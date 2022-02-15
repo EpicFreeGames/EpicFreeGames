@@ -71,6 +71,11 @@ export enum CommandTypes {
   ADMIN = "ADMIN",
 }
 
+export type SubCommandHandler = (
+  i: CommandInteraction,
+  guild: IGuild | null,
+  language: Languages
+) => Promise<any>;
 export interface RawCommand {
   type: CommandTypes;
   data: ApplicationCommandData;
