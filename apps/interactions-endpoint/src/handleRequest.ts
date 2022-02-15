@@ -40,9 +40,9 @@ export const handleRequests = async (req: Request, res: Response) => {
   try {
     await command.execute(i, dbGuild, language);
   } catch (err: any) {
-    logger.discord({ content: `failed to run ${i.command.name} ${err.message}` });
+    logger.discord({ content: `failed to run ${i.getFullCommandName()} ${err.message}` });
 
-    logger.console(`failed to run ${i.command.name} ${err.message}`);
+    logger.console(`failed to run ${i.getFullCommandName()} ${err.message}`);
   }
 };
 

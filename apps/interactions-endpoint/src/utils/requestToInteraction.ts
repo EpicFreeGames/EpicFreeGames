@@ -6,7 +6,16 @@ import {
   MessageFlags,
 } from "discord-api-types/v9";
 import { discordApiRequest } from "./axiosConfig";
-import { CommandInteraction, CommandOptions, db, embeds, ICommandLog, logger, User } from "shared";
+import {
+  CommandInteraction,
+  CommandOptions,
+  db,
+  embeds,
+  ICommandLog,
+  logger,
+  User,
+  getTag,
+} from "shared";
 import { config } from "config";
 
 export const requestToInteraction = (req: Request): CommandInteraction => {
@@ -15,10 +24,7 @@ export const requestToInteraction = (req: Request): CommandInteraction => {
 
   const user: User = {
     id: body?.member?.user?.id || body?.user?.id,
-    tag:
-      (body?.member?.user?.username || body?.user?.username) +
-      "#" +
-      (body?.member?.user?.discriminator || body?.user?.discriminator),
+    tag: getTag(body),
     locale: body.locale,
     permissions: null,
   };
@@ -187,9 +193,12 @@ export const requestToInteraction = (req: Request): CommandInteraction => {
 
       return subCmd;
     },
+    getFullCommandName() {
+      const subCommand = this.getSubCommand()?.name;
+      return `/${this.command?.name}${subCommand ? ` ${subCommand}` : ""}`;
+    },
     async onFinish() {
-      const subCommandName = this.getSubCommand()?.name;
-      const commandName = `/${this.command.name}${subCommandName ? ` ${subCommandName}` : ""}`;
+      const commandName = this.getFullCommandName();
 
       const end = Date.now();
 

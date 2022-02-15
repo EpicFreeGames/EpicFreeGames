@@ -1,7 +1,6 @@
 import { ApplicationCommandData, MessageActionRow, MessageEmbed } from "discord.js";
 import { IGuild } from "../data/types";
 import { Languages } from "../localisation/languages";
-import { User } from "./User";
 
 export interface CommandInteraction {
   guildId: string | null;
@@ -17,6 +16,7 @@ export interface CommandInteraction {
   deferReply: (options: DeferReplyOptions) => Promise<void>;
   editReply: (options: ReplyOptions) => Promise<void>;
   getSubCommand: (required?: boolean | undefined) => CommandOptions | undefined;
+  getFullCommandName: () => string;
   onFinish: () => Promise<void>;
 }
 
@@ -79,4 +79,14 @@ export type SubCommandHandler = (
 export interface RawCommand {
   type: CommandTypes;
   data: ApplicationCommandData;
+}
+
+export interface User {
+  permissions: {
+    bits: bigint;
+    hasPermission: (bits: bigint, checkFor: bigint) => boolean;
+  } | null;
+  id: string;
+  tag: string;
+  locale: string;
 }

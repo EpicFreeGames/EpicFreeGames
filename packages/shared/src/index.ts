@@ -1,7 +1,8 @@
 export * from "./data/types";
 export * from "./data/models";
 
-export * from "./interactions";
+export * from "./interactions/types";
+export * from "./interactions/utils";
 export * from "./localisation";
 export * from "./localisation/languages";
 
