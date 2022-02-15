@@ -1,10 +1,11 @@
 import { MessageEmbed } from "discord.js";
 import { IGuild, ICommandLog } from "../data/types";
 import { CommandInteraction } from "../interactions";
+import { utils } from "./utils";
 
 const addDbInfo = (guild: IGuild, embed: MessageEmbed) => {
   embed.description +=
-    "**__DB Info__**" +
+    utils.title("DB Info") +
     "\n" +
     `Language: ${guild.language}` +
     "\n" +
@@ -20,7 +21,7 @@ export const command = (guild: IGuild | null, log: ICommandLog, dms: boolean) =>
     title: `${log.command} ${dms ? "in DMs" : ""}`,
     color: "#2f3136",
     description:
-      "**__Command Info__**" +
+      utils.title("Command Info") +
       "\n" +
       `Sender: ${log.sender.tag}` +
       "\n" +
@@ -40,7 +41,7 @@ export const channelSet = (guild: IGuild | null, i: CommandInteraction, channelI
   const embed = new MessageEmbed({
     title: "Channel set",
     description:
-      "**__Info__**" +
+      utils.title("Info") +
       "\n" +
       `User: ${i.user.tag}` +
       "\n" +
@@ -60,7 +61,7 @@ export const roleSet = (guild: IGuild | null, i: CommandInteraction, roleId: str
   const embed = new MessageEmbed({
     title: "Role set",
     description:
-      "**__Info__**" +
+      utils.title("Info") +
       "\n" +
       `User: ${i.user.tag}` +
       "\n" +
@@ -80,7 +81,7 @@ export const languageSet = (guild: IGuild | null, i: CommandInteraction, languag
   const embed = new MessageEmbed({
     title: "Language set",
     description:
-      "**__Info__**" +
+      utils.title("Info") +
       "\n" +
       `User: ${i.user.tag}` +
       "\n" +

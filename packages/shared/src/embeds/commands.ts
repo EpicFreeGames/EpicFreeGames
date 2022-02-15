@@ -9,7 +9,7 @@ export const help = (language: Languages) =>
     title: "Help",
     color: "GREEN",
     description:
-      `**${translate("commands_title", language)}**` +
+      utils.bold(`${translate("commands_title", language)}`) +
       "\n" +
       translate("help_command_description", language, { link: constants.links.commands }) +
       utils.footer(language),
@@ -39,5 +39,5 @@ export const debug = (guildId: string) =>
   new MessageEmbed({
     title: "Debug info",
     color: "BLUE",
-    description: `Guild ID: ${guildId}`,
+    description: utils.bold(`Guild ID: ${guildId}`),
   });

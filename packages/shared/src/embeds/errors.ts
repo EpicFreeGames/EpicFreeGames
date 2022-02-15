@@ -11,7 +11,7 @@ export const missingPermissions = (channelId: string, language: Languages): Mess
     description:
       translate("no_permission_desc", language, { channelId }) +
       "\n\n" +
-      `**${translate("permission_manage_webhooks", language)}**` +
+      utils.bold(`${translate("permission_manage_webhooks", language)}`) +
       "\n\n" +
       translate("click_here", language, { serverAddress: constants.links.serverInvite }),
   });
@@ -21,7 +21,7 @@ export const unauthorized = {
     new MessageEmbed({
       title: "❌",
       color: "DARK_RED",
-      description: "**Admin only** command" + utils.footer(language),
+      description: `${utils.bold("Admin only")} command` + utils.footer(language),
     }),
 
   manageGuildCommand: (language: Languages) =>

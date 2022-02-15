@@ -33,7 +33,7 @@ export const games = (games: IGame[], language: Languages) => {
 
         "\n\n" +
 
-        `💰 **${utils.strike(game.price)} -> ${translate("game_free", language)}!**` +
+        `💰 ${utils.bold(`${utils.strike(game.price)} -> ${translate("game_free", language)}`)}!` +
 
         "\n\n" +
         utils.footer(language),

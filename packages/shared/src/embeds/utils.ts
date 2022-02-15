@@ -21,6 +21,8 @@ export const utils = {
   relativeTimestamp: (timestamp: number) => `<t:${timestamp}:R>`,
 
   strike: (text: string) => `~~${text}~~`,
+  bold: (text: string) => `**${text}**`,
+  title: (text: string) => `**__${text}__**`,
 
   truncate: (text: string, length: number) =>
     text.length > length ? `${text.slice(0, length).trim()}...` : text,
