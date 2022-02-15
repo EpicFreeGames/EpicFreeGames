@@ -27,11 +27,9 @@ export const set = {
     ).select(selectString),
 
   role: async (guildId: string, roleId: string) =>
-    GuildModel.findOneAndUpdate(
-      { guildId },
-      { guildId, roleId },
-      { upsert: true, new: true }
-    ).select(selectString),
+    GuildModel.findOneAndUpdate({ guildId }, { guildId, roleId }, { new: true }).select(
+      selectString
+    ),
 
   language: async (guildId: string, language: string) =>
     GuildModel.updateOne({ guildId }, { guildId, language }, { upsert: true }),
