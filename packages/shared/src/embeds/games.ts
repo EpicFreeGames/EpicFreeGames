@@ -15,7 +15,7 @@ export const games = (games: IGame[], language: Languages) => {
 
     // prettier-ignore
     const embed = new MessageEmbed({
-      title: utils.truncate(game.name, 27),
+      title: utils.truncate(game.name, 31),
       color: "#2f3136",
       image: {
         url: game.imgUrl,
