@@ -5,12 +5,13 @@ import { utils } from "./utils";
 
 const addDbInfo = (guild: IGuild, embed: MessageEmbed) => {
   embed.description +=
+    "\n\n" +
     utils.title("DB Info") +
     "\n" +
     `Language: ${guild.language}` +
     "\n" +
     `Role ID: ${guild.roleId}` +
-    +"\n" +
+    "\n" +
     `Channel ID: ${guild.channelId}` +
     "\n" +
     `Webhook: ${guild.webhook ? "✅" : "❌"}`;
