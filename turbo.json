@@ -13,7 +13,5 @@
     "depl-g": {
       "dependsOn": ["build"]
     }
-  },
-
-  "globalDepencies": ["config.ts", "constants.ts"]
+  }
 }
