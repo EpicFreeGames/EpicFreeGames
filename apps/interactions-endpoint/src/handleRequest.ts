@@ -23,22 +23,22 @@ export const handleRequests = async (req: Request, res: Response) => {
   const command = commands.get(i.command.name);
   if (!command) return;
 
-  let langauge = Languages.en;
+  let language = Languages.en;
   let dbGuild = null;
 
   if (i.guildId) {
     dbGuild = await db.guilds.get.one(i.guildId);
 
-    if (dbGuild) langauge = getGuildLang(dbGuild);
+    if (dbGuild) language = getGuildLang(dbGuild);
   }
 
   if (!i.guildId && command.needsGuild)
     return i.reply({ content: "This command has to be run on a server!" }).catch(() => null);
 
-  if (!isAuthorized(i, command)) return handleMissingPermissions(i, command, langauge);
+  if (!isAuthorized(i, command)) return handleMissingPermissions(i, command, language);
 
   try {
-    await command.execute(i, dbGuild, langauge);
+    await command.execute(i, dbGuild, language);
   } catch (err: any) {
     logger.discord({ content: `failed to run ${i.command.name} ${err.message}` });
 
