@@ -115,7 +115,7 @@ export const requestToInteraction = (req: Request): CommandInteraction => {
     async reply(options) {
       this.onFinish();
       const data: any = {
-        type: 4,
+        type: InteractionResponseType.ChannelMessageWithSource,
         data: {},
       };
 
