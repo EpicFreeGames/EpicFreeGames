@@ -6,6 +6,12 @@
     },
     "dev": {
       "dependsOn": ["build"]
+    },
+    "depl": {
+      "dependsOn": ["build"]
+    },
+    "depl-g": {
+      "dependsOn": ["build"]
     }
   },
 

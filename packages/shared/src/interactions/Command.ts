@@ -1,4 +1,4 @@
-import { MessageActionRow, MessageEmbed } from "discord.js";
+import { ApplicationCommandData, MessageActionRow, MessageEmbed } from "discord.js";
 import { IGuild } from "../data/types";
 import { Languages } from "../localisation/languages";
 import { User } from "./User";
@@ -73,5 +73,5 @@ export enum CommandTypes {
 
 export interface RawCommand {
   type: CommandTypes;
-  data: any;
+  data: ApplicationCommandData;
 }

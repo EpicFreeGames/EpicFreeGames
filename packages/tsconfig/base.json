@@ -7,6 +7,7 @@
     "lib": ["esnext"],
 
     "declaration": true,
+    "declarationMap": true,
     "composite": false,
     "esModuleInterop": true,
     "moduleResolution": "Node",
@@ -17,7 +18,7 @@
 
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
-    
+
     "noUnusedLocals": true,
     "noImplicitAny": true,
     "noImplicitOverride": true,
