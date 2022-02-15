@@ -6,5 +6,10 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
+config.js
+config.ts
+constants.ts
+constants.ts
+
 .turbo
 dist/
