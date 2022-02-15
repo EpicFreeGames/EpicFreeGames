@@ -39,6 +39,13 @@ export const maxNumberOfWebhooks = (language: Languages) =>
     description: "A channel can only have 10 webhooks." + utils.footer(language),
   });
 
+export const channelNotSet = (language: Languages) =>
+  new MessageEmbed({
+    title: "❌",
+    color: "RED",
+    description: translate("no_channel_set_description", language) + utils.footer(language),
+  });
+
 export const mustVote = (language: Languages) =>
   new MessageEmbed({
     title: translate("need_to_vote_title", language),
