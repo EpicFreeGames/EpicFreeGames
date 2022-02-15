@@ -9,6 +9,8 @@ import { command as vote } from "./vote";
 import { command as help } from "./help";
 import { command as invite } from "./invite";
 
+import { command as set } from "./set";
+
 export const commands: Map<string, SlashCommand> = new Map();
 
 commands.set("free", free);
@@ -19,3 +21,5 @@ commands.set("debug", debug);
 commands.set("vote", vote);
 commands.set("help", help);
 commands.set("invite", invite);
+
+commands.set("set", set);

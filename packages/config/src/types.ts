@@ -42,6 +42,8 @@ export interface IConstants {
     launcherRedirect: string;
   };
 
+  webhookName: string;
+
   userIds: {
     [key: string]: any;
 

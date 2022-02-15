@@ -19,10 +19,10 @@ export const get = {
 };
 
 export const set = {
-  webhook: async (guildId: string, webhook: string) =>
+  webhook: async (guildId: string, webhook: string, channelId: string) =>
     GuildModel.findOneAndUpdate(
       { guildId },
-      { guildId, webhook },
+      { guildId, webhook, channelId },
       { upsert: true, new: true }
     ).select(selectString),
 

@@ -16,6 +16,8 @@ export const constants: IConstants = {
     launcherRedirect: "",
   },
 
+  webhookName: "",
+
   userIds: {
     prod: "",
     dev: "",
