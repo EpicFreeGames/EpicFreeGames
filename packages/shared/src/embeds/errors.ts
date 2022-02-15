@@ -1,8 +1,8 @@
 import { MessageEmbed } from "discord.js";
-import { links } from "../const";
 import { Languages } from "../localisation/languages";
 import { translate } from "../localisation";
 import { utils } from "./utils";
+import { constants } from "config";
 
 export const missingPermissions = (channelId: string, language: Languages): MessageEmbed =>
   new MessageEmbed({
@@ -13,7 +13,7 @@ export const missingPermissions = (channelId: string, language: Languages): Mess
       "\n\n" +
       `**${translate("permission_manage_webhooks", language)}**` +
       "\n\n" +
-      translate("click_here", language, { serverAddress: links.serverInvite }),
+      translate("click_here", language, { serverAddress: constants.links.serverInvite }),
   });
 
 export const unauthorized = {
@@ -44,7 +44,7 @@ export const mustVote = (language: Languages) =>
     title: translate("need_to_vote_title", language),
     color: "RED",
     description:
-      translate("need_to_vote_description", language, { voteAddress: links.vote }) +
+      translate("need_to_vote_description", language, { voteAddress: constants.links.vote }) +
       utils.footer(language),
   });
 
