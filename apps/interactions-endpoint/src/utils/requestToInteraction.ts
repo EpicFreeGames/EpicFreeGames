@@ -23,11 +23,11 @@ export const requestToInteraction = (req: Request): CommandInteraction => {
     permissions: null,
   };
 
-  if (body?.member?.id) {
+  if (body?.member) {
     const bits = BigInt(body.member.permissions);
     user.permissions = {
       bits,
-      hasPermission: (bits: bigint, checkFor: bigint) => (bits & checkFor) == checkFor,
+      hasPermission: (bits: bigint, checkFor: bigint) => (bits & checkFor) === checkFor,
     };
   }
 
