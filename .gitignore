@@ -10,6 +10,7 @@ config.js
 config.ts
 constants.ts
 constants.ts
+translations.ts
 
 .turbo
 dist/
