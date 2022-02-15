@@ -5,7 +5,7 @@ const hook = new WebhookClient({
   url: config.loggingHookUrl,
 });
 
-export const logger = {
+export const logger: any = {
   discord: async (options: WebhookMessageOptions) => {
     return await hook.send(options);
   },
