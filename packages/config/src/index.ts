@@ -13,8 +13,6 @@ for (let key in constTemplate) {
   if (!userConst.hasOwnProperty(key) || !userConst[key])
     throw Error(`CONSTANTS ERROR: '${key}' not set`);
 
-  if (typeof userConst[key] !== "string") throw Error(`CONSTANTS ERROR: '${key}' must be a string`);
-
   for (let subKey in constTemplate[key]) {
     if (!userConst[key].hasOwnProperty(subKey) || !userConst[key][subKey])
       throw Error(`CONSTANTS ERROR: '${key}.${subKey}' not set`);
