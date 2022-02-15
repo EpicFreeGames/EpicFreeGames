@@ -1,4 +1,5 @@
 import { CommandTypes, db, SlashCommand, SubCommandHandler } from "shared";
+import { deleteWebhook } from "../utils/webhooks";
 
 export const command: SlashCommand = {
   type: CommandTypes.MANAGE_GUILD,
@@ -15,9 +16,7 @@ const channelCommand: SubCommandHandler = async (i, guild, language) => {
   if (guild?.channelId) {
     await db.guilds.remove.webhook(i.guildId!);
 
-    if (guild?.webhook) {
-      // TODO: Delete webhook
-    }
+    if (guild?.webhook) await deleteWebhook(guild.webhook);
   }
 
   return i.reply({ content: "✅", ephemeral: true });
