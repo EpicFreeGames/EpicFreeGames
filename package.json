@@ -8,7 +8,9 @@
   ],
   "scripts": {
     "build": "turbo run build",
-    "dev": "turbo run dev"
+    "dev": "turbo run dev",
+    "postclean": "rm -rf node_modules",
+    "clean": "turbo run clean"
   },
   "devDependencies": {
     "turbo": "^1.1.2"

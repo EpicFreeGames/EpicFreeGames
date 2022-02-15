@@ -12,6 +12,9 @@
     },
     "depl-g": {
       "dependsOn": ["build"]
+    },
+    "clean": {
+      "cache": false
     }
   }
 }

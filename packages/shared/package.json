@@ -5,7 +5,8 @@
   "types": "./dist/index.d.ts",
   "type": "module",
   "scripts": {
-    "build": "./node_modules/.bin/tsc -p ./tsconfig.json"
+    "build": "rm -rf dist &&./node_modules/.bin/tsc -p ./tsconfig.json",
+    "clean": "rm -rf node_modules && rm -rf .turbo && rm -rf dist"
   },
   "files": [
     "dist/**"
