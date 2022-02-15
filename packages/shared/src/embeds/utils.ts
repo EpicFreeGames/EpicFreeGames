@@ -22,5 +22,6 @@ export const utils = {
 
   strike: (text: string) => `~~${text}~~`,
 
-  truncate: (text: string, length: number) => `${text.slice(0, length)}...`,
+  truncate: (text: string, length: number) =>
+    text.length > length ? `${text.slice(0, length).trim()}...` : text,
 };
