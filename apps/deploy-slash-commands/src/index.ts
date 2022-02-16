@@ -28,6 +28,7 @@ const globalDeploy = async (commands: any[]) => {
     console.log("✅ Deployed global commands!");
   } catch (err) {
     console.log("❌ Error deploying global commands:", err.message);
+    console.log(JSON.stringify(err.response.data, null, 2));
   }
 };
 
@@ -41,6 +42,7 @@ const guildDeploy = async (commands: any[]) => {
     console.log(`✅ Deployed guild commands to ${config.guildId}!`);
   } catch (err) {
     console.log("❌ Error deploying guild commands:", err.message);
+    console.log(JSON.stringify(err.response.data, null, 2));
   }
 };
 
