@@ -1,6 +1,7 @@
 import { Languages } from "../localisation/languages";
 
 export interface IGame {
+  _id: string;
   name: string;
   imgUrl: string;
   start: number;

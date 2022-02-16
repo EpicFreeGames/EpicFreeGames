@@ -4,7 +4,7 @@ import { MessageEmbed } from "discord.js";
 import { translate } from "../localisation";
 import { utils } from "./utils";
 
-export const games = (games: IGame[], language: Languages) => {
+export const games = (games: IGame[], language: Languages, showId: boolean = false) => {
   const now = Date.now() / 1000;
 
   let embeds: MessageEmbed[] = [];
@@ -28,7 +28,7 @@ export const games = (games: IGame[], language: Languages) => {
 
         "\n\n" +
 
-        (start > now ? `🟢 ${utils.relativeTimestamp(start)}` + "\n\n" : "") + // only show start if it's relevant
+        (start > now ? `🟢 ${utils.relativeTimestamp(start)}` + "\n\n" : "") + // only show start if it's in the future
         `🏁 ${utils.relativeTimestamp(end)}` +
 
         "\n\n" +
@@ -36,6 +36,11 @@ export const games = (games: IGame[], language: Languages) => {
         `💰 ${utils.bold(`${utils.strike(game.price)} -> ${translate("game_free", language)}`)}!` +
 
         "\n\n" +
+
+        showId ? `🆔 ${game._id}` : "" +
+
+        "\n\n" +
+
         utils.footer(language),
     });
 
