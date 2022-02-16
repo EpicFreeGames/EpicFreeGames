@@ -10,7 +10,9 @@
     "build": "turbo run build",
     "dev": "turbo run dev",
     "postclean": "rm -rf node_modules",
-    "clean": "turbo run clean"
+    "clean": "turbo run clean",
+    "depl": "turbo run depl",
+    "depl-g": "turbo run depl-g"
   },
   "devDependencies": {
     "turbo": "^1.1.2"
