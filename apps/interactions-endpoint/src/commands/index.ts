@@ -10,6 +10,9 @@ import { command as help } from "./help";
 import { command as invite } from "./invite";
 
 import { command as set } from "./set";
+import { command as remove } from "./remove";
+
+import { command as games } from "./games";
 
 export const commands: Map<string, SlashCommand> = new Map();
 
@@ -23,3 +26,6 @@ commands.set("help", help);
 commands.set("invite", invite);
 
 commands.set("set", set);
+commands.set("remove", remove);
+
+commands.set("games", games);
