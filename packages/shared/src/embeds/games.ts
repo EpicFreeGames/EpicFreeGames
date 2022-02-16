@@ -37,7 +37,7 @@ export const games = (games: IGame[], language: Languages, showId: boolean = fal
 
         "\n\n" +
 
-        showId ? `🆔 ${game._id}` : "" +
+        (showId ? `🆔 ${game._id}` : "") +
 
         "\n\n" +
 
