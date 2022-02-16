@@ -5,7 +5,7 @@ export const slashCommands: RawCommand[] = [
   {
     type: CommandTypes.EVERYONE,
     data: {
-      name: "help",
+      name: "free",
       description: "I'll reply with the current free game(s)!",
     },
   },
@@ -128,7 +128,15 @@ export const slashCommands: RawCommand[] = [
     type: CommandTypes.ADMIN,
     data: {
       name: "stats",
-      description: "Use this to get bot statistics",
+      description: "Use this to get bot statistics (admin only)",
+    },
+  },
+
+  {
+    type: CommandTypes.ADMIN,
+    data: {
+      name: "games",
+      description: "Get all games (admin only)",
     },
   },
 ];
