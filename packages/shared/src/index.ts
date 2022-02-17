@@ -10,3 +10,4 @@ export * as db from "./data/dal";
 export * as embeds from "./embeds";
 
 export * from "./logger";
+export * from "./utils";

@@ -2,8 +2,7 @@ import axios from "axios";
 import { config, constants } from "config";
 import { APIWebhook, RESTGetAPIChannelWebhooksResult } from "discord-api-types";
 import { WebhookMessageOptions } from "discord.js";
-import { IWebhook } from "shared";
-import { discordApiRequest } from "./axiosConfig";
+import { IWebhook, discordApiRequest } from "shared";
 
 export const createWebhook = async (channelId: string): Promise<IWebhook | null> => {
   try {

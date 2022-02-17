@@ -5,7 +5,6 @@ import {
   InteractionResponseType,
   MessageFlags,
 } from "discord-api-types/v9";
-import { discordApiRequest } from "./axiosConfig";
 import {
   CommandInteraction,
   CommandOptions,
@@ -15,6 +14,7 @@ import {
   logger,
   User,
   getTag,
+  discordApiRequest,
 } from "shared";
 import { config } from "config";
 

@@ -1,7 +1,14 @@
 import axios from "axios";
 import { config, constants } from "config";
-import { CommandTypes, db, embeds, logger, SlashCommand, SubCommandHandler } from "shared";
-import { discordApiRequest } from "../utils/axiosConfig";
+import {
+  CommandTypes,
+  db,
+  embeds,
+  logger,
+  SlashCommand,
+  SubCommandHandler,
+  discordApiRequest,
+} from "shared";
 import { createWebhook, deleteWebhook, executeHook, hasWebhook } from "../utils/webhooks";
 
 export const command: SlashCommand = {
