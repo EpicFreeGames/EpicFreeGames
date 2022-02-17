@@ -24,7 +24,7 @@
     "noImplicitOverride": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
-    "noPropertyAccessFromIndexSignature": true,
+    "noPropertyAccessFromIndexSignature": false,
     "noFallthroughCasesInSwitch": true,
 
     "useUnknownInCatchVariables": false,
