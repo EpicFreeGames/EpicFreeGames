@@ -39,8 +39,6 @@ export const games = (games: IGame[], language: Languages, showId: boolean = fal
 
         (showId ? `🆔 ${game._id}` : "") +
 
-        "\n\n" +
-
         utils.footer(language),
     });
 
