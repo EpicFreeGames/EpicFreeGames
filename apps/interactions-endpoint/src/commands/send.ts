@@ -5,6 +5,7 @@ import { CommandTypes, SlashCommand } from "shared";
 export const command: SlashCommand = {
   type: CommandTypes.ADMIN,
   execute: async (i, guild, language) => {
+    await i.deferReply({ ephemeral: true });
     let gameIds = i.options.getString("game_ids", true);
     const sendingId = i.options.getString("sending_id");
 
@@ -18,9 +19,9 @@ export const command: SlashCommand = {
 
     try {
       const res = await axios.post(config.senderUrl, { gameIds: idArr, sendingId });
-      return i.reply({ content: `**sendingId:** ${res?.data?.sendingId}`, ephemeral: true });
+      return i.editReply({ content: `**sendingId:** ${res?.data?.sendingId}`, ephemeral: true });
     } catch (err: any) {
-      return i.reply({ content: `**error:** ${err?.response?.data}`, ephemeral: true });
+      return i.editReply({ content: `**error:** ${err?.response?.data}`, ephemeral: true });
     }
   },
 };
