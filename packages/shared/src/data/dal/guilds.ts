@@ -1,4 +1,5 @@
 import { GuildModel } from "../models";
+import { IWebhook } from "../types";
 
 const selectString = "-_id -__v -createdAt -updatedAt";
 
@@ -19,7 +20,7 @@ export const get = {
 };
 
 export const set = {
-  webhook: async (guildId: string, webhook: string, channelId: string) =>
+  webhook: (guildId: string, webhook: IWebhook | null, channelId: string) =>
     GuildModel.findOneAndUpdate(
       { guildId },
       { guildId, webhook, channelId },
