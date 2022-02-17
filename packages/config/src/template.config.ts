@@ -1,7 +1,9 @@
 import { IConfig } from "./types";
 
 export const config: IConfig = {
-  port: 0,
+  interactionsPort: 0,
+  senderPort: 0,
+
   loggingHookUrl: "",
   statsUrl: "",
 

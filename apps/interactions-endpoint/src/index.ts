@@ -10,7 +10,7 @@ import { createApp } from "./app";
 
   console.log(`Running in ${config.prod ? "PROD" : "DEV"}`);
 
-  app.listen(config.port, () => {
-    console.log(`Listening on port ${config.port}`);
+  app.listen(config.interactionsPort, () => {
+    console.log(`I-endpoint listening on port ${config.interactionsPort}`);
   });
 })();

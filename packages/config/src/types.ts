@@ -1,7 +1,9 @@
 export interface IConfig {
   [key: string]: any;
 
-  port: number;
+  interactionsPort: number;
+  senderPort: number;
+
   loggingHookUrl: string;
 
   statsUrl: string;
