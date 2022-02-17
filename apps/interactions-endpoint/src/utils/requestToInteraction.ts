@@ -59,6 +59,8 @@ export const requestToInteraction = (req: Request): CommandInteraction => {
             break;
           }
 
+          if (!option.options) continue;
+
           for (const subOption of option.options) {
             if (subOption.type === ApplicationCommandOptionType.String && subOption.name === name) {
               res = subOption.value;
@@ -79,6 +81,8 @@ export const requestToInteraction = (req: Request): CommandInteraction => {
             res = option.value;
             break;
           }
+
+          if (!option.options) continue;
 
           for (const subOption of option.options) {
             if (
@@ -104,6 +108,8 @@ export const requestToInteraction = (req: Request): CommandInteraction => {
             res = option.value;
             break;
           }
+
+          if (!option.options) continue;
 
           for (const subOption of option.options) {
             if (subOption.type === ApplicationCommandOptionType.Role && subOption.name === name) {
