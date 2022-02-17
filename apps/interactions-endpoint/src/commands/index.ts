@@ -13,6 +13,7 @@ import { command as set } from "./set";
 import { command as remove } from "./remove";
 
 import { command as games } from "./games";
+import { command as send } from "./send";
 
 export const commands: Map<string, SlashCommand> = new Map();
 
@@ -29,3 +30,4 @@ commands.set("set", set);
 commands.set("remove", remove);
 
 commands.set("games", games);
+commands.set("send", send);

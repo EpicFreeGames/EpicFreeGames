@@ -5,7 +5,7 @@ export const config: IConfig = {
   senderPort: 0,
 
   loggingHookUrl: "",
-  statsUrl: "",
+  senderUrl: "",
 
   botId: "",
   botToken: "",

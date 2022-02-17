@@ -139,4 +139,25 @@ export const slashCommands: RawCommand[] = [
       description: "Get all games (admin only)",
     },
   },
+
+  {
+    type: CommandTypes.ADMIN,
+    data: {
+      name: "send",
+      description: "Send games (admin only)",
+      options: [
+        {
+          type: ApplicationCommandOptionTypes.STRING,
+          name: "game_ids",
+          description: "The game ids (<id>, <id>, ...)",
+          required: true,
+        },
+        {
+          type: ApplicationCommandOptionTypes.STRING,
+          name: "sending_id",
+          description: "The sending id (optional)",
+        },
+      ],
+    },
+  },
 ];

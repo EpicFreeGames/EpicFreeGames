@@ -6,7 +6,7 @@ export interface IConfig {
 
   loggingHookUrl: string;
 
-  statsUrl: string;
+  senderUrl: string;
 
   botId: string;
   botToken: string;
