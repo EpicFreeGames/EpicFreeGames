@@ -4,7 +4,7 @@ import { createApp } from "./app";
 
 (async () => {
   await mongoose.connect(config.mongoUrl);
-  console.log("Connected to database");
+  console.log("Connected to database (i-endpoint)");
 
   const app = createApp();
 
