@@ -26,6 +26,15 @@ export interface ICommandLog {
   respondedIn: number;
 }
 
+export interface ISendingLog {
+  guildId: string;
+  sendingId: string;
+  result: {
+    success: boolean;
+    reason: string | null;
+  };
+}
+
 export interface IWebhook {
   id: string;
   token: string;

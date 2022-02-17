@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { ICommandLog, IGame, IGuild } from "./types";
+import { ICommandLog, ISendingLog, IGame, IGuild } from "./types";
 import { Languages } from "../localisation/languages";
 
 export const GameModel = mongoose.model<IGame>(
@@ -54,6 +54,21 @@ export const CommandLogModel = mongoose.model<ICommandLog>(
       },
       guildId: { type: String, default: null },
       respondedIn: { type: Number },
+    },
+    { timestamps: true }
+  )
+);
+
+export const SendingLogModel = mongoose.model<ISendingLog>(
+  "sending-log",
+  new mongoose.Schema<ISendingLog>(
+    {
+      guildId: { type: String, required: true },
+      sendingId: { type: String, required: true },
+      result: {
+        success: { type: Boolean, required: true },
+        reason: { type: String, default: null },
+      },
     },
     { timestamps: true }
   )
