@@ -14,3 +14,7 @@ translations.ts
 
 .turbo
 dist/
+
+migration
+DATA
+.env.mongo

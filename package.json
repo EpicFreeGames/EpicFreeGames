@@ -12,7 +12,11 @@
     "postclean": "rm -rf node_modules",
     "clean": "turbo run clean",
     "depl": "turbo run depl",
-    "depl-g": "turbo run depl-g"
+    "depl-g": "turbo run depl-g",
+    "devup": "docker-compose -p dev up -d --build",
+    "devdown": "docker-compose -p dev down",
+    "produp": "docker-compose -p prod up -d --build",
+    "proddown": "docker-compose -p prod down"
   },
   "devDependencies": {
     "turbo": "^1.1.2"
