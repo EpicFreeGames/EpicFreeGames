@@ -21,6 +21,7 @@ export enum Languages {
   ar = "ar",
   it = "it",
   ko = "ko",
+  bg = "bg",
 }
 
 export const LanguagesWithFlags = {
@@ -46,4 +47,5 @@ export const LanguagesWithFlags = {
   ar: "🇸🇦 عربي",
   it: "🇮🇹 Italiano",
   ko: "🇰🇷 한국어",
+  bg: "🇧🇬 български",
 };
