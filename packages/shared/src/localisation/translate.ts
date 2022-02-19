@@ -1,7 +1,7 @@
 import { isEnum } from "../utils";
 import { translations } from "./translations";
 import { Languages } from "./languages";
-import { IGuild } from "../data/types/Guild";
+import { IGuild } from "../data/types";
 
 const defaultLang = Languages.en;
 

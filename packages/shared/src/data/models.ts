@@ -1,9 +1,6 @@
 import mongoose from "mongoose";
-import { Languages } from "../localisation/languages";
-import { ICommandLog } from "./types/CommandLog";
-import { IGame } from "./types/Game";
-import { GuildDocument } from "./types/Guild";
-import { SendingLogDocument } from "./types/SendingLog";
+import { IGame, GuildDocument, ICommandLog, SendingLogDocument } from "./types";
+import { Languages } from "../localisation";
 
 export const GameModel = mongoose.model<IGame>(
   "game",

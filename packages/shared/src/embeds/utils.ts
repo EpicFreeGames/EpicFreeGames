@@ -1,5 +1,4 @@
-import { Languages } from "../localisation/languages";
-import { translate } from "../localisation";
+import { Languages, translate } from "../localisation";
 import { constants } from "config";
 
 export const utils = {

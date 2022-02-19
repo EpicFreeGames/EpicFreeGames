@@ -1,6 +1,6 @@
 import { ApplicationCommandData, MessageActionRow, MessageEmbed } from "discord.js";
 import { IGuild } from "../data/types";
-import { Languages } from "../localisation/languages";
+import { Languages } from "../localisation";
 
 export interface CommandInteraction {
   guildId: string | null;

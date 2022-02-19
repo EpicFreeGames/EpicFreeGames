@@ -1,7 +1,6 @@
-import { IGame } from "../data/types";
-import { Languages } from "../localisation/languages";
+import { IGame } from "../data/types/Game";
+import { Languages, translate } from "../localisation";
 import { MessageEmbed } from "discord.js";
-import { translate } from "../localisation";
 import { utils } from "./utils";
 
 export const games = (games: IGame[], language: Languages, showId: boolean = false) => {

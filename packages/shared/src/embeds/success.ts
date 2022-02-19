@@ -1,6 +1,5 @@
 import { MessageEmbed } from "discord.js";
-import { translate } from "../localisation";
-import { Languages } from "../localisation/languages";
+import { translate, Languages } from "../localisation";
 import { utils } from "./utils";
 
 export const channelSet = (channelId: string, language: Languages) =>
