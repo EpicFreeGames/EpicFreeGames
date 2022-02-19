@@ -1,4 +1,5 @@
 import { MessageEmbed } from "discord.js";
+import { Languages, LanguagesWithFlags } from "../localisation";
 import { IGuild, ICommandLog } from "../data/types";
 import { CommandInteraction } from "../interactions/types";
 import { utils } from "./utils";
@@ -8,11 +9,11 @@ const addDbInfo = (guild: IGuild, embed: MessageEmbed) => {
     "\n\n" +
     utils.title("DB Info") +
     "\n" +
-    `Language: ${guild.language}` +
+    `Language: ${LanguagesWithFlags[guild.language]}` +
     "\n" +
-    `Role ID: ${guild.roleId}` +
+    `Role ID: ${guild.roleId ? guild.roleId : "❌"}` +
     "\n" +
-    `Channel ID: ${guild.channelId}` +
+    `Channel ID: ${guild.channelId ? guild.channelId : "❌"}` +
     "\n" +
     `Webhook: ${guild.webhook ? "✅" : "❌"}`;
 };
@@ -44,9 +45,9 @@ export const channelSet = (guild: IGuild | null, i: CommandInteraction, channelI
     description:
       utils.title("Info") +
       "\n" +
-      `User: ${i.user.tag}` +
+      `Executor: ${i.user.tag}` +
       "\n" +
-      `User ID: ${i.user.id}` +
+      `Executor ID: ${i.user.id}` +
       "\n" +
       `Guild ID: ${i.guildId}` +
       "\n" +
@@ -64,9 +65,9 @@ export const roleSet = (guild: IGuild | null, i: CommandInteraction, roleId: str
     description:
       utils.title("Info") +
       "\n" +
-      `User: ${i.user.tag}` +
+      `Executor: ${i.user.tag}` +
       "\n" +
-      `User ID: ${i.user.id}` +
+      `Executor ID: ${i.user.id}` +
       "\n" +
       `Guild ID: ${i.guildId}` +
       "\n" +
@@ -78,19 +79,19 @@ export const roleSet = (guild: IGuild | null, i: CommandInteraction, roleId: str
   return embed;
 };
 
-export const languageSet = (guild: IGuild | null, i: CommandInteraction, language: string) => {
+export const languageSet = (guild: IGuild | null, i: CommandInteraction, language: Languages) => {
   const embed = new MessageEmbed({
     title: "Language set",
     description:
       utils.title("Info") +
       "\n" +
-      `User: ${i.user.tag}` +
+      `Executor: ${i.user.tag}` +
       "\n" +
-      `User ID: ${i.user.id}` +
+      `Executor ID: ${i.user.id}` +
       "\n" +
       `Guild ID: ${i.guildId}` +
       "\n" +
-      `Set language: ${language}`,
+      `Set language: ${LanguagesWithFlags[language]}`,
   }).setTimestamp();
 
   if (guild) addDbInfo(guild, embed);
