@@ -50,7 +50,7 @@ export class ChannelSender {
 
           console.log(`sent to ${guild.guildId} (channel)`);
 
-          db.logs.addSend(log).catch((err) => console.log("log (channel1):", err.message));
+          db.logs.sends.add(log).catch((err) => console.log("log (channel1):", err.message));
         })
         .catch((err: any) => {
           const log: ISendingLog = {
@@ -65,6 +65,7 @@ export class ChannelSender {
           if (!err?.response) {
             log.result.reason = "no response";
             console.log("NOT SENT", log.result.reason, guild.guildId);
+            db.logs.sends.add(log).catch((err) => console.log("log (channel2):", err.message));
 
             return;
           }
@@ -73,7 +74,7 @@ export class ChannelSender {
             log.result.reason = err?.response?.data?.code;
             console.log("NOT SENT", log.result.reason, guild.guildId);
             db.guilds.remove.webhook(guild.guildId).catch(() => null);
-            db.logs.addSend(log).catch((err) => console.log("log (channel2):", err.message));
+            db.logs.sends.add(log).catch((err) => console.log("log (channel2):", err.message));
 
             return;
           }
@@ -83,14 +84,14 @@ export class ChannelSender {
             console.log("NOT SENT", log.result.reason, guild.guildId);
             if (err.response.status === 429) return console.log("RATELIMIT");
 
-            db.logs.addSend(log).catch((err) => console.log("log (channel3):", err.message));
+            db.logs.sends.add(log).catch((err) => console.log("log (channel3):", err.message));
 
             return;
           }
 
           log.result.reason = "hmm";
           console.log("NOT SENT", log.result.reason, guild.guildId);
-          db.logs.addSend(log).catch((err) => console.log("log (channel4):", err.message));
+          db.logs.sends.add(log).catch((err) => console.log("log (channel4):", err.message));
         });
     }
   }

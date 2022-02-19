@@ -1,7 +1,15 @@
 import { CommandLogModel, SendingLogModel } from "../models";
-import { ICommandLog, ISendingLog } from "../types";
+import { ICommandLog } from "../types/CommandLog";
+import { ISendingLog } from "../types/SendingLog";
 
-export const addCommand = async (log: ICommandLog) => new CommandLogModel(log).save();
+export const commands = {
+  add: async (log: ICommandLog) => new CommandLogModel(log).save(),
+};
 
-export const addSend = async (log: ISendingLog) => new SendingLogModel(log).save();
-export const getSends = async (sendingId: string) => SendingLogModel.find({ sendingId });
+export const sends = {
+  add: async (log: ISendingLog) => new SendingLogModel(log).save(),
+  getManyById: async (sendingId: string) => SendingLogModel.find({ sendingId }),
+  getCount: async (sendingId: string) => SendingLogModel.countDocuments({ sendingId }),
+  getLatest: async (sendingId: string) =>
+    SendingLogModel.findOne({ sendingId }).sort({ createdAt: -1 }),
+};

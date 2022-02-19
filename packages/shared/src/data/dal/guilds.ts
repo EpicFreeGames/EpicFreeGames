@@ -1,5 +1,5 @@
 import { GuildModel } from "../models";
-import { IWebhook } from "../types";
+import { IWebhook } from "../types/Guild";
 
 const selectString = "-_id -__v -createdAt -updatedAt";
 

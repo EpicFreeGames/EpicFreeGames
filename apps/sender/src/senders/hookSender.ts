@@ -65,7 +65,7 @@ export class HookSender {
             }
           }
 
-          db.logs.addSend(log).catch((err) => console.log("log (hook1):", err.message));
+          db.logs.sends.add(log).catch((err) => console.log("log (hook1):", err.message));
 
           console.log(`sent to: ${guild.guildId} (webhook)`);
         })
@@ -81,7 +81,7 @@ export class HookSender {
 
           console.log("hook weird err", err?.message);
 
-          db.logs.addSend(log).catch((err) => console.log("log (hook2):", err.message));
+          db.logs.sends.add(log).catch((err) => console.log("log (hook2):", err.message));
         });
     }
   }

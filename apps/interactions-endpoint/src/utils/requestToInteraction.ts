@@ -218,7 +218,7 @@ export const requestToInteraction = (req: Request): CommandInteraction => {
         respondedIn: end - start,
       };
 
-      db.logs.addCommand(log).catch((err) => console.error(err));
+      db.logs.commands.add(log).catch((err) => console.error(err));
 
       let guild = null;
       if (this.guildId) guild = await db.guilds.get.one(this.guildId);

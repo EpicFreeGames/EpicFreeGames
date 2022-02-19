@@ -1,6 +1,9 @@
 import mongoose from "mongoose";
-import { ICommandLog, ISendingLog, IGame, IGuild } from "./types";
 import { Languages } from "../localisation/languages";
+import { ICommandLog } from "./types/CommandLog";
+import { IGame } from "./types/Game";
+import { GuildDocument } from "./types/Guild";
+import { SendingLogDocument } from "./types/SendingLog";
 
 export const GameModel = mongoose.model<IGame>(
   "game",
@@ -23,9 +26,9 @@ export const GameModel = mongoose.model<IGame>(
   )
 );
 
-export const GuildModel = mongoose.model<IGuild>(
+export const GuildModel = mongoose.model<GuildDocument>(
   "guild",
-  new mongoose.Schema<IGuild>(
+  new mongoose.Schema<GuildDocument>(
     {
       guildId: { type: String, required: true },
       roleId: { type: String, default: null },
@@ -59,9 +62,9 @@ export const CommandLogModel = mongoose.model<ICommandLog>(
   )
 );
 
-export const SendingLogModel = mongoose.model<ISendingLog>(
+export const SendingLogModel = mongoose.model<SendingLogDocument>(
   "sending-log",
-  new mongoose.Schema<ISendingLog>(
+  new mongoose.Schema<SendingLogDocument>(
     {
       guildId: { type: String, required: true },
       sendingId: { type: String, required: true },
