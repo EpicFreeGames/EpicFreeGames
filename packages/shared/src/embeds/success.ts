@@ -1,5 +1,5 @@
 import { MessageEmbed } from "discord.js";
-import { translate, Languages } from "../localisation";
+import { translate, Languages, LanguagesWithFlags } from "../localisation";
 import { utils } from "./utils";
 
 export const channelSet = (channelId: string, language: Languages) =>
@@ -21,7 +21,7 @@ export const roleSet = (roleId: string, language: Languages) =>
 export const languageSet = (language: Languages) =>
   new MessageEmbed({
     title: translate("language_successfully_set_title", language, {
-      language: language,
+      language: LanguagesWithFlags[language],
     }),
     color: "GREEN",
     description: translate("language_successfully_set_description", language),
