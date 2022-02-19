@@ -16,5 +16,5 @@ translations.ts
 dist/
 
 migration
-DATA
+/DATA
 .env.mongo
