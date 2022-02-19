@@ -8,6 +8,8 @@ import {
   SlashCommand,
   SubCommandHandler,
   discordApiRequest,
+  isEnum,
+  Languages,
 } from "shared";
 import { createWebhook, deleteWebhook, executeHook, hasWebhook } from "../utils/webhooks";
 
@@ -18,6 +20,7 @@ export const command: SlashCommand = {
     const subCommand = i.getSubCommand(true);
 
     if (subCommand?.name === "channel") return channelCommand(i, guild, language);
+    if (subCommand?.name === "language") return languageCommand(i, guild, language);
     if (subCommand?.name === "role") return roleCommand(i, guild, language);
   },
 };
@@ -56,6 +59,20 @@ const channelCommand: SubCommandHandler = async (i, guild, language) => {
   await executeHook(newChannelsHook, {
     embeds: embeds.games.games(await db.games.get.free(), language),
   });
+};
+
+const languageCommand: SubCommandHandler = async (i, guild, language) => {
+  const givenLanguage = i.options.getString("language", true) as Languages;
+
+  // can't basically happen but check to be safe
+  if (!isEnum<Languages>(givenLanguage))
+    return i.reply({ content: "Language not supported.", ephemeral: true });
+
+  await db.guilds.set.language(i.guildId!, givenLanguage);
+
+  logger.discord({ embeds: [embeds.logs.languageSet(guild, i, givenLanguage)] });
+
+  await i.reply({ embeds: [embeds.success.languageSet(givenLanguage)], ephemeral: true });
 };
 
 const roleCommand: SubCommandHandler = async (i, guild, language) => {

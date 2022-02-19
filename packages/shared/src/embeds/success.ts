@@ -17,3 +17,12 @@ export const roleSet = (roleId: string, language: Languages) =>
     color: "GREEN",
     description: translate("successfully_set_role_description", language, { role: roleId }),
   });
+
+export const languageSet = (language: Languages) =>
+  new MessageEmbed({
+    title: translate("language_successfully_set_title", language, {
+      language: language,
+    }),
+    color: "GREEN",
+    description: translate("language_successfully_set_description", language),
+  });
