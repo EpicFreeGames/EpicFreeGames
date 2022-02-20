@@ -18,10 +18,10 @@ export const utils = {
 
   relativeTimestamp: (timestamp: number) => `<t:${timestamp}:R>`,
 
-  strike: (text: string) => `~~${text}~~`,
-  bold: (text: string) => `**${text}**`,
-  title: (text: string) => `**__${text}__**`,
+  strike: (text: any) => `~~${text}~~`,
+  bold: (text: any) => `**${text}**`,
+  title: (text: any) => `**__${text}__**`,
 
-  truncate: (text: string, length: number) =>
+  truncate: (text: any, length: number) =>
     text.length > length ? `${text.slice(0, length).trim()}...` : text,
 };
