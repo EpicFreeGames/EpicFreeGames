@@ -93,25 +93,3 @@ export type Variables<
 export type ITranslation = {
   [key in Languages]: string;
 };
-
-export interface ITranslations {
-  footer: ITranslation;
-  clickHere: ITranslation;
-
-  inviteTitle: ITranslation;
-
-  mustVoteTitle: ITranslation;
-  mustVoteDesc: ITranslation;
-  voteTitle: ITranslation;
-
-  languageSetTitle: ITranslation;
-  languageSetDesc: ITranslation;
-
-  roleSetTitle: ITranslation;
-  roleSetDesc: ITranslation;
-
-  channelSetTitle: ITranslation;
-  channelSetDesc: ITranslation;
-
-  manageWebhooks: ITranslation;
-}

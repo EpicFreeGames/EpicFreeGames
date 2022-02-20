@@ -17,8 +17,6 @@ export function translate<P extends Join<PathKeys<Translations>, ".">>(
   let toReturn: string = translation;
 
   for (const variable of Object.keys(vars)) {
-    console.log(vars[variable as keyof Record<Variables<Translations, P, ".">, string>]);
-
     toReturn = toReturn.replace(
       `{${variable}}`,
       vars[variable as keyof Record<Variables<Translations, P, ".">, string>]
