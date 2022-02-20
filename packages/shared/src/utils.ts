@@ -45,6 +45,7 @@ export const timeString = (millis: number) => {
   const minutes = seconds / 60;
   const hours = minutes / 60;
 
+  const millisLeft = Math.floor(millis % 1000);
   const secondsLeft = Math.floor(seconds % 60);
   const minutesLeft = Math.floor(minutes % 60);
   const hoursLeft = Math.floor(hours % 24);
@@ -56,6 +57,7 @@ export const timeString = (millis: number) => {
   if (hoursLeft > 0) time.push(`${hoursLeft}h`);
   if (minutesLeft > 0) time.push(`${minutesLeft}m`);
   if (secondsLeft > 0) time.push(`${secondsLeft}s`);
+  time.push(`${millisLeft}ms`);
 
   return time.join(" ");
 };
