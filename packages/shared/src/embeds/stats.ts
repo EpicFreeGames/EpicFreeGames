@@ -8,13 +8,33 @@ export const stats = (stats: IStats) =>
     title: "Stats",
     color: "#2f3136",
     description:
-      utils.bold("DB Guilds:") + ` ${stats.guildCount}` +
+      utils.title("Main") +
+      "\n" +
+      "DB Guilds: " + utils.bold(stats.guildCount) +
+      "\n" +
+      "Has webhook: " + utils.bold(stats.hasWebhook) +
+      "\n" +
+      "Has only channel: " + utils.bold(stats.hasOnlyChannel) +
+      "\n" +
+      "Has set role: " + utils.bold(stats.hasSetRole) +
+      "\n" +
+      "Has changed language: " + utils.bold(stats.hasChangedLanguage) + 
       "\n\n" +
-      utils.bold("Has webhook:") + ` ${stats.hasWebhook}` +
+
+      utils.title("Commands ran in the...") +
+      "\n" +
+      "Last hour: " + utils.bold(stats.commandsRanIn.lastHour) +
+      "\n" +
+      "Last day: " + utils.bold(stats.commandsRanIn.lastDay) +
+      "\n" +
+      "Last 7 days: " + utils.bold(stats.commandsRanIn.last7days) +
+      "\n" +
+      "Last 30 days: " + utils.bold(stats.commandsRanIn.last30days) +
       "\n\n" +
-      utils.bold("Has only channel:") + ` ${stats.hasOnlyChannel}` +
-      "\n\n" +
-      utils.bold("Has set role:") + ` ${stats.hasSetRole}` +
-      "\n\n" +
-      utils.bold("Has changed language:") + ` ${stats.hasChangedLanguage}`,
-  })
+
+      utils.title("Average commands in...") +
+      "\n" +
+      "An hour: " + utils.bold(stats.avgCommandsIn.anHour) +
+      "\n" +
+      "A day: " + utils.bold(stats.avgCommandsIn.aDay),
+  });

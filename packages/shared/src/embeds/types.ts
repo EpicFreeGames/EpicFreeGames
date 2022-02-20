@@ -18,4 +18,16 @@ export interface IStats {
   hasOnlyChannel: number;
   hasSetRole: number;
   hasChangedLanguage: number;
+
+  commandsRanIn: {
+    lastHour: number;
+    lastDay: number;
+    last7days: number;
+    last30days: number;
+  };
+
+  avgCommandsIn: {
+    anHour: number;
+    aDay: number;
+  };
 }
