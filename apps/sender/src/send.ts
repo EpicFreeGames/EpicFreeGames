@@ -31,6 +31,7 @@ const startSenders = (
 };
 
 const startWatcher = async (target: number, sendingId: string, names: string[]) => {
+  await wait(500); // wait a bit for the senders to start
   let sendCount = await db.logs.sends.getCount(sendingId);
   let speed = 1;
   let msgId: string | undefined = undefined;
@@ -69,7 +70,7 @@ const startWatcher = async (target: number, sendingId: string, names: string[]) 
     }
 
     if (speed !== 0) {
-      await wait(2500);
+      await wait(1500);
       return watcher();
     }
 
