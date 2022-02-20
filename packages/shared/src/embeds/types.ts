@@ -11,3 +11,11 @@ export interface IFinishedSendingStats {
   elapsedTime: string;
   sentCount: number;
 }
+
+export interface IStats {
+  guildCount: number;
+  hasWebhook: number;
+  hasOnlyChannel: number;
+  hasSetRole: number;
+  hasChangedLanguage: number;
+}

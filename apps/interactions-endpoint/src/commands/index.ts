@@ -14,6 +14,7 @@ import { command as remove } from "./remove";
 
 import { command as games } from "./games";
 import { command as send } from "./send";
+import { command as stats } from "./stats";
 
 export const commands: Map<string, SlashCommand> = new Map();
 
@@ -31,3 +32,4 @@ commands.set("remove", remove);
 
 commands.set("games", games);
 commands.set("send", send);
+commands.set("stats", stats);
