@@ -53,6 +53,7 @@ export class HookSender {
           };
 
           if (!err.ok) {
+            log.result.success = false;
             console.log("HOOK NOT SENT", err.status, guild.guildId);
             try {
               const res = await err.json();
