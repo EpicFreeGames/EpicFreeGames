@@ -8,11 +8,11 @@ export const missingPermissions = (channelId: string, language: Languages): Mess
     title: "❌",
     color: "DARK_RED",
     description:
-      translate("no_permission_desc", language, { channelId }) +
+      translate(`missingPermsDesc.${language}`, { channelId }) +
       "\n\n" +
-      utils.bold(`${translate("permission_manage_webhooks", language)}`) +
+      utils.bold(`${translate(`manageWebhooks.${language}`)}`) +
       "\n\n" +
-      translate("click_here", language, { serverAddress: constants.links.serverInvite }),
+      translate(`clickHere.${language}`, { serverAddress: constants.links.serverInvite }),
   });
 
 export const unauthorized = {
@@ -27,7 +27,11 @@ export const unauthorized = {
     new MessageEmbed({
       title: "❌",
       color: "DARK_RED",
-      description: translate("error_manage_guild_title", language) + utils.footer(language),
+      description:
+        translate(`noManageGuild.${language}`) +
+        "\n\n" +
+        translate(`clickHere.${language}`, { serverAddress: constants.links.serverInvite }) +
+        utils.footer(language),
     }),
 };
 
@@ -42,15 +46,15 @@ export const channelNotSet = (language: Languages) =>
   new MessageEmbed({
     title: "❌",
     color: "RED",
-    description: translate("no_channel_set_description", language) + utils.footer(language),
+    description: translate(`noChannelSet.${language}`) + utils.footer(language),
   });
 
 export const mustVote = (language: Languages) =>
   new MessageEmbed({
-    title: translate("need_to_vote_title", language),
+    title: translate(`mustVoteTitle.${language}`),
     color: "RED",
     description:
-      translate("need_to_vote_description", language, { voteAddress: constants.links.vote }) +
+      translate(`mustVoteDesc.${language}`, { voteAddress: constants.links.vote }) +
       utils.footer(language),
   });
 

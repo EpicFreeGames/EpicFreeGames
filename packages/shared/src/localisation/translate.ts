@@ -1,26 +1,32 @@
 import { isEnum } from "../utils";
-import { translations } from "./translations";
-import { Languages } from "./languages";
+import { Languages, Variables, Join, PathKeys } from "./types";
+import { Translations, translations1 } from "./translations";
 import { IGuild } from "../data/types";
 
-const defaultLang = Languages.en;
+export function translate<P extends Join<PathKeys<Translations>, ".">>(
+  paths: P,
+  vars?: Record<Variables<Translations, P, ".">, string>
+) {
+  const key = paths.split(".")[0] as keyof Translations;
+  const language = paths.split(".")[1] as Languages;
 
-export const translate = (key: string, lan: Languages, variables: any = {}) => {
-  const lang = lan || defaultLang;
+  let translation = translations1[key][language];
 
-  const translationsByLanguage = translations[key];
-  if (!translationsByLanguage) return "NO TRANSLATION";
+  if (!vars) return translation;
 
-  let translation = translationsByLanguage[lang];
+  let toReturn: string = translation;
 
-  if (Object.keys(variables).length > 0) {
-    Object.keys(variables).forEach((variable) => {
-      translation = translation.replace(`{${variable}}`, variables[variable]);
-    });
+  for (const variable of Object.keys(vars)) {
+    console.log(vars[variable as keyof Record<Variables<Translations, P, ".">, string>]);
+
+    toReturn = toReturn.replace(
+      `{${variable}}`,
+      vars[variable as keyof Record<Variables<Translations, P, ".">, string>]
+    );
   }
 
-  return translation;
-};
+  return toReturn;
+}
 
 export const getGuildLang = (guild: IGuild) => {
   let language: Languages = Languages.en;

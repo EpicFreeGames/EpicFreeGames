@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { Languages } from "../../localisation/languages";
+import { Languages } from "../../localisation";
 
 export interface IWebhook {
   id: string;

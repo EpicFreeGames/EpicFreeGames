@@ -2,27 +2,32 @@ import { MessageEmbed } from "discord.js";
 import { translate, Languages, LanguagesWithFlags } from "../localisation";
 import { utils } from "./utils";
 
+// prettier-ignore
 export const channelSet = (channelId: string, language: Languages) =>
   new MessageEmbed({
     title: "✅",
     color: "GREEN",
-    description:
-      translate("successfully_set_channel_description", language, { channelId }) +
+    description: 
+      translate(`channelSetDesc.${language}`, { channelId }) + 
       utils.footer(language),
   });
 
-export const roleSet = (roleId: string, language: Languages) =>
+// prettier-ignore
+export const roleSet = (role: string, language: Languages) =>
   new MessageEmbed({
     title: "✅",
     color: "GREEN",
-    description: translate("successfully_set_role_description", language, { role: roleId }),
+    description: 
+      translate(`roleSetDesc.${language}`, { role }) + 
+      utils.footer(language),
   });
 
+// prettier-ignore
 export const languageSet = (language: Languages) =>
   new MessageEmbed({
-    title: translate("language_successfully_set_title", language, {
-      language: LanguagesWithFlags[language],
-    }),
+    title: translate(`languageSetTitle.${language}`, { language: LanguagesWithFlags[language] }),
     color: "GREEN",
-    description: translate("language_successfully_set_description", language),
+    description: 
+      translate(`languageSetDesc.${language}`) + 
+      utils.footer(language),
   });

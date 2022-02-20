@@ -20,10 +20,10 @@ export const games = (games: IGame[], language: Languages, showId: boolean = fal
         url: game.imgUrl,
       },
       description:
-        translate("game_link", language) + "\n" +
-        utils.redirectToBrowser(language, game.slug) +
+        translate(`openIn.${language}`) + "\n" +
+        utils.redirectToBrowser(game.slug) +
         " • " +
-        utils.redirectToLauncher(language, game.slug) +
+        utils.redirectToLauncher(game.slug) +
 
         "\n\n" +
 
@@ -32,7 +32,7 @@ export const games = (games: IGame[], language: Languages, showId: boolean = fal
 
         "\n\n" +
 
-        `💰 ${utils.bold(`${utils.strike(game.price)} -> ${translate("game_free", language)}`)}!` +
+        `💰 ${utils.bold(`${utils.strike(game.price)} -> ${translate(`free.${language}`)}`)}!` +
 
         "\n\n" +
 
@@ -49,14 +49,14 @@ export const games = (games: IGame[], language: Languages, showId: boolean = fal
 
 export const noFreeGames = (language: Languages) =>
   new MessageEmbed({
-    title: translate("no_free_game_message", language),
+    title: translate(`noFreeGames.${language}`),
     color: "DARK_RED",
     description: ":(" + utils.footer(language),
   });
 
 export const noUpcomingGames = (language: Languages) =>
   new MessageEmbed({
-    title: translate("no_upcoming_game_message", language),
+    title: translate(`noUpGames.${language}`),
     color: "DARK_RED",
     description: ":(" + utils.footer(language),
   });

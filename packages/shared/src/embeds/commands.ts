@@ -8,15 +8,15 @@ export const help = (language: Languages) =>
     title: "Help",
     color: "GREEN",
     description:
-      utils.bold(`${translate("commands_title", language)}`) +
+      utils.bold(`${translate(`commands.${language}`)}`) +
       "\n" +
-      translate("help_command_description", language, { link: constants.links.commands }) +
+      translate(`helpDesc.${language}`, { link: constants.links.commands }) +
       utils.footer(language),
   }).setThumbnail(constants.photos.thumbnail);
 
 export const vote = (language: Languages) =>
   new MessageEmbed({
-    title: translate("vote_title", language),
+    title: translate(`voteTitle.${language}`),
     color: "BLUE",
     image: {
       url: constants.gifs.vote,
@@ -26,7 +26,7 @@ export const vote = (language: Languages) =>
 
 export const invite = (language: Languages) =>
   new MessageEmbed({
-    title: translate("invite_title", language),
+    title: translate(`inviteTitle.${language}`),
     color: "BLUE",
     image: {
       url: constants.gifs.invite,
