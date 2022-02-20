@@ -148,7 +148,7 @@ export const requestToInteraction = (req: Request): CommandInteraction => {
         data: {},
       };
 
-      if (options.ephemeral) data.data.flags = MessageFlags.Ephemeral;
+      if (options?.ephemeral) data.data.flags = MessageFlags.Ephemeral;
 
       const res = await axios(
         discordApiRequest(`/interactions/${this.id}/${this.token}/callback`, "POST", data)

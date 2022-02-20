@@ -13,7 +13,7 @@ export interface CommandInteraction {
   options: CommandOptionsResolver;
   reply: (options: ReplyOptions) => Promise<void>;
   followUp: (options: ReplyOptions) => Promise<void>;
-  deferReply: (options: DeferReplyOptions) => Promise<void>;
+  deferReply: (options?: DeferReplyOptions) => Promise<void>;
   editReply: (options: ReplyOptions) => Promise<void>;
   getSubCommand: (required?: boolean | undefined) => CommandOptions | undefined;
   getFullCommandName: () => string;
