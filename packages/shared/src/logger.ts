@@ -1,9 +1,6 @@
-import { WebhookClient, WebhookMessageOptions } from "discord.js";
+import { WebhookMessageOptions } from "discord.js";
 import { config } from "config";
-
-const hook = new WebhookClient({
-  url: config.loggingHookUrl,
-});
+import { executeWebhook } from "./utils";
 
 interface Logger {
   discord: (options: WebhookMessageOptions) => Promise<any>;
@@ -11,10 +8,7 @@ interface Logger {
 }
 
 export const logger: Logger = {
-  discord: async (options: WebhookMessageOptions) => {
-    return hook.send(options);
-  },
-
+  discord: async (options: WebhookMessageOptions) => executeWebhook(config.loggingHookUrl, options),
   console: (msg: string) => {
     const date = new Date();
     const time = `${date.toLocaleDateString()} - ${date.toLocaleTimeString()}`;
