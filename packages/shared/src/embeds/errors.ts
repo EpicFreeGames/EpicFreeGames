@@ -64,3 +64,10 @@ export const genericError = () =>
     color: "RED",
     description: "An error occured. :( Please try again later.",
   });
+
+export const error = (msg: string) =>
+  new MessageEmbed({
+    title: "Error",
+    color: "RED",
+    description: msg,
+  }).setTimestamp();
