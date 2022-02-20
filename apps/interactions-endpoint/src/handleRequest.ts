@@ -1,3 +1,4 @@
+import { config } from "config";
 import { Request, Response } from "express";
 import {
   CommandInteraction,
@@ -40,7 +41,10 @@ export const handleRequests = async (req: Request, res: Response) => {
   try {
     await command.execute(i, dbGuild, language);
   } catch (err: any) {
-    logger.discord({ content: `failed to run ${i.getFullCommandName()} ${err.message}` });
+    logger.discord({
+      content: `<@${config.adminIds[0]}>`,
+      embeds: [embeds.errors.error(`Failed to run \`${i.getFullCommandName()}\`\n${err.message}`)],
+    });
 
     logger.console(`failed to run ${i.getFullCommandName()} ${err.message}`);
   }
