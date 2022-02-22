@@ -54,9 +54,5 @@ services:
     networks:
       - efg
 
-volumes:
-  db-data:
-  db-config:
-
 networks:
   efg:
