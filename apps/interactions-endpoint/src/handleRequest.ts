@@ -36,7 +36,8 @@ export const handleRequests = async (req: Request, res: Response) => {
   if (!i.guildId && command.needsGuild)
     return i.reply({ content: "This command has to be run on a server!" }).catch(() => null);
 
-  if (!isAuthorized(i, command)) return handleMissingPermissions(i, command, language);
+  if (!isAuthorized(i, command))
+    return handleMissingPermissions(i, command, language).catch(() => null);
 
   try {
     await command.execute(i, dbGuild, language);
@@ -51,17 +52,17 @@ export const handleRequests = async (req: Request, res: Response) => {
 };
 
 const handleMissingPermissions = async (
-  interaction: CommandInteraction,
+  i: CommandInteraction,
   command: SlashCommand,
   language: Languages
 ) => {
   if (command.type !== CommandTypes.ADMIN)
-    return await interaction.reply({
+    return i.reply({
       embeds: [embeds.errors.unauthorized.manageGuildCommand(language)],
       ephemeral: true,
     });
 
-  await interaction.reply({
+  return i.reply({
     embeds: [embeds.errors.unauthorized.adminOnlyCommand(language)],
     ephemeral: true,
   });
