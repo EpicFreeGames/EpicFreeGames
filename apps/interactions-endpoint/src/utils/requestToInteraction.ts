@@ -225,7 +225,7 @@ export const requestToInteraction = (req: Request): CommandInteraction => {
 
       logger
         .discord({ embeds: [embeds.logs.command(guild, log, !!!this.guildId)] })
-        .catch((err: any) => console.error(err));
+        .catch((err: any) => console.error(err.message));
 
       logger.console(`${commandName} executed in ${log.respondedIn}ms`);
     },

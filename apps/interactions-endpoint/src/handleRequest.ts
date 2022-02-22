@@ -42,10 +42,11 @@ export const handleRequests = async (req: Request, res: Response) => {
   try {
     await command.execute(i, dbGuild, language);
   } catch (err: any) {
+    // prettier-ignore
     logger.discord({
       content: `<@${config.adminIds[0]}>`,
       embeds: [embeds.errors.error(`Failed to run \`${i.getFullCommandName()}\`\n${err.message}`)],
-    });
+    }).catch((err: any) => console.error(err.message));
 
     logger.console(`failed to run ${i.getFullCommandName()} ${err.message}`);
   }
