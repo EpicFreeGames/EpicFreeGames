@@ -4,10 +4,10 @@
   "type": "module",
   "scripts": {
     "private-build": "rm -rf dist && ./node_modules/.bin/tsc -p ./tsconfig.json",
-    "predepl": "yarn private-build",
-    "predepl-g": "yarn private-build",
-    "depl": "node --experimental-specifier-resolution=node ./dist/index.js",
-    "depl-g": "node --experimental-specifier-resolution=node ./dist/index.js -g"
+    "prereg": "yarn private-build",
+    "prereg-g": "yarn private-build",
+    "reg": "node --experimental-specifier-resolution=node ./dist/index.js",
+    "reg-g": "node --experimental-specifier-resolution=node ./dist/index.js -g"
   },
   "dependencies": {
     "axios": "^0.26.0",

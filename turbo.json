@@ -7,10 +7,10 @@
     "dev": {
       "dependsOn": ["build"]
     },
-    "depl": {
+    "reg": {
       "dependsOn": ["build"]
     },
-    "depl-g": {
+    "reg-g": {
       "dependsOn": ["build"]
     },
     "clean": {
