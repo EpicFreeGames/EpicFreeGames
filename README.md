@@ -1,16 +1,16 @@
-##### This is a monorepo for a Discord bot focused around free games.
+#### This is a monorepo for a Discord bot focused around free games.
 
-#### Data
+### Data
 
 All data is stored in a [MongoDB](https://www.mongodb.com/) database. The games are saved there by a scraper which is closed source. Schemas can be found [here](packages/shared/src/data/models.ts).
 
-#### Packages
+### Packages
 
 - [config](packages/config) contains all the configuration for the bot.
 - [shared](packages/shared) contains all the shared types, schemas, data access, utils, embeds etc.
 - [tsconfig](packages/tsconfig) contains a base tsconfig from which all the other tsconfigs inherit from.
 
-#### Apps
+### Apps
 
 (interactions = commands)
 
