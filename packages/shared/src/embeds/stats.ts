@@ -8,7 +8,7 @@ export const stats = (stats: IStats) =>
     title: "Stats",
     color: "#2f3136",
     description:
-      utils.title("Main") +
+      utils.title("Database") +
       "\n" +
       "DB Guilds: " + utils.bold(stats.guildCount) +
       "\n" +
