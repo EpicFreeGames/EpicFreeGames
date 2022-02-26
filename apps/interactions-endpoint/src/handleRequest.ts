@@ -19,7 +19,7 @@ export const handleRequests = async (req: Request, res: Response) => {
   const body = req.body;
   if (!body) return;
 
-  const i = requestToInteraction(req);
+  const i = requestToInteraction(req, res);
 
   const command = commands.get(i.command.name);
   if (!command) return;

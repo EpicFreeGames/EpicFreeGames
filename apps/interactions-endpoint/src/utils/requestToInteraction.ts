@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Request } from "express";
+import { Request, Response } from "express";
 import {
   ApplicationCommandOptionType,
   InteractionResponseType,
@@ -18,7 +18,7 @@ import {
 } from "shared";
 import { config } from "config";
 
-export const requestToInteraction = (req: Request): CommandInteraction => {
+export const requestToInteraction = (req: Request, res: Response): CommandInteraction => {
   const body = req.body;
   const start = Date.now();
 
@@ -136,11 +136,7 @@ export const requestToInteraction = (req: Request): CommandInteraction => {
       if (options.components?.length) data.data.components = options.components;
       if (options.ephemeral) data.data.flags = MessageFlags.Ephemeral;
 
-      const res = await axios(
-        discordApiRequest(`/interactions/${this.id}/${this.token}/callback`, "POST", data)
-      );
-
-      return res.data;
+      res.status(200).json(data);
     },
     async deferReply(options) {
       const data: any = {
@@ -150,11 +146,7 @@ export const requestToInteraction = (req: Request): CommandInteraction => {
 
       if (options?.ephemeral) data.data.flags = MessageFlags.Ephemeral;
 
-      const res = await axios(
-        discordApiRequest(`/interactions/${this.id}/${this.token}/callback`, "POST", data)
-      );
-
-      return res.data;
+      res.status(200).json(data);
     },
     async followUp(options) {
       this.onFinish();
