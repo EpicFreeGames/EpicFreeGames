@@ -16,7 +16,8 @@
     "devup": "docker-compose -p dev up -d --build",
     "devdown": "docker-compose -p dev down",
     "produp": "docker-compose -p prod up -d --build",
-    "proddown": "docker-compose -p prod down"
+    "proddown": "docker-compose -p prod down",
+    "onlydb": "docker-compose -p dev up -d efg-db --build"
   },
   "devDependencies": {
     "turbo": "^1.1.2"
