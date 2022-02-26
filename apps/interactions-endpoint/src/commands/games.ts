@@ -4,6 +4,9 @@ export const command: SlashCommand = {
   type: CommandTypes.ADMIN,
   execute: async (i, guild, language) => {
     const games = await db.games.get.all();
+
+    if (!games.length) return i.reply({ content: "No games found." });
+
     const gameEmbeds = embeds.games.games(games, language, true);
 
     return i.reply({ embeds: gameEmbeds, ephemeral: true });
