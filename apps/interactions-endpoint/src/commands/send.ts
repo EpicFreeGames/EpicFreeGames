@@ -5,6 +5,14 @@ import { CommandTypes, embeds, SlashCommand } from "shared";
 export const command: SlashCommand = {
   type: CommandTypes.ADMIN,
   execute: async (i, guild, language) => {
+    if (i.user.id !== config.adminIds[0])
+      return i.reply({
+        embeds: [
+          embeds.generic("Not allowed", "You are not allowed to use `/send`, sorry", "DARK_RED"),
+        ],
+        ephemeral: true,
+      });
+
     await i.deferReply({ ephemeral: true });
 
     let gameIds = i.options.getString("game_ids", true);
