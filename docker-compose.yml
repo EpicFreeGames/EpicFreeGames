@@ -20,7 +20,7 @@ services:
     depends_on:
       - efg-db
     build: .
-    image: endpoint
+    image: efg-endpoint
     entrypoint:
       ["yarn", "dev", "--scope=interactions-endpoint", "--include-dependencies", "--no-deps"]
     deploy:
@@ -34,8 +34,20 @@ services:
       - efg-db
       - efg-endpoint
     build: .
-    image: sender
+    image: efg-sender
     entrypoint: ["yarn", "dev", "--scope=sender", "--include-dependencies", "--no-deps"]
+    restart: unless-stopped
+    networks:
+      - efg
+
+  efg-client:
+    depends_on:
+      - efg-db
+      - efg-sender
+      - efg-endpoint
+    build: .
+    image: efg-client
+    entrypoint: ["yarn", "dev", "--scope=discordjs-client", "--include-dependencies", "--no-deps"]
     restart: unless-stopped
     networks:
       - efg

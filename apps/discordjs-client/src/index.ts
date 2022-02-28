@@ -1,13 +1,16 @@
 import Cluster from "discord-hybrid-sharding";
 import path, { dirname } from "path";
 import { logger } from "shared";
+import { config } from "config";
 import { fileURLToPath } from "url";
 
 const manager = new Cluster.Manager(
   path.resolve(process.cwd(), dirname(fileURLToPath(import.meta.url)), "./bot.js"),
   {
+    token: config.botToken,
     shardsPerClusters: 10,
-    mode: "worker",
+    mode: "process",
+    execArgv: ["--experimental-specifier-resolution=node"],
     keepAlive: {
       interval: 2000,
       maxMissedHeartbeats: 5,
