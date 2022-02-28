@@ -2,6 +2,8 @@ import mongoose from "mongoose";
 import { IGame, GuildDocument, ICommandLog, SendingLogDocument } from "./types";
 import { Languages } from "../localisation";
 
+export const rightMongo = mongoose;
+
 export const GameModel = mongoose.model<IGame>(
   "game",
   new mongoose.Schema<IGame>({
