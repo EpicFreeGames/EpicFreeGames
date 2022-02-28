@@ -32,7 +32,7 @@ export const updatePresence = async (c: IClient) => {
   c.cluster?.broadcastEval(
     (c: any, { timeUntilNext }) => {
       c.user?.setPresence({
-        activities: [{ name: `/help ${timeUntilNext ? `| ${timeUntilNext}`: ""}`, type: "WATCHING" }],
+        activities: [{ name: `/help ${timeUntilNext ? `| ${timeUntilNext} until the next free game!`: ""}`, type: "WATCHING" }],
         status: "online",
       });
     },

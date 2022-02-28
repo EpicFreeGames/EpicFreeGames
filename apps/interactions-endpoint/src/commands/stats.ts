@@ -1,5 +1,6 @@
 import { db, embeds, IStats } from "shared";
 import { CommandTypes, SlashCommand } from "shared";
+import { getGuildCount } from "../utils/guildCount";
 
 export const command: SlashCommand = {
   type: CommandTypes.ADMIN,
@@ -14,7 +15,8 @@ export const command: SlashCommand = {
     };
 
     const stats: IStats = {
-      guildCount: await db.guilds.get.count(),
+      guildCount: await getGuildCount().catch((_) => null),
+      dbGuildCount: await db.guilds.get.count(),
       hasWebhook: await db.guilds.get.counts.hasWebhook(),
       hasOnlyChannel: await db.guilds.get.counts.hasOnlySetChannel(),
       hasSetRole: await db.guilds.get.counts.hasSetRole(),

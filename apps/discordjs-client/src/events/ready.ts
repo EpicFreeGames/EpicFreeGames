@@ -1,5 +1,6 @@
 import { config } from "config";
 import { logger, rightMongo } from "shared";
+import { expressServer } from "../express";
 import { IClient, IEvent } from "../types";
 import { getGuildCount, statsToTopGG, updatePresence } from "../utils";
 
@@ -13,6 +14,8 @@ export const event: IEvent = {
 
     await rightMongo.connect(config.mongoUrl);
     console.log("Connected to database");
+
+    expressServer(client);
 
     const guildCount = await getGuildCount(client);
 

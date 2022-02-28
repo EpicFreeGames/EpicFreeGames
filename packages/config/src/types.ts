@@ -3,11 +3,13 @@ export interface IConfig {
 
   interactionsPort: number;
   senderPort: number;
+  clientPort: number;
 
   loggingHookUrl: string;
   senderHookUrl: string;
 
   senderUrl: string;
+  clientUrl: string;
 
   botId: string;
   botToken: string;
