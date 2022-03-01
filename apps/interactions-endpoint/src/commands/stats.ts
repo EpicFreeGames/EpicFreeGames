@@ -1,11 +1,16 @@
-import { db, embeds, IStats } from "shared";
+import { db, embeds, IStats, TopTenGuild } from "shared";
 import { CommandTypes, SlashCommand } from "shared";
-import { getGuildCount } from "../utils/guildCount";
+import { getStatsFromClient } from "../utils/stats";
 
 export const command: SlashCommand = {
   type: CommandTypes.ADMIN,
   execute: async (i, guild, language) => {
     await i.deferReply();
+
+    const clientStats = await getStatsFromClient().catch(() => ({
+      guildCount: null,
+      topTenGuilds: null,
+    }));
 
     const commandsRanIn = {
       lastHour: await db.logs.commands.get.lastHour(),
@@ -15,7 +20,7 @@ export const command: SlashCommand = {
     };
 
     const stats: IStats = {
-      guildCount: await getGuildCount().catch((_) => null),
+      guildCount: clientStats.guildCount,
       dbGuildCount: await db.guilds.get.count(),
       hasWebhook: await db.guilds.get.counts.hasWebhook(),
       hasOnlyChannel: await db.guilds.get.counts.hasOnlySetChannel(),
@@ -30,8 +35,31 @@ export const command: SlashCommand = {
       },
     };
 
+    const embedToSend = [embeds.stats(stats)];
+
+    if (clientStats.topTenGuilds) {
+      const resolvedGuilds: TopTenGuild[] = [];
+      for (const guild of clientStats.topTenGuilds) {
+        const dbInfo = await db.guilds.get.one(guild.id);
+
+        resolvedGuilds.push({
+          ...guild,
+          dbInfo,
+        });
+      }
+
+      embedToSend.push(embeds.topTenGuilds(resolvedGuilds));
+    } else {
+      embedToSend.push(
+        embeds.generic(
+          "Everything is not yet available",
+          "More stats will become available once the client has spawned all of it's shards."
+        )
+      );
+    }
+
     return i.editReply({
-      embeds: [embeds.stats(stats)],
+      embeds: embedToSend,
     });
   },
 };

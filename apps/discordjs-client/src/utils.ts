@@ -56,3 +56,20 @@ export const statsToTopGG = async (guildCount: number) => {
     throw new Error("Failed to post stats to top.gg");
   }
 };
+
+export const getTopTenGuilds = async (client: IClient) => {
+  const guilds = await client.cluster.broadcastEval((c: IClient) => {
+    return c.guilds.cache.map((guild) => ({
+      id: guild.id,
+      name: guild.name,
+      memberCount: guild.memberCount,
+    }));
+  });
+
+  if (!Array.isArray(guilds) || !guilds.length) return [];
+
+  return guilds
+    .flat()
+    .sort((a, b) => b.memberCount - a.memberCount)
+    .slice(0, 10);
+};

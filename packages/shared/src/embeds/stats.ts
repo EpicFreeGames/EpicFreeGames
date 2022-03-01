@@ -1,5 +1,6 @@
 import { MessageEmbed } from "discord.js";
-import { IStats } from "./types";
+import { LanguagesWithFlags } from "../localisation";
+import { IStats, TopTenGuild } from "../types/stats";
 import { utils } from "./utils";
 
 // prettier-ignore
@@ -42,3 +43,38 @@ export const stats = (stats: IStats) =>
       "\n" +
       "A day: " + utils.bold(stats.avgCommandsIn.aDay),
   });
+
+// prettier-ignore
+export const topTenGuilds = (guilds: TopTenGuild[]) => {
+  const embed = new MessageEmbed({
+    title: "Top 10 guilds",
+    color: "#2f3136",
+    description: "",
+  });
+
+  for (const [index, guild] of guilds.entries()) {
+    embed.description += utils.title(`${index + 1}. ${utils.bold(guild.name)}`) +
+    "\n" +
+    "Member count: " + utils.bold(guild.memberCount) +
+    "\n" +
+    "ID: " + utils.bold(guild.id)
+
+    if (guild.dbInfo) {
+      embed.description +=
+      "\n" +
+      `Language: ${LanguagesWithFlags[guild.dbInfo.language]}` +
+      "\n" +
+      `Role ID: ${guild.dbInfo.roleId ? guild.dbInfo.roleId : "❌"}` +
+      "\n" +
+      `Channel ID: ${guild.dbInfo.channelId ? guild.dbInfo.channelId : "❌"}` +
+      "\n" +
+      `Webhook: ${guild.dbInfo.webhook ? "✅" : "❌"}`;
+    } else {
+      embed.description += "\n" + utils.bold("Not found in database");
+    }
+
+    embed.description += "\n\n";
+  }
+
+  return embed;
+};
