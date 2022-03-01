@@ -1,5 +1,5 @@
 import { MessageEmbed } from "discord.js";
-import { ISendingStats, IFinishedSendingStats } from "./types";
+import { ISendingStats, IFinishedSendingStats } from "../types/stats";
 
 // prettier-ignore
 export const started = (names: string[]) =>

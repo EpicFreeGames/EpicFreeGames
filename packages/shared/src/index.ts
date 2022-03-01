@@ -8,7 +8,7 @@ export * from "./localisation";
 
 export * as db from "./data/dal";
 export * as embeds from "./embeds";
-export * from "./embeds/types";
 
 export * from "./logger";
 export * from "./utils";
+export * from "./types";

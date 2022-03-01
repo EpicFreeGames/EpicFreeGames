@@ -1,3 +1,5 @@
+import { IGuild } from "..";
+
 export interface ISendingStats {
   speed: number;
   sent: number;
@@ -13,7 +15,7 @@ export interface IFinishedSendingStats {
 }
 
 export interface IStats {
-  guildCount: number;
+  guildCount: number | null;
   dbGuildCount: number;
   hasWebhook: number;
   hasOnlyChannel: number;
@@ -31,4 +33,17 @@ export interface IStats {
     anHour: number;
     aDay: number;
   };
+}
+
+export interface TopTenGuild {
+  id: string;
+  name: string;
+  memberCount: number;
+  owner: string;
+  dbInfo: IGuild | null;
+}
+
+export interface StatsResponse {
+  guildCount: number;
+  topTenGuilds: TopTenGuild[];
 }
