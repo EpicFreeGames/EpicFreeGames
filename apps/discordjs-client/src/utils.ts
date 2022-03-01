@@ -45,7 +45,7 @@ export const statsToTopGG = async (guildCount: number) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: config.topGGToken,
+      Authorization: config.topGGAuth,
     },
     body: JSON.stringify({
       server_count: guildCount,
