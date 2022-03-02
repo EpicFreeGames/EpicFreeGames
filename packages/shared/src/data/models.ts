@@ -61,6 +61,7 @@ export const SendingLogModel = mongoose.model<SendingLogDocument>(
     {
       guildId: { type: String, required: true },
       sendingId: { type: String, required: true },
+      type: { type: String, required: true },
       result: {
         success: { type: Boolean, required: true },
         reason: { type: String, default: null },
