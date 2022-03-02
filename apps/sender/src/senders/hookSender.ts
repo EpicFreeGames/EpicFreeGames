@@ -1,3 +1,4 @@
+import axios, { AxiosInstance } from "axios";
 import {
   db,
   discordApiBaseUrl,
@@ -8,7 +9,6 @@ import {
   ISendingLog,
   wait,
 } from "shared";
-import fetch from "node-fetch";
 import { getDataToSend } from "../utils";
 
 export class HookSender {
@@ -17,10 +17,19 @@ export class HookSender {
 
   sendingId: string;
 
+  axios: AxiosInstance;
+
   constructor(guilds: IGuild[], games: IGame[], sendingId: string) {
     this.guilds = guilds;
     this.games = games;
     this.sendingId = sendingId;
+
+    this.axios = axios.create({
+      baseURL: `${discordApiBaseUrl}/webhooks`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   }
 
   async start() {
@@ -35,54 +44,64 @@ export class HookSender {
         continue;
       }
 
-      fetch(`${discordApiBaseUrl}/webhooks/${guild.webhook.id}/${guild.webhook.token}`, {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-type": "application/json",
-        },
-      })
-        .then(async (err: any) => {
+      this.axios
+        .post(`/${guild.webhook.id}/${guild.webhook.token}`, data)
+        .then((_) => {
           const log: ISendingLog = {
             guildId: guild.guildId,
             sendingId: this.sendingId,
+            type: "webhook",
             result: {
               success: true,
-              reason: err.status.toString(),
+              reason: null,
             },
           };
 
-          if (!err.ok) {
-            log.result.success = false;
-            console.log("HOOK NOT SENT", err.status, guild.guildId);
-            try {
-              const res = await err.json();
-              if (res?.code) {
-                log.result.reason = res.code;
-                db.guilds.remove.webhook(guild.guildId).catch(() => null);
-              }
-            } catch (err: any) {
-              console.log("convert to json failed: ", err?.message);
-            }
-          }
+          console.log(`sent to ${guild.guildId} (webhook)`);
 
-          db.logs.sends.add(log).catch((err) => console.log("log (hook1):", err.message));
-
-          console.log(`sent to: ${guild.guildId} (webhook)`);
+          db.logs.sends.add(log).catch((err) => console.log("log (webhook1):", err.message));
         })
         .catch((err: any) => {
           const log: ISendingLog = {
             guildId: guild.guildId,
             sendingId: this.sendingId,
+            type: "webhook",
             result: {
               success: false,
-              reason: err?.message,
+              reason: null,
             },
           };
 
-          console.log("hook weird err", err?.message);
+          if (!err?.response) {
+            log.result.reason = "no response";
+            console.log("(HOOK) NOT SENT", log.result.reason, guild.guildId);
+            db.logs.sends.add(log).catch((err) => console.log("log (webhook2):", err.message));
 
-          db.logs.sends.add(log).catch((err) => console.log("log (hook2):", err.message));
+            return;
+          }
+
+          if (err?.response?.data?.code) {
+            log.result.reason = err?.response?.data?.code;
+            console.log("(HOOK) NOT SENT", log.result.reason, guild.guildId);
+            db.guilds.remove.webhook(guild.guildId).catch(() => null);
+            db.logs.sends.add(log).catch((err) => console.log("log (webhook2):", err.message));
+
+            return;
+          }
+
+          if (err?.response?.status) {
+            log.result.reason = err?.response?.status;
+            console.log("(HOOK) NOT SENT", log.result.reason, guild.guildId);
+            if (err.response.status === 429) return console.log("RATELIMIT");
+
+            db.logs.sends.add(log).catch((err) => console.log("log (webhook3):", err.message));
+
+            return;
+          }
+
+          log.result.reason = "hmm";
+          console.log("(HOOK) NOT SENT", log.result.reason, guild.guildId);
+          db.logs.sends.add(log).catch((err) => console.log("log (webhook4):", err.message));
         });
     }
   }
