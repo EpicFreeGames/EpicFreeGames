@@ -42,6 +42,7 @@ export class ChannelSender {
           const log: ISendingLog = {
             guildId: guild.guildId,
             sendingId: this.sendingId,
+            type: "channel",
             result: {
               success: true,
               reason: null,
@@ -56,6 +57,7 @@ export class ChannelSender {
           const log: ISendingLog = {
             guildId: guild.guildId,
             sendingId: this.sendingId,
+            type: "channel",
             result: {
               success: false,
               reason: "",
