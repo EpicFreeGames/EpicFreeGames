@@ -55,7 +55,10 @@ export const timeString = (millis: number, short: boolean = false) => {
 
   if (days > 0) time.push(`${days}d`);
   if (hoursLeft > 0) time.push(`${hoursLeft}h`);
-  if (minutesLeft > 0) time.push(`${minutesLeft}m`);
+  if (minutesLeft > 0) {
+    if (short) time.push(`${minutesLeft + 1}m`);
+    else time.push(`${minutesLeft}m`);
+  }
   if (secondsLeft > 0 && !short) time.push(`${secondsLeft}s`);
   if (millisLeft > 0 && !short) time.push(`${millisLeft}ms`);
 
