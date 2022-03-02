@@ -43,7 +43,7 @@ export const send = async (req: Request, res: Response) => {
   let hookGuilds = await db.guilds.get.hasWebhook();
 
   if (!createdNewId) {
-    const sent = await db.logs.sends.getManyById(sendingId);
+    const sent = await db.logs.sends.getSuccesses(sendingId);
 
     if (sent) {
       // filter out guilds that have already received the message

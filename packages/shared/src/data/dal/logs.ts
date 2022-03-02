@@ -15,7 +15,7 @@ export const commands = {
 
 export const sends = {
   add: async (log: ISendingLog) => new SendingLogModel(log).save(),
-  getManyById: async (sendingId: string) => SendingLogModel.find({ sendingId }),
+  getSuccesses: async (sendingId: string) => SendingLogModel.find({ sendingId, success: true }),
   getCount: async (sendingId: string) => SendingLogModel.countDocuments({ sendingId }),
   getLatest: async (sendingId: string) =>
     SendingLogModel.findOne({ sendingId }).sort({ createdAt: -1 }),
