@@ -3,11 +3,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "private-build": "rm -rf dist && ./node_modules/.bin/tsc -p ./tsconfig.json",
-    "prereg": "yarn private-build",
-    "prereg-g": "yarn private-build",
+    "prereg": "yarn rm -rf dist && ./node_modules/.bin/tsc -p ./tsconfig.json",
+    "prereg-g": "yarn rm -rf dist && ./node_modules/.bin/tsc -p ./tsconfig.json",
     "reg": "node --experimental-specifier-resolution=node ./dist/index.js",
-    "reg-g": "node --experimental-specifier-resolution=node ./dist/index.js -g"
+    "reg-g": "node --experimental-specifier-resolution=node ./dist/index.js -g",
+    "clean": "rm -rf node_modules && rm -rf .turbo && rm -rf dist"
   },
   "dependencies": {
     "axios": "^0.26.0",
