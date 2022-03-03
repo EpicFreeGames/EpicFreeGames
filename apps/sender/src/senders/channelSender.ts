@@ -43,14 +43,14 @@ export class ChannelSender {
       await wait(30);
 
       this.limitedAxios(discordApiRequest(`/channels/${guild.channelId}/messages`, "POST", data))
-        .then((_) => {
+        .then((res) => {
           const log: ISendingLog = {
             guildId: guild.guildId,
             sendingId: this.sendingId,
             type: "channel",
             result: {
               success: true,
-              reason: null,
+              reason: res?.status?.toString(),
             },
           };
 

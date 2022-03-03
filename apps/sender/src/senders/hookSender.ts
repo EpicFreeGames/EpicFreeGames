@@ -42,7 +42,7 @@ export class HookSender {
       );
       const data = getDataToSend(guild, gameEmbeds);
 
-      await wait(5);
+      await wait(4);
 
       if (!guild.webhook) {
         console.log("no webhook", guild);
@@ -51,14 +51,14 @@ export class HookSender {
 
       this.axios
         .post(`/${guild.webhook.id}/${guild.webhook.token}`, data)
-        .then((_) => {
+        .then((res) => {
           const log: ISendingLog = {
             guildId: guild.guildId,
             sendingId: this.sendingId,
             type: "webhook",
             result: {
               success: true,
-              reason: null,
+              reason: res?.status?.toString(),
             },
           };
 
