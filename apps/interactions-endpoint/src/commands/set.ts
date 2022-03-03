@@ -10,6 +10,7 @@ import {
   discordApiRequest,
   isEnum,
   Languages,
+  Currencies,
 } from "shared";
 import { createWebhook, deleteWebhook, executeHook, hasWebhook } from "../utils/webhooks";
 
@@ -22,6 +23,7 @@ export const command: SlashCommand = {
     if (subCommand?.name === "channel") return channelCommand(i, guild, language);
     if (subCommand?.name === "language") return languageCommand(i, guild, language);
     if (subCommand?.name === "role") return roleCommand(i, guild, language);
+    if (subCommand?.name === "currency") return currencyCommand(i, guild, language);
   },
 };
 
@@ -73,6 +75,22 @@ const languageCommand: SubCommandHandler = async (i, guild, language) => {
   logger.discord({ embeds: [embeds.logs.languageSet(guild, i, givenLanguage)] });
 
   await i.reply({ embeds: [embeds.success.languageSet(givenLanguage)], ephemeral: true });
+};
+
+const currencyCommand: SubCommandHandler = async (i, guild, language) => {
+  const givenCurrency = i.options.getString("currency", true) as Currencies;
+
+  // can't basically happen but check to be safe
+  if (!isEnum<Currencies>(givenCurrency))
+    return i.reply({
+      embeds: [embeds.generic("Not supported", "That currency is not supported!", "DARK_RED")],
+    });
+
+  await db.guilds.set.currency(i.guildId!, givenCurrency);
+
+  logger.discord({ embeds: [embeds.logs.currencySet(guild, i, givenCurrency)] });
+
+  i.reply({ content: "✅", ephemeral: true });
 };
 
 const roleCommand: SubCommandHandler = async (i, guild, language) => {

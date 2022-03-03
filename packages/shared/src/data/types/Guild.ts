@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { Languages } from "../../localisation";
+import { Languages, Currencies } from "../../localisation";
 
 export interface IWebhook {
   id: string;
@@ -11,6 +11,7 @@ export interface IGuild {
   roleId: string | null;
   channelId: string | null;
   language: Languages;
+  currency: Currencies;
   webhook: IWebhook | null;
   createdAt: Date;
   updatedAt: Date;

@@ -30,6 +30,12 @@ export enum Currencies {
   EUR = "EUR",
 }
 
+export const CurrenciesWithDesc = {
+  USD: "$ Dollar (USD)",
+  CAD: "$ Canadian dollar (CAD)",
+  EUR: "€ Euro (EUR)",
+};
+
 export const LanguagesWithFlags = {
   en: "English 🇬🇧",
   de: "Deutsch 🇩🇪",

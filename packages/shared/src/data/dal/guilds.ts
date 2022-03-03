@@ -1,3 +1,4 @@
+import { Currencies, Languages } from "../../localisation";
 import { GuildModel } from "../models";
 import { IWebhook } from "../types/Guild";
 
@@ -25,6 +26,7 @@ export const get = {
     hasOnlySetChannel: async () =>
       GuildModel.find({ channelId: { $ne: null }, webhook: null }).countDocuments(),
     hasChangedLanguage: async () => GuildModel.find({ language: { $ne: "en" } }).countDocuments(),
+    hasChangedCurrency: async () => GuildModel.find({ currency: { $ne: "USD" } }).countDocuments(),
 
     hasNoWebhook: async () => GuildModel.find({ webhook: null }).countDocuments(),
   },
@@ -43,8 +45,11 @@ export const set = {
       selectString
     ),
 
-  language: async (guildId: string, language: string) =>
+  language: async (guildId: string, language: Languages) =>
     GuildModel.updateOne({ guildId }, { guildId, language }, { upsert: true }),
+
+  currency: async (guildId: string, currency: Currencies) =>
+    GuildModel.updateOne({ guildId }, { guildId, currency }, { upsert: true }),
 };
 
 export const remove = {

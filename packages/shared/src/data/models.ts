@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { IGame, GuildDocument, ICommandLog, SendingLogDocument } from "./types";
-import { Languages } from "../localisation";
+import { Languages, Currencies } from "../localisation";
 
 export const rightMongo = mongoose;
 
@@ -27,6 +27,7 @@ export const GuildModel = mongoose.model<GuildDocument>(
     roleId: { type: String, default: null },
     channelId: { type: String, default: null },
     language: { type: String, default: Languages.en },
+    currency: { type: String, default: Currencies.USD },
     webhook: {
       type: {
         id: String,
