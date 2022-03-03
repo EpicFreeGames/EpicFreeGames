@@ -1,5 +1,5 @@
 import { isEnum } from "../utils";
-import { Languages, Variables, Join, PathKeys } from "./types";
+import { Languages, Variables, Join, PathKeys, Currencies } from "./types";
 import { Translations, translations1 } from "./translations";
 import { IGuild } from "../data/types";
 
@@ -34,4 +34,14 @@ export const getGuildLang = (guild: IGuild) => {
   if (isEnum<Languages>(guild.language)) language = guild.language;
 
   return language;
+};
+
+export const getGuildCurrency = (guild: IGuild) => {
+  let currency: Currencies = Currencies.USD;
+
+  if (guild && guild.currency) currency = Currencies[guild.currency as keyof typeof Currencies];
+
+  if (isEnum<Currencies>(guild.currency)) currency = guild.currency;
+
+  return currency;
 };
