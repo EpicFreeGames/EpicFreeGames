@@ -16,5 +16,7 @@ translations.ts
 dist/
 
 migration
+scrapers
+
 /DATA
 .env.mongo
