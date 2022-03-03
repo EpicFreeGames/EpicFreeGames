@@ -7,7 +7,6 @@ export const get = {
 
   free: async (start: number = Date.now()) =>
     GameModel.find({
-      confirmed: true,
       start: { $lte: start },
       end: { $gt: start },
     }).select(selectString),

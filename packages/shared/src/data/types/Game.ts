@@ -1,17 +1,13 @@
 import { Currencies } from "../..";
 
 export interface IGame {
-  _id: string;
+  _id?: string;
   name: string;
   imageUrl: string;
-  start: number;
-  end: number;
+  slug: string;
+  start: Date;
+  end: Date;
   price: {
     [key in Currencies]: string;
   };
-  store: {
-    name: string;
-    url: string;
-  };
-  slug: string;
 }

@@ -16,9 +16,9 @@ export const getTimeToClosestGame = async () => {
 
   if (!games.length) return null;
 
-  games = games.sort((a, b) => a.start - b.start);
+  games = games.sort((a, b) => a.start.getTime() - b.start.getTime());
 
-  const ms = games[0].start;
+  const ms = games[0].start.getTime();
 
   return timeString(ms - Date.now(), true);
 };

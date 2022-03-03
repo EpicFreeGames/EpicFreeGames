@@ -9,15 +9,15 @@ export const games = (games: IGame[], language: Languages, showId: boolean = fal
   let embeds: MessageEmbed[] = [];
 
   for (const game of games) {
-    const start = Math.floor(game.start / 1000);
-    const end = Math.floor(game.end / 1000);
+    const start = game.start.getTime() / 1000;
+    const end = game.end.getTime() / 1000;
 
     // prettier-ignore
     const embed = new MessageEmbed({
       title: utils.truncate(game.name, 31),
       color: "#2f3136",
       image: {
-        url: game.imgUrl,
+        url: game.imageUrl,
       },
       description:
         translate(`openIn.${language}`) + "\n" +
