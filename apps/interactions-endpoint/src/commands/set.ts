@@ -17,17 +17,17 @@ import { createWebhook, deleteWebhook, executeHook, hasWebhook } from "../utils/
 export const command: SlashCommand = {
   type: CommandTypes.MANAGE_GUILD,
   needsGuild: true,
-  execute: async (i, guild, language) => {
+  execute: async (i, guild, language, currency) => {
     const subCommand = i.getSubCommand(true);
 
-    if (subCommand?.name === "channel") return channelCommand(i, guild, language);
-    if (subCommand?.name === "language") return languageCommand(i, guild, language);
-    if (subCommand?.name === "role") return roleCommand(i, guild, language);
-    if (subCommand?.name === "currency") return currencyCommand(i, guild, language);
+    if (subCommand?.name === "channel") return channelCommand(i, guild, language, currency);
+    if (subCommand?.name === "language") return languageCommand(i, guild, language, currency);
+    if (subCommand?.name === "role") return roleCommand(i, guild, language, currency);
+    if (subCommand?.name === "currency") return currencyCommand(i, guild, language, currency);
   },
 };
 
-const channelCommand: SubCommandHandler = async (i, guild, language) => {
+const channelCommand: SubCommandHandler = async (i, guild, language, currency) => {
   await i.deferReply({ ephemeral: true });
   const channelId = i.options.getChannelId("channel", true);
 
@@ -59,11 +59,11 @@ const channelCommand: SubCommandHandler = async (i, guild, language) => {
 
   // send current free games to the newly set channel
   await executeHook(newChannelsHook, {
-    embeds: embeds.games.games(await db.games.get.free(), language),
+    embeds: embeds.games.games(await db.games.get.free(), language, currency),
   });
 };
 
-const languageCommand: SubCommandHandler = async (i, guild, language) => {
+const languageCommand: SubCommandHandler = async (i, guild, language, currency) => {
   const givenLanguage = i.options.getString("language", true) as Languages;
 
   // can't basically happen but check to be safe
@@ -77,7 +77,7 @@ const languageCommand: SubCommandHandler = async (i, guild, language) => {
   await i.reply({ embeds: [embeds.success.languageSet(givenLanguage)], ephemeral: true });
 };
 
-const currencyCommand: SubCommandHandler = async (i, guild, language) => {
+const currencyCommand: SubCommandHandler = async (i, guild, language, currency) => {
   const givenCurrency = i.options.getString("currency", true) as Currencies;
 
   // can't basically happen but check to be safe
@@ -93,7 +93,7 @@ const currencyCommand: SubCommandHandler = async (i, guild, language) => {
   i.reply({ content: "✅", ephemeral: true });
 };
 
-const roleCommand: SubCommandHandler = async (i, guild, language) => {
+const roleCommand: SubCommandHandler = async (i, guild, language, currency) => {
   await i.deferReply({ ephemeral: true });
 
   if (!guild || !guild?.channelId)

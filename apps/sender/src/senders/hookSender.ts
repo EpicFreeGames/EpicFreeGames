@@ -8,6 +8,7 @@ import {
   IGuild,
   ISendingLog,
   wait,
+  getGuildCurrency,
 } from "shared";
 import { getDataToSend } from "../utils";
 
@@ -34,7 +35,11 @@ export class HookSender {
 
   async start() {
     for (const guild of this.guilds) {
-      const gameEmbeds = embeds.games.games(this.games, getGuildLang(guild));
+      const gameEmbeds = embeds.games.games(
+        this.games,
+        getGuildLang(guild),
+        getGuildCurrency(guild)
+      );
       const data = getDataToSend(guild, gameEmbeds);
 
       await wait(5);

@@ -1,6 +1,6 @@
 import { ApplicationCommandData, MessageActionRow, MessageEmbed } from "discord.js";
 import { IGuild } from "../data/types";
-import { Languages } from "../localisation";
+import { Languages, Currencies } from "../localisation";
 
 export interface CommandInteraction {
   guildId: string | null;
@@ -23,7 +23,12 @@ export interface CommandInteraction {
 export interface SlashCommand {
   type: CommandTypes;
   needsGuild?: boolean;
-  execute: (i: CommandInteraction, guild: IGuild | null, language: Languages) => Promise<any>;
+  execute: (
+    i: CommandInteraction,
+    guild: IGuild | null,
+    language: Languages,
+    currency: Currencies
+  ) => Promise<any>;
 }
 
 export interface Command {
@@ -74,7 +79,8 @@ export enum CommandTypes {
 export type SubCommandHandler = (
   i: CommandInteraction,
   guild: IGuild | null,
-  language: Languages
+  language: Languages,
+  currency: Currencies
 ) => Promise<any>;
 
 export interface RawCommand {

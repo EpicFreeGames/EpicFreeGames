@@ -4,7 +4,7 @@ import { getStatsFromClient } from "../utils/stats";
 
 export const command: SlashCommand = {
   type: CommandTypes.ADMIN,
-  execute: async (i, guild, language) => {
+  execute: async (i, guild, language, currency) => {
     await i.deferReply();
 
     const clientStats = await getStatsFromClient().catch(() => ({

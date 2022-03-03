@@ -4,7 +4,7 @@ import { CommandTypes, embeds, SlashCommand } from "shared";
 
 export const command: SlashCommand = {
   type: CommandTypes.ADMIN,
-  execute: async (i, guild, language) => {
+  execute: async (i, guild, language, currency) => {
     if (i.user.id !== config.adminIds[0])
       return i.reply({
         embeds: [

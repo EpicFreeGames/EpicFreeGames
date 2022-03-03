@@ -1,9 +1,14 @@
 import { IGame } from "../data/types/Game";
-import { Languages, translate } from "../localisation";
+import { Languages, Currencies, translate } from "../localisation";
 import { MessageEmbed } from "discord.js";
 import { utils } from "./utils";
 
-export const games = (games: IGame[], language: Languages, showId: boolean = false) => {
+export const games = (
+  games: IGame[],
+  language: Languages,
+  currency: Currencies,
+  showId: boolean = false
+) => {
   const now = Date.now() / 1000;
 
   let embeds: MessageEmbed[] = [];
@@ -32,7 +37,7 @@ export const games = (games: IGame[], language: Languages, showId: boolean = fal
 
         "\n\n" +
 
-        `💰 ${utils.bold(`${utils.strike(game.price)} -> ${translate(`free.${language}`)}`)}!` +
+        `💰 ${utils.bold(`${utils.strike(game.price[currency])} -> ${translate(`free.${language}`)}`)}!` +
 
         "\n\n" +
 

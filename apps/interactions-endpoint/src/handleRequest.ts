@@ -3,9 +3,11 @@ import { Request, Response } from "express";
 import {
   CommandInteraction,
   CommandTypes,
+  Currencies,
   db,
   embeds,
   getGuildLang,
+  getGuildCurrency,
   Languages,
   logger,
   SlashCommand,
@@ -25,12 +27,16 @@ export const handleRequests = async (req: Request, res: Response) => {
   if (!command) return;
 
   let language = Languages.en;
+  let currency = Currencies.USD;
   let dbGuild = null;
 
   if (i.guildId) {
     dbGuild = await db.guilds.get.one(i.guildId);
 
-    if (dbGuild) language = getGuildLang(dbGuild);
+    if (dbGuild) {
+      language = getGuildLang(dbGuild);
+      currency = getGuildCurrency(dbGuild);
+    }
   }
 
   if (!i.guildId && command.needsGuild)
@@ -40,7 +46,7 @@ export const handleRequests = async (req: Request, res: Response) => {
     return handleMissingPermissions(i, command, language).catch(() => null);
 
   try {
-    await command.execute(i, dbGuild, language);
+    await command.execute(i, dbGuild, language, currency);
   } catch (err: any) {
     // prettier-ignore
     logger.discord({
