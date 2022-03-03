@@ -76,6 +76,7 @@ export type SubCommandHandler = (
   guild: IGuild | null,
   language: Languages
 ) => Promise<any>;
+
 export interface RawCommand {
   type: CommandTypes;
   data: ApplicationCommandData;
