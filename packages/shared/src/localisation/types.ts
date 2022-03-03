@@ -36,6 +36,32 @@ export const CurrenciesWithDesc = {
   EUR: "€ Euro (EUR)",
 };
 
+export const CurrencyData: ICurrencyData = {
+  USD: {
+    apiValue: "US",
+    inFrontOfPrice: "$",
+    afterPrice: "",
+  },
+  CAD: {
+    apiValue: "CA",
+    inFrontOfPrice: "CA$",
+    afterPrice: "",
+  },
+  EUR: {
+    apiValue: "DE",
+    inFrontOfPrice: "",
+    afterPrice: " €",
+  },
+};
+
+type ICurrencyData = {
+  [key in Currencies]: {
+    apiValue: string;
+    inFrontOfPrice: string;
+    afterPrice: string;
+  };
+};
+
 export const LanguagesWithFlags = {
   en: "English 🇬🇧",
   de: "Deutsch 🇩🇪",
