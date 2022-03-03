@@ -32,6 +32,7 @@ export const get = {
   },
 };
 
+// prettier-ignore
 export const set = {
   webhook: (guildId: string, webhook: IWebhook | null, channelId: string) =>
     GuildModel.findOneAndUpdate(
@@ -41,15 +42,19 @@ export const set = {
     ).select(selectString),
 
   role: async (guildId: string, roleId: string) =>
-    GuildModel.findOneAndUpdate({ guildId }, { guildId, roleId }, { new: true }).select(
-      selectString
-    ),
+    GuildModel
+      .findOneAndUpdate({ guildId }, { guildId, roleId }, { new: true })
+      .select(selectString),
 
   language: async (guildId: string, language: Languages) =>
-    GuildModel.updateOne({ guildId }, { guildId, language }, { upsert: true }),
+    GuildModel
+      .findOneAndUpdate({ guildId }, { guildId, language }, { upsert: true, new: true })
+      .select(selectString),
 
   currency: async (guildId: string, currency: Currencies) =>
-    GuildModel.updateOne({ guildId }, { guildId, currency }, { upsert: true }),
+    GuildModel
+      .findOneAndUpdate({ guildId }, { guildId, currency }, { upsert: true, new: true })
+      .select(selectString),
 };
 
 export const remove = {
