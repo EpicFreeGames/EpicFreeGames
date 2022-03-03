@@ -24,6 +24,12 @@ export enum Languages {
   bg = "bg",
 }
 
+export enum Currencies {
+  USD = "USD",
+  CAD = "CAD",
+  EUR = "EUR",
+}
+
 export const LanguagesWithFlags = {
   en: "English 🇬🇧",
   de: "Deutsch 🇩🇪",

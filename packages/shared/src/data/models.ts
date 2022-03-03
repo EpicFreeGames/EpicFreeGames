@@ -8,12 +8,14 @@ export const GameModel = mongoose.model<IGame>(
   "game",
   new mongoose.Schema<IGame>({
     name: { type: String, required: true, unique: true },
-    imgUrl: { type: String, required: true },
+    imageUrl: { type: String, required: true },
     start: { type: Number, required: true },
     end: { type: Number, required: true },
-    sent: { type: Boolean, required: true },
-    confirmed: { type: Boolean, required: true },
-    price: { type: String, required: true },
+    price: {
+      USD: { type: String, required: true },
+      CAD: { type: String, required: true },
+      EUR: { type: String, required: true },
+    },
     store: {
       name: { type: String, required: true },
       url: { type: String, required: true },
