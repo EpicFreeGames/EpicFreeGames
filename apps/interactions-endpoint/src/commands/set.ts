@@ -54,7 +54,6 @@ const channelCommand: SubCommandHandler = async (i, guild, language, currency) =
   const updatedGuild = await db.guilds.set.webhook(i.guildId!, newChannelsHook, channelId);
 
   logger.discord({ embeds: [embeds.logs.channelSet(updatedGuild, i, channelId)] });
-
   await i.editReply({ embeds: [embeds.success.channelSet(channelId, language)] });
 
   // send current free games to the newly set channel
@@ -70,11 +69,10 @@ const languageCommand: SubCommandHandler = async (i, guild, language, currency) 
   if (!isEnum<Languages>(givenLanguage))
     return i.reply({ content: "Language not supported.", ephemeral: true });
 
-  await db.guilds.set.language(i.guildId!, givenLanguage);
+  const updatedGuild = await db.guilds.set.language(i.guildId!, givenLanguage);
 
-  logger.discord({ embeds: [embeds.logs.languageSet(guild, i, givenLanguage)] });
-
-  await i.reply({ embeds: [embeds.success.languageSet(givenLanguage)], ephemeral: true });
+  logger.discord({ embeds: [embeds.logs.languageSet(updatedGuild, i, givenLanguage)] });
+  return i.reply({ embeds: [embeds.success.languageSet(givenLanguage)], ephemeral: true });
 };
 
 const currencyCommand: SubCommandHandler = async (i, guild, language, currency) => {
@@ -86,11 +84,10 @@ const currencyCommand: SubCommandHandler = async (i, guild, language, currency) 
       embeds: [embeds.generic("Not supported", "That currency is not supported!", "DARK_RED")],
     });
 
-  await db.guilds.set.currency(i.guildId!, givenCurrency);
+  const updatedGuild = await db.guilds.set.currency(i.guildId!, givenCurrency);
 
-  logger.discord({ embeds: [embeds.logs.currencySet(guild, i, givenCurrency)] });
-
-  i.reply({ content: "✅", ephemeral: true });
+  logger.discord({ embeds: [embeds.logs.currencySet(updatedGuild, i, givenCurrency)] });
+  return i.reply({ content: "✅", ephemeral: true });
 };
 
 const roleCommand: SubCommandHandler = async (i, guild, language, currency) => {
@@ -110,7 +107,7 @@ const roleCommand: SubCommandHandler = async (i, guild, language, currency) => {
   const updatedGuild = await db.guilds.set.role(i.guildId!, useful.toDb);
 
   logger.discord({ embeds: [embeds.logs.roleSet(updatedGuild, i, useful.embed)] });
-  await i.editReply({ embeds: [embeds.success.roleSet(useful.embed, language)], ephemeral: true });
+  return i.editReply({ embeds: [embeds.success.roleSet(useful.embed, language)], ephemeral: true });
 };
 
 const makeSenseOfRole = (role: any) => {
