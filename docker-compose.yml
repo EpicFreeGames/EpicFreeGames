@@ -52,6 +52,19 @@ services:
     networks:
       - efg
 
+  efg-scrapers:
+    depends_on:
+      - efg-db
+      - efg-sender
+      - efg-endpoint
+      - efg-client
+    build: .
+    image: efg-scrapers
+    entrypoint: ["yarn", "dev", "--scope=scrapers", "--include-dependencies", "--no-deps"]
+    restart: unless-stopped
+    networks:
+      - efg
+
   efg-loadbalancer:
     depends_on:
       - efg-db
