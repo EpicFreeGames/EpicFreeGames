@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "prereg": "yarn rm -rf dist && ./node_modules/.bin/tsc -p ./tsconfig.json",
-    "prereg-g": "yarn rm -rf dist && ./node_modules/.bin/tsc -p ./tsconfig.json",
+    "prereg": "rm -rf dist && ./node_modules/.bin/tsc -p ./tsconfig.json",
+    "prereg-g": "rm -rf dist && ./node_modules/.bin/tsc -p ./tsconfig.json",
     "reg": "node --experimental-specifier-resolution=node ./dist/index.js",
     "reg-g": "node --experimental-specifier-resolution=node ./dist/index.js -g",
     "clean": "rm -rf node_modules && rm -rf .turbo && rm -rf dist"
