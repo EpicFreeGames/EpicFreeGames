@@ -12,7 +12,7 @@ export const utils = {
     }),
 
   redirectToLauncher: (slug: string) =>
-    `[Epic Games Launcher](${constants.links.launcherRedirect}${slug})`,
+    `[Epic Launcher](${constants.links.launcherRedirect}${slug})`,
 
   redirectToBrowser: (slug: string) => `[Epicgames.com](${constants.links.browserRedirect}${slug})`,
 
