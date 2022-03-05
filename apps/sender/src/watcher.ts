@@ -1,7 +1,6 @@
 import {
   embeds,
   db,
-  timeString,
   executeWebhook,
   editWebhookMsg,
   deleteWebhookMsg,
@@ -10,11 +9,12 @@ import {
   wait,
 } from "shared";
 import { config } from "config";
+import moment from "moment";
 
-const calculateEta = (target: number, msgPerSec: number) => (target / msgPerSec) * 1000;
+const calculateEta = (target: number, msgPerSec: number) => target / msgPerSec;
 
 export const startWatcher = async (target: number, sendingId: string, names: string[]) => {
-  await wait(500); // wait a bit for the senders to start
+  await wait(1000); // wait a bit for the senders to start
   let sendCount = await db.logs.sends.getCount(sendingId);
   let speed = 1;
   let msgId: string | undefined = undefined;
@@ -30,12 +30,19 @@ export const startWatcher = async (target: number, sendingId: string, names: str
     latestSentCountCheck = Date.now();
     sendCount = newSendCount;
 
+    const dur = moment.duration(moment().diff(moment(start)));
+    // prettier-ignore
+    const elapsedTimeString = `${dur.hours() ? `${dur.hours()}h ` : ""}${dur.minutes()}m ${dur.seconds()}s`;
+
     const stats: ISendingStats = {
       speed: Math.floor(speed),
       sent: newSendCount,
       target,
-      elapsedTime: timeString(Date.now() - start),
-      eta: timeString(calculateEta(target - newSendCount, speed)),
+      elapsedTime: elapsedTimeString,
+      // prettier-ignore
+      eta: moment
+        .duration(moment(moment().add(calculateEta(target - newSendCount, speed), "s")).diff(moment()))
+        .humanize(),
     };
 
     if (!msgId) {
@@ -60,10 +67,14 @@ export const startWatcher = async (target: number, sendingId: string, names: str
     const latestLog = await db.logs.sends.getLatest(sendingId);
     const finishedAt = latestLog ? latestLog.createdAt : new Date();
 
+    const timeTaken = moment.duration(moment(finishedAt).diff(start));
+    // prettier-ignore
+    const timeTakenString = `${timeTaken.hours() ? `${timeTaken.hours()}h ` : ""}${timeTaken.minutes()}m ${timeTaken.seconds()}s`;
+
     // sending done
     const finishedStats: IFinishedSendingStats = {
       averageSpeed: Math.floor((newSendCount / (finishedAt.getTime() - start)) * 1000),
-      elapsedTime: timeString(finishedAt.getTime() - start),
+      elapsedTime: timeTakenString,
       sentCount: newSendCount,
     };
 

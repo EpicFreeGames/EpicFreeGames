@@ -19,7 +19,9 @@ export const getTimeToClosestGame = async () => {
 
   games = games.sort((a, b) => a.start.getTime() - b.start.getTime());
 
-  const dur = moment.duration(moment().diff(moment())).humanize();
+  const start = games[0]?.start || new Date();
+
+  const dur = moment.duration(moment(start).diff(moment())).humanize();
 
   return dur;
 };
