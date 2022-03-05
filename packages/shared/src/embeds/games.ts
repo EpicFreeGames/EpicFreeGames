@@ -41,7 +41,8 @@ export const games = (
 
         "\n\n" +
 
-        (showId ? `🆔 ${game._id}` : "") +
+        (showId ? `🆔 ${game._id}\n\n` : "") +
+        (showId ? `Confirmed: ${game.confirmed ? "✅" : "❌"}` : "") +
 
         utils.footer(language),
     });

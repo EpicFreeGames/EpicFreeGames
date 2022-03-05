@@ -37,7 +37,7 @@ export const send = async (req: Request, res: Response) => {
   }
 
   const games = await db.games.get.byIds(gameIds);
-  if (!games) return res.status(400).send("No games found");
+  if (!games.length) return res.status(400).send("No confirmed games found");
 
   let noHookGuilds = await db.guilds.get.hasOnlySetChannel();
   let hookGuilds = await db.guilds.get.hasWebhook();
