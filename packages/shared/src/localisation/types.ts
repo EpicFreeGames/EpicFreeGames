@@ -30,12 +30,6 @@ export enum Currencies {
   EUR = "EUR",
 }
 
-export const CurrenciesWithDesc = {
-  USD: "$ Dollar (USD)",
-  CAD: "$ Canadian dollar (CAD)",
-  EUR: "€ Euro (EUR)",
-};
-
 export const CurrencyData: ICurrencyData = {
   USD: {
     apiValue: "US",

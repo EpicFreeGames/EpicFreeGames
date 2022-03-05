@@ -1,5 +1,5 @@
 import { ApplicationCommandOptionTypes, ChannelTypes } from "discord.js/typings/enums";
-import { CommandTypes, LanguagesWithFlags, RawCommand, CurrenciesWithDesc } from "shared";
+import { CommandTypes, LanguagesWithFlags, RawCommand, CurrencyData } from "shared";
 
 export const slashCommands: RawCommand[] = [
   {
@@ -62,8 +62,8 @@ export const slashCommands: RawCommand[] = [
               name: "language",
               description: "The language",
               required: true,
-              choices: Object.entries(LanguagesWithFlags).map(([value, name]) => {
-                return { name, value };
+              choices: Object.entries(LanguagesWithFlags).map(([key, value]) => {
+                return { name: value, value: key };
               }),
             },
           ],
@@ -78,8 +78,8 @@ export const slashCommands: RawCommand[] = [
               name: "currency",
               description: "The currency",
               required: true,
-              choices: Object.entries(CurrenciesWithDesc).map(([value, name]) => {
-                return { name, value };
+              choices: Object.entries(CurrencyData).map(([key, value]) => {
+                return { name: value.name, value: key };
               }),
             },
           ],
