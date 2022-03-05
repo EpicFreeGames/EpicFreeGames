@@ -26,5 +26,5 @@ const confirmCommand: SubCommandHandler = async (i, guild, language, currency) =
 
   await db.games.confirm(idArray);
 
-  return i.reply({ content: "✅" });
+  return i.reply({ content: "✅", ephemeral: true });
 };
