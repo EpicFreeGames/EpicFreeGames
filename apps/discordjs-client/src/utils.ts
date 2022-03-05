@@ -1,7 +1,8 @@
-import { db, timeString, logger } from "shared";
+import { db, logger } from "shared";
 import fetch from "node-fetch";
 import { IClient } from "./types";
 import { config } from "config";
+import moment from "moment";
 
 export const getGuildCount = async (c: IClient) => {
   const res = await c.cluster.broadcastEval((c: any) => {
@@ -18,9 +19,9 @@ export const getTimeToClosestGame = async () => {
 
   games = games.sort((a, b) => a.start.getTime() - b.start.getTime());
 
-  const ms = games[0].start.getTime();
+  const dur = moment.duration(moment().diff(moment())).humanize();
 
-  return timeString(ms - Date.now(), true);
+  return dur;
 };
 
 export const updatePresence = async (c: IClient) => {

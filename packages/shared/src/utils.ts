@@ -39,29 +39,3 @@ export const editWebhookMsg = (msgId: string, webhookUrl: string, options: Webho
 
 export const deleteWebhookMsg = (msgId: string, webhookUrl: string) =>
   axios.delete(`${webhookUrl}/messages/${msgId}`);
-
-export const timeString = (millis: number, short: boolean = false) => {
-  const seconds = millis / 1000;
-  const minutes = seconds / 60;
-  const hours = minutes / 60;
-
-  const millisLeft = Math.floor(millis % 1000);
-  const secondsLeft = Math.floor(seconds % 60);
-  const minutesLeft = Math.floor(minutes % 60);
-  const hoursLeft = Math.floor(hours % 24);
-  const days = Math.floor(hours / 24);
-
-  const time = [];
-
-  if (days > 0) time.push(`${days}d`);
-  if (hoursLeft > 0) time.push(`${hoursLeft}h`);
-  if (minutesLeft > 0) {
-    if (short) {
-      if (minutesLeft != 59) time.push(`${minutesLeft + 1}m`);
-    } else time.push(`${minutesLeft}m`);
-  }
-  if (secondsLeft > 0 && !short) time.push(`${secondsLeft}s`);
-  if (millisLeft > 0 && !short) time.push(`${millisLeft}ms`);
-
-  return time.join(" ");
-};
