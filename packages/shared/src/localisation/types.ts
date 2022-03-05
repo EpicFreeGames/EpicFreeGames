@@ -41,16 +41,19 @@ export const CurrencyData: ICurrencyData = {
     apiValue: "US",
     inFrontOfPrice: "$",
     afterPrice: "",
+    name: "$ Dollar (USD)",
   },
   CAD: {
     apiValue: "CA",
     inFrontOfPrice: "CA$",
     afterPrice: "",
+    name: "$ Canadian dollar (CAD)",
   },
   EUR: {
     apiValue: "DE",
     inFrontOfPrice: "",
     afterPrice: " €",
+    name: "€ Euro (EUR)",
   },
 };
 
@@ -59,6 +62,7 @@ type ICurrencyData = {
     apiValue: string;
     inFrontOfPrice: string;
     afterPrice: string;
+    name: string;
   };
 };
 

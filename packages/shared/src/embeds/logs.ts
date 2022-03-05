@@ -1,5 +1,5 @@
 import { MessageEmbed } from "discord.js";
-import { Languages, LanguagesWithFlags, Currencies } from "../localisation";
+import { Languages, LanguagesWithFlags, Currencies, CurrencyData } from "../localisation";
 import { IGuild, ICommandLog } from "../data/types";
 import { CommandInteraction } from "../interactions/types";
 import { utils } from "./utils";
@@ -10,6 +10,8 @@ const addDbInfo = (guild: IGuild, embed: MessageEmbed) => {
     utils.title("DB Info") +
     "\n" +
     `Language: ${LanguagesWithFlags[guild.language]}` +
+    "\n" +
+    `Currency: ${CurrencyData[guild.currency].name}` +
     "\n" +
     `Role ID: ${guild.roleId ? guild.roleId : "❌"}` +
     "\n" +
@@ -111,7 +113,7 @@ export const currencySet = (guild: IGuild | null, i: CommandInteraction, currenc
       "\n" +
       `Guild ID: ${i.guildId}` +
       "\n" +
-      `Set currency: ${currency}`,
+      `Set currency: ${CurrencyData[currency].name}`,
   }).setTimestamp();
 
   if (guild) addDbInfo(guild, embed);
