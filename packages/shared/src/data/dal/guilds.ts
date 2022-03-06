@@ -16,7 +16,6 @@ export const get = {
   hasOnlySetChannel: async () =>
     GuildModel.find({ channelId: { $ne: null }, webhook: null }).select(selectString),
 
-  hasNoWebhook: async () => GuildModel.find({ webhook: null }).select(selectString),
   hasNotSetRole: async () => GuildModel.find({ roleId: null }).select(selectString),
 
   count: async () => GuildModel.countDocuments(),
@@ -27,8 +26,6 @@ export const get = {
       GuildModel.find({ channelId: { $ne: null }, webhook: null }).countDocuments(),
     hasChangedLanguage: async () => GuildModel.find({ language: { $ne: "en" } }).countDocuments(),
     hasChangedCurrency: async () => GuildModel.find({ currency: { $ne: "USD" } }).countDocuments(),
-
-    hasNoWebhook: async () => GuildModel.find({ webhook: null }).countDocuments(),
   },
 };
 
