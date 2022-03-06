@@ -11,6 +11,7 @@ import { command as invite } from "./invite";
 
 import { command as set } from "./set";
 import { command as remove } from "./remove";
+import { command as settings } from "./settings";
 
 import { command as games } from "./games";
 import { command as send } from "./send";
@@ -29,6 +30,7 @@ commands.set("invite", invite);
 
 commands.set("set", set);
 commands.set("remove", remove);
+commands.set("settings", settings);
 
 commands.set("games", games);
 commands.set("send", send);

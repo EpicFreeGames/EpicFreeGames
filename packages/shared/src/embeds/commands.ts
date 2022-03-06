@@ -1,7 +1,8 @@
 import { MessageEmbed } from "discord.js";
-import { Languages, translate } from "../localisation";
+import { CurrencyData, Languages, LanguagesWithFlags, translate } from "../localisation";
 import { constants } from "config";
 import { utils } from "./utils";
+import { IGuild } from "../data/types";
 
 export const help = (language: Languages) =>
   new MessageEmbed({
@@ -39,4 +40,19 @@ export const debug = (guildId: string) =>
     title: "Debug info",
     color: "BLUE",
     description: utils.bold(`Guild ID: ${guildId}`),
+  });
+
+// prettier-ignore
+export const settings = (guild: IGuild | null,  language: Languages) =>
+  new MessageEmbed({
+    title: "Settings",
+    color: "#2f3136",
+    description:
+      utils.bold(`Channel: `) + (guild?.channelId ? `<#${guild?.channelId}>` : "Not set, you can set a channel with `/set channel`") +
+      "\n\n" +
+      utils.bold(`Role: `) + (guild?.roleId ? `<@&${guild?.roleId}>` : "Not set, you can set a role with `/set role`") +
+      "\n\n" +
+      utils.bold(`Language: `) + (guild?.language ? `${LanguagesWithFlags[guild.language]}` : LanguagesWithFlags[Languages.en]) +
+      "\n\n" +
+      utils.bold(`Currency: `) + (guild?.currency ? `${CurrencyData[guild.currency].name}` : CurrencyData["USD"].name)
   });

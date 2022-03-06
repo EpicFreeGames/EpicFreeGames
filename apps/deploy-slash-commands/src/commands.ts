@@ -196,4 +196,12 @@ export const slashCommands: RawCommand[] = [
       ],
     },
   },
+
+  {
+    type: CommandTypes.MANAGE_GUILD,
+    data: {
+      name: "settings",
+      description: "Use this to get my settings on this server",
+    },
+  },
 ];
