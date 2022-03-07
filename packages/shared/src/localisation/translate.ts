@@ -1,6 +1,6 @@
 import { isEnum } from "../utils";
 import { Languages, Variables, Join, PathKeys, Currencies } from "./types";
-import { Translations, translations1 } from "./translations";
+import { Translations, translations } from "./translations";
 import { IGuild } from "../data/types";
 
 export function translate<P extends Join<PathKeys<Translations>, ".">>(
@@ -10,7 +10,7 @@ export function translate<P extends Join<PathKeys<Translations>, ".">>(
   const key = paths.split(".")[0] as keyof Translations;
   const language = paths.split(".")[1] as Languages;
 
-  let translation = translations1[key][language];
+  let translation = translations[key][language];
 
   if (!vars) return translation;
 
@@ -29,7 +29,7 @@ export function translate<P extends Join<PathKeys<Translations>, ".">>(
 export const getGuildLang = (guild: IGuild) => {
   let language: Languages = Languages.en;
 
-  if (guild && guild.language) language = Languages[guild.language as keyof typeof Languages];
+  if (guild && guild.language) language = Languages[guild.language];
 
   if (isEnum<Languages>(guild.language)) language = guild.language;
 
@@ -39,7 +39,7 @@ export const getGuildLang = (guild: IGuild) => {
 export const getGuildCurrency = (guild: IGuild) => {
   let currency: Currencies = Currencies.USD;
 
-  if (guild && guild.currency) currency = Currencies[guild.currency as keyof typeof Currencies];
+  if (guild && guild.currency) currency = Currencies[guild.currency];
 
   if (isEnum<Currencies>(guild.currency)) currency = guild.currency;
 
