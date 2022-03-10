@@ -50,7 +50,7 @@ export const settings = (guild: IGuild | null,  language: Languages) =>
     description:
       utils.bold(`Channel: `) + (guild?.channelId ? `<#${guild?.channelId}>` : "Not set, you can set a channel with `/set channel`") +
       "\n\n" +
-      utils.bold(`Role: `) + (guild?.roleId ? `<@&${guild?.roleId}>` : "Not set, you can set a role with `/set role`") +
+      utils.bold(`Role: `) + (guild?.roleId ? guild.roleId === "1" ? "@everyone" : `<@&${guild?.roleId}>` : "Not set, you can set a role with `/set role`") +
       "\n\n" +
       utils.bold(`Language: `) + (guild?.language ? `${LanguagesWithFlags[guild.language]}` : LanguagesWithFlags[Languages.en]) +
       "\n\n" +
