@@ -1,6 +1,6 @@
 import { MessageEmbed } from "discord.js";
 import { LanguagesWithFlags } from "../localisation";
-import { IStats, TopTenGuild } from "../types/stats";
+import { IStats, TopTenGuild, ICommandsRanIn } from "../types/stats";
 import { utils } from "./utils";
 
 // prettier-ignore
@@ -23,18 +23,23 @@ export const stats = (stats: IStats) =>
       "\n" +
       "Has set role: " + utils.bold(stats.hasSetRole) +
       "\n" +
-      "Has changed language: " + utils.bold(stats.hasChangedLanguage) + 
-      "\n\n" +
+      "Has changed language: " + utils.bold(stats.hasChangedLanguage),
+  });
 
+// prettier-ignore
+export const commandsRanIn = (stats: ICommandsRanIn) => new MessageEmbed({
+    title: "Command stats",
+    color: "#2f3136",
+    description:
       utils.title("Commands ran in the...") +
       "\n" +
-      "Last hour: " + utils.bold(stats.commandsRanIn.lastHour) +
+      "Last hour: " + utils.bold(stats.lastHour) +
       "\n" +
-      "Last day: " + utils.bold(stats.commandsRanIn.lastDay) +
+      "Last day: " + utils.bold(stats.lastDay) +
       "\n" +
-      "Last 7 days: " + utils.bold(stats.commandsRanIn.last7days) +
+      "Last 7 days: " + utils.bold(stats.last7days) +
       "\n" +
-      "Last 30 days: " + utils.bold(stats.commandsRanIn.last30days) +
+      "Last 30 days: " + utils.bold(stats.last30days) +
       "\n\n" +
 
       utils.title("Average commands in...") +

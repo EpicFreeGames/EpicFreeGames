@@ -1,5 +1,15 @@
-import { db, embeds, IStats, TopTenGuild } from "shared";
-import { CommandTypes, SlashCommand } from "shared";
+import { MessageEmbed } from "discord.js";
+import {
+  CommandInteraction,
+  db,
+  embeds,
+  IStats,
+  StatsResponse,
+  TopTenGuild,
+  ICommandsRanIn,
+  CommandTypes,
+  SlashCommand,
+} from "shared";
 import { getStatsFromClient } from "../utils/stats";
 
 export const command: SlashCommand = {
@@ -7,59 +17,73 @@ export const command: SlashCommand = {
   execute: async (i, guild, language, currency) => {
     await i.deferReply();
 
-    const clientStats = await getStatsFromClient().catch(() => ({
-      guildCount: null,
-      topTenGuilds: null,
-    }));
+    const subCommand = i.getSubCommand(true);
 
-    const commandsRanIn = {
-      lastHour: await db.logs.commands.get.lastHour(),
-      lastDay: await db.logs.commands.get.lastDay(),
-      last7days: await db.logs.commands.get.last7days(),
-      last30days: await db.logs.commands.get.last30days(),
-    };
+    const clientStats = await getStatsFromClient().catch(() => {
+      return {
+        guildCount: null,
+        topTenGuilds: null,
+      };
+    });
 
-    const stats: IStats = {
-      guildCount: clientStats.guildCount,
-      dbGuildCount: await db.guilds.get.count(),
-      hasWebhook: await db.guilds.get.counts.hasWebhook(),
-      hasOnlyChannel: await db.guilds.get.counts.hasOnlySetChannel(),
-      hasSetRole: await db.guilds.get.counts.hasSetRole(),
-      hasChangedLanguage: await db.guilds.get.counts.hasChangedLanguage(),
+    if (subCommand?.name === "basic") return basicHandler(i, clientStats);
+    if (subCommand?.name === "commands") return commandStatsHandler(i, clientStats);
+    if (subCommand?.name === "top10") return topTenGuildsHandler(i, clientStats);
+  },
+};
 
-      commandsRanIn,
+const basicHandler = async (i: CommandInteraction, clientStats: StatsResponse) => {
+  const stats: IStats = {
+    guildCount: clientStats.guildCount,
+    dbGuildCount: await db.guilds.get.count(),
+    hasWebhook: await db.guilds.get.counts.hasWebhook(),
+    hasOnlyChannel: await db.guilds.get.counts.hasOnlySetChannel(),
+    hasSetRole: await db.guilds.get.counts.hasSetRole(),
+    hasChangedLanguage: await db.guilds.get.counts.hasChangedLanguage(),
+  };
 
-      avgCommandsIn: {
-        anHour: Math.ceil(commandsRanIn.last30days / 720),
-        aDay: Math.ceil(commandsRanIn.last30days / 30),
-      },
-    };
+  return i.editReply({ embeds: [embeds.stats(stats)] });
+};
 
-    const embedToSend = [embeds.stats(stats)];
+const commandStatsHandler = async (i: CommandInteraction, clientStats: StatsResponse) => {
+  const last30days = await db.logs.commands.get.last30days();
 
-    if (clientStats.topTenGuilds) {
-      const resolvedGuilds: TopTenGuild[] = [];
-      for (const guild of clientStats.topTenGuilds) {
-        const dbInfo = await db.guilds.get.one(guild.id);
+  const commandsRanIn: ICommandsRanIn = {
+    lastHour: await db.logs.commands.get.lastHour(),
+    lastDay: await db.logs.commands.get.lastDay(),
+    last7days: await db.logs.commands.get.last7days(),
+    last30days,
 
-        resolvedGuilds.push({
-          ...guild,
-          dbInfo,
-        });
-      }
+    avgCommandsIn: {
+      anHour: Math.ceil(last30days / 720),
+      aDay: Math.ceil(last30days / 30),
+    },
+  };
 
-      embedToSend.push(embeds.topTenGuilds(resolvedGuilds));
-    } else {
-      embedToSend.push(
-        embeds.generic(
-          "Everything is not yet available",
-          "More stats will become available once the client has spawned all of it's shards."
-        )
-      );
+  return i.editReply({ embeds: [embeds.commandsRanIn(commandsRanIn)] });
+};
+
+const topTenGuildsHandler = async (i: CommandInteraction, clientStats: StatsResponse) => {
+  let embedToSend: MessageEmbed;
+
+  if (clientStats.topTenGuilds) {
+    const resolvedGuilds: TopTenGuild[] = [];
+    for (const guild of clientStats.topTenGuilds) {
+      const dbInfo = await db.guilds.get.one(guild.id);
+
+      resolvedGuilds.push({
+        ...guild,
+        dbInfo,
+      });
     }
 
-    return i.editReply({
-      embeds: embedToSend,
-    });
-  },
+    embedToSend = embeds.topTenGuilds(resolvedGuilds);
+  } else {
+    embedToSend = embeds.generic(
+      "All stats not yet available",
+      "More stats will become available once the client has spawned all of it's shards."
+    );
+  }
+
+  return i.editReply({ embeds: [embedToSend] });
 };

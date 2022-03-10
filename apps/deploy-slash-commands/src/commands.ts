@@ -145,6 +145,23 @@ export const slashCommands: RawCommand[] = [
     data: {
       name: "stats",
       description: "Use this to get bot statistics (admin only)",
+      options: [
+        {
+          type: ApplicationCommandOptionTypes.SUB_COMMAND,
+          name: "basic",
+          description: "Get basic statistics",
+        },
+        {
+          type: ApplicationCommandOptionTypes.SUB_COMMAND,
+          name: "commands",
+          description: "Get command statistics",
+        },
+        {
+          type: ApplicationCommandOptionTypes.SUB_COMMAND,
+          name: "top10",
+          description: "Get the top 10 guilds",
+        },
+      ],
     },
   },
 

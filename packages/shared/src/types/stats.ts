@@ -21,13 +21,13 @@ export interface IStats {
   hasOnlyChannel: number;
   hasSetRole: number;
   hasChangedLanguage: number;
+}
 
-  commandsRanIn: {
-    lastHour: number;
-    lastDay: number;
-    last7days: number;
-    last30days: number;
-  };
+export interface ICommandsRanIn {
+  lastHour: number;
+  lastDay: number;
+  last7days: number;
+  last30days: number;
 
   avgCommandsIn: {
     anHour: number;
@@ -44,6 +44,6 @@ export interface TopTenGuild {
 }
 
 export interface StatsResponse {
-  guildCount: number;
-  topTenGuilds: TopTenGuild[];
+  guildCount: number | null;
+  topTenGuilds: TopTenGuild[] | null;
 }
