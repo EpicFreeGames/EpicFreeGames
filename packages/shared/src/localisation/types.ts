@@ -74,8 +74,8 @@ export const CurrencyData: ICurrencyData = {
   },
   RUB: {
     apiValue: "RU",
-    inFrontOfPrice: "",
-    afterPrice: "₽",
+    inFrontOfPrice: "₽",
+    afterPrice: "",
     name: "₽ Russian Ruble (RUB)",
   },
   BYN: {
