@@ -33,6 +33,8 @@ export enum Currencies {
   UAH = "UAH",
   RUB = "RUB",
   BYN = "BYN",
+  IDR = "IDR",
+  NZD = "NZD",
 }
 
 export const CurrencyData: ICurrencyData = {
@@ -83,6 +85,18 @@ export const CurrencyData: ICurrencyData = {
     inFrontOfPrice: "Br",
     afterPrice: "",
     name: "Br Belarusian Ruble (BYN)",
+  },
+  IDR: {
+    apiValue: "ID",
+    inFrontOfPrice: "Rp ",
+    afterPrice: "",
+    name: "Rp Indonesian Rupiah (IDR)",
+  },
+  NZD: {
+    apiValue: "NZ",
+    inFrontOfPrice: "NZ$",
+    afterPrice: "",
+    name: "$ New Zealand Dollar (NZD)",
   },
 };
 
