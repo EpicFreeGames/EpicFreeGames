@@ -17,6 +17,7 @@ export const GameModel = mongoose.model<IGame>(
       USD: { type: String, required: true },
       CAD: { type: String, required: true },
       EUR: { type: String, required: true },
+      INR: { type: String, required: true },
     },
   })
 );
