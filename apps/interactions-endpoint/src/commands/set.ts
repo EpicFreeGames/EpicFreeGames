@@ -106,7 +106,7 @@ const roleCommand: SubCommandHandler = async (i, guild, language, currency) => {
 
   const updatedGuild = await db.guilds.set.role(i.guildId!, useful.toDb);
 
-  logger.discord({ embeds: [embeds.logs.roleSet(updatedGuild, i, useful.embed)] });
+  logger.discord({ embeds: [embeds.logs.roleSet(updatedGuild, i, useful.toDb)] });
   return i.editReply({ embeds: [embeds.success.roleSet(useful.embed, language)], ephemeral: true });
 };
 
