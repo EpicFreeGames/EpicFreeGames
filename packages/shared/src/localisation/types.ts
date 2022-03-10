@@ -29,6 +29,7 @@ export enum Currencies {
   CAD = "CAD",
   EUR = "EUR",
   INR = "INR",
+  GBP = "GBP",
 }
 
 export const CurrencyData: ICurrencyData = {
@@ -55,6 +56,12 @@ export const CurrencyData: ICurrencyData = {
     inFrontOfPrice: "₹",
     afterPrice: "",
     name: "₹ Indian Rupee (INR)",
+  },
+  GBP: {
+    apiValue: "GB",
+    inFrontOfPrice: "£",
+    afterPrice: "",
+    name: "£ British Pound (GBP)",
   },
 };
 
