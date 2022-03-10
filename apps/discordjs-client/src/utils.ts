@@ -29,8 +29,6 @@ export const getTimeToClosestGame = async () => {
 export const updatePresence = async (c: IClient) => {
   const timeUntilNext = await getTimeToClosestGame();
 
-  logger.console(`Updating presence: ${timeUntilNext}`);
-
   // prettier-ignore
   c.cluster?.broadcastEval(
     (c: any, { timeUntilNext }) => {
@@ -58,6 +56,8 @@ export const statsToTopGG = async (guildCount: number) => {
   if (res.status !== 200) {
     throw new Error("Failed to post stats to top.gg");
   }
+
+  logger.console("Posted stats to top.gg, guildCount: " + guildCount);
 };
 
 export const getTopTenGuilds = async (client: IClient) => {
