@@ -189,6 +189,24 @@ export const slashCommands: RawCommand[] = [
             },
           ],
         },
+        {
+          type: ApplicationCommandOptionTypes.SUB_COMMAND,
+          name: "confirm-all",
+          description: "Confirm all games (admin only)",
+        },
+        {
+          type: ApplicationCommandOptionTypes.SUB_COMMAND,
+          name: "unconfirm",
+          description: "Unconfirm a game (admin only)",
+          options: [
+            {
+              type: ApplicationCommandOptionTypes.STRING,
+              name: "ids",
+              description: "The game ids (<id>, <id>, ...)",
+              required: true,
+            },
+          ],
+        },
       ],
     },
   },

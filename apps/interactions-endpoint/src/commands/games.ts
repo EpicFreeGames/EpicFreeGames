@@ -7,6 +7,8 @@ export const command: SlashCommand = {
 
     if (subCommand?.name === "get") return getCommand(i, guild, language, currency);
     if (subCommand?.name === "confirm") return confirmCommand(i, guild, language, currency);
+    if (subCommand?.name === "confirm-all") return confirmAllCommand(i, guild, language, currency);
+    if (subCommand?.name === "unconfirm") return unconfirmHandler(i, guild, language, currency);
   },
 };
 
@@ -25,6 +27,29 @@ const confirmCommand: SubCommandHandler = async (i, guild, language, currency) =
   const idArray = idString.split(", ");
 
   await db.games.confirm(idArray);
+
+  return i.reply({ content: "✅", ephemeral: true });
+};
+
+const confirmAllCommand: SubCommandHandler = async (i, guild, language, currency) => {
+  const games = await db.games.get.all();
+
+  if (!games.length)
+    return i.reply({
+      embeds: [embeds.generic("No games", "No games found", "DARK_RED")],
+      ephemeral: true,
+    });
+
+  await db.games.confirm(games.map((g) => g._id!));
+
+  return i.reply({ content: "✅", ephemeral: true });
+};
+
+const unconfirmHandler: SubCommandHandler = async (i, guild, language, currency) => {
+  const idString = i.options.getString("ids", true);
+  const idArray = idString.split(", ");
+
+  await db.games.unconfirm(idArray);
 
   return i.reply({ content: "✅", ephemeral: true });
 };

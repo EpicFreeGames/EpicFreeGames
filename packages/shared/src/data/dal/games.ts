@@ -8,6 +8,9 @@ export const create = (game: IGame) => new GameModel(game).save();
 export const confirm = async (ids: string[]) =>
   GameModel.updateMany({ _id: { $in: ids } }, { confirmed: true });
 
+export const unconfirm = async (ids: string[]) =>
+  GameModel.updateMany({ _id: { $in: ids } }, { confirmed: false });
+
 export const get = {
   all: async () => GameModel.find({}).select(selectString),
 
