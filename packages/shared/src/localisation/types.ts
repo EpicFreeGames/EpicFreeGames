@@ -30,6 +30,9 @@ export enum Currencies {
   EUR = "EUR",
   INR = "INR",
   GBP = "GBP",
+  UAH = "UAH",
+  RUB = "RUB",
+  BYN = "BYN",
 }
 
 export const CurrencyData: ICurrencyData = {
@@ -62,6 +65,24 @@ export const CurrencyData: ICurrencyData = {
     inFrontOfPrice: "£",
     afterPrice: "",
     name: "£ British Pound (GBP)",
+  },
+  UAH: {
+    apiValue: "UA",
+    inFrontOfPrice: "₴",
+    afterPrice: "",
+    name: "₴ Ukrainian Hryvnia (UAH)",
+  },
+  RUB: {
+    apiValue: "RU",
+    inFrontOfPrice: "",
+    afterPrice: "₽",
+    name: "₽ Russian Ruble (RUB)",
+  },
+  BYN: {
+    apiValue: "BY",
+    inFrontOfPrice: "Br",
+    afterPrice: "",
+    name: "Br Belarusian Ruble (BYN)",
   },
 };
 
