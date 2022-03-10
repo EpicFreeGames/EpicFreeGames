@@ -42,7 +42,17 @@ const basicHandler = async (i: CommandInteraction, clientStats: StatsResponse) =
     hasChangedLanguage: await db.guilds.get.counts.hasChangedLanguage(),
   };
 
-  return i.editReply({ embeds: [embeds.stats(stats)] });
+  const embedsToSend = [embeds.stats(stats)];
+
+  if (!stats.guildCount)
+    embedsToSend.push(
+      embeds.generic(
+        "All stats not yet available",
+        "More stats will become available once the client has spawned all of it's shards."
+      )
+    );
+
+  return i.editReply({ embeds: embedsToSend });
 };
 
 const commandStatsHandler = async (i: CommandInteraction, clientStats: StatsResponse) => {
