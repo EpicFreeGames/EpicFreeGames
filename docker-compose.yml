@@ -43,8 +43,6 @@ services:
   efg-client:
     depends_on:
       - efg-db
-      - efg-sender
-      - efg-endpoint
     build: .
     image: efg-client
     entrypoint: ["yarn", "dev", "--scope=discordjs-client", "--include-dependencies", "--no-deps"]
@@ -55,9 +53,6 @@ services:
   efg-scrapers:
     depends_on:
       - efg-db
-      - efg-sender
-      - efg-endpoint
-      - efg-client
     build: .
     image: efg-scrapers
     entrypoint: ["yarn", "dev", "--scope=scrapers", "--include-dependencies", "--no-deps"]
