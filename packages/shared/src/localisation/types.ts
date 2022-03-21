@@ -35,6 +35,7 @@ export enum Currencies {
   BYN = "BYN",
   IDR = "IDR",
   NZD = "NZD",
+  VND = "VND",
 }
 
 export const CurrencyData: ICurrencyData = {
@@ -97,6 +98,12 @@ export const CurrencyData: ICurrencyData = {
     inFrontOfPrice: "NZ$",
     afterPrice: "",
     name: "$ New Zealand Dollar (NZD)",
+  },
+  VND: {
+    apiValue: "VN",
+    inFrontOfPrice: "",
+    afterPrice: " ₫",
+    name: "₫ Vietnamese Dong (VND)",
   },
 };
 
