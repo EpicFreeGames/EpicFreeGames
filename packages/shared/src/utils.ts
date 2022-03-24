@@ -1,6 +1,8 @@
 import axios, { AxiosRequestConfig, Method } from "axios";
 import { config } from "config";
 import { WebhookMessageOptions } from "discord.js";
+import { IGame } from "./data/types";
+import { Currencies } from "./localisation";
 
 export const discordApiBaseUrl = "https://discord.com/api/v9";
 
@@ -39,3 +41,7 @@ export const editWebhookMsg = (msgId: string, webhookUrl: string, options: Webho
 
 export const deleteWebhookMsg = (msgId: string, webhookUrl: string) =>
   axios.delete(`${webhookUrl}/messages/${msgId}`);
+
+export const getGamePrice = (game: IGame, currency: Currencies) => {
+  return game.price[currency] || game.price.USD;
+};

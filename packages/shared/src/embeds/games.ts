@@ -2,6 +2,7 @@ import { IGame } from "../data/types/Game";
 import { Languages, Currencies, translate } from "../localisation";
 import { MessageEmbed } from "discord.js";
 import { utils } from "./utils";
+import { getGamePrice } from "../utils";
 
 export const games = (
   games: IGame[],
@@ -11,7 +12,7 @@ export const games = (
 ) => {
   const now = Date.now() / 1000;
 
-  let embeds: MessageEmbed[] = [];
+  let answerEmbeds: MessageEmbed[] = [];
 
   for (const game of games) {
     const start = game.start.getTime() / 1000;
@@ -37,7 +38,7 @@ export const games = (
 
         "\n\n" +
 
-        `💰 ${utils.bold(`${utils.strike(game.price[currency])} -> ${translate(`free.${language}`)}`)}!` +
+        `💰 ${utils.bold(`${utils.strike(getGamePrice(game, currency))} -> ${translate(`free.${language}`)}`)}!` +
 
         "\n\n" +
 
@@ -47,10 +48,10 @@ export const games = (
         utils.footer(language),
     });
 
-    embeds.push(embed);
+    answerEmbeds.push(embed);
   }
 
-  return embeds;
+  return answerEmbeds;
 };
 
 export const noFreeGames = (language: Languages) =>
