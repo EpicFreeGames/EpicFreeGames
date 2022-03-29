@@ -1,7 +1,7 @@
 version: "3.9"
 
 services:
-  efg-db:
+  db:
     image: mongo:4.4.7
     expose:
       - 27017
@@ -14,57 +14,57 @@ services:
       - .env.mongo
     restart: unless-stopped
     networks:
-      - efg
+      - fg
 
-  efg-endpoint:
+  endpoint:
     depends_on:
-      - efg-db
+      - db
     build: .
-    image: efg-endpoint
+    image: endpoint
     entrypoint:
       ["yarn", "dev", "--scope=interactions-endpoint", "--include-dependencies", "--no-deps"]
     deploy:
       replicas: 2
     restart: unless-stopped
     networks:
-      - efg
+      - fg
 
-  efg-sender:
+  sender:
     depends_on:
-      - efg-db
-      - efg-endpoint
+      - db
+      - endpoint
     build: .
-    image: efg-sender
+    image: sender
     entrypoint: ["yarn", "dev", "--scope=sender", "--include-dependencies", "--no-deps"]
     restart: unless-stopped
     networks:
-      - efg
+      - fg
 
-  efg-client:
+  client:
     depends_on:
-      - efg-db
+      - db
     build: .
-    image: efg-client
+    image: client
     entrypoint: ["yarn", "dev", "--scope=discordjs-client", "--include-dependencies", "--no-deps"]
     restart: unless-stopped
     networks:
-      - efg
+      - fg
 
-  efg-scrapers:
+  scrapers:
     depends_on:
-      - efg-db
+      - db
     build: .
-    image: efg-scrapers
+    image: scrapers
     entrypoint: ["yarn", "dev", "--scope=scrapers", "--include-dependencies", "--no-deps"]
     restart: unless-stopped
     networks:
-      - efg
+      - fg
 
-  efg-loadbalancer:
+  loadbalancer:
     depends_on:
-      - efg-db
-      - efg-endpoint
-      - efg-sender
+      - db
+      - endpoint
+      - sender
     image: nginx
     ports:
       - "50000:5000"
@@ -72,7 +72,7 @@ services:
       - ./nginx.conf:/etc/nginx/nginx.conf
     restart: unless-stopped
     networks:
-      - efg
+      - fg
 
 networks:
-  efg:
+  fg:
