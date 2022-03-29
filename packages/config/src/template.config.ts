@@ -5,6 +5,7 @@ export const config: IConfig = {
   senderPort: 0,
   clientPort: 0,
 
+  infoHookUrl: "",
   loggingHookUrl: "",
   senderHookUrl: "",
 

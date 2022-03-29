@@ -5,6 +5,7 @@ export interface IConfig {
   senderPort: number;
   clientPort: number;
 
+  infoHookUrl: string;
   loggingHookUrl: string;
   senderHookUrl: string;
 

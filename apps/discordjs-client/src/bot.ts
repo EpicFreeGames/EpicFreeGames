@@ -70,5 +70,9 @@ fs.readdir(
   }
 );
 
-client.on("shardReady", (id) => logger.console(`Shard ${id} ready`));
+client.on("shardReady", (id) => {
+  logger.console(`Shard ${id} ready`);
+  logger.info(`Shard ${id} ready`);
+});
+
 client.login(config.botToken);

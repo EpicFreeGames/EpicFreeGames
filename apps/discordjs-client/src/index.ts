@@ -23,6 +23,7 @@ logger.console("Bot started");
 
 manager.on("clusterCreate", (cluster) => {
   logger.console(`Cluster ${cluster.id} created`);
+  logger.info(`Cluster ${cluster.id} created`);
 });
 
 manager.spawn({ timeout: -1 });

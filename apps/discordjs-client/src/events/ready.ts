@@ -8,20 +8,22 @@ export const event: IEvent = {
   once: true,
   async execute(client: IClient) {
     logger.console("Ready event");
+    logger.info("Ready event");
 
     // check for the last cluster
     if (client.cluster.id !== client.cluster.count - 1) return;
+
+    logger.info("**Last shard spawned**");
 
     await rightMongo.connect(config.mongoUrl);
     console.log("Connected to database");
 
     expressServer(client);
 
-    const guildCount = await getGuildCount(client);
-
     await updatePresence(client);
-    await statsToTopGG(guildCount).catch((err) => console.error(err));
+    await statsToTopGG(await getGuildCount(client)).catch((err) => console.error(err));
+
     setInterval(() => updatePresence(client), 1000 * 60);
-    setInterval(() => statsToTopGG(guildCount), 1000 * 60 * 60 * 24);
+    setInterval(async () => statsToTopGG(await getGuildCount(client)), 1000 * 60 * 60 * 24);
   },
 };

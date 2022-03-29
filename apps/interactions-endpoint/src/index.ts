@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { config } from "config";
 import { createApp } from "./app";
+import { logger } from "shared";
 
 (async () => {
   await mongoose.connect(config.mongoUrl);
@@ -11,6 +12,7 @@ import { createApp } from "./app";
   console.log(`Running in ${config.prod ? "PROD" : "DEV"}`);
 
   app.listen(config.interactionsPort, () => {
-    console.log(`I-endpoint listening on port ${config.interactionsPort}`);
+    console.log(`Listening for interactions on port ${config.interactionsPort}`);
+    logger.info("Interactions endpoint ready");
   });
 })();
