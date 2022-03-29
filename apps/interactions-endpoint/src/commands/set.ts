@@ -57,9 +57,11 @@ const channelCommand: SubCommandHandler = async (i, guild, language, currency) =
   await i.editReply({ embeds: [embeds.success.channelSet(channelId, language)] });
 
   // send current free games to the newly set channel
-  await executeHook(newChannelsHook, {
-    embeds: embeds.games.games(await db.games.get.free(), language, currency),
-  });
+  const games = await db.games.get.free();
+  games.length &&
+    (await executeHook(newChannelsHook, {
+      embeds: embeds.games.games(games, language, currency),
+    }));
 };
 
 const languageCommand: SubCommandHandler = async (i, guild, language, currency) => {
