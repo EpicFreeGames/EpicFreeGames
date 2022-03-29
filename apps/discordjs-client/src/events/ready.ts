@@ -21,7 +21,10 @@ export const event: IEvent = {
     expressServer(client);
 
     await updatePresence(client);
-    await statsToTopGG(await getGuildCount(client)).catch((err) => console.error(err));
+    setTimeout(
+      async () => statsToTopGG(await getGuildCount(client)).catch((err) => console.error(err)),
+      1000 * 60 * 30
+    );
 
     setInterval(() => updatePresence(client), 1000 * 60);
     setInterval(async () => statsToTopGG(await getGuildCount(client)), 1000 * 60 * 60 * 24);
