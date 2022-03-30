@@ -10,6 +10,8 @@ export const event: IEvent = {
     logger.console("Ready event");
     logger.info("Ready event");
 
+    await updatePresence(client);
+
     // check for the last cluster
     if (client.cluster.id !== client.cluster.count - 1) return;
 
@@ -20,7 +22,6 @@ export const event: IEvent = {
 
     expressServer(client);
 
-    await updatePresence(client);
     setTimeout(
       async () => statsToTopGG(await getGuildCount(client)).catch((err) => console.error(err)),
       1000 * 60 * 30
