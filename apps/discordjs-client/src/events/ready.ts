@@ -10,12 +10,10 @@ export const event: IEvent = {
     logger.console("Ready event");
     logger.info("Ready event");
 
-    await updatePresence(client);
-
     // check for the last cluster
     if (client.cluster.id !== client.cluster.count - 1) return;
 
-    logger.info("**Last shard spawned**");
+    logger.info("**Last cluster spawned**");
 
     await rightMongo.connect(config.mongoUrl);
     console.log("Connected to database");
