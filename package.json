@@ -9,6 +9,7 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
+    "devr": "yarn clean && yarn && yarn build && yarn dev",
     "postclean": "rm -rf node_modules",
     "clean": "turbo run clean",
     "reg": "turbo run reg",
