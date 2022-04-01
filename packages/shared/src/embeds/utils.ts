@@ -17,6 +17,7 @@ export const utils = {
   redirectToBrowser: (slug: string) => `[Epicgames.com](${constants.links.browserRedirect}${slug})`,
 
   relativeTimestamp: (timestamp: number) => `<t:${timestamp}:R>`,
+  longTime: (timestamp: number) => `<t:${timestamp}:T>`,
 
   strike: (text: any) => `~~${text}~~`,
   bold: (text: any) => `**${text}**`,

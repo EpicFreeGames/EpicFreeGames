@@ -9,9 +9,9 @@ import {
   wait,
 } from "shared";
 import { config } from "config";
-import moment from "moment";
 
-const calculateEta = (target: number, msgPerSec: number) => target / msgPerSec;
+const secondsToFinish = (target: number, msgPerSec: number) => target / msgPerSec;
+const millisToSeconds = (millis: number) => Math.ceil(millis / 1000);
 
 export const startWatcher = async (target: number, sendingId: string, names: string[]) => {
   await wait(1000); // wait a bit for the senders to start
@@ -22,30 +22,19 @@ export const startWatcher = async (target: number, sendingId: string, names: str
 
   let latestSentCountCheck = Date.now();
 
-  await executeWebhook({
-    webhookUrl: config.senderHookUrl,
-    options: { embeds: [embeds.sendingStats.started(names)] },
-  });
-
   const watcher = async (): Promise<any> => {
     const newSendCount = await db.logs.sends.getCount(sendingId);
     speed = ((newSendCount - sendCount) / (Date.now() - latestSentCountCheck)) * 1000;
     latestSentCountCheck = Date.now();
     sendCount = newSendCount;
 
-    const dur = moment.duration(moment().diff(moment(start)));
-    // prettier-ignore
-    const elapsedTimeString = `${dur.hours() ? `${dur.hours()}h ` : ""}${dur.minutes()}m ${dur.seconds()}s`;
-
     const stats: ISendingStats = {
       speed: Math.floor(speed),
       sent: newSendCount,
       target,
-      elapsedTime: elapsedTimeString,
-      // prettier-ignore
-      eta: moment
-        .duration(moment(moment().add(calculateEta(target - newSendCount, speed), "s")).diff(moment()))
-        .humanize(),
+      eta: Math.ceil(millisToSeconds(Date.now()) + secondsToFinish(target - newSendCount, speed)),
+      startedAt: start,
+      gameNames: names,
     };
 
     if (!msgId) {
@@ -62,23 +51,21 @@ export const startWatcher = async (target: number, sendingId: string, names: str
       });
     }
 
-    if (speed !== 0) {
+    if (Date.now() - start < 10000 || speed !== 0) {
       await wait(1500);
       return watcher();
     }
 
     const latestLog = await db.logs.sends.getLatest(sendingId);
-    const finishedAt = latestLog ? latestLog.createdAt : new Date();
-
-    const timeTaken = moment.duration(moment(finishedAt).diff(start));
-    // prettier-ignore
-    const timeTakenString = `${timeTaken.hours() ? `${timeTaken.hours()}h ` : ""}${timeTaken.minutes()}m ${timeTaken.seconds()}s`;
+    const finishedAt = (latestLog ? latestLog.createdAt : new Date()).getTime();
 
     // sending done
     const finishedStats: IFinishedSendingStats = {
-      averageSpeed: Math.floor((newSendCount / (finishedAt.getTime() - start)) * 1000),
-      elapsedTime: timeTakenString,
+      averageSpeed: Math.floor((newSendCount / (finishedAt - start)) * 1000),
       sentCount: newSendCount,
+      finishedAt: millisToSeconds(finishedAt),
+      gameNames: names,
+      startedAt: millisToSeconds(start),
     };
 
     if (!msgId) {

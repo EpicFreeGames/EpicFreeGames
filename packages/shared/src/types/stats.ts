@@ -4,14 +4,17 @@ export interface ISendingStats {
   speed: number;
   sent: number;
   target: number;
-  elapsedTime: string;
-  eta: string;
+  eta: number;
+  startedAt: number;
+  gameNames: string[];
 }
 
 export interface IFinishedSendingStats {
   averageSpeed: number;
-  elapsedTime: string;
   sentCount: number;
+  startedAt: number;
+  finishedAt: number;
+  gameNames: string[];
 }
 
 export interface IStats {
