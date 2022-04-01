@@ -1,11 +1,10 @@
-import { WebhookMessageOptions } from "discord.js";
 import { config } from "config";
-import { executeWebhook } from "./utils";
+import { executeWebhook, WebhookMessageOptions } from "./utils";
 
 // prettier-ignore
 export const logger = {
-  discord: (options: WebhookMessageOptions) => executeWebhook(config.loggingHookUrl, options)
-    .catch(() => setTimeout(() => executeWebhook(config.loggingHookUrl, options), 10000)),
+  discord: (options: WebhookMessageOptions) => executeWebhook({ webhookUrl: config.loggingHookUrl, options})
+    .catch(() => setTimeout(() => executeWebhook({ webhookUrl: config.loggingHookUrl, options}), 10000)),
 
   console: (msg: string) => {
     const date = new Date();
@@ -14,6 +13,6 @@ export const logger = {
 
     console.log(debug + msg);
   },
-  info: (msg: string) => executeWebhook(config.infoHookUrl, { content: msg })
-    .catch(() => setTimeout(() => executeWebhook(config.infoHookUrl, { content: msg }), 10000)),
+  info: (msg: string) => executeWebhook({ webhookUrl: config.infoHookUrl, options: { content: msg } })
+    .catch(() => setTimeout(() => executeWebhook({ webhookUrl: config.infoHookUrl, options: { content: msg } }), 10000)),
 };

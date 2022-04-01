@@ -23,7 +23,7 @@ export const slashCommands: RawCommand[] = [
     type: CommandTypes.MANAGE_GUILD,
     data: {
       name: "set",
-      description: "Set a channel or a role",
+      description: "Manage my settings on this server",
       options: [
         {
           type: ApplicationCommandOptionTypes.SUB_COMMAND,
@@ -48,6 +48,20 @@ export const slashCommands: RawCommand[] = [
               channel_types: [ChannelTypes.GUILD_TEXT, ChannelTypes.GUILD_NEWS],
               name: "channel",
               description: "A channel of your choice",
+              required: true,
+            },
+          ],
+        },
+        {
+          type: ApplicationCommandOptionTypes.SUB_COMMAND,
+          name: "thread",
+          description: "I'll post the new games here now and always in the future!",
+          options: [
+            {
+              type: ApplicationCommandOptionTypes.CHANNEL,
+              channel_types: [ChannelTypes.GUILD_NEWS_THREAD, ChannelTypes.GUILD_PUBLIC_THREAD],
+              name: "thread",
+              description: "A thread of your choice",
               required: true,
             },
           ],
@@ -92,7 +106,7 @@ export const slashCommands: RawCommand[] = [
     type: CommandTypes.MANAGE_GUILD,
     data: {
       name: "remove",
-      description: "Remove the set role",
+      description: "Remove the set role, set channel or the set thread",
       options: [
         {
           type: ApplicationCommandOptionTypes.SUB_COMMAND,
@@ -102,7 +116,7 @@ export const slashCommands: RawCommand[] = [
         {
           type: ApplicationCommandOptionTypes.SUB_COMMAND,
           name: "channel",
-          description: "Remove the set channel",
+          description: "Remove the set channel (or thread)",
         },
       ],
     },

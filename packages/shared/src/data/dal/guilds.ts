@@ -31,10 +31,10 @@ export const get = {
 
 // prettier-ignore
 export const set = {
-  webhook: (guildId: string, webhook: IWebhook | null, channelId: string) =>
+  webhook: (guildId: string, webhook: IWebhook | null, channelId: string, threadId: string | null) =>
     GuildModel.findOneAndUpdate(
       { guildId },
-      { guildId, webhook, channelId },
+      { guildId, webhook, channelId, threadId },
       { upsert: true, new: true }
     ).select(selectString),
 
@@ -58,7 +58,7 @@ export const remove = {
   webhook: async (guildId: string) =>
     GuildModel.findOneAndUpdate(
       { guildId },
-      { $set: { webhook: null, channelId: null } },
+      { $set: { webhook: null, channelId: null, threadId: null } },
       { new: true }
     ).select(selectString),
 

@@ -35,6 +35,7 @@ export const GuildModel = mongoose.model<GuildDocument>(
     guildId: { type: String, required: true },
     roleId: { type: String, default: null },
     channelId: { type: String, default: null },
+    threadId: { type: String, default: null },
     language: { type: String, default: Languages.en },
     currency: { type: String, default: Currencies.USD },
     webhook: {

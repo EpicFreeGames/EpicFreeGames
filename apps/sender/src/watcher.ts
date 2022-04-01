@@ -22,7 +22,10 @@ export const startWatcher = async (target: number, sendingId: string, names: str
 
   let latestSentCountCheck = Date.now();
 
-  await executeWebhook(config.senderHookUrl, { embeds: [embeds.sendingStats.started(names)] });
+  await executeWebhook({
+    webhookUrl: config.senderHookUrl,
+    options: { embeds: [embeds.sendingStats.started(names)] },
+  });
 
   const watcher = async (): Promise<any> => {
     const newSendCount = await db.logs.sends.getCount(sendingId);
@@ -47,11 +50,11 @@ export const startWatcher = async (target: number, sendingId: string, names: str
 
     if (!msgId) {
       msgId = (
-        await executeWebhook(
-          config.senderHookUrl,
-          { embeds: [embeds.sendingStats.stats(stats)] },
-          true
-        )
+        await executeWebhook({
+          webhookUrl: config.senderHookUrl,
+          options: { embeds: [embeds.sendingStats.stats(stats)] },
+          wait: true,
+        })
       ).data?.id;
     } else {
       await editWebhookMsg(msgId, config.senderHookUrl, {
@@ -79,14 +82,16 @@ export const startWatcher = async (target: number, sendingId: string, names: str
     };
 
     if (!msgId) {
-      executeWebhook(config.senderHookUrl, {
-        embeds: [embeds.sendingStats.finished(finishedStats)],
+      executeWebhook({
+        webhookUrl: config.senderHookUrl,
+        options: { embeds: [embeds.sendingStats.finished(finishedStats)] },
       });
     } else {
       await deleteWebhookMsg(msgId, config.senderHookUrl);
 
-      executeWebhook(config.senderHookUrl, {
-        embeds: [embeds.sendingStats.finished(finishedStats)],
+      executeWebhook({
+        webhookUrl: config.senderHookUrl,
+        options: { embeds: [embeds.sendingStats.finished(finishedStats)] },
       });
     }
   };

@@ -11,6 +11,8 @@ import {
   isEnum,
   Languages,
   Currencies,
+  executeWebhook,
+  getWebhookUrl,
 } from "shared";
 import { createWebhook, deleteWebhook, executeHook, hasWebhook } from "../utils/webhooks";
 
@@ -21,6 +23,7 @@ export const command: SlashCommand = {
     const subCommand = i.getSubCommand(true);
 
     if (subCommand?.name === "channel") return channelCommand(i, guild, language, currency);
+    if (subCommand?.name === "thread") return threadCommand(i, guild, language, currency);
     if (subCommand?.name === "language") return languageCommand(i, guild, language, currency);
     if (subCommand?.name === "role") return roleCommand(i, guild, language, currency);
     if (subCommand?.name === "currency") return currencyCommand(i, guild, language, currency);
@@ -51,7 +54,7 @@ const channelCommand: SubCommandHandler = async (i, guild, language, currency) =
   if (newChannelsHook === "30007")
     return i.editReply({ embeds: [embeds.errors.maxNumberOfWebhooks(language)] });
 
-  const updatedGuild = await db.guilds.set.webhook(i.guildId!, newChannelsHook, channelId);
+  const updatedGuild = await db.guilds.set.webhook(i.guildId!, newChannelsHook, channelId, null);
 
   logger.discord({ embeds: [embeds.logs.channelSet(updatedGuild, i, channelId)] });
   await i.editReply({ embeds: [embeds.success.channelSet(channelId, language)] });
@@ -61,6 +64,57 @@ const channelCommand: SubCommandHandler = async (i, guild, language, currency) =
   games.length &&
     (await executeHook(newChannelsHook, {
       embeds: embeds.games.games(games, language, currency),
+    }));
+};
+
+const threadCommand: SubCommandHandler = async (i, guild, language, currency) => {
+  await i.deferReply({ ephemeral: true });
+  const threadId = i.options.getChannelId("thread", true);
+
+  const channelId = await getParentId(threadId).catch((err) => err.message);
+
+  if (!channelId) return i.editReply({ embeds: [embeds.errors.genericError()] });
+
+  if (channelId === "50013" || channelId === "50001")
+    return i.editReply({ embeds: [embeds.errors.missingPermissions(channelId, language)] });
+
+  let newChannelsHook = await hasWebhook(channelId).catch((err: any) => err.message);
+
+  // 50013 = Missing permissions | 50001 = Missing access
+  if (newChannelsHook === "50013" || newChannelsHook === "50001")
+    return i.editReply({ embeds: [embeds.errors.missingPermissions(channelId, language)] });
+
+  if (guild?.webhook && guild?.channelId !== channelId)
+    await deleteWebhook(guild.webhook).catch((err: any) => db.guilds.remove.webhook(i.guildId!));
+
+  newChannelsHook ??= await createWebhook(channelId).catch((err: any) => err.message);
+
+  if (!newChannelsHook) return i.editReply({ embeds: [embeds.errors.genericError()] });
+
+  if (newChannelsHook === "50013" || newChannelsHook === "50001")
+    return i.editReply({ embeds: [embeds.errors.missingPermissions(channelId, language)] });
+
+  // 30007 = Maximum number of webhooks reached (10)
+  if (newChannelsHook === "30007")
+    return i.editReply({ embeds: [embeds.errors.maxNumberOfWebhooks(language)] });
+
+  const updatedGuild = await db.guilds.set.webhook(
+    i.guildId!,
+    newChannelsHook,
+    channelId,
+    threadId
+  );
+
+  logger.discord({ embeds: [embeds.logs.channelSet(updatedGuild, i, channelId)] });
+  await i.editReply({ embeds: [embeds.success.channelSet(threadId, language)] });
+
+  // send current free games to the newly set channel
+  const games = await db.games.get.free();
+  games.length &&
+    (await executeWebhook({
+      webhookUrl: getWebhookUrl(updatedGuild.webhook!.id, updatedGuild.webhook!.token),
+      options: { embeds: embeds.games.games(games, language, currency) },
+      threadId,
     }));
 };
 
@@ -139,4 +193,16 @@ const getRole = async (guildId: string, roleId: string) => {
   const res = await axios(discordApiRequest(`/guilds/${guildId}/roles`, "GET"));
 
   return res?.data?.find((role: any) => role.id === roleId);
+};
+
+const getParentId = async (channelId: string) => {
+  try {
+    const res = await axios(discordApiRequest(`/channels/${channelId}`, "GET"));
+
+    return res?.data?.parent_id;
+  } catch (err) {
+    if (err?.respnose && err?.response?.data?.code) throw new Error(err.response.data.code);
+
+    return null;
+  }
 };

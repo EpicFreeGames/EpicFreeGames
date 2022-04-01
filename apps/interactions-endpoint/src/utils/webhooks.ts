@@ -18,7 +18,7 @@ export const createWebhook = async (channelId: string): Promise<IWebhook | null>
       token: res.data.token,
     };
   } catch (err: any) {
-    if (err.response && err.response?.data.code === 30007) throw new Error("30007"); // 30007 = Maximum number of webhooks reached (10)
+    if (err.response && err.response?.data?.code === 30007) throw new Error(err.response.data.code);
 
     console.log("error creating a webhook:", err.message, err?.response?.data);
     return null;

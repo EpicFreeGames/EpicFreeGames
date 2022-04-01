@@ -10,6 +10,7 @@ export interface IGuild {
   guildId: string;
   roleId: string | null;
   channelId: string | null;
+  threadId: string | null;
   language: Languages;
   currency: Currencies;
   webhook: IWebhook | null;

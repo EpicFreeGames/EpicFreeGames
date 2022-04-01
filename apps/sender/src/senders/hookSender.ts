@@ -9,6 +9,8 @@ import {
   ISendingLog,
   wait,
   getGuildCurrency,
+  getWebhookUrl,
+  executeWebhook,
 } from "shared";
 import { getDataToSend } from "../utils";
 
@@ -49,8 +51,11 @@ export class HookSender {
         continue;
       }
 
-      this.axios
-        .post(`/${guild.webhook.id}/${guild.webhook.token}`, data)
+      executeWebhook({
+        webhookUrl: getWebhookUrl(guild.webhook.id, guild.webhook.token),
+        options: data,
+        threadId: guild.threadId,
+      })
         .then((res) => {
           const log: ISendingLog = {
             guildId: guild.guildId,

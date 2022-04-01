@@ -48,11 +48,15 @@ export const settings = (guild: IGuild | null,  language: Languages) =>
     title: "Settings",
     color: "#2f3136",
     description:
-      utils.bold(`Channel: `) + (guild?.channelId ? `<#${guild?.channelId}>` : "Not set, you can set a channel with `/set channel`") +
+      utils.bold("Channel/Thread: ") + 
+        (guild?.threadId ? `<#${guild?.threadId}>` 
+          : guild?.channelId ? `<#${guild?.channelId}>` 
+        : "Not set, you can set one with `/set channel` **OR** `/set thread`") + 
       "\n\n" +
-      utils.bold(`Role: `) + (guild?.roleId ? guild.roleId === "1" ? "@everyone" : `<@&${guild?.roleId}>` : "Not set, you can set a role with `/set role`") +
+      utils.bold("Role: ") + (guild?.roleId ? guild.roleId === "1" ? "@everyone" : `<@&${guild?.roleId}>` : "Not set, you can set a role with `/set role`") +
       "\n\n" +
-      utils.bold(`Language: `) + (guild?.language ? `${LanguagesWithFlags[guild.language]}` : LanguagesWithFlags[Languages.en]) +
+      utils.bold("Language: ") + (guild?.language ? `${LanguagesWithFlags[guild.language]}` : LanguagesWithFlags[Languages.en]) +
       "\n\n" +
-      utils.bold(`Currency: `) + (guild?.currency ? `${CurrencyData[guild.currency].name}` : CurrencyData["USD"].name)
+      utils.bold("Currency: ") + (guild?.currency ? `${CurrencyData[guild.currency].name}` : CurrencyData["USD"].name) +
+      utils.footer(language),
   });
