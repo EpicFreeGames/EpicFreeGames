@@ -23,7 +23,9 @@ export const stats = (stats: IStats) =>
       "\n" +
       "Has set role: " + utils.bold(stats.hasSetRole) +
       "\n" +
-      "Has changed language: " + utils.bold(stats.hasChangedLanguage),
+      "Has changed language: " + utils.bold(stats.hasChangedLanguage) +
+      "\n" +
+      "Has changed currency: " + utils.bold(stats.hasChangedCurrency),
   });
 
 // prettier-ignore
