@@ -95,7 +95,7 @@ export const requestToInteraction = (req: Request, res: Response): CommandIntera
           }
         }
 
-        if (!res && required) throw new TypeError("STRING_OPTION_NOT_FOUND");
+        if (!res && required) throw new TypeError("CHANNEL_OPTION_NOT_FOUND");
 
         return res;
       },
@@ -119,7 +119,7 @@ export const requestToInteraction = (req: Request, res: Response): CommandIntera
           }
         }
 
-        if (!res && required) throw new TypeError("STRING_OPTION_NOT_FOUND");
+        if (!res && required) throw new TypeError("ROLE_OPTION_NOT_FOUND");
 
         return res;
       },
