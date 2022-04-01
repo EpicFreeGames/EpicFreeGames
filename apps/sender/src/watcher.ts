@@ -3,7 +3,6 @@ import {
   db,
   executeWebhook,
   editWebhookMsg,
-  deleteWebhookMsg,
   ISendingStats,
   IFinishedSendingStats,
   wait,
@@ -51,7 +50,7 @@ export const startWatcher = async (target: number, sendingId: string, names: str
       });
     }
 
-    if (Date.now() - start < 10000 || speed !== 0) {
+    if (Date.now() - start < 5000 || speed !== 0) {
       await wait(1500);
       return watcher();
     }
@@ -74,11 +73,8 @@ export const startWatcher = async (target: number, sendingId: string, names: str
         options: { embeds: [embeds.sendingStats.finished(finishedStats)] },
       });
     } else {
-      await deleteWebhookMsg(msgId, config.senderHookUrl);
-
-      executeWebhook({
-        webhookUrl: config.senderHookUrl,
-        options: { embeds: [embeds.sendingStats.finished(finishedStats)] },
+      await editWebhookMsg(msgId, config.senderHookUrl, {
+        embeds: [embeds.sendingStats.finished(finishedStats)],
       });
     }
   };
