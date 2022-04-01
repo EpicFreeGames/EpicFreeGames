@@ -40,6 +40,7 @@ const basicHandler = async (i: CommandInteraction, clientStats: StatsResponse) =
     hasOnlyChannel: await db.guilds.get.counts.hasOnlySetChannel(),
     hasSetRole: await db.guilds.get.counts.hasSetRole(),
     hasChangedLanguage: await db.guilds.get.counts.hasChangedLanguage(),
+    hasChangedCurrency: await db.guilds.get.counts.hasChangedCurrency(),
   };
 
   const embedsToSend = [embeds.stats(stats)];

@@ -24,6 +24,7 @@ export interface IStats {
   hasOnlyChannel: number;
   hasSetRole: number;
   hasChangedLanguage: number;
+  hasChangedCurrency: number;
 }
 
 export interface ICommandsRanIn {
