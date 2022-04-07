@@ -8,7 +8,9 @@ export interface IGame {
   start: Date;
   end: Date;
   confirmed: boolean;
-  price: {
-    [key in Currencies]: string;
-  };
+  price: GamePrices;
 }
+
+export type GamePrices = {
+  [key in Currencies]: string;
+};

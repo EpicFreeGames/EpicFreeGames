@@ -1,9 +1,16 @@
 import { GameModel } from "../models";
-import { IGame } from "../types";
+import { GamePrices, IGame } from "../types";
 
 const selectString = "-__v -createdAt -updatedAt";
 
 export const create = (game: IGame) => new GameModel(game).save();
+
+export const update = {
+  prices: async (slug: string, prices: GamePrices) =>
+    GameModel.updateOne({ slug }, { $set: { price: prices } }),
+  start: async (slug: string, start: Date) => GameModel.updateOne({ slug }, { start }),
+  end: async (slug: string, end: Date) => GameModel.updateOne({ slug }, { end }),
+};
 
 export const confirm = async (ids: string[]) =>
   GameModel.updateMany({ _id: { $in: ids } }, { confirmed: true });
@@ -26,4 +33,6 @@ export const get = {
 
   byIds: async (ids: string[]) =>
     GameModel.find({ _id: { $in: ids }, confirmed: true }).select(selectString),
+
+  bySlug: async (slug: string) => GameModel.findOne({ slug }).select(selectString),
 };
