@@ -32,7 +32,7 @@ export const startWatcher = async (target: number, sendingId: string, names: str
       sent: newSendCount,
       target,
       eta: Math.ceil(millisToSeconds(Date.now()) + secondsToFinish(target - newSendCount, speed)),
-      startedAt: start,
+      startedAt: millisToSeconds(start),
       gameNames: names,
     };
 
