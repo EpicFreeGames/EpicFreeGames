@@ -61,7 +61,7 @@ export const slashCommands: RawCommand[] = [
               type: ApplicationCommandOptionTypes.CHANNEL,
               channel_types: [ChannelTypes.GUILD_NEWS_THREAD, ChannelTypes.GUILD_PUBLIC_THREAD],
               name: "thread",
-              description: "A thread of your choice",
+              description: "An active public thread of your choice",
               required: true,
             },
           ],
