@@ -25,6 +25,7 @@ export interface IStats {
   hasSetRole: number;
   hasChangedLanguage: number;
   hasChangedCurrency: number;
+  hasSetThread: number;
 }
 
 export interface ICommandsRanIn {

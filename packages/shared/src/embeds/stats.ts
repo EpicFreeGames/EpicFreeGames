@@ -25,7 +25,9 @@ export const stats = (stats: IStats) =>
       "\n" +
       "Has changed language: " + utils.bold(stats.hasChangedLanguage) +
       "\n" +
-      "Has changed currency: " + utils.bold(stats.hasChangedCurrency),
+      "Has changed currency: " + utils.bold(stats.hasChangedCurrency) +
+      "\n" +
+      "Has set a thread: " + utils.bold(stats.hasSetThread),
   });
 
 // prettier-ignore

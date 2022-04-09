@@ -26,6 +26,7 @@ export const get = {
       GuildModel.find({ channelId: { $ne: null }, webhook: null }).countDocuments(),
     hasChangedLanguage: async () => GuildModel.find({ language: { $ne: "en" } }).countDocuments(),
     hasChangedCurrency: async () => GuildModel.find({ currency: { $ne: "USD" } }).countDocuments(),
+    hasSetThread: async () => GuildModel.find({ threadId: { $ne: null } }).countDocuments(),
   },
 };
 
