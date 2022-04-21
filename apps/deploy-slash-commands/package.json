@@ -1,6 +1,7 @@
 {
   "name": "deploy-slash-commands",
   "version": "0.0.0",
+  "private": true,
   "type": "module",
   "scripts": {
     "prereg": "rm -rf dist && ./node_modules/.bin/tsc -p ./tsconfig.json",
@@ -11,11 +12,11 @@
   },
   "dependencies": {
     "axios": "^0.26.0",
-    "typescript": "^4.5.5",
     "discord-api-types": "^0.27.1",
     "discord.js": "^13.6.0",
     "shared": "*",
-    "config": "*"
+    "config": "*",
+    "typescript": "^4.5.5"
   },
   "devDependencies": {
     "tsconfig": "*"

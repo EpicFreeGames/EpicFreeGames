@@ -24,11 +24,11 @@
     "restart": "docker-compose up -d --force-recreate --build"
   },
   "devDependencies": {
-    "turbo": "^1.1.2"
+    "turbo": "^1.2.4"
   },
   "engines": {
-    "npm": ">=7.0.0",
-    "node": ">=14.0.0"
+    "npm": ">=8.7.0",
+    "node": ">=17.8.0"
   },
-  "packageManager": "yarn@1.22.17"
+  "packageManager": "yarn@1.22.18"
 }

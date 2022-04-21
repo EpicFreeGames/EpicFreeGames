@@ -1,6 +1,7 @@
 {
   "name": "discordjs-client",
   "version": "0.0.0",
+  "private": true,
   "type": "module",
   "scripts": {
     "build": "rm -rf dist && ./node_modules/.bin/tsc -p ./tsconfig.json",
@@ -14,7 +15,7 @@
     "express": "^4.17.3",
     "moment": "^2.29.1",
     "shared": "*",
-    "typescript": "^4.5.5"
+    "typescript": "^4.6.3"
   },
   "devDependencies": {
     "tsconfig": "*"
