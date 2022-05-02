@@ -1,21 +1,6 @@
 version: "3.9"
 
 services:
-  db:
-    image: mongo:4.4.7
-    expose:
-      - 27017
-    ports:
-      - "50001:27017"
-    volumes:
-      - ./DATA/database:/data/db
-      - ./DATA/conf:/data/configdb
-    env_file:
-      - .env.mongo
-    restart: unless-stopped
-    networks:
-      - fg
-
   endpoint:
     depends_on:
       - db
@@ -26,8 +11,6 @@ services:
     deploy:
       replicas: 2
     restart: unless-stopped
-    networks:
-      - fg
 
   sender:
     depends_on:
@@ -37,8 +20,6 @@ services:
     image: sender
     entrypoint: ["yarn", "dev", "--scope=sender", "--include-dependencies", "--no-deps"]
     restart: unless-stopped
-    networks:
-      - fg
 
   client:
     depends_on:
@@ -47,8 +28,6 @@ services:
     image: client
     entrypoint: ["yarn", "dev", "--scope=discordjs-client", "--include-dependencies", "--no-deps"]
     restart: unless-stopped
-    networks:
-      - fg
 
   scrapers:
     depends_on:
@@ -57,22 +36,3 @@ services:
     image: scrapers
     entrypoint: ["yarn", "dev", "--scope=scrapers", "--include-dependencies", "--no-deps"]
     restart: unless-stopped
-    networks:
-      - fg
-
-  loadbalancer:
-    depends_on:
-      - db
-      - endpoint
-      - sender
-    image: nginx
-    ports:
-      - "50000:5000"
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
-    restart: unless-stopped
-    networks:
-      - fg
-
-networks:
-  fg:
