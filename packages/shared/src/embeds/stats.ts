@@ -9,10 +9,6 @@ export const stats = (stats: IStats) =>
     title: "Stats",
     color: "#2f3136",
     description:
-      "Guild Count: " + utils.bold(stats.guildCount) +
-      
-      "\n\n" +
-
       utils.title("Database") +
       "\n" +
       "DB Guilds: " + utils.bold(stats.dbGuildCount) +

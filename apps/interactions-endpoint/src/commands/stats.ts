@@ -1,16 +1,12 @@
-import { MessageEmbed } from "discord.js";
 import {
   CommandInteraction,
   db,
   embeds,
   IStats,
-  StatsResponse,
-  TopTenGuild,
   ICommandsRanIn,
   CommandTypes,
   SlashCommand,
 } from "shared";
-import { getStatsFromClient } from "../utils/stats";
 
 export const command: SlashCommand = {
   type: CommandTypes.ADMIN,
@@ -19,22 +15,13 @@ export const command: SlashCommand = {
 
     const subCommand = i.getSubCommand(true);
 
-    const clientStats = await getStatsFromClient().catch(() => {
-      return {
-        guildCount: null,
-        topTenGuilds: null,
-      };
-    });
-
-    if (subCommand?.name === "basic") return basicHandler(i, clientStats);
-    if (subCommand?.name === "commands") return commandStatsHandler(i, clientStats);
-    if (subCommand?.name === "top10") return topTenGuildsHandler(i, clientStats);
+    if (subCommand?.name === "basic") return basicHandler(i);
+    if (subCommand?.name === "commands") return commandStatsHandler(i);
   },
 };
 
-const basicHandler = async (i: CommandInteraction, clientStats: StatsResponse) => {
+const basicHandler = async (i: CommandInteraction) => {
   const stats: IStats = {
-    guildCount: clientStats.guildCount,
     dbGuildCount: await db.guilds.get.count(),
     hasWebhook: await db.guilds.get.counts.hasWebhook(),
     hasOnlyChannel: await db.guilds.get.counts.hasOnlySetChannel(),
@@ -44,20 +31,10 @@ const basicHandler = async (i: CommandInteraction, clientStats: StatsResponse) =
     hasSetThread: await db.guilds.get.counts.hasSetThread(),
   };
 
-  const embedsToSend = [embeds.stats(stats)];
-
-  if (!stats.guildCount)
-    embedsToSend.push(
-      embeds.generic(
-        "All stats not yet available",
-        "More stats will become available once the client has spawned all of it's shards."
-      )
-    );
-
-  return i.editReply({ embeds: embedsToSend });
+  return i.editReply({ embeds: [embeds.stats(stats)] });
 };
 
-const commandStatsHandler = async (i: CommandInteraction, clientStats: StatsResponse) => {
+const commandStatsHandler = async (i: CommandInteraction) => {
   const last30days = await db.logs.commands.get.last30days();
 
   const commandsRanIn: ICommandsRanIn = {
@@ -73,29 +50,4 @@ const commandStatsHandler = async (i: CommandInteraction, clientStats: StatsResp
   };
 
   return i.editReply({ embeds: [embeds.commandsRanIn(commandsRanIn)] });
-};
-
-const topTenGuildsHandler = async (i: CommandInteraction, clientStats: StatsResponse) => {
-  let embedToSend: MessageEmbed;
-
-  if (clientStats.topTenGuilds) {
-    const resolvedGuilds: TopTenGuild[] = [];
-    for (const guild of clientStats.topTenGuilds) {
-      const dbInfo = await db.guilds.get.one(guild.id);
-
-      resolvedGuilds.push({
-        ...guild,
-        dbInfo,
-      });
-    }
-
-    embedToSend = embeds.topTenGuilds(resolvedGuilds);
-  } else {
-    embedToSend = embeds.generic(
-      "All stats not yet available",
-      "More stats will become available once the client has spawned all of it's shards."
-    );
-  }
-
-  return i.editReply({ embeds: [embedToSend] });
 };

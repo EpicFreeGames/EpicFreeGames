@@ -18,7 +18,6 @@ export interface IFinishedSendingStats {
 }
 
 export interface IStats {
-  guildCount: number | null;
   dbGuildCount: number;
   hasWebhook: number;
   hasOnlyChannel: number;

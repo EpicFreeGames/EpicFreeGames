@@ -2,8 +2,6 @@ version: "3.9"
 
 services:
   endpoint:
-    depends_on:
-      - db
     build: .
     image: endpoint
     entrypoint:
@@ -14,25 +12,16 @@ services:
 
   sender:
     depends_on:
-      - db
       - endpoint
     build: .
     image: sender
     entrypoint: ["yarn", "dev", "--scope=sender", "--include-dependencies", "--no-deps"]
     restart: unless-stopped
 
-  client:
-    depends_on:
-      - db
-    build: .
-    image: client
-    entrypoint: ["yarn", "dev", "--scope=discordjs-client", "--include-dependencies", "--no-deps"]
-    restart: unless-stopped
-
   scrapers:
     depends_on:
-      - db
+      - endpoint
     build: .
     image: scrapers
     entrypoint: ["yarn", "dev", "--scope=scrapers", "--include-dependencies", "--no-deps"]
-    restart: unless-stopped
+    restart: unless-stopped 

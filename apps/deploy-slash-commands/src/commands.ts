@@ -170,11 +170,6 @@ export const slashCommands: RawCommand[] = [
           name: "commands",
           description: "Get command statistics",
         },
-        {
-          type: ApplicationCommandOptionTypes.SUB_COMMAND,
-          name: "top10",
-          description: "Get the top 10 guilds",
-        },
       ],
     },
   },
