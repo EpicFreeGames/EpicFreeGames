@@ -10,7 +10,6 @@ export interface IConfig {
   senderHookUrl: string;
 
   senderUrl: string;
-  clientUrl: string;
 
   botId: string;
   botToken: string;

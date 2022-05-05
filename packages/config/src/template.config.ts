@@ -10,7 +10,6 @@ export const config: IConfig = {
   senderHookUrl: "",
 
   senderUrl: "",
-  clientUrl: "",
 
   botId: "",
   botToken: "",
