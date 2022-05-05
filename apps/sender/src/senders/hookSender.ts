@@ -11,8 +11,8 @@ import {
   getGuildCurrency,
   getWebhookUrl,
   executeWebhook,
+  getMessage,
 } from "shared";
-import { getDataToSend } from "../utils";
 
 export class HookSender {
   guilds: IGuild[];
@@ -42,7 +42,7 @@ export class HookSender {
         getGuildLang(guild),
         getGuildCurrency(guild)
       );
-      const data = getDataToSend(guild, gameEmbeds);
+      const data = getMessage(guild, gameEmbeds);
 
       await wait(4);
 

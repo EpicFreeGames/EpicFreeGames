@@ -13,8 +13,9 @@ import {
   Currencies,
   executeWebhook,
   getWebhookUrl,
+  getMessage,
 } from "shared";
-import { createWebhook, deleteWebhook, executeHook, hasWebhook } from "../utils/webhooks";
+import { createWebhook, deleteWebhook, hasWebhook } from "../utils/webhooks";
 
 export const command: SlashCommand = {
   type: CommandTypes.MANAGE_GUILD,
@@ -61,9 +62,11 @@ const channelCommand: SubCommandHandler = async (i, guild, language, currency) =
 
   // send current free games to the newly set channel
   const games = await db.games.get.free();
-  games.length &&
-    (await executeHook(newChannelsHook, {
-      embeds: embeds.games.games(games, language, currency),
+  const gameEmbeds = embeds.games.games(games, language, currency);
+  gameEmbeds.length &&
+    (await executeWebhook({
+      webhookUrl: getWebhookUrl(newChannelsHook.id, newChannelsHook.token),
+      options: getMessage(updatedGuild, gameEmbeds),
     }));
 };
 
@@ -108,12 +111,13 @@ const threadCommand: SubCommandHandler = async (i, guild, language, currency) =>
   logger.discord({ embeds: [embeds.logs.channelSet(updatedGuild, i, channelId)] });
   await i.editReply({ embeds: [embeds.success.channelSet(threadId, language)] });
 
-  // send current free games to the newly set channel
+  // send current free games to the newly set thread
   const games = await db.games.get.free();
-  games.length &&
+  const gameEmbeds = embeds.games.games(games, language, currency);
+  gameEmbeds.length &&
     (await executeWebhook({
       webhookUrl: getWebhookUrl(updatedGuild.webhook!.id, updatedGuild.webhook!.token),
-      options: { embeds: embeds.games.games(games, language, currency) },
+      options: getMessage(updatedGuild, gameEmbeds),
       threadId,
     }));
 };

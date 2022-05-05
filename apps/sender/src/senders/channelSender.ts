@@ -10,8 +10,8 @@ import {
   IGuild,
   IGame,
   getGuildCurrency,
+  getMessage,
 } from "shared";
-import { getDataToSend } from "../utils";
 
 export class ChannelSender {
   limitedAxios: RateLimitedAxiosInstance;
@@ -38,7 +38,7 @@ export class ChannelSender {
         getGuildLang(guild),
         getGuildCurrency(guild)
       );
-      const data = getDataToSend(guild, gameEmbeds);
+      const data = getMessage(guild, gameEmbeds);
 
       await wait(30);
 

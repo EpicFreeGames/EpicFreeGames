@@ -97,3 +97,8 @@ export interface User {
   tag: string;
   locale: string;
 }
+
+export interface IMessage {
+  content?: string;
+  embeds: MessageEmbed[];
+}

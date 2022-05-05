@@ -1,7 +1,6 @@
 import axios from "axios";
 import { config, constants } from "config";
 import { APIWebhook, RESTGetAPIChannelWebhooksResult } from "discord-api-types";
-import { WebhookMessageOptions } from "discord.js";
 import { IWebhook, discordApiRequest } from "shared";
 
 export const createWebhook = async (channelId: string): Promise<IWebhook | null> => {
@@ -54,6 +53,3 @@ export const hasWebhook = async (channelId: string): Promise<IWebhook | null> =>
 
 export const deleteWebhook = async (webhook: IWebhook) =>
   axios(discordApiRequest(`/webhooks/${webhook.id}/${webhook.token}`, "DELETE"));
-
-export const executeHook = async (webhook: IWebhook, options: WebhookMessageOptions) =>
-  axios(discordApiRequest(`/webhooks/${webhook.id}/${webhook.token}`, "POST", options));
