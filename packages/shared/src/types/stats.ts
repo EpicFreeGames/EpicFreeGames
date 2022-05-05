@@ -1,5 +1,3 @@
-import { IGuild } from "..";
-
 export interface ISendingStats {
   speed: number;
   sent: number;
@@ -37,17 +35,4 @@ export interface ICommandsRanIn {
     anHour: number;
     aDay: number;
   };
-}
-
-export interface TopTenGuild {
-  id: string;
-  name: string;
-  memberCount: number;
-  owner: string;
-  dbInfo: IGuild | null;
-}
-
-export interface StatsResponse {
-  guildCount: number | null;
-  topTenGuilds: TopTenGuild[] | null;
 }
