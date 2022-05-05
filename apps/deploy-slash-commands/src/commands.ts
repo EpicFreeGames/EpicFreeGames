@@ -24,6 +24,7 @@ export const slashCommands: RawCommand[] = [
     data: {
       name: "set",
       description: "Manage my settings on this server",
+      dm_permission: false,
       options: [
         {
           type: ApplicationCommandOptionTypes.SUB_COMMAND,
@@ -107,6 +108,7 @@ export const slashCommands: RawCommand[] = [
     data: {
       name: "remove",
       description: "Remove the set role, set channel or the set thread",
+      dm_permission: false,
       options: [
         {
           type: ApplicationCommandOptionTypes.SUB_COMMAND,
@@ -151,6 +153,7 @@ export const slashCommands: RawCommand[] = [
     data: {
       name: "debug",
       description: "Use this to get debug information",
+      dm_permission: false,
     },
   },
 
@@ -246,6 +249,7 @@ export const slashCommands: RawCommand[] = [
     data: {
       name: "settings",
       description: "Use this to get my settings on this server",
+      dm_permission: false,
     },
   },
 ];

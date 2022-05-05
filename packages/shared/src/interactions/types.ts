@@ -1,4 +1,4 @@
-import { ApplicationCommandData, MessageActionRow, MessageEmbed } from "discord.js";
+import { MessageActionRow, MessageEmbed } from "discord.js";
 import { IGuild } from "../data/types";
 import { Languages, Currencies } from "../localisation";
 
@@ -85,7 +85,7 @@ export type SubCommandHandler = (
 
 export interface RawCommand {
   type: CommandTypes;
-  data: ApplicationCommandData;
+  data: any;
 }
 
 export interface User {
