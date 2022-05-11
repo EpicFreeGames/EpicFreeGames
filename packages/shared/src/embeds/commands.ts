@@ -48,10 +48,10 @@ export const settings = (guild: IGuild | null,  language: Languages) =>
     title: "Settings",
     color: "#2f3136",
     description:
-      utils.bold("Channel/Thread: ") + 
-        (guild?.threadId ? `<#${guild?.threadId}>` 
-          : guild?.channelId ? `<#${guild?.channelId}>` 
-        : "Not set, you can set one with `/set channel` **OR** `/set thread`") + 
+      utils.bold("Channel/Thread: ") +
+        (guild?.threadId ? `<#${guild?.threadId}>`
+          : guild?.channelId ? `<#${guild?.channelId}>`
+        : "Not set, you can set one with `/set channel` **OR** `/set thread`") +
       "\n\n" +
       utils.bold("Role: ") + (guild?.roleId ? guild.roleId === "1" ? "@everyone" : `<@&${guild?.roleId}>` : "Not set, you can set a role with `/set role`") +
       "\n\n" +

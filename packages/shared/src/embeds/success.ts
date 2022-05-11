@@ -7,8 +7,8 @@ export const channelSet = (channelId: string, language: Languages) =>
   new MessageEmbed({
     title: "✅",
     color: "GREEN",
-    description: 
-      translate(`channelSetDesc.${language}`, { channelId }) + 
+    description:
+      translate(`channelSetDesc.${language}`, { channelId }) +
       utils.footer(language),
   });
 
@@ -17,8 +17,8 @@ export const roleSet = (role: string, language: Languages) =>
   new MessageEmbed({
     title: "✅",
     color: "GREEN",
-    description: 
-      translate(`roleSetDesc.${language}`, { role }) + 
+    description:
+      translate(`roleSetDesc.${language}`, { role }) +
       utils.footer(language),
   });
 
@@ -27,7 +27,7 @@ export const languageSet = (language: Languages) =>
   new MessageEmbed({
     title: translate(`languageSetTitle.${language}`, { language: LanguagesWithFlags[language] }),
     color: "GREEN",
-    description: 
-      translate(`languageSetDesc.${language}`) + 
+    description:
+      translate(`languageSetDesc.${language}`) +
       utils.footer(language),
   });

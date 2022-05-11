@@ -4,7 +4,7 @@ import { IStats, TopTenGuild, ICommandsRanIn } from "../types/stats";
 import { utils } from "./utils";
 
 // prettier-ignore
-export const stats = (stats: IStats) => 
+export const stats = (stats: IStats) =>
   new MessageEmbed({
     title: "Stats",
     color: "#2f3136",
