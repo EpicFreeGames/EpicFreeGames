@@ -5,6 +5,7 @@ import { MessageEmbed, MessageEmbedOptions } from "discord.js";
 import { IGame, IGuild } from "./data/types";
 import { IMessage } from "./interactions/types";
 import { Currencies } from "./localisation";
+import fs from "fs/promises";
 
 export const discordApiBaseUrl = "https://discord.com/api/v9";
 
@@ -83,3 +84,12 @@ export const getMessage = (guild: IGuild | null, embeds: MessageEmbed[]): IMessa
 
   return data;
 };
+
+export const getJson = async (path: string) => {
+  const json = await fs.readFile(path, "utf8");
+
+  return JSON.parse(json);
+};
+
+export const saveJson = (path: string, data: any) =>
+  fs.writeFile(path, JSON.stringify(data, null, 2));
