@@ -40,19 +40,42 @@ export const initTranslations = async () => {
   const resources: any = {};
 
   for (const lngCode in crowdinTranslations) {
-    for (const key in crowdinTranslations[lngCode][0].content) {
+    for (const key in english) {
       let translation = crowdinTranslations[lngCode][0].content[key];
 
       // if crowdin doesn't have a translation, use the old one
       if (translation === english[key]) {
         translation = old[lngCode][key];
+
+        // if the old one doesn't exist, use the english one
+        if (!translation) {
+          translation = english[key];
+        }
       }
 
       if (!resources[lngCode]) {
         resources[lngCode] = {};
       }
 
-      resources[lngCode][key] = translation;
+      resources[lngCode].translation = {
+        [key]: translation,
+      };
+    }
+  }
+
+  for (const lang in resources) {
+    const value = resources[lang].translation;
+
+    if (value.invite === english.invite) {
+      resources[lang].translation = {
+        ...resources[lang].translation,
+        footer: old[lang].translation.footer,
+      };
+    } else {
+      resources[lang].translation = {
+        ...resources[lang].translation,
+        footer: createFooter(value.invite, value.vote, value.support, value.website),
+      };
     }
   }
 
@@ -62,6 +85,34 @@ export const initTranslations = async () => {
     supportedLngs: crowdinLangs,
     resources,
   });
+};
+
+export const translate2 = (key: string, language: Languages, vars?: any) => {
+  const t = i18next.getFixedT(language);
+
+  let translation = t(key);
+
+  if (!vars) return translation;
+
+  let toReturn: string = translation;
+
+  for (const variable of Object.keys(vars)) {
+    toReturn = toReturn.replace(`<${variable}>`, vars[variable]);
+  }
+
+  return toReturn;
+};
+
+const createFooter = (invite: string, vote: string, support: string, website: string) => {
+  const list = [invite, vote, support, website];
+  const concatted = list.join("");
+  const separator = " • ";
+
+  if (concatted.length >= 39) {
+    return list.slice(0, 2).join(separator) + "\n" + list.slice(1).join(separator);
+  }
+
+  return list.join(separator);
 };
 
 export const getGuildLang = (guild: IGuild) => {
