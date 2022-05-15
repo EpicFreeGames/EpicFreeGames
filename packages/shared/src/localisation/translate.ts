@@ -84,23 +84,19 @@ export const initTranslations = async () => {
     fallbackLng: "en",
     supportedLngs: crowdinLangs,
     resources,
+    interpolation: {
+      prefix: "<",
+      suffix: ">",
+    },
   });
 };
 
 export const translate2 = (key: string, language: Languages, vars?: any) => {
   const t = i18next.getFixedT(language);
 
-  let translation = t(key);
+  let translation = t(key, vars);
 
-  if (!vars) return translation;
-
-  let toReturn: string = translation;
-
-  for (const variable of Object.keys(vars)) {
-    toReturn = toReturn.replace(`<${variable}>`, vars[variable]);
-  }
-
-  return toReturn;
+  return translation;
 };
 
 const createFooter = (invite: string, vote: string, support: string, website: string) => {
