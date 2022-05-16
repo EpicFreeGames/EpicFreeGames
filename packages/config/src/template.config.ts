@@ -1,6 +1,8 @@
 import { IConfig } from "./types";
 
 export const config: IConfig = {
+  crowdinDistHash: "",
+
   interactionsPort: 0,
   senderPort: 0,
   clientPort: 0,

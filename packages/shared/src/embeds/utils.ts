@@ -1,20 +1,17 @@
-import { Languages, translate } from "../localisation";
+import { Languages, t } from "../localisation";
 import { constants } from "config";
 
 export const utils = {
   footer: (language: Languages) =>
     "\n\n" +
-    translate(`footer.${language}`, {
+    t("footer", language, {
       inviteAddress: constants.links.botInvite,
       serverAddress: constants.links.serverInvite,
       voteAddress: constants.links.vote,
       website: constants.links.website,
     }),
 
-  redirectToLauncher: (slug: string) =>
-    `[Epic Launcher](${constants.links.launcherRedirect}${slug})`,
-
-  redirectToBrowser: (slug: string) => `[Epicgames.com](${constants.links.browserRedirect}${slug})`,
+  link: (text: any, url: string) => `[${text}](${url})`,
 
   relativeTimestamp: (timestamp: number) => `<t:${timestamp}:R>`,
   longTime: (timestamp: number) => `<t:${timestamp}:T>`,

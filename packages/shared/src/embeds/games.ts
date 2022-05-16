@@ -1,8 +1,9 @@
 import { IGame } from "../data/types/Game";
-import { Languages, Currencies, translate } from "../localisation";
+import { Languages, Currencies, t } from "../localisation";
 import { MessageEmbed } from "discord.js";
 import { utils } from "./utils";
 import { getGamePrice } from "../utils";
+import { constants } from "config";
 
 export const games = (
   games: IGame[],
@@ -26,10 +27,10 @@ export const games = (
         url: game.imageUrl,
       },
       description:
-        translate(`openIn.${language}`) + "\n" +
-        utils.redirectToBrowser(game.slug) +
+        t("open_in", language) + "\n" +
+        utils.link("Epicgames.com", `${constants.links.browserRedirect}${game.slug}`) +
         " • " +
-        utils.redirectToLauncher(game.slug) +
+        utils.link("Epic Launcher", `${constants.links.launcherRedirect}${game.slug}`) +
 
         "\n\n" +
 
@@ -38,7 +39,7 @@ export const games = (
 
         "\n\n" +
 
-        `💰 ${utils.bold(`${utils.strike(getGamePrice(game, currency))} -> ${translate(`free.${language}`)}`)}!` +
+        `💰 ${utils.bold(`${utils.strike(getGamePrice(game, currency))} -> ${t("free", language)}`)}!` +
 
         "\n\n" +
 
@@ -56,14 +57,14 @@ export const games = (
 
 export const noFreeGames = (language: Languages) =>
   new MessageEmbed({
-    title: translate(`noFreeGames.${language}`),
+    title: t("no_free_games", language),
     color: "DARK_RED",
     description: ":(" + utils.footer(language),
   });
 
 export const noUpcomingGames = (language: Languages) =>
   new MessageEmbed({
-    title: translate(`noUpGames.${language}`),
+    title: t("no_upcoming_games", language),
     color: "DARK_RED",
     description: ":(" + utils.footer(language),
   });

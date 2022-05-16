@@ -1,11 +1,13 @@
 import mongoose from "mongoose";
 import { config } from "config";
 import { createApp } from "./app";
-import { logger } from "shared";
+import { initTranslations, logger } from "shared";
 
 (async () => {
   await mongoose.connect(config.mongoUrl);
   console.log("Connected to database (i-endpoint)");
+
+  await initTranslations();
 
   const app = createApp();
 

@@ -24,6 +24,7 @@
     "noImplicitThis": true,
     "noPropertyAccessFromIndexSignature": false,
     "noFallthroughCasesInSwitch": true,
+    "resolveJsonModule": true,
 
     "useUnknownInCatchVariables": false,
 

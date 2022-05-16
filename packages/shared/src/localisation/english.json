@@ -17,15 +17,20 @@
   "manage_webhooks": "Manage webhooks",
 
   "role_set_success_desc": "I'll mention/ping <role> when notifying about free games!",
-  "channel_set_success_desc": "I'll start notifying about free games on <channel>!",
+  "channel_thread_set_success_desc": "I'll start notifying about free games on <channel>!",
 
-  "channel_remove_success_desc": "I'll no longer notify about free games on this server.",
+  "channel_thread_remove_success_desc": "I'll no longer notify about free games on this server.",
   "role_remove_success_desc": "I'll no longer mention/ping <role> when notifying about free games",
 
   "updated_settings": "Here are the updated settings:",
   "current_settings": "Here are the current settings:",
 
-  "help": "Help",
+  "channel_thread_not_set": "Not set, you can set one with `/set channel` or `/set thread`",
+  "role_not_set": "Not set, you can set one with `/set role`",
+
+  "too_many_webhooks": "Too many webhooks",
+  "ten_webhooks_only": "A channel can have 10 webhooks at most. Please remove one, and try again.",
+
   "open_in": "Open in:",
   "free": "Free",
 
@@ -39,9 +44,9 @@
   "role": "Role",
   "language": "Language",
   "currency": "Currency",
-  "settings": "Settings",
 
-  "invite_text": "Invite me!",
+  "settings": "Settings",
+  "help": "Help",
 
   "webhooks_notification": "I support webhooks nowadays! They allow me to send the notifications a lot faster. Server admins, please do `/set channel` (or `/set thread`) to enable notifications through webhooks.",
   "slash_notification": "Slash (/) commands not working? (Click here) to add the bot again to your server with the slash commands enabled. (Kicking is not required)"

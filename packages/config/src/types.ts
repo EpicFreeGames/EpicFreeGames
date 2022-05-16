@@ -1,6 +1,8 @@
 export interface IConfig {
   [key: string]: any;
 
+  crowdinDistHash: string;
+
   interactionsPort: number;
   senderPort: number;
   clientPort: number;

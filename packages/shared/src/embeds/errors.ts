@@ -1,5 +1,5 @@
 import { MessageEmbed } from "discord.js";
-import { Languages, translate } from "../localisation";
+import { Languages, t } from "../localisation";
 import { utils } from "./utils";
 import { constants } from "config";
 
@@ -8,11 +8,11 @@ export const missingPermissions = (channelId: string, language: Languages): Mess
     title: "❌",
     color: "DARK_RED",
     description:
-      translate(`missingPermsDesc.${language}`, { channelId }) +
+      t("make_sure_perms", language, { channelId }) +
       "\n\n" +
-      utils.bold(`${translate(`manageWebhooks.${language}`)}`) +
+      utils.bold(`${t("manage_webhooks", language)}`) +
       "\n\n" +
-      translate(`clickHere.${language}`, { serverAddress: constants.links.serverInvite }),
+      utils.link(t("support_click_here", language), constants.links.serverInvite),
   });
 
 export const unauthorized = {
@@ -20,7 +20,7 @@ export const unauthorized = {
     new MessageEmbed({
       title: "❌",
       color: "DARK_RED",
-      description: `${utils.bold("Admin only")} command` + utils.footer(language),
+      description: t("bot_admins_only", language) + utils.footer(language),
     }),
 
   manageGuildCommand: (language: Languages) =>
@@ -28,34 +28,37 @@ export const unauthorized = {
       title: "❌",
       color: "DARK_RED",
       description:
-        translate(`noManageGuild.${language}`) +
+        t("manage_guild_needed", language) +
         "\n\n" +
-        translate(`clickHere.${language}`, { serverAddress: constants.links.serverInvite }) +
+        utils.link(t("support_click_here", language), constants.links.serverInvite) +
         utils.footer(language),
     }),
 };
 
 export const maxNumberOfWebhooks = (language: Languages) =>
   new MessageEmbed({
-    title: "Too many webhooks",
+    title: t("too_many_webhooks", language),
     color: "RED",
-    description: "A channel can only have 10 webhooks." + utils.footer(language),
+    description:
+      t("ten_webhooks_only", language) +
+      "\n\n" +
+      utils.link(t("support_click_here", language), constants.links.serverInvite) +
+      utils.footer(language),
   });
 
 export const channelNotSet = (language: Languages) =>
   new MessageEmbed({
     title: "❌",
     color: "RED",
-    description: translate(`noChannelSet.${language}`) + utils.footer(language),
+    description: t("set_channel_first", language) + utils.footer(language),
   });
 
 export const mustVote = (language: Languages) =>
   new MessageEmbed({
-    title: translate(`mustVoteTitle.${language}`),
+    title: t("vote_needed_title", language),
     color: "RED",
     description:
-      translate(`mustVoteDesc.${language}`, { voteAddress: constants.links.vote }) +
-      utils.footer(language),
+      utils.link(t("vote_click_here", language), constants.links.vote) + utils.footer(language),
   });
 
 export const genericError = () =>

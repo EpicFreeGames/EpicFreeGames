@@ -1,5 +1,5 @@
 import { MessageEmbed } from "discord.js";
-import { Languages, LanguagesWithFlags, Currencies, CurrencyData } from "../localisation";
+import { Languages, LanguageNames, Currencies, CurrencyData } from "../localisation";
 import { IGuild, ICommandLog } from "../data/types";
 import { CommandInteraction } from "../interactions/types";
 import { utils } from "./utils";
@@ -9,7 +9,7 @@ const addDbInfo = (guild: IGuild, embed: MessageEmbed) => {
     "\n\n" +
     utils.title("DB Info") +
     "\n" +
-    `Language: ${LanguagesWithFlags[guild.language]}` +
+    `Language: ${LanguageNames[guild.language]}` +
     "\n" +
     `Currency: ${CurrencyData[guild.currency].name}` +
     "\n" +
@@ -61,6 +61,33 @@ export const channelSet = (guild: IGuild | null, i: CommandInteraction, channelI
   return embed;
 };
 
+export const threadSet = (
+  guild: IGuild | null,
+  i: CommandInteraction,
+  parentChannelId: string,
+  threadId: string
+) => {
+  const embed = new MessageEmbed({
+    title: "Channel set",
+    description:
+      utils.title("Info") +
+      "\n" +
+      `Executor: ${i.user.tag}` +
+      "\n" +
+      `Executor ID: ${i.user.id}` +
+      "\n" +
+      `Guild ID: ${i.guildId}` +
+      "\n" +
+      `Parent channel ID: ${parentChannelId}` +
+      "\n" +
+      `Thread ID: ${threadId}`,
+  }).setTimestamp();
+
+  if (guild) addDbInfo(guild, embed);
+
+  return embed;
+};
+
 export const roleSet = (guild: IGuild | null, i: CommandInteraction, roleId: string) => {
   const embed = new MessageEmbed({
     title: "Role set",
@@ -93,7 +120,7 @@ export const languageSet = (guild: IGuild | null, i: CommandInteraction, languag
       "\n" +
       `Guild ID: ${i.guildId}` +
       "\n" +
-      `Set language: ${LanguagesWithFlags[language]}`,
+      `Set language: ${LanguageNames[language]}`,
   }).setTimestamp();
 
   if (guild) addDbInfo(guild, embed);

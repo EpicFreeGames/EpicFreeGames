@@ -1,5 +1,5 @@
 import { MessageEmbed } from "discord.js";
-import { translate, Languages, LanguagesWithFlags } from "../localisation";
+import { Languages, t } from "../localisation";
 import { utils } from "./utils";
 
 // prettier-ignore
@@ -8,8 +8,9 @@ export const channelSet = (channelId: string, language: Languages) =>
     title: "✅",
     color: "GREEN",
     description: 
-      translate(`channelSetDesc.${language}`, { channelId }) + 
-      utils.footer(language),
+      t("channel_thread_set_success_desc", language, { channelId }) + 
+      "\n\n" +
+      utils.bold(t("updated_settings", language))
   });
 
 // prettier-ignore
@@ -18,16 +19,21 @@ export const roleSet = (role: string, language: Languages) =>
     title: "✅",
     color: "GREEN",
     description: 
-      translate(`roleSetDesc.${language}`, { role }) + 
-      utils.footer(language),
+      t("role_set_success_desc", language, { role }) + 
+      "\n\n" +
+      utils.bold(t("updated_settings", language))
   });
 
-// prettier-ignore
-export const languageSet = (language: Languages) =>
+export const updatedSettings = (language: Languages) =>
   new MessageEmbed({
-    title: translate(`languageSetTitle.${language}`, { language: LanguagesWithFlags[language] }),
+    title: "✅",
     color: "GREEN",
-    description: 
-      translate(`languageSetDesc.${language}`) + 
-      utils.footer(language),
+    description: utils.bold(t("updated_settings", language)),
+  });
+
+export const currentSettings = (language: Languages) =>
+  new MessageEmbed({
+    title: "✅",
+    color: "GREEN",
+    description: utils.bold(t("current_settings", language)),
   });

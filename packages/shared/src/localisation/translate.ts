@@ -1,63 +1,49 @@
-import { getJson, isEnum } from "../utils";
-import { Languages, Variables, Join, PathKeys, Currencies } from "./types";
-import { Translations, translations } from "./translations";
+import { isEnum } from "../utils";
+import { Languages, Currencies } from "./types";
 import { IGuild } from "../data/types";
 import { config } from "config";
 import OtaClient from "@crowdin/ota-client";
 import i18next from "i18next";
 
-export function translate<P extends Join<PathKeys<Translations>, ".">>(
-  paths: P,
-  vars?: Record<Variables<Translations, P, ".">, string>
-) {
-  const key = paths.split(".")[0] as keyof Translations;
-  const language = paths.split(".")[1] as Languages;
-
-  let translation = translations[key][language];
-
-  if (!vars) return translation;
-
-  let toReturn: string = translation;
-
-  for (const variable of Object.keys(vars)) {
-    toReturn = toReturn.replace(
-      `{${variable}}`,
-      vars[variable as keyof Record<Variables<Translations, P, ".">, string>]
-    );
-  }
-
-  return toReturn;
-}
+import english from "./english.json";
+import old from "./old.json";
 
 export const initTranslations = async () => {
   const client = new OtaClient(config.crowdinDistHash);
 
-  const english = await getJson("./english.json");
-  const old = await getJson("./old.json");
-
-  const crowdinLangs = await client.listLanguages();
   const crowdinTranslations = await client.getTranslations();
-  const resources: any = {};
+  const resources: any = {
+    en: {
+      translation: english,
+    },
+  };
 
   for (const lngCode in crowdinTranslations) {
+    if (lngCode === "en") continue;
+
+    let lang = lngCode.slice(0, 2); // es-ES -> es
+
     for (const key in english) {
       let translation = crowdinTranslations[lngCode][0].content[key];
 
       // if crowdin doesn't have a translation, use the old one
-      if (translation === english[key]) {
-        translation = old[lngCode][key];
+      if (translation === (english as any)[key]) {
+        translation = (old as any)[lang]?.translation[key];
 
         // if the old one doesn't exist, use the english one
         if (!translation) {
-          translation = english[key];
+          translation = (english as any)[key];
         }
       }
 
-      if (!resources[lngCode]) {
-        resources[lngCode] = {};
+      if (!resources[lang]?.translation) {
+        resources[lang] = {
+          translation: {},
+        };
       }
 
-      resources[lngCode].translation = {
+      resources[lang].translation = {
+        ...resources[lang].translation,
         [key]: translation,
       };
     }
@@ -65,11 +51,14 @@ export const initTranslations = async () => {
 
   for (const lang in resources) {
     const value = resources[lang].translation;
+    console.log("value", value);
+    console.log("thing", (old as any)[lang]);
+    console.log("lang", lang);
 
     if (value.invite === english.invite) {
       resources[lang].translation = {
         ...resources[lang].translation,
-        footer: old[lang].translation.footer,
+        footer: (old as any)[lang].translation.footer,
       };
     } else {
       resources[lang].translation = {
@@ -82,33 +71,49 @@ export const initTranslations = async () => {
   await i18next.init({
     lng: "en",
     fallbackLng: "en",
-    supportedLngs: crowdinLangs,
     resources,
-    interpolation: {
-      prefix: "<",
-      suffix: ">",
-    },
   });
 };
 
-export const translate2 = (key: string, language: Languages, vars?: any) => {
+export const t = (key: string, language: Languages, vars?: any) => {
   const t = i18next.getFixedT(language);
 
-  let translation = t(key, vars);
+  const withoutVars = t(key);
 
-  return translation;
+  if (!vars) return withoutVars;
+
+  let toReturn = withoutVars;
+
+  for (const variable of Object.keys(vars)) {
+    toReturn = toReturn.replace(`<${variable}>`, vars[variable]);
+  }
+
+  return toReturn;
 };
 
 const createFooter = (invite: string, vote: string, support: string, website: string) => {
   const list = [invite, vote, support, website];
-  const concatted = list.join("");
+  const withVars = [
+    `[${invite}](<inviteAddress>)`,
+    `[${vote}](<voteAddress>)`,
+    `[${support}](<serverAddress>)`,
+    `[${website}](<website>)`,
+  ];
   const separator = " • ";
+  const concatted = list.join(separator);
+  const threeConcatted = list.slice(0, 3).join(separator);
 
-  if (concatted.length >= 39) {
-    return list.slice(0, 2).join(separator) + "\n" + list.slice(1).join(separator);
-  }
+  // if the footer is too long, try to break it,
+  // otherwise, just use the full footer
 
-  return list.join(separator);
+  if (concatted.length >= 39)
+    if (threeConcatted.length >= 39)
+      // 2 lines, with one on the second line
+      return withVars.slice(0, 2).join(separator) + "\n" + withVars.slice(2).join(separator);
+    // 2 lines, with two on the second line
+    else return withVars.slice(0, 3).join(separator) + "\n" + withVars.slice(3).join(separator);
+
+  return withVars.join(separator);
 };
 
 export const getGuildLang = (guild: IGuild) => {
