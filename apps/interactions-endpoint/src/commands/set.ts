@@ -1,5 +1,3 @@
-import axios from "axios";
-import { config, constants } from "config";
 import {
   CommandTypes,
   db,
@@ -7,7 +5,6 @@ import {
   logger,
   SlashCommand,
   SubCommandHandler,
-  discordApiRequest,
   isEnum,
   Languages,
   Currencies,
@@ -15,6 +12,13 @@ import {
   getWebhookUrl,
   getMessage,
 } from "shared";
+import {
+  getParentId,
+  userHasVoted,
+  getRole,
+  makeSenseOfRole,
+  checkForErrorsAndCommunicate,
+} from "../utils/commandUtils";
 import { createWebhook, deleteWebhook, hasWebhook } from "../utils/webhooks";
 
 export const command: SlashCommand = {
@@ -35,30 +39,27 @@ const channelCommand: SubCommandHandler = async (i, guild, language, currency) =
   await i.deferReply({ ephemeral: true });
   const channelId = i.options.getChannelId("channel", true);
 
-  let newChannelsHook = await hasWebhook(channelId).catch((err: any) => err.message);
+  let newChannelsHook = await hasWebhook(channelId).catch((err) => err.message);
 
-  // 50013 = Missing permissions | 50001 = Missing access
-  if (newChannelsHook === "50013" || newChannelsHook === "50001")
-    return i.editReply({ embeds: [embeds.errors.missingPermissions(channelId, language)] });
+  if (await checkForErrorsAndCommunicate(newChannelsHook, i, language, channelId)) return;
 
   if (guild?.webhook && guild?.channelId !== channelId)
-    await deleteWebhook(guild.webhook).catch((err: any) => db.guilds.remove.webhook(i.guildId!));
+    await deleteWebhook(guild.webhook).catch((err) => db.guilds.remove.webhook(i.guildId!));
 
-  newChannelsHook ??= await createWebhook(channelId).catch((err: any) => err.message);
-
+  newChannelsHook ??= await createWebhook(channelId).catch((err) => err.message);
   if (!newChannelsHook) return i.editReply({ embeds: [embeds.errors.genericError()] });
 
-  if (newChannelsHook === "50013" || newChannelsHook === "50001")
-    return i.editReply({ embeds: [embeds.errors.missingPermissions(channelId, language)] });
-
-  // 30007 = Maximum number of webhooks reached (10)
-  if (newChannelsHook === "30007")
-    return i.editReply({ embeds: [embeds.errors.maxNumberOfWebhooks(language)] });
+  if (await checkForErrorsAndCommunicate(newChannelsHook, i, language, channelId)) return;
 
   const updatedGuild = await db.guilds.set.webhook(i.guildId!, newChannelsHook, channelId, null);
 
   logger.discord({ embeds: [embeds.logs.channelSet(updatedGuild, i, channelId)] });
-  await i.editReply({ embeds: [embeds.success.channelSet(channelId, language)] });
+  await i.editReply({
+    embeds: [
+      embeds.success.channelSet(channelId, language),
+      embeds.commands.settings(updatedGuild, language),
+    ],
+  });
 
   // send current free games to the newly set channel
   const games = await db.games.get.free();
@@ -75,31 +76,21 @@ const threadCommand: SubCommandHandler = async (i, guild, language, currency) =>
   const threadId = i.options.getChannelId("thread", true);
 
   const channelId = await getParentId(threadId).catch((err) => err.message);
-
   if (!channelId) return i.editReply({ embeds: [embeds.errors.genericError()] });
 
-  if (channelId === "50013" || channelId === "50001")
-    return i.editReply({ embeds: [embeds.errors.missingPermissions(channelId, language)] });
+  if (await checkForErrorsAndCommunicate(channelId, i, language, channelId)) return;
 
   let newChannelsHook = await hasWebhook(channelId).catch((err: any) => err.message);
 
-  // 50013 = Missing permissions | 50001 = Missing access
-  if (newChannelsHook === "50013" || newChannelsHook === "50001")
-    return i.editReply({ embeds: [embeds.errors.missingPermissions(channelId, language)] });
+  if (await checkForErrorsAndCommunicate(channelId, i, language, channelId)) return;
 
   if (guild?.webhook && guild?.channelId !== channelId)
     await deleteWebhook(guild.webhook).catch((err: any) => db.guilds.remove.webhook(i.guildId!));
 
   newChannelsHook ??= await createWebhook(channelId).catch((err: any) => err.message);
-
   if (!newChannelsHook) return i.editReply({ embeds: [embeds.errors.genericError()] });
 
-  if (newChannelsHook === "50013" || newChannelsHook === "50001")
-    return i.editReply({ embeds: [embeds.errors.missingPermissions(channelId, language)] });
-
-  // 30007 = Maximum number of webhooks reached (10)
-  if (newChannelsHook === "30007")
-    return i.editReply({ embeds: [embeds.errors.maxNumberOfWebhooks(language)] });
+  if (await checkForErrorsAndCommunicate(channelId, i, language, channelId)) return;
 
   const updatedGuild = await db.guilds.set.webhook(
     i.guildId!,
@@ -108,8 +99,13 @@ const threadCommand: SubCommandHandler = async (i, guild, language, currency) =>
     threadId
   );
 
-  logger.discord({ embeds: [embeds.logs.channelSet(updatedGuild, i, channelId)] });
-  await i.editReply({ embeds: [embeds.success.channelSet(threadId, language)] });
+  logger.discord({ embeds: [embeds.logs.threadSet(updatedGuild, i, channelId, threadId)] });
+  await i.editReply({
+    embeds: [
+      embeds.success.channelSet(threadId, language),
+      embeds.commands.settings(updatedGuild, language),
+    ],
+  });
 
   // send current free games to the newly set thread
   const games = await db.games.get.free();
@@ -132,7 +128,13 @@ const languageCommand: SubCommandHandler = async (i, guild, language, currency) 
   const updatedGuild = await db.guilds.set.language(i.guildId!, givenLanguage);
 
   logger.discord({ embeds: [embeds.logs.languageSet(updatedGuild, i, givenLanguage)] });
-  return i.reply({ embeds: [embeds.success.languageSet(givenLanguage)], ephemeral: true });
+  return i.reply({
+    embeds: [
+      embeds.success.updatedSettings(language),
+      embeds.commands.settings(updatedGuild, updatedGuild.language),
+    ],
+    ephemeral: true,
+  });
 };
 
 const currencyCommand: SubCommandHandler = async (i, guild, language, currency) => {
@@ -147,7 +149,13 @@ const currencyCommand: SubCommandHandler = async (i, guild, language, currency) 
   const updatedGuild = await db.guilds.set.currency(i.guildId!, givenCurrency);
 
   logger.discord({ embeds: [embeds.logs.currencySet(updatedGuild, i, givenCurrency)] });
-  return i.reply({ content: "✅", ephemeral: true });
+  return i.reply({
+    embeds: [
+      embeds.success.updatedSettings(language),
+      embeds.commands.settings(updatedGuild, language),
+    ],
+    ephemeral: true,
+  });
 };
 
 const roleCommand: SubCommandHandler = async (i, guild, language, currency) => {
@@ -167,46 +175,11 @@ const roleCommand: SubCommandHandler = async (i, guild, language, currency) => {
   const updatedGuild = await db.guilds.set.role(i.guildId!, useful.toDb);
 
   logger.discord({ embeds: [embeds.logs.roleSet(updatedGuild, i, useful.toDb)] });
-  return i.editReply({ embeds: [embeds.success.roleSet(useful.embed, language)], ephemeral: true });
-};
-
-const makeSenseOfRole = (role: any) => {
-  if (role.name === "@everyone") return { embed: "@everyone", toDb: "1" };
-  return { embed: `<@&${role.id}>`, toDb: role.id };
-};
-
-const userHasVoted = async (userId: string): Promise<boolean> => {
-  try {
-    const res = await axios.get(
-      `https://top.gg/api/bots/${constants.userIds.prod}/check?userId=${userId}`,
-      {
-        headers: { Authorization: config.topGGAuth },
-      }
-    );
-
-    if (res?.data) return res?.data?.voted === 1;
-
-    return true;
-  } catch (err: any) {
-    console.log("topgg vote check failed", err?.message);
-    return true;
-  }
-};
-
-const getRole = async (guildId: string, roleId: string) => {
-  const res = await axios(discordApiRequest(`/guilds/${guildId}/roles`, "GET"));
-
-  return res?.data?.find((role: any) => role.id === roleId);
-};
-
-const getParentId = async (channelId: string) => {
-  try {
-    const res = await axios(discordApiRequest(`/channels/${channelId}`, "GET"));
-
-    return res?.data?.parent_id;
-  } catch (err) {
-    if (err?.respnose && err?.response?.data?.code) throw new Error(err.response.data.code);
-
-    return null;
-  }
+  return i.editReply({
+    embeds: [
+      embeds.success.roleSet(useful.embed, language),
+      embeds.commands.settings(updatedGuild, language),
+    ],
+    ephemeral: true,
+  });
 };

@@ -1,3 +1,4 @@
+import { embeds } from "shared";
 import { CommandTypes, db, SlashCommand, SubCommandHandler } from "shared";
 import { deleteWebhook } from "../utils/webhooks";
 
@@ -14,16 +15,39 @@ export const command: SlashCommand = {
 
 const channelCommand: SubCommandHandler = async (i, guild, language, currency) => {
   if (guild?.channelId) {
-    await db.guilds.remove.webhook(i.guildId!);
+    const updatedGuild = await db.guilds.remove.webhook(i.guildId!);
 
     if (guild?.webhook) await deleteWebhook(guild.webhook);
+
+    return i.reply({
+      embeds: [
+        embeds.success.updatedSettings(language),
+        embeds.commands.settings(updatedGuild, language),
+      ],
+      ephemeral: true,
+    });
   }
 
-  return i.reply({ content: "✅", ephemeral: true });
+  return i.reply({
+    embeds: [embeds.success.currentSettings(language), embeds.commands.settings(guild, language)],
+    ephemeral: true,
+  });
 };
 
 const roleCommand: SubCommandHandler = async (i, guild, language, currency) => {
-  await db.guilds.remove.role(i.guildId!);
+  const updatedGuild = await db.guilds.remove.role(i.guildId!);
 
-  return i.reply({ content: "✅", ephemeral: true });
+  if (updatedGuild.roleId === guild?.roleId)
+    return i.reply({
+      embeds: [embeds.success.currentSettings(language), embeds.commands.settings(guild, language)],
+      ephemeral: true,
+    });
+
+  return i.reply({
+    embeds: [
+      embeds.success.updatedSettings(language),
+      embeds.commands.settings(updatedGuild, language),
+    ],
+    ephemeral: true,
+  });
 };
