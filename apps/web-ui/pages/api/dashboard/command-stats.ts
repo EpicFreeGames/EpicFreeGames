@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { db, ICommandsRanIn } from "shared";
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+const Handler = async (req: NextApiRequest, res: NextApiResponse) => {
   await db.connect();
 
   const lastHour = await db.logs.commands.get.lastHour();
@@ -22,3 +22,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   res.status(200).json(stats);
 };
+
+export default Handler;

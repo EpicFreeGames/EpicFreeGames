@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { db } from "shared";
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+const Handler = async (req: NextApiRequest, res: NextApiResponse) => {
   await db.connect();
 
   res.status(200).json({
@@ -14,3 +14,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     hasSetThread: await db.guilds.get.counts.hasSetThread(),
   });
 };
+
+export default Handler;
