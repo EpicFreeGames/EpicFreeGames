@@ -2,7 +2,7 @@ import { Title } from "@mantine/core";
 import { FC } from "react";
 import { Card } from "./Card";
 import CountUp from "react-countup";
-import { FlexDiv } from "./Containers";
+import { FlexDiv } from "./FlexDiv";
 
 interface Props {
   description: string;

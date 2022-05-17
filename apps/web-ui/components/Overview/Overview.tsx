@@ -4,7 +4,7 @@ import { Sendable } from "./Stats/Sendable";
 import { ChannelSet } from "./Stats/ChannelSet";
 import { WebhookSet } from "./Stats/WebhookSet";
 import { CommandsRan } from "./Stats/CommandsRan";
-import { FlexDiv } from "../Containers";
+import { FlexDiv } from "../FlexDiv";
 
 export const Overview = () => {
   return (
