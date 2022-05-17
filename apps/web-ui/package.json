@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev:front": "next dev",
-    "build:front": "next build",
-    "start:front": "next start",
+    "dev": "next dev",
+    "buildprod": "next build",
+    "start": "next start",
     "lint": "next lint",
     "clean": "rm -rf node_modules && rm -rf .next"
   },
@@ -18,6 +18,7 @@
     "@mantine/spotlight": "^4.2.5",
     "config": "*",
     "cookies-next": "^2.0.4",
+    "formik": "^2.2.9",
     "next": "12.1.5",
     "next-auth": "^4.3.4",
     "react": "18.1.0",
@@ -26,7 +27,8 @@
     "recharts": "^2.1.9",
     "shared": "*",
     "swr": "^1.3.0",
-    "tabler-icons-react": "^1.48.0"
+    "tabler-icons-react": "^1.48.0",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@types/node": "17.0.33",

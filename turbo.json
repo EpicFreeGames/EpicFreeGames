@@ -2,7 +2,11 @@
   "pipeline": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**"]
+      "outputs": ["dist/**", ".next/**"]
+    },
+    "buildprod": {
+      "dependsOn": ["^buildprod"],
+      "outputs": ["dist/**", ".next/**"]
     },
     "dev": {
       "dependsOn": ["build"],
@@ -17,16 +21,8 @@
     "clean": {
       "cache": false
     },
-    "dev:front": {
-      "dependsOn": ["^dev:front"],
-      "cache": false
-    },
-    "build:front": {
-      "dependsOn": ["^build:front"],
-      "cache": false
-    },
-    "start:front": {
-      "dependsOn": ["^start:front"],
+    "start": {
+      "dependsOn": ["^start"],
       "cache": false
     }
   }
