@@ -30,6 +30,7 @@ export interface IConfig {
     discordClientId: string;
     discordClientSecret: string;
     nextAuthSecret: string;
+    apiUrl: string;
   };
 }
 

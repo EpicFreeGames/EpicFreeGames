@@ -7,6 +7,8 @@ import { GetServerSidePropsContext } from "next";
 import { NotificationsProvider } from "@mantine/notifications";
 import { SessionProvider, useSession } from "next-auth/react";
 
+import "../global.css";
+
 const App = (props: AppProps & { colorScheme: ColorScheme }) => {
   const { Component, pageProps } = props;
   const [colorScheme, setColorScheme] = useState<ColorScheme>(props.colorScheme);

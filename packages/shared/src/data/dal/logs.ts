@@ -6,6 +6,7 @@ export const commands = {
   add: async (log: ICommandLog) => new CommandLogModel(log).save(),
   // prettier-ignore
   get: {
+    all: async () => CommandLogModel.find({}).countDocuments(),
     lastHour: async () => CommandLogModel.find({ createdAt: { $gte: new Date(Date.now() - 3600000) }}).countDocuments(),
     lastDay: async () => CommandLogModel.find({ createdAt: { $gte: new Date(Date.now() - 86400000) }}).countDocuments(),
     last7days: async () => CommandLogModel.find({ createdAt: { $gte: new Date(Date.now() - 604800000) }}).countDocuments(),

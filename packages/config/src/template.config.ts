@@ -30,5 +30,6 @@ export const config: IConfig = {
     discordClientId: "",
     discordClientSecret: "",
     nextAuthSecret: "",
+    apiUrl: "",
   },
 };
