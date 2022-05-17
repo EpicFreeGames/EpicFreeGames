@@ -1,5 +1,5 @@
 import { config } from "config";
-import { ICommandsRanIn, IStats } from "shared";
+import { ICommandsRanIn, IStats, ILanguageWithGuildCount } from "shared";
 import useSWR from "swr";
 
 export const fetcher = async (url: string) =>
@@ -21,4 +21,12 @@ export const useCommandStats = () => {
   });
 
   return { commandStats: data, isLoading: !error && !data, error };
+};
+
+export const useLanguages = () => {
+  const { data, error } = useSWR<ILanguageWithGuildCount[]>("/languages", fetcher, {
+    refreshInterval: 5000,
+  });
+
+  return { languages: data, isLoading: !error && !data, error };
 };

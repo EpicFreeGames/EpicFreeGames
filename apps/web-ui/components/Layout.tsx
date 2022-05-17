@@ -1,4 +1,5 @@
-import { createStyles } from "@mantine/core";
+import { createStyles, Title } from "@mantine/core";
+import Head from "next/head";
 import { FC, ReactNode } from "react";
 import { Menubar } from "./Menubar/Menubar";
 
@@ -20,18 +21,35 @@ const useStyles = createStyles((theme) => ({
     [theme.fn.largerThan("sm")]: {
       paddingLeft: "25px",
       paddingRight: "25px",
-      paddingTop: "6rem",
+      paddingTop: "5rem",
+    },
+  },
+  title: {
+    padding: "0 1rem",
+
+    [theme.fn.largerThan("xs")]: {
+      padding: "1rem 0",
     },
   },
 }));
 
-export const Layout: FC<{ children: ReactNode }> = ({ children }) => {
+export const Layout: FC<{ children: ReactNode; title: string }> = ({ children, title }) => {
   const { classes } = useStyles();
 
   return (
     <>
+      <Head>
+        <title>{title}</title>
+      </Head>
+
       <Menubar />
-      <main className={classes.main}>{children}</main>
+
+      <main className={classes.main}>
+        <Title order={1} className={classes.title}>
+          {title}
+        </Title>
+        {children}
+      </main>
     </>
   );
 };

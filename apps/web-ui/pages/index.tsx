@@ -4,7 +4,7 @@ import { Overview } from "../components/Overview/Overview";
 
 const Home: NextPage = () => {
   return (
-    <Layout>
+    <Layout title="Dashboard">
       <Overview />
     </Layout>
   );

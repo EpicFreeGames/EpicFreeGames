@@ -27,6 +27,7 @@ export const get = {
     hasChangedLanguage: async () => GuildModel.find({ language: { $ne: "en" } }).countDocuments(),
     hasChangedCurrency: async () => GuildModel.find({ currency: { $ne: "USD" } }).countDocuments(),
     hasSetThread: async () => GuildModel.find({ threadId: { $ne: null } }).countDocuments(),
+    hasLanguage: async (code: string) => GuildModel.find({ language: code }).countDocuments(),
   },
 };
 

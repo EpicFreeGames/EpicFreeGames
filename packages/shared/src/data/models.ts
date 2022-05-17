@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { IGame, GuildDocument, ICommandLog, SendingLogDocument } from "./types";
 import { Languages, Currencies } from "../localisation";
+import { CurrencyDocument, LanguageDocument } from "./types/Internationalization";
 
 export const rightMongo = mongoose;
 
@@ -75,6 +76,32 @@ export const SendingLogModel = mongoose.model<SendingLogDocument>(
         success: { type: Boolean, required: true },
         reason: { type: String, default: null },
       },
+    },
+    { timestamps: true }
+  )
+);
+
+export const LanguageModel = mongoose.model<LanguageDocument>(
+  "language",
+  new mongoose.Schema<LanguageDocument>(
+    {
+      code: { type: String, required: true, unique: true },
+      name: { type: String, required: true },
+      localizedName: { type: String, required: true },
+    },
+    { timestamps: true }
+  )
+);
+
+export const CurrencyModel = mongoose.model<CurrencyDocument>(
+  "currency",
+  new mongoose.Schema<CurrencyDocument>(
+    {
+      code: { type: String, required: true },
+      name: { type: String, required: true },
+      apiValue: { type: String, required: true },
+      inFrontOfPrice: { type: String, required: true },
+      afterPrice: { type: String, required: true },
     },
     { timestamps: true }
   )

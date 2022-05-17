@@ -14,17 +14,12 @@ export const cardStyles = createStyles((theme) => ({
     borderRadius: "8px",
     position: "relative",
     width: "100%",
-    height: "9rem",
-
-    [theme.fn.largerThan("sm")]: {
-      width: "calc(calc(100% - 2rem) / 5)",
-    },
+    height: "100%",
   },
   lightCardSkele: {
     borderRadius: "8px",
     boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
     width: "100%",
-    height: "9rem",
 
     [theme.fn.largerThan("sm")]: {
       width: "calc(calc(100% - 2rem) / 5)",
