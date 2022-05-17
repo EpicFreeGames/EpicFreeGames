@@ -1,7 +1,7 @@
 import { Skeleton } from "@mantine/core";
 import { useGuildStats } from "../../../utils/swr";
 import { cardStyles } from "../../Card";
-import { Stat } from "../Stat";
+import { Stat } from "../../Stat";
 
 export const WebhookSet = () => {
   const { guildStats } = useGuildStats();

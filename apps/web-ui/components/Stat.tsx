@@ -1,6 +1,6 @@
 import { Title } from "@mantine/core";
 import { FC } from "react";
-import { cardStyles } from "../Card";
+import { cardStyles } from "./Card";
 import CountUp from "react-countup";
 
 interface Props {
