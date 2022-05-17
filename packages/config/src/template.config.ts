@@ -25,4 +25,10 @@ export const config: IConfig = {
   guildId: "",
 
   prod: false,
+
+  webUi: {
+    discordClientId: "",
+    discordClientSecret: "",
+    nextAuthSecret: "",
+  },
 };

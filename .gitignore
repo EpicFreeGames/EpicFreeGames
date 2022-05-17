@@ -20,3 +20,4 @@ scrapers
 
 /DATA
 .env.mongo
+.env

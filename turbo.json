@@ -16,6 +16,18 @@
     },
     "clean": {
       "cache": false
+    },
+    "dev:front": {
+      "dependsOn": ["^dev:front"],
+      "cache": false
+    },
+    "build:front": {
+      "dependsOn": ["^build:front"],
+      "cache": false
+    },
+    "start:front": {
+      "dependsOn": ["^start:front"],
+      "cache": false
     }
   }
 }

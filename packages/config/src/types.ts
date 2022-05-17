@@ -25,6 +25,12 @@ export interface IConfig {
   guildId: string;
 
   prod: boolean;
+
+  webUi: {
+    discordClientId: string;
+    discordClientSecret: string;
+    nextAuthSecret: string;
+  };
 }
 
 export interface IConstants {

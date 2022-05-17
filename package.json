@@ -10,6 +10,9 @@
     "build": "turbo run build",
     "dev": "turbo run dev",
     "devr": "yarn clean && yarn && yarn build && yarn dev",
+    "dev:front": "yarn build && turbo run dev:front",
+    "build:front": "turbo run build:front",
+    "start:front": "turbo run start:front",
     "postclean": "rm -rf node_modules",
     "clean": "turbo run clean",
     "reg": "turbo run reg",
@@ -21,8 +24,8 @@
     "turbo": "^1.2.4"
   },
   "engines": {
-    "npm": ">=8.7.0",
-    "node": ">=17.8.0"
+    "npm": ">=8.5.5",
+    "node": ">=16.5.0"
   },
-  "packageManager": "yarn@1.22.18"
+  "packageManager": "yarn@1.22.19"
 }
