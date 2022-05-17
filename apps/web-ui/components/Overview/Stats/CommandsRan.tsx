@@ -1,7 +1,7 @@
 import { Skeleton } from "@mantine/core";
 import { useCommandStats } from "../../../utils/swr";
 import { cardStyles } from "../../Card";
-import { Stat } from "../../Stats/Stat";
+import { Stat } from "../Stat";
 
 export const CommandsRan = () => {
   const { commandStats } = useCommandStats();

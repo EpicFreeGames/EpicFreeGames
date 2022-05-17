@@ -1,7 +1,7 @@
 import { Skeleton } from "@mantine/core";
 import { useGuildStats } from "../../../utils/swr";
 import { cardStyles } from "../../Card";
-import { Stat } from "../../Stats/Stat";
+import { Stat } from "../Stat";
 
 export const Sendable = () => {
   const { guildStats } = useGuildStats();
