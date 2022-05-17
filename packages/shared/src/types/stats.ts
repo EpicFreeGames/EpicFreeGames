@@ -26,6 +26,7 @@ export interface IStats {
 }
 
 export interface ICommandsRanIn {
+  allTime: number;
   lastHour: number;
   lastDay: number;
   last7days: number;
