@@ -26,7 +26,7 @@ const EditLanguageButton: FC<{
   language: ILanguageWithGuildCount;
 }> = ({ setOpen, language }) =>
   language.isDefault ? (
-    <Tooltip label="Default language can't be edited">
+    <Tooltip label="Default language can't be edited" fullWidth>
       <Button onClick={() => setOpen(true)} disabled flexGrow>
         Edit language
       </Button>

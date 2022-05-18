@@ -26,7 +26,7 @@ const EditCurrencyButton: FC<{
   currency: ICurrencyWithGuildCount;
 }> = ({ setOpen, currency }) =>
   currency.isDefault ? (
-    <Tooltip label="Default currency can't be edited">
+    <Tooltip label="Default currency can't be edited" fullWidth>
       <Button onClick={() => setOpen(true)} disabled flexGrow>
         Edit currency
       </Button>
