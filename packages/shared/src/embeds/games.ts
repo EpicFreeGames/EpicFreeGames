@@ -1,14 +1,15 @@
 import { IGame } from "../data/types/Game";
-import { Languages, Currencies, t } from "../localisation";
+import { t } from "../localisation";
 import { MessageEmbed } from "discord.js";
 import { utils } from "./utils";
 import { getGamePrice } from "../utils";
 import { constants } from "config";
+import { ICurrency, ILanguage } from "../data/types";
 
 export const games = (
   games: IGame[],
-  language: Languages,
-  currency: Currencies,
+  language: ILanguage,
+  currency: ICurrency,
   showId: boolean = false
 ) => {
   const now = Date.now() / 1000;
@@ -55,14 +56,14 @@ export const games = (
   return answerEmbeds;
 };
 
-export const noFreeGames = (language: Languages) =>
+export const noFreeGames = (language: ILanguage) =>
   new MessageEmbed({
     title: t("no_free_games", language),
     color: "DARK_RED",
     description: ":(" + utils.footer(language),
   });
 
-export const noUpcomingGames = (language: Languages) =>
+export const noUpcomingGames = (language: ILanguage) =>
   new MessageEmbed({
     title: t("no_upcoming_games", language),
     color: "DARK_RED",

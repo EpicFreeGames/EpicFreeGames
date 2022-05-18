@@ -1,9 +1,10 @@
 import { MessageEmbed } from "discord.js";
-import { Languages, t } from "../localisation";
+import { ILanguage } from "../data/types";
+import { t } from "../localisation";
 import { utils } from "./utils";
 
 // prettier-ignore
-export const channelSet = (channelId: string, language: Languages) =>
+export const channelSet = (channelId: string, language: ILanguage) =>
   new MessageEmbed({
     title: "✅",
     color: "GREEN",
@@ -14,7 +15,7 @@ export const channelSet = (channelId: string, language: Languages) =>
   });
 
 // prettier-ignore
-export const roleSet = (role: string, language: Languages) =>
+export const roleSet = (role: string, language: ILanguage) =>
   new MessageEmbed({
     title: "✅",
     color: "GREEN",
@@ -24,14 +25,14 @@ export const roleSet = (role: string, language: Languages) =>
       utils.bold(t("updated_settings", language))
   });
 
-export const updatedSettings = (language: Languages) =>
+export const updatedSettings = (language: ILanguage) =>
   new MessageEmbed({
     title: "✅",
     color: "GREEN",
     description: utils.bold(t("updated_settings", language)),
   });
 
-export const currentSettings = (language: Languages) =>
+export const currentSettings = (language: ILanguage) =>
   new MessageEmbed({
     title: "✅",
     color: "GREEN",

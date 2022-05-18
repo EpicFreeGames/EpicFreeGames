@@ -1,20 +1,26 @@
 import { LanguageModel } from "../models";
 import { ILanguage } from "../types/Internationalization";
+import { LanguageDocument } from "../types";
 
 const selectString = "-_id -__v -createdAt -updatedAt";
 
 export const get = {
-  all: async () => LanguageModel.find({}).select(selectString).lean(),
-  byCode: async (code: string) => LanguageModel.findOne({ code }).select(selectString).lean(),
+  all: async (): Promise<LanguageDocument[]> => LanguageModel.find({}).select(selectString).lean(),
+  byCode: async (code: string): Promise<LanguageDocument> =>
+    LanguageModel.findOne({ code }).select(selectString).lean(),
 };
 
 export const create = (language: ILanguage) => new LanguageModel(language).save();
 
-export const update = async (code: string, language: ILanguage) => {
+export const update = async (
+  code: string,
+  language: ILanguage
+): Promise<LanguageDocument | null> => {
   const languageToUpdate = await LanguageModel.findOne({ code }).lean();
   if (!languageToUpdate) return null;
 
   return LanguageModel.findOneAndUpdate({ code }, language, { new: true }).lean();
 };
 
-export const remove = async (code: string) => LanguageModel.findOneAndDelete({ code }).lean();
+export const remove = async (code: string): Promise<LanguageDocument | null> =>
+  LanguageModel.findOneAndDelete({ code }).lean();

@@ -1,9 +1,8 @@
 import mongoose from "mongoose";
 import { IGame, GuildDocument, ICommandLog, SendingLogDocument } from "./types";
-import { Languages, Currencies } from "../localisation";
 import { CurrencyDocument, LanguageDocument } from "./types/Internationalization";
 
-export const rightMongo = mongoose;
+const { Schema } = mongoose;
 
 export const GameModel = mongoose.model<IGame>(
   "game",
@@ -37,8 +36,8 @@ export const GuildModel = mongoose.model<GuildDocument>(
     roleId: { type: String, default: null },
     channelId: { type: String, default: null },
     threadId: { type: String, default: null },
-    language: { type: String, default: Languages.en },
-    currency: { type: String, default: Currencies.USD },
+    language: { type: Schema.Types.ObjectId, ref: "language", default: null },
+    currency: { type: Schema.Types.ObjectId, ref: "currency", default: null },
     webhook: {
       type: {
         id: String,
@@ -86,7 +85,7 @@ export const LanguageModel = mongoose.model<LanguageDocument>(
   new mongoose.Schema<LanguageDocument>(
     {
       code: { type: String, required: true, unique: true },
-      name: { type: String, required: true },
+      englishName: { type: String, required: true },
       localizedName: { type: String, required: true },
     },
     { timestamps: true }

@@ -3,14 +3,15 @@ import { Request, Response } from "express";
 import {
   CommandInteraction,
   CommandTypes,
-  Currencies,
   db,
   embeds,
+  getDefaultCurrency,
+  getDefaultLanguage,
   getGuildLang,
   getGuildCurrency,
-  Languages,
   logger,
   SlashCommand,
+  ILanguage,
 } from "shared";
 import { commands } from "./commands";
 import { isAuthorized } from "./utils/Authorization";
@@ -26,8 +27,8 @@ export const handleRequests = async (req: Request, res: Response) => {
   const command = commands.get(i.command.name);
   if (!command) return;
 
-  let language = Languages.en;
-  let currency = Currencies.USD;
+  let language = getDefaultLanguage();
+  let currency = getDefaultCurrency();
   let dbGuild = null;
 
   if (i.guildId) {
@@ -61,7 +62,7 @@ export const handleRequests = async (req: Request, res: Response) => {
 const handleMissingPermissions = async (
   i: CommandInteraction,
   command: SlashCommand,
-  language: Languages
+  language: ILanguage
 ) => {
   if (command.type !== CommandTypes.ADMIN)
     return i.reply({

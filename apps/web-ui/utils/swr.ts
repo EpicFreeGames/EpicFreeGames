@@ -1,5 +1,5 @@
 import { config } from "config";
-import { ICommandsRanIn, IStats, ILanguageWithGuildCount } from "shared";
+import { ICommandsRanIn, IStats, ILanguageWithGuildCount, ICurrencyWithGuildCount } from "shared";
 import useSWR from "swr";
 
 export const fetcher = async (url: string) =>
@@ -29,4 +29,12 @@ export const useLanguages = () => {
   });
 
   return { languages: data, isLoading: !error && !data, error };
+};
+
+export const useCurrencies = () => {
+  const { data, error } = useSWR<ICurrencyWithGuildCount[]>("/currencies", fetcher, {
+    refreshInterval: 5000,
+  });
+
+  return { currencies: data, isLoading: !error && !data, error };
 };

@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 export interface ILanguage {
   code: string;
-  name: string;
+  englishName: string;
   localizedName: string;
 }
 

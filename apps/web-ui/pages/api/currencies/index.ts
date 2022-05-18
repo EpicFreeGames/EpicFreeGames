@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { db, ILanguageWithGuildCount } from "shared";
+import { db, ICurrencyWithGuildCount } from "shared";
 
 const Handler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
@@ -22,19 +22,19 @@ const HandlePost = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const body = JSON.parse(req.body);
 
-  const language = await db.languages.get.byCode(body.code);
+  const currency = await db.currencies.get.byCode(body.code);
 
-  if (language) {
+  if (currency) {
     res.status(400).json({
-      message: `Language with code '${body.code}' already exists`,
+      message: `Currency with code '${body.code}' already exists`,
     });
     return;
   }
 
-  const createdLanguage = await db.languages.create(JSON.parse(req.body));
+  const createdCurrency = await db.currencies.create(JSON.parse(req.body));
 
   res.status(201).json({
-    ...createdLanguage,
+    ...createdCurrency,
     guildCount: 0,
   });
 };
@@ -42,16 +42,16 @@ const HandlePost = async (req: NextApiRequest, res: NextApiResponse) => {
 const HandleGet = async (req: NextApiRequest, res: NextApiResponse) => {
   await db.connect();
 
-  const languages = await db.languages.get.all();
+  const currency = await db.currencies.get.all();
 
-  const languagesWithGuildCounts: ILanguageWithGuildCount[] = await Promise.all(
-    languages.map(async (l) => ({
-      ...l,
-      guildCount: await db.guilds.get.counts.hasLanguage(l.code),
+  const currenciesWithGuildCounts: ICurrencyWithGuildCount[] = await Promise.all(
+    currency.map(async (c) => ({
+      ...c,
+      guildCount: await db.guilds.get.counts.hasCurrency(c.code),
     }))
   );
 
-  res.status(200).json(languagesWithGuildCounts);
+  res.status(200).json(currenciesWithGuildCounts);
 };
 
 export default Handler;

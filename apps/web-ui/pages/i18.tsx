@@ -1,24 +1,16 @@
-import { Title } from "@mantine/core";
 import { NextPage } from "next";
-import { Card } from "../components/Card";
+import { CurrenciesCard } from "../components/Currencies/CurrenciesCard";
 import { FlexDiv } from "../components/FlexDiv";
-import { AddLanguage } from "../components/Languages/AddLanguage";
-import { LanguageList } from "../components/Languages/Languages";
+import { LanguagesCard } from "../components/Languages/LanguagesCard";
 import { Layout } from "../components/Layout";
 
 const I18: NextPage = () => (
   <Layout title="Internationalization">
-    <Card variant="dark">
-      <FlexDiv column fullWidth>
-        <FlexDiv justifyBetween>
-          <Title order={2}>Languages</Title>
+    <FlexDiv column gap05>
+      <LanguagesCard />
 
-          <AddLanguage />
-        </FlexDiv>
-
-        <LanguageList />
-      </FlexDiv>
-    </Card>
+      <CurrenciesCard />
+    </FlexDiv>
   </Layout>
 );
 

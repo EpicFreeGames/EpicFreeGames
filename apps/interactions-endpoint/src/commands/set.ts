@@ -5,12 +5,11 @@ import {
   logger,
   SlashCommand,
   SubCommandHandler,
-  isEnum,
-  Languages,
-  Currencies,
   executeWebhook,
   getWebhookUrl,
   getMessage,
+  getGuildLang,
+  LanguageDocument,
 } from "shared";
 import {
   getParentId,
@@ -119,36 +118,32 @@ const threadCommand: SubCommandHandler = async (i, guild, language, currency) =>
 };
 
 const languageCommand: SubCommandHandler = async (i, guild, language, currency) => {
-  const givenLanguage = i.options.getString("language", true) as Languages;
+  const givenLanguage = i.options.getString("language", true);
 
-  // can't basically happen but check to be safe
-  if (!isEnum<Languages>(givenLanguage))
-    return i.reply({ content: "Language not supported.", ephemeral: true });
+  const dbLanguage = await db.languages.get.byCode(givenLanguage);
+  if (!dbLanguage) return i.reply({ embeds: [embeds.errors.genericError()] });
 
-  const updatedGuild = await db.guilds.set.language(i.guildId!, givenLanguage);
+  const updatedGuild = await db.guilds.set.language(i.guildId!, dbLanguage as LanguageDocument);
 
-  logger.discord({ embeds: [embeds.logs.languageSet(updatedGuild, i, givenLanguage)] });
+  logger.discord({ embeds: [embeds.logs.languageSet(updatedGuild, i)] });
   return i.reply({
     embeds: [
       embeds.success.updatedSettings(language),
-      embeds.commands.settings(updatedGuild, updatedGuild.language),
+      embeds.commands.settings(updatedGuild, getGuildLang(updatedGuild)),
     ],
     ephemeral: true,
   });
 };
 
 const currencyCommand: SubCommandHandler = async (i, guild, language, currency) => {
-  const givenCurrency = i.options.getString("currency", true) as Currencies;
+  const givenCurrency = i.options.getString("currency", true);
 
-  // can't basically happen but check to be safe
-  if (!isEnum<Currencies>(givenCurrency))
-    return i.reply({
-      embeds: [embeds.generic("Not supported", "That currency is not supported!", "DARK_RED")],
-    });
+  const dbCurrency = await db.currencies.get.byCode(givenCurrency);
+  if (!dbCurrency) return i.reply({ embeds: [embeds.errors.genericError()] });
 
-  const updatedGuild = await db.guilds.set.currency(i.guildId!, givenCurrency);
+  const updatedGuild = await db.guilds.set.currency(i.guildId!, dbCurrency);
 
-  logger.discord({ embeds: [embeds.logs.currencySet(updatedGuild, i, givenCurrency)] });
+  logger.discord({ embeds: [embeds.logs.currencySet(updatedGuild, i)] });
   return i.reply({
     embeds: [
       embeds.success.updatedSettings(language),

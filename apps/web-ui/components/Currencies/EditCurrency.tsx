@@ -1,0 +1,121 @@
+import { Modal, Text, TextInput } from "@mantine/core";
+import { FC, useState } from "react";
+import { Button } from "../Button";
+import { Formik } from "formik";
+import { mutate } from "swr";
+import { FlexDiv } from "../FlexDiv";
+import { useCurrencies } from "../../utils/swr";
+import { updateCurrency } from "../../utils/swr/requests/Currencies";
+import { currencySchema, IUpdateCurrencyValues } from "../../utils/validation/Currencies";
+
+export const EditCurrency = ({ code }: { code: string }) => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <EditCurrencyButton setOpen={setOpen} />
+      <EditCurrencyModal open={open} setOpen={setOpen} code={code} />
+    </>
+  );
+};
+
+const EditCurrencyButton: FC<{ setOpen: (open: boolean) => void }> = ({ setOpen }) => (
+  <Button fullWidth onClick={() => setOpen(true)}>
+    Edit
+  </Button>
+);
+const EditCurrencyModal: FC<{ open: boolean; setOpen: (open: boolean) => void; code: string }> = ({
+  open,
+  setOpen,
+  code,
+}) => {
+  const { currencies } = useCurrencies();
+
+  const onSuccess = () => setOpen(false);
+
+  const onSubmit = async (values: IUpdateCurrencyValues) =>
+    mutate("/currencies", updateCurrency(code, values, onSuccess, currencies));
+
+  const currency = currencies?.find((l) => l.code === code);
+
+  return (
+    <Modal opened={open} onClose={() => setOpen(false)} title="Edit currency">
+      <Formik
+        onSubmit={onSubmit}
+        initialValues={{
+          code: currency?.code,
+          name: currency?.name,
+          apiValue: currency?.apiValue,
+          inFrontOfPrice: currency?.inFrontOfPrice,
+          afterPrice: currency?.afterPrice,
+        }}
+        validationSchema={currencySchema}
+      >
+        {({ handleSubmit, isSubmitting, errors, dirty, touched, isValid, getFieldProps }) => (
+          <form onSubmit={handleSubmit}>
+            <FlexDiv column>
+              <TextInput
+                label="Name"
+                error={errors.name && touched.name ? errors.name : undefined}
+                autoComplete="off"
+                required
+                {...getFieldProps("name")}
+              />
+
+              <TextInput
+                label="Code"
+                error={errors.code && touched.code ? errors.code : undefined}
+                autoComplete="off"
+                required
+                {...getFieldProps("code")}
+              />
+
+              <TextInput
+                label="Api value"
+                error={errors.apiValue && touched.apiValue ? errors.apiValue : undefined}
+                autoComplete="off"
+                required
+                {...getFieldProps("apiValue")}
+              />
+
+              <Text>Price preview: </Text>
+
+              <TextInput
+                label="In front of price"
+                error={
+                  errors.inFrontOfPrice && touched.inFrontOfPrice
+                    ? errors.inFrontOfPrice
+                    : undefined
+                }
+                autoComplete="off"
+                {...getFieldProps("inFrontOfPrice")}
+              />
+
+              <TextInput
+                label="After price"
+                error={errors.afterPrice && touched.afterPrice ? errors.afterPrice : undefined}
+                autoComplete="off"
+                {...getFieldProps("afterPrice")}
+              />
+
+              <FlexDiv fullWidth gap05>
+                <Button flexGrow onClick={() => setOpen(false)}>
+                  Cancel
+                </Button>
+
+                <Button
+                  flexGrow
+                  disabled={!isValid || !dirty || isSubmitting}
+                  loading={isSubmitting}
+                  type="submit"
+                >
+                  {isSubmitting ? "Adding..." : "Add"}
+                </Button>
+              </FlexDiv>
+            </FlexDiv>
+          </form>
+        )}
+      </Formik>
+    </Modal>
+  );
+};

@@ -20,23 +20,23 @@ const HandlePatch = async (req: NextApiRequest, res: NextApiResponse) => {
   const { code } = req.query;
 
   if (body.code !== code) {
-    const language = await db.languages.get.byCode(body.code);
+    const currency = await db.currencies.get.byCode(body.code);
 
-    if (language)
+    if (currency)
       return res.status(400).json({
-        message: `Language with code '${body.code}' already exists`,
+        message: `Currency with code '${body.code}' already exists`,
       });
   }
 
-  const updatedLanguage = await db.languages.update(code as string, JSON.parse(req.body));
-  if (!updatedLanguage)
+  const updatedCurrency = await db.currencies.update(code as string, JSON.parse(req.body));
+  if (!updatedCurrency)
     return res.status(400).json({
-      message: `Language with code '${code}' doesn't exist`,
+      message: `Currency with code '${code}' doesn't exist`,
     });
 
   res.status(200).json({
-    ...updatedLanguage,
-    guildCount: await db.guilds.get.counts.hasLanguage(updatedLanguage.code),
+    ...updatedCurrency,
+    guildCount: await db.guilds.get.counts.hasCurrency(updatedCurrency.code),
   });
 };
 

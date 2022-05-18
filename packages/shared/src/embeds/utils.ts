@@ -1,8 +1,9 @@
-import { Languages, t } from "../localisation";
+import { t } from "../localisation";
 import { constants } from "config";
+import { ILanguage } from "../data/types";
 
 export const utils = {
-  footer: (language: Languages) =>
+  footer: (language: ILanguage) =>
     "\n\n" +
     t("footer", language, {
       inviteAddress: constants.links.botInvite,

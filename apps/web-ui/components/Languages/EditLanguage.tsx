@@ -43,58 +43,39 @@ const EditLanguageModal: FC<{ open: boolean; setOpen: (open: boolean) => void; c
       <Formik
         onSubmit={onSubmit}
         initialValues={{
-          name: language?.name || "",
-          localizedName: language?.localizedName || "",
+          name: language?.englishName,
+          localizedName: language?.localizedName,
           code: code,
         }}
         validationSchema={languageSchema}
       >
-        {({
-          handleSubmit,
-          handleBlur,
-          values,
-          handleChange,
-          isSubmitting,
-          errors,
-          dirty,
-          touched,
-          isValid,
-        }) => (
+        {({ handleSubmit, isSubmitting, errors, dirty, touched, isValid, getFieldProps }) => (
           <form onSubmit={handleSubmit}>
             <FlexDiv column>
               <TextInput
-                name="name"
                 label="English name"
-                onChange={handleChange}
-                value={values.name}
-                onBlur={handleBlur}
                 error={errors.name && touched.name ? errors.name : undefined}
                 autoComplete="off"
                 required
+                {...getFieldProps("name")}
               />
 
               <TextInput
-                name="localizedName"
                 label="Local name"
-                onChange={handleChange}
-                value={values.localizedName}
-                onBlur={handleBlur}
                 error={
                   errors.localizedName && touched.localizedName ? errors.localizedName : undefined
                 }
                 autoComplete="off"
                 required
+                {...getFieldProps("localizedName")}
               />
 
               <TextInput
-                name="code"
                 label="Code"
-                onChange={handleChange}
-                value={values.code}
-                onBlur={handleBlur}
                 error={errors.code && touched.code ? errors.code : undefined}
                 autoComplete="off"
                 required
+                {...getFieldProps("code")}
               />
 
               <FlexDiv fullWidth gap05>

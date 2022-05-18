@@ -1,5 +1,3 @@
-import { Currencies } from "../../localisation";
-
 export interface IGame {
   _id?: string;
   name: string;
@@ -12,5 +10,5 @@ export interface IGame {
 }
 
 export type GamePrices = {
-  [key in Currencies]: string;
+  [key: string]: string;
 };

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { constants, config } from "config";
-import { CommandInteraction, discordApiRequest, embeds, IWebhook, Languages } from "shared";
+import { CommandInteraction, discordApiRequest, embeds, ILanguage, IWebhook } from "shared";
 
 export const makeSenseOfRole = (role: any) => {
   if (role.name === "@everyone") return { embed: "@everyone", toDb: "1" };
@@ -46,7 +46,7 @@ export const getParentId = async (channelId: string): Promise<string | null> => 
 export const checkForErrorsAndCommunicate = async (
   check: IWebhook | string | null,
   i: CommandInteraction,
-  language: Languages,
+  language: ILanguage,
   channelId: string
 ) => {
   // 50013 = Missing permissions | 50001 = Missing access

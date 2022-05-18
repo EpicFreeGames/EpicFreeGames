@@ -1,5 +1,6 @@
-import { Currencies, Languages } from "../../localisation";
-import { GuildModel } from "../models";
+import { getDefaultCurrency, getDefaultLanguage } from "../../localisation";
+import { CurrencyModel, GuildModel, LanguageModel } from "../models";
+import { CurrencyDocument, LanguageDocument } from "../types";
 import { IWebhook } from "../types/Guild";
 
 const selectString = "-_id -__v -createdAt -updatedAt";
@@ -24,10 +25,23 @@ export const get = {
     hasSetRole: async () => GuildModel.find({ roleId: { $ne: null } }).countDocuments(),
     hasOnlySetChannel: async () =>
       GuildModel.find({ channelId: { $ne: null }, webhook: null }).countDocuments(),
-    hasChangedLanguage: async () => GuildModel.find({ language: { $ne: "en" } }).countDocuments(),
-    hasChangedCurrency: async () => GuildModel.find({ currency: { $ne: "USD" } }).countDocuments(),
+    hasChangedLanguage: async () =>
+      GuildModel.find({ language: { $ne: getDefaultLanguage().code } }).countDocuments(),
+    hasChangedCurrency: async () =>
+      GuildModel.find({ currency: { $ne: getDefaultCurrency().code } }).countDocuments(),
     hasSetThread: async () => GuildModel.find({ threadId: { $ne: null } }).countDocuments(),
-    hasLanguage: async (code: string) => GuildModel.find({ language: code }).countDocuments(),
+    hasLanguage: async (code: string) => {
+      const language = await LanguageModel.findOne({ code });
+      if (!language) return 0;
+
+      return GuildModel.find({ language: language._id }).countDocuments();
+    },
+    hasCurrency: async (code: string) => {
+      const currency = await CurrencyModel.findOne({ code });
+      if (!currency) return 0;
+
+      return GuildModel.find({ currency: currency._id }).countDocuments();
+    },
   },
 };
 
@@ -45,14 +59,14 @@ export const set = {
       .findOneAndUpdate({ guildId }, { guildId, roleId }, { new: true })
       .select(selectString),
 
-  language: async (guildId: string, language: Languages) =>
+  language: async (guildId: string, language: LanguageDocument) =>
     GuildModel
-      .findOneAndUpdate({ guildId }, { guildId, language }, { upsert: true, new: true })
+      .findOneAndUpdate({ guildId }, { guildId, language: language._id }, { upsert: true, new: true })
       .select(selectString),
 
-  currency: async (guildId: string, currency: Currencies) =>
+  currency: async (guildId: string, currency: CurrencyDocument) =>
     GuildModel
-      .findOneAndUpdate({ guildId }, { guildId, currency }, { upsert: true, new: true })
+      .findOneAndUpdate({ guildId }, { guildId, currency: currency._id }, { upsert: true, new: true })
       .select(selectString),
 };
 

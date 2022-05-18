@@ -1,9 +1,10 @@
 import { MessageEmbed } from "discord.js";
-import { Languages, t } from "../localisation";
+import { t } from "../localisation";
 import { utils } from "./utils";
 import { constants } from "config";
+import { ILanguage } from "../data/types";
 
-export const missingPermissions = (channelId: string, language: Languages): MessageEmbed =>
+export const missingPermissions = (channelId: string, language: ILanguage): MessageEmbed =>
   new MessageEmbed({
     title: "❌",
     color: "DARK_RED",
@@ -16,14 +17,14 @@ export const missingPermissions = (channelId: string, language: Languages): Mess
   });
 
 export const unauthorized = {
-  adminOnlyCommand: (language: Languages) =>
+  adminOnlyCommand: (language: ILanguage) =>
     new MessageEmbed({
       title: "❌",
       color: "DARK_RED",
       description: t("bot_admins_only", language) + utils.footer(language),
     }),
 
-  manageGuildCommand: (language: Languages) =>
+  manageGuildCommand: (language: ILanguage) =>
     new MessageEmbed({
       title: "❌",
       color: "DARK_RED",
@@ -35,7 +36,7 @@ export const unauthorized = {
     }),
 };
 
-export const maxNumberOfWebhooks = (language: Languages) =>
+export const maxNumberOfWebhooks = (language: ILanguage) =>
   new MessageEmbed({
     title: t("too_many_webhooks", language),
     color: "RED",
@@ -46,14 +47,14 @@ export const maxNumberOfWebhooks = (language: Languages) =>
       utils.footer(language),
   });
 
-export const channelNotSet = (language: Languages) =>
+export const channelNotSet = (language: ILanguage) =>
   new MessageEmbed({
     title: "❌",
     color: "RED",
     description: t("set_channel_first", language) + utils.footer(language),
   });
 
-export const mustVote = (language: Languages) =>
+export const mustVote = (language: ILanguage) =>
   new MessageEmbed({
     title: t("vote_needed_title", language),
     color: "RED",

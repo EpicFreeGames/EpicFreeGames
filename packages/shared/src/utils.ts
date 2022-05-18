@@ -2,10 +2,10 @@ import axios, { AxiosRequestConfig, Method } from "axios";
 import { config } from "config";
 import { APIEmbed } from "discord-api-types";
 import { MessageEmbed, MessageEmbedOptions } from "discord.js";
-import { IGame, IGuild } from "./data/types";
+import { ICurrency, IGame, IGuild } from "./data/types";
 import { IMessage } from "./interactions/types";
-import { Currencies } from "./localisation";
 import fs from "fs/promises";
+import { getDefaultCurrency } from "./localisation";
 
 export const discordApiBaseUrl = "https://discord.com/api/v9";
 
@@ -65,8 +65,8 @@ export const editWebhookMsg = (msgId: string, webhookUrl: string, options: Webho
 export const deleteWebhookMsg = (msgId: string, webhookUrl: string) =>
   axios.delete(`${webhookUrl}/messages/${msgId}`);
 
-export const getGamePrice = (game: IGame, currency: Currencies) => {
-  return game.price[currency] || game.price.USD;
+export const getGamePrice = (game: IGame, currency: ICurrency) => {
+  return game.price[currency.code] || game.price[getDefaultCurrency().code];
 };
 
 export const getMessage = (guild: IGuild | null, embeds: MessageEmbed[]): IMessage => {

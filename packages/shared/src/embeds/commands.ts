@@ -1,10 +1,10 @@
 import { MessageEmbed } from "discord.js";
-import { CurrencyData, Languages, LanguageNames, t } from "../localisation";
+import { t } from "../localisation";
 import { constants } from "config";
 import { utils } from "./utils";
-import { IGuild } from "../data/types";
+import { IGuild, ILanguage } from "../data/types";
 
-export const help = (language: Languages) =>
+export const help = (language: ILanguage) =>
   new MessageEmbed({
     title: "Help",
     color: "GREEN",
@@ -15,7 +15,7 @@ export const help = (language: Languages) =>
       utils.footer(language),
   }).setThumbnail(constants.photos.thumbnail);
 
-export const vote = (language: Languages) =>
+export const vote = (language: ILanguage) =>
   new MessageEmbed({
     title: t("vote_needed_title", language),
     color: "BLUE",
@@ -25,7 +25,7 @@ export const vote = (language: Languages) =>
     description: constants.links.vote,
   });
 
-export const invite = (language: Languages) =>
+export const invite = (language: ILanguage) =>
   new MessageEmbed({
     title: t("invite", language),
     color: "BLUE",
@@ -43,7 +43,7 @@ export const debug = (guildId: string) =>
   });
 
 // prettier-ignore
-export const settings = (guild: IGuild | null,  language: Languages) =>
+export const settings = (guild: IGuild | null,  language: ILanguage) =>
   new MessageEmbed({
     title: t("settings", language),
     color: "#2f3136",
@@ -53,14 +53,14 @@ export const settings = (guild: IGuild | null,  language: Languages) =>
       "\n\n" +
       utils.bold(`${t("role", language)}: `) + settingsUtils.showRole(guild, language) +
       "\n\n" +
-      utils.bold(`${t("language", language)}: `) + (guild?.language ? `${LanguageNames[guild.language]}` : LanguageNames[Languages.en]) +
+      utils.bold(`${t("language", language)}: `) + (guild?.language ? `${guild.language.localizedName}` : "English") +
       "\n\n" +
-      utils.bold(`${t("currency", language)}: `) + (guild?.currency ? `${CurrencyData[guild.currency].name}` : CurrencyData["USD"].name) +
+      utils.bold(`${t("currency", language)}: `) + (guild?.currency ? `${guild.currency.name}` : "USD") +
       utils.footer(language),
   });
 
 const settingsUtils = {
-  showChannelOrThread: (guild: IGuild | null, language: Languages) => {
+  showChannelOrThread: (guild: IGuild | null, language: ILanguage) => {
     if (guild?.channelId) {
       return `<#${guild?.channelId}>`;
     } else if (guild?.threadId) {
@@ -70,7 +70,7 @@ const settingsUtils = {
     }
   },
 
-  showRole: (guild: IGuild | null, language: Languages) => {
+  showRole: (guild: IGuild | null, language: ILanguage) => {
     if (guild?.roleId) {
       if (guild.roleId === "1") return "@everyone";
 

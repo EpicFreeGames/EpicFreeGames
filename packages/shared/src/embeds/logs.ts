@@ -1,5 +1,5 @@
 import { MessageEmbed } from "discord.js";
-import { Languages, LanguageNames, Currencies, CurrencyData } from "../localisation";
+import { getGuildLang, getGuildCurrency } from "../localisation";
 import { IGuild, ICommandLog } from "../data/types";
 import { CommandInteraction } from "../interactions/types";
 import { utils } from "./utils";
@@ -9,9 +9,9 @@ const addDbInfo = (guild: IGuild, embed: MessageEmbed) => {
     "\n\n" +
     utils.title("DB Info") +
     "\n" +
-    `Language: ${LanguageNames[guild.language]}` +
+    `Language: ${guild.language?.englishName}` +
     "\n" +
-    `Currency: ${CurrencyData[guild.currency].name}` +
+    `Currency: ${guild.currency?.name}` +
     "\n" +
     `Role ID: ${guild.roleId ? guild.roleId : "❌"}` +
     "\n" +
@@ -108,7 +108,7 @@ export const roleSet = (guild: IGuild | null, i: CommandInteraction, roleId: str
   return embed;
 };
 
-export const languageSet = (guild: IGuild | null, i: CommandInteraction, language: Languages) => {
+export const languageSet = (guild: IGuild | null, i: CommandInteraction) => {
   const embed = new MessageEmbed({
     title: "Language set",
     description:
@@ -120,7 +120,7 @@ export const languageSet = (guild: IGuild | null, i: CommandInteraction, languag
       "\n" +
       `Guild ID: ${i.guildId}` +
       "\n" +
-      `Set language: ${LanguageNames[language]}`,
+      `Set language: ${getGuildLang(guild).englishName}`,
   }).setTimestamp();
 
   if (guild) addDbInfo(guild, embed);
@@ -128,7 +128,7 @@ export const languageSet = (guild: IGuild | null, i: CommandInteraction, languag
   return embed;
 };
 
-export const currencySet = (guild: IGuild | null, i: CommandInteraction, currency: Currencies) => {
+export const currencySet = (guild: IGuild | null, i: CommandInteraction) => {
   const embed = new MessageEmbed({
     title: "Currency set",
     description:
@@ -140,7 +140,7 @@ export const currencySet = (guild: IGuild | null, i: CommandInteraction, currenc
       "\n" +
       `Guild ID: ${i.guildId}` +
       "\n" +
-      `Set currency: ${CurrencyData[currency].name}`,
+      `Set currency: ${getGuildCurrency(guild).name}`,
   }).setTimestamp();
 
   if (guild) addDbInfo(guild, embed);

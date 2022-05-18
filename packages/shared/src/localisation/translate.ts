@@ -1,12 +1,10 @@
-import { isEnum } from "../utils";
-import { Languages, Currencies } from "./types";
-import { IGuild } from "../data/types";
 import { config } from "config";
 import OtaClient from "@crowdin/ota-client";
 import i18next from "i18next";
 
 import english from "./english.json";
 import old from "./old.json";
+import { ILanguage } from "../data/types";
 
 export const initTranslations = async () => {
   const client = new OtaClient(config.crowdinDistHash);
@@ -75,8 +73,8 @@ export const initTranslations = async () => {
   });
 };
 
-export const t = (key: string, language: Languages, vars?: any) => {
-  const t = i18next.getFixedT(language);
+export const t = (key: string, language: ILanguage, vars?: any) => {
+  const t = i18next.getFixedT(language.code);
 
   const withoutVars = t(key);
 
@@ -114,24 +112,4 @@ const createFooter = (invite: string, vote: string, support: string, website: st
     else return withVars.slice(0, 3).join(separator) + "\n" + withVars.slice(3).join(separator);
 
   return withVars.join(separator);
-};
-
-export const getGuildLang = (guild: IGuild) => {
-  let language: Languages = Languages.en;
-
-  if (guild && guild.language) language = Languages[guild.language];
-
-  if (isEnum<Languages>(guild.language)) language = guild.language;
-
-  return language;
-};
-
-export const getGuildCurrency = (guild: IGuild) => {
-  let currency: Currencies = Currencies.USD;
-
-  if (guild && guild.currency) currency = Currencies[guild.currency];
-
-  if (isEnum<Currencies>(guild.currency)) currency = guild.currency;
-
-  return currency;
 };
