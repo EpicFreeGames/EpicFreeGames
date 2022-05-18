@@ -31,7 +31,6 @@ export const FlexDiv: FC<FlexDivProps> = (props) => (
   <div
     style={{
       display: "flex",
-      flexWrap: "wrap",
       gap: props.gap05 ? "0.5rem" : props.gap0 ? "0rem" : "1rem",
 
       alignItems: props.alignCenter
