@@ -25,6 +25,7 @@ type FlexDivProps = NoneOrOneOf<FlexDivJustifyProps> &
     column?: boolean;
     fullWidth?: boolean;
     fullHeight?: boolean;
+    flexWrap?: boolean;
   };
 
 export const FlexDiv: FC<FlexDivProps> = (props) => (
@@ -42,6 +43,8 @@ export const FlexDiv: FC<FlexDivProps> = (props) => (
         : props.alignBaseline
         ? "baseline"
         : undefined,
+
+      flexWrap: props.flexWrap ? "wrap" : undefined,
 
       justifyContent: props.justifyCenter
         ? "center"
