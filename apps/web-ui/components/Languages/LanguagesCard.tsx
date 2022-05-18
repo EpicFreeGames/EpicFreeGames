@@ -1,4 +1,4 @@
-import { Text, Title } from "@mantine/core";
+import { createStyles, Text, Title } from "@mantine/core";
 import { FC } from "react";
 import { ILanguageWithGuildCount } from "shared";
 import { useLanguages } from "../../hooks/requests";
@@ -50,10 +50,27 @@ export const Languages = () => {
   const { languages } = useLanguages();
 
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "0.5rem" }}>
+    <div className={styles().classes.langGrid}>
       {languages?.map((language) => (
         <Language key={language.code} language={language} />
       ))}
     </div>
   );
 };
+
+const styles = createStyles((theme) => ({
+  langGrid: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "0.5rem",
+
+    [theme.fn.largerThan("sm")]: {
+      display: "grid",
+      gridTemplateColumns: "1fr 1fr 1fr",
+    },
+
+    [theme.fn.largerThan("md")]: {
+      gridTemplateColumns: "1fr 1fr 1fr 1fr",
+    },
+  },
+}));

@@ -1,4 +1,4 @@
-import { Text, Title } from "@mantine/core";
+import { createStyles, Text, Title } from "@mantine/core";
 import { FC } from "react";
 import { ICurrencyWithGuildCount } from "shared";
 import { useCurrencies } from "../../hooks/requests";
@@ -26,18 +26,6 @@ const CurrenciesTitle = () => (
   </FlexDiv>
 );
 
-export const Currencies = () => {
-  const { currencies } = useCurrencies();
-
-  return (
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "0.5rem" }}>
-      {currencies?.map((c) => (
-        <CurrencyCard key={c.code} currency={c} />
-      ))}
-    </div>
-  );
-};
-
 interface Props {
   currency: ICurrencyWithGuildCount;
 }
@@ -59,3 +47,32 @@ const CurrencyCard: FC<Props> = ({ currency }) => (
     </FlexDiv>
   </Card>
 );
+
+export const Currencies = () => {
+  const { currencies } = useCurrencies();
+
+  return (
+    <div className={styles().classes.currencyGrid}>
+      {currencies?.map((c) => (
+        <CurrencyCard key={c.code} currency={c} />
+      ))}
+    </div>
+  );
+};
+
+const styles = createStyles((theme) => ({
+  currencyGrid: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "0.5rem",
+
+    [theme.fn.largerThan("sm")]: {
+      display: "grid",
+      gridTemplateColumns: "1fr 1fr 1fr",
+    },
+
+    [theme.fn.largerThan("md")]: {
+      gridTemplateColumns: "1fr 1fr 1fr 1fr",
+    },
+  },
+}));
