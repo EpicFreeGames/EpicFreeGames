@@ -26,6 +26,7 @@ type FlexDivProps = NoneOrOneOf<FlexDivJustifyProps> &
     className?: string;
     style?: CSSProperties;
     gap05?: boolean;
+    gap0?: boolean;
     column?: boolean;
     fullWidth?: boolean;
     fullHeight?: boolean;
@@ -36,7 +37,7 @@ export const FlexDiv: FC<FlexDivProps> = (props) => (
     style={{
       display: "flex",
       flexWrap: "wrap",
-      gap: props.gap05 ? "0.5rem" : "1rem",
+      gap: props.gap05 ? "0.5rem" : props.gap0 ? "0rem" : "1rem",
 
       alignItems: props.alignCenter
         ? "center"
