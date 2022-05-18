@@ -9,6 +9,7 @@ import { currencySchema, IUpdateCurrencyValues } from "../../utils/validation/Cu
 import { useCurrencies } from "../../hooks/requests";
 import { Tooltip } from "../Tooltip";
 import { ICurrencyWithGuildCount } from "shared";
+import { DeployGlobalCommands, DeployGuildCommands } from "../../utils/requests/Commands";
 
 export const EditCurrency = ({ currency }: { currency: ICurrencyWithGuildCount }) => {
   const [open, setOpen] = useState(false);
@@ -44,7 +45,12 @@ const EditCurrencyModal: FC<{
 }> = ({ open, setOpen, currency }) => {
   const { currencies } = useCurrencies();
 
-  const onSuccess = () => setOpen(false);
+  const onSuccess = async () => {
+    setOpen(false);
+
+    await DeployGuildCommands();
+    await DeployGlobalCommands();
+  };
 
   const onSubmit = async (values: IUpdateCurrencyValues) =>
     mutate("/currencies", updateCurrency(currency.code, values, onSuccess, currencies));

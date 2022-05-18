@@ -7,6 +7,7 @@ import { FlexDiv } from "../FlexDiv";
 import { currencySchema, IAddCurrencyValues } from "../../utils/validation/Currencies";
 import { addCurrency } from "../../utils/requests/Currencies";
 import { useCurrencies } from "../../hooks/requests";
+import { DeployGlobalCommands, DeployGuildCommands } from "../../utils/requests/Commands";
 
 export const AddCurrency = () => {
   const [open, setOpen] = useState(false);
@@ -29,7 +30,12 @@ const AddCurrencyModal: FC<{ open: boolean; setOpen: (open: boolean) => void }> 
 }) => {
   const { currencies } = useCurrencies();
 
-  const onSuccess = () => setOpen(false);
+  const onSuccess = async () => {
+    setOpen(false);
+
+    await DeployGuildCommands();
+    await DeployGlobalCommands();
+  };
 
   const onSubmit = async (values: IAddCurrencyValues) =>
     mutate("/languages", addCurrency(values, onSuccess, currencies));
