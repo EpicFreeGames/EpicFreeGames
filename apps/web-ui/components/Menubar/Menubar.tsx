@@ -1,5 +1,8 @@
 import { createStyles } from "@mantine/core";
 import { ColorSchemeToggle } from "../ColorSchemeToggle/ColorSchemeToggle";
+import { FlexDiv } from "../FlexDiv";
+import { HomeButton } from "./Home";
+import { Nav } from "./Nav";
 import { Profile } from "./Profile";
 
 const useStyles = createStyles((theme) => ({
@@ -29,7 +32,6 @@ const useStyles = createStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     gap: "0.5rem",
-    justifyContent: "flex-end",
 
     [theme.fn.largerThan("sm")]: {
       height: "5rem",
@@ -45,10 +47,17 @@ export const Menubar = () => {
     <div className={classes.outer}>
       <div className={classes.inner}>
         <div className={classes.content}>
-          <div style={{ display: "flex", gap: "0.5rem" }}>
-            <ColorSchemeToggle />
-            <Profile />
-          </div>
+          <FlexDiv justifyBetween fullWidth>
+            <FlexDiv gap05>
+              <Nav />
+              <HomeButton />
+            </FlexDiv>
+
+            <FlexDiv gap05>
+              <ColorSchemeToggle />
+              <Profile />
+            </FlexDiv>
+          </FlexDiv>
         </div>
       </div>
     </div>
