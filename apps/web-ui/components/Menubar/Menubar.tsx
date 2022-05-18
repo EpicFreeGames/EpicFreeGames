@@ -15,6 +15,7 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[8] : "white",
     zIndex: 2,
     boxShadow: theme.colorScheme === "light" ? "0 0.5rem 1rem rgba(0, 0, 0, 0.04)" : "",
+    paddingRight: "var(--removed-scroll-width)",
   },
   inner: {
     boxSizing: "border-box",
