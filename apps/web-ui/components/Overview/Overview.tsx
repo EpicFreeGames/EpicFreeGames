@@ -4,20 +4,22 @@ import { Sendable } from "./Stats/Sendable";
 import { ChannelSet } from "./Stats/ChannelSet";
 import { WebhookSet } from "./Stats/WebhookSet";
 import { CommandsRan } from "./Stats/CommandsRan";
-import { FlexDiv } from "../FlexDiv";
+import { Title } from "@mantine/core";
 
 export const Overview = () => {
   return (
     <Card variant="dark">
-      <h1 style={{ paddingBottom: "1rem" }}>Overview</h1>
+      <Title order={2} style={{ paddingBottom: "1rem" }}>
+        Overview
+      </Title>
 
-      <FlexDiv gap05 justifyCenter>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr", gap: "0.5rem" }}>
         <GuildCount />
         <Sendable />
         <ChannelSet />
         <WebhookSet />
         <CommandsRan />
-      </FlexDiv>
+      </div>
     </Card>
   );
 };
