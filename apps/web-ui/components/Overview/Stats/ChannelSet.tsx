@@ -1,5 +1,5 @@
 import { Skeleton } from "@mantine/core";
-import { useGuildStats } from "../../../utils/swr";
+import { useGuildStats } from "../../../hooks/requests";
 import { cardStyles } from "../../Card";
 import { Stat } from "../../Stat";
 

@@ -1,5 +1,5 @@
 import { Skeleton } from "@mantine/core";
-import { useCommandStats } from "../../../utils/swr";
+import { useCommandStats } from "../../../hooks/requests";
 import { cardStyles } from "../../Card";
 import { Stat } from "../../Stat";
 

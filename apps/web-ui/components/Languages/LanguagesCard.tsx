@@ -1,7 +1,7 @@
 import { Text, Title, Tooltip } from "@mantine/core";
 import { FC } from "react";
 import { ILanguageWithGuildCount } from "shared";
-import { useLanguages } from "../../utils/swr";
+import { useLanguages } from "../../hooks/requests";
 import { Card } from "../Card";
 import { FlexDiv } from "../FlexDiv";
 import { AddLanguage } from "./AddLanguage";

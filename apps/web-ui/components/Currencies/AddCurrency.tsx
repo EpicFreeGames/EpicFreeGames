@@ -3,10 +3,10 @@ import { FC, useState } from "react";
 import { Button } from "../Button";
 import { Formik } from "formik";
 import { mutate } from "swr";
-import { useCurrencies } from "../../utils/swr";
 import { FlexDiv } from "../FlexDiv";
 import { currencySchema, IAddCurrencyValues } from "../../utils/validation/Currencies";
 import { addCurrency } from "../../utils/swr/requests/Currencies";
+import { useCurrencies } from "../../hooks/requests";
 
 export const AddCurrency = () => {
   const [open, setOpen] = useState(false);

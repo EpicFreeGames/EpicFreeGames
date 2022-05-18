@@ -5,8 +5,8 @@ import { Formik } from "formik";
 import { languageSchema, IAddLanguageValues } from "../../utils/validation/Languages";
 import { mutate } from "swr";
 import { addLanguage } from "../../utils/swr/requests/Languages";
-import { useLanguages } from "../../utils/swr";
 import { FlexDiv } from "../FlexDiv";
+import { useLanguages } from "../../hooks/requests";
 
 export const AddLanguage = () => {
   const [open, setOpen] = useState(false);

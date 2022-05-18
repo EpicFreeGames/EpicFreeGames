@@ -4,9 +4,9 @@ import { Button } from "../Button";
 import { Formik } from "formik";
 import { mutate } from "swr";
 import { FlexDiv } from "../FlexDiv";
-import { useCurrencies } from "../../utils/swr";
 import { updateCurrency } from "../../utils/swr/requests/Currencies";
 import { currencySchema, IUpdateCurrencyValues } from "../../utils/validation/Currencies";
+import { useCurrencies } from "../../hooks/requests";
 
 export const EditCurrency = ({ code }: { code: string }) => {
   const [open, setOpen] = useState(false);

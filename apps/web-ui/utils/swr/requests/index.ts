@@ -15,3 +15,8 @@ export const request = <T>({ path, method, body }: Props): Promise<T> =>
     if (!res.ok) throw new Error(res.statusText);
     return res.json();
   });
+
+export const fetcher = async (url: string) =>
+  fetch(`${config.webUi.apiUrl}${url}`, {
+    credentials: "same-origin",
+  }).then((res) => res.json());

@@ -1,11 +1,6 @@
-import { config } from "config";
-import { ICommandsRanIn, IStats, ILanguageWithGuildCount, ICurrencyWithGuildCount } from "shared";
+import { IStats, ICommandsRanIn, ILanguageWithGuildCount, ICurrencyWithGuildCount } from "shared";
 import useSWR from "swr";
-
-export const fetcher = async (url: string) =>
-  fetch(`${config.webUi.apiUrl}${url}`, {
-    credentials: "same-origin",
-  }).then((res) => res.json());
+import { fetcher } from "../utils/swr/requests";
 
 export const useGuildStats = () => {
   const { data, error } = useSWR<IStats>("/dashboard/guild-stats", fetcher, {
