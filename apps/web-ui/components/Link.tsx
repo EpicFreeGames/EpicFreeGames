@@ -19,7 +19,7 @@ export const Link: FC<OtherProps> = ({ to, children, style, className }) => {
 
   return (
     <NextLink href={to} passHref>
-      <a onClick={onClick} style={style} className={className}>
+      <a onClick={onClick} style={{ all: "unset", ...style }} className={className}>
         {children}
       </a>
     </NextLink>
