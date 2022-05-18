@@ -86,9 +86,10 @@ const NavDrawer: FC<{ setOpen: (open: boolean) => void; open: boolean }> = ({ se
       overlayBlur={3}
       transition="rotate-left"
     >
-      <FlexDiv fullWidth gap0>
+      <FlexDiv gap0 flexWrap>
         <HomeNavItem />
         <NavDrawerItem to="/i18">Internationalization</NavDrawerItem>
+        <NavDrawerItem to="/commands">Commands</NavDrawerItem>
       </FlexDiv>
     </Drawer>
   );
