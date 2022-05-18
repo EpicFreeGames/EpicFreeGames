@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { db, ICommandsRanIn } from "shared";
+import { db } from "shared";
+import { ICommandsRanIn } from "types";
 
 const Handler = async (req: NextApiRequest, res: NextApiResponse) => {
   await db.connect();

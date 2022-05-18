@@ -1,10 +1,11 @@
-import { createStyles, Drawer, Tooltip, useMantineTheme } from "@mantine/core";
+import { createStyles, Drawer, useMantineTheme } from "@mantine/core";
 import { FC, ReactNode, useState } from "react";
 import { Menu2 } from "tabler-icons-react";
 import { useHasMounted } from "../../hooks/useHasMounted";
 import { Button } from "../Button";
 import { FlexDiv } from "../FlexDiv";
 import { Link } from "../Link";
+import { Tooltip } from "../Tooltip";
 
 export const Nav = () => {
   const [open, setOpen] = useState(false);

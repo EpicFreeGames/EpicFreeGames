@@ -1,9 +1,10 @@
-import { Text, Title, Tooltip } from "@mantine/core";
+import { Text, Title } from "@mantine/core";
 import { FC } from "react";
-import { ICurrencyWithGuildCount } from "shared";
+import { ICurrencyWithGuildCount } from "types";
 import { useCurrencies } from "../../hooks/requests";
 import { Card } from "../Card";
 import { FlexDiv } from "../FlexDiv";
+import { Tooltip } from "../Tooltip";
 import { AddCurrency } from "./AddCurrency";
 import { EditCurrency } from "./EditCurrency";
 
@@ -50,7 +51,7 @@ const CurrencyCard: FC<Props> = ({ currency }) => (
         </Text>
       </FlexDiv>
 
-      <Tooltip transition={"rotate-right"} label={`Used by ${currency.guildCount} servers`}>
+      <Tooltip label={`Used by ${currency.guildCount} servers`}>
         <Title order={3}>{currency.guildCount} servers</Title>
       </Tooltip>
 

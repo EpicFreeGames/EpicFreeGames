@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { db, getDefaultCurrency, ICurrencyWithGuildCount } from "shared";
+import { db, getDefaultCurrency } from "shared";
+import { ICurrencyWithGuildCount } from "types";
 
 const Handler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {

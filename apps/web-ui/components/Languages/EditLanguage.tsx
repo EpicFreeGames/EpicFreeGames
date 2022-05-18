@@ -7,8 +7,8 @@ import { mutate } from "swr";
 import { updateLanguage } from "../../utils/requests/Languages";
 import { FlexDiv } from "../FlexDiv";
 import { useLanguages } from "../../hooks/requests";
-import { ILanguageWithGuildCount } from "shared";
 import { Tooltip } from "../Tooltip";
+import { ILanguageWithGuildCount } from "types";
 
 export const EditLanguage = ({ language }: { language: ILanguageWithGuildCount }) => {
   const [open, setOpen] = useState(false);

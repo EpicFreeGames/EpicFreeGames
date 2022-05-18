@@ -1,5 +1,5 @@
-import { IStats, ICommandsRanIn, ILanguageWithGuildCount, ICurrencyWithGuildCount } from "shared";
 import useSWR from "swr";
+import { IStats, ICommandsRanIn, ILanguageWithGuildCount, ICurrencyWithGuildCount } from "types";
 import { fetcher } from "../utils/requests";
 
 export const useGuildStats = () => {

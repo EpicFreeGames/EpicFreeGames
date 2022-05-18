@@ -1,7 +1,7 @@
-import { Tooltip } from "@mantine/core";
 import { useHasMounted } from "../../hooks/useHasMounted";
 import { Button } from "../Button";
 import { Link } from "../Link";
+import { Tooltip } from "../Tooltip";
 
 export const HomeButton = () => {
   const hasMounted = useHasMounted();
@@ -13,7 +13,7 @@ export const HomeButton = () => {
 
   return (
     <Link to="/">
-      <Tooltip label="Go to home" transition={"rotate-right"}>
+      <Tooltip label="Go to home">
         <Button p={"0.5rem"} variant="outline">
           Home
         </Button>

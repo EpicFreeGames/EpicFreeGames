@@ -1,6 +1,6 @@
 import { showNotification, updateNotification } from "@mantine/notifications";
-import { ILanguageWithGuildCount } from "shared";
 import { CircleCheck, CircleX } from "tabler-icons-react";
+import { ILanguageWithGuildCount } from "types";
 import { request } from ".";
 import { IAddLanguageValues, IUpdateLanguageValues } from "../validation/Languages";
 

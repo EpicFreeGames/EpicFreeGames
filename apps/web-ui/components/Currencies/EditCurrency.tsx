@@ -8,7 +8,7 @@ import { updateCurrency } from "../../utils/requests/Currencies";
 import { currencySchema, IUpdateCurrencyValues } from "../../utils/validation/Currencies";
 import { useCurrencies } from "../../hooks/requests";
 import { Tooltip } from "../Tooltip";
-import { ICurrencyWithGuildCount } from "shared";
+import { ICurrencyWithGuildCount } from "types";
 
 export const EditCurrency = ({ currency }: { currency: ICurrencyWithGuildCount }) => {
   const [open, setOpen] = useState(false);

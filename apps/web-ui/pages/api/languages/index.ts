@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { db, getDefaultLanguage, ILanguageWithGuildCount } from "shared";
+import { db, getDefaultLanguage } from "shared";
+import { ILanguageWithGuildCount } from "types";
 
 const Handler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {

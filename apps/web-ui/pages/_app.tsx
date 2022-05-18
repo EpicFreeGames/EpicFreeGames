@@ -1,10 +1,4 @@
-import {
-  MantineProvider,
-  ColorSchemeProvider,
-  ColorScheme,
-  useMantineTheme,
-  ButtonStylesParams,
-} from "@mantine/core";
+import { MantineProvider, ColorSchemeProvider, ColorScheme } from "@mantine/core";
 import { useHotkeys } from "@mantine/hooks";
 import { AppProps } from "next/app";
 import { ReactNode, useState } from "react";
