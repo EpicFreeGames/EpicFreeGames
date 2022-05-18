@@ -1,6 +1,6 @@
 import { showNotification, updateNotification } from "@mantine/notifications";
 import { CircleCheck, CircleX } from "tabler-icons-react";
-import { ICurrencyWithGuildCount } from "types";
+import { ICurrencyWithGuildCount } from "shared";
 import { request } from ".";
 import { IAddCurrencyValues, IUpdateCurrencyValues } from "../validation/Currencies";
 

@@ -1,51 +1,65 @@
-import { config } from "config";
-import {
-  db,
-  getDefaultCurrency,
-  getDefaultLanguage,
-  getCommands,
-  discordApiUrl,
-  CommandTypes,
-} from "shared";
+import { showNotification, updateNotification } from "@mantine/notifications";
+import { Check, CircleX } from "tabler-icons-react";
+import { request } from ".";
 
-export const updateCommands = async () => {
-  await db.connect();
+export const DeployGuildCommands = async () => {
+  try {
+    showNotification({
+      id: "deploy-guild-commands",
+      message: "Deploying guild (/) commands",
+      loading: true,
+    });
 
-  const languages = await Promise.all([db.languages.get.all(), getDefaultLanguage()]);
-  const currencies = await Promise.all([db.currencies.get.all(), getDefaultCurrency()]);
+    await request({
+      path: "/commands/deploy/guild",
+      method: "POST",
+    });
 
-  const commands = getCommands(languages.flat(), currencies.flat());
+    updateNotification({
+      id: "deploy-guild-commands",
+      message: "Guild (/) commands deployed",
+      icon: <Check />,
+      color: "green",
+    });
+  } catch (err) {
+    console.log(err);
 
-  const guildCommands = [];
-  const globalCommands = [];
-
-  for (const command of commands) {
-    guildCommands.push(command.data);
-
-    if (command.type === CommandTypes.ADMIN) continue;
-
-    globalCommands.push(command.data);
-
-    await guildDeploy(guildCommands);
-    await globalDeploy(globalCommands);
+    updateNotification({
+      id: "deploy-guild-commands",
+      message: "Failed to deploy guild (/) commands",
+      icon: <CircleX />,
+      color: "red",
+    });
   }
 };
 
-const headers = {
-  "Content-Type": "application/json",
-  Authorization: `Bot ${config.botToken}`,
+export const DeployGlobalCommands = async () => {
+  try {
+    showNotification({
+      id: "deploy-global-commands",
+      message: "Deploying global (/) commands",
+      loading: true,
+    });
+
+    await request({
+      path: "/commands/deploy/global",
+      method: "POST",
+    });
+
+    updateNotification({
+      id: "deploy-global-commands",
+      message: "Global (/) commands deployed",
+      icon: <Check />,
+      color: "green",
+    });
+  } catch (err) {
+    console.log(err);
+
+    updateNotification({
+      id: "deploy-global-commands",
+      message: "Failed to deploy global (/) commands",
+      icon: <CircleX />,
+      color: "red",
+    });
+  }
 };
-
-const globalDeploy = (commands: any[]) =>
-  fetch(`${discordApiUrl}/applications/${config.botId}/commands`, {
-    method: "PUT",
-    headers,
-    body: JSON.stringify(commands),
-  });
-
-const guildDeploy = (commands: any[]) =>
-  fetch(`${discordApiUrl}/applications/${config.botId}/guilds/${config.guildId}/commands`, {
-    method: "PUT",
-    headers,
-    body: JSON.stringify(commands),
-  });

@@ -3,13 +3,12 @@ import limitedAxios, { RateLimitedAxiosInstance } from "axios-rate-limit";
 import {
   embeds,
   getGuildLang,
-  db,
   discordApiRequest,
-  wait,
   getGuildCurrency,
   getMessage,
-} from "shared";
-import { IGuild, IGame, ISendingLog } from "types";
+} from "shared-discord-stuff";
+import { db } from "database";
+import { IGuild, IGame, ISendingLog, wait } from "shared";
 
 export class ChannelSender {
   limitedAxios: RateLimitedAxiosInstance;

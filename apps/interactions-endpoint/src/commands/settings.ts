@@ -1,4 +1,5 @@
-import { CommandTypes, embeds, SlashCommand } from "shared";
+import { embeds, SlashCommand } from "shared-discord-stuff";
+import { CommandTypes } from "shared";
 
 export const command: SlashCommand = {
   type: CommandTypes.MANAGE_GUILD,

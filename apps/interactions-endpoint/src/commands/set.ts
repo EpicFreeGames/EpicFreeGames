@@ -1,6 +1,4 @@
 import {
-  CommandTypes,
-  db,
   embeds,
   logger,
   SlashCommand,
@@ -9,8 +7,9 @@ import {
   getWebhookUrl,
   getMessage,
   getGuildLang,
-  LanguageDocument,
-} from "shared";
+} from "shared-discord-stuff";
+import { CommandTypes, LanguageDocument } from "shared";
+import { db } from "database";
 import {
   getParentId,
   userHasVoted,

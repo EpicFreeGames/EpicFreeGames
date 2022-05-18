@@ -1,14 +1,20 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { db, getDefaultCurrency } from "shared";
-import { ICurrencyWithGuildCount } from "types";
+import { ICurrencyWithGuildCount, getDefaultCurrency } from "shared";
+import { hasAccess } from "../../../utils/auth";
+import { dbConnect } from "../../../utils/db";
+import { db } from "database";
 
 const Handler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
     case "GET":
+      if (!(await hasAccess(req, res, false))) break;
+
       await HandleGet(req, res);
       break;
 
     case "POST":
+      if (!(await hasAccess(req, res, true))) break;
+
       await HandlePost(req, res);
       break;
 
@@ -19,7 +25,7 @@ const Handler = async (req: NextApiRequest, res: NextApiResponse) => {
 };
 
 const HandlePost = async (req: NextApiRequest, res: NextApiResponse) => {
-  await db.connect();
+  await dbConnect();
 
   const body = JSON.parse(req.body);
 
@@ -42,7 +48,7 @@ const HandlePost = async (req: NextApiRequest, res: NextApiResponse) => {
 };
 
 const HandleGet = async (req: NextApiRequest, res: NextApiResponse) => {
-  await db.connect();
+  await dbConnect();
 
   const currency = await db.currencies.get.all();
 

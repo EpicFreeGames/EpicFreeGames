@@ -1,6 +1,7 @@
 import axios from "axios";
 import { config } from "config";
-import { CommandTypes, embeds, SlashCommand } from "shared";
+import { embeds, SlashCommand } from "shared-discord-stuff";
+import { CommandTypes } from "shared";
 
 export const command: SlashCommand = {
   type: CommandTypes.ADMIN,

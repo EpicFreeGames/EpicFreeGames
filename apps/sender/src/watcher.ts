@@ -1,6 +1,7 @@
-import { embeds, db, executeWebhook, editWebhookMsg, wait } from "shared";
+import { embeds, executeWebhook, editWebhookMsg } from "shared-discord-stuff";
 import { config } from "config";
-import { ISendingStats, IFinishedSendingStats } from "types";
+import { ISendingStats, IFinishedSendingStats, wait } from "shared";
+import { db } from "database";
 
 const secondsToFinish = (target: number, msgPerSec: number) => target / msgPerSec;
 const millisToSeconds = (millis: number) => Math.ceil(millis / 1000);

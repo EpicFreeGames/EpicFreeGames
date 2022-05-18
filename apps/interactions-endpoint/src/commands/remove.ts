@@ -1,6 +1,8 @@
-import { embeds } from "shared";
-import { CommandTypes, db, SlashCommand, SubCommandHandler } from "shared";
+import { embeds } from "shared-discord-stuff";
+import { SlashCommand, SubCommandHandler } from "shared-discord-stuff";
 import { deleteWebhook } from "../utils/webhooks";
+import { db } from "database";
+import { CommandTypes } from "shared";
 
 export const command: SlashCommand = {
   type: CommandTypes.MANAGE_GUILD,

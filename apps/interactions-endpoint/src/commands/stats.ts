@@ -1,5 +1,7 @@
-import { CommandInteraction, db, embeds, CommandTypes, SlashCommand } from "shared";
-import { IStats, ICommandsRanIn } from "types";
+import { CommandInteraction, embeds, SlashCommand } from "shared-discord-stuff";
+import { IStats, ICommandsRanIn } from "shared";
+import { db } from "database";
+import { CommandTypes } from "shared";
 
 export const command: SlashCommand = {
   type: CommandTypes.ADMIN,

@@ -1,5 +1,6 @@
 import { config } from "config";
-import { CommandInteraction, CommandTypes, SlashCommand } from "shared";
+import { CommandInteraction, SlashCommand } from "shared-discord-stuff";
+import { CommandTypes } from "shared";
 
 export const isAuthorized = (i: CommandInteraction, command: SlashCommand) => {
   if (command.type === CommandTypes.MANAGE_GUILD)

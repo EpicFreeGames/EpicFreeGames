@@ -1,5 +1,5 @@
 import { CSSProperties, FC, ReactNode } from "react";
-import { NoneOrOneOf } from "types";
+import { NoneOrOneOf } from "shared";
 
 interface FlexDivJustifyProps {
   justifyCenter: boolean;

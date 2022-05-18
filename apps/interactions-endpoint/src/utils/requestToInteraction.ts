@@ -8,15 +8,15 @@ import {
 import {
   CommandInteraction,
   CommandOptions,
-  db,
   embeds,
   logger,
   User,
   getTag,
   discordApiRequest,
-} from "shared";
+} from "shared-discord-stuff";
+import { db } from "database";
 import { config } from "config";
-import { ICommandLog } from "types";
+import { ICommandLog } from "shared";
 
 export const requestToInteraction = (req: Request, res: Response): CommandInteraction => {
   const body = req.body;

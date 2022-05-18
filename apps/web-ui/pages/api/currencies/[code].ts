@@ -1,10 +1,15 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { db, getDefaultCurrency } from "shared";
+import { getDefaultCurrency } from "shared";
+import { hasAccess } from "../../../utils/auth";
+import { dbConnect } from "../../../utils/db";
+import { db } from "database";
 
-const Handler = (req: NextApiRequest, res: NextApiResponse) => {
+const Handler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
     case "PATCH":
-      HandlePatch(req, res);
+      if (!(await hasAccess(req, res, true))) break;
+
+      await HandlePatch(req, res);
       break;
 
     default:
@@ -14,7 +19,7 @@ const Handler = (req: NextApiRequest, res: NextApiResponse) => {
 };
 
 const HandlePatch = async (req: NextApiRequest, res: NextApiResponse) => {
-  await db.connect();
+  await dbConnect();
 
   const body = JSON.parse(req.body);
   const { code } = req.query;

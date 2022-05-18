@@ -1,5 +1,5 @@
 import { ApplicationCommandOptionTypes, ChannelTypes } from "discord.js/typings/enums";
-import { CommandTypes, LanguagesWithFlags, RawCommand, CurrencyData } from "shared";
+import { CommandTypes, LanguagesWithFlags, RawCommand, CurrencyData } from "shared-discord-stuff";
 
 export const slashCommands: RawCommand[] = [
   {

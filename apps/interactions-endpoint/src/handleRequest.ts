@@ -2,8 +2,6 @@ import { config } from "config";
 import { Request, Response } from "express";
 import {
   CommandInteraction,
-  CommandTypes,
-  db,
   embeds,
   getDefaultCurrency,
   getDefaultLanguage,
@@ -11,12 +9,12 @@ import {
   getGuildCurrency,
   logger,
   SlashCommand,
-} from "shared";
-import { ILanguage } from "types";
+} from "shared-discord-stuff";
+import { ILanguage, CommandTypes } from "shared";
 import { commands } from "./commands";
 import { isAuthorized } from "./utils/Authorization";
-
 import { requestToInteraction } from "./utils/requestToInteraction";
+import { db } from "database";
 
 export const handleRequests = async (req: Request, res: Response) => {
   const body = req.body;

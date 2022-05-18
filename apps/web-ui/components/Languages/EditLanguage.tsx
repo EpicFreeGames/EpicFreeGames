@@ -8,7 +8,8 @@ import { updateLanguage } from "../../utils/requests/Languages";
 import { FlexDiv } from "../FlexDiv";
 import { useLanguages } from "../../hooks/requests";
 import { Tooltip } from "../Tooltip";
-import { ILanguageWithGuildCount } from "types";
+import { ILanguageWithGuildCount } from "shared";
+import { DeployGlobalCommands, DeployGuildCommands } from "../../utils/requests/Commands";
 
 export const EditLanguage = ({ language }: { language: ILanguageWithGuildCount }) => {
   const [open, setOpen] = useState(false);
@@ -32,7 +33,9 @@ const EditLanguageButton: FC<{
       </Button>
     </Tooltip>
   ) : (
-    <Button onClick={() => setOpen(true)}>Edit language</Button>
+    <Button fullWidth onClick={() => setOpen(true)}>
+      Edit language
+    </Button>
   );
 
 const EditLanguageModal: FC<{
@@ -42,17 +45,23 @@ const EditLanguageModal: FC<{
 }> = ({ open, setOpen, language }) => {
   const { languages } = useLanguages();
 
-  const onSuccess = () => setOpen(false);
+  const onSuccess = async () => {
+    setOpen(false);
 
-  const onSubmit = async (values: IAddLanguageValues) =>
+    await DeployGuildCommands();
+    await DeployGlobalCommands();
+  };
+
+  const onSubmit = async (values: IAddLanguageValues) => {
     mutate("/languages", updateLanguage(language.code, values, onSuccess, languages));
+  };
 
   return (
     <Modal opened={open} onClose={() => setOpen(false)} title="Add a language">
       <Formik
         onSubmit={onSubmit}
         initialValues={{
-          name: language?.englishName,
+          englishName: language?.englishName,
           localizedName: language?.localizedName,
           code: language.code,
         }}
@@ -63,10 +72,10 @@ const EditLanguageModal: FC<{
             <FlexDiv column>
               <TextInput
                 label="English name"
-                error={errors.name && touched.name ? errors.name : undefined}
+                error={errors.englishName && touched.englishName ? errors.englishName : undefined}
                 autoComplete="off"
                 required
-                {...getFieldProps("name")}
+                {...getFieldProps("englishName")}
               />
 
               <TextInput

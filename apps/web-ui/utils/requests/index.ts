@@ -1,4 +1,4 @@
-import { config } from "config";
+import { apiBaseUrl } from "../envs";
 
 interface Props {
   path: string;
@@ -7,16 +7,19 @@ interface Props {
 }
 
 export const request = <T>({ path, method, body }: Props): Promise<T> =>
-  fetch(`${config.webUi.apiUrl}${path}`, {
+  fetch(`${apiBaseUrl}${path}`, {
     method,
     credentials: "same-origin",
-    body: JSON.stringify(body),
+    body: body ? JSON.stringify(body) : undefined,
   }).then((res) => {
     if (!res.ok) throw new Error(res.statusText);
+
+    if (res.status === 204) return null;
+
     return res.json();
   });
 
 export const fetcher = async (url: string) =>
-  fetch(`${config.webUi.apiUrl}${url}`, {
+  fetch(`${apiBaseUrl}${url}`, {
     credentials: "same-origin",
   }).then((res) => res.json());

@@ -5,7 +5,6 @@ export interface IConfig {
 
   interactionsPort: number;
   senderPort: number;
-  clientPort: number;
 
   infoHookUrl: string;
   loggingHookUrl: string;
@@ -55,8 +54,6 @@ export interface IConstants {
     browserRedirect: string;
     launcherRedirect: string;
   };
-
-  discordApiVersion: number;
 
   webhookName: string;
 

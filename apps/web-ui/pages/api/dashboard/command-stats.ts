@@ -1,9 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { db } from "shared";
-import { ICommandsRanIn } from "types";
+import { db } from "database";
+import { ICommandsRanIn } from "shared";
+import { hasAccess } from "../../../utils/auth";
+import { dbConnect } from "../../../utils/db";
 
 const Handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  await db.connect();
+  if (!(await hasAccess(req, res, false))) return;
+
+  await dbConnect();
 
   const lastHour = await db.logs.commands.get.lastHour();
   const lastDat = await db.logs.commands.get.lastDay();

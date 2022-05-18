@@ -1,6 +1,6 @@
 import { Text, Title } from "@mantine/core";
 import { FC } from "react";
-import { ICurrencyWithGuildCount } from "types";
+import { ICurrencyWithGuildCount } from "shared";
 import { useCurrencies } from "../../hooks/requests";
 import { Card } from "../Card";
 import { FlexDiv } from "../FlexDiv";

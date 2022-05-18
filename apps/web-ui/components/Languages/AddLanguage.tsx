@@ -7,6 +7,7 @@ import { mutate } from "swr";
 import { addLanguage } from "../../utils/requests/Languages";
 import { FlexDiv } from "../FlexDiv";
 import { useLanguages } from "../../hooks/requests";
+import { DeployGuildCommands, DeployGlobalCommands } from "../../utils/requests/Commands";
 
 export const AddLanguage = () => {
   const [open, setOpen] = useState(false);
@@ -29,7 +30,12 @@ const AddLanguageModal: FC<{ open: boolean; setOpen: (open: boolean) => void }> 
 }) => {
   const { languages } = useLanguages();
 
-  const onSuccess = () => setOpen(false);
+  const onSuccess = async () => {
+    setOpen(false);
+
+    await DeployGuildCommands();
+    await DeployGlobalCommands();
+  };
 
   const onSubmit = async (values: IAddLanguageValues) =>
     mutate("/languages", addLanguage(values, onSuccess, languages));

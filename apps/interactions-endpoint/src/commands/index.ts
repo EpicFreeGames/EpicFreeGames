@@ -1,4 +1,4 @@
-import { SlashCommand } from "shared";
+import { SlashCommand } from "shared-discord-stuff";
 
 import { command as free } from "./free";
 import { command as up } from "./up";

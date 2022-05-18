@@ -8,7 +8,7 @@ import { updateCurrency } from "../../utils/requests/Currencies";
 import { currencySchema, IUpdateCurrencyValues } from "../../utils/validation/Currencies";
 import { useCurrencies } from "../../hooks/requests";
 import { Tooltip } from "../Tooltip";
-import { ICurrencyWithGuildCount } from "types";
+import { ICurrencyWithGuildCount } from "shared";
 
 export const EditCurrency = ({ currency }: { currency: ICurrencyWithGuildCount }) => {
   const [open, setOpen] = useState(false);
@@ -32,7 +32,9 @@ const EditCurrencyButton: FC<{
       </Button>
     </Tooltip>
   ) : (
-    <Button onClick={() => setOpen(true)}>Edit currency</Button>
+    <Button fullWidth onClick={() => setOpen(true)}>
+      Edit currency
+    </Button>
   );
 
 const EditCurrencyModal: FC<{

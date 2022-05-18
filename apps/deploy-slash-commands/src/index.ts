@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { config } from "config";
-import { CommandTypes } from "shared";
+import { CommandTypes } from "shared-discord-stuff";
 import { slashCommands } from "./commands";
 
 const discordApiBase = `https://discord.com/api/v9/applications/${config.botId}`;

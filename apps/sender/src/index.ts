@@ -1,9 +1,9 @@
 import { config } from "config";
-import mongoose from "mongoose";
 import { createApp } from "./app";
+import { db } from "database";
 
 (async () => {
-  await mongoose.connect(config.mongoUrl);
+  await db.connect(config.mongoUrl);
   console.log("Connected to database (sender)");
 
   const app = createApp();

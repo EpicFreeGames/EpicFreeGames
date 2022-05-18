@@ -1,8 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { db } from "shared";
+import { db } from "database";
+import { hasAccess } from "../../../utils/auth";
+import { dbConnect } from "../../../utils/db";
 
 const Handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  await db.connect();
+  if (!(await hasAccess(req, res, false))) return;
+
+  await dbConnect();
 
   res.status(200).json({
     dbGuildCount: await db.guilds.get.count(),

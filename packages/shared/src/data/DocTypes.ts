@@ -1,4 +1,7 @@
-import { IGuild, ICommandLog, ISendingLog, ILanguage, ICurrency } from "types";
+import { ICommandLog } from "./CommandLog";
+import { IGuild } from "./Guild";
+import { ICurrency, ILanguage } from "./Internationalization";
+import { ISendingLog } from "./SendingLog";
 
 export interface DocumentStuff {
   _id: string;

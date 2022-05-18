@@ -1,10 +1,10 @@
-import mongoose from "mongoose";
 import { config } from "config";
+import { db } from "database";
 import { createApp } from "./app";
-import { initTranslations, logger } from "shared";
+import { initTranslations, logger } from "shared-discord-stuff";
 
 (async () => {
-  await mongoose.connect(config.mongoUrl);
+  await db.connect(config.mongoUrl);
   console.log("Connected to database (i-endpoint)");
 
   await initTranslations();

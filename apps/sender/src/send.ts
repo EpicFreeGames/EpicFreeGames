@@ -3,8 +3,8 @@ import mongoose from "mongoose";
 import { startWatcher } from "./watcher";
 import { ChannelSender } from "./senders/channelSender";
 import { HookSender } from "./senders/hookSender";
-import { db } from "shared";
-import { IGuild, IGame } from "types";
+import { db } from "database";
+import { IGuild, IGame } from "shared";
 
 const startSenders = (
   noHookGuilds: IGuild[],

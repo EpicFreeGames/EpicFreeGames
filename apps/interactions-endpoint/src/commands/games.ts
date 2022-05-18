@@ -1,4 +1,6 @@
-import { CommandTypes, db, embeds, SlashCommand, SubCommandHandler } from "shared";
+import { embeds, SlashCommand, SubCommandHandler } from "shared-discord-stuff";
+import { db } from "database";
+import { CommandTypes } from "shared";
 
 export const command: SlashCommand = {
   type: CommandTypes.ADMIN,
