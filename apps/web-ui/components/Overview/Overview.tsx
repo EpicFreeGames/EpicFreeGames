@@ -9,9 +9,7 @@ import { Title } from "@mantine/core";
 export const Overview = () => {
   return (
     <Card variant="dark">
-      <Title order={2} style={{ paddingBottom: "1rem" }}>
-        Overview
-      </Title>
+      <Title order={2}>Overview</Title>
 
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr", gap: "0.5rem" }}>
         <GuildCount />
