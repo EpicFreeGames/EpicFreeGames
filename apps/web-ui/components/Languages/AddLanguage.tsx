@@ -4,7 +4,7 @@ import { Button } from "../Button";
 import { Formik } from "formik";
 import { languageSchema, IAddLanguageValues } from "../../utils/validation/Languages";
 import { mutate } from "swr";
-import { addLanguage } from "../../utils/swr/requests/Languages";
+import { addLanguage } from "../../utils/requests/Languages";
 import { FlexDiv } from "../FlexDiv";
 import { useLanguages } from "../../hooks/requests";
 

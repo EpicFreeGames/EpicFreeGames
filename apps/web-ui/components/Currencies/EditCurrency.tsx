@@ -4,7 +4,7 @@ import { Button } from "../Button";
 import { Formik } from "formik";
 import { mutate } from "swr";
 import { FlexDiv } from "../FlexDiv";
-import { updateCurrency } from "../../utils/swr/requests/Currencies";
+import { updateCurrency } from "../../utils/requests/Currencies";
 import { currencySchema, IUpdateCurrencyValues } from "../../utils/validation/Currencies";
 import { useCurrencies } from "../../hooks/requests";
 

@@ -2,7 +2,7 @@ import { showNotification, updateNotification } from "@mantine/notifications";
 import { ICurrencyWithGuildCount } from "shared";
 import { CircleCheck, CircleX } from "tabler-icons-react";
 import { request } from ".";
-import { IAddCurrencyValues, IUpdateCurrencyValues } from "../../validation/Currencies";
+import { IAddCurrencyValues, IUpdateCurrencyValues } from "../validation/Currencies";
 
 export const addCurrency = async (
   values: IAddCurrencyValues,

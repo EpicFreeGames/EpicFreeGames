@@ -1,6 +1,6 @@
 import { IStats, ICommandsRanIn, ILanguageWithGuildCount, ICurrencyWithGuildCount } from "shared";
 import useSWR from "swr";
-import { fetcher } from "../utils/swr/requests";
+import { fetcher } from "../utils/requests";
 
 export const useGuildStats = () => {
   const { data, error } = useSWR<IStats>("/dashboard/guild-stats", fetcher, {

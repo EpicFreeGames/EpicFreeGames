@@ -2,7 +2,7 @@ import { showNotification, updateNotification } from "@mantine/notifications";
 import { ILanguageWithGuildCount } from "shared";
 import { CircleCheck, CircleX } from "tabler-icons-react";
 import { request } from ".";
-import { IAddLanguageValues, IUpdateLanguageValues } from "../../validation/Languages";
+import { IAddLanguageValues, IUpdateLanguageValues } from "../validation/Languages";
 
 export const addLanguage = async (
   values: IAddLanguageValues,

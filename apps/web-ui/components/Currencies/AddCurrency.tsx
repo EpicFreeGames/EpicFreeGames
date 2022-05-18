@@ -5,7 +5,7 @@ import { Formik } from "formik";
 import { mutate } from "swr";
 import { FlexDiv } from "../FlexDiv";
 import { currencySchema, IAddCurrencyValues } from "../../utils/validation/Currencies";
-import { addCurrency } from "../../utils/swr/requests/Currencies";
+import { addCurrency } from "../../utils/requests/Currencies";
 import { useCurrencies } from "../../hooks/requests";
 
 export const AddCurrency = () => {
