@@ -1,4 +1,4 @@
-import { Button } from "@mantine/core";
+import { Button, Tooltip } from "@mantine/core";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { buttonStyles } from "../Button";
 
@@ -12,9 +12,11 @@ export const Profile = () => {
   return (
     <>
       {data ? (
-        <Button className={classes.button} onClick={logout}>
-          {data?.user?.name}
-        </Button>
+        <Tooltip label="Logout" transition={"rotate-right"}>
+          <Button className={classes.button} onClick={logout}>
+            {data?.user?.name}
+          </Button>
+        </Tooltip>
       ) : (
         <Button className={classes.button} onClick={login}>
           Login
