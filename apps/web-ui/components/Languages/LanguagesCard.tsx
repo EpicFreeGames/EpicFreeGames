@@ -40,7 +40,7 @@ const Language: FC<LanguageProps> = ({ language }) => (
         <Title order={3}>{language.guildCount} servers</Title>
       </Tooltip>
 
-      <EditLanguage code={language.code} />
+      <EditLanguage language={language} />
     </FlexDiv>
   </Card>
 );

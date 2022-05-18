@@ -16,10 +16,12 @@ export interface ICurrency {
 
 export interface ILanguageWithGuildCount extends ILanguage {
   guildCount: number;
+  isDefault?: boolean;
 }
 
 export interface ICurrencyWithGuildCount extends ICurrency {
   guildCount: number;
+  isDefault?: boolean;
 }
 
 export interface LanguageDocument extends ILanguage, mongoose.Document {

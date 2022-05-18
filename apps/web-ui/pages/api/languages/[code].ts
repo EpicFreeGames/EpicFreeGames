@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { db } from "shared";
+import { db, getDefaultLanguage } from "shared";
 
 const Handler = (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
@@ -18,6 +18,9 @@ const HandlePatch = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const body = JSON.parse(req.body);
   const { code } = req.query;
+
+  if (getDefaultLanguage().code === code)
+    return res.status(400).json({ message: "Default language can't be edited" });
 
   if (body.code !== code) {
     const language = await db.languages.get.byCode(body.code);

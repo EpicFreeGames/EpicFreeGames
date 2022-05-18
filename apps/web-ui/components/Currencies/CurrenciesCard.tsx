@@ -54,7 +54,7 @@ const CurrencyCard: FC<Props> = ({ currency }) => (
         <Title order={3}>{currency.guildCount} servers</Title>
       </Tooltip>
 
-      <EditCurrency code={currency.code} />
+      <EditCurrency currency={currency} />
     </FlexDiv>
   </Card>
 );

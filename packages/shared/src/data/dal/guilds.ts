@@ -1,4 +1,3 @@
-import { getDefaultCurrency, getDefaultLanguage } from "../../localisation";
 import { CurrencyModel, GuildModel, LanguageModel } from "../models";
 import { CurrencyDocument, LanguageDocument } from "../types";
 import { IWebhook } from "../types/Guild";
@@ -25,23 +24,25 @@ export const get = {
     hasSetRole: async () => GuildModel.find({ roleId: { $ne: null } }).countDocuments(),
     hasOnlySetChannel: async () =>
       GuildModel.find({ channelId: { $ne: null }, webhook: null }).countDocuments(),
-    hasChangedLanguage: async () =>
-      GuildModel.find({ language: { $ne: getDefaultLanguage().code } }).countDocuments(),
-    hasChangedCurrency: async () =>
-      GuildModel.find({ currency: { $ne: getDefaultCurrency().code } }).countDocuments(),
+    hasChangedLanguage: async () => GuildModel.find({ language: { $ne: null } }).countDocuments(),
+    hasChangedCurrency: async () => GuildModel.find({ currency: { $ne: null } }).countDocuments(),
     hasSetThread: async () => GuildModel.find({ threadId: { $ne: null } }).countDocuments(),
+
     hasLanguage: async (code: string) => {
       const language = await LanguageModel.findOne({ code });
       if (!language) return 0;
 
       return GuildModel.find({ language: language._id }).countDocuments();
     },
+    hasDefaultLanguage: async () => GuildModel.find({ language: null }).countDocuments(),
+
     hasCurrency: async (code: string) => {
       const currency = await CurrencyModel.findOne({ code });
       if (!currency) return 0;
 
       return GuildModel.find({ currency: currency._id }).countDocuments();
     },
+    hasDefaultCurrency: async () => GuildModel.find({ currency: null }).countDocuments(),
   },
 };
 

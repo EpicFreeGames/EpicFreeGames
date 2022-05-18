@@ -7,36 +7,45 @@ import { FlexDiv } from "../FlexDiv";
 import { updateCurrency } from "../../utils/requests/Currencies";
 import { currencySchema, IUpdateCurrencyValues } from "../../utils/validation/Currencies";
 import { useCurrencies } from "../../hooks/requests";
+import { Tooltip } from "../Tooltip";
+import { ICurrencyWithGuildCount } from "shared";
 
-export const EditCurrency = ({ code }: { code: string }) => {
+export const EditCurrency = ({ currency }: { currency: ICurrencyWithGuildCount }) => {
   const [open, setOpen] = useState(false);
 
   return (
     <>
-      <EditCurrencyButton setOpen={setOpen} />
-      <EditCurrencyModal open={open} setOpen={setOpen} code={code} />
+      <EditCurrencyButton setOpen={setOpen} currency={currency} />
+      <EditCurrencyModal open={open} setOpen={setOpen} currency={currency} />
     </>
   );
 };
 
-const EditCurrencyButton: FC<{ setOpen: (open: boolean) => void }> = ({ setOpen }) => (
-  <Button fullWidth onClick={() => setOpen(true)}>
-    Edit
-  </Button>
-);
-const EditCurrencyModal: FC<{ open: boolean; setOpen: (open: boolean) => void; code: string }> = ({
-  open,
-  setOpen,
-  code,
-}) => {
+const EditCurrencyButton: FC<{
+  setOpen: (open: boolean) => void;
+  currency: ICurrencyWithGuildCount;
+}> = ({ setOpen, currency }) =>
+  currency.isDefault ? (
+    <Tooltip label="Default currency can't be edited">
+      <Button onClick={() => setOpen(true)} disabled flexGrow>
+        Edit currency
+      </Button>
+    </Tooltip>
+  ) : (
+    <Button onClick={() => setOpen(true)}>Edit currency</Button>
+  );
+
+const EditCurrencyModal: FC<{
+  open: boolean;
+  setOpen: (open: boolean) => void;
+  currency: ICurrencyWithGuildCount;
+}> = ({ open, setOpen, currency }) => {
   const { currencies } = useCurrencies();
 
   const onSuccess = () => setOpen(false);
 
   const onSubmit = async (values: IUpdateCurrencyValues) =>
-    mutate("/currencies", updateCurrency(code, values, onSuccess, currencies));
-
-  const currency = currencies?.find((l) => l.code === code);
+    mutate("/currencies", updateCurrency(currency.code, values, onSuccess, currencies));
 
   return (
     <Modal opened={open} onClose={() => setOpen(false)} title="Edit currency">

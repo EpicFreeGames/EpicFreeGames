@@ -39,7 +39,7 @@ const AddLanguageModal: FC<{ open: boolean; setOpen: (open: boolean) => void }> 
       <Formik
         onSubmit={onSubmit}
         initialValues={{
-          name: "",
+          englishName: "",
           localizedName: "",
           code: "",
         }}
@@ -59,12 +59,12 @@ const AddLanguageModal: FC<{ open: boolean; setOpen: (open: boolean) => void }> 
           <form onSubmit={handleSubmit}>
             <FlexDiv column>
               <TextInput
-                name="name"
+                name="englishName"
                 label="English name"
                 onChange={handleChange}
-                value={values.name}
+                value={values.englishName}
                 onBlur={handleBlur}
-                error={errors.name && touched.name ? errors.name : undefined}
+                error={errors.englishName && touched.englishName ? errors.englishName : undefined}
                 autoComplete="off"
                 required
               />

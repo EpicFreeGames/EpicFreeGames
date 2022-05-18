@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { db, ILanguageWithGuildCount } from "shared";
+import { db, getDefaultLanguage, ILanguageWithGuildCount } from "shared";
 
 const Handler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
@@ -22,7 +22,8 @@ const HandlePost = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const body = JSON.parse(req.body);
 
-  const language = await db.languages.get.byCode(body.code);
+  const language =
+    getDefaultLanguage().code === body.code || (await db.languages.get.byCode(body.code));
 
   if (language) {
     res.status(400).json({
@@ -51,7 +52,13 @@ const HandleGet = async (req: NextApiRequest, res: NextApiResponse) => {
     }))
   );
 
-  res.status(200).json(languagesWithGuildCounts);
+  const defaultLangStats: ILanguageWithGuildCount = {
+    ...getDefaultLanguage(),
+    guildCount: await db.guilds.get.counts.hasDefaultLanguage(),
+    isDefault: true,
+  };
+
+  res.status(200).json([...languagesWithGuildCounts, defaultLangStats]);
 };
 
 export default Handler;

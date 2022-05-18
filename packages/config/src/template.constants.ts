@@ -16,6 +16,8 @@ export const constants: IConstants = {
     launcherRedirect: "",
   },
 
+  discordApiVersion: 0,
+
   webhookName: "",
 
   userIds: {

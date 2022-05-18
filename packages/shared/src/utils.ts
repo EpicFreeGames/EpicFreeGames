@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig, Method } from "axios";
-import { config } from "config";
+import { config, constants } from "config";
 import { APIEmbed } from "discord-api-types";
 import { MessageEmbed, MessageEmbedOptions } from "discord.js";
 import { ICurrency, IGame, IGuild } from "./data/types";
@@ -7,7 +7,7 @@ import { IMessage } from "./interactions/types";
 import fs from "fs/promises";
 import { getDefaultCurrency } from "./localisation";
 
-export const discordApiBaseUrl = "https://discord.com/api/v9";
+export const discordApiUrl = `https://discord.com/api/v${constants.discordApiVersion}`;
 
 export const isEnum =
   <T>(e: T) =>
@@ -20,7 +20,7 @@ export const discordApiRequest = (url: string, method: Method, body: any = null)
       authorization: `Bot ${config.botToken}`,
     },
     method,
-    url: `${discordApiBaseUrl}${url}`,
+    url: `${discordApiUrl}${url}`,
   };
 
   if (body) {
@@ -34,7 +34,7 @@ export const discordApiRequest = (url: string, method: Method, body: any = null)
 export const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const getWebhookUrl = (webhookId: string, webhookToken: string) =>
-  `${discordApiBaseUrl}/webhooks/${webhookId}/${webhookToken}`;
+  `${discordApiUrl}/webhooks/${webhookId}/${webhookToken}`;
 
 export type WebhookMessageOptions = {
   embeds?: (MessageEmbed | MessageEmbedOptions | APIEmbed)[];

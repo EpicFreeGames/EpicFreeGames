@@ -3,6 +3,7 @@ export * from "./data/types";
 
 export * from "./interactions/types";
 export * from "./interactions/utils";
+export * from "./interactions/commands";
 
 export * from "./localisation";
 

@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { db } from "shared";
+import { db, getDefaultCurrency } from "shared";
 
 const Handler = (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
@@ -18,6 +18,9 @@ const HandlePatch = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const body = JSON.parse(req.body);
   const { code } = req.query;
+
+  if (getDefaultCurrency().code === code)
+    return res.status(400).json({ message: "Default currency can't be edited" });
 
   if (body.code !== code) {
     const currency = await db.currencies.get.byCode(body.code);

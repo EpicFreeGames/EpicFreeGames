@@ -56,6 +56,8 @@ export interface IConstants {
     launcherRedirect: string;
   };
 
+  discordApiVersion: number;
+
   webhookName: string;
 
   userIds: {

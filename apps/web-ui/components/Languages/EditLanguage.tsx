@@ -7,36 +7,45 @@ import { mutate } from "swr";
 import { updateLanguage } from "../../utils/requests/Languages";
 import { FlexDiv } from "../FlexDiv";
 import { useLanguages } from "../../hooks/requests";
+import { ILanguageWithGuildCount } from "shared";
+import { Tooltip } from "../Tooltip";
 
-export const EditLanguage = ({ code }: { code: string }) => {
+export const EditLanguage = ({ language }: { language: ILanguageWithGuildCount }) => {
   const [open, setOpen] = useState(false);
 
   return (
     <>
-      <EditLanguageButton setOpen={setOpen} />
-      <EditLanguageModal open={open} setOpen={setOpen} code={code} />
+      <EditLanguageButton setOpen={setOpen} language={language!} />
+      <EditLanguageModal open={open} setOpen={setOpen} language={language!} />
     </>
   );
 };
 
-const EditLanguageButton: FC<{ setOpen: (open: boolean) => void }> = ({ setOpen }) => (
-  <Button fullWidth onClick={() => setOpen(true)}>
-    Edit
-  </Button>
-);
-const EditLanguageModal: FC<{ open: boolean; setOpen: (open: boolean) => void; code: string }> = ({
-  open,
-  setOpen,
-  code,
-}) => {
+const EditLanguageButton: FC<{
+  setOpen: (open: boolean) => void;
+  language: ILanguageWithGuildCount;
+}> = ({ setOpen, language }) =>
+  language.isDefault ? (
+    <Tooltip label="Default language can't be edited">
+      <Button onClick={() => setOpen(true)} disabled flexGrow>
+        Edit language
+      </Button>
+    </Tooltip>
+  ) : (
+    <Button onClick={() => setOpen(true)}>Edit language</Button>
+  );
+
+const EditLanguageModal: FC<{
+  open: boolean;
+  setOpen: (open: boolean) => void;
+  language: ILanguageWithGuildCount;
+}> = ({ open, setOpen, language }) => {
   const { languages } = useLanguages();
 
   const onSuccess = () => setOpen(false);
 
   const onSubmit = async (values: IAddLanguageValues) =>
-    mutate("/languages", updateLanguage(code, values, onSuccess, languages));
-
-  const language = languages?.find((l) => l.code === code);
+    mutate("/languages", updateLanguage(language.code, values, onSuccess, languages));
 
   return (
     <Modal opened={open} onClose={() => setOpen(false)} title="Add a language">
@@ -45,7 +54,7 @@ const EditLanguageModal: FC<{ open: boolean; setOpen: (open: boolean) => void; c
         initialValues={{
           name: language?.englishName,
           localizedName: language?.localizedName,
-          code: code,
+          code: language.code,
         }}
         validationSchema={languageSchema}
       >

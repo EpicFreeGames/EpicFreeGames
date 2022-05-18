@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { db, ICurrencyWithGuildCount } from "shared";
+import { db, getDefaultCurrency, ICurrencyWithGuildCount } from "shared";
 
 const Handler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
@@ -22,7 +22,8 @@ const HandlePost = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const body = JSON.parse(req.body);
 
-  const currency = await db.currencies.get.byCode(body.code);
+  const currency =
+    getDefaultCurrency().code === body.code || (await db.currencies.get.byCode(body.code));
 
   if (currency) {
     res.status(400).json({
@@ -51,7 +52,13 @@ const HandleGet = async (req: NextApiRequest, res: NextApiResponse) => {
     }))
   );
 
-  res.status(200).json(currenciesWithGuildCounts);
+  const defaultLangStats: ICurrencyWithGuildCount = {
+    ...getDefaultCurrency(),
+    guildCount: await db.guilds.get.counts.hasDefaultCurrency(),
+    isDefault: true,
+  };
+
+  res.status(200).json([...currenciesWithGuildCounts, defaultLangStats]);
 };
 
 export default Handler;
