@@ -2,7 +2,7 @@ import { MessageEmbed } from "discord.js";
 import { t } from "../localisation";
 import { utils } from "./utils";
 import { constants } from "config";
-import { ILanguage } from "../data/types";
+import { ILanguage } from "types";
 
 export const missingPermissions = (channelId: string, language: ILanguage): MessageEmbed =>
   new MessageEmbed({

@@ -1,4 +1,4 @@
-import { ILanguage, ICurrency, IGuild } from "../data/types";
+import { ILanguage, ICurrency, IGuild } from "types";
 
 const English: ILanguage = {
   englishName: "English",

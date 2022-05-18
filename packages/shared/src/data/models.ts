@@ -1,6 +1,12 @@
 import mongoose from "mongoose";
-import { IGame, GuildDocument, ICommandLog, SendingLogDocument } from "./types";
-import { CurrencyDocument, LanguageDocument } from "./types/Internationalization";
+import { IGame } from "types";
+import {
+  CommandLogDocument,
+  CurrencyDocument,
+  GuildDocument,
+  LanguageDocument,
+  SendingLogDocument,
+} from "./DocTypes";
 
 const { Schema } = mongoose;
 
@@ -48,9 +54,9 @@ export const GuildModel = mongoose.model<GuildDocument>(
   })
 );
 
-export const CommandLogModel = mongoose.model<ICommandLog>(
+export const CommandLogModel = mongoose.model<CommandLogDocument>(
   "command-log",
-  new mongoose.Schema<ICommandLog>(
+  new mongoose.Schema<CommandLogDocument>(
     {
       command: { type: String },
       sender: {

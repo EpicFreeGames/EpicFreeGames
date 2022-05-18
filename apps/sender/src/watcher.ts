@@ -1,13 +1,6 @@
-import {
-  embeds,
-  db,
-  executeWebhook,
-  editWebhookMsg,
-  ISendingStats,
-  IFinishedSendingStats,
-  wait,
-} from "shared";
+import { embeds, db, executeWebhook, editWebhookMsg, wait } from "shared";
 import { config } from "config";
+import { ISendingStats, IFinishedSendingStats } from "types";
 
 const secondsToFinish = (target: number, msgPerSec: number) => target / msgPerSec;
 const millisToSeconds = (millis: number) => Math.ceil(millis / 1000);

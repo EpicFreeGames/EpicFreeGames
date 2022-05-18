@@ -1,6 +1,6 @@
 import { t } from "../localisation";
 import { constants } from "config";
-import { ILanguage } from "../data/types";
+import { ILanguage } from "types";
 
 export const utils = {
   footer: (language: ILanguage) =>

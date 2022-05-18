@@ -1,10 +1,9 @@
-import { IGame } from "../data/types/Game";
 import { t } from "../localisation";
 import { MessageEmbed } from "discord.js";
 import { utils } from "./utils";
 import { getGamePrice } from "../utils";
 import { constants } from "config";
-import { ICurrency, ILanguage } from "../data/types";
+import { IGame, ILanguage, ICurrency } from "types";
 
 export const games = (
   games: IGame[],

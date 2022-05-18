@@ -1,6 +1,6 @@
+import { IWebhook } from "types";
+import { LanguageDocument, CurrencyDocument } from "../DocTypes";
 import { CurrencyModel, GuildModel, LanguageModel } from "../models";
-import { CurrencyDocument, LanguageDocument } from "../types";
-import { IWebhook } from "../types/Guild";
 
 const selectString = "-_id -__v -createdAt -updatedAt";
 

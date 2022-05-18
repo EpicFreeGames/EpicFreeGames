@@ -1,4 +1,3 @@
-import mongoose from "mongoose";
 import { ICurrency, ILanguage } from "./Internationalization";
 
 export interface IWebhook {
@@ -14,12 +13,6 @@ export interface IGuild {
   language: ILanguage | null;
   currency: ICurrency | null;
   webhook: IWebhook | null;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-export interface GuildDocument extends IGuild, mongoose.Document {
-  _id: string;
   createdAt: Date;
   updatedAt: Date;
 }

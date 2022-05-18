@@ -1,6 +1,7 @@
 import axios from "axios";
 import { constants, config } from "config";
-import { CommandInteraction, discordApiRequest, embeds, ILanguage, IWebhook } from "shared";
+import { CommandInteraction, discordApiRequest, embeds } from "shared";
+import { IWebhook, ILanguage } from "types";
 
 export const makeSenseOfRole = (role: any) => {
   if (role.name === "@everyone") return { embed: "@everyone", toDb: "1" };

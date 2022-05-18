@@ -2,7 +2,7 @@ import { MessageEmbed } from "discord.js";
 import { t } from "../localisation";
 import { constants } from "config";
 import { utils } from "./utils";
-import { IGuild, ILanguage } from "../data/types";
+import { ILanguage, IGuild } from "types";
 
 export const help = (language: ILanguage) =>
   new MessageEmbed({

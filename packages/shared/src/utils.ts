@@ -2,10 +2,10 @@ import axios, { AxiosRequestConfig, Method } from "axios";
 import { config, constants } from "config";
 import { APIEmbed } from "discord-api-types";
 import { MessageEmbed, MessageEmbedOptions } from "discord.js";
-import { ICurrency, IGame, IGuild } from "./data/types";
 import { IMessage } from "./interactions/types";
 import fs from "fs/promises";
 import { getDefaultCurrency } from "./localisation";
+import { IGame, ICurrency, IGuild } from "types";
 
 export const discordApiUrl = `https://discord.com/api/v${constants.discordApiVersion}`;
 

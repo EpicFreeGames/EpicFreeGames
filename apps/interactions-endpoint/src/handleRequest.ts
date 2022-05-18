@@ -11,8 +11,8 @@ import {
   getGuildCurrency,
   logger,
   SlashCommand,
-  ILanguage,
 } from "shared";
+import { ILanguage } from "types";
 import { commands } from "./commands";
 import { isAuthorized } from "./utils/Authorization";
 

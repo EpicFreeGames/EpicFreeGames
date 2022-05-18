@@ -1,8 +1,8 @@
 import { MessageEmbed } from "discord.js";
 import { getGuildLang, getGuildCurrency } from "../localisation";
-import { IGuild, ICommandLog } from "../data/types";
 import { CommandInteraction } from "../interactions/types";
 import { utils } from "./utils";
+import { IGuild, ICommandLog } from "types";
 
 const addDbInfo = (guild: IGuild, embed: MessageEmbed) => {
   embed.description +=

@@ -1,6 +1,7 @@
 import { ApplicationCommandOptionTypes, ChannelTypes } from "discord.js/typings/enums";
-import { CurrencyDocument, ICurrency, ILanguage, LanguageDocument } from "../data/types";
 import { CommandTypes, RawCommand } from "./types";
+import { ILanguage, ICurrency } from "types";
+import { LanguageDocument, CurrencyDocument } from "../data/DocTypes";
 
 export const getCommands = (
   languages: (LanguageDocument | ILanguage)[],

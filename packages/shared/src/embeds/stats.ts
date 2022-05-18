@@ -1,5 +1,5 @@
 import { MessageEmbed } from "discord.js";
-import { IStats, ICommandsRanIn } from "../types/stats";
+import { IStats, ICommandsRanIn } from "types";
 import { utils } from "./utils";
 
 // prettier-ignore

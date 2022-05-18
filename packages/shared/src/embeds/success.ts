@@ -1,5 +1,5 @@
 import { MessageEmbed } from "discord.js";
-import { ILanguage } from "../data/types";
+import { ILanguage } from "types";
 import { t } from "../localisation";
 import { utils } from "./utils";
 

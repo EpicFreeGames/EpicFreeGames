@@ -1,10 +1,10 @@
 import { config } from "config";
 import OtaClient from "@crowdin/ota-client";
 import i18next from "i18next";
+import { ILanguage } from "types";
 
 import english from "./english.json";
 import old from "./old.json";
-import { ILanguage } from "../data/types";
 
 export const initTranslations = async () => {
   const client = new OtaClient(config.crowdinDistHash);

@@ -1,5 +1,6 @@
 import { CurrencyModel } from "../models";
-import { CurrencyDocument, ICurrency } from "../types";
+import { ICurrency } from "types";
+import { CurrencyDocument } from "../DocTypes";
 
 const selectString = "-_id -__v -createdAt -updatedAt";
 

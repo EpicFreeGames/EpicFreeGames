@@ -1,6 +1,6 @@
+import { ILanguage } from "types";
+import { LanguageDocument } from "../DocTypes";
 import { LanguageModel } from "../models";
-import { ILanguage } from "../types/Internationalization";
-import { LanguageDocument } from "../types";
 
 const selectString = "-_id -__v -createdAt -updatedAt";
 

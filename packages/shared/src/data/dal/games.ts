@@ -1,5 +1,5 @@
 import { GameModel } from "../models";
-import { GamePrices, IGame } from "../types";
+import { GamePrices, IGame } from "types";
 
 const selectString = "-__v -createdAt -updatedAt";
 

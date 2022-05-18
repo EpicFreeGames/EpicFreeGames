@@ -1,5 +1,5 @@
 import { MessageEmbed } from "discord.js";
-import { ISendingStats, IFinishedSendingStats } from "../types/stats";
+import { ISendingStats, IFinishedSendingStats } from "types";
 import { utils } from "./utils";
 
 export const stats = (stats: ISendingStats) =>

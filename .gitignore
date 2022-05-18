@@ -21,3 +21,4 @@ scrapers
 /DATA
 .env.mongo
 .env
+old.json

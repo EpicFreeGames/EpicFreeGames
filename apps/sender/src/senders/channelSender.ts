@@ -4,14 +4,12 @@ import {
   embeds,
   getGuildLang,
   db,
-  ISendingLog,
   discordApiRequest,
   wait,
-  IGuild,
-  IGame,
   getGuildCurrency,
   getMessage,
 } from "shared";
+import { IGuild, IGame, ISendingLog } from "types";
 
 export class ChannelSender {
   limitedAxios: RateLimitedAxiosInstance;

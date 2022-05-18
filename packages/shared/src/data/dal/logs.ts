@@ -1,6 +1,5 @@
+import { ICommandLog, ISendingLog } from "types";
 import { CommandLogModel, SendingLogModel } from "../models";
-import { ICommandLog } from "../types/CommandLog";
-import { ISendingLog } from "../types/SendingLog";
 
 export const commands = {
   add: async (log: ICommandLog) => new CommandLogModel(log).save(),

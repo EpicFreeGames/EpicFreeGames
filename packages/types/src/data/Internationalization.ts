@@ -1,5 +1,3 @@
-import mongoose from "mongoose";
-
 export interface ILanguage {
   code: string;
   englishName: string;
@@ -22,16 +20,4 @@ export interface ILanguageWithGuildCount extends ILanguage {
 export interface ICurrencyWithGuildCount extends ICurrency {
   guildCount: number;
   isDefault?: boolean;
-}
-
-export interface LanguageDocument extends ILanguage, mongoose.Document {
-  _id: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-export interface CurrencyDocument extends ICurrency, mongoose.Document {
-  _id: string;
-  createdAt: Date;
-  updatedAt: Date;
 }

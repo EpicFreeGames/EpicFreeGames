@@ -1,12 +1,5 @@
-import {
-  CommandInteraction,
-  db,
-  embeds,
-  IStats,
-  ICommandsRanIn,
-  CommandTypes,
-  SlashCommand,
-} from "shared";
+import { CommandInteraction, db, embeds, CommandTypes, SlashCommand } from "shared";
+import { IStats, ICommandsRanIn } from "types";
 
 export const command: SlashCommand = {
   type: CommandTypes.ADMIN,

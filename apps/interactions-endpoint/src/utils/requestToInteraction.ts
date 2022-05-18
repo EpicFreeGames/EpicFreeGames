@@ -10,13 +10,13 @@ import {
   CommandOptions,
   db,
   embeds,
-  ICommandLog,
   logger,
   User,
   getTag,
   discordApiRequest,
 } from "shared";
 import { config } from "config";
+import { ICommandLog } from "types";
 
 export const requestToInteraction = (req: Request, res: Response): CommandInteraction => {
   const body = req.body;

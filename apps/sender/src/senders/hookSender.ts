@@ -1,18 +1,16 @@
 import axios, { AxiosInstance } from "axios";
 import {
   db,
-  discordApiBaseUrl,
   embeds,
   getGuildLang,
-  IGame,
-  IGuild,
-  ISendingLog,
   wait,
   getGuildCurrency,
   getWebhookUrl,
   executeWebhook,
   getMessage,
+  discordApiUrl,
 } from "shared";
+import { IGuild, IGame, ISendingLog } from "types";
 
 export class HookSender {
   guilds: IGuild[];
@@ -28,7 +26,7 @@ export class HookSender {
     this.sendingId = sendingId;
 
     this.axios = axios.create({
-      baseURL: `${discordApiBaseUrl}/webhooks`,
+      baseURL: `${discordApiUrl}/webhooks`,
       headers: {
         "Content-Type": "application/json",
       },

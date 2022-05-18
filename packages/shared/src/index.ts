@@ -1,5 +1,5 @@
 export * from "./data/models";
-export * from "./data/types";
+export * from "./data/DocTypes";
 
 export * from "./interactions/types";
 export * from "./interactions/utils";
@@ -12,4 +12,3 @@ export * as embeds from "./embeds";
 
 export * from "./logger";
 export * from "./utils";
-export * from "./types";

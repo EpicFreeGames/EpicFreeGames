@@ -1,5 +1,5 @@
 import { MessageActionRow, MessageEmbed } from "discord.js";
-import { ICurrency, IGuild, ILanguage } from "../data/types";
+import { ICurrency, IGuild, ILanguage } from "types";
 
 export interface CommandInteraction {
   guildId: string | null;
