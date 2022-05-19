@@ -19,11 +19,8 @@ export const cardStyles = createStyles((theme) => ({
   lightCardSkele: {
     borderRadius: "8px",
     boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
+    height: "100%",
     width: "100%",
-
-    [theme.fn.largerThan("sm")]: {
-      width: "calc(calc(100% - 2rem) / 5)",
-    },
   },
   cardContent: {
     display: "flex",

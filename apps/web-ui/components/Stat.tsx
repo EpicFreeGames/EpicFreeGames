@@ -3,6 +3,7 @@ import { Card } from "./Card";
 import CountUp from "react-countup";
 import { FlexDiv } from "./FlexDiv";
 import { H3, textStyles } from "./Text";
+import { Skeleton } from "@mantine/core";
 
 interface Props {
   description: string;
@@ -16,7 +17,7 @@ export const Stat: FC<Props> = ({ description, amount, percentage }) => {
   return (
     <Card>
       <FlexDiv column justifyBetween alignCenter fullHeight gap05>
-        <FlexDiv column gap05 alignCenter>
+        <FlexDiv column gap05 alignCenter fullWidth>
           <CountUp
             end={amount || 0}
             duration={2}
