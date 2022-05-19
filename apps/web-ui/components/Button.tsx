@@ -17,12 +17,12 @@ interface BtnProps extends ButtonProps<"button"> {
   flexGrow?: boolean;
 }
 
-export const Button = (props: BtnProps) => (
+export const Button = ({ flexGrow, ...props }: BtnProps) => (
   <MantineButton
     {...props}
     className={`${props.className} ${buttonStyles().classes.button}`}
     style={{
-      flexGrow: props.flexGrow ? 1 : undefined,
+      flexGrow: flexGrow ? 1 : undefined,
     }}
   />
 );
