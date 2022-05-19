@@ -3,6 +3,7 @@ import { Card } from "../Card";
 import { FlexDiv } from "../FlexDiv";
 import { H3, Text } from "../Text";
 import { ConfirmGame } from "./ConfirmGame";
+import { EditGame } from "./EditGame";
 import { UnconfirmGame } from "./UnconfirmGame";
 
 export const Game = ({ game }: { game: IGame }) => {
@@ -10,7 +11,11 @@ export const Game = ({ game }: { game: IGame }) => {
     <Card>
       <FlexDiv column justifyBetween fullHeight>
         <FlexDiv column>
-          <H3>{game.name}</H3>
+          <FlexDiv justifyBetween>
+            <H3>{game.name}</H3>
+
+            <EditGame game={game} />
+          </FlexDiv>
 
           <Text>
             <b>Slug:</b> {game.slug}
