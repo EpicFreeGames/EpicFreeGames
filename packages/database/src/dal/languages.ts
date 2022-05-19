@@ -1,7 +1,7 @@
 import { ILanguage, LanguageDocument } from "shared";
 import { LanguageModel } from "../models";
 
-const selectString = "-_id -__v -createdAt -updatedAt";
+const selectString = "-__v";
 
 export const get = {
   all: async (): Promise<LanguageDocument[]> => LanguageModel.find({}).select(selectString).lean(),
