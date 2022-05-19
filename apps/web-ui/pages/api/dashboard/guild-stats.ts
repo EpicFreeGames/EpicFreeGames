@@ -2,8 +2,11 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { db } from "database";
 import { hasAccess } from "../../../utils/auth";
 import { dbConnect } from "../../../utils/db";
+import { requireMethod } from "../../../utils/apiUtils";
 
 const Handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  if (!requireMethod("GET")) return;
+
   if (!(await hasAccess(req, res, false))) return;
 
   await dbConnect();

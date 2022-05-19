@@ -1,9 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { getToken } from "next-auth/jwt";
+import { forbidden, unauthorized } from "./apiUtils";
 import { adminId, collaborators, nextAuthSecret } from "./envs";
-
-const unauthorized = (res: NextApiResponse) => res.status(401).json({ message: "Unauthorized" });
-const forbidden = (res: NextApiResponse) => res.status(403).json({ message: "Forbidden" });
 
 export const hasAccess = async (
   req: NextApiRequest,

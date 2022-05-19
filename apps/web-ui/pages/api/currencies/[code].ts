@@ -3,6 +3,7 @@ import { getDefaultCurrency } from "shared";
 import { hasAccess } from "../../../utils/auth";
 import { dbConnect } from "../../../utils/db";
 import { db } from "database";
+import { methodNotAllowed } from "../../../utils/apiUtils";
 
 const Handler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
@@ -13,7 +14,7 @@ const Handler = async (req: NextApiRequest, res: NextApiResponse) => {
       break;
 
     default:
-      res.status(405).json({ message: `Method ${req.method} Not Allowed` });
+      methodNotAllowed(res);
       break;
   }
 };

@@ -4,10 +4,10 @@ import { hasAccess } from "../../../../utils/auth";
 import { getCommandsToDeploy, globalDeploy } from "../../../../utils/commandDeploy";
 import { dbConnect } from "../../../../utils/db";
 import { db } from "database";
+import { requireMethod } from "../../../../utils/apiUtils";
 
 const Handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.method !== "POST")
-    return res.status(405).json({ message: `Method '${req.method}' not allowed` });
+  if (!requireMethod("POST")) return;
 
   if (!(await hasAccess(req, res, true))) return;
 
