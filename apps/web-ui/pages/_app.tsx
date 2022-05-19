@@ -27,10 +27,6 @@ const App = (props: AppProps & { colorScheme: ColorScheme }) => {
         <MantineProvider
           theme={{
             colorScheme,
-            breakpoints: {
-              mobile: 600,
-              tablet: 1060,
-            },
           }}
           withGlobalStyles
           withNormalizeCSS
