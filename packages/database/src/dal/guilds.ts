@@ -1,4 +1,4 @@
-import { IWebhook, CurrencyDocument, LanguageDocument } from "shared";
+import { IWebhook, CurrencyDocument, LanguageDocument, GuildDocument } from "shared";
 import { CurrencyModel, GuildModel, LanguageModel } from "../models";
 
 const selectString = "-_id -__v -createdAt -updatedAt";
@@ -6,7 +6,8 @@ const selectString = "-_id -__v -createdAt -updatedAt";
 export const create = (guildId: string) => new GuildModel({ guildId }).save();
 
 export const get = {
-  one: async (guildId: string) => GuildModel.findOne({ guildId }).select(selectString),
+  one: async (guildId: string): Promise<GuildDocument> =>
+    GuildModel.findOne({ guildId }).select(selectString).populate("language", "-__v").lean(),
 
   all: async () => GuildModel.find({}).select(selectString),
 
