@@ -1,5 +1,11 @@
 import useSWR from "swr";
-import { IStats, ICommandsRanIn, ILanguageWithGuildCount, ICurrencyWithGuildCount } from "shared";
+import {
+  IStats,
+  ICommandsRanIn,
+  ILanguageWithGuildCount,
+  ICurrencyWithGuildCount,
+  IGame,
+} from "shared";
 import { fetcher } from "../utils/requests";
 
 export const useGuildStats = () => {
@@ -32,4 +38,28 @@ export const useCurrencies = () => {
   });
 
   return { currencies: data, isLoading: !error && !data, error };
+};
+
+export const useFreeGames = () => {
+  const { data, error } = useSWR<IGame[]>("/games/free", fetcher, {
+    refreshInterval: 5000,
+  });
+
+  return { freeGames: data, isLoading: !error && !data, error };
+};
+
+export const useUpcomingGames = () => {
+  const { data, error } = useSWR<IGame[]>("/games/upcoming", fetcher, {
+    refreshInterval: 5000,
+  });
+
+  return { upcomingGames: data, isLoading: !error && !data, error };
+};
+
+export const useNotConfirmedGames = () => {
+  const { data, error } = useSWR<IGame[]>("/games/not-confirmed", fetcher, {
+    refreshInterval: 5000,
+  });
+
+  return { notConfirmedGames: data, isLoading: !error && !data, error };
 };

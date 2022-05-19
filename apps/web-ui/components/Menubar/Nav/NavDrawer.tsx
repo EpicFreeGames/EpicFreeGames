@@ -29,7 +29,7 @@ export const NavDrawer: FC<{ setOpen: (open: boolean) => void; open: boolean }> 
       <FlexDiv gap0 flexWrap>
         <HomeNavItem />
         <NavDrawerItem to="/i18">Internationalization</NavDrawerItem>
-        <NavDrawerItem to="/commands">Commands</NavDrawerItem>
+        <NavDrawerItem to="/games">Games</NavDrawerItem>
       </FlexDiv>
     </Drawer>
   );

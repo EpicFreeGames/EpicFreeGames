@@ -1,6 +1,6 @@
 import { FC, ReactNode } from "react";
-import { Link } from "tabler-icons-react";
 import { useHasMounted } from "../../../hooks/useHasMounted";
+import { Link } from "../../Link";
 import { useNavItemStyles } from "./NavItem.styles";
 
 export const NavDrawerItem: FC<{ to: string; children: ReactNode }> = ({ to, children }) => (
