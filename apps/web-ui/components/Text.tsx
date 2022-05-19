@@ -38,7 +38,7 @@ export const textStyles = createStyles((theme) => ({
     padding: "0.7rem",
 
     [theme.fn.largerThan("sm")]: {
-      padding: "1rem 0",
+      padding: "1.5rem 0",
     },
   },
   h1: {
