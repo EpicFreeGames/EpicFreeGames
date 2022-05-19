@@ -11,3 +11,4 @@ export const gameValidationSchema = Yup.object()
   .required();
 
 export type IAddGameValues = Yup.InferType<typeof gameValidationSchema> & GamePrices;
+export type IUpdateGameValues = Yup.InferType<typeof gameValidationSchema> & GamePrices;
