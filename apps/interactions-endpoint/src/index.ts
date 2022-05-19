@@ -7,7 +7,9 @@ import { initTranslations, logger } from "shared-discord-stuff";
   await db.connect(config.mongoUrl);
   console.log("Connected to database (i-endpoint)");
 
+  console.log("Initializing translations");
   await initTranslations();
+  console.log("Translations initialized");
 
   const app = createApp();
 
