@@ -3,7 +3,6 @@ import { Card } from "./Card";
 import CountUp from "react-countup";
 import { FlexDiv } from "./FlexDiv";
 import { H3, textStyles } from "./Text";
-import { Skeleton } from "@mantine/core";
 
 interface Props {
   description: string;
