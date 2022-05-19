@@ -1,8 +1,8 @@
-import { Title } from "@mantine/core";
 import { FC } from "react";
 import { Card } from "./Card";
 import CountUp from "react-countup";
 import { FlexDiv } from "./FlexDiv";
+import { H3, textStyles } from "./Text";
 
 interface Props {
   description: string;
@@ -11,18 +11,25 @@ interface Props {
 }
 
 export const Stat: FC<Props> = ({ description, amount, percentage }) => {
+  const { classes } = textStyles();
+
   return (
     <Card>
       <FlexDiv column justifyBetween alignCenter fullHeight gap05>
-        <FlexDiv column gap05>
-          <CountUp end={amount || 0} duration={2} delay={0} preserveValue useEasing>
-            {({ countUpRef }) => <h1 ref={countUpRef as any}>{amount || 0}</h1>}
-          </CountUp>
+        <FlexDiv column gap05 alignCenter>
+          <CountUp
+            end={amount || 0}
+            duration={2}
+            delay={0}
+            preserveValue
+            useEasing
+            className={classes.h1}
+          />
 
-          {percentage ? <Title order={3}>({percentage} %)</Title> : <></>}
+          {percentage ? <H3>({percentage} %)</H3> : <></>}
         </FlexDiv>
 
-        <Title order={3}>{description}</Title>
+        <H3>{description}</H3>
       </FlexDiv>
     </Card>
   );
