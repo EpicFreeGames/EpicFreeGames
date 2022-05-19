@@ -8,6 +8,8 @@ import { NotificationsProvider } from "@mantine/notifications";
 import { SessionProvider, useSession } from "next-auth/react";
 
 import "../global.css";
+import { ModalsProvider } from "@mantine/modals";
+import { Toaster } from "react-hot-toast";
 
 const App = (props: AppProps & { colorScheme: ColorScheme }) => {
   const { Component, pageProps } = props;
@@ -32,15 +34,18 @@ const App = (props: AppProps & { colorScheme: ColorScheme }) => {
           withNormalizeCSS
         >
           <NotificationsProvider>
-            <SessionProvider session={pageProps?.session}>
-              {(Component as any).auth ? (
-                <Auth>
+            <ModalsProvider>
+              <Toaster />
+              <SessionProvider session={pageProps?.session}>
+                {(Component as any).auth ? (
+                  <Auth>
+                    <Component {...pageProps} />
+                  </Auth>
+                ) : (
                   <Component {...pageProps} />
-                </Auth>
-              ) : (
-                <Component {...pageProps} />
-              )}
-            </SessionProvider>
+                )}
+              </SessionProvider>
+            </ModalsProvider>
           </NotificationsProvider>
         </MantineProvider>
       </ColorSchemeProvider>
