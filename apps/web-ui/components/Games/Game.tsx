@@ -19,11 +19,13 @@ export const Game = ({ game }: { game: IGame }) => {
           <FlexDiv column gap05>
             <Text>Prices:</Text>
 
-            {Object.entries(game.price).map(([currency, index]) => (
-              <Text key={index}>
-                <b>{currency}:</b> {game.price[currency]}
-              </Text>
-            ))}
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
+              {Object.entries(game.price).map(([currency, index]) => (
+                <Text key={index}>
+                  <b>{currency}:</b> {game.price[currency]}
+                </Text>
+              ))}
+            </div>
           </FlexDiv>
 
           <img src={game.imageUrl} style={{ objectFit: "contain", width: "100%" }}></img>
