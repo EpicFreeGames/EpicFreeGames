@@ -27,11 +27,15 @@ export const PageTitle: FC<Props> = ({ children }) => {
   return <h1 className={cx(classes.h1, classes.pageTitle)}>{children}</h1>;
 };
 
-export const CardTitle: FC<Props> = ({ children }) => {
-  const { classes } = textStyles();
+export const CardTitle: FC<Props> = ({ children }) => (
+  <h2 className={textStyles().classes.h2}>{children}</h2>
+);
 
-  return <h2 className={classes.h2}>{children}</h2>;
-};
+export const Text: FC<Props> = ({ children, ...props }) => (
+  <p className={textStyles().classes.text} {...props}>
+    {children}
+  </p>
+);
 
 export const textStyles = createStyles((theme) => ({
   pageTitle: {
@@ -41,6 +45,15 @@ export const textStyles = createStyles((theme) => ({
       padding: "1.5rem 0",
     },
   },
+
+  text: {
+    fontSize: "0.875rem",
+
+    [theme.fn.largerThan("sm")]: {
+      fontSize: "1rem",
+    },
+  },
+
   h1: {
     fontSize: "1.4rem",
     fontWeight: "bold",

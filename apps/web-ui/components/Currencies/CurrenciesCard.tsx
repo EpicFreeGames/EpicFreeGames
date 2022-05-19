@@ -1,10 +1,10 @@
-import { createStyles, Text, Title } from "@mantine/core";
+import { createStyles } from "@mantine/core";
 import { FC } from "react";
 import { ICurrencyWithGuildCount } from "shared";
 import { useCurrencies } from "../../hooks/requests";
 import { Card } from "../Card";
 import { FlexDiv } from "../FlexDiv";
-import { CardTitle } from "../Text";
+import { CardTitle, H3, Text } from "../Text";
 import { Tooltip } from "../Tooltip";
 import { AddCurrency } from "./AddCurrency";
 import { EditCurrency } from "./EditCurrency";
@@ -34,14 +34,14 @@ const CurrencyCard: FC<Props> = ({ currency }) => (
   <Card key={currency.code}>
     <FlexDiv column alignCenter>
       <FlexDiv column alignCenter gap05>
-        <Title order={3}>{currency.name}</Title>
+        <H3>{currency.name}</H3>
         <Text>
           {currency.inFrontOfPrice}59.99{currency.afterPrice}
         </Text>
       </FlexDiv>
 
       <Tooltip label={`Used by ${currency.guildCount} servers`}>
-        <Title order={3}>{currency.guildCount} servers</Title>
+        <H3>{currency.guildCount} servers</H3>
       </Tooltip>
 
       <EditCurrency currency={currency} />

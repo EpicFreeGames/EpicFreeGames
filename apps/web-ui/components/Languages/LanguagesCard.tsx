@@ -1,10 +1,10 @@
-import { createStyles, Text, Title } from "@mantine/core";
+import { createStyles } from "@mantine/core";
 import { FC } from "react";
 import { ILanguageWithGuildCount } from "shared";
 import { useLanguages } from "../../hooks/requests";
 import { Card } from "../Card";
 import { FlexDiv } from "../FlexDiv";
-import { CardTitle } from "../Text";
+import { CardTitle, H3, Text } from "../Text";
 import { Tooltip } from "../Tooltip";
 import { AddLanguage } from "./AddLanguage";
 import { EditLanguage } from "./EditLanguage";
@@ -32,12 +32,12 @@ const Language: FC<LanguageProps> = ({ language }) => (
   <Card key={language.code}>
     <FlexDiv column alignCenter>
       <FlexDiv column alignCenter gap05>
-        <Title order={3}>{language.englishName}</Title>
+        <H3>{language.englishName}</H3>
         <Text>{language.localizedName}</Text>
       </FlexDiv>
 
       <Tooltip label={`Used by ${language.guildCount} servers`}>
-        <Title order={3}>{language.guildCount} servers</Title>
+        <H3>{language.guildCount} servers</H3>
       </Tooltip>
 
       <EditLanguage language={language} />
