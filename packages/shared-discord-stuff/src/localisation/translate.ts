@@ -49,9 +49,6 @@ export const initTranslations = async () => {
 
   for (const lang in resources) {
     const value = resources[lang].translation;
-    console.log("value", value);
-    console.log("thing", (old as any)[lang]);
-    console.log("lang", lang);
 
     if (value.invite === english.invite) {
       resources[lang].translation = {
