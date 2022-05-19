@@ -8,6 +8,7 @@ import { addLanguage } from "../../utils/requests/Languages";
 import { FlexDiv } from "../FlexDiv";
 import { useLanguages } from "../../hooks/requests";
 import { DeployGuildCommands, DeployGlobalCommands } from "../../utils/requests/Commands";
+import { Plus } from "tabler-icons-react";
 
 export const AddLanguage = () => {
   const [open, setOpen] = useState(false);
@@ -21,7 +22,9 @@ export const AddLanguage = () => {
 };
 
 const AddLanguageButton: FC<{ setOpen: (open: boolean) => void }> = ({ setOpen }) => (
-  <Button onClick={() => setOpen(true)}>Add a language</Button>
+  <Button p={"0.5rem"} onClick={() => setOpen(true)}>
+    <Plus />
+  </Button>
 );
 
 const AddLanguageModal: FC<{ open: boolean; setOpen: (open: boolean) => void }> = ({

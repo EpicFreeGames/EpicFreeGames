@@ -4,23 +4,22 @@ import { ILanguageWithGuildCount } from "shared";
 import { useLanguages } from "../../hooks/requests";
 import { Card } from "../Card";
 import { FlexDiv } from "../FlexDiv";
+import { CardTitle } from "../Text";
 import { Tooltip } from "../Tooltip";
 import { AddLanguage } from "./AddLanguage";
 import { EditLanguage } from "./EditLanguage";
 
 export const LanguagesCard = () => (
   <Card variant="dark">
-    <FlexDiv column fullWidth>
-      <LanguagesTitle />
+    <LanguagesTitle />
 
-      <Languages />
-    </FlexDiv>
+    <Languages />
   </Card>
 );
 
 const LanguagesTitle = () => (
-  <FlexDiv justifyBetween>
-    <Title order={2}>Languages</Title>
+  <FlexDiv justifyBetween alignCenter>
+    <CardTitle>Languages</CardTitle>
 
     <AddLanguage />
   </FlexDiv>
@@ -71,6 +70,7 @@ const styles = createStyles((theme) => ({
 
     [theme.fn.largerThan("md")]: {
       gridTemplateColumns: "1fr 1fr 1fr 1fr",
+      gap: "0.7rem",
     },
   },
 }));

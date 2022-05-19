@@ -24,7 +24,7 @@ const useStyles = createStyles((theme) => ({
     padding: "0 0.7rem",
     maxWidth: "1200px",
 
-    [theme.fn.largerThan("sm")]: {
+    [theme.fn.largerThan("md")]: {
       padding: "0 25px",
     },
   },
@@ -34,7 +34,7 @@ const useStyles = createStyles((theme) => ({
     alignItems: "center",
     gap: "0.5rem",
 
-    [theme.fn.largerThan("sm")]: {
+    [theme.fn.largerThan("md")]: {
       height: "5rem",
       gap: "1rem",
     },

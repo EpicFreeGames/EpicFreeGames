@@ -1,7 +1,8 @@
-import { createStyles, Title } from "@mantine/core";
+import { createStyles } from "@mantine/core";
 import Head from "next/head";
 import { FC, ReactNode } from "react";
 import { Menubar } from "./Menubar/Menubar";
+import { PageTitle } from "./Text";
 
 const useStyles = createStyles((theme) => ({
   main: {
@@ -12,23 +13,16 @@ const useStyles = createStyles((theme) => ({
     paddingBottom: "1rem",
     zIndex: 1,
 
-    [theme.fn.largerThan("xs")]: {
+    [theme.fn.largerThan("sm")]: {
       paddingLeft: "0.7rem",
       paddingRight: "0.7rem",
-      paddingTop: "4.5rem",
+      paddingTop: "3.5rem",
     },
 
-    [theme.fn.largerThan("sm")]: {
+    [theme.fn.largerThan("md")]: {
       paddingLeft: "25px",
       paddingRight: "25px",
       paddingTop: "5rem",
-    },
-  },
-  title: {
-    padding: "0 1rem",
-
-    [theme.fn.largerThan("xs")]: {
-      padding: "1rem 0",
     },
   },
 }));
@@ -45,9 +39,7 @@ export const Layout: FC<{ children: ReactNode; title: string }> = ({ children, t
       <Menubar />
 
       <main className={classes.main}>
-        <Title order={1} className={classes.title}>
-          {title}
-        </Title>
+        <PageTitle>{title}</PageTitle>
         {children}
       </main>
     </>

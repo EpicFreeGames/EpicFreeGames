@@ -1,7 +1,6 @@
 import { useHasMounted } from "../../hooks/useHasMounted";
 import { Button } from "../Button";
 import { ButtonLink } from "../Link";
-import { Tooltip } from "../Tooltip";
 
 export const HomeButton = () => {
   const hasMounted = useHasMounted();
@@ -13,11 +12,9 @@ export const HomeButton = () => {
 
   return (
     <ButtonLink to="/">
-      <Tooltip label="Go to home">
-        <Button p={"0.5rem"} variant="outline">
-          Home
-        </Button>
-      </Tooltip>
+      <Button p={"0.5rem"} variant="outline">
+        Home
+      </Button>
     </ButtonLink>
   );
 };

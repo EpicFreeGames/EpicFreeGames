@@ -29,8 +29,17 @@ export const cardStyles = createStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     gap: "0.5rem",
-    padding: "1rem",
+    padding: "0.7rem",
     height: "100%",
+
+    [theme.fn.largerThan("sm")]: {
+      gap: "0.7rem",
+    },
+
+    [theme.fn.largerThan("md")]: {
+      gap: "1rem",
+      padding: "1rem",
+    },
   },
   cardLoadingOverlay: {
     position: "absolute",

@@ -8,6 +8,7 @@ import { currencySchema, IAddCurrencyValues } from "../../utils/validation/Curre
 import { addCurrency } from "../../utils/requests/Currencies";
 import { useCurrencies } from "../../hooks/requests";
 import { DeployGlobalCommands, DeployGuildCommands } from "../../utils/requests/Commands";
+import { Plus } from "tabler-icons-react";
 
 export const AddCurrency = () => {
   const [open, setOpen] = useState(false);
@@ -21,7 +22,9 @@ export const AddCurrency = () => {
 };
 
 const AddCurrencyButton: FC<{ setOpen: (open: boolean) => void }> = ({ setOpen }) => (
-  <Button onClick={() => setOpen(true)}>Add a currency</Button>
+  <Button p={"0.5rem"} onClick={() => setOpen(true)} onTouchEnd={() => setOpen(true)}>
+    <Plus />
+  </Button>
 );
 
 const AddCurrencyModal: FC<{ open: boolean; setOpen: (open: boolean) => void }> = ({

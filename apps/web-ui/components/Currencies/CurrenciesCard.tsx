@@ -4,6 +4,7 @@ import { ICurrencyWithGuildCount } from "shared";
 import { useCurrencies } from "../../hooks/requests";
 import { Card } from "../Card";
 import { FlexDiv } from "../FlexDiv";
+import { CardTitle } from "../Text";
 import { Tooltip } from "../Tooltip";
 import { AddCurrency } from "./AddCurrency";
 import { EditCurrency } from "./EditCurrency";
@@ -19,8 +20,8 @@ export const CurrenciesCard = () => (
 );
 
 const CurrenciesTitle = () => (
-  <FlexDiv justifyBetween>
-    <Title order={2}>Currencies</Title>
+  <FlexDiv justifyBetween alignCenter>
+    <CardTitle>Currencies</CardTitle>
 
     <AddCurrency />
   </FlexDiv>

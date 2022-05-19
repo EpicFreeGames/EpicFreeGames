@@ -1,7 +1,6 @@
 import { Button, useMantineColorScheme } from "@mantine/core";
 import { MoonStars, Sun } from "tabler-icons-react";
 import { buttonStyles } from "../Button";
-import { Tooltip } from "../Tooltip";
 
 export const ColorSchemeToggle = () => {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
@@ -10,16 +9,14 @@ export const ColorSchemeToggle = () => {
   const dark = colorScheme === "dark";
 
   return (
-    <Tooltip label={dark ? "Turn on light mode" : "Turn on dark mode"}>
-      <Button
-        onClick={() => toggleColorScheme()}
-        p={"0.5rem"}
-        variant="light"
-        color={"gray"}
-        className={classes.colorSchemeButton}
-      >
-        {dark ? <MoonStars size={20} /> : <Sun size={20} />}
-      </Button>
-    </Tooltip>
+    <Button
+      onClick={() => toggleColorScheme()}
+      p={"0.5rem"}
+      variant="light"
+      color={"gray"}
+      className={classes.colorSchemeButton}
+    >
+      {dark ? <MoonStars size={20} /> : <Sun size={20} />}
+    </Button>
   );
 };
