@@ -3,8 +3,7 @@ import { config } from "config";
 import { APIEmbed } from "discord-api-types";
 import { MessageEmbed, MessageEmbedOptions } from "discord.js";
 import { IMessage } from "./interactions/types";
-import { getDefaultCurrency } from "./localisation";
-import { IGame, ICurrency, IGuild, discordApiUrl } from "shared";
+import { IGame, ICurrency, IGuild, discordApiUrl, getDefaultCurrency } from "shared";
 
 export const isEnum =
   <T>(e: T) =>

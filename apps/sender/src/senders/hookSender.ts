@@ -1,14 +1,15 @@
 import axios, { AxiosInstance } from "axios";
+import { embeds, getWebhookUrl, executeWebhook, getMessage } from "shared-discord-stuff";
+import { db } from "database";
 import {
-  embeds,
+  IGuild,
+  IGame,
+  ISendingLog,
+  discordApiUrl,
+  wait,
   getGuildLang,
   getGuildCurrency,
-  getWebhookUrl,
-  executeWebhook,
-  getMessage,
-} from "shared-discord-stuff";
-import { db } from "database";
-import { IGuild, IGame, ISendingLog, discordApiUrl, wait } from "shared";
+} from "shared";
 
 export class HookSender {
   guilds: IGuild[];

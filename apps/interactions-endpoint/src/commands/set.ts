@@ -6,9 +6,8 @@ import {
   executeWebhook,
   getWebhookUrl,
   getMessage,
-  getGuildLang,
 } from "shared-discord-stuff";
-import { CommandTypes, LanguageDocument } from "shared";
+import { CommandTypes, LanguageDocument, getGuildLang } from "shared";
 import { db } from "database";
 import {
   getParentId,

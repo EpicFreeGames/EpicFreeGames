@@ -1,16 +1,14 @@
 import { config } from "config";
 import { Request, Response } from "express";
+import { CommandInteraction, embeds, logger, SlashCommand } from "shared-discord-stuff";
 import {
-  CommandInteraction,
-  embeds,
+  ILanguage,
+  CommandTypes,
   getDefaultCurrency,
   getDefaultLanguage,
   getGuildLang,
   getGuildCurrency,
-  logger,
-  SlashCommand,
-} from "shared-discord-stuff";
-import { ILanguage, CommandTypes } from "shared";
+} from "shared";
 import { commands } from "./commands";
 import { isAuthorized } from "./utils/Authorization";
 import { requestToInteraction } from "./utils/requestToInteraction";
