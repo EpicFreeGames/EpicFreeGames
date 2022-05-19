@@ -14,7 +14,6 @@
     "@mantine/hooks": "^4.2.5",
     "@mantine/modals": "^4.2.5",
     "@mantine/next": "^4.2.5",
-    "@mantine/notifications": "^4.2.5",
     "@mantine/spotlight": "^4.2.5",
     "cookies-next": "^2.0.4",
     "database": "*",

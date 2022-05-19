@@ -4,7 +4,6 @@ import { AppProps } from "next/app";
 import { ReactNode, useState } from "react";
 import { getCookie, setCookies } from "cookies-next";
 import { GetServerSidePropsContext } from "next";
-import { NotificationsProvider } from "@mantine/notifications";
 import { SessionProvider, useSession } from "next-auth/react";
 
 import "../global.css";
@@ -33,20 +32,25 @@ const App = (props: AppProps & { colorScheme: ColorScheme }) => {
           withGlobalStyles
           withNormalizeCSS
         >
-          <NotificationsProvider>
-            <ModalsProvider>
-              <Toaster />
-              <SessionProvider session={pageProps?.session}>
-                {(Component as any).auth ? (
-                  <Auth>
-                    <Component {...pageProps} />
-                  </Auth>
-                ) : (
+          <ModalsProvider>
+            <Toaster
+              toastOptions={{
+                style: {
+                  backgroundColor: colorScheme === "dark" ? "#333" : "white",
+                  color: colorScheme === "dark" ? "white" : "black",
+                },
+              }}
+            />
+            <SessionProvider session={pageProps?.session}>
+              {(Component as any).auth ? (
+                <Auth>
                   <Component {...pageProps} />
-                )}
-              </SessionProvider>
-            </ModalsProvider>
-          </NotificationsProvider>
+                </Auth>
+              ) : (
+                <Component {...pageProps} />
+              )}
+            </SessionProvider>
+          </ModalsProvider>
         </MantineProvider>
       </ColorSchemeProvider>
     </>
