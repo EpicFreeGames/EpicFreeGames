@@ -1,13 +1,8 @@
-import { Skeleton } from "@mantine/core";
 import { useCommandStats } from "../../../hooks/requests";
-import { cardStyles } from "../../Card";
-import { Stat } from "../../Stat";
+import { Stat } from "./Stat";
 
 export const CommandsRan = () => {
-  const { commandStats } = useCommandStats();
-  const { classes } = cardStyles();
+  const { commandStats, isLoading } = useCommandStats();
 
-  if (!commandStats) return <Skeleton className={classes.lightCardSkele} />;
-
-  return <Stat amount={commandStats.allTime} description="Commands ran" />;
+  return <Stat isLoading={isLoading} amount={commandStats?.allTime} description="Commands ran" />;
 };

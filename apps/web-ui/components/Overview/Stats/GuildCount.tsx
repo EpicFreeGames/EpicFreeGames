@@ -1,13 +1,10 @@
-import { Skeleton } from "@mantine/core";
 import { useGuildStats } from "../../../hooks/requests";
-import { cardStyles } from "../../Card";
-import { Stat } from "../../Stat";
+import { Stat } from "./Stat";
 
 export const GuildCount = () => {
-  const { guildStats } = useGuildStats();
-  const { classes } = cardStyles();
+  const { guildStats, isLoading } = useGuildStats();
 
-  if (!guildStats) return <Skeleton className={classes.lightCardSkele} />;
-
-  return <Stat description="Servers in db" amount={guildStats?.dbGuildCount} />;
+  return (
+    <Stat isLoading={isLoading} description="Servers in db" amount={guildStats?.dbGuildCount} />
+  );
 };

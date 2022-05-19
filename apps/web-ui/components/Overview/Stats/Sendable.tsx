@@ -1,15 +1,10 @@
-import { Skeleton } from "@mantine/core";
 import { useGuildStats } from "../../../hooks/requests";
-import { cardStyles } from "../../Card";
-import { Stat } from "../../Stat";
+import { Stat } from "./Stat";
 
 export const Sendable = () => {
-  const { guildStats } = useGuildStats();
-  const { classes } = cardStyles();
+  const { guildStats, isLoading } = useGuildStats();
 
-  if (!guildStats) return <Skeleton className={classes.lightCardSkele} />;
+  const amount = guildStats ? guildStats?.hasOnlyChannel + guildStats?.hasWebhook : 0;
 
-  return (
-    <Stat amount={guildStats?.hasOnlyChannel + guildStats?.hasWebhook} description="Sendable" />
-  );
+  return <Stat isLoading={isLoading} amount={amount} description="Sendable" />;
 };

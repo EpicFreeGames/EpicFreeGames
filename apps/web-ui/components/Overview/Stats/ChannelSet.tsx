@@ -1,13 +1,10 @@
-import { Skeleton } from "@mantine/core";
 import { useGuildStats } from "../../../hooks/requests";
-import { cardStyles } from "../../Card";
-import { Stat } from "../../Stat";
+import { Stat } from "./Stat";
 
 export const ChannelSet = () => {
-  const { guildStats } = useGuildStats();
-  const { classes } = cardStyles();
+  const { guildStats, isLoading } = useGuildStats();
 
-  if (!guildStats) return <Skeleton className={classes.lightCardSkele} />;
-
-  return <Stat amount={guildStats.hasOnlyChannel} description="Channel set" />;
+  return (
+    <Stat isLoading={isLoading} amount={guildStats?.hasOnlyChannel} description="Channel set" />
+  );
 };
