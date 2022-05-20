@@ -26,7 +26,7 @@ export const Game = ({ game }: { game: IGame }) => {
 
             {Object.entries(game.price).map(([currency, value], i) => (
               <Text key={i}>
-                <b>{currency}:</b> {game.price[currency]}
+                <b>{currency}:</b> {value}
               </Text>
             ))}
           </FlexDiv>
