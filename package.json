@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "start": "turbo run start",
-    "build": "turbo run build",
+    "build": "yarn && turbo run build",
     "dev": "turbo run dev",
     "devr": "yarn clean && yarn && yarn build && yarn dev",
     "dev:front": "yarn build --scope=web-ui && turbo run dev --scope=web-ui",
