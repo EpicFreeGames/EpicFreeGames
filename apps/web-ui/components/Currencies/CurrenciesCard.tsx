@@ -34,7 +34,7 @@ const CurrencyCard: FC<Props> = ({ currency }) => (
   <Card key={currency.code}>
     <FlexDiv column alignCenter>
       <FlexDiv column alignCenter gap05>
-        <H3>{currency.name}</H3>
+        <Text bold>{currency.name}</Text>
         <Text>
           {currency.inFrontOfPrice}59.99{currency.afterPrice}
         </Text>

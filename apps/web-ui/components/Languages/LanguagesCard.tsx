@@ -70,7 +70,6 @@ const styles = createStyles((theme) => ({
 
     [theme.fn.largerThan("md")]: {
       gridTemplateColumns: "1fr 1fr 1fr 1fr",
-      gap: "0.7rem",
     },
   },
 }));
