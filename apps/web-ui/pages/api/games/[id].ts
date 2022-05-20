@@ -1,6 +1,7 @@
 import { db } from "database";
 import { ApiEndpoint } from "../../../utils/ApiEndpoint";
 import { methodNotAllowed } from "../../../utils/apiUtils";
+import { hasAccess } from "../../../utils/auth";
 
 const Handler: ApiEndpoint = async (req, res) => {
   const method = req.method;
@@ -17,6 +18,8 @@ const Handler: ApiEndpoint = async (req, res) => {
 };
 
 const HandlePatch: ApiEndpoint = async (req, res) => {
+  if (!(await hasAccess(req, res, true))) return;
+
   const body = JSON.parse(req.body);
   const id = req.query.id as string;
 
