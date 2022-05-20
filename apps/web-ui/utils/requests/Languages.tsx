@@ -5,7 +5,6 @@ import toast from "react-hot-toast";
 
 export const addLanguage = async (
   values: IAddLanguageValues,
-  onSuccess: () => void,
   currentLanguages?: ILanguageWithGuildCount[]
 ): Promise<ILanguageWithGuildCount[]> =>
   toast.promise(
@@ -15,8 +14,6 @@ export const addLanguage = async (
         method: "POST",
         body: values,
       });
-
-      onSuccess();
 
       const filtered = currentLanguages?.filter((l) => l.code !== values.code) || [];
       return [...filtered, addedLang];
@@ -31,7 +28,6 @@ export const addLanguage = async (
 export const updateLanguage = async (
   code: string,
   values: IUpdateLanguageValues,
-  onSuccess: () => void,
   currentLanguages?: ILanguageWithGuildCount[]
 ): Promise<ILanguageWithGuildCount[]> =>
   toast.promise(
@@ -41,8 +37,6 @@ export const updateLanguage = async (
         method: "PATCH",
         body: values,
       });
-
-      onSuccess();
 
       const filtered = currentLanguages?.filter((l) => l.code !== code) || [];
       return [...filtered, updatedLang];

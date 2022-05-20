@@ -33,15 +33,16 @@ const AddCurrencyModal: FC<{ open: boolean; setOpen: (open: boolean) => void }> 
 }) => {
   const { currencies } = useCurrencies();
 
-  const onSuccess = async () => {
-    setOpen(false);
+  const onSubmit = async (values: IAddCurrencyValues) => {
+    try {
+      await mutate("/currencies", addCurrency(values, currencies));
 
-    await DeployGuildCommands();
-    await DeployGlobalCommands();
+      setOpen(false);
+
+      await DeployGuildCommands();
+      await DeployGlobalCommands();
+    } catch (_) {}
   };
-
-  const onSubmit = async (values: IAddCurrencyValues) =>
-    mutate("/languages", addCurrency(values, onSuccess, currencies));
 
   return (
     <Modal opened={open} onClose={() => setOpen(false)} title="Add a currency">

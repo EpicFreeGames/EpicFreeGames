@@ -5,7 +5,6 @@ import toast from "react-hot-toast";
 
 export const addCurrency = async (
   values: IAddCurrencyValues,
-  onSuccess: () => void,
   currenctCurrencies?: ICurrencyWithGuildCount[]
 ): Promise<ICurrencyWithGuildCount[]> =>
   toast.promise(
@@ -15,8 +14,6 @@ export const addCurrency = async (
         method: "POST",
         body: values,
       });
-
-      onSuccess();
 
       const filtered = currenctCurrencies?.filter((l) => l.code !== values.code) || [];
       return [...filtered, addedCurrency];
@@ -31,7 +28,6 @@ export const addCurrency = async (
 export const updateCurrency = async (
   code: string,
   values: IUpdateCurrencyValues,
-  onSuccess: () => void,
   currenctCurrencies?: ICurrencyWithGuildCount[]
 ): Promise<ICurrencyWithGuildCount[]> =>
   toast.promise(
@@ -41,8 +37,6 @@ export const updateCurrency = async (
         method: "PATCH",
         body: values,
       });
-
-      onSuccess();
 
       const filtered = currenctCurrencies?.filter((l) => l.code !== code) || [];
       return [...filtered, updatedLang];

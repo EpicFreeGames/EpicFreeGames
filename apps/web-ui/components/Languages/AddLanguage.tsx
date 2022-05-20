@@ -33,16 +33,16 @@ const AddLanguageModal: FC<{ open: boolean; setOpen: (open: boolean) => void }> 
 }) => {
   const { languages } = useLanguages();
 
-  const onSuccess = async () => {
-    setOpen(false);
+  const onSubmit = async (values: IAddLanguageValues) => {
+    try {
+      await mutate("/languages", addLanguage(values, languages));
 
-    await DeployGuildCommands();
-    await DeployGlobalCommands();
+      setOpen(false);
+
+      await DeployGuildCommands();
+      await DeployGlobalCommands();
+    } catch (_) {}
   };
-
-  const onSubmit = async (values: IAddLanguageValues) =>
-    mutate("/languages", addLanguage(values, onSuccess, languages));
-
   return (
     <Modal opened={open} onClose={() => setOpen(false)} title="Add a language">
       <Formik

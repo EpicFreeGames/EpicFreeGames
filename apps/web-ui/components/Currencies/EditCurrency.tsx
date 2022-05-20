@@ -45,15 +45,16 @@ const EditCurrencyModal: FC<{
 }> = ({ open, setOpen, currency }) => {
   const { currencies } = useCurrencies();
 
-  const onSuccess = async () => {
-    setOpen(false);
+  const onSubmit = async (values: IUpdateCurrencyValues) => {
+    try {
+      await mutate("/currencies", updateCurrency(currency.code, values, currencies));
 
-    await DeployGuildCommands();
-    await DeployGlobalCommands();
+      setOpen(false);
+
+      await DeployGuildCommands();
+      await DeployGlobalCommands();
+    } catch (_) {}
   };
-
-  const onSubmit = async (values: IUpdateCurrencyValues) =>
-    mutate("/currencies", updateCurrency(currency.code, values, onSuccess, currencies));
 
   return (
     <Modal opened={open} onClose={() => setOpen(false)} title="Edit currency">

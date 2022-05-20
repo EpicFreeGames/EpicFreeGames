@@ -45,15 +45,15 @@ const EditLanguageModal: FC<{
 }> = ({ open, setOpen, language }) => {
   const { languages } = useLanguages();
 
-  const onSuccess = async () => {
-    setOpen(false);
-
-    await DeployGuildCommands();
-    await DeployGlobalCommands();
-  };
-
   const onSubmit = async (values: IAddLanguageValues) => {
-    mutate("/languages", updateLanguage(language.code, values, onSuccess, languages));
+    try {
+      await mutate("/languages", updateLanguage(language.code, values, languages));
+
+      setOpen(false);
+
+      await DeployGuildCommands();
+      await DeployGlobalCommands();
+    } catch (_) {}
   };
 
   return (
