@@ -4,6 +4,7 @@ import { GamePrices, IGame } from "shared";
 const selectString = "-__v -createdAt -updatedAt";
 
 export const create = (game: IGame) => new GameModel(game).save();
+export const remove = (id: string) => GameModel.findByIdAndDelete(id);
 
 export const update = {
   game: async (id: string, game: IGame) => GameModel.updateOne({ _id: id }, game),

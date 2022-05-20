@@ -77,3 +77,22 @@ export const updateGame = async (
       loading: `Unconfirming ${game.name}`,
     }
   );
+
+export const removeGame = async (game: IGame) =>
+  toast.promise(
+    (async () => {
+      await request<IGame>({
+        path: `/games/${game._id}`,
+        method: "DELETE",
+      });
+
+      mutate("/games/free");
+      mutate("/games/upcoming");
+      mutate("/games/not-confirmed");
+    })(),
+    {
+      error: `Failed to remove ${game.name}`,
+      success: `Removed ${game.name}`,
+      loading: `Removing ${game.name}`,
+    }
+  );

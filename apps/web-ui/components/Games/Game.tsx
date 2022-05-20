@@ -4,7 +4,7 @@ import { FlexDiv } from "../FlexDiv";
 import { H3, Text } from "../Text";
 import { ConfirmGame } from "./ConfirmGame";
 import { EditGame } from "./EditGame";
-import { UnconfirmGame } from "./UnconfirmGame";
+import { RemoveGame } from "./RemoveGame";
 
 export const Game = ({ game }: { game: IGame }) => {
   return (
@@ -24,21 +24,19 @@ export const Game = ({ game }: { game: IGame }) => {
           <FlexDiv column gap05>
             <Text>Prices:</Text>
 
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
-              {Object.entries(game.price).map(([currency, index]) => (
-                <Text key={index}>
-                  <b>{currency}:</b> {game.price[currency]}
-                </Text>
-              ))}
-            </div>
+            {Object.entries(game.price).map(([currency, index]) => (
+              <Text key={index}>
+                <b>{currency}:</b> {game.price[currency]}
+              </Text>
+            ))}
           </FlexDiv>
 
           <img src={game.imageUrl} style={{ objectFit: "contain", width: "100%" }}></img>
         </FlexDiv>
 
-        <FlexDiv>
+        <FlexDiv gap05>
           <ConfirmGame game={game} />
-          <UnconfirmGame game={game} />
+          <RemoveGame game={game} />
         </FlexDiv>
       </FlexDiv>
     </Card>
