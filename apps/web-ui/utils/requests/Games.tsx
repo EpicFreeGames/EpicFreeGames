@@ -28,30 +28,6 @@ export const confirmGame = async (game: IGame, currentNotConfirmedGames?: IGame[
     }
   );
 
-export const unConfirmGame = async (game: IGame, currentNotConfirmedGames?: IGame[]) =>
-  toast.promise<IGame[]>(
-    (async () => {
-      await request<IGame>({
-        path: `/games/${game._id}`,
-        method: "PATCH",
-        body: {
-          confirmed: false,
-        },
-      });
-
-      mutate("/games/free");
-      mutate("/games/upcoming");
-
-      const filtered = currentNotConfirmedGames?.filter((g) => g._id !== game._id) || [];
-      return filtered;
-    })(),
-    {
-      error: `Failed to unconfirm ${game.name}`,
-      success: `Unconfirmed ${game.name}`,
-      loading: `Unconfirming ${game.name}`,
-    }
-  );
-
 export const updateGame = async (
   game: IGame,
   updatedGame: IUpdateGameValues,
@@ -67,14 +43,15 @@ export const updateGame = async (
 
       mutate("/games/free");
       mutate("/games/upcoming");
+      mutate("/games/not-confirmed");
 
       const filtered = currentNotConfirmedGames?.filter((g) => g._id !== game._id) || [];
       return filtered;
     })(),
     {
-      error: `Failed to unconfirm ${game.name}`,
-      success: `Unconfirmed ${game.name}`,
-      loading: `Unconfirming ${game.name}`,
+      error: `Failed to update ${game.name}`,
+      success: `Updated ${game.name}`,
+      loading: `Updating ${game.name}`,
     }
   );
 

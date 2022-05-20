@@ -2,7 +2,6 @@ import { Modal, TextInput } from "@mantine/core";
 import { Formik } from "formik";
 import { FC, useState } from "react";
 import { IGame } from "shared";
-import { mutate } from "swr";
 import { updateGame } from "../../utils/requests/Games";
 import { gameValidationSchema, IUpdateGameValues } from "../../utils/validation/Games";
 import { FlexDiv } from "../FlexDiv";
@@ -35,9 +34,11 @@ const EditGameModal: FC<{
   game: IGame;
 }> = ({ open, setOpen, game }) => {
   const onSubmit = async (values: IUpdateGameValues) => {
-    await mutate("/languages", updateGame(values, values));
+    try {
+      await updateGame(game, values);
 
-    setOpen(false);
+      setOpen(false);
+    } catch (err) {}
   };
 
   return (

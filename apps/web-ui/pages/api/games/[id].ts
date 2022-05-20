@@ -1,4 +1,5 @@
 import { db } from "database";
+import { IGame } from "shared";
 import { ApiEndpoint } from "../../../utils/ApiEndpoint";
 import { methodNotAllowed } from "../../../utils/apiUtils";
 import { hasAccess } from "../../../utils/auth";
@@ -31,12 +32,10 @@ const HandlePatch: ApiEndpoint = async (req, res) => {
 
   if (!existingGame) return res.status(404).json({ message: "Game not found" });
 
-  const game = {
+  const { _id, ...game } = {
     ...existingGame,
     ...body,
-  };
-
-  delete game._id;
+  } as IGame;
 
   await db.games.update.game(id, game);
 
