@@ -24,8 +24,8 @@ export const Game = ({ game }: { game: IGame }) => {
           <FlexDiv column gap05>
             <Text>Prices:</Text>
 
-            {Object.entries(game.price).map(([currency, index]) => (
-              <Text key={index}>
+            {Object.entries(game.price).map(([currency, value], i) => (
+              <Text key={i}>
                 <b>{currency}:</b> {game.price[currency]}
               </Text>
             ))}
