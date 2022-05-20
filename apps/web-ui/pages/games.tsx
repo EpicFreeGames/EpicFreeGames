@@ -30,4 +30,7 @@ const GamesPage: NextPage = () => (
     </FlexDiv>
   </Layout>
 );
+
+(GamesPage as any).auth = true;
+
 export default GamesPage;
