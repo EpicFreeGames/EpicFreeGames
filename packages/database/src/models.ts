@@ -117,8 +117,8 @@ export const CurrencyModel = mongoose.modelNames().includes("currency")
           code: { type: String, required: true },
           name: { type: String, required: true },
           apiValue: { type: String, required: true },
-          inFrontOfPrice: { type: String, required: true },
-          afterPrice: { type: String, required: true },
+          inFrontOfPrice: { type: String, default: "" },
+          afterPrice: { type: String, default: "" },
         },
         { timestamps: true }
       )
