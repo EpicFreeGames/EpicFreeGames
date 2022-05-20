@@ -10,4 +10,16 @@ export default NextAuth({
       authorization: "https://discord.com/api/oauth2/authorize?scope=identify",
     }),
   ],
+
+  callbacks: {
+    async session(props) {
+      return {
+        ...props.session,
+        user: {
+          ...props.session.user,
+          id: props.token.sub,
+        },
+      };
+    },
+  },
 });
