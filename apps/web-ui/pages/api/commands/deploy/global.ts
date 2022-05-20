@@ -14,25 +14,15 @@ const Handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     await dbConnect();
 
-    console.log("Connected to DB");
-    console.log("Getting languages");
-
     const dbLanguages = await db.languages.get.all();
     const dbCurrencies = await db.currencies.get.all();
 
     const languages = [...dbLanguages, getDefaultLanguage()];
     const currencies = [...dbCurrencies, getDefaultCurrency()];
 
-    console.log("Got languages");
-
     const { globalCommands } = await getCommandsToDeploy(languages, currencies);
 
-    console.log("Got commands");
-    console.log("Deploying commands");
-
     await globalDeploy(globalCommands);
-
-    console.log("Commands deployed");
 
     res.status(204).end();
   } catch (err) {
