@@ -6,6 +6,7 @@ export interface IGame {
   start: Date;
   end: Date;
   confirmed: boolean;
+  revalidate: boolean;
   price: GamePrices;
 }
 

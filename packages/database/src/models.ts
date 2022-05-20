@@ -21,19 +21,8 @@ export const GameModel = mongoose.modelNames().includes("game")
         start: { type: Date, required: true },
         end: { type: Date, required: true },
         confirmed: { type: Boolean, required: true },
-        price: {
-          USD: { type: String },
-          CAD: { type: String },
-          EUR: { type: String },
-          INR: { type: String },
-          GBP: { type: String },
-          UAH: { type: String },
-          RUB: { type: String },
-          BYN: { type: String },
-          IDR: { type: String },
-          NZD: { type: String },
-          VND: { type: String },
-        },
+        revalidate: { type: Boolean, default: false },
+        price: { type: Object },
       })
     );
 
@@ -114,7 +103,7 @@ export const CurrencyModel = mongoose.modelNames().includes("currency")
       "currency",
       new mongoose.Schema<CurrencyDocument>(
         {
-          code: { type: String, required: true },
+          code: { type: String, required: true, unique: true },
           name: { type: String, required: true },
           apiValue: { type: String, required: true },
           inFrontOfPrice: { type: String, default: "" },

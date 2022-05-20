@@ -7,12 +7,14 @@ export const create = (game: IGame) => new GameModel(game).save();
 export const remove = (id: string) => GameModel.findByIdAndDelete(id);
 
 export const update = {
-  game: async (id: string, game: IGame) => GameModel.updateOne({ _id: id }, game),
-  prices: async (slug: string, prices: GamePrices, existingUsd: string) =>
-    GameModel.updateOne({ slug }, { $set: { price: { ...prices, USD: existingUsd } } }),
-  start: async (slug: string, start: Date) => GameModel.updateOne({ slug }, { start }),
-  end: async (slug: string, end: Date) => GameModel.updateOne({ slug }, { end }),
+  game: async (id: string, game: IGame) =>
+    GameModel.updateOne({ _id: id }, { ...game, revalidate: false }),
+
+  prices: async (slug: string, prices: GamePrices) =>
+    GameModel.updateOne({ slug, revalidate: true }, { $set: { price: prices }, revalidate: false }),
 };
+
+export const markToBeRevalidated = () => GameModel.updateMany({}, { revalidate: true });
 
 export const confirm = async (ids: string[]) =>
   GameModel.updateMany({ _id: { $in: ids } }, { confirmed: true });

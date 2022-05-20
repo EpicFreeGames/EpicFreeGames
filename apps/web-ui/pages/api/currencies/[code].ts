@@ -47,6 +47,8 @@ const HandlePatch = async (req: NextApiRequest, res: NextApiResponse) => {
     ...updatedCurrency,
     guildCount: await db.guilds.get.counts.hasCurrency(updatedCurrency.code),
   });
+
+  await db.games.markToBeRevalidated();
 };
 
 export default Handler;

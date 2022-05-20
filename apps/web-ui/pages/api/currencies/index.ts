@@ -46,6 +46,8 @@ const HandlePost = async (req: NextApiRequest, res: NextApiResponse) => {
     ...createdCurrency,
     guildCount: 0,
   });
+
+  await db.games.markToBeRevalidated();
 };
 
 const HandleGet = async (req: NextApiRequest, res: NextApiResponse) => {
