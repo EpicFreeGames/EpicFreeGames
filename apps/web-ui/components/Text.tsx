@@ -31,9 +31,9 @@ export const CardTitle: FC<Props> = ({ children }) => (
   <h2 className={textStyles().classes.h2}>{children}</h2>
 );
 
-export const Text: FC<Props> = ({ children, ...props }) => (
+export const Text: FC<Props & { bold?: boolean }> = ({ children, bold, ...props }) => (
   <p className={textStyles().classes.text} {...props}>
-    {children}
+    {bold ? <strong>{children}</strong> : children}
   </p>
 );
 
@@ -77,12 +77,12 @@ export const textStyles = createStyles((theme) => ({
   },
 
   h3: {
-    fontSize: "1.1rem",
+    fontSize: "1.05rem",
     fontWeight: "bold",
     padding: "0.2rem 0",
 
     [theme.fn.largerThan("sm")]: {
-      fontSize: "1.3rem",
+      fontSize: "1.2rem",
       padding: "0.3rem 0",
     },
   },
