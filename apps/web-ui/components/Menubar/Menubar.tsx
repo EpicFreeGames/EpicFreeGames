@@ -1,4 +1,3 @@
-import { createStyles } from "@mantine/core";
 import { ColorSchemeToggle } from "../ColorSchemeToggle/ColorSchemeToggle";
 import { FlexDiv } from "../FlexDiv";
 import { HomeButton } from "./Home";

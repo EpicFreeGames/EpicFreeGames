@@ -9,7 +9,7 @@ export const UpcomingFreeGames = () => {
   if (error)
     return (
       <FlexDiv justifyCenter style={{ padding: "1rem" }}>
-        <Text>Couldn't get upcoming free games</Text>
+        <Text>Couldn&lsquo;t get upcoming free games</Text>
       </FlexDiv>
     );
 

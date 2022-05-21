@@ -1,4 +1,4 @@
-import { useFreeGames, useNotConfirmedGames } from "../../hooks/requests";
+import { useNotConfirmedGames } from "../../hooks/requests";
 import { FlexDiv } from "../FlexDiv";
 import { Text } from "../Text";
 import { Games } from "./Games";
@@ -9,7 +9,7 @@ export const NotConfirmedFreeGames = () => {
   if (error)
     return (
       <FlexDiv justifyCenter style={{ padding: "1rem" }}>
-        <Text>Couldn't get not confirmed free games</Text>
+        <Text>Couldn&lsquo;t get not confirmed free games</Text>
       </FlexDiv>
     );
 
