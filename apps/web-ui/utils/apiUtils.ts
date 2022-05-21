@@ -7,7 +7,7 @@ export const forbidden = (res: NextApiResponse) => res.status(403).json({ messag
 export const methodNotAllowed = (res: NextApiResponse) =>
   res.status(405).json({ message: "Method not allowed" });
 
-export const requireMethod = (method: string) => (req: NextApiRequest, res: NextApiResponse) => {
+export const requireMethod = (req: NextApiRequest, res: NextApiResponse, method: string) => {
   if (req.method !== method) {
     methodNotAllowed(res);
     return false;

@@ -7,7 +7,7 @@ import { db } from "database";
 import { requireMethod } from "../../../../utils/apiUtils";
 
 const Handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  if (!requireMethod("POST")) return;
+  if (!requireMethod(req, res, "POST")) return;
 
   if (!(await hasAccess(req, res, true))) return;
 

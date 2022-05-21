@@ -5,7 +5,7 @@ import { dbConnect } from "../../../utils/db";
 import { requireMethod } from "../../../utils/apiUtils";
 
 const Handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  if (!requireMethod("GET")) return;
+  if (!requireMethod(req, res, "GET")) return;
 
   if (!(await hasAccess(req, res, false))) return;
 
