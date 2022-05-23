@@ -95,7 +95,7 @@ jobs:
     if: ${{ needs.determine-images.outputs.i_endpoint }}
     uses: ./.github/workflows/build-docker-image.yml
     with:
-      scope: i-endpoint
+      scope: interactions-endpoint
       image-name-tag: veetik/freegames-bot-i-endpoint:latest
     secrets: 
       DH_USERNAME: ${{ secrets.DH_USERNAME }}
