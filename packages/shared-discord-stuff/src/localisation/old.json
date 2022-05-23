@@ -1,1 +1,485 @@
-{}
+{
+  "en": {
+    "translation": {
+      "footer": "[Invite](<inviteAddress>) • [Vote](<voteAddress>) • [Support](<serverAddress>) • [Website](<website>)",
+      "support_click_here": "Click here if you have any questions.",
+      "inviteTitle": "Invite the EpicFreeGames Discord Bot",
+      "vote_needed_title": "You need to vote to be able to use this command",
+      "vote_click_here": "Vote for the EpicFreeGames Discord Bot",
+      "commands_listed": "You can find a list with all the commands here",
+      "role_set_success_desc": "From now on I will always notify <role> when a new game gets released.",
+      "channel_thread_set_success_desc": "I will from now on post free games in <channelId>.",
+      "manage_webhooks": "Manage webhooks",
+      "make_sure_perms": "Make sure that the bot has the following permissions in **<channelId>**",
+      "manage_guild_needed": "You need `MANAGE_GUILD` permissions to use this command.",
+      "set_channel_first": "You have to set a channel, so that I know where I should notify you.\n\nJust type `/set channel`",
+      "commands": "Commands",
+      "open_in": "Open in:",
+      "free": "Free",
+      "no_free_games": "There are no free games.",
+      "no_upcoming_games": "There are no upcoming free games now."
+    }
+  },
+  "de": {
+    "translation": {
+      "footer": "[Einladen](<inviteAddress>) • [Vote](<voteAddress>) • [Support](<serverAddress>) • [Webseite](<website>)",
+      "support_click_here": "Click here falls du Fragen hast.",
+      "inviteTitle": "Lade den EpicFreeGames Discord Bot auf deinen Server ein:",
+      "vote_needed_title": "Du musst zuerst voten, damit du diesen Befehl nutzen kannst",
+      "vote_click_here": "Vote für den EpicFreeGames Discord Bot",
+      "commands_listed": "Du findest hier eine Liste mit allen Commands",
+      "role_set_success_desc": "Von nun an werde ich immer <role> benachrichtigen, wenn ein neues gratis Game released wird.",
+      "channel_thread_set_success_desc": "Ich werde von nun an in <channelId> die gratis Games posten.",
+      "manage_webhooks": "Webhooks verwalten",
+      "make_sure_perms": "Stelle sicher, dass der Bot die folgenen Berechtigungen in dem Kanal besitzt **<channelId>**",
+      "manage_guild_needed": "Du brauchst `MANAGE_GUILD` Berechtigungen, um diesen Befehl nutzen zu können.",
+      "set_channel_first": "Du musst einen channel setzen, damit ich weiss, wo ich die benachrichtigen kann.\n\nSchreibe einfach `/set channel`",
+      "commands": "Befehle",
+      "open_in": "Öffnen im:",
+      "free": "Gratis",
+      "no_free_games": "Es gibt momentan keine gratis Games.",
+      "no_upcoming_games": "Momentan gibt es kein kostenloses Spiel, welches verfügbar ist."
+    }
+  },
+  "fr": {
+    "translation": {
+      "footer": "[Inviter](<inviteAddress>) • [Vote](<voteAddress>) • [Support](<serverAddress>) • [Site internet](<website>)",
+      "support_click_here": "Cliquez ici si vous avez des questions.",
+      "inviteTitle": "Inviter EpicFreeGames Discord Bot dans votre serveur:",
+      "vote_needed_title": "Vous devez voter pour pouvoir utiliser cette commande",
+      "vote_click_here": "Voter pour EpicFreeGames Discord Bot",
+      "commands_listed": "Vous pouvez trouver une liste de toutes les commandes ici",
+      "role_set_success_desc": "Désormais, j'informerai toujours le rôle <role>, lorsqu'un nouveau jeu gratuit est annoncé.",
+      "channel_thread_set_success_desc": "Je vais désormais poster les jeux gratuits dans <channelId>.",
+      "manage_webhooks": "Gérer les webhooks",
+      "make_sure_perms": "Assurez-vous que le bot dispose des autorisations suivantes pour le canal **<channelId>**",
+      "manage_guild_needed": "Vous avez besoin de la permission `MANAGE_GUILD` pour utiliser cette commande.",
+      "set_channel_first": "Vous devez définir un canal, de sorte que je sache où je dois vous avertir.\n\nIl suffit de taper `/set channel`",
+      "commands": "Commandes",
+      "open_in": "Ouvrir dans:",
+      "free": "Gratuit",
+      "no_free_games": "Il n'y a pas de jeux gratuits.",
+      "no_upcoming_games": "Il n'y a pas de jeux gratuits à venir pour le moment."
+    }
+  },
+  "es": {
+    "translation": {
+      "footer": "[Invite](<inviteAddress>) • [Vote](<voteAddress>) • [Support](<serverAddress>) • [Website](<website>)",
+      "support_click_here": "Click here si tienes alguna pregunta.",
+      "inviteTitle": "Invitar al Bot de Discord de EpicFreeGames:",
+      "vote_needed_title": "Necesitan votar para poder usar este comando",
+      "vote_click_here": "Vota por el Bot de Discord de EpicFreeGames:",
+      "commands_listed": "Puede encontrar una lista con todos los comandos aquí",
+      "role_set_success_desc": "De ahora en adelante siempre notificaré <role> cuando salga un nuevo juego.",
+      "channel_thread_set_success_desc": "A partir se publicaran los juegos gratis en <channelId>.",
+      "manage_webhooks": "Gestionar webhooks",
+      "make_sure_perms": "Asegúrate de que el bot tenga los siguientes permisos en **<channelId>**",
+      "manage_guild_needed": "Necesitas `MANAGE_GUILD`permisos para usar este comando. ",
+      "set_channel_first": "Tienes que establecer un canal, para que yo sepa dónde debo notificarte.\n\nSólo escribe `/set channel`",
+      "commands": "Comandos",
+      "open_in": "Abrir en:",
+      "free": "Gratis",
+      "no_free_games": "No hay juegos gratis.",
+      "no_upcoming_games": "No hay juegos gratis proximos por ahora."
+    }
+  },
+  "ru": {
+    "translation": {
+      "footer": "[Пригласить](<inviteAddress>) • [Проголосовать](<voteAddress>)\n[Поддержка](<serverAddress>) • [Веб-сайт](<website>)",
+      "support_click_here": "Нажмите здесь, если у вас есть какие-либо вопросы.",
+      "inviteTitle": "Пригласить EpicFreeGames Discord Bot",
+      "vote_needed_title": "Вам нужно проголосовать, чтобы иметь возможность использовать эту команду",
+      "vote_click_here": "Голосуйте за EpicFreeGames Discord Bot",
+      "commands_listed": "Вы можете найти список со всеми командами здесь",
+      "role_set_success_desc": "Отныне я всегда буду упоминать <role>, когда выйдет новая игра.",
+      "channel_thread_set_success_desc": "Отныне я буду публиковать бесплатные игры в <channelId>.",
+      "manage_webhooks": "Управлять вебхуками (webhooks)",
+      "make_sure_perms": "Убедитесь, что бот имеет следующие разрешения в **<channelId>**",
+      "manage_guild_needed": "Для использования этой команды вам нужны разрешения `Управлять сервером`.",
+      "set_channel_first": "Вы должны установить канал, чтобы я знал, где я должен вас уведомить.\n\nПросто наберите `/set channel`",
+      "commands": "Команды",
+      "open_in": "Открыть в:",
+      "free": "Бесплатно",
+      "no_free_games": "Бесплатных игр нет.",
+      "no_upcoming_games": "Сейчас нет никаких предстоящих бесплатных игр."
+    }
+  },
+  "uk": {
+    "translation": {
+      "footer": "[Запросити](<inviteAddress>) • [Проголосувати](<voteAddress>)\n[Підтримка](<serverAddress>) • [Веб-сайт](<website>)",
+      "support_click_here": "Натисніть тут, якщо у вас є які-небудь питання.",
+      "inviteTitle": "Запросити EpicFreeGames Discord Bot",
+      "vote_needed_title": "Вам потрібно проголосувати, щоб мати можливість використовувати цю команду",
+      "vote_click_here": "Голосуйте за EpicFreeGames Discord Bot",
+      "commands_listed": "Ви можете знайти список з усіма командами тут",
+      "role_set_success_desc": "Відтепер Я завжди буду сповіщати <role>, коли вийде нова гра.",
+      "channel_thread_set_success_desc": "Відтепер Я буду публікувати безкоштовні ігри в <channelId>.",
+      "manage_webhooks": "Керувати Webhook",
+      "make_sure_perms": "Переконайтеся, що бот має наступні дозволи в **<channelId>**",
+      "manage_guild_needed": "Для використання цієї команди вам потрібні дозли `Керувати сервером`.",
+      "set_channel_first": "Ви повинні встановити канал, щоб я знав, де я повинен вас повідомити.\n\nПросто наберіть `/set channel`",
+      "commands": "Команди",
+      "open_in": "Відкрити в:",
+      "free": "Безкоштовно",
+      "no_free_games": "Безкоштовних ігор немає.",
+      "no_upcoming_games": "Зараз немає ніяких майбутніх безкоштовних ігор."
+    }
+  },
+  "pl": {
+    "translation": {
+      "footer": "[Zaproś](<inviteAddress>) • [Zagłosuj](<voteAddress>) • [Wsparcie](<serverAddress>)\n[Strona internetowa](<website>)",
+      "support_click_here": "Kliknij tutaj jeżeli masz jakieś pytania.",
+      "inviteTitle": "Zaproś EpicFreeGames Discord Bot",
+      "vote_needed_title": "Musisz zagłosować aby móc używać tej komendy",
+      "vote_click_here": "Głosuj na EpicFreeGames Discord Bot",
+      "commands_listed": "Tutaj możesz znaleźć listę wszystkich komend",
+      "role_set_success_desc": "Od teraz zawsze będę pingować <role> kiedy wyjdzie nowa gra.",
+      "channel_thread_set_success_desc": "Od teraz będę dodawał darmowe gry na kanale <channelId>.",
+      "manage_webhooks": "Zarządzanie webhookami",
+      "make_sure_perms": "Upewnij się, że bot ma uprawniena w kanale **<channelId>**",
+      "manage_guild_needed": "Musisz nadać uprawnienia `MANAGE_GUILD` aby użyć tej komendy",
+      "set_channel_first": "Musisz ustawić kanał, abym wiedział gdzie mam cię powiadamiać.\n\nPo prostu napisz `/set channel`",
+      "commands": "Komendy",
+      "open_in": "Otwórz w:",
+      "free": "Darmowa",
+      "no_free_games": "Obecnie nie ma darmowych gier.",
+      "no_upcoming_games": "Teraz nie ma żadnych darmowych gier."
+    }
+  },
+  "tr": {
+    "translation": {
+      "footer": "[Davet](<inviteAddress>) • [Oy](<voteAddress>) • [Yardım](<serverAddress>) • [İnternet sitesi](<website>)",
+      "support_click_here": "Buraya Tıkla.",
+      "inviteTitle": "EpicFreeGames Discord Botunu Davet Et:",
+      "vote_needed_title": "Bu komutu kullanabilmek için oy vermen gerekiyor ",
+      "vote_click_here": "EpicFreeGames Discord Botuna Oy Ver:",
+      "commands_listed": "Tüm komutları içeren bir listeyi burada bulabilirsiniz",
+      "role_set_success_desc": "Şu andan itibaren yeni bir oyun çıkarsa <role> rolünü bilgilendireceğim.",
+      "channel_thread_set_success_desc": "Bundan sonra  bedava oyun mesajlarını bu kanalda paylaşcağım <channelId>.",
+      "manage_webhooks": "Webhook'ları Yönet",
+      "make_sure_perms": "Herhangi bir sorunuz varsa, botun aşağıdaki izinlere sahip olduğundan emin olun **<channelId>**",
+      "manage_guild_needed": "Bu Komutu kullanmak için `MANAGE_GUILD` yetkisine sahip olman gerekiyor.",
+      "set_channel_first": "Size nereden haber vermem gerektiğini bilmem için bir kanal belirlemelisiniz. \n\nSadece Şunu Yazın `/set channel`",
+      "commands": "Komutlar",
+      "open_in": "Aç:",
+      "free": "Bedava",
+      "no_free_games": "Bedava oyun yok.",
+      "no_upcoming_games": "Şu an çıkacak bedava bir oyun yok."
+    }
+  },
+  "cs": {
+    "translation": {
+      "footer": "[Pozvat](<inviteAddress>) • [Hlasování](<voteAddress>) • [Podpora](<serverAddress>)\n[Webová stránka](<website>)",
+      "support_click_here": "Click here pokud máte nějaké otázky.",
+      "inviteTitle": "Pozvěte EpicFreeGames Discord Bota:",
+      "vote_needed_title": "Musíte hlasovat pro bota, aby jste mohli použít tento příkaz",
+      "vote_click_here": "Hlasujte pro EpicFreeGames Discord Bota:",
+      "commands_listed": "Seznam všech příkazů najdeš zde",
+      "role_set_success_desc": "Od teď budu vždy upozorňovat roli <role>, když vyjde nová hra zdarma.",
+      "channel_thread_set_success_desc": "Od teď budu oznamovat hry zdarma v <channelId>.",
+      "manage_webhooks": "Správa háčků webhook",
+      "make_sure_perms": "Ujistěte se, že má bot následující oprávnění v kanálu **<channelId>**",
+      "manage_guild_needed": "Potřebujete povolení `MANAGE_GUILD`, aby jste mohli použít tento příkaz.",
+      "set_channel_first": "Musíš nastavit kanál, takže budu vědět kde vás mám upozornit.\n\nStačí napsat `/set channel`",
+      "commands": "Příkazy",
+      "open_in": "Otevřít v:",
+      "free": "Zdarma",
+      "no_free_games": "Právě nejsou žádné hry zdarma.",
+      "no_upcoming_games": "Nyní nejsou žádné nadcházející hry zdarma."
+    }
+  },
+  "ro": {
+    "translation": {
+      "footer": "[Invită](<inviteAddress>) • [Votează](<voteAddress>) • [Susține](<serverAddress>) • [Site Web](<website>)",
+      "support_click_here": "Apăsați aici dacă aveți întrebări.",
+      "inviteTitle": "Invitați botul pentru Discord EpicFreeGames:",
+      "vote_needed_title": "Trebuie să votați pentru a putea folosi această comandă",
+      "vote_click_here": "Votați pentru bot-ul pentru Discord EpicFreeGames:",
+      "commands_listed": "Poți găsi o listă cu toate comenzile aici",
+      "role_set_success_desc": "De acum voi notifica <role> atunci când va fii lansat un nou joc gratuit.",
+      "channel_thread_set_success_desc": "De acum voi posta jocurile gratuite în <channelId>. ",
+      "manage_webhooks": "Gestionează Webhook-urile",
+      "make_sure_perms": "Asigurați-vă că bot-ul are următoarele permisiuni în **<channelId>**",
+      "manage_guild_needed": "Trebuie să `MANAGE_GUILD` permisiuni ca să utilizați această comandă.",
+      "set_channel_first": "Trebuie să setezi un canal pentru a știi unde să te notific. \n\nDoar scrie `/set channel`",
+      "commands": "Comenzi",
+      "open_in": "Deschide în:",
+      "free": "Gratuit",
+      "no_free_games": "Nu sunt jocuri gratuite disponibile.",
+      "no_upcoming_games": "Nu există jocuri gratuite in viitor, momentan."
+    }
+  },
+  "ja": {
+    "translation": {
+      "footer": "[招待](<inviteAddress>) • [Vote](<voteAddress>) • [サポート](<serverAddress>)\n[ウェブサイト](<website>)",
+      "support_click_here": "質問があったらここをクリック",
+      "inviteTitle": "エピックフリーゲームズボットを招待する。",
+      "vote_needed_title": "voteしないとこのコマンドは使用できません",
+      "vote_click_here": "エピックフリーゲームズボットにvoteする:",
+      "commands_listed": "ここで全てのコマンドを確認。",
+      "role_set_success_desc": "これから新しいゲームがリリースされたら<role>をタグ付けます。",
+      "channel_thread_set_success_desc": "これから<channelId>に無料のゲームを投稿します",
+      "manage_webhooks": "ウェブフックの管理",
+      "make_sure_perms": "ボットがこの権限を用いていることを確認してください。 **<channelId>**",
+      "manage_guild_needed": "このコマンドを使用するには`MANAGE_GUILD`権力が必要です。",
+      "set_channel_first": "私がどこに通知を送るかをはっきりさせるため、チャンネルの設定は必要です\n\n `/set channel`　とタイプすれば設定できます。",
+      "commands": "コマンド",
+      "open_in": "開く:",
+      "free": "無料",
+      "no_free_games": "ただ今無料のゲームはありません。",
+      "no_upcoming_games": "まだフリーゲームズはないようだ。"
+    }
+  },
+  "hi": {
+    "translation": {
+      "footer": "[आमंत्रित](<inviteAddress>) • [वोट](<voteAddress>) • [समर्थन](<serverAddress>) • [वेबसाइट](<website>)",
+      "support_click_here": "यहाँ क्लिक करें अगर आपके पास कोई प्रश्न है।",
+      "inviteTitle": "एपिकफ्रीगेम डिस्कोर्ड बॉट को आमंत्रित करें:",
+      "vote_needed_title": "इस आदेश का उपयोग करने में सक्षम होने के लिए आपको मतदान करने की आवश्यकता है ",
+      "vote_click_here": "एपिकफ्रीगेस्म डिस्कोर्ड बॉट के लिए वोट करें:",
+      "commands_listed": "आप सभी कमांड यहां के साथ एक सूची पा सकते हैं।",
+      "role_set_success_desc": "अब से मैं हमेशा एक नया खेल जारी होने पर <role> को सूचित करूँगा।",
+      "channel_thread_set_success_desc": "मैं अब से <channelId> में फ्री गेम खेलूंगा।",
+      "manage_webhooks": "वेबहुक को मैनेज करें",
+      "make_sure_perms": "यह सुनिश्चित करें कि बॉट में निम्नलिखित अनुमतियाँ हैं **<channelId>**",
+      "manage_guild_needed": "आपको इस आदेश का उपयोग करने के लिए `MANAGE_GUILD` अनुमतियों की आवश्यकता है।",
+      "set_channel_first": "आपको एक चैनल सेट करना होगा, ताकि मुझे पता हो कि मुझे आपको कहां सूचित करना चाहिए।  \n\nJust प्रकार `/set channel`",
+      "commands": "आदेश",
+      "open_in": "ओपन इन:",
+      "free": "मुफ्त",
+      "no_free_games": "कोई मुफ्त गेम नहीं हैं।",
+      "no_upcoming_games": "अब कोई आगामी मुफ्त गेम नहीं हैं।"
+    }
+  },
+  "pt": {
+    "translation": {
+      "footer": "[Convite](<inviteAddress>) • [Voto](<voteAddress>) • [Suporte](<serverAddress>) • [Website](<website>)",
+      "support_click_here": "Clique aqui se você tiver quaisquer perguntas.",
+      "inviteTitle": "Convide o EpicFreeGames Discord Bot",
+      "vote_needed_title": "Você precisa votar para poder usar este comando",
+      "vote_click_here": "Vote no EpicFreeGames Discord Bot",
+      "commands_listed": "Pode encontrar uma lista de todos os comandos aqui",
+      "role_set_success_desc": "De agora em diante sempre notificarei <role> quando um novo jogo é lançado.",
+      "channel_thread_set_success_desc": "Vou de agora em diante postar jogos grátis em <channelId>.",
+      "manage_webhooks": "Gerenciar webhooks",
+      "make_sure_perms": "Certifique-se de que o bot tenha as seguintes permissões em **<channelId>**",
+      "manage_guild_needed": "Você precisa `MANAGE_GUILD` permissões para usar este comando.",
+      "set_channel_first": "Você precisa definir um canal, para que eu saiba onde devo postar as notificações.\n\nBasta digitar `/set channel`",
+      "commands": "Comandos",
+      "open_in": "Abrir em:",
+      "free": "Jogo Grátis",
+      "no_free_games": "Não há jogos grátis.",
+      "no_upcoming_games": "Não há próximos jogos grátis agora."
+    }
+  },
+  "nl": {
+    "translation": {
+      "footer": "[Uitnodigen](<inviteAddress>) • [Vote](<voteAddress>) • [Support](<serverAddress>)\n[Webpagina](<website>)",
+      "support_click_here": "Klik here als je nog andere vragen hebt.",
+      "inviteTitle": "Nodig de EpicFreeGames Discord Bot uit naar uw server.",
+      "vote_needed_title": "Je moete voten om deze command te gebruiken",
+      "vote_click_here": "Vote voor de EpicFreeGames Discord Bot",
+      "commands_listed": "Je kan hier een lijst vinden met alle commands hier",
+      "role_set_success_desc": "Vanaf nu vermeld ik <role> wanneer er een nieuwe gratis game uitkomt.",
+      "channel_thread_set_success_desc": "Vanaf nu post ik gratis games in <channelId>.",
+      "manage_webhooks": "Webhooks beheren",
+      "make_sure_perms": "Zorg ervoor dat de bot de volgende machtigingen heeft in **<channelId>**",
+      "manage_guild_needed": "You hebt `MANAGE_GUILD` permissie nodig om deze command te kunnen gebruiken.",
+      "set_channel_first": "Je moet een kanaal in stellen, zodat ik weet waar ik je moet informeren.\n\nTyp gewoon `/set channel`",
+      "commands": "Commands",
+      "open_in": "Open in:",
+      "free": "Gratis",
+      "no_free_games": "Er zijn geen gratis games.",
+      "no_upcoming_games": "Er zijn geen aankomde gratis games nu."
+    }
+  },
+  "fa": {
+    "translation": {
+      "footer": "[دعوت](<inviteAddress>) • [رای دادن](<voteAddress>) • [پشتیبانی](<serverAddress>) • [وب سایت](<website>)",
+      "support_click_here": "اگر سوالی دارید کلیک کنید",
+      "inviteTitle": "ربات EpicFreeGames را دعوت کنید :",
+      "vote_needed_title": "باید رای بدی تا بتونی از این کامند استفاده کنی",
+      "vote_click_here": "به ربات EpicFreeGames رای دهید : ",
+      "commands_listed": "می توانید لیست همه دستورات را اینجا  پیدا کنید",
+      "role_set_success_desc": "از این به بعد وقتی یک بازی جدید اومد رول <role> رو خبر میکنم.",
+      "channel_thread_set_success_desc": "از الان بازی های رایگان رو توی کانال <channelId> میفرستم.",
+      "manage_webhooks": "Manage webhooks",
+      "make_sure_perms": "مطمئن شوید ربات در کانال **<channelId>** اجازه های زیر را دارد",
+      "manage_guild_needed": "برای استفاده از این دستور به رول `MANAGE_GUILD` نیاز دارید.",
+      "set_channel_first": "شما باید یک کانال انتخاب کنید تا من متوجه بشوم در کدام کانال شما را مطلع کنم.\n\n کافیست دستور بدهید `/set channel`",
+      "commands": "دستور ها",
+      "open_in": "بازکردن در :",
+      "free": "رایگان",
+      "no_free_games": "هیچ بازی رایگانی وجود ندارد.",
+      "no_upcoming_games": "در حال حاظر هیچ بازی رایگانی برای روز های اینده وجود ندارد. "
+    }
+  },
+  "hu": {
+    "translation": {
+      "footer": "[Meghívás](<inviteAddress>) • [Szavazás](<voteAddress>)\n[Segítségnyújtás](<serverAddress>) • [Weboldal](<website>)",
+      "support_click_here": "Kattints ide, ha bármilyen kérdésed van.",
+      "inviteTitle": "Hívd meg az EpicFreeGames Discord Bot-ot:",
+      "vote_needed_title": "Szavaznod kell a parancs használatához",
+      "vote_click_here": "Szavazz az EpicFreeGames Discord Bot-ra:",
+      "commands_listed": "Megtalálhatod az összes parancsot tartalmazó listát itt",
+      "role_set_success_desc": "Innentől kezdve mindig a <role> rangot fogom értesíteni amint egy új játék megjelenik.",
+      "channel_thread_set_success_desc": "Innentől kezdve az ingyenes játékokat a(z) <channelId> csatornába fogom közzétenni.",
+      "manage_webhooks": "Webhookok kezelése",
+      "make_sure_perms": "Győződj meg arról, hogy a bot rendelkezik a következő engedélyekkel a(z) **<channelId>** csatornában",
+      "manage_guild_needed": "Szükséged van `MANAGE_GUILD` engedélyekre a parancs használatához.",
+      "set_channel_first": "Meg kell adnod egy csatornát, szóval tudni fogom, hogy hol kell téged értesítenem. \n\nCsak írd be, hogy `/set channel`",
+      "commands": "Parancsok",
+      "open_in": "Megnyitás itt:",
+      "free": "Ingyenes",
+      "no_free_games": "Nincsenek ingyenes játékok.",
+      "no_upcoming_games": "Jelenleg nincsenek közelgő ingyenes játékok."
+    }
+  },
+  "id": {
+    "translation": {
+      "footer": "[Undang](<inviteAddress>) • [Vote](<voteAddress>) • [Bantuan](<serverAddress>) • [Website](<website>) ",
+      "support_click_here": "Klik disini jika anda mempunyai pertanyaan.",
+      "inviteTitle": "Undang EpicFreeGames bot Discord ke server anda.",
+      "vote_needed_title": "Anda harus vote untuk dapat menggunakan perintah ini",
+      "vote_click_here": "Vote EpicFreeGames bot Discord:",
+      "commands_listed": "Kamu bisa menemukan semua link perintah disini",
+      "role_set_success_desc": "Dari sekarang saya akan selalu memberi tahu <role> ketika game baru akan dirilis.",
+      "channel_thread_set_success_desc": "Mulai sekarang saya akan memposting game gratis di <channelId>.",
+      "manage_webhooks": "Manage webhooks",
+      "make_sure_perms": "Pastikan bot mengikuti persetujuan di **<channelId>**",
+      "manage_guild_needed": "Anda perlu izin `MANAGE_GUILD` untuk menggunakan perintah ini",
+      "set_channel_first": "Kamu harus menyetel sebuah channel, agar supaya saya tau dimana saya memberitaumu. \n\nHanya ketik `/set channel`",
+      "commands": "Perintah",
+      "open_in": "Buka di:",
+      "free": "Gratis",
+      "no_free_games": "Tidak ada game gratis.",
+      "no_upcoming_games": "Tidak ada permainan gratis yang datang sekarang"
+    }
+  },
+  "ka": {
+    "translation": {
+      "footer": "[მოწვევა](<inviteAddress>) • [ხმის მიცემა](<voteAddress>) • [საპორტი](<serverAddress>)\n[ვებსაიტი](<website>)",
+      "support_click_here": "დააჭირეთ აქ თუ გაქვთ რაიმე კითხვა.",
+      "inviteTitle": "მოიწვიეთ EpicFreeGames Discord Bot",
+      "vote_needed_title": "თქვენ უნდა მისცეთ ხმა იმისათვის რომ გამოიყენოთ ეს კომანდი",
+      "vote_click_here": "მიეცით ხმა EpicFreeGames Discord Bot",
+      "commands_listed": "შენ შეგიძლია ნახო ყველა კომანდიაქ",
+      "role_set_success_desc": "დღეიდან ყოველთვის შევატყობინებ <role> - ს  როცა ახალი უფასო თამაში გამოვა.",
+      "channel_thread_set_success_desc": "დღეიდან ამ ჩენელზე დავდებ უფასო თამაშებს --> <channelId>.",
+      "manage_webhooks": "Manage webhooks",
+      "make_sure_perms": "დარწმუნდით რომ ბოტს აქვს სწორი ნებართვა მოცემულ ჩენელში **<channelId>**",
+      "manage_guild_needed": "ამ კომანდის გამოსაყენებლად თქვენ გჭირდებათ ნებართვა `MANAGE_GUILD`",
+      "set_channel_first": "თქვენ უნდა დააყენოთ ჩენელი, სადაც შეგატყობინებთ.\n\nუბრალოდ დაწერეთ `/set channel`",
+      "commands": "კომანდები",
+      "open_in": "გახსენით:",
+      "free": "უფასო",
+      "no_free_games": "ამ წამს არ არის უფასო თამაშები.",
+      "no_upcoming_games": "ჯერ არ არის ახალი უფასო თამაშები"
+    }
+  },
+  "vi": {
+    "translation": {
+      "footer": "[Mời](<inviteAddress>) • [Bỏ phiếu](<voteAddress>) • [Hỗ trợ](<serverAddress>) • [Website](<website>)",
+      "support_click_here": "Nếu bạn có bất kỳ câu hỏi nào Nhấp vào đây",
+      "inviteTitle": "Mời EpicFreeGames Discord Bot",
+      "vote_needed_title": "Bạn cần bỏ phiếu để có thể sử dụng lệnh này",
+      "vote_click_here": "Bình chọn cho EpicFreeGames Discord Bot",
+      "commands_listed": "Bạn có thể tìm thấy danh sách với tất cả các lệnh tại đây",
+      "role_set_success_desc": "Gắn thẻ <role> khi trò chơi mới được phát hành.",
+      "channel_thread_set_success_desc": "Kể từ bây giờ trò chơi miễn phí sẽ được đăng trên <channelId>.",
+      "manage_webhooks": "Quản lý Webhook",
+      "make_sure_perms": "Đảm bảo rằng bot của bạn sử dụng quyền này. **<channelId>**",
+      "manage_guild_needed": "Bạn phải có quyền `MANAGE_GUILD` để sử dụng lệnh này.",
+      "set_channel_first": "Bạn phải thiết lập một kênh để tôi biết nơi tôi sẽ thông báo cho bạn.\n\nChỉ cần nhập `/set channel`",
+      "commands": "Lệnh",
+      "open_in": "Mở trong:",
+      "free": "Miễn phí",
+      "no_free_games": "Không có trò chơi miễn phí.",
+      "no_upcoming_games": "Có vẻ như chưa có trò chơi miễn phí nào."
+    }
+  },
+  "ar": {
+    "translation": {
+      "footer": "[رابط الدعوة](<inviteAddress>) • [رابط التصويت](<voteAddress>) • [الدعم الفني](<serverAddress>)\n[الموقع الكتروني](<website>)",
+      "support_click_here": "اضغط هنا إذا كان لديك أي سؤال.",
+      "inviteTitle": "قم بدعوة بوت EpicFreeGames:",
+      "vote_needed_title": "تحتاج إلى التصويت لتتمكن من استخدام هذا الأمر",
+      "vote_click_here": "فم بالتصويت لبوت EpicFreeGames:",
+      "commands_listed": "تستطيع ان تجد قائمة بجميع الأوامر هنا",
+      "role_set_success_desc": "من الآن فصاعدًا ، سأبلغ <role> دائمًا عند إطلاق لعبة جديدة.",
+      "channel_thread_set_success_desc": "سأقوم من الآن بنشر الألعاب المجانية في <channelId>.",
+      "manage_webhooks": "Manage webhooks",
+      "make_sure_perms": "تأكد من أن البوت لديه البرمشنات التالية في **<channelId>**",
+      "manage_guild_needed": "انت تحتاج برمشن `MANAGE_GUILD` لإستخدام هذا الأمر.",
+      "set_channel_first": "يجب عليك تعيين الروم الكتابي، حتى أعرف المكان الذي يجب تبليغك فيه. \n\nاكتب فقط `/set channel`",
+      "commands": "الأوامر",
+      "open_in": "فتح في:",
+      "free": "مجاني",
+      "no_free_games": "لا يوجد ألعاب مجانية.",
+      "no_upcoming_games": "لا يوجد ألعاب قادمة بالوقت الحالي."
+    }
+  },
+  "it": {
+    "translation": {
+      "footer": "[Invito](<inviteAddress>) • [Voto](<voteAddress>) • [Supporto](<serverAddress>) • [Sito web](<website>)",
+      "support_click_here": "Clicca qui se hai qualche domanda.",
+      "inviteTitle": "Invita il bot discord EpicFreeGames:",
+      "vote_needed_title": "Devi votare per poter usare questo comando",
+      "vote_click_here": "Vota per il bot discord EpicFreeGames:",
+      "commands_listed": "Puoi trovare una lista con tutti i comandi here",
+      "role_set_success_desc": "D'ora in poi avviserò sempre <role> quando un nuovo gioco viene rilasciato.",
+      "channel_thread_set_success_desc": "D'ora in poi invierò i giochi gratuiti in <channelId>.",
+      "manage_webhooks": "Gestire i webhook",
+      "make_sure_perms": "Assicurati che il bot abbia i seguenti permessi in **<channelId>**",
+      "manage_guild_needed": "Ti server il permesso `MANAGE_GUILD` per usare questo comando.",
+      "set_channel_first": "Devi impostare un canale, così so dove avvisarti.\n\nScrivi `/set channel`",
+      "commands": "Comandi",
+      "open_in": "Apri in:",
+      "free": "Gratis",
+      "no_free_games": "Non ci sono giochi gratuiti.",
+      "no_upcoming_games": "Non ci sono giochi gratuiti in arrivo al momento."
+    }
+  },
+  "ko": {
+    "translation": {
+      "footer": "[초대](<inviteAddress>) • [투표](<voteAddress>) • [지원](<serverAddress>) • [웹사이트](<website>)",
+      "support_click_here": "질문이 있다면 여기 를 눌러주세요.",
+      "inviteTitle": "EpicFreeGames봇을 초대해주세요:",
+      "vote_needed_title": "이 명령어를 사용하려면 투표가 필요합니다",
+      "vote_click_here": "EpicFreeGames 봇을 투표해주세요:",
+      "commands_listed": "여기에서 모든 명령어를 찾을 수 있습니다",
+      "role_set_success_desc": "이제 새로운 게임이 배포될 때 <role> 역할을 소유하고 있다면 알림을 보낼게요.",
+      "channel_thread_set_success_desc": "이제 무료게임에 대한 알림을 <channelId>에 전송해드릴게요.",
+      "manage_webhooks": "웹후크 관리하기",
+      "make_sure_perms": "봇에게 **<channelId>**에 대한 아래의 권한이 필요합니다",
+      "manage_guild_needed": "이 명령어를 사용하려면 `MANAGE_GUILD`권한이 필요합니다.",
+      "set_channel_first": "알림받을 채널을 설정해주셔야 알림을 받을 수 있습니다.\n\n`/set channel`을 입력하기만 하면 돼요!",
+      "commands": "명령어",
+      "open_in": "열기:",
+      "free": "무료",
+      "no_free_games": "현재 무료 배포중인 게임이 없네요.",
+      "no_upcoming_games": "지금은 무료 배포될 예정인 게임이 없네요."
+    }
+  },
+  "bg": {
+    "translation": {
+      "footer": "[Покани](<inviteAddress>) • [Гласувай](<voteAddress>) • [Поддръжка](<serverAddress>)\n[Уебсайт](<website>)",
+      "support_click_here": "Натиснете тук ако имате някакви въпроси.",
+      "inviteTitle": "Поканете EpicFreeGames Discord Bot",
+      "vote_needed_title": "Трябва да гласувате, за да може да използвате тази команда",
+      "vote_click_here": "Гласувайте за бота EpicFreeGames:",
+      "commands_listed": "Може да намерите списък с всички команди тук",
+      "role_set_success_desc": "Отсега нататък винаги ще уведомявам <role> когато излезе нова игра.",
+      "channel_thread_set_success_desc": "Отсега нататък ще публикувам безплатни игри в <channelId>.",
+      "manage_webhooks": "Управление на Webhooks",
+      "make_sure_perms": "Убедете се, че бота има следните разрешения в **<channelId>**",
+      "manage_guild_needed": "Нуждаете се от `MANAGE_GUILD` разрешения, за да използвате тази команда.",
+      "set_channel_first": "Трябва да зададеш канал, за да знам къде да те уведомя.\n\nПросто въведи `/set channel`",
+      "commands": "Команди",
+      "open_in": "Отворете в:",
+      "free": "Безплатно",
+      "no_free_games": "Няма безплатни игри.",
+      "no_upcoming_games": "В момента няма предстоящи безплатни игри."
+    }
+  }
+}
