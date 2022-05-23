@@ -12,7 +12,6 @@
     "dev": "turbo run dev",
     "devr": "yarn clean && yarn && yarn build && yarn dev",
     "dev:front": "yarn build --scope=web-ui && turbo run dev --scope=web-ui",
-    "build:front": "turbo run build --scope=web-ui && turbo run buildprod --scope=web-ui",
     "start:front": "turbo run start --scope=web-ui",
     "postclean": "rm -rf node_modules",
     "clean": "turbo run clean",

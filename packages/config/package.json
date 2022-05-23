@@ -6,6 +6,7 @@
   "private": true,
   "scripts": {
     "build": "rm -rf dist && ./node_modules/.bin/tsc -p ./tsconfig.json",
+    "buildprod": "rm -rf dist && ./node_modules/.bin/tsc -p ./tsconfig.json",
     "clean": "rm -rf node_modules && rm -rf .turbo && rm -rf dist"
   },
   "dependencies": {

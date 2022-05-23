@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "buildprod": "next build",
     "start": "next start",
+    "buildprod": "next build",
     "lint": "next lint",
     "clean": "rm -rf node_modules && rm -rf .next"
   },
