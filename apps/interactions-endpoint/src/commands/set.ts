@@ -7,7 +7,7 @@ import {
   getWebhookUrl,
   getMessage,
 } from "shared-discord-stuff";
-import { CommandTypes, LanguageDocument, getGuildLang } from "shared";
+import { CommandTypes, LanguageDocument, getDefaultLanguage } from "shared";
 import { db } from "database";
 import {
   getParentId,
@@ -118,8 +118,12 @@ const threadCommand: SubCommandHandler = async (i, guild, language, currency) =>
 const languageCommand: SubCommandHandler = async (i, guild, language, currency) => {
   const givenLanguage = i.options.getString("language", true);
 
-  const dbLanguage = await db.languages.get.byCode(givenLanguage);
-  if (!dbLanguage) return i.reply({ embeds: [embeds.errors.genericError()] });
+  const defaultLanguage = getDefaultLanguage();
+
+  const isDefault = givenLanguage === defaultLanguage.code;
+
+  const dbLanguage = isDefault ? null : await db.languages.get.byCode(givenLanguage);
+  if (!dbLanguage && !isDefault) return i.reply({ embeds: [embeds.errors.genericError()] });
 
   const updatedGuild = await db.guilds.set.language(i.guildId!, dbLanguage as LanguageDocument);
 
@@ -127,7 +131,7 @@ const languageCommand: SubCommandHandler = async (i, guild, language, currency) 
   return i.reply({
     embeds: [
       embeds.success.updatedSettings(language),
-      embeds.commands.settings(updatedGuild, getGuildLang(updatedGuild)),
+      embeds.commands.settings(updatedGuild, isDefault ? defaultLanguage : dbLanguage!),
     ],
     ephemeral: true,
   });
