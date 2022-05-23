@@ -1,7 +1,7 @@
 import { CurrencyModel } from "../models";
 import { ICurrency, CurrencyDocument } from "shared";
 
-const selectString = "-_id -__v -createdAt -updatedAt";
+const selectString = "-__v -createdAt -updatedAt";
 
 export const get = {
   all: async (): Promise<CurrencyDocument[]> => CurrencyModel.find({}).select(selectString).lean(),

@@ -67,12 +67,12 @@ export const set = {
   language: async (guildId: string, language: LanguageDocument | null) =>
     GuildModel
       .findOneAndUpdate({ guildId }, { guildId, language }, { upsert: true, new: true })
-      .select(selectString).populate("language", "-__v"),
+      .select(selectString).populate("currency", "-__v").populate("language", "-__v"),
 
   currency: async (guildId: string, currency: CurrencyDocument) =>
     GuildModel
       .findOneAndUpdate({ guildId }, { guildId, currency: currency._id }, { upsert: true, new: true })
-      .select(selectString).populate("currency", "-__v"),
+      .select(selectString).populate("currency", "-__v").populate("language", "-__v"),
 };
 
 export const remove = {
