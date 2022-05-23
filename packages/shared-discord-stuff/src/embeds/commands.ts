@@ -2,7 +2,7 @@ import { MessageEmbed } from "discord.js";
 import { t } from "../localisation";
 import { constants } from "config";
 import { utils } from "./utils";
-import { ILanguage, IGuild } from "shared";
+import { ILanguage, IGuild, getDefaultCurrency, getDefaultLanguage } from "shared";
 
 export const help = (language: ILanguage) =>
   new MessageEmbed({
@@ -53,9 +53,9 @@ export const settings = (guild: IGuild | null,  language: ILanguage) =>
       "\n\n" +
       utils.bold(`${t("role", language)}: `) + settingsUtils.showRole(guild, language) +
       "\n\n" +
-      utils.bold(`${t("language", language)}: `) + (guild?.language ? `${guild.language.localizedName}` : "English") +
+      utils.bold(`${t("language", language)}: `) + (guild?.language ? `${guild.language.localizedName}` : getDefaultLanguage().localizedName) +
       "\n\n" +
-      utils.bold(`${t("currency", language)}: `) + (guild?.currency ? `${guild.currency.name}` : "USD") +
+      utils.bold(`${t("currency", language)}: `) + (guild?.currency ? `${guild.currency.name}` : getDefaultCurrency().name) +
       utils.footer(language),
   });
 
