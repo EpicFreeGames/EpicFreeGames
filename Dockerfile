@@ -38,7 +38,6 @@ ARG SCOPE
 COPY --from=all-deps /app/ ./
 COPY --from=pruner /app/out/full/ ./
 
-RUN ls -la ./node_modules/typescript/bin
 RUN yarn turbo run buildprod
 RUN rm -rf apps/**/src
 RUN rm -rf packages/**/src
