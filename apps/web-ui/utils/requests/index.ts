@@ -1,5 +1,3 @@
-import { apiBaseUrl } from "../envs";
-
 interface Props {
   path: string;
   method: string;
@@ -7,7 +5,7 @@ interface Props {
 }
 
 export const request = <T>({ path, method, body }: Props): Promise<T> =>
-  fetch(`${apiBaseUrl}${path}`, {
+  fetch(`/api${path}`, {
     method,
     credentials: "same-origin",
     body: body ? JSON.stringify(body) : undefined,
@@ -20,6 +18,6 @@ export const request = <T>({ path, method, body }: Props): Promise<T> =>
   });
 
 export const fetcher = async (url: string) =>
-  fetch(`${apiBaseUrl}${url}`, {
+  fetch(`/api${url}`, {
     credentials: "same-origin",
   }).then((res) => res.json());
