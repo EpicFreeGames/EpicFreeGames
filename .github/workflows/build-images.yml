@@ -66,12 +66,12 @@ jobs:
         }
         sender () {
           if [[ $1 == *"apps/sender"* ]]; then 
-            set_auth 
+            set_sender 
           fi
         }
         web_ui () {
           if [[ $1 == *"apps/web-ui"* ]]; then 
-            set_catalogue 
+            set_web_ui 
           fi        
         }
     
