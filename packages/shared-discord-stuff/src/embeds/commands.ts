@@ -17,7 +17,7 @@ export const help = (language: ILanguage) =>
 
 export const vote = (language: ILanguage) =>
   new MessageEmbed({
-    title: t("vote_needed_title", language),
+    title: t("vote", language),
     color: "BLUE",
     image: {
       url: constants.gifs.vote,

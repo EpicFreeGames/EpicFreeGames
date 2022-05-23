@@ -6,10 +6,6 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-config.js
-config.ts
-constants.ts
-constants.ts
 translations.ts
 
 .turbo
@@ -21,4 +17,5 @@ scrapers
 /DATA
 .env.mongo
 .env
+.const
 old.json

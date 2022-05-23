@@ -9,7 +9,7 @@ export const channelSet = (channelId: string, language: ILanguage) =>
     title: "✅",
     color: "GREEN",
     description: 
-      t("channel_thread_set_success_desc", language, { channelId }) + 
+      t("channel_thread_set_success_desc", language, { channel: `<#${channelId}>` }) + 
       "\n\n" +
       utils.bold(t("updated_settings", language))
   });

@@ -127,11 +127,13 @@ const languageCommand: SubCommandHandler = async (i, guild, language, currency) 
 
   const updatedGuild = await db.guilds.set.language(i.guildId!, dbLanguage as LanguageDocument);
 
+  const embedLang = isDefault ? defaultLanguage : dbLanguage!;
+
   logger.discord({ embeds: [embeds.logs.languageSet(updatedGuild, i)] });
   return i.reply({
     embeds: [
-      embeds.success.updatedSettings(language),
-      embeds.commands.settings(updatedGuild, isDefault ? defaultLanguage : dbLanguage!),
+      embeds.success.updatedSettings(embedLang),
+      embeds.commands.settings(updatedGuild, embedLang),
     ],
     ephemeral: true,
   });
