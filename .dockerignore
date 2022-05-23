@@ -1,4 +1,6 @@
-DATA
-dist
-node_modules
-.turbo
+**/DATA
+**/dist
+**/node_modules
+**/.turbo
+**/.env
+**/.env.local
