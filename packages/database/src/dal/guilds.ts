@@ -13,14 +13,40 @@ export const get = {
       .populate("currency", "-__v")
       .lean(),
 
-  all: async () => GuildModel.find({}).select(selectString),
+  all: async () =>
+    GuildModel.find({})
+      .select(selectString)
+      .populate("language", "-__v")
+      .populate("currency", "-__v")
+      .lean(),
 
-  hasWebhook: async () => GuildModel.find({ webhook: { $ne: null } }).select(selectString),
-  hasSetRole: async () => GuildModel.find({ roleId: { $ne: null } }).select(selectString),
+  hasWebhook: async () =>
+    GuildModel.find({ webhook: { $ne: null } })
+      .select(selectString)
+      .populate("language", "-__v")
+      .populate("currency", "-__v")
+      .lean(),
+
+  hasSetRole: async () =>
+    GuildModel.find({ roleId: { $ne: null } })
+      .select(selectString)
+      .populate("language", "-__v")
+      .populate("currency", "-__v")
+      .lean(),
+
   hasOnlySetChannel: async () =>
-    GuildModel.find({ channelId: { $ne: null }, webhook: null }).select(selectString),
+    GuildModel.find({ channelId: { $ne: null }, webhook: null })
+      .select(selectString)
+      .populate("language", "-__v")
+      .populate("currency", "-__v")
+      .lean(),
 
-  hasNotSetRole: async () => GuildModel.find({ roleId: null }).select(selectString),
+  hasNotSetRole: async () =>
+    GuildModel.find({ roleId: null })
+      .select(selectString)
+      .populate("language", "-__v")
+      .populate("currency", "-__v")
+      .lean(),
 
   count: async () => GuildModel.countDocuments(),
   counts: {
