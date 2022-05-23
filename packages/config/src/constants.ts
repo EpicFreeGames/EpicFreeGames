@@ -1,7 +1,7 @@
 import { IConstants } from "./types";
 import dotenv from "dotenv";
 
-dotenv.config({ path: "../../.const" });
+if (process.env.PROD !== "1") dotenv.config({ path: "../../.const" });
 
 export const constants: IConstants = {
   gifs: {

@@ -1,7 +1,7 @@
 import { IConfig } from "./types";
 import dotenv from "dotenv";
 
-dotenv.config({ path: "../../.env" });
+if (process.env.PROD !== "1") dotenv.config({ path: "../../.env" });
 
 export const config: IConfig = {
   crowdinDistHash: process.env.CROWDIN_DIST_HASH || "",

@@ -18,4 +18,3 @@ scrapers
 .env.mongo
 .env
 .const
-old.json

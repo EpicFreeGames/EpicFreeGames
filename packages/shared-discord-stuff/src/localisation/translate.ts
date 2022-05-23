@@ -7,6 +7,8 @@ import english from "./english.json";
 import old from "./old.json";
 
 export const initTranslations = async () => {
+  const hasOldTranslations = Object.entries(old).length > 0;
+
   const client = new OtaClient(config.crowdinDistHash);
 
   const crowdinTranslations = await client.getTranslations();
@@ -25,7 +27,7 @@ export const initTranslations = async () => {
       let translation = crowdinTranslations[lngCode][0].content[key];
 
       // if crowdin doesn't have a translation, use the old one
-      if (translation === (english as any)[key]) {
+      if (translation === (english as any)[key] && hasOldTranslations) {
         translation = (old as any)[lang]?.translation[key];
 
         // if the old one doesn't exist, use the english one
@@ -50,7 +52,7 @@ export const initTranslations = async () => {
   for (const lang in resources) {
     const value = resources[lang].translation;
 
-    if (value.invite === english.invite) {
+    if (value.invite === english.invite && hasOldTranslations) {
       resources[lang].translation = {
         ...resources[lang].translation,
         footer: (old as any)[lang].translation.footer,
