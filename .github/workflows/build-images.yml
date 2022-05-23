@@ -28,9 +28,9 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       some: ${{ steps.builds.outputs.some }}
-      i-endpoint: ${{ steps.builds.outputs.i_endpoint }}
+      i_endpoint: ${{ steps.builds.outputs.i_endpoint }}
       sender: ${{ steps.builds.outputs.sender }}
-      web-ui: ${{ steps.builds.outputs.web_ui }}
+      web_ui: ${{ steps.builds.outputs.web_ui }}
     steps:
     - uses: actions/checkout@v3
       with:

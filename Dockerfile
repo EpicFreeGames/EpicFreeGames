@@ -38,7 +38,6 @@ ARG SCOPE
 COPY --from=all-deps /app/ ./
 COPY --from=pruner /app/out/full/ ./
 
-RUN ls
 RUN yarn turbo run build
 RUN rm -rf apps/**/src
 RUN rm -rf packages/**/src
