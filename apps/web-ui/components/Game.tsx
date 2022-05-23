@@ -1,14 +1,14 @@
 import { IGame } from "shared";
-import { Card } from "../Card";
-import { FlexDiv } from "../FlexDiv";
-import { H3, Text } from "../Text";
-import { ConfirmGame } from "./ConfirmGame";
-import { EditGame } from "./EditGame";
-import { RemoveGame } from "./RemoveGame";
+import { Card } from "./Card";
+import { FlexDiv } from "./FlexDiv";
+import { H3, Text } from "./Text";
+import { ConfirmGame } from "./Games/ConfirmGame";
+import { EditGame } from "./Games/EditGame";
+import { RemoveGame } from "./Games/RemoveGame";
 
 export const Game = ({ game }: { game: IGame }) => {
   return (
-    <Card>
+    <Card style={{ width: "265px" }}>
       <FlexDiv column justifyBetween fullHeight>
         <FlexDiv column>
           <FlexDiv justifyBetween>

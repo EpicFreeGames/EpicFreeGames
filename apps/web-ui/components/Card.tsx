@@ -1,5 +1,5 @@
 import { createStyles, LoadingOverlay } from "@mantine/core";
-import { FC, ReactNode } from "react";
+import { CSSProperties, FC, ReactNode } from "react";
 
 export const cardStyles = createStyles((theme) => ({
   card: {
@@ -51,15 +51,16 @@ interface Props {
   children: ReactNode;
   variant?: "light" | "dark";
   loading?: boolean;
+  style?: CSSProperties;
 }
 
-export const Card: FC<Props> = ({ children, variant, loading }) => {
+export const Card: FC<Props> = ({ children, variant, loading, style }) => {
   const { classes } = cardStyles();
 
   const dark = variant === "dark";
 
   return (
-    <div className={dark ? classes.card : classes.lightCard}>
+    <div className={dark ? classes.card : classes.lightCard} style={style}>
       <LoadingOverlay visible={!!loading} className={classes.cardLoadingOverlay} />
 
       <div className={classes.cardContent}>{children}</div>

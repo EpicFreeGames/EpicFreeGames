@@ -1,15 +1,11 @@
 import { IGame } from "shared";
-import { Game } from "./Game";
-import { useGamesStyles } from "./Games.styles";
+import { FlexDiv } from "../FlexDiv";
+import { Game } from "../Game";
 
-export const Games = ({ games }: { games: IGame[] }) => {
-  const { classes } = useGamesStyles();
-
-  return (
-    <div className={classes.gamesGrid}>
-      {games.map((game) => (
-        <Game key={game._id} game={game} />
-      ))}
-    </div>
-  );
-};
+export const Games = ({ games }: { games: IGame[] }) => (
+  <FlexDiv gap05>
+    {games.map((game) => (
+      <Game key={game._id} game={game} />
+    ))}
+  </FlexDiv>
+);
