@@ -1,8 +1,9 @@
-import { createStyles } from "@mantine/core";
+import { createStyles, Skeleton } from "@mantine/core";
 import { FC } from "react";
 import { ICurrencyWithGuildCount } from "shared";
 import { useCurrencies } from "../../hooks/requests";
 import { Card } from "../Card";
+import { FailedToGet } from "../FailedToGet";
 import { FlexDiv } from "../FlexDiv";
 import { CardTitle, H3, Text } from "../Text";
 import { Tooltip } from "../Tooltip";
@@ -50,13 +51,17 @@ const CurrencyCard: FC<Props> = ({ currency }) => (
 );
 
 export const Currencies = () => {
-  const { currencies } = useCurrencies();
+  const { currencies, error, isLoading } = useCurrencies();
+
+  if (error) return <FailedToGet objName="currencies" />;
 
   return (
     <div className={styles().classes.currencyGrid}>
-      {currencies?.map((c) => (
-        <CurrencyCard key={c.code} currency={c} />
-      ))}
+      {isLoading
+        ? Array(12)
+            .fill(1)
+            .map((i) => <Skeleton height={175} />)
+        : currencies?.map((c) => <CurrencyCard key={c.code} currency={c} />)}
     </div>
   );
 };

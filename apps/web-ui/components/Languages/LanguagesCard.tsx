@@ -1,8 +1,9 @@
-import { createStyles } from "@mantine/core";
+import { createStyles, Skeleton } from "@mantine/core";
 import { FC } from "react";
 import { ILanguageWithGuildCount } from "shared";
 import { useLanguages } from "../../hooks/requests";
 import { Card } from "../Card";
+import { FailedToGet } from "../FailedToGet";
 import { FlexDiv } from "../FlexDiv";
 import { CardTitle, H3, Text } from "../Text";
 import { Tooltip } from "../Tooltip";
@@ -46,13 +47,17 @@ const Language: FC<LanguageProps> = ({ language }) => (
 );
 
 export const Languages = () => {
-  const { languages } = useLanguages();
+  const { languages, error, isLoading } = useLanguages();
+
+  if (error) return <FailedToGet objName="languages" />;
 
   return (
     <div className={styles().classes.langGrid}>
-      {languages?.map((language) => (
-        <Language key={language.code} language={language} />
-      ))}
+      {isLoading
+        ? Array(20)
+            .fill(1)
+            .map((_, i) => <Skeleton height={175} />)
+        : languages?.map((language) => <Language key={language.code} language={language} />)}
     </div>
   );
 };
