@@ -9,9 +9,13 @@ import { addCurrency } from "../../utils/requests/Currencies";
 import { useCurrencies } from "../../hooks/requests";
 import { DeployGlobalCommands, DeployGuildCommands } from "../../utils/requests/Commands";
 import { Plus } from "tabler-icons-react";
+import { useSession } from "next-auth/react";
 
 export const AddCurrency = () => {
   const [open, setOpen] = useState(false);
+  const { data: session } = useSession();
+
+  if (!session?.user.isAdmin) return null;
 
   return (
     <>

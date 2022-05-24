@@ -9,9 +9,13 @@ import { FlexDiv } from "../FlexDiv";
 import { useLanguages } from "../../hooks/requests";
 import { DeployGuildCommands, DeployGlobalCommands } from "../../utils/requests/Commands";
 import { Plus } from "tabler-icons-react";
+import { useSession } from "next-auth/react";
 
 export const AddLanguage = () => {
   const [open, setOpen] = useState(false);
+  const { data: session } = useSession();
+
+  if (!session?.user.isAdmin) return null;
 
   return (
     <>

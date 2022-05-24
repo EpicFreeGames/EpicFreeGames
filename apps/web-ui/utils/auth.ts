@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { getToken } from "next-auth/jwt";
 import { forbidden, unauthorized } from "./apiUtils";
-import { adminId, collaborators, nextAuthSecret } from "./envs";
+import { nextAuthSecret } from "./envs";
 
 export const hasAccess = async (
   req: NextApiRequest,
@@ -10,15 +10,13 @@ export const hasAccess = async (
 ) => {
   const token = await getToken({ req, secret: nextAuthSecret });
 
-  const userId = token?.sub || "";
-
-  if (!userId) {
+  if (!token) {
     unauthorized(res);
     return false;
   }
 
-  const isAdmin = userId === adminId;
-  const isCollaborator = collaborators.includes(userId);
+  const isAdmin = token.isAdmin;
+  const isCollaborator = token.isCollaborator;
 
   if (requireAdmin && !isAdmin) {
     forbidden(res);

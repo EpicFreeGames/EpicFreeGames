@@ -8,9 +8,13 @@ import { FlexDiv } from "../FlexDiv";
 import { DateRangePicker } from "@mantine/dates";
 import { Button } from "../Button";
 import { Edit } from "tabler-icons-react";
+import { useSession } from "next-auth/react";
 
 export const EditGame = ({ game }: { game: IGame }) => {
   const [open, setOpen] = useState(false);
+  const { data: session } = useSession();
+
+  if (!session?.user.isAdmin) return null;
 
   return (
     <>

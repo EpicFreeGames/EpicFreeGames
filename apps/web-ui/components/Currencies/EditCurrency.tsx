@@ -10,6 +10,7 @@ import { useCurrencies } from "../../hooks/requests";
 import { Tooltip } from "../Tooltip";
 import { ICurrencyWithGuildCount } from "shared";
 import { DeployGlobalCommands, DeployGuildCommands } from "../../utils/requests/Commands";
+import { useSession } from "next-auth/react";
 
 export const EditCurrency = ({ currency }: { currency: ICurrencyWithGuildCount }) => {
   const [open, setOpen] = useState(false);
@@ -25,8 +26,19 @@ export const EditCurrency = ({ currency }: { currency: ICurrencyWithGuildCount }
 const EditCurrencyButton: FC<{
   setOpen: (open: boolean) => void;
   currency: ICurrencyWithGuildCount;
-}> = ({ setOpen, currency }) =>
-  currency.isDefault ? (
+}> = ({ setOpen, currency }) => {
+  const { data: session } = useSession();
+
+  if (!session?.user.isAdmin)
+    return (
+      <Tooltip label="Only the admin can edit this" fullWidth>
+        <Button onClick={() => setOpen(true)} disabled flexGrow>
+          Edit language
+        </Button>
+      </Tooltip>
+    );
+
+  return currency.isDefault ? (
     <Tooltip label="Default currency can't be edited" fullWidth>
       <Button onClick={() => setOpen(true)} disabled flexGrow>
         Edit currency
@@ -37,6 +49,7 @@ const EditCurrencyButton: FC<{
       Edit currency
     </Button>
   );
+};
 
 const EditCurrencyModal: FC<{
   open: boolean;

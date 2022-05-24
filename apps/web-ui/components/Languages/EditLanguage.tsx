@@ -10,6 +10,7 @@ import { useLanguages } from "../../hooks/requests";
 import { Tooltip } from "../Tooltip";
 import { ILanguageWithGuildCount } from "shared";
 import { DeployGlobalCommands, DeployGuildCommands } from "../../utils/requests/Commands";
+import { useSession } from "next-auth/react";
 
 export const EditLanguage = ({ language }: { language: ILanguageWithGuildCount }) => {
   const [open, setOpen] = useState(false);
@@ -25,8 +26,19 @@ export const EditLanguage = ({ language }: { language: ILanguageWithGuildCount }
 const EditLanguageButton: FC<{
   setOpen: (open: boolean) => void;
   language: ILanguageWithGuildCount;
-}> = ({ setOpen, language }) =>
-  language.isDefault ? (
+}> = ({ setOpen, language }) => {
+  const { data: session } = useSession();
+
+  if (!session?.user.isAdmin)
+    return (
+      <Tooltip label="Only the admin can edit this" fullWidth>
+        <Button onClick={() => setOpen(true)} disabled flexGrow>
+          Edit language
+        </Button>
+      </Tooltip>
+    );
+
+  return language.isDefault ? (
     <Tooltip label="Default language can't be edited" fullWidth>
       <Button onClick={() => setOpen(true)} disabled flexGrow>
         Edit language
@@ -37,6 +49,7 @@ const EditLanguageButton: FC<{
       Edit language
     </Button>
   );
+};
 
 const EditLanguageModal: FC<{
   open: boolean;

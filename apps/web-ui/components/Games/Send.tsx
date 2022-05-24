@@ -1,5 +1,6 @@
 import { Anchor, Modal, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/hooks";
+import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { useFreeGames } from "../../hooks/requests";
 import { sendGames } from "../../utils/requests/Games";
@@ -10,6 +11,9 @@ import { Tooltip } from "../Tooltip";
 
 export const SendGames = () => {
   const [open, setOpen] = useState(false);
+  const { data: session } = useSession();
+
+  if (!session?.user.isAdmin) return null;
 
   return (
     <>

@@ -1,4 +1,5 @@
 import { useModals } from "@mantine/modals";
+import { useSession } from "next-auth/react";
 import { IGame } from "shared";
 import { mutate } from "swr";
 import { Check } from "tabler-icons-react";
@@ -11,6 +12,10 @@ import { Tooltip } from "../Tooltip";
 export const ConfirmGame = ({ game }: { game: IGame }) => {
   const modals = useModals();
   const { notConfirmedGames } = useNotConfirmedGames();
+
+  const { data: session } = useSession();
+
+  if (!session?.user.isAdmin) return null;
 
   const openConfirmModal = () =>
     modals.openConfirmModal({

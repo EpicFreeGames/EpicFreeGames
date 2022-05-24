@@ -1,6 +1,6 @@
 import NextAuth from "next-auth/next";
 import DiscordProvider from "next-auth/providers/discord";
-import { discordClientId, discordClientSecret } from "../../../utils/envs";
+import { adminId, collaborators, discordClientId, discordClientSecret } from "../../../utils/envs";
 
 export default NextAuth({
   providers: [
@@ -12,14 +12,18 @@ export default NextAuth({
   ],
 
   callbacks: {
+    async jwt(props) {
+      props.token.isAdmin = props.token.sub === adminId;
+      props.token.isCollaborator = collaborators.includes(props.token.sub || "");
+
+      return props.token;
+    },
+
     async session(props) {
-      return {
-        ...props.session,
-        user: {
-          ...props.session.user,
-          id: props.token.sub,
-        },
-      };
+      props.session.user.isAdmin = props.token.isAdmin;
+      props.session.user.isCollaborator = props.token.isCollaborator;
+
+      return props.session;
     },
   },
 });

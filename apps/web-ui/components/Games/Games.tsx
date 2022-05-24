@@ -1,6 +1,6 @@
 import { IGame } from "shared";
 import { FlexDiv } from "../FlexDiv";
-import { Game } from "../Game";
+import { Game } from "./Game";
 
 export const Games = ({ games }: { games: IGame[] }) => (
   <FlexDiv gap05>
