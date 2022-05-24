@@ -11,7 +11,7 @@ const HandlePost: ApiEndpoint = async (req, res) => {
   const sendingId = body.sendingId;
   const gameIds = body.gameIds;
 
-  const response = await fetch(senderUrl, {
+  const response = await fetch(`${senderUrl}/send`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ sendingId, gameIds }),

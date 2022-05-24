@@ -9,7 +9,9 @@ export const nextAuthSecret = process.env.NEXTAUTH_SECRET || "";
 export const botId = process.env.BOT_ID || "";
 export const guildId = process.env.GUILD_ID || "";
 export const botToken = process.env.BOT_TOKEN || "";
+export const botPublicKey = process.env.BOT_PUBLIC_KEY || "";
 
 export const mongoUrl = process.env.MONGO_URI || "";
 
-export const senderUrl = process.env.SENDER_URL || "";
+export const senderUrl = process.env.SENDER_BASE_URL || "";
+export const iendpointUrl = process.env.I_ENDPOINT_BASE_URL || "";

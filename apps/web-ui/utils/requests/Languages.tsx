@@ -47,3 +47,16 @@ export const updateLanguage = async (
       error: "Failed to update language",
     }
   );
+
+export const updateTranslations = async () =>
+  toast.promise(
+    request({
+      path: "/languages/update",
+      method: "POST",
+    }),
+    {
+      loading: "Updating translations",
+      success: "Translations updated",
+      error: "Failed to update translations",
+    }
+  );

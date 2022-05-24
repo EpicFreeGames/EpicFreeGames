@@ -9,6 +9,7 @@ import { CardTitle, H3, Text } from "../Text";
 import { Tooltip } from "../Tooltip";
 import { AddLanguage } from "./AddLanguage";
 import { EditLanguage } from "./EditLanguage";
+import { UpdateTranslations } from "./UpdateTranslations";
 
 export const LanguagesCard = () => (
   <Card variant="dark">
@@ -22,7 +23,10 @@ const LanguagesTitle = () => (
   <FlexDiv justifyBetween alignCenter>
     <CardTitle>Languages</CardTitle>
 
-    <AddLanguage />
+    <FlexDiv gap05>
+      <UpdateTranslations />
+      <AddLanguage />
+    </FlexDiv>
   </FlexDiv>
 );
 

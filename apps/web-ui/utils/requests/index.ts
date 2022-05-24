@@ -11,6 +11,9 @@ export const request = <T>({ path, method, body }: Props): Promise<T> =>
     method,
     credentials: "same-origin",
     body: body ? JSON.stringify(body) : undefined,
+    headers: {
+      "Content-Type": "application/json",
+    },
   }).then(async (res) => {
     let json = null;
 

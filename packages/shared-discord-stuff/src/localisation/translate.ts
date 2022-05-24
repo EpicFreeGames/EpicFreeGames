@@ -65,10 +65,29 @@ export const initTranslations = async () => {
     }
   }
 
+  if (i18next.isInitialized) {
+    await Promise.all(
+      Object.keys(crowdinTranslations).map((lng) =>
+        i18next.removeResourceBundle(lng, "translation")
+      )
+    );
+
+    await Promise.all(
+      Object.keys(crowdinTranslations).map((lng) => {
+        const lngCode = lng.slice(0, 2);
+
+        i18next.addResourceBundle(lngCode, "translation", resources[lngCode].translation);
+      })
+    );
+
+    return;
+  }
+
   await i18next.init({
     lng: "en",
     fallbackLng: "en",
     resources,
+    defaultNS: "translation",
   });
 };
 
