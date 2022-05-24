@@ -47,6 +47,8 @@ const HandlePatch = async (req: NextApiRequest, res: NextApiResponse) => {
     ...updatedLanguage,
     guildCount: await db.guilds.get.counts.hasLanguage(updatedLanguage.code),
   });
+
+  await db.games.markToBeRevalidated();
 };
 
 export default Handler;
