@@ -1,4 +1,5 @@
 export interface ISendingStats {
+  id: string;
   speed: number;
   sent: number;
   target: number;
@@ -8,6 +9,7 @@ export interface ISendingStats {
 }
 
 export interface IFinishedSendingStats {
+  id: string;
   averageSpeed: number;
   sentCount: number;
   startedAt: number;

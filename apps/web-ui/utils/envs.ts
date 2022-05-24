@@ -11,3 +11,5 @@ export const guildId = process.env.GUILD_ID || "";
 export const botToken = process.env.BOT_TOKEN || "";
 
 export const mongoUrl = process.env.MONGO_URI || "";
+
+export const senderUrl = process.env.SENDER_URL || "";

@@ -22,6 +22,7 @@ export const startWatcher = async (target: number, sendingId: string, names: str
     sendCount = newSendCount;
 
     const stats: ISendingStats = {
+      id: sendingId,
       speed: Math.floor(speed),
       sent: newSendCount,
       target,
@@ -54,6 +55,7 @@ export const startWatcher = async (target: number, sendingId: string, names: str
 
     // sending done
     const finishedStats: IFinishedSendingStats = {
+      id: sendingId,
       averageSpeed: Math.floor((newSendCount / (finishedAt - start)) * 1000),
       sentCount: newSendCount,
       finishedAt: millisToSeconds(finishedAt),

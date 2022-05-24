@@ -73,3 +73,20 @@ export const removeGame = async (game: IGame) =>
       loading: `Removing ${game.name}`,
     }
   );
+
+export const sendGames = async (games: IGame[], sendingId: string) =>
+  toast.promise(
+    request({
+      path: `/games/send`,
+      method: "POST",
+      body: {
+        sendingId,
+        gameIds: games.map((game) => game._id),
+      },
+    }),
+    {
+      loading: "Sending request",
+      success: "Request sent",
+      error: "Failed to send request",
+    }
+  );

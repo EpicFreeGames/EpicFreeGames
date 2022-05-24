@@ -19,7 +19,9 @@ export const stats = (stats: ISendingStats) =>
         !Number.isNaN(stats.eta) && stats.eta < Infinity ? utils.relativeTimestamp(stats.eta) : ""
       }` +
       "\n\n" +
-      `**__Started at:__** ${utils.longTime(stats.startedAt)}`,
+      `**__Started at:__** ${utils.longTime(stats.startedAt)}` +
+      "\n\n" +
+      `**__ID:__** ${stats.id}`,
   });
 
 export const finished = (stats: IFinishedSendingStats) =>
@@ -37,5 +39,7 @@ export const finished = (stats: IFinishedSendingStats) =>
       "\n\n" +
       `**__Started at:__** ${utils.longTime(stats.startedAt)}` +
       "\n\n" +
-      `**__Finished at:__** ${utils.longTime(stats.finishedAt)}`,
+      `**__Finished at:__** ${utils.longTime(stats.finishedAt)}` +
+      "\n\n" +
+      `**__ID:__** ${stats.id}`,
   });

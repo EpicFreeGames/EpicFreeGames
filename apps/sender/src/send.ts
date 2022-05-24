@@ -21,14 +21,14 @@ const startSenders = (
 
 export const send = async (req: Request, res: Response) => {
   const body = req.body;
-  if (!body) return res.status(400).send("No body");
+  if (!body) return res.status(400).json({ message: "No body" });
 
   const gameIds = body.gameIds;
   let sendingId = body.sendingId;
 
-  if (!Array.isArray(gameIds)) return res.status(400).send("No gameIds");
+  if (!Array.isArray(gameIds)) return res.status(400).json({ message: "No gameIds" });
   for (const id of gameIds)
-    if (!mongoose.isValidObjectId(id)) return res.status(400).send("Invalid gameIds");
+    if (!mongoose.isValidObjectId(id)) return res.status(400).json({ message: "Invalid gameIds" });
 
   let createdNewId = false;
 
@@ -38,7 +38,7 @@ export const send = async (req: Request, res: Response) => {
   }
 
   const games = await db.games.get.byIds(gameIds);
-  if (!games.length) return res.status(400).send("No confirmed games found");
+  if (!games.length) return res.status(400).json({ message: "No confirmed games found" });
 
   let noHookGuilds = await db.guilds.get.hasOnlySetChannel();
   let hookGuilds = await db.guilds.get.hasWebhook();
@@ -56,8 +56,8 @@ export const send = async (req: Request, res: Response) => {
 
   if (!noHookGuilds.length && !hookGuilds.length)
     return createdNewId
-      ? res.status(400).send("No guilds found")
-      : res.status(400).send("No guilds found or all got filtered out");
+      ? res.status(400).json({ message: "No guilds found" })
+      : res.status(400).json({ message: "No guilds found or all got filtered out" });
 
   startSenders(noHookGuilds, hookGuilds, games, sendingId);
   startWatcher(
