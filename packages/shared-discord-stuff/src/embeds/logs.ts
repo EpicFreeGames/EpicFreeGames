@@ -8,9 +8,9 @@ const addDbInfo = (guild: IGuild, embed: MessageEmbed) => {
     "\n\n" +
     utils.title("DB Info") +
     "\n" +
-    `Language: ${guild.language?.englishName}` +
+    `Language: ${getGuildLang(guild).englishName}` +
     "\n" +
-    `Currency: ${guild.currency?.name}` +
+    `Currency: ${getGuildCurrency(guild).name}` +
     "\n" +
     `Role ID: ${guild.roleId ? guild.roleId : "❌"}` +
     "\n" +
