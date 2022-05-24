@@ -10,12 +10,10 @@ import { useCurrencies } from "../../hooks/requests";
 import { DeployGlobalCommands, DeployGuildCommands } from "../../utils/requests/Commands";
 import { Plus } from "tabler-icons-react";
 import { useSession } from "next-auth/react";
+import { Tooltip } from "../Tooltip";
 
 export const AddCurrency = () => {
   const [open, setOpen] = useState(false);
-  const { data: session } = useSession();
-
-  if (!session?.user.isAdmin) return null;
 
   return (
     <>
@@ -25,11 +23,21 @@ export const AddCurrency = () => {
   );
 };
 
-const AddCurrencyButton: FC<{ setOpen: (open: boolean) => void }> = ({ setOpen }) => (
-  <Button p={"0.5rem"} onClick={() => setOpen(true)} onTouchEnd={() => setOpen(true)}>
-    <Plus />
-  </Button>
-);
+const AddCurrencyButton: FC<{ setOpen: (open: boolean) => void }> = ({ setOpen }) => {
+  const { data: session } = useSession();
+
+  return !session?.user.isAdmin ? (
+    <Tooltip label="Only the admin can add languages">
+      <Button disabled p={"0.5rem"}>
+        <Plus />
+      </Button>
+    </Tooltip>
+  ) : (
+    <Button p={"0.5rem"} onClick={() => setOpen(true)}>
+      <Plus />
+    </Button>
+  );
+};
 
 const AddCurrencyModal: FC<{ open: boolean; setOpen: (open: boolean) => void }> = ({
   open,
