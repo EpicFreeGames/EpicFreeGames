@@ -140,7 +140,7 @@ const EditCurrencyModal: FC<{
                   loading={isSubmitting}
                   type="submit"
                 >
-                  {isSubmitting ? "Adding..." : "Add"}
+                  {isSubmitting ? "Updating..." : "Update"}
                 </Button>
               </FlexDiv>
             </FlexDiv>
