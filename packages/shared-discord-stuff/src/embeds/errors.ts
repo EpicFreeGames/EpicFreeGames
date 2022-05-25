@@ -9,7 +9,7 @@ export const missingPermissions = (channelId: string, language: ILanguage): Mess
     title: "❌",
     color: "DARK_RED",
     description:
-      t("make_sure_perms", language, { channelId }) +
+      t("make_sure_perms", language, { channel: `<#${channelId}>` }) +
       "\n\n" +
       utils.bold(`${t("manage_webhooks", language)}`) +
       "\n\n" +

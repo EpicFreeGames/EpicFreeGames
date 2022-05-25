@@ -79,7 +79,7 @@ const threadCommand: SubCommandHandler = async (i, guild, language, currency) =>
 
   let newChannelsHook = await hasWebhook(channelId).catch((err: any) => err.message);
 
-  if (await checkForErrorsAndCommunicate(channelId, i, language, channelId)) return;
+  if (await checkForErrorsAndCommunicate(newChannelsHook, i, language, channelId)) return;
 
   if (guild?.webhook && guild?.channelId !== channelId)
     await deleteWebhook(guild.webhook).catch((err: any) => db.guilds.remove.webhook(i.guildId!));
