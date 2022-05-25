@@ -60,7 +60,7 @@ export const Currencies = () => {
       {isLoading
         ? Array(12)
             .fill(1)
-            .map((i) => <Skeleton height={175} />)
+            .map((_, i) => <Skeleton key={i} height={175} />)
         : currencies?.map((c) => <CurrencyCard key={c.code} currency={c} />)}
     </div>
   );
