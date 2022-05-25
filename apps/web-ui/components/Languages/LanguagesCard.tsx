@@ -60,7 +60,7 @@ export const Languages = () => {
       {isLoading
         ? Array(20)
             .fill(1)
-            .map((_, i) => <Skeleton height={175} />)
+            .map((_, i) => <Skeleton key={i} height={175} />)
         : languages?.map((language) => <Language key={language.code} language={language} />)}
     </div>
   );
