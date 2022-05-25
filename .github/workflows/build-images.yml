@@ -61,7 +61,7 @@ jobs:
 
         i_endpoint () {
           if [[ $1 == *"apps/interactions-endpoint"* ]]; then 
-            set_integration_tests 
+            set_i_endpoint 
           fi
         }
         sender () {
