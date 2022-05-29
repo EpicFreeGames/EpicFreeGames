@@ -10,8 +10,8 @@ export const update = {
   game: async (id: string, game: IGame) =>
     GameModel.updateOne({ _id: id }, { ...game, revalidate: false }),
 
-  prices: async (slug: string, prices: GamePrices) =>
-    GameModel.updateOne({ slug, revalidate: true }, { $set: { price: prices }, revalidate: false }),
+  prices: async (name: string, prices: GamePrices) =>
+    GameModel.updateOne({ name, revalidate: true }, { $set: { price: prices }, revalidate: false }),
 };
 
 export const markToBeRevalidated = () => GameModel.updateMany({}, { revalidate: true });
@@ -46,7 +46,7 @@ export const get = {
 
   byId: async (id: string) => GameModel.findOne({ _id: id }).select(selectString).lean(),
 
-  bySlug: async (slug: string) => GameModel.findOne({ slug }).select(selectString).lean(),
+  byName: async (name: string) => GameModel.findOne({ name }).select(selectString).lean(),
 
   notConfirmed: async () => GameModel.find({ confirmed: false }).select(selectString).lean(),
 };
