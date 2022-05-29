@@ -52,6 +52,7 @@ export const handleRequests = async (req: Request, res: Response) => {
     }).catch((err: any) => console.error(err.message));
 
     logger.console(`failed to run ${i.getFullCommandName()} ${err.message}`);
+    console.log(JSON.stringify(err?.response?.data));
   }
 };
 

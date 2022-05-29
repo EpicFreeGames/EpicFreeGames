@@ -18,7 +18,7 @@ export const Game = ({ game }: { game: IGame }) => {
           </FlexDiv>
 
           <Text>
-            <b>Slug:</b> {game.slug}
+            <b>Link:</b> {game.link}
           </Text>
 
           <FlexDiv column gap05>

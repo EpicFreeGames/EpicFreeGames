@@ -2,7 +2,6 @@ import { t } from "../localisation";
 import { MessageEmbed } from "discord.js";
 import { utils } from "./utils";
 import { getGamePrice } from "../utils";
-import { constants } from "config";
 import { IGame, ILanguage, ICurrency } from "shared";
 
 export const games = (
@@ -28,9 +27,7 @@ export const games = (
       },
       description:
         t("open_in", language) + "\n" +
-        utils.link("Epicgames.com", `${constants.links.browserRedirect}${game.slug}`) +
-        " • " +
-        utils.link("Epic Launcher", `${constants.links.launcherRedirect}${game.slug}`) +
+        utils.link("Epicgames.com", game.link) +
 
         "\n\n" +
 

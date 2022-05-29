@@ -51,7 +51,7 @@ const EditGameModal: FC<{
         initialValues={{
           name: game.name,
           imageUrl: game.imageUrl,
-          slug: game.slug,
+          link: game.link,
           start: new Date(game.start),
           end: new Date(game.end),
           price: game.price,
@@ -90,11 +90,11 @@ const EditGameModal: FC<{
               />
 
               <TextInput
-                label="Slug"
-                error={errors.slug && touched.slug ? errors.slug : undefined}
+                label="Link"
+                error={errors.link && touched.link ? errors.link : undefined}
                 autoComplete="off"
                 required
-                {...getFieldProps("slug")}
+                {...getFieldProps("link")}
               />
 
               <DateRangePicker

@@ -7,7 +7,7 @@ const HandlePost: ApiEndpoint = async (req, res) => {
   if (!requireMethod(req, res, "POST")) return;
   if (!(await hasAccess(req, res, true))) return;
 
-  const body = JSON.parse(req.body);
+  const body = req.body;
   const sendingId = body.sendingId;
   const gameIds = body.gameIds;
 

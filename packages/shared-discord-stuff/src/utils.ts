@@ -60,7 +60,11 @@ export const deleteWebhookMsg = (msgId: string, webhookUrl: string) =>
   axios.delete(`${webhookUrl}/messages/${msgId}`);
 
 export const getGamePrice = (game: IGame, currency: ICurrency) => {
-  return game.price[currency.code] || game.price[getDefaultCurrency().code];
+  const currencyPrice = game.price[currency.code];
+
+  if (!currencyPrice || currencyPrice === "???") return game.price[getDefaultCurrency().code];
+
+  return currencyPrice;
 };
 
 export const getMessage = (guild: IGuild | null, embeds: MessageEmbed[]): IMessage => {

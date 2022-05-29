@@ -25,7 +25,8 @@ const Handler: ApiEndpoint = async (req, res) => {
 const HandlePatch: ApiEndpoint = async (req, res) => {
   if (!(await hasAccess(req, res, true))) return;
 
-  const body = JSON.parse(req.body);
+  const body = req.body;
+
   const id = req.query.id as string;
 
   const existingGame = await db.games.get.byId(id);
