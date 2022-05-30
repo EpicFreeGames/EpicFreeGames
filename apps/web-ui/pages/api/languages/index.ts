@@ -28,7 +28,7 @@ const Handler = async (req: NextApiRequest, res: NextApiResponse) => {
 const HandlePost = async (req: NextApiRequest, res: NextApiResponse) => {
   await dbConnect();
 
-  const body = JSON.parse(req.body);
+  const body = req.body;
 
   const language =
     getDefaultLanguage().code === body.code || (await db.languages.get.byCode(body.code));
@@ -40,7 +40,7 @@ const HandlePost = async (req: NextApiRequest, res: NextApiResponse) => {
     return;
   }
 
-  const createdLanguage = await db.languages.create(JSON.parse(req.body));
+  const createdLanguage = await db.languages.create(req.body);
 
   res.status(201).json({
     ...createdLanguage,
