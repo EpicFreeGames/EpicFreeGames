@@ -22,7 +22,7 @@ const Handler = async (req: NextApiRequest, res: NextApiResponse) => {
 const HandlePatch = async (req: NextApiRequest, res: NextApiResponse) => {
   await dbConnect();
 
-  const body = JSON.parse(req.body);
+  const body = req.body;
   const { code } = req.query;
 
   if (getDefaultCurrency().code === code)
@@ -37,7 +37,7 @@ const HandlePatch = async (req: NextApiRequest, res: NextApiResponse) => {
       });
   }
 
-  const updatedCurrency = await db.currencies.update(code as string, JSON.parse(req.body));
+  const updatedCurrency = await db.currencies.update(code as string, req.body);
   if (!updatedCurrency)
     return res.status(400).json({
       message: `Currency with code '${code}' doesn't exist`,

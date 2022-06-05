@@ -22,7 +22,7 @@ const Handler = async (req: NextApiRequest, res: NextApiResponse) => {
 const HandlePatch = async (req: NextApiRequest, res: NextApiResponse) => {
   await dbConnect();
 
-  const body = JSON.parse(req.body);
+  const body = req.body;
   const { code } = req.query;
 
   if (getDefaultLanguage().code === code)
@@ -37,7 +37,7 @@ const HandlePatch = async (req: NextApiRequest, res: NextApiResponse) => {
       });
   }
 
-  const updatedLanguage = await db.languages.update(code as string, JSON.parse(req.body));
+  const updatedLanguage = await db.languages.update(code as string, body);
   if (!updatedLanguage)
     return res.status(400).json({
       message: `Language with code '${code}' doesn't exist`,

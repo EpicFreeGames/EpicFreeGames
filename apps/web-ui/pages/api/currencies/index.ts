@@ -28,7 +28,7 @@ const Handler = async (req: NextApiRequest, res: NextApiResponse) => {
 const HandlePost = async (req: NextApiRequest, res: NextApiResponse) => {
   await dbConnect();
 
-  const body = JSON.parse(req.body);
+  const body = req.body;
 
   const currency =
     getDefaultCurrency().code === body.code || (await db.currencies.get.byCode(body.code));
@@ -40,7 +40,7 @@ const HandlePost = async (req: NextApiRequest, res: NextApiResponse) => {
     return;
   }
 
-  const createdCurrency = await db.currencies.create(JSON.parse(req.body));
+  const createdCurrency = await db.currencies.create(body);
 
   res.status(201).json({
     ...createdCurrency,
