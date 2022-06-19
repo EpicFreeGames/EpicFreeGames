@@ -95,9 +95,9 @@ export const set = {
       .findOneAndUpdate({ guildId }, { guildId, language }, { upsert: true, new: true })
       .select(selectString).populate("currency", "-__v").populate("language", "-__v"),
 
-  currency: async (guildId: string, currency: CurrencyDocument) =>
+  currency: async (guildId: string, currency: CurrencyDocument | null) =>
     GuildModel
-      .findOneAndUpdate({ guildId }, { guildId, currency: currency._id }, { upsert: true, new: true })
+      .findOneAndUpdate({ guildId }, { guildId, currency }, { upsert: true, new: true })
       .select(selectString).populate("currency", "-__v").populate("language", "-__v"),
 };
 

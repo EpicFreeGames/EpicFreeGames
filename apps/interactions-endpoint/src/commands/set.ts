@@ -7,7 +7,7 @@ import {
   getWebhookUrl,
   getMessage,
 } from "shared-discord-stuff";
-import { CommandTypes, LanguageDocument, getDefaultLanguage } from "shared";
+import { CommandTypes, LanguageDocument, getDefaultLanguage, getDefaultCurrency } from "shared";
 import { db } from "database";
 import {
   getParentId,
@@ -119,7 +119,6 @@ const languageCommand: SubCommandHandler = async (i, guild, language, currency) 
   const givenLanguage = i.options.getString("language", true);
 
   const defaultLanguage = getDefaultLanguage();
-
   const isDefault = givenLanguage === defaultLanguage.code;
 
   const dbLanguage = isDefault ? null : await db.languages.get.byCode(givenLanguage);
@@ -142,8 +141,11 @@ const languageCommand: SubCommandHandler = async (i, guild, language, currency) 
 const currencyCommand: SubCommandHandler = async (i, guild, language, currency) => {
   const givenCurrency = i.options.getString("currency", true);
 
-  const dbCurrency = await db.currencies.get.byCode(givenCurrency);
-  if (!dbCurrency) return i.reply({ embeds: [embeds.errors.genericError()] });
+  const defaultCurrency = getDefaultCurrency();
+  const isDefault = givenCurrency === defaultCurrency.code;
+
+  const dbCurrency = isDefault ? null : await db.currencies.get.byCode(givenCurrency);
+  if (!dbCurrency && !isDefault) return i.reply({ embeds: [embeds.errors.genericError()] });
 
   const updatedGuild = await db.guilds.set.currency(i.guildId!, dbCurrency);
 
