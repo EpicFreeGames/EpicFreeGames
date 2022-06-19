@@ -28,7 +28,7 @@ export const initTranslations = async () => {
 
       // if crowdin doesn't have a translation, use the old one
       if (translation === (english as any)[key] && hasOldTranslations) {
-        translation = (old as any)[lang]?.translation[key];
+        translation = (old as any)[lang]?.translation?.[key];
 
         // if the old one doesn't exist, use the english one
         if (!translation) {
@@ -50,17 +50,22 @@ export const initTranslations = async () => {
   }
 
   for (const lang in resources) {
-    const value = resources[lang].translation;
+    const value = resources[lang]?.translation;
 
     if (value.invite === english.invite && hasOldTranslations) {
       resources[lang].translation = {
-        ...resources[lang].translation,
-        footer: (old as any)[lang].translation.footer,
+        ...resources[lang]?.translation,
+        footer: (old as any)[lang]?.translation?.footer,
       };
     } else {
       resources[lang].translation = {
-        ...resources[lang].translation,
-        footer: createFooter(value.invite, value.vote, value.support, value.website),
+        ...resources[lang]?.translation,
+        footer: createFooter(
+          value.invite,
+          value.vote,
+          value.support,
+          value.website
+        ),
       };
     }
   }
@@ -76,7 +81,11 @@ export const initTranslations = async () => {
       Object.keys(crowdinTranslations).map((lng) => {
         const lngCode = lng.slice(0, 2);
 
-        i18next.addResourceBundle(lngCode, "translation", resources[lngCode].translation);
+        i18next.addResourceBundle(
+          lngCode,
+          "translation",
+          resources[lngCode]?.translation
+        );
       })
     );
 
@@ -107,7 +116,12 @@ export const t = (key: string, language: ILanguage, vars?: any) => {
   return toReturn;
 };
 
-const createFooter = (invite: string, vote: string, support: string, website: string) => {
+const createFooter = (
+  invite: string,
+  vote: string,
+  support: string,
+  website: string
+) => {
   const list = [invite, vote, support, website];
   const withVars = [
     `[${invite}](<inviteAddress>)`,
@@ -125,9 +139,18 @@ const createFooter = (invite: string, vote: string, support: string, website: st
   if (concatted.length >= 39)
     if (threeConcatted.length >= 39)
       // 2 lines, with one on the second line
-      return withVars.slice(0, 2).join(separator) + "\n" + withVars.slice(2).join(separator);
+      return (
+        withVars.slice(0, 2).join(separator) +
+        "\n" +
+        withVars.slice(2).join(separator)
+      );
     // 2 lines, with two on the second line
-    else return withVars.slice(0, 3).join(separator) + "\n" + withVars.slice(3).join(separator);
+    else
+      return (
+        withVars.slice(0, 3).join(separator) +
+        "\n" +
+        withVars.slice(3).join(separator)
+      );
 
   return withVars.join(separator);
 };
