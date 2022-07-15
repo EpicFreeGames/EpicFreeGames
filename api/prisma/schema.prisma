@@ -1,0 +1,94 @@
+datasource db {
+  url                  = env("DATABASE_URL")
+  provider             = "mysql"
+  referentialIntegrity = "prisma"
+}
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
+}
+
+model Game {
+  id          String      @id @default(cuid())
+  name        String      @unique
+  displayName String
+  imageUrl    String
+  start       DateTime
+  end         DateTime
+  confirmed   Boolean     @default(false)
+  path        String
+  prices      GamePrice[]
+}
+
+model GamePrice {
+  id           String   @id @default(cuid())
+  value        String
+  gameId       String
+  game         Game     @relation(fields: [gameId], references: [id])
+  currencyCode String   @unique
+  currency     Currency @relation(fields: [currencyCode], references: [code])
+}
+
+model Server {
+  id           String       @id @unique
+  roleId       String?
+  channelId    String?
+  threadId     String?
+  languageId   String?
+  webhookId    String?
+  webhookToken String?
+  language     Language?    @relation(fields: [languageId], references: [id])
+  currencyCode String?
+  currency     Currency?    @relation(fields: [currencyCode], references: [code])
+  createdAt    DateTime     @default(now())
+  commandLogs  CommandLog[]
+  sendingLogs  SendingLog[]
+}
+
+model Language {
+  id          String   @id @default(cuid())
+  code        String
+  englishName String
+  nativeName  String
+  servers     Server[]
+}
+
+model Currency {
+  code           String      @id @unique
+  name           String
+  apiValue       String
+  inFrontOfPrice String      @default("")
+  afterPrice     String      @default("")
+  servers        Server[]
+  GamePrice      GamePrice[]
+}
+
+model SendingLog {
+  id        String @id @default(cuid())
+  sendingId String
+  type      String
+  result    String
+  serverId  String
+  server    Server @relation(fields: [serverId], references: [id])
+}
+
+model CommandLog {
+  id       String  @id @default(cuid())
+  command  String
+  senderId String
+  serverId String
+  Server   Server? @relation(fields: [serverId], references: [id])
+}
+
+model User {
+  id              String    @id @default(cuid())
+  email           String    @unique
+  password        String
+  flags           Int       @default(0)
+  emailVerifiedAt DateTime?
+}
+
+model RefreshToken {
+  id String @id @default(cuid())
+}
