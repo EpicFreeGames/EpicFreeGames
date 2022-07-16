@@ -8,7 +8,7 @@ export const auth =
   async (req, res, next) => {
     const botToken = req.headers.authorization?.split("Bot ")?.at(1);
 
-    if (!botToken || !req.session?.flags)
+    if (!botToken && !req.session?.flags)
       return res.status(401).json({
         statusCode: 401,
         error: "Unauthorized",
@@ -17,7 +17,7 @@ export const auth =
 
     if (botToken && safeEqual(botToken, config.BOT_SECRET)) return next();
 
-    if (!hasPermission(req.session.flags, requiredFlags))
+    if (req.session?.flags && !hasPermission(req.session.flags, requiredFlags))
       return res.status(403).json({
         statusCode: 403,
         error: "Forbidden",

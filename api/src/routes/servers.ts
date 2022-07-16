@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { z } from "zod";
 import { prisma } from "..";
-import { auth, botAuth } from "../utils/auth";
+import { auth } from "../utils/auth";
 import { Flags } from "../utils/flags";
 import { withValidation } from "../utils/withValidation";
 
@@ -9,7 +9,7 @@ const router = Router();
 
 router.get(
   "/:serverId",
-  botAuth,
+  auth(Flags.EditServers),
   withValidation(
     {
       params: z.object({
@@ -37,7 +37,7 @@ router.get(
 
 router.put(
   "/:serverId/channel",
-  botAuth,
+  auth(Flags.EditServers),
   withValidation(
     {
       params: z.object({
@@ -75,7 +75,7 @@ router.put(
 
 router.put(
   "/:serverId/channel",
-  botAuth,
+  auth(Flags.EditServers),
   withValidation(
     {
       params: z.object({
@@ -113,7 +113,7 @@ router.put(
 
 router.delete(
   "/:serverId/channel",
-  botAuth,
+  auth(Flags.EditServers),
   withValidation(
     {
       params: z.object({
@@ -139,7 +139,7 @@ router.delete(
 
 router.put(
   "/:serverId/role",
-  botAuth,
+  auth(Flags.EditServers),
   withValidation(
     {
       params: z.object({
@@ -171,7 +171,7 @@ router.put(
 
 router.delete(
   "/:serverId/role",
-  botAuth,
+  auth(Flags.EditServers),
   withValidation(
     {
       params: z.object({
@@ -195,7 +195,7 @@ router.delete(
 
 router.put(
   "/:serverId/thread",
-  botAuth,
+  auth(Flags.EditServers),
   withValidation(
     {
       params: z.object({
@@ -237,7 +237,7 @@ router.put(
 
 router.delete(
   "/:serverId/thread",
-  botAuth,
+  auth(Flags.EditServers),
   withValidation(
     {
       params: z.object({

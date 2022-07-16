@@ -80,3 +80,9 @@ model CommandLog {
   serverId String
   Server   Server? @relation(fields: [serverId], references: [id])
 }
+
+model User {
+  id        String @id @default(cuid())
+  discordId String @unique
+  flags     Int    @default(0)
+}

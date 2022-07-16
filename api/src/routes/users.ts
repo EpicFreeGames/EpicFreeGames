@@ -26,9 +26,6 @@ router.post(
       const user = await prisma.user.update({
         where: { id: userId },
         data: { flags: newFlags },
-        select: {
-          flags: true,
-        },
       });
 
       if (!user)

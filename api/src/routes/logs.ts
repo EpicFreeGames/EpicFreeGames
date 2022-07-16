@@ -1,14 +1,15 @@
 import { Router } from "express";
 import { z } from "zod";
 import { prisma } from "..";
-import { botAuth } from "../utils/auth";
+import { auth } from "../utils/auth";
+import { Flags } from "../utils/flags";
 import { withValidation } from "../utils/withValidation";
 
 const router = Router();
 
 router.post(
   "/commands",
-  botAuth,
+  auth(Flags.AddCommandLogs),
   withValidation(
     {
       body: z.object({
@@ -29,7 +30,7 @@ router.post(
 
 router.post(
   "/sends",
-  botAuth,
+  auth(Flags.AddSendingLogs),
   withValidation(
     {
       body: z.object({
