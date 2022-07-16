@@ -1,59 +1,52 @@
-import { FastifyInstance, FastifyPluginOptions } from "fastify";
+import { Router } from "express";
 import { z } from "zod";
-import { auth } from "../utils/auth";
-import { Flags } from "../utils/flags";
-import { zodToJson } from "../utils/zodToJson";
+import { prisma } from "..";
+import { botAuth } from "../utils/auth";
+import { withValidation } from "../utils/withValidation";
 
-const addCommandLogSchema = {
-  body: z.object({
-    command: z.string(),
-    senderId: z.string(),
-    serverId: z.string(),
-  }),
-};
+const router = Router();
 
-const addSendingLogSchema = {
-  body: z.object({
-    serverId: z.string(),
-    sendingId: z.string(),
-    type: z.string(),
-    result: z.string(),
-  }),
-};
-
-export const logRoutes = async (
-  fastify: FastifyInstance,
-  options: FastifyPluginOptions
-) => {
-  fastify.post<{
-    Body: z.infer<typeof addCommandLogSchema.body>;
-  }>("/commands", {
-    schema: {
-      body: zodToJson(addCommandLogSchema.body),
+router.post(
+  "/commands",
+  botAuth,
+  withValidation(
+    {
+      body: z.object({
+        command: z.string(),
+        senderId: z.string(),
+        serverId: z.string(),
+      }),
     },
-    preHandler: auth(Flags.AddCommandLogs),
-    handler: async (request, reply) => {
-      const addedLog = await fastify.prisma.commandLog.create({
-        data: request.body,
+    async (req, res) => {
+      const addedLog = await prisma.commandLog.create({
+        data: req.body,
       });
 
-      return reply.send(addedLog);
-    },
-  });
+      return res.send(addedLog);
+    }
+  )
+);
 
-  fastify.post<{
-    Body: z.infer<typeof addSendingLogSchema.body>;
-  }>("/sends", {
-    schema: {
-      body: zodToJson(addSendingLogSchema.body),
+router.post(
+  "/sends",
+  botAuth,
+  withValidation(
+    {
+      body: z.object({
+        serverId: z.string(),
+        sendingId: z.string(),
+        type: z.string(),
+        result: z.string(),
+      }),
     },
-    preHandler: auth(Flags.AddSendingLogs),
-    handler: async (request, reply) => {
-      const addedLog = await fastify.prisma.sendingLog.create({
-        data: request.body,
+    async (req, res) => {
+      const addedLog = await prisma.sendingLog.create({
+        data: req.body,
       });
 
-      return reply.send(addedLog);
-    },
-  });
-};
+      return res.send(addedLog);
+    }
+  )
+);
+
+export const logRouter = router;

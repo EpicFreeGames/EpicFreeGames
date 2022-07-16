@@ -1,103 +1,59 @@
-import { FastifyInstance, FastifyPluginOptions } from "fastify";
+import { Router } from "express";
 import { z } from "zod";
-import { auth } from "../utils/auth";
+import { prisma } from "..";
+import { auth, botAuth } from "../utils/auth";
 import { Flags } from "../utils/flags";
-import { zodToJson } from "../utils/zodToJson";
+import { withValidation } from "../utils/withValidation";
 
-const getServerSchema = {
-  params: z.object({
-    serverId: z.string(),
-  }),
-};
+const router = Router();
 
-const putChannelSchema = {
-  params: z.object({
-    serverId: z.string(),
-  }),
-  body: z.object({
-    channelId: z.string(),
-    webhookId: z.string(),
-    webhookToken: z.string(),
-  }),
-};
-
-const deleteChannelSchema = {
-  params: z.object({
-    serverId: z.string(),
-  }),
-};
-
-const putRoleSchema = {
-  params: z.object({
-    serverId: z.string(),
-  }),
-  body: z.object({
-    roleId: z.string(),
-  }),
-};
-
-const deleteRoleSchema = {
-  params: z.object({
-    serverId: z.string(),
-  }),
-};
-
-const putThreadSchema = {
-  params: z.object({
-    serverId: z.string(),
-  }),
-  body: z.object({
-    threadId: z.string(),
-    channelId: z.string(),
-    webhookId: z.string(),
-    webhookToken: z.string(),
-  }),
-};
-
-const deleteThreadSchema = {
-  params: z.object({
-    serverId: z.string(),
-  }),
-};
-
-export const serverRoutes = async (
-  fastify: FastifyInstance,
-  options: FastifyPluginOptions
-) => {
-  fastify.get<{
-    Params: z.infer<typeof getServerSchema.params>;
-  }>("/:serverId", {
-    schema: {
-      params: zodToJson(getServerSchema.params),
+router.get(
+  "/:serverId",
+  botAuth,
+  withValidation(
+    {
+      params: z.object({
+        serverId: z.string(),
+      }),
     },
-    preHandler: auth(Flags.GetServers),
-    handler: async (request, reply) => {
-      const { serverId } = request.params;
+    async (req, res) => {
+      const { serverId } = req.params;
 
-      const server = await fastify.prisma.server.findUnique({
+      const server = await prisma.server.findUnique({
         where: { id: serverId },
       });
 
-      if (!server) return reply.code(404).send({ error: "Server not found" });
+      if (!server)
+        return res.status(404).send({
+          statusCode: 404,
+          error: "Not found",
+          message: "Server not found",
+        });
 
-      return reply.send(server);
+      return res.send(server);
+    }
+  )
+);
+
+router.put(
+  "/:serverId/channel",
+  botAuth,
+  withValidation(
+    {
+      params: z.object({
+        serverId: z.string(),
+      }),
+      body: z.object({
+        channelId: z.string(),
+        webhookId: z.string(),
+        webhookToken: z.string(),
+      }),
     },
-  });
+    async (req, res) => {
+      const { serverId } = req.params;
+      const { channelId, webhookId, webhookToken } = req.body;
 
-  fastify.put<{
-    Params: z.infer<typeof putChannelSchema.params>;
-    Body: z.infer<typeof putChannelSchema.body>;
-  }>("/:serverId/channel", {
-    schema: {
-      params: zodToJson(putChannelSchema.params),
-      body: zodToJson(putChannelSchema.body),
-    },
-    preHandler: auth(Flags.EditServers),
-    handler: async (request, reply) => {
-      const { serverId } = request.params;
-      const { channelId, webhookId, webhookToken } = request.body;
-
-      const server = await fastify.prisma.server.upsert({
+      const server = await prisma.server.upsert({
         where: { id: serverId },
         update: {
           channelId,
@@ -112,21 +68,62 @@ export const serverRoutes = async (
         },
       });
 
-      return reply.send(server);
-    },
-  });
+      return res.send(server);
+    }
+  )
+);
 
-  fastify.delete<{
-    Params: z.infer<typeof deleteChannelSchema.params>;
-  }>("/:serverId/channel", {
-    schema: {
-      params: zodToJson(deleteChannelSchema.params),
+router.put(
+  "/:serverId/channel",
+  botAuth,
+  withValidation(
+    {
+      params: z.object({
+        serverId: z.string(),
+      }),
+      body: z.object({
+        channelId: z.string(),
+        webhookId: z.string(),
+        webhookToken: z.string(),
+      }),
     },
-    preHandler: auth(Flags.EditServers),
-    handler: async (request, reply) => {
-      const { serverId } = request.params;
+    async (req, res) => {
+      const { serverId } = req.params;
+      const { channelId, webhookId, webhookToken } = req.body;
 
-      await fastify.prisma.server.update({
+      const server = await prisma.server.upsert({
+        where: { id: serverId },
+        update: {
+          channelId,
+          webhookId,
+          webhookToken,
+        },
+        create: {
+          id: serverId,
+          channelId,
+          webhookId,
+          webhookToken,
+        },
+      });
+
+      return res.send(server);
+    }
+  )
+);
+
+router.delete(
+  "/:serverId/channel",
+  botAuth,
+  withValidation(
+    {
+      params: z.object({
+        serverId: z.string(),
+      }),
+    },
+    async (req, res) => {
+      const { serverId } = req.params;
+
+      await prisma.server.update({
         where: { id: serverId },
         data: {
           channelId: null,
@@ -135,24 +132,28 @@ export const serverRoutes = async (
         },
       });
 
-      return reply.status(204);
-    },
-  });
+      return res.status(204);
+    }
+  )
+);
 
-  fastify.put<{
-    Params: z.infer<typeof putRoleSchema.params>;
-    Body: z.infer<typeof putRoleSchema.body>;
-  }>("/:serverId/role", {
-    schema: {
-      params: zodToJson(putRoleSchema.params),
-      body: zodToJson(putRoleSchema.body),
+router.put(
+  "/:serverId/role",
+  botAuth,
+  withValidation(
+    {
+      params: z.object({
+        serverId: z.string(),
+      }),
+      body: z.object({
+        roleId: z.string(),
+      }),
     },
-    preHandler: auth(Flags.EditServers),
-    handler: async (request, reply) => {
-      const { serverId } = request.params;
-      const { roleId } = request.body;
+    async (req, res) => {
+      const { serverId } = req.params;
+      const { roleId } = req.body;
 
-      const server = await fastify.prisma.server.upsert({
+      const server = await prisma.server.upsert({
         where: { id: serverId },
         update: {
           roleId,
@@ -163,132 +164,170 @@ export const serverRoutes = async (
         },
       });
 
-      return reply.send(server);
-    },
-  });
+      return res.send(server);
+    }
+  )
+);
 
-  fastify.delete<{
-    Params: z.infer<typeof deleteRoleSchema.params>;
-  }>("/:serverId/role", {
-    schema: {
-      params: zodToJson(deleteRoleSchema.params),
+router.delete(
+  "/:serverId/role",
+  botAuth,
+  withValidation(
+    {
+      params: z.object({
+        serverId: z.string(),
+      }),
     },
-    preHandler: auth(Flags.EditServers),
-    handler: async (request, reply) => {
-      const { serverId } = request.params;
+    async (req, res) => {
+      const { serverId } = req.params;
 
-      await fastify.prisma.server.update({
+      await prisma.server.update({
         where: { id: serverId },
         data: {
           roleId: null,
         },
       });
 
-      return reply.status(204);
-    },
-  });
+      return res.status(204);
+    }
+  )
+);
 
-  fastify.put<{
-    Params: z.infer<typeof putThreadSchema.params>;
-    Body: z.infer<typeof putThreadSchema.body>;
-  }>("/:serverId/thread", {
-    schema: {
-      params: zodToJson(putThreadSchema.params),
-      body: zodToJson(putThreadSchema.body),
+router.put(
+  "/:serverId/thread",
+  botAuth,
+  withValidation(
+    {
+      params: z.object({
+        serverId: z.string(),
+      }),
+      body: z.object({
+        threadId: z.string(),
+        channelId: z.string(),
+        webhookId: z.string(),
+        webhookToken: z.string(),
+      }),
     },
-    preHandler: auth(Flags.EditServers),
-    handler: async (request, reply) => {
-      const { serverId } = request.params;
+    async (req, res) => {
+      const { serverId } = req.params;
 
-      const server = await fastify.prisma.server.upsert({
+      const { threadId, channelId, webhookId, webhookToken } = req.body;
+
+      const server = await prisma.server.upsert({
         where: { id: serverId },
-        update: request.body,
+        update: {
+          threadId,
+          channelId,
+          webhookId,
+          webhookToken,
+        },
         create: {
           id: serverId,
-          ...request.body,
+          threadId,
+          channelId,
+          webhookId,
+          webhookToken,
         },
       });
 
-      return reply.send(server);
-    },
-  });
+      return res.send(server);
+    }
+  )
+);
 
-  fastify.delete<{
-    Params: z.infer<typeof deleteThreadSchema.params>;
-  }>("/:serverId/thread", {
-    schema: {
-      params: zodToJson(deleteThreadSchema.params),
+router.delete(
+  "/:serverId/thread",
+  botAuth,
+  withValidation(
+    {
+      params: z.object({
+        serverId: z.string(),
+      }),
+      body: z.object({
+        threadId: z.string(),
+        channelId: z.string(),
+        webhookId: z.string(),
+        webhookToken: z.string(),
+      }),
     },
-    preHandler: auth(Flags.EditServers),
-    handler: async (request, reply) => {
-      const { serverId } = request.params;
+    async (req, res) => {
+      const { serverId } = req.params;
+      const { threadId, channelId, webhookId, webhookToken } = req.body;
 
-      await fastify.prisma.server.update({
+      const server = await prisma.server.upsert({
         where: { id: serverId },
-        data: {
-          channelId: null,
-          threadId: null,
+        update: {
+          threadId,
+
+          channelId,
+          webhookId,
+          webhookToken,
+        },
+        create: {
+          id: serverId,
+          threadId,
+
+          channelId,
+          webhookId,
+          webhookToken,
+        },
+      });
+
+      return res.send(server);
+    }
+  )
+);
+
+router.get("/counts", auth(Flags.GetServers), async (req, res) => {
+  const [total, sendable, hasOnlyChannel, hasWebhook, hasRole] =
+    await prisma.$transaction([
+      // total
+      prisma.server.count(),
+      // sendable
+      prisma.server.count({
+        where: {
+          channelId: {
+            not: null,
+          },
+        },
+      }),
+      // has only channel
+      prisma.server.count({
+        where: {
+          channelId: {
+            not: null,
+          },
           webhookId: null,
           webhookToken: null,
         },
-      });
+      }),
+      // has webhook
+      prisma.server.count({
+        where: {
+          NOT: {
+            channelId: null,
+            webhookId: null,
+            webhookToken: null,
+          },
+        },
+      }),
+      // has role
+      prisma.server.count({
+        where: {
+          roleId: {
+            not: null,
+          },
+        },
+      }),
+    ]);
 
-      return reply.status(204);
-    },
+  return res.send({
+    total,
+    sendable,
+    hasOnlyChannel,
+    hasWebhook,
+    hasRole,
   });
+});
 
-  fastify.get("/counts", {
-    preHandler: auth(Flags.GetServers),
-    handler: async (request, reply) => {
-      const [total, sendable, hasOnlyChannel, hasWebhook, hasRole] =
-        await fastify.prisma.$transaction([
-          // total
-          fastify.prisma.server.count(),
-          // sendable
-          fastify.prisma.server.count({
-            where: {
-              channelId: {
-                not: null,
-              },
-            },
-          }),
-          // has only channel
-          fastify.prisma.server.count({
-            where: {
-              channelId: {
-                not: null,
-              },
-              webhookId: null,
-              webhookToken: null,
-            },
-          }),
-          // has webhook
-          fastify.prisma.server.count({
-            where: {
-              NOT: {
-                channelId: null,
-                webhookId: null,
-                webhookToken: null,
-              },
-            },
-          }),
-          // has role
-          fastify.prisma.server.count({
-            where: {
-              roleId: {
-                not: null,
-              },
-            },
-          }),
-        ]);
-
-      return reply.send({
-        total,
-        sendable,
-        hasOnlyChannel,
-        hasWebhook,
-        hasRole,
-      });
-    },
-  });
-};
+export const serverRouter = router;

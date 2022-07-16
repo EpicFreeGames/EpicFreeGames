@@ -1,37 +1,30 @@
-import { FastifyReply, FastifyRequest, HookHandlerDoneFunction } from "fastify";
+import { config } from "../config";
+import { Middleware } from "../types";
+import { safeEqual } from "./crypto";
 import { Flags } from "./flags";
-import { verifyAccessJwt } from "./jwt";
 
 export const auth =
-  (...requiredFlags: Flags[]) =>
-  async (
-    request: FastifyRequest,
-    reply: FastifyReply,
-    done: HookHandlerDoneFunction
-  ) => {
-    const token = request.headers["authorization"]?.split("Bearer ").at(1);
-    if (!token)
-      return reply.status(401).send({
+  (...requiredFlags: Flags[]): Middleware =>
+  async (req, res, next) => {
+    const botToken = req.headers.authorization?.split("Bot ")?.at(1);
+
+    if (!botToken || !req.session?.flags)
+      return res.status(401).json({
         statusCode: 401,
         error: "Unauthorized",
-        message: "No token provided",
+        message: "No auth provided",
       });
 
-    const accessToken = await verifyAccessJwt(token);
+    if (botToken && safeEqual(botToken, config.BOT_SECRET)) return next();
 
-    if (!accessToken)
-      return reply.status(401).send({
-        statusCode: 401,
-        error: "Unauthorized",
-        message: "Token is invalid or has expired",
-      });
-
-    if (!hasPermission(accessToken.flags, requiredFlags))
-      return reply.status(403).send({
+    if (!hasPermission(req.session.flags, requiredFlags))
+      return res.status(403).json({
         statusCode: 403,
         error: "Forbidden",
         message: "Insufficient permissions",
       });
+
+    next();
   };
 
 const hasPermission = (flags: number, requiredFlags: Flags[]) => {

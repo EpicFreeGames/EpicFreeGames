@@ -1,18 +1,11 @@
-import { PrismaClient } from "@prisma/client";
-import nodemailer from "nodemailer";
-import { TokenPayload } from "./utils/jwt";
+import { NextFunction, Request, Response } from "express";
 
-declare module "fastify" {
-  interface FastifyRequest {
-    prisma: PrismaClient;
-    mailer: nodemailer.Transporter;
-  }
-  interface FastifyInstance {
-    prisma: PrismaClient;
-    mailer: nodemailer.Transporter;
-  }
+export interface Middleware {
+  (req: Request, res: Response, next: NextFunction): any;
 }
 
-declare module "jose" {
-  interface JWTPayload extends TokenPayload {}
+declare module "express-session" {
+  interface SessionData {
+    flags: number;
+  }
 }

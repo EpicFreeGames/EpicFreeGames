@@ -1,14 +1,5 @@
-import { compare, hash } from "bcrypt";
-import { createHash, timingSafeEqual, createHmac } from "crypto";
+import { timingSafeEqual, createHmac } from "crypto";
 import { config } from "../config";
-
-const sha256 = (plainText: string) =>
-  createHash("sha256").update(plainText).digest("base64");
-
-export const comparePassword = (plainText: string, hash: string) =>
-  compare(sha256(plainText), hash);
-
-export const hashPassword = (plainText: string) => hash(sha256(plainText), 12);
 
 export const safeEqual = (a: string, b: string) => {
   const aBuff = Buffer.from(a);

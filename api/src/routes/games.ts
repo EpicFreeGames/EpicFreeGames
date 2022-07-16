@@ -1,114 +1,94 @@
-import { FastifyInstance, FastifyPluginOptions } from "fastify";
+import { Router } from "express";
 import { z } from "zod";
+import { prisma } from "..";
 import { auth } from "../utils/auth";
 import { Flags } from "../utils/flags";
-import { zodToJson } from "../utils/zodToJson";
+import { withValidation } from "../utils/withValidation";
 
-const putGamesSchema = {
-  body: z.array(
-    z.object({
-      name: z.string(),
-      imageUrl: z.string(),
-      start: z.string(),
-      end: z.string(),
-      path: z.string(),
-      prices: z.array(
+export const gameRouter = Router();
+
+gameRouter.get("/", auth(Flags.GetGames), async (req, res) => {
+  const games = await prisma.game.findMany();
+
+  res.send(games);
+});
+
+gameRouter.get("/free", auth(Flags.GetGames), async (req, res) => {
+  const games = await prisma.game.findMany({
+    where: {
+      start: {
+        lt: new Date(),
+      },
+      end: {
+        gt: new Date(),
+      },
+    },
+  });
+
+  res.send(games);
+});
+
+gameRouter.get("/up", auth(Flags.GetGames), async (req, res) => {
+  const games = await prisma.game.findMany({
+    where: {
+      start: {
+        gt: new Date(),
+      },
+      end: {
+        gt: new Date(),
+      },
+    },
+  });
+
+  res.send(games);
+});
+
+gameRouter.get("/confirmed", auth(Flags.GetGames), async (req, res) => {
+  const games = await prisma.game.findMany({
+    where: {
+      confirmed: true,
+    },
+  });
+
+  res.send(games);
+});
+
+gameRouter.get("/not-confirmed", auth(Flags.GetGames), async (req, res) => {
+  const games = await prisma.game.findMany({
+    where: {
+      confirmed: false,
+    },
+  });
+
+  res.send(games);
+});
+
+gameRouter.put(
+  "/",
+  auth(Flags.PutGames),
+  withValidation(
+    {
+      body: z.array(
         z.object({
-          value: z.string(),
-          currencyCode: z.string(),
+          name: z.string(),
+          imageUrl: z.string(),
+          start: z.string(),
+          end: z.string(),
+          path: z.string(),
+          prices: z.array(
+            z.object({
+              value: z.string(),
+              currencyCode: z.string(),
+            })
+          ),
         })
       ),
-    })
-  ),
-};
-
-export const gameRoutes = async (
-  fastify: FastifyInstance,
-  options: FastifyPluginOptions
-) => {
-  fastify.get("/", {
-    preHandler: auth(Flags.GetGames),
-    handler: async (request, reply) => {
-      const games = await fastify.prisma.game.findMany();
-
-      reply.send(games);
     },
-  });
-
-  fastify.get("/free", {
-    preHandler: auth(Flags.GetGames),
-    handler: async (request, reply) => {
-      const games = await fastify.prisma.game.findMany({
-        where: {
-          start: {
-            lt: new Date(),
-          },
-          end: {
-            gt: new Date(),
-          },
-        },
-      });
-
-      reply.send(games);
-    },
-  });
-
-  fastify.get("/up", {
-    preHandler: auth(Flags.GetGames),
-    handler: async (request, reply) => {
-      const games = await fastify.prisma.game.findMany({
-        where: {
-          start: {
-            gt: new Date(),
-          },
-          end: {
-            gt: new Date(),
-          },
-        },
-      });
-
-      reply.send(games);
-    },
-  });
-
-  fastify.get("/confirmed", {
-    preHandler: auth(Flags.GetGames),
-    handler: async (request, reply) => {
-      const games = await fastify.prisma.game.findMany({
-        where: {
-          confirmed: true,
-        },
-      });
-
-      reply.send(games);
-    },
-  });
-
-  fastify.get("/not-confirmed", {
-    preHandler: auth(Flags.GetGames),
-    handler: async (request, reply) => {
-      const games = await fastify.prisma.game.findMany({
-        where: {
-          confirmed: false,
-        },
-      });
-
-      reply.send(games);
-    },
-  });
-
-  fastify.put<{
-    Body: z.infer<typeof putGamesSchema.body>;
-  }>("/", {
-    preHandler: auth(Flags.PutGames),
-    schema: {
-      body: zodToJson(putGamesSchema.body),
-    },
-    handler: async (request, reply) => {
-      for (const game of request.body) {
+    async (req, res) => {
+      for (const game of req.body) {
         const { prices, ...rest } = game;
 
-        await fastify.prisma.game.upsert({
+        await prisma.game.upsert({
           where: {
             name: game.name,
           },
@@ -136,7 +116,7 @@ export const gameRoutes = async (
         });
       }
 
-      reply.status(204);
-    },
-  });
-};
+      res.status(204);
+    }
+  )
+);

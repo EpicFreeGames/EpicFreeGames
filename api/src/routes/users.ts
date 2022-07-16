@@ -1,42 +1,46 @@
-import { FastifyInstance, FastifyPluginOptions } from "fastify";
 import { z } from "zod";
 import { auth } from "../utils/auth";
-import { zodToJson } from "../utils/zodToJson";
+import { Router } from "express";
+import { prisma } from "..";
+import { withValidation } from "../utils/withValidation";
 import { Flags } from "../utils/flags";
 
-const updateUserFlagsSchema = {
-  params: z.object({
-    userId: z.string(),
-  }),
+const router = Router();
 
-  body: z.object({
-    newFlags: z.number(),
-  }),
-};
-
-export const userRoutes = async (
-  fastify: FastifyInstance,
-  options: FastifyPluginOptions
-) => {
-  fastify.post<{
-    Params: z.infer<typeof updateUserFlagsSchema.params>;
-    Body: z.infer<typeof updateUserFlagsSchema.body>;
-  }>("/:userId/flags", {
-    schema: {
-      params: zodToJson(updateUserFlagsSchema.params),
-      body: zodToJson(updateUserFlagsSchema.body),
+router.post(
+  "/:userId/flags",
+  auth(Flags.EditUsers),
+  withValidation(
+    {
+      params: z.object({
+        userId: z.string(),
+      }),
+      body: z.object({
+        newFlags: z.number(),
+      }),
     },
-    preHandler: auth(Flags.EditUsers),
-    handler: async (request, reply) => {
-      const { userId } = request.params;
-      const { newFlags } = request.body;
+    async (req, res) => {
+      const { userId } = req.params;
+      const { newFlags } = req.body;
 
-      await fastify.prisma.user.update({
+      const user = await prisma.user.update({
         where: { id: userId },
         data: { flags: newFlags },
+        select: {
+          flags: true,
+        },
       });
 
-      return reply.status(204);
-    },
-  });
-};
+      if (!user)
+        return res.status(404).send({
+          statusCode: 404,
+          error: "Not found",
+          message: "User not found",
+        });
+
+      return res.send(user);
+    }
+  )
+);
+
+export const userRouter = router;

@@ -1,36 +1,21 @@
-import Fastify from "fastify";
-import { logRoutes } from "./routes/logs";
-import { serverRoutes } from "./routes/servers";
-import { gameRoutes } from "./routes/games";
+import { PrismaClient } from "@prisma/client";
 import { config } from "./config";
-import { prismaPlugin } from "./plugins/prismaPlugin";
-import { mailerPlugin } from "./plugins/mailerPlugin";
-import { authRoutes } from "./routes/auth";
-import { emailRoutes } from "./routes/email";
-import fastifyCookie from "@fastify/cookie";
+import { createRedisStore } from "./redis";
+import { createServer } from "./server";
+
+export const prisma = new PrismaClient();
 
 (async () => {
-  const fastify = Fastify({ logger: true });
+  await prisma.$connect();
+  console.log("Connected to database");
 
-  fastify.register(fastifyCookie);
-  fastify.register(prismaPlugin);
-  fastify.register(mailerPlugin);
+  const { client, store } = await createRedisStore();
+  await client.connect();
+  console.log("Connected to Redis");
 
-  fastify.register(serverRoutes, {
-    prefix: "/api/servers",
-  });
-  fastify.register(logRoutes, {
-    prefix: "/api/logs",
-  });
-  fastify.register(gameRoutes, {
-    prefix: "/api/games",
-  });
-  fastify.register(authRoutes, {
-    prefix: "/api/auth",
-  });
-  fastify.register(emailRoutes, {
-    prefix: "/api/email",
-  });
+  const server = await createServer(store);
 
-  await fastify.listen({ port: config.PORT });
+  server.listen(config.PORT, () =>
+    console.log(`Listening on port ${config.PORT}`)
+  );
 })();

@@ -4,10 +4,15 @@ import { createSecretKey } from "crypto";
 
 const envSchema = z.object({
   DATABASE_URL: z.string(),
+  REDIS_URL: z.string(),
   APP_URL: z.string(),
-  SOCKET_URL: z.string(),
 
   APP_SECRET: z.string(),
+  BOT_SECRET: z.string(),
+
+  DISCORD_CLIENT_ID: z.string(),
+  DISCORD_CLIENT_SECRET: z.string(),
+  DISCORD_API_BASEURL: z.string(),
 
   JWT_ACC_SECRET: z.string(),
   JWT_ACC_AUD: z.string(),
