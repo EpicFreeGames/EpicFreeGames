@@ -22,12 +22,13 @@ model Game {
 }
 
 model GamePrice {
-  id           String   @id @default(cuid())
-  value        Float
-  gameId       String
-  game         Game     @relation(fields: [gameId], references: [id], onDelete: Cascade)
-  currencyCode String   @unique
-  currency     Currency @relation(fields: [currencyCode], references: [code], onDelete: Cascade)
+  id             String   @id @default(cuid())
+  value          Float
+  formattedValue String
+  gameId         String
+  game           Game     @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  currencyCode   String   @unique
+  currency       Currency @relation(fields: [currencyCode], references: [code], onDelete: Cascade)
 }
 
 model Server {
