@@ -1,0 +1,68 @@
+version: "3.9"
+
+services:
+  redis:
+    image: redis:latest
+    volumes:
+      - ./redis:/data
+    restart: unless-stopped
+
+  api:
+    depends_on:
+      - redis
+    build:
+      context: ./api
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env-api
+    restart: unless-stopped
+    volumes:
+      - ./api/src:/app/src:r
+    command: ["yarn", "dev"]
+
+  bot_rest-proxy:
+    depends_on:
+      - redis
+      - api
+    build:
+      context: ./bot
+      args:
+        - SCOPE=rest-proxy
+    image: bot/rest-proxy
+    env_file:
+      - .env-bot
+    restart: unless-stopped
+
+  bot_gateway-proxy:
+    depends_on:
+      - redis
+      - api
+      - bot_rest-proxy
+    build:
+      context: ./bot
+      args:
+        - SCOPE=gateway-proxy
+    image: bot/gateway-proxy
+    env_file:
+      - .env-bot
+    restart: unless-stopped
+
+  bot_bot:
+    depends_on:
+      - redis
+      - api
+      - bot_rest-proxy
+      - bot_gateway-proxy
+    build:
+      context: ./bot
+      args:
+        - SCOPE=bot
+    image: bot/bot
+    env_file:
+      - .env-bot
+    restart: unless-stopped
+    volumes:
+      - ./bot/src:/app/src:r
+    command: "deno run --watch -A ./src/bot/mod.ts"
