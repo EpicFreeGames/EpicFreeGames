@@ -1,3 +1,4 @@
+import { GamePrice } from "@prisma/client";
 import { Router } from "express";
 import { z } from "zod";
 import { prisma } from "..";
@@ -130,21 +131,28 @@ gameRouter.put(
       for (const game of req.body) {
         const { prices, ...rest } = game;
 
-        const availableCurrencyCodes = (await prisma.currency.findMany()).map(
-          (c) => c.code
-        );
+        const availableCurrencies = await prisma.currency.findMany();
 
-        const goodPrices = prices.filter((p) => {
-          if (!availableCurrencyCodes.includes(p.currencyCode)) {
+        const formattedPrices = prices.reduce((acc, p) => {
+          const currency = availableCurrencies.find(
+            (c) => c.code === p.currencyCode
+          );
+
+          if (currency) {
+            acc.push({
+              ...p,
+              formattedValue: `${currency.inFrontOfPrice}${p.value}${currency.afterPrice}`,
+            });
+          } else {
+            // if no currency, dont push to result arr and add to excluded
             excludedPriceCodes.set(game.name, [
               ...(excludedPriceCodes.get(game.name) || []),
               p.currencyCode,
             ]);
-            return false;
           }
 
-          return true;
-        });
+          return acc;
+        }, [] as Omit<GamePrice, "id" | "gameId">[]);
 
         await prisma.game.upsert({
           where: {
@@ -153,17 +161,12 @@ gameRouter.put(
           update: {
             ...rest,
             prices: {
-              upsert: goodPrices.map((price) => ({
+              upsert: formattedPrices.map((price) => ({
                 where: {
                   currencyCode: price.currencyCode,
                 },
-                create: {
-                  currencyCode: price.currencyCode,
-                  value: price.value,
-                },
-                update: {
-                  value: price.value,
-                },
+                create: price,
+                update: price,
               })),
             },
           },
@@ -171,14 +174,11 @@ gameRouter.put(
             ...rest,
             displayName: game.name,
             prices: {
-              connectOrCreate: goodPrices.map((price) => ({
+              connectOrCreate: formattedPrices.map((price) => ({
                 where: {
                   currencyCode: price.currencyCode,
                 },
-                create: {
-                  currencyCode: price.currencyCode,
-                  value: price.value,
-                },
+                create: price,
               })),
             },
           },
