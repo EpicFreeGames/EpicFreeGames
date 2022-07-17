@@ -1,0 +1,13 @@
+FROM node:16-alpine as base
+
+WORKDIR /app
+
+FROM base as builder
+
+COPY ./*.json ./
+COPY ./yarn.lock ./
+COPY ./prisma ./
+
+RUN yarn
+
+CMD [ "yarn", "dev" ]
