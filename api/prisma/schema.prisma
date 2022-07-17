@@ -23,11 +23,11 @@ model Game {
 
 model GamePrice {
   id           String   @id @default(cuid())
-  value        String
+  value        Float
   gameId       String
-  game         Game     @relation(fields: [gameId], references: [id])
+  game         Game     @relation(fields: [gameId], references: [id], onDelete: Cascade)
   currencyCode String   @unique
-  currency     Currency @relation(fields: [currencyCode], references: [code])
+  currency     Currency @relation(fields: [currencyCode], references: [code], onDelete: Cascade)
 }
 
 model Server {
@@ -61,7 +61,7 @@ model Currency {
   inFrontOfPrice String      @default("")
   afterPrice     String      @default("")
   servers        Server[]
-  GamePrice      GamePrice[]
+  prices         GamePrice[]
 }
 
 model SendingLog {
@@ -78,7 +78,7 @@ model CommandLog {
   command  String
   senderId String
   serverId String
-  Server   Server? @relation(fields: [serverId], references: [id])
+  server   Server? @relation(fields: [serverId], references: [id])
 }
 
 model User {
