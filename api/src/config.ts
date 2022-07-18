@@ -1,6 +1,5 @@
-import { z } from "zod";
-import dotenv from "dotenv";
 import { createSecretKey } from "crypto";
+import { z } from "zod";
 
 const envSchema = z.object({
   DATABASE_URL: z.string(),
@@ -33,9 +32,7 @@ const envSchema = z.object({
   MAIL_FROM: z.string(),
 });
 
-const env = envSchema.safeParse(
-  process.env.NODE_ENV === "development" ? dotenv.config().parsed : process.env
-);
+const env = envSchema.safeParse(process.env);
 
 if (!env.success) {
   console.error(
