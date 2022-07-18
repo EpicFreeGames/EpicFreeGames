@@ -30,7 +30,7 @@ router.get(
           message: "Server not found",
         });
 
-      return res.send(server);
+      res.json(server);
     }
   )
 );
@@ -53,7 +53,7 @@ router.put(
       const { serverId } = req.params;
       const { channelId, webhookId, webhookToken } = req.body;
 
-      const server = await prisma.server.upsert({
+      const updatedServer = await prisma.server.upsert({
         where: { id: serverId },
         update: {
           channelId,
@@ -68,7 +68,7 @@ router.put(
         },
       });
 
-      return res.send(server);
+      res.json(updatedServer);
     }
   )
 );
@@ -91,7 +91,7 @@ router.put(
       const { serverId } = req.params;
       const { channelId, webhookId, webhookToken } = req.body;
 
-      const server = await prisma.server.upsert({
+      const updatedServer = await prisma.server.upsert({
         where: { id: serverId },
         update: {
           channelId,
@@ -106,7 +106,7 @@ router.put(
         },
       });
 
-      return res.send(server);
+      res.json(updatedServer);
     }
   )
 );
@@ -123,7 +123,7 @@ router.delete(
     async (req, res) => {
       const { serverId } = req.params;
 
-      await prisma.server.update({
+      const updatedServer = await prisma.server.update({
         where: { id: serverId },
         data: {
           channelId: null,
@@ -132,7 +132,7 @@ router.delete(
         },
       });
 
-      return res.status(204);
+      res.json(updatedServer);
     }
   )
 );
@@ -153,7 +153,7 @@ router.put(
       const { serverId } = req.params;
       const { roleId } = req.body;
 
-      const server = await prisma.server.upsert({
+      const updatedServer = await prisma.server.upsert({
         where: { id: serverId },
         update: {
           roleId,
@@ -164,7 +164,7 @@ router.put(
         },
       });
 
-      return res.send(server);
+      res.json(updatedServer);
     }
   )
 );
@@ -181,14 +181,14 @@ router.delete(
     async (req, res) => {
       const { serverId } = req.params;
 
-      await prisma.server.update({
+      const updatedServer = await prisma.server.update({
         where: { id: serverId },
         data: {
           roleId: null,
         },
       });
 
-      return res.status(204);
+      res.json(updatedServer);
     }
   )
 );
@@ -213,7 +213,7 @@ router.put(
 
       const { threadId, channelId, webhookId, webhookToken } = req.body;
 
-      const server = await prisma.server.upsert({
+      const updatedServer = await prisma.server.upsert({
         where: { id: serverId },
         update: {
           threadId,
@@ -230,7 +230,7 @@ router.put(
         },
       });
 
-      return res.send(server);
+      res.json(updatedServer);
     }
   )
 );
@@ -254,7 +254,7 @@ router.delete(
       const { serverId } = req.params;
       const { threadId, channelId, webhookId, webhookToken } = req.body;
 
-      const server = await prisma.server.upsert({
+      const updatedServer = await prisma.server.upsert({
         where: { id: serverId },
         update: {
           threadId,
@@ -273,7 +273,7 @@ router.delete(
         },
       });
 
-      return res.send(server);
+      res.json(updatedServer);
     }
   )
 );
@@ -321,7 +321,7 @@ router.get("/counts", auth(Flags.GetServers), async (req, res) => {
       }),
     ]);
 
-  return res.send({
+  res.send({
     total,
     sendable,
     hasOnlyChannel,
