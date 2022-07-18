@@ -77,7 +77,7 @@ model CommandLog {
   id       String  @id @default(cuid())
   command  String
   senderId String
-  serverId String
+  serverId String?
   server   Server? @relation(fields: [serverId], references: [id])
 }
 
