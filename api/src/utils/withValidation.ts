@@ -32,6 +32,8 @@ export const withValidation =
           message: "Body validation failed",
           details: result.error.format()._errors,
         });
+
+      req.body = result.data;
     }
 
     if (query) {
@@ -44,6 +46,8 @@ export const withValidation =
           message: "Querystring validation failed",
           details: result.error.format()._errors,
         });
+
+      req.query = result.data;
     }
 
     if (params) {
@@ -56,6 +60,8 @@ export const withValidation =
           message: "Params validation failed",
           details: result.error.format()._errors,
         });
+
+      req.params = result.data;
     }
 
     handler(req, res);
