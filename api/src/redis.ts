@@ -6,7 +6,7 @@ import { config } from "./config";
 export const createRedisStore = async () => {
   const RedisStore = connectRedis(expressSession);
   const redisClient = createClient({
-    url: config.REDIS_URL,
+    url: `redis://${config.REDIS_HOST}:${config.REDIS_PORT}`,
   });
 
   redisClient.on("error", (err) => console.log("REDIS ERROR:", err));
