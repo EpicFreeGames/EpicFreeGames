@@ -12,9 +12,11 @@ router.get(
   auth(Flags.EditServers),
   withValidation(
     {
-      params: z.object({
-        serverId: z.string(),
-      }),
+      params: z
+        .object({
+          serverId: z.string(),
+        })
+        .strict(),
     },
     async (req, res) => {
       const { serverId } = req.params;
@@ -40,14 +42,18 @@ router.put(
   auth(Flags.EditServers),
   withValidation(
     {
-      params: z.object({
-        serverId: z.string(),
-      }),
-      body: z.object({
-        channelId: z.string(),
-        webhookId: z.string(),
-        webhookToken: z.string(),
-      }),
+      params: z
+        .object({
+          serverId: z.string(),
+        })
+        .strict(),
+      body: z
+        .object({
+          channelId: z.string(),
+          webhookId: z.string(),
+          webhookToken: z.string(),
+        })
+        .strict(),
     },
     async (req, res) => {
       const { serverId } = req.params;
@@ -78,14 +84,18 @@ router.put(
   auth(Flags.EditServers),
   withValidation(
     {
-      params: z.object({
-        serverId: z.string(),
-      }),
-      body: z.object({
-        channelId: z.string(),
-        webhookId: z.string(),
-        webhookToken: z.string(),
-      }),
+      params: z
+        .object({
+          serverId: z.string(),
+        })
+        .strict(),
+      body: z
+        .object({
+          channelId: z.string(),
+          webhookId: z.string(),
+          webhookToken: z.string(),
+        })
+        .strict(),
     },
     async (req, res) => {
       const { serverId } = req.params;
@@ -116,9 +126,11 @@ router.delete(
   auth(Flags.EditServers),
   withValidation(
     {
-      params: z.object({
-        serverId: z.string(),
-      }),
+      params: z
+        .object({
+          serverId: z.string(),
+        })
+        .strict(),
     },
     async (req, res) => {
       const { serverId } = req.params;
@@ -142,12 +154,16 @@ router.put(
   auth(Flags.EditServers),
   withValidation(
     {
-      params: z.object({
-        serverId: z.string(),
-      }),
-      body: z.object({
-        roleId: z.string(),
-      }),
+      params: z
+        .object({
+          serverId: z.string(),
+        })
+        .strict(),
+      body: z
+        .object({
+          roleId: z.string(),
+        })
+        .strict(),
     },
     async (req, res) => {
       const { serverId } = req.params;
@@ -174,9 +190,11 @@ router.delete(
   auth(Flags.EditServers),
   withValidation(
     {
-      params: z.object({
-        serverId: z.string(),
-      }),
+      params: z
+        .object({
+          serverId: z.string(),
+        })
+        .strict(),
     },
     async (req, res) => {
       const { serverId } = req.params;
@@ -198,15 +216,19 @@ router.put(
   auth(Flags.EditServers),
   withValidation(
     {
-      params: z.object({
-        serverId: z.string(),
-      }),
-      body: z.object({
-        threadId: z.string(),
-        channelId: z.string(),
-        webhookId: z.string(),
-        webhookToken: z.string(),
-      }),
+      params: z
+        .object({
+          serverId: z.string(),
+        })
+        .strict(),
+      body: z
+        .object({
+          threadId: z.string(),
+          channelId: z.string(),
+          webhookId: z.string(),
+          webhookToken: z.string(),
+        })
+        .strict(),
     },
     async (req, res) => {
       const { serverId } = req.params;
@@ -240,15 +262,19 @@ router.delete(
   auth(Flags.EditServers),
   withValidation(
     {
-      params: z.object({
-        serverId: z.string(),
-      }),
-      body: z.object({
-        threadId: z.string(),
-        channelId: z.string(),
-        webhookId: z.string(),
-        webhookToken: z.string(),
-      }),
+      params: z
+        .object({
+          serverId: z.string(),
+        })
+        .strict(),
+      body: z
+        .object({
+          threadId: z.string(),
+          channelId: z.string(),
+          webhookId: z.string(),
+          webhookToken: z.string(),
+        })
+        .strict(),
     },
     async (req, res) => {
       const { serverId } = req.params;

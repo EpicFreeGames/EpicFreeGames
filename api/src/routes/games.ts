@@ -60,26 +60,30 @@ gameRouter.post(
   auth(Flags.EditGames),
   withValidation(
     {
-      body: z.object({
-        name: z.string().optional(),
-        displayName: z.string().optional(),
-        imageUrl: z.string().optional(),
-        start: z.string().optional(),
-        end: z.string().optional(),
-        path: z.string().optional(),
-        confirmed: z.boolean().optional(),
-        prices: z
-          .array(
-            z.object({
-              value: z.number(),
-              currencyCode: z.string(),
-            })
-          )
-          .optional(),
-      }),
-      params: z.object({
-        gameId: z.string(),
-      }),
+      body: z
+        .object({
+          name: z.string().optional(),
+          displayName: z.string().optional(),
+          imageUrl: z.string().optional(),
+          start: z.string().optional(),
+          end: z.string().optional(),
+          path: z.string().optional(),
+          confirmed: z.boolean().optional(),
+          prices: z
+            .array(
+              z.object({
+                value: z.number(),
+                currencyCode: z.string(),
+              })
+            )
+            .optional(),
+        })
+        .strict(),
+      params: z
+        .object({
+          gameId: z.string(),
+        })
+        .strict(),
     },
     async (req, res) => {
       const game = await prisma.game.update({

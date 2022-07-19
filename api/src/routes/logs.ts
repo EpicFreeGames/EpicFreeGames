@@ -12,13 +12,17 @@ router.post(
   auth(Flags.AddCommandLogs),
   withValidation(
     {
-      body: z.object({
-        command: z.string(),
-        senderId: z.string(),
-        serverId: z.string(),
-      }),
+      body: z
+        .object({
+          command: z.string(),
+          senderId: z.string(),
+          serverId: z.string(),
+        })
+        .strict(),
     },
     async (req, res) => {
+      console.log(req.body);
+
       const addedLog = await prisma.commandLog.create({
         data: req.body,
       });

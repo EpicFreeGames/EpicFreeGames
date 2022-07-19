@@ -11,9 +11,11 @@ authRouter.post(
   "/callback/discord",
   withValidation(
     {
-      query: z.object({
-        code: z.string(),
-      }),
+      query: z
+        .object({
+          code: z.string(),
+        })
+        .strict(),
     },
     async (req, res) => {
       const { code } = req.query;

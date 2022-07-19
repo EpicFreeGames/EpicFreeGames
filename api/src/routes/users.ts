@@ -12,12 +12,16 @@ router.post(
   auth(Flags.EditUsers),
   withValidation(
     {
-      params: z.object({
-        userId: z.string(),
-      }),
-      body: z.object({
-        newFlags: z.number(),
-      }),
+      params: z
+        .object({
+          userId: z.string(),
+        })
+        .strict(),
+      body: z
+        .object({
+          newFlags: z.number(),
+        })
+        .strict(),
     },
     async (req, res) => {
       const { userId } = req.params;
