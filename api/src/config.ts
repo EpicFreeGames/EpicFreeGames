@@ -3,8 +3,9 @@ import { z } from "zod";
 
 const envSchema = z.object({
   DATABASE_URL: z.string(),
+
   REDIS_HOST: z.string(),
-  REDIS_PORT: z.number(),
+  REDIS_PORT: z.string().transform(Number),
 
   APP_URL: z.string(),
 
