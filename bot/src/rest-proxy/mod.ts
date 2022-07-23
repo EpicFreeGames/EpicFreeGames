@@ -6,7 +6,7 @@ import { logger } from "../utils/logger.ts";
 const rest = createRestManager({
   token: config.BOT_TOKEN,
   secretKey: config.REST_PROXY_AUTH,
-  customUrl: `${config.REST_PROXY_URL}:${config.REST_PROXY_PORT}`,
+  customUrl: `${config.REST_PROXY_URL}`,
 });
 
 const httpServer = Deno.listen({ port: config.REST_PROXY_PORT });

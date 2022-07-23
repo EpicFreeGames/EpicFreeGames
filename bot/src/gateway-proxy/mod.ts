@@ -31,7 +31,7 @@ async function handleQueue() {
     return;
   }
 
-  await fetch(`${config.BOT_URL}:${config.BOT_PORT}`, {
+  await fetch(`${config.BOT_URL}`, {
     headers: {
       Authorization: config.BOT_AUTH,
       "Content-Type": "application/json",
@@ -55,7 +55,7 @@ async function handleQueue() {
 const rest = createRestManager({
   token: config.BOT_TOKEN,
   secretKey: config.REST_PROXY_AUTH,
-  customUrl: `${config.REST_PROXY_URL}:${config.REST_PROXY_PORT}`,
+  customUrl: `${config.REST_PROXY_URL}`,
 });
 
 const gatewayData = await rest.runMethod(rest, "GET", routes.GATEWAY_BOT());
@@ -72,7 +72,7 @@ const gateway = createGatewayManager({
     if (queue.processing && data.t !== "INTERACTION_CREATE")
       return queue.events.push({ shardId, data });
 
-    await fetch(`${config.BOT_URL}:${config.BOT_PORT}`, {
+    await fetch(`${config.BOT_URL}`, {
       headers: {
         Authorization: config.BOT_AUTH,
       },
