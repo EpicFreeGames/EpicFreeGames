@@ -1,11 +1,10 @@
-import { createSecretKey } from "crypto";
 import { z } from "zod";
 
 const envSchema = z.object({
   DATABASE_URL: z.string(),
 
-  REDIS_HOST: z.string(),
-  REDIS_PORT: z.string().transform(Number),
+  REDISHOST: z.string(),
+  REDISPORT: z.string().transform(Number),
 
   APP_URL: z.string(),
 
@@ -15,16 +14,6 @@ const envSchema = z.object({
   DISCORD_CLIENT_ID: z.string(),
   DISCORD_CLIENT_SECRET: z.string(),
   DISCORD_API_BASEURL: z.string(),
-
-  JWT_ACC_SECRET: z.string(),
-  JWT_ACC_AUD: z.string(),
-  JWT_ACC_ISS: z.string(),
-  JWT_ACC_EXP: z.string(),
-
-  JWT_REF_SECRET: z.string(),
-  JWT_REF_AUD: z.string(),
-  JWT_REF_ISS: z.string(),
-  JWT_REF_EXP: z.string(),
 
   PORT: z.string().transform(Number),
 
@@ -45,8 +34,4 @@ if (!env.success) {
   process.exit(1);
 }
 
-export const config = {
-  ...env.data,
-  JWT_ACC_KEY: createSecretKey(env.data.JWT_ACC_SECRET, "utf-8"),
-  JWT_REF_KEY: createSecretKey(env.data.JWT_REF_SECRET, "utf-8"),
-};
+export const config = env.data;
