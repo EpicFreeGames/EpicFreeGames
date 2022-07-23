@@ -2,10 +2,12 @@ version: "3.9"
 
 services:
   redis:
-    image: redis:latest
+    image: redis/redis-stack
     volumes:
-      - ./redis:/data
+      - redis:/data
     restart: unless-stopped
+    ports:
+      - "3001:8001"
 
   api:
     depends_on:
@@ -20,7 +22,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./api/src:/app/src:r
-    command: ["yarn", "dev"]
+    command: yarn dev
 
   bot_rest-proxy:
     depends_on:
@@ -66,3 +68,6 @@ services:
     volumes:
       - ./bot/src:/app/src:r
     command: "deno run --watch -A ./src/bot/mod.ts"
+
+volumes:
+  redis:

@@ -7,16 +7,9 @@
     "packages/*"
   ],
   "scripts": {
-    "start": "turbo run start",
-    "build": "yarn && turbo run build",
-    "buildprod": "turbo run buildprod",
-    "dev": "turbo run dev",
-    "postclean": "rm -rf node_modules",
-    "clean": "turbo run clean",
-    "reg": "turbo run reg",
-    "reg-g": "turbo run reg-g",
-    "up": "docker-compose up -d --build",
-    "down": "docker-compose down"
+    "dev": "docker compose up --build -V --attach api --attach bot_rest-proxy --attach bot_gateway-proxy --attach bot_bot",
+    "db": "cd ./api/ && yarn dotenv -e ../.env-api yarn prisma studio",
+    "dbpush": "cd ./api/ && yarn dotenv -e ../.env-api yarn prisma db push"
   },
   "devDependencies": {
     "turbo": "^1.2.4"
