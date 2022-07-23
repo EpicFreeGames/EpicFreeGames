@@ -30,13 +30,15 @@ const handleConnection = async (connection: Deno.Conn) => {
 
     const json = await requestEvent.request.json().catch(() => null);
 
+    const proxyTo = `${BASE_URL}/${requestEvent.request.url.substring(
+      rest.customUrl.length
+    )}`;
+
     try {
       const result = await rest.runMethod(
         rest,
         requestEvent.request.method as Method,
-        `${BASE_URL}/${requestEvent.request.url.substring(
-          rest.customUrl.length
-        )}`,
+        proxyTo,
         json
       );
 
@@ -60,11 +62,7 @@ const handleConnection = async (connection: Deno.Conn) => {
       logger.error(
         `Connection came to: ${requestEvent.request.method} ${requestEvent.request.url}`
       );
-      logger.error(
-        `Tried to proxy connection to: ${BASE_URL}${requestEvent.request.url.substring(
-          rest.customUrl.length
-        )}`
-      );
+      logger.error(`Tried to proxy connection to: ${proxyTo}`);
       logger.error(`Request body: ${JSON.stringify(json)}`);
 
       const statusCode = err.message.match(/\(\d+\) /)?.[0].replace(/\D/g, "");
