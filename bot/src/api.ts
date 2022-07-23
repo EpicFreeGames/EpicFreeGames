@@ -39,7 +39,7 @@ export const api = async <TData>(
     })
     .catch((err) => {
       logger.error(
-        `API request failed\nRequest url: ${config.API_BASEURL}${path}`
+        `API request failed\nRequest url: ${config.API_BASEURL}${path}\nError: ${err}`
       );
 
       return {
