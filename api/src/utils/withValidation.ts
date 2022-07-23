@@ -30,7 +30,7 @@ export const withValidation =
           statusCode: 400,
           error: "Bad Request",
           message: "Body validation failed",
-          details: result.error.format()._errors,
+          details: result.error.issues,
         });
 
       req.body = result.data;
@@ -44,7 +44,7 @@ export const withValidation =
           statusCode: 400,
           error: "Bad Request",
           message: "Querystring validation failed",
-          details: result.error.format()._errors,
+          details: result.error.issues,
         });
 
       req.query = result.data;
@@ -58,7 +58,7 @@ export const withValidation =
           statusCode: 400,
           error: "Bad Request",
           message: "Params validation failed",
-          details: result.error.format()._errors,
+          details: result.error.issues,
         });
 
       req.params = result.data;
