@@ -34,7 +34,7 @@ const handleConnection = async (connection: Deno.Conn) => {
       const result = await rest.runMethod(
         rest,
         requestEvent.request.method as Method,
-        `${BASE_URL}${requestEvent.request.url.substring(
+        `${BASE_URL}/${requestEvent.request.url.substring(
           rest.customUrl.length
         )}`,
         json
@@ -55,7 +55,7 @@ const handleConnection = async (connection: Deno.Conn) => {
       }
     } catch (err) {
       logger.error(
-        `Error while running REST request, more info about request:`
+        `\nError while running REST request, more info about request:`
       );
       logger.error(
         `Connection came to: ${requestEvent.request.method} ${requestEvent.request.url}`
