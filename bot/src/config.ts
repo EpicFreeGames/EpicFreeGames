@@ -2,6 +2,7 @@ import { GatewayIntents } from "discordeno";
 import { config as dotenvConfig } from "dotenv";
 import { z } from "zod";
 import { logger } from "~logger";
+import { getBase64Image } from "./utils/getBase64Image.ts";
 
 const env = dotenvConfig();
 
@@ -47,7 +48,7 @@ const envSchema = z.object({
   LINKS_LAUNCHER_REDIRECT: z.string(),
 
   NAME_ON_WEBHOOK: z.string(),
-  WEBHOOK_BASE64_PHOTO: z.string(),
+  LOGO_URL_ON_WEBHOOK: z.string(),
 });
 
 const result = envSchema.safeParse(
@@ -67,4 +68,5 @@ export const config = {
   ...result.data,
   BOT_ID: BigInt(atob(result.data.BOT_TOKEN.split(".")[0])),
   Intents,
+  BASE64_LOGO_ON_WEBHOOK: await getBase64Image(result.data.LOGO_URL_ON_WEBHOOK),
 };

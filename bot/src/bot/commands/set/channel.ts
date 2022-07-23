@@ -63,7 +63,7 @@ export const setChannelCommand = async ({
       webhook = await bot.helpers
         .createWebhook(channelId, {
           name: config.NAME_ON_WEBHOOK,
-          avatar: config.WEBHOOK_BASE64_PHOTO,
+          avatar: config.BASE64_LOGO_ON_WEBHOOK,
           reason:
             "The free game notifications will be delivered via this webhook",
         })
