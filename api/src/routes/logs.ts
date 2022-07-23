@@ -17,12 +17,11 @@ router.post(
           command: z.string(),
           senderId: z.string(),
           serverId: z.string(),
+          error: z.string().nullable(),
         })
         .strict(),
     },
     async (req, res) => {
-      console.log(req.body);
-
       const addedLog = await prisma.commandLog.create({
         data: req.body,
       });
