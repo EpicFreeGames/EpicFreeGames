@@ -2,7 +2,12 @@ import { MessageEmbed } from "discord.js";
 import { t } from "../localisation";
 import { constants } from "config";
 import { utils } from "./utils";
-import { ILanguage, IGuild, getDefaultCurrency, getDefaultLanguage } from "shared";
+import {
+  ILanguage,
+  IGuild,
+  getDefaultCurrency,
+  getDefaultLanguage,
+} from "shared";
 
 export const help = (language: ILanguage) =>
   new MessageEmbed({
@@ -11,7 +16,9 @@ export const help = (language: ILanguage) =>
     description:
       `[${t("commands_listed", language)}](${constants.links.commands})` +
       "\n\n" +
-      `[${t("support_click_here", language)}](${constants.links.serverInvite})` +
+      `[${t("support_click_here", language)}](${
+        constants.links.serverInvite
+      })` +
       utils.footer(language),
   }).setThumbnail(constants.photos.thumbnail);
 

@@ -1,0 +1,16 @@
+{
+  "cmd_desc_set_currency": "Chọn đơn vị tiền tệ bạn muốn giá ở đó",
+  "cmd_desc_set_thread": "Chọn một chủ đề, tôi sẽ đăng các trò chơi miễn phí mới trên đó",
+  "cmd_desc_set_channel": "Chọn một kênh, tôi sẽ đăng các trò chơi miễn phí mới trên đó",
+  "cmd_desc_set_role": "Chọn một vai trò tôi sẽ ping khi có trò chơi mới miễn phí!",
+  "cmd_desc_set_language": "Chọn một ngôn ngữ bạn muốn sử dụng các tin nhắn của tôi",
+  "cmd_desc_remove_channel": "Xóa kênh đã đặt (hoặc chủ đề)",
+  "cmd_desc_remove_role": "Xóa vai trò đã đặt",
+  "cmd_desc_invite": "Nhận liên kết mời của tôi",
+  "cmd_desc_help": "Sử dụng lệnh này nếu bạn cần trợ giúp",
+  "cmd_desc_debug": "Được sử dụng để gỡ lỗi",
+  "cmd_desc_up": "Xem các trò chơi miễn phí sắp tới",
+  "cmd_desc_free": "Xem các trò chơi miễn phí hiện tại",
+  "cmd_desc_settings": "Xem cài đặt",
+  "cmd_desc_vote": "Bỏ phiếu cho tôi"
+}

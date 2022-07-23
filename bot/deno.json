@@ -1,0 +1,22 @@
+{
+  "tasks": {
+    "rest": "deno run -A --unstable ./src/rest/mod.ts",
+    "bot": "deno run -A --unstable ./src/bot/mod.ts",
+    "watch-bot": "ENVIRONMENT=development deno run --watch -A --unstable ./src/bot/mod.ts",
+    "gateway": "deno run -A --unstable ./src/gateway/mod.ts"
+  },
+  "fmt": {
+    "files": {
+      "include": ["./src/**/*.ts"]
+    },
+    "options": {
+      "lineWidth": 80,
+      "tabWidth": 2,
+      "trailingComma": "es5",
+      "singleQuote": false,
+      "semi": true,
+      "useTabs": false
+    }
+  },
+  "importMap": "./importMap.json"
+}

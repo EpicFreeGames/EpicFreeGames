@@ -1,0 +1,21 @@
+{
+  "invite": "Undang",
+  "vote": "Vote",
+  "support": "Bantuan",
+  "website": "Website",
+  "support_click_here": "Klik disini jika anda mempunyai pertanyaan.",
+  "vote_needed_title": "Anda harus vote untuk dapat menggunakan perintah ini",
+  "vote_click_here": "Vote EpicFreeGames bot Discord:",
+  "commands_listed": "Kamu bisa menemukan semua link perintah disini",
+  "role_set_success_desc": "Dari sekarang saya akan selalu memberi tahu <role> ketika game baru akan dirilis.",
+  "channel_thread_set_success_desc": "Mulai sekarang saya akan memposting game gratis di <channel>.",
+  "manage_webhooks": "Manage webhooks",
+  "make_sure_perms": "Pastikan bot mengikuti persetujuan di **<channel>**",
+  "manage_guild_needed": "Anda perlu izin `MANAGE_GUILD` untuk menggunakan perintah ini",
+  "set_channel_first": "Kamu harus menyetel sebuah channel, agar supaya saya tau dimana saya memberitaumu. \n\nHanya ketik `/set channel`",
+  "commands": "Perintah",
+  "open_in": "Buka di:",
+  "free": "Gratis",
+  "no_free_games": "Tidak ada game gratis.",
+  "no_upcoming_games": "Tidak ada permainan gratis yang datang sekarang"
+}

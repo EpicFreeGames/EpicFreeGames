@@ -4,7 +4,10 @@ import { utils } from "./utils";
 import { constants } from "config";
 import { ILanguage } from "shared";
 
-export const missingPermissions = (channelId: string, language: ILanguage): MessageEmbed =>
+export const missingPermissions = (
+  channelId: string,
+  language: ILanguage
+): MessageEmbed =>
   new MessageEmbed({
     title: "❌",
     color: "DARK_RED",
@@ -13,7 +16,10 @@ export const missingPermissions = (channelId: string, language: ILanguage): Mess
       "\n\n" +
       utils.bold(`${t("manage_webhooks", language)}`) +
       "\n\n" +
-      utils.link(t("support_click_here", language), constants.links.serverInvite),
+      utils.link(
+        t("support_click_here", language),
+        constants.links.serverInvite
+      ),
   });
 
 export const unauthorized = {
@@ -31,7 +37,10 @@ export const unauthorized = {
       description:
         t("manage_guild_needed", language) +
         "\n\n" +
-        utils.link(t("support_click_here", language), constants.links.serverInvite) +
+        utils.link(
+          t("support_click_here", language),
+          constants.links.serverInvite
+        ) +
         utils.footer(language),
     }),
 };
@@ -43,7 +52,10 @@ export const maxNumberOfWebhooks = (language: ILanguage) =>
     description:
       t("ten_webhooks_only", language) +
       "\n\n" +
-      utils.link(t("support_click_here", language), constants.links.serverInvite) +
+      utils.link(
+        t("support_click_here", language),
+        constants.links.serverInvite
+      ) +
       utils.footer(language),
   });
 
@@ -59,7 +71,8 @@ export const mustVote = (language: ILanguage) =>
     title: t("vote_needed_title", language),
     color: "RED",
     description:
-      utils.link(t("vote_click_here", language), constants.links.vote) + utils.footer(language),
+      utils.link(t("vote_click_here", language), constants.links.vote) +
+      utils.footer(language),
   });
 
 export const genericError = () =>
