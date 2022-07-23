@@ -1,6 +1,7 @@
 import { serialize } from "./bot/utils/jsonWorker/initiator.ts";
 import { config } from "./config.ts";
 import { Method } from "./types.ts";
+import { logger } from "./utils/logger.ts";
 
 type ApiResponse<TData> =
   | {
@@ -36,6 +37,12 @@ export const api = async <TData>(
         throw json;
       }
     })
-    .catch((err) => ({
-      error: err,
-    }));
+    .catch((err) => {
+      logger.error(
+        `API request failed\nRequest url: ${config.API_BASEURL}${path}`
+      );
+
+      return {
+        error: err,
+      };
+    });
