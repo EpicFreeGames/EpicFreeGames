@@ -56,8 +56,9 @@ const handleConnection = async (connection: Deno.Conn) => {
         );
       }
     } catch (err) {
+      logger.error();
       logger.error(
-        `\nError while running REST request, more info about request:`
+        `Error while running REST request, more info about request:`
       );
       logger.error(
         `Connection came to: ${requestEvent.request.method} ${requestEvent.request.url}`
