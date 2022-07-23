@@ -19,15 +19,15 @@ const envSchema = z.object({
   REDISPORT: z.string().transform(Number),
 
   GATEWAY_PROXY_URL: z.string(),
-  GATEWAY_PROXY_PORT: z.string().transform(Number).nullable(),
+  GATEWAY_PROXY_PORT: z.string().transform(Number).optional(),
   GATEWAY_PROXY_AUTH: z.string(),
 
   BOT_URL: z.string(),
-  BOT_PORT: z.string().transform(Number).nullable(),
+  BOT_PORT: z.string().transform(Number).optional(),
   BOT_AUTH: z.string(),
 
   REST_PROXY_URL: z.string(),
-  REST_PROXY_PORT: z.string().transform(Number).nullable(),
+  REST_PROXY_PORT: z.string().transform(Number).optional(),
   REST_PROXY_AUTH: z.string(),
 
   DEV_GUILD_ID: z.string().optional(),
