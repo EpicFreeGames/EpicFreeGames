@@ -36,22 +36,14 @@ model Server {
   roleId       String?
   channelId    String?
   threadId     String?
-  languageCode String?
   webhookId    String?
   webhookToken String?
-  language     Language?    @relation(fields: [languageCode], references: [code])
+  languageCode String?
   currencyCode String?
   currency     Currency?    @relation(fields: [currencyCode], references: [code])
   createdAt    DateTime     @default(now())
   commandLogs  CommandLog[]
   sendingLogs  SendingLog[]
-}
-
-model Language {
-  code        String   @id @unique
-  englishName String
-  nativeName  String
-  servers     Server[]
 }
 
 model Currency {
