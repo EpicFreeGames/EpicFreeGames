@@ -1,22 +1,8 @@
 {
-  "name": "freegames-bot",
-  "version": "0.0.0",
-  "private": true,
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
+  "name": "freegames-bot-monorepo",
   "scripts": {
     "dev": "docker compose up --build -V --attach api --attach bot_rest-proxy --attach bot_gateway-proxy --attach bot_bot",
     "db": "cd ./api/ && yarn dotenv -e ../.env-api yarn prisma studio",
     "dbpush": "cd ./api/ && yarn dotenv -e ../.env-api yarn prisma db push"
-  },
-  "devDependencies": {
-    "turbo": "^1.2.4"
-  },
-  "engines": {
-    "npm": ">=8.5.5",
-    "node": ">=16.5.0"
-  },
-  "packageManager": "yarn@1.22.19"
+  }
 }
