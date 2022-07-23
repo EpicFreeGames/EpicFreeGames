@@ -21,7 +21,9 @@ export const bot = handleCache(
 bot.rest = createRestManager({
   token: config.BOT_TOKEN,
   secretKey: config.REST_PROXY_AUTH,
-  customUrl: `${config.REST_PROXY_URL}`,
+  customUrl: `${config.REST_PROXY_URL}${
+    config.BOT_PORT ? `:${config.BOT_PORT}` : ""
+  }`,
 });
 
 export const redis = await connect({
@@ -45,8 +47,8 @@ initCommands();
 //   .then(() => console.log("Commands updated."))
 //   .catch((err) => console.error(err));
 
-const httpServer = Deno.listen({ port: config.BOT_PORT });
-console.log(`🚀 Bot listening for events on port ${config.BOT_PORT}`);
+const httpServer = Deno.listen({ port: config.BOT_PORT || 3000 });
+console.log(`🚀 Bot listening for events on port ${config.BOT_PORT || 3000}`);
 
 for await (const conn of httpServer) {
   (async () => {

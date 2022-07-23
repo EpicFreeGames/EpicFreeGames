@@ -55,7 +55,9 @@ async function handleQueue() {
 const rest = createRestManager({
   token: config.BOT_TOKEN,
   secretKey: config.REST_PROXY_AUTH,
-  customUrl: `${config.REST_PROXY_URL}`,
+  customUrl: `${config.REST_PROXY_URL}${
+    config.REST_PROXY_PORT ? `:${config.REST_PROXY_PORT}` : ""
+  }`,
 });
 
 const gatewayData = await rest.runMethod(rest, "GET", routes.GATEWAY_BOT());

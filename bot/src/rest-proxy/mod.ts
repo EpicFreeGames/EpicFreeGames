@@ -9,8 +9,8 @@ const rest = createRestManager({
   customUrl: `${config.REST_PROXY_URL}`,
 });
 
-const httpServer = Deno.listen({ port: config.REST_PROXY_PORT });
-console.log(`🚀 REST server listening on port ${config.REST_PROXY_PORT}`);
+const httpServer = Deno.listen({ port: config.REST_PROXY_PORT || 3000 });
+logger.info(`REST server listening on port ${config.REST_PROXY_PORT || 3000}`);
 
 const handleConnection = async (connection: Deno.Conn) => {
   const httpConnection = Deno.serveHttp(connection);
@@ -32,7 +32,7 @@ const handleConnection = async (connection: Deno.Conn) => {
 
     const proxyTo = `${BASE_URL}/${requestEvent.request.url.substring(
       rest.customUrl.length
-    )}`;
+    )}`.replace("//", "/");
 
     try {
       const result = await rest.runMethod(
@@ -64,8 +64,9 @@ const handleConnection = async (connection: Deno.Conn) => {
       );
       logger.error(`Tried to proxy connection to: ${proxyTo}`);
       logger.error(`Request body: ${JSON.stringify(json)}`);
+      logger.error(`Error: ${err.stack}`);
 
-      const statusCode = err.message.match(/\(\d+\) /)?.[0].replace(/\D/g, "");
+      const statusCode = err.match(/\(\d+\) /)?.[0].replace(/\D/g, "");
 
       requestEvent.respondWith(
         new Response(undefined, {
