@@ -54,7 +54,18 @@ const handleConnection = async (connection: Deno.Conn) => {
         );
       }
     } catch (err) {
-      logger.error(`Error while running REST request\n${err}`);
+      logger.error(
+        `Error while running REST request, more info about request:`
+      );
+      logger.error(
+        `Connection came to: ${requestEvent.request.method} ${requestEvent.request.url}`
+      );
+      logger.error(
+        `Tried to proxy connection to: ${BASE_URL}${requestEvent.request.url.substring(
+          rest.customUrl.length
+        )}`
+      );
+      logger.error(`Request body: ${JSON.stringify(json)}`);
 
       const statusCode = err.message.match(/\(\d+\) /)?.[0].replace(/\D/g, "");
 
