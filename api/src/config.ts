@@ -13,7 +13,6 @@ const envSchema = z.object({
 
   DISCORD_CLIENT_ID: z.string(),
   DISCORD_CLIENT_SECRET: z.string(),
-  DISCORD_API_BASEURL: z.string(),
 
   PORT: z.string().transform(Number),
 });
