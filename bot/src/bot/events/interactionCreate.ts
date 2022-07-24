@@ -56,7 +56,7 @@ export const interactionCreateHandler: EventHandlers["interactionCreate"] =
       });
       !!error && logger.error("Error logging command:", error);
 
-      console.log(`Command executed: ${command.name}`);
+      logger.debug(`Command executed: ${command.name}`);
       // deno-lint-ignore no-explicit-any
     } catch (err: any) {
       logger.error(

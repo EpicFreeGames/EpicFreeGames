@@ -10,7 +10,6 @@ import { logger } from "~logger";
 import { Currency, Language, Server } from "../../types.ts";
 import { freeCommand } from "./free.ts";
 import { helpCommand } from "./help.ts";
-import { pingCommand } from "./ping.ts";
 import { removeCommand } from "./remove.ts";
 import { setCommand } from "./set/mod.ts";
 import { upCommand } from "./up.ts";
@@ -49,7 +48,6 @@ export const commands = new Collection<string, Command>();
 export const initCommands = () => {
   logger.info("Initializing commands");
 
-  commands.set("ping", pingCommand);
   commands.set("free", freeCommand);
   commands.set("up", upCommand);
   commands.set("help", helpCommand);
