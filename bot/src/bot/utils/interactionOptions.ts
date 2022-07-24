@@ -1,21 +1,11 @@
-import {
-  ApplicationCommandOptionTypes,
-  Interaction,
-  snowflakeToBigint,
-} from "discordeno";
+import { ApplicationCommandOptionTypes, Interaction, snowflakeToBigint } from "discordeno";
 
-export const getChannelId = (
-  i: Interaction,
-  name: string
-): bigint | null | undefined => {
+export const getChannelId = (i: Interaction, name: string): bigint | null | undefined => {
   let res = null;
   if (!i?.data?.options) return null;
 
   for (const option of i.data.options) {
-    if (
-      option.type === ApplicationCommandOptionTypes.Channel &&
-      option.name === name
-    ) {
+    if (option.type === ApplicationCommandOptionTypes.Channel && option.name === name) {
       res = option.value;
       break;
     }
@@ -23,10 +13,7 @@ export const getChannelId = (
     if (!option.options) continue;
 
     for (const subOption of option.options) {
-      if (
-        subOption.type === ApplicationCommandOptionTypes.Channel &&
-        subOption.name === name
-      ) {
+      if (subOption.type === ApplicationCommandOptionTypes.Channel && subOption.name === name) {
         res = subOption.value;
         break;
       }
@@ -36,18 +23,12 @@ export const getChannelId = (
   return snowflakeToBigint(String(res));
 };
 
-export const getRoleId = (
-  i: Interaction,
-  name: string
-): bigint | null | undefined => {
+export const getRoleId = (i: Interaction, name: string): bigint | null | undefined => {
   let res = null;
   if (!i?.data?.options) return null;
 
   for (const option of i.data.options) {
-    if (
-      option.type === ApplicationCommandOptionTypes.Role &&
-      option.name === name
-    ) {
+    if (option.type === ApplicationCommandOptionTypes.Role && option.name === name) {
       res = option.value;
       break;
     }
@@ -55,10 +36,7 @@ export const getRoleId = (
     if (!option.options) continue;
 
     for (const subOption of option.options) {
-      if (
-        subOption.type === ApplicationCommandOptionTypes.Role &&
-        subOption.name === name
-      ) {
+      if (subOption.type === ApplicationCommandOptionTypes.Role && subOption.name === name) {
         res = subOption.value;
         break;
       }
@@ -66,4 +44,27 @@ export const getRoleId = (
   }
 
   return snowflakeToBigint(String(res));
+};
+
+export const getString = (i: Interaction, name: string): string | null | undefined => {
+  let res = null;
+  if (!i?.data?.options) return null;
+
+  for (const option of i.data.options) {
+    if (option.type === ApplicationCommandOptionTypes.String && option.name === name) {
+      res = option.value;
+      break;
+    }
+
+    if (!option.options) continue;
+
+    for (const subOption of option.options) {
+      if (subOption.type === ApplicationCommandOptionTypes.String && subOption.name === name) {
+        res = subOption.value;
+        break;
+      }
+    }
+  }
+
+  return res as string;
 };
