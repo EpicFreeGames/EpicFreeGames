@@ -1,15 +1,12 @@
 import { GatewayIntents } from "discordeno";
-import { config as dotenvConfig } from "dotenv";
 import { z } from "zod";
-import { logger } from "~logger";
 import { getBase64Image } from "./utils/getBase64Image.ts";
-
-const env = dotenvConfig();
 
 const Intents: GatewayIntents = GatewayIntents.DirectMessages | GatewayIntents.Guilds;
 
 const envSchema = z.object({
   DEBUG: z.any().optional(),
+  SLASH_COMMANDS: z.any().optional(),
 
   BOT_TOKEN: z.string().refine((v) => !!BigInt(atob(v.split(".")[0]))),
 
@@ -46,12 +43,10 @@ const envSchema = z.object({
   LOGO_URL_ON_WEBHOOK: z.string(),
 });
 
-const result = envSchema.safeParse(
-  Deno.env.get("ENVIRONMENT") === "development" ? env : Deno.env.toObject()
-);
+const result = envSchema.safeParse(Deno.env.toObject());
 
 if (!result.success) {
-  logger.error("❌ Invalid environment variables:", JSON.stringify(result.error.format(), null, 4));
+  console.log("❌ Invalid environment variables:", JSON.stringify(result.error.format(), null, 4));
 
   Deno.exit(1);
 }

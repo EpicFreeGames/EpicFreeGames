@@ -17,6 +17,4 @@ COPY ./src/utils ./src/utils
 
 RUN deno cache ${FOLDER}/mod.ts
 
-EXPOSE 3000
-
 CMD deno run -A ${FOLDER}/mod.ts
