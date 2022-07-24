@@ -6,8 +6,11 @@ import { Language } from "../types.ts";
 import { colors, utils } from "./embedUtils.ts";
 
 const permissionMap = new Map([
-  ["MANAGE_WEBHOOKS", "Manage webhooks"],
-  ["VIEW_CHANNEL", "View channel"],
+  ["MANAGE_WEBHOOKS", "Manage webhooks  "],
+  ["VIEW_CHANNEL", "View channel     "],
+  ["SEND_MESSAGES", "Send messages    "],
+  ["MENTION_EVERYONE", "Mention everyone "],
+  ["EMBED_LINKS", "Embed links      "],
 ]);
 
 export const missingPermissions = (
@@ -19,9 +22,16 @@ export const missingPermissions = (
   color: colors.red,
   description:
     t({ language, key: "make_sure_perms", vars: { channel: `<#${channelId}>` } }) +
-    "\n\n" +
-    missingPerms.map((r, perm) => `${permissionMap.get(perm)} ${r ? "✅" : "❌"}`).join("\n") +
-    "\n\n" +
+    "\n" +
+    "```" +
+    missingPerms
+      .map(
+        (r, perm) =>
+          `${permissionMap.get(perm)} ${r ? "✅" : `❌ ${t({ language, key: "missing" })}`}`
+      )
+      .join("\n") +
+    "```" +
+    "\n" +
     utils.link(t({ language, key: "support_click_here" }), config.LINKS_SERVER_INVITE),
 });
 
