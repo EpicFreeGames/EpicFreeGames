@@ -12,7 +12,7 @@ export const gameEmbed = (game: Game, language: Language, currency: Currency): E
 
   return {
     title: game.displayName,
-    color: 0x2f3136,
+    color: colors.gray,
     image: {
       url: game.imageUrl,
     },

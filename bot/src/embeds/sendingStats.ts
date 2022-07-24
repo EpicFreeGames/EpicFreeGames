@@ -1,10 +1,10 @@
 import { Embed } from "discordeno";
 import { IFinishedSendingStats, ISendingStats } from "../types.ts";
-import { utils } from "./embedUtils.ts";
+import { colors, utils } from "./embedUtils.ts";
 
 export const stats = (stats: ISendingStats): Embed => ({
   title: "Sending in progress...",
-  color: 0x2f3136,
+  color: colors.gray,
   description:
     "**__Games:__**" +
     "\n" +
@@ -15,9 +15,7 @@ export const stats = (stats: ISendingStats): Embed => ({
     `**__Speed:__** ${stats.speed} msg/sec` +
     "\n\n" +
     `**__ETA:__** ${
-      !Number.isNaN(stats.eta) && stats.eta < Infinity
-        ? utils.relativeTimestamp(stats.eta)
-        : ""
+      !Number.isNaN(stats.eta) && stats.eta < Infinity ? utils.relativeTimestamp(stats.eta) : ""
     }` +
     "\n\n" +
     `**__Started at:__** ${utils.longTime(stats.startedAt)}` +
@@ -27,7 +25,7 @@ export const stats = (stats: ISendingStats): Embed => ({
 
 export const finished = (stats: IFinishedSendingStats): Embed => ({
   title: "Sending finished",
-  color: 0x2f3136,
+  color: colors.gray,
   description:
     "**__Games:__**" +
     "\n" +

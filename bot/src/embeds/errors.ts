@@ -3,7 +3,7 @@ import { ResultMap } from "../bot/helpers/hasPerms.ts";
 import { config } from "../config.ts";
 import { t } from "../i18n/translate.ts";
 import { Language } from "../types.ts";
-import { utils } from "./embedUtils.ts";
+import { colors, utils } from "./embedUtils.ts";
 
 const permissionMap = new Map([
   ["MANAGE_WEBHOOKS", "Manage webhooks"],
@@ -16,7 +16,7 @@ export const missingPermissions = (
   missingPerms: ResultMap
 ): Embed => ({
   title: "❌",
-  color: 0x8b0000,
+  color: colors.red,
   description:
     t({ language, key: "make_sure_perms", vars: { channel: `<#${channelId}>` } }) +
     "\n\n" +
@@ -28,13 +28,13 @@ export const missingPermissions = (
 export const unauthorized = {
   adminOnlyCommand: (language: Language): Embed => ({
     title: "❌",
-    color: 0x8b0000,
+    color: colors.red,
     description: t({ language, key: "bot_admins_only" }) + utils.footer(language),
   }),
 
   manageGuildCommand: (language: Language): Embed => ({
     title: "❌",
-    color: 0x8b0000,
+    color: colors.red,
     description:
       t({ language, key: "manage_guild_needed" }) +
       "\n\n" +
@@ -45,7 +45,7 @@ export const unauthorized = {
 
 export const maxNumberOfWebhooks = (language: Language): Embed => ({
   title: t({ language, key: "too_many_webhooks" }),
-  color: 0x8b0000,
+  color: colors.red,
   description:
     t({ language, key: "ten_webhooks_only" }) +
     "\n\n" +
@@ -55,12 +55,12 @@ export const maxNumberOfWebhooks = (language: Language): Embed => ({
 
 export const channelNotSet = (language: Language): Embed => ({
   title: "❌",
-  color: 0x8b0000,
+  color: colors.red,
   description: t({ language, key: "set_channel_first" }) + utils.footer(language),
 });
 
 export const genericError = (): Embed => ({
   title: "Error",
-  color: 0x8b0000,
+  color: colors.red,
   description: "An error occured. :( Please try again later.",
 });
