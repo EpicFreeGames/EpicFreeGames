@@ -12,6 +12,8 @@
   "bot_admins_only": "Per usare questo comando devi essere un amministratore del bot",
   "manage_webhooks": "Gestire i webhook",
   "role_set_success_desc": "Menzionerò/Pingherò <role> per avvisarti sui nuovi giochi gratuiti!",
+  "channel_thread_set_success_desc": "Comincierò a inviare notifiche sui giochi gratuiti su <channel>!",
+  "channel_thread_remove_success_desc": "Non invierò più notifiche sui giochi gratuiti su questo server.",
   "role_remove_success_desc": "Non menzionerò/pingherò più <role> per avvisarti sui nuovi giochi gratuiti",
   "open_in": "Apri in:",
   "invite": "Invita",
@@ -20,7 +22,5 @@
   "website": "Sito web",
   "help": "Supporto",
   "webhooks_notification": "Ora supporto i webhooks! Mi permettono di inviare le notifiche molto più velocemente. Admin del server, scrivete `/set channel` (o `/set thread`) per abilitare le notifiche tramite webhooks.",
-  "slash_notification": "I comandi slash (/) non funzionano? (Clicca qui) per aggiungere di nuovo il bot al tuo server con i comandi slash abilitati. (Non è necessario rimuovere il bot)",
-  "channel_thread_set_success_desc": "Comincierò a inviare notifiche sui giochi gratuiti su <channel>!",
-  "channel_thread_remove_success_desc": "Non invierò più notifiche sui giochi gratuiti su questo server."
+  "slash_notification": "I comandi slash (/) non funzionano? (Clicca qui) per aggiungere di nuovo il bot al tuo server con i comandi slash abilitati. (Non è necessario rimuovere il bot)"
 }
