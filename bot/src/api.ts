@@ -34,7 +34,7 @@ export async function api<TData>({
     method,
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bot ${config.API_TOKEN}`,
+      Authorization: `Bot ${config.API_BOT_SECRET}`,
     },
     ...(!!body && { body: await serialize(body) }),
   })

@@ -32,7 +32,7 @@ const envSchema = z.object({
 
   DEV_GUILD_ID: z.string().optional(),
 
-  API_TOKEN: z.string(),
+  API_BOT_SECRET: z.string(),
   API_BASEURL: z.string(),
 
   GIFS_VOTE: z.string(),

@@ -16,12 +16,6 @@ const envSchema = z.object({
   DISCORD_API_BASEURL: z.string(),
 
   PORT: z.string().transform(Number),
-
-  MAIL_HOST: z.string(),
-  MAIL_PORT: z.string().transform(Number),
-  MAIL_USER: z.string(),
-  MAIL_PASS: z.string(),
-  MAIL_FROM: z.string(),
 });
 
 const env = envSchema.safeParse(process.env);
