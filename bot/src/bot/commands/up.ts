@@ -15,7 +15,7 @@ export const upCommand: Command = {
   execute: async ({ bot, i, lang, curr }) => {
     const { error, data: games } = await api<Game[]>({
       method: "GET",
-      path: "/games/upcoming",
+      path: "/games/up",
     });
 
     await bot.helpers.sendInteractionResponse(i.id, i.token, {
