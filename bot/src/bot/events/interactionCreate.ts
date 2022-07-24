@@ -23,8 +23,8 @@ export const interactionCreateHandler: EventHandlers["interactionCreate"] = asyn
   });
 
   if (!error && server) {
-    language = server.language;
-    currency = server.currency;
+    server.language && (language = server.language);
+    server.currency && (currency = server.currency);
   }
 
   try {
