@@ -27,12 +27,12 @@ export const roleSet = (role: string, language: Language):Embed =>
 
 export const updatedSettings = (language: Language): Embed => ({
   title: "✅",
-  color: colors.gray,
+  color: colors.green,
   description: utils.bold(t({ language, key: "updated_settings" })),
 });
 
 export const currentSettings = (language: Language): Embed => ({
   title: "✅",
-  color: colors.gray,
+  color: colors.green,
   description: utils.bold(t({ language, key: "current_settings" })),
 });
