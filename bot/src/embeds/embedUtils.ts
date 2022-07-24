@@ -24,10 +24,10 @@ export const colors = {
 };
 
 const createFooter = (language: Language) => {
-  const invite = t(language, "invite");
-  const vote = t(language, "vote");
-  const support = t(language, "support");
-  const website = t(language, "website");
+  const invite = t({ language, key: "invite" });
+  const vote = t({ language, key: "vote" });
+  const support = t({ language, key: "support" });
+  const website = t({ language, key: "website" });
 
   const list = [invite, vote, support, website];
   const withVars = [
@@ -47,18 +47,9 @@ const createFooter = (language: Language) => {
   if (concatted.length >= 39)
     if (threeConcatted.length >= 39)
       // 2 lines, with one on the second line
-      return (
-        withVars.slice(0, 2).join(separator) +
-        "\n" +
-        withVars.slice(2).join(separator)
-      );
+      return withVars.slice(0, 2).join(separator) + "\n" + withVars.slice(2).join(separator);
     // 2 lines, with two on the second line
-    else
-      return (
-        withVars.slice(0, 3).join(separator) +
-        "\n" +
-        withVars.slice(3).join(separator)
-      );
+    else return withVars.slice(0, 3).join(separator) + "\n" + withVars.slice(3).join(separator);
 
   return withVars.join(separator);
 };

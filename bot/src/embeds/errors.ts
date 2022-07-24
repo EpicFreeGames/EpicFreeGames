@@ -18,50 +18,45 @@ export const missingPermissions = (
   title: "❌",
   color: 0x8b0000,
   description:
-    t(language, "make_sure_perms", { channel: `<#${channelId}>` }) +
+    t({ language, key: "make_sure_perms", vars: { channel: `<#${channelId}>` } }) +
     "\n\n" +
-    missingPerms
-      .map((r, perm) => `${permissionMap.get(perm)} ${r ? "✅" : "❌"}`)
-      .join("\n") +
+    missingPerms.map((r, perm) => `${permissionMap.get(perm)} ${r ? "✅" : "❌"}`).join("\n") +
     "\n\n" +
-    utils.link(t(language, "support_click_here"), config.LINKS_SERVER_INVITE),
+    utils.link(t({ language, key: "support_click_here" }), config.LINKS_SERVER_INVITE),
 });
 
 export const unauthorized = {
   adminOnlyCommand: (language: Language): Embed => ({
     title: "❌",
     color: 0x8b0000,
-    description: t(language, "bot_admins_only") + utils.footer(language),
+    description: t({ language, key: "bot_admins_only" }) + utils.footer(language),
   }),
 
   manageGuildCommand: (language: Language): Embed => ({
     title: "❌",
     color: 0x8b0000,
     description:
-      t(language, "manage_guild_needed") +
+      t({ language, key: "manage_guild_needed" }) +
       "\n\n" +
-      utils.link(
-        t(language, "support_click_here"),
-        config.LINKS_SERVER_INVITE
-      ) +
+      utils.link(t({ language, key: "support_click_here" }), config.LINKS_SERVER_INVITE) +
       utils.footer(language),
   }),
 };
 
 export const maxNumberOfWebhooks = (language: Language): Embed => ({
-  title: t(language, "too_many_webhooks"),
+  title: t({ language, key: "too_many_webhooks" }),
   color: 0x8b0000,
   description:
-    t(language, "ten_webhooks_only") +
+    t({ language, key: "ten_webhooks_only" }) +
     "\n\n" +
-    utils.link(t(language, "support_click_here"), config.LINKS_SERVER_INVITE) +
+    utils.link(t({ language, key: "support_click_here" }), config.LINKS_SERVER_INVITE) +
     utils.footer(language),
 });
 
 export const channelNotSet = (language: Language): Embed => ({
   title: "❌",
   color: 0x8b0000,
-  description: t(language, "set_channel_first") + utils.footer(language),
+  description: t({ language, key: "set_channel_first" }) + utils.footer(language),
 });
 
 export const genericError = (): Embed => ({

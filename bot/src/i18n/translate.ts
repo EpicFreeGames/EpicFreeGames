@@ -12,13 +12,19 @@ import {
 
 type T = translationsType;
 
-export const t = <P extends Join<PathKeys<T>, ".">>(
-  language: Language,
-  key: P,
-  vars: Variables<T, P, "."> extends never
-    ? undefined
-    : Record<Variables<T, P, ".">, string>
-): string => {
+type Args<P extends Join<PathKeys<T>, ".">> = Variables<T, P, "."> extends never
+  ? {
+      language: Language;
+      key: P;
+      vars?: never;
+    }
+  : {
+      language: Language;
+      key: P;
+      vars: Record<Variables<T, P, ".">, string>;
+    };
+
+export const t = <P extends Join<PathKeys<T>, ".">>({ language, key, vars }: Args<P>): string => {
   const langTranslations = translations.get(language.code);
 
   const path = key.split(".");

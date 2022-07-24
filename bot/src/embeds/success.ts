@@ -9,9 +9,9 @@ export const channelSet = (channelId: bigint, language: Language):Embed =>
     title: "✅",
     color: colors.green,
     description: 
-      t(language,"channel_thread_set_success_desc", { channel: `<#${channelId}>` }) + 
+      t({language,key: "channel_thread_set_success_desc",vars: { channel: `<#${channelId}>` }}) + 
       "\n\n" +
-      utils.bold(t(language,"updated_settings"))
+      utils.bold(t({language,key:"updated_settings"}))
   });
 
 // prettier-ignore
@@ -20,19 +20,19 @@ export const roleSet = (role: string, language: Language):Embed =>
     title: "✅",
     color: colors.green,
     description: 
-      t(language,"role_set_success_desc", { role }) + 
+      t({language,key: "role_set_success_desc",vars: { role }}) + 
       "\n\n" +
-      utils.bold(t(language,"updated_settings", ))
+      utils.bold(t({language,key:"updated_settings"}, ))
   });
 
 export const updatedSettings = (language: Language): Embed => ({
   title: "✅",
   color: colors.gray,
-  description: utils.bold(t(language, "updated_settings")),
+  description: utils.bold(t({ language, key: "updated_settings" })),
 });
 
 export const currentSettings = (language: Language): Embed => ({
   title: "✅",
   color: colors.gray,
-  description: utils.bold(t(language, "current_settings")),
+  description: utils.bold(t({ language, key: "current_settings" })),
 });

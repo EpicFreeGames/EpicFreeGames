@@ -8,9 +8,9 @@ export const help = (language: Language): Embed => ({
   title: "Help",
   color: colors.green,
   description:
-    `[${t(language, "commands_listed")}](${config.LINKS_COMMANDS})` +
+    `[${t({ language, key: "commands_listed" })}](${config.LINKS_COMMANDS})` +
     "\n\n" +
-    `[${t(language, "support_click_here")}](${config.LINKS_SERVER_INVITE})` +
+    `[${t({ language, key: "support_click_here" })}](${config.LINKS_SERVER_INVITE})` +
     utils.footer(language),
   thumbnail: {
     url: config.PHOTOS_THUMBNAIL,
@@ -18,7 +18,7 @@ export const help = (language: Language): Embed => ({
 });
 
 export const vote = (language: Language): Embed => ({
-  title: t(language, "vote"),
+  title: t({ language, key: "vote" }),
   color: colors.blue,
   image: {
     url: config.GIFS_VOTE,
@@ -27,7 +27,7 @@ export const vote = (language: Language): Embed => ({
 });
 
 export const invite = (language: Language): Embed => ({
-  title: t(language, "invite"),
+  title: t({ language, key: "invite" }),
   color: colors.blue,
   image: {
     url: config.GIFS_INVITE,
@@ -41,23 +41,20 @@ export const debug = (guildId: string): Embed => ({
   description: utils.bold(`Guild ID: ${guildId}`),
 });
 
-export const settings = (
-  server: Server | undefined,
-  language: Language
-): Embed => ({
-  title: t(language, "settings"),
+export const settings = (server: Server | undefined, language: Language): Embed => ({
+  title: t({ language, key: "settings" }),
   color: colors.gray,
   description:
-    utils.bold(`${t(language, "channel")}/${t(language, "thread")}: `) +
+    utils.bold(`${t({ language, key: "channel" })}/${t({ language, key: "thread" })}: `) +
     settingsUtils.showChannelOrThread(server, language) +
     "\n\n" +
-    utils.bold(`${t(language, "role")}: `) +
+    utils.bold(`${t({ language, key: "role" })}: `) +
     settingsUtils.showRole(server, language) +
     "\n\n" +
-    utils.bold(`${t(language, "language")}: `) +
+    utils.bold(`${t({ language, key: "language" })}: `) +
     (server?.language?.nativeName ?? "English") +
     "\n\n" +
-    utils.bold(`${t(language, "currency")}: `) +
+    utils.bold(`${t({ language, key: "currency" })}: `) +
     (server?.currency?.name ?? "$ Dollar (USD)") +
     utils.footer(language),
 });
@@ -69,7 +66,7 @@ const settingsUtils = {
     } else if (server?.threadId) {
       return `<#${server?.threadId}>`;
     } else {
-      return t(language, "channel_thread_not_set");
+      return t({ language, key: "channel_thread_not_set" });
     }
   },
 
@@ -79,7 +76,7 @@ const settingsUtils = {
 
       return `<@&${server?.roleId}>`;
     } else {
-      return t(language, "role_not_set");
+      return t({ language, key: "role_not_set" });
     }
   },
 };

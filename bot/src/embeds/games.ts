@@ -18,7 +18,7 @@ export const gameEmbed = (game: Game, language: Language, currency: Currency): E
     },
     // prettier-ignore
     description:
-      t(language, "open_in") +
+      t({language, key: "open_in"}) +
 
       "\n" +
       
@@ -39,7 +39,7 @@ export const gameEmbed = (game: Game, language: Language, currency: Currency): E
 
       "\n\n" +
 
-      `💰 ${utils.bold(`${utils.strike(getGamePrice(game, currency))} -> ${t(language, "free")}`)}!` +
+      `💰 ${utils.bold(`${utils.strike(getGamePrice(game, currency))} -> ${t({language,key: "free"})}`)}!` +
 
       "\n\n" +
 
@@ -48,13 +48,13 @@ export const gameEmbed = (game: Game, language: Language, currency: Currency): E
 };
 
 export const noFreeGames = (language: Language): Embed => ({
-  title: t(language, "no_free_games"),
+  title: t({ language, key: "no_free_games" }),
   color: colors.red,
   description: ":(" + utils.footer(language),
 });
 
 export const noUpcomingGames = (language: Language): Embed => ({
-  title: t(language, "no_upcoming_games"),
+  title: t({ language, key: "no_upcoming_games" }),
   color: colors.red,
   description: ":(" + utils.footer(language),
 });
