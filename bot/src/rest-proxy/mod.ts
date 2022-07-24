@@ -1,6 +1,7 @@
 import { BASE_URL, createRestManager } from "discordeno";
 import { config } from "../config.ts";
 import { RestMethod } from "../types.ts";
+import { serialize } from "../utils/jsonWorker/initiator.ts";
 import { logger } from "../utils/logger.ts";
 
 const rest = createRestManager({
@@ -30,10 +31,8 @@ const handleConnection = async (connection: Deno.Conn) => {
 
     const json = await requestEvent.request.json().catch(() => null);
 
-    const proxyTo = `${BASE_URL}/${requestEvent.request.url.substring(
-      requestEvent.request.url.startsWith("/")
-        ? rest.customUrl.length + 1
-        : rest.customUrl.length
+    const proxyTo = `${BASE_URL}${requestEvent.request.url.substring(
+      rest.customUrl.length
     )}`;
 
     try {
@@ -58,16 +57,15 @@ const handleConnection = async (connection: Deno.Conn) => {
         );
       }
     } catch (err) {
-      logger.error();
       logger.error(
-        `Error while running REST request, more info about request:`
+        `Error while running REST request, more info about request:\nConnection came to: ${
+          requestEvent.request.method
+        } ${
+          requestEvent.request.url
+        }\nTried to proxy connection to: ${proxyTo}\nRequest body: ${await serialize(
+          json
+        )}\nError: ${err.stack}`
       );
-      logger.error(
-        `Connection came to: ${requestEvent.request.method} ${requestEvent.request.url}`
-      );
-      logger.error(`Tried to proxy connection to: ${proxyTo}`);
-      logger.error(`Request body: ${JSON.stringify(json)}`);
-      logger.error(`Error: ${err.stack}`);
 
       const statusCode = err.message.match(/\(\d+\) /)?.[0].replace(/\D/g, "");
 
