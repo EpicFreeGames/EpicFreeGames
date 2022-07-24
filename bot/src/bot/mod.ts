@@ -2,7 +2,7 @@ import { createBot, createRestManager, DiscordGatewayPayload } from "discordeno"
 import { connect } from "https://deno.land/x/redis@v0.26.0/redis.ts";
 import { logger } from "~logger";
 import { config } from "../config.ts";
-import { initCommands } from "./commands/mod.ts";
+import { commands, initCommands } from "./commands/mod.ts";
 import { initEvents } from "./events/mod.ts";
 import { handleCache } from "./utils/cache.ts";
 
@@ -26,20 +26,22 @@ export const redis = await connect({
 });
 logger.info("Connected to Redis");
 
+if (config.SLASH_COMMANDS) {
+  await bot.helpers
+    .upsertApplicationCommands(
+      commands.map((c) => ({
+        name: c.name,
+        description: c.description,
+        options: c.options,
+        type: c.type,
+      }))
+    )
+    .then(() => logger.info("Commands updated."))
+    .catch((err) => logger.error("Error updating slash commands:", err));
+}
+
 initEvents();
 initCommands();
-
-// await bot.helpers
-//   .upsertApplicationCommands(
-//     commands.map((c) => ({
-//       name: c.name,
-//       description: c.description,
-//       options: c.options,
-//       type: c.type,
-//     }))
-//   )
-//   .then(() => logger.info("Commands updated."))
-//   .catch((err) => logger.error(err));
 
 const httpServer = Deno.listen({ port: 3000 });
 logger.info("🚀 Bot listening for events on port 3000");
