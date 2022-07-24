@@ -12,6 +12,8 @@
   "bot_admins_only": "Cette commande nécessite que vous soyez l'un des administrateurs du bot",
   "manage_webhooks": "Gérer les webhooks",
   "role_set_success_desc": "Je mentionnerai/pingerai <role> lors de la notification des jeux gratuits !",
+  "channel_thread_set_success_desc": "Je vais commencer à signaler les jeux gratuits sur <channel> !",
+  "channel_thread_remove_success_desc": "Je ne notifierai plus les jeux gratuits sur ce serveur.",
   "role_remove_success_desc": "Je ne mentionnerai plus/pingerai <role> lors de la notification de jeux gratuits",
   "updated_settings": "Voici les paramètres mis à jour :",
   "current_settings": "Voici les paramètres actuels :",
@@ -33,7 +35,5 @@
   "settings": "Réglages",
   "help": "Aider",
   "webhooks_notification": "Je supporte les webhooks de nos jours ! Ils me permettent d'envoyer les notifications beaucoup plus rapidement. Administrateurs du serveur, veuillez faire `/set channel` (ou `/set thread`) pour activer les notifications via les webhooks.",
-  "slash_notification": "Les commandes slash (/) ne fonctionnent pas ? (Cliquez ici) pour ajouter à nouveau le bot à votre serveur avec les commandes slash activées. (Le coup de pied n'est pas obligatoire)",
-  "channel_thread_set_success_desc": "Je vais commencer à signaler les jeux gratuits sur <channel> !",
-  "channel_thread_remove_success_desc": "Je ne notifierai plus les jeux gratuits sur ce serveur."
+  "slash_notification": "Les commandes slash (/) ne fonctionnent pas ? (Cliquez ici) pour ajouter à nouveau le bot à votre serveur avec les commandes slash activées. (Le coup de pied n'est pas obligatoire)"
 }
