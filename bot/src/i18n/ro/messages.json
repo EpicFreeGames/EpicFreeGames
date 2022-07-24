@@ -12,6 +12,8 @@
   "bot_admins_only": "Această comandă necesită să fiți unul dintre administratorii botului",
   "manage_webhooks": "Gestionează webhook-uri",
   "role_set_success_desc": "Voi notifica/ping <role> când voi anunța jocuri gratuite!",
+  "channel_thread_set_success_desc": "Voi anunța jocurile gratuite pe <channel>!",
+  "channel_thread_remove_success_desc": "Nu voi mai notifica despre jocurile gratuite pe acest server.",
   "role_remove_success_desc": "Nu voi mai notifica/ping<role> când voi anunța jocuri gratuite",
   "updated_settings": "Aici sunt setările actualizate:",
   "current_settings": "Aici sunt setările curente:",
@@ -33,7 +35,5 @@
   "settings": "Setări",
   "help": "Ajutor",
   "webhooks_notification": "De acum suport și webhook-uri! Acestea îmi dau acordul de a trimite notificări mult mai rapid! Administratorii server-ului, vă rog utilizați comanda `/set channel` (sau `/set thread`) pentru a activa notificările prin intermediul webhook-urilor.",
-  "slash_notification": "Comenzile slash(/) nu funcționează? (Apasă aici) pentru a adăuga bot-ul din nou pe server cu comenzile slash activate. (Nu e nevoie de înlăturarea bot-ului de pe server)",
-  "channel_thread_set_success_desc": "Voi anunța jocurile gratuite pe <channel>!",
-  "channel_thread_remove_success_desc": "Nu voi mai notifica despre jocurile gratuite pe acest server."
+  "slash_notification": "Comenzile slash(/) nu funcționează? (Apasă aici) pentru a adăuga bot-ul din nou pe server cu comenzile slash activate. (Nu e nevoie de înlăturarea bot-ului de pe server)"
 }
