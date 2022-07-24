@@ -18,8 +18,6 @@ export const setChannelCommand = async ({ bot, i, lang, curr }: CommandExecutePr
     },
   });
 
-  console.log(lang);
-
   const channelId = getChannelId(i, "channel");
   if (!channelId) return; // won't happen, but just in case
 
