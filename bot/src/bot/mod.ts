@@ -73,7 +73,7 @@ for await (const conn of httpServer) {
         shardId: number;
       };
 
-      console.log("GATEWAY EVENT", json.data.t);
+      logger.debug("GATEWAY EVENT", json.data.t);
 
       bot.events.raw(bot, json.data, json.shardId);
 

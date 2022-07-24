@@ -6,6 +6,7 @@ import {
   transformGatewayBot,
 } from "discordeno";
 import { config } from "../config.ts";
+import { logger } from "../utils/logger.ts";
 
 const queue: GatewayQueue = {
   processing: false,
@@ -67,7 +68,7 @@ const gateway = createGatewayManager({
     intents: config.Intents,
   },
   handleDiscordPayload: async ({ id: shardId }, data) => {
-    console.log("GATEWAY EVENT", data.t);
+    logger.debug("GATEWAY EVENT", data.t);
 
     if (queue.processing && data.t !== "INTERACTION_CREATE")
       return queue.events.push({ shardId, data });
@@ -81,8 +82,7 @@ const gateway = createGatewayManager({
     })
       .then((res) => res.text())
       .catch(() => {
-        if (data.t !== "INTERACTION_CREATE")
-          queue.events.push({ shardId, data });
+        if (data.t !== "INTERACTION_CREATE") queue.events.push({ shardId, data });
         setTimeout(handleQueue, 1000);
       });
   },
