@@ -7,13 +7,12 @@ import { api } from "../../../api.ts";
 import { embeds } from "../../../embeds/mod.ts";
 import { languages } from "../../../i18n/languages.ts";
 import { Server } from "../../../types.ts";
-import { bot } from "../../mod.ts";
 import { getString } from "../../utils/interactionOptions.ts";
 import { CommandExecuteProps, EphemeralFlag } from "../mod.ts";
 
-export const setLanguageCommand = async ({ i, lang, curr, ...rest }: CommandExecuteProps) => {
+export const setLanguageCommand = async ({ bot, i, lang, curr, ...rest }: CommandExecuteProps) => {
   if (i.type === InteractionTypes.ApplicationCommandAutocomplete)
-    return autoCompleteHandler({ i, lang, curr, ...rest });
+    return autoCompleteHandler({ i, lang, curr, bot, ...rest });
 
   const languageCode = getString(i, "language");
   if (!languageCode || !languages.has(languageCode)) return;

@@ -3,7 +3,6 @@ import {
   InteractionResponseTypes,
 } from "https://deno.land/x/discordeno@13.0.0-rc45/mod.ts";
 import { embeds } from "../../embeds/mod.ts";
-import { bot } from "../mod.ts";
 import { Command, EphemeralFlag } from "./mod.ts";
 
 export const settingsCommand: Command = {
@@ -12,7 +11,7 @@ export const settingsCommand: Command = {
   needsGuild: true,
   type: ApplicationCommandTypes.ChatInput,
   needsManageGuild: true,
-  execute: ({ i, server, lang, curr }) =>
+  execute: ({ bot, i, server, lang, curr }) =>
     bot.helpers.sendInteractionResponse(i.id, i.token, {
       type: InteractionResponseTypes.ChannelMessageWithSource,
       data: {
