@@ -12,6 +12,8 @@
   "bot_admins_only": "Ta komenda wymaga bycia jednym z operatorów bota",
   "manage_webhooks": "Zarządzaj webhookami",
   "role_set_success_desc": "Wspomnę / spinguję <role> gdy powiadomię o grach darmowych!",
+  "channel_thread_set_success_desc": "Zacznę powiadamiać o darmowych grach na <channel>!",
+  "channel_thread_remove_success_desc": "Nie będę już powiadamiał o darmowych grach na tym serwerze.",
   "role_remove_success_desc": "Nie będę już wspominać/pingować <role> podczas powiadamiania o darmowej grze",
   "updated_settings": "Oto zaktualizowane ustawienia:",
   "current_settings": "Oto obecne ustawienia:",
@@ -33,7 +35,5 @@
   "settings": "Ustawienia",
   "help": "Pomoc",
   "webhooks_notification": "Wspieram webhooki od niedawna! Pozwalają one wysyłać powiadomienia znacznie szybciej. Administratorzy, użyjcie `/set channel` (lub `/set thread`) aby włączyć powiadomienia poprzez webhooki.",
-  "slash_notification": "Komendy po slashu (/) nie działają? (Kliknij tutaj) aby dodać bota ponownie do serwera z włączonymi komendami po slashu. (Wyrzucenie nie jest wymagane)",
-  "channel_thread_set_success_desc": "Zacznę powiadamiać o darmowych grach na <channel>!",
-  "channel_thread_remove_success_desc": "Nie będę już powiadamiał o darmowych grach na tym serwerze."
+  "slash_notification": "Komendy po slashu (/) nie działają? (Kliknij tutaj) aby dodać bota ponownie do serwera z włączonymi komendami po slashu. (Wyrzucenie nie jest wymagane)"
 }
