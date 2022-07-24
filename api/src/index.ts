@@ -1,7 +1,7 @@
-import { PrismaClient } from "@prisma/client";
 import { config } from "./config";
 import { createRedisStore } from "./redis";
 import { createServer } from "./server";
+import { PrismaClient } from "@prisma/client";
 
 export const prisma = new PrismaClient();
 

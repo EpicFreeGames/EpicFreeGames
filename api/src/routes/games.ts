@@ -1,10 +1,10 @@
-import { GamePrice } from "@prisma/client";
-import { Router } from "express";
-import { z } from "zod";
 import { prisma } from "..";
 import { auth } from "../utils/auth";
 import { Flags } from "../utils/flags";
 import { withValidation } from "../utils/withValidation";
+import { GamePrice } from "@prisma/client";
+import { Router } from "express";
+import { z } from "zod";
 
 export const gameRouter = Router();
 

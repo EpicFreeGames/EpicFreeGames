@@ -1,7 +1,7 @@
+import { config } from "./config";
 import connectRedis from "connect-redis";
 import expressSession from "express-session";
 import { createClient } from "redis";
-import { config } from "./config";
 
 export const createRedisStore = async () => {
   const RedisStore = connectRedis(expressSession);

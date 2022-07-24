@@ -1,14 +1,13 @@
 import { config } from "./config";
-
-import express, { Router, Express } from "express";
-import expressSession from "express-session";
-import cookieParser from "cookie-parser";
+import { authRouter } from "./routes/auth";
 import { gameRouter } from "./routes/games";
+import { logRouter } from "./routes/logs";
 import { serverRouter } from "./routes/servers";
 import { userRouter } from "./routes/users";
-import { logRouter } from "./routes/logs";
-import { authRouter } from "./routes/auth";
 import { RedisStore } from "connect-redis";
+import cookieParser from "cookie-parser";
+import express, { Router, Express } from "express";
+import expressSession from "express-session";
 
 export const createServer = async (redisStore: RedisStore) => {
   const app = express();

@@ -1,9 +1,9 @@
-import { Router } from "express";
-import { z } from "zod";
 import { prisma } from "..";
 import { auth } from "../utils/auth";
 import { Flags } from "../utils/flags";
 import { withValidation } from "../utils/withValidation";
+import { Router } from "express";
+import { z } from "zod";
 
 const router = Router();
 

@@ -1,9 +1,8 @@
-import axios from "axios";
-import { z } from "zod";
 import { config } from "../config";
-
-import { Router } from "express";
 import { withValidation } from "../utils/withValidation";
+import axios from "axios";
+import { Router } from "express";
+import { z } from "zod";
 
 export const authRouter = Router();
 
