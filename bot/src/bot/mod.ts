@@ -6,7 +6,7 @@ import {
 import { connect } from "https://deno.land/x/redis@v0.26.0/redis.ts";
 import { logger } from "~logger";
 import { config } from "../config.ts";
-import { initCommands } from "./commands/mod.ts";
+import { commands, initCommands } from "./commands/mod.ts";
 import { initEvents } from "./events/mod.ts";
 import { handleCache } from "./utils/cache.ts";
 
@@ -21,9 +21,7 @@ export const bot = handleCache(
 bot.rest = createRestManager({
   token: config.BOT_TOKEN,
   secretKey: config.REST_PROXY_AUTH,
-  customUrl: `${config.REST_PROXY_URL}${
-    config.BOT_PORT ? `:${config.BOT_PORT}` : ""
-  }`,
+  customUrl: config.REST_PROXY_URL,
 });
 
 export const redis = await connect({
@@ -35,17 +33,17 @@ logger.info("Connected to Redis");
 initEvents();
 initCommands();
 
-// await bot.helpers
-//   .upsertApplicationCommands(
-//     commands.map((c) => ({
-//       name: c.name,
-//       description: c.description,
-//       options: c.options,
-//       type: c.type,
-//     }))
-//   )
-//   .then(() => console.log("Commands updated."))
-//   .catch((err) => console.error(err));
+await bot.helpers
+  .upsertApplicationCommands(
+    commands.map((c) => ({
+      name: c.name,
+      description: c.description,
+      options: c.options,
+      type: c.type,
+    }))
+  )
+  .then(() => console.log("Commands updated."))
+  .catch((err) => console.error(err));
 
 const httpServer = Deno.listen({ port: config.BOT_PORT || 3000 });
 console.log(`🚀 Bot listening for events on port ${config.BOT_PORT || 3000}`);

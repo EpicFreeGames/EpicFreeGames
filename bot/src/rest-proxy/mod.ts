@@ -6,11 +6,11 @@ import { logger } from "../utils/logger.ts";
 const rest = createRestManager({
   token: config.BOT_TOKEN,
   secretKey: config.REST_PROXY_AUTH,
-  customUrl: `${config.REST_PROXY_URL}`,
+  customUrl: config.REST_PROXY_URL,
 });
 
-const httpServer = Deno.listen({ port: config.REST_PROXY_PORT || 3000 });
-logger.info(`REST server listening on port ${config.REST_PROXY_PORT || 3000}`);
+const httpServer = Deno.listen({ port: 3000 });
+logger.info("REST server listening on port 3000");
 
 const handleConnection = async (connection: Deno.Conn) => {
   const httpConnection = Deno.serveHttp(connection);
