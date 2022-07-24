@@ -12,6 +12,8 @@
   "bot_admins_only": "هذا الأمر يتطلب منك أن تكون أحد مشرفي البوت",
   "manage_webhooks": "إدارة webhooks",
   "role_set_success_desc": "سأقوم بذكر <role> عند الإشعار عن الألعاب المجانية!",
+  "channel_thread_set_success_desc": "سأبدأ بالإشعار عن الألعاب المجانية في <channel>!",
+  "channel_thread_remove_success_desc": "لن أقوم بالإشعار عن الألعاب المجانية في هذا الخادم بعد الأن.",
   "role_remove_success_desc": "لن أقوم بذكر <role> عند الإشعار عن الألعاب المجانية بعد الأن",
   "updated_settings": "فيما يلي الإعدادات المحدثة:",
   "current_settings": "فيما يلي الإعدادات الحالية:",
@@ -29,7 +31,5 @@
   "settings": "إعدادات",
   "help": "المساعدة",
   "webhooks_notification": "أنا أدعم webhooks هذه الأيام! إنها تسمح لي إرسال الإشعارات بسرعة أكبر. مشرفو الخوادم، رجاءًا القيام بـ`/set channel` (أو `/set thread`) لتفعيل الإشعارات خلال webhooks.",
-  "slash_notification": "أوامر Slash (/) لا تعمل؟ (إضغط هنا) لإضافة البوت مرة أخرى إلى خادمك مع تمكين أوامر Slash. (الطرد ليس مطلوب)",
-  "channel_thread_set_success_desc": "سأبدأ بالإشعار عن الألعاب المجانية في <channel>!",
-  "channel_thread_remove_success_desc": "لن أقوم بالإشعار عن الألعاب المجانية في هذا الخادم بعد الأن."
+  "slash_notification": "أوامر Slash (/) لا تعمل؟ (إضغط هنا) لإضافة البوت مرة أخرى إلى خادمك مع تمكين أوامر Slash. (الطرد ليس مطلوب)"
 }
