@@ -3,21 +3,14 @@ import { config } from "~config";
 import { logger } from "~logger";
 import { api } from "../../../api.ts";
 import { embeds } from "../../../embeds/mod.ts";
-import { Server } from "../../../types.ts";
+import { Game, Server } from "../../../types.ts";
 import { getChannel } from "../../helpers/getChannel.ts";
 import { getGuild } from "../../helpers/getGuild.ts";
 import { hasPermsOnChannel } from "../../helpers/hasPerms.ts";
 import { getChannelId } from "../../utils/interactionOptions.ts";
 import { CommandExecuteProps } from "../mod.ts";
 
-export const setChannelCommand = async ({
-  bot,
-  i,
-  server,
-  lang,
-}: CommandExecuteProps) => {
-  console.log({ lang });
-
+export const setChannelCommand = async ({ bot, i, server, lang, curr }: CommandExecuteProps) => {
   const channelId = getChannelId(i, "channel");
   if (!channelId) return; // won't happen, but just in case
 
@@ -40,12 +33,10 @@ export const setChannelCommand = async ({
         },
       });
 
-    const channelsWebhooks = await bot.helpers
-      .getChannelWebhooks(channelId)
-      .catch((err) => {
-        logger.error("error getting channels webhooks:", err);
-        return undefined;
-      });
+    const channelsWebhooks = await bot.helpers.getChannelWebhooks(channelId).catch((err) => {
+      logger.error("error getting channels webhooks:", err);
+      return undefined;
+    });
 
     if (!channelsWebhooks)
       return await bot.helpers.sendInteractionResponse(i.id, i.token, {
@@ -55,17 +46,14 @@ export const setChannelCommand = async ({
         },
       });
 
-    let webhook = channelsWebhooks.find(
-      (webhook) => webhook.user?.id === bot.id
-    );
+    let webhook = channelsWebhooks.find((webhook) => webhook.user?.id === bot.id);
 
     if (!webhook)
       webhook = await bot.helpers
         .createWebhook(channelId, {
           name: config.NAME_ON_WEBHOOK,
           avatar: config.BASE64_LOGO_ON_WEBHOOK,
-          reason:
-            "The free game notifications will be delivered via this webhook",
+          reason: "The free game notifications will be delivered via this webhook",
         })
         .catch((error) => {
           logger.error("failed creating a new webhook:", error);
@@ -98,7 +86,7 @@ export const setChannelCommand = async ({
         },
       });
 
-    return await bot.helpers.sendInteractionResponse(i.id, i.token, {
+    await bot.helpers.sendInteractionResponse(i.id, i.token, {
       type: InteractionResponseTypes.ChannelMessageWithSource,
       data: {
         embeds: [
@@ -106,6 +94,18 @@ export const setChannelCommand = async ({
           embeds.commands.settings(updatedServer, lang),
         ],
       },
+    });
+
+    // send current free games to the set channel
+    const { error: gameError, data: freeGames } = await api<Game[]>({
+      method: "GET",
+      path: "/games/free",
+    });
+
+    if (gameError || !freeGames.length) return;
+
+    await bot.helpers.sendWebhook(webhook.id, webhook.token!, {
+      embeds: freeGames.map((game) => embeds.games.gameEmbed(game, lang, curr)),
     });
   }
 };
