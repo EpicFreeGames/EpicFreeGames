@@ -93,6 +93,7 @@ export type translationsType = {
 
   settings: "Settings";
   help: "Help";
+  missing: "Missing!";
 
   webhooks_notification: "I support webhooks nowadays! They allow me to send the notifications a lot faster. Server admins, please do `/set channel` (or `/set thread`) to enable notifications through webhooks.";
   slash_notification: "Slash (/) commands not working? (Click here) to add the bot again to your server with the slash commands enabled. (Kicking is not required)";
