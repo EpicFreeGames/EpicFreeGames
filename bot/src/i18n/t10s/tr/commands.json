@@ -1,0 +1,16 @@
+{
+  "cmd_desc_set_currency": "Gözükmesini istediğiniz para birimini seçin",
+  "cmd_desc_set_thread": "Yeni ücretsiz oyunları göndereceğim konuyu seç",
+  "cmd_desc_set_channel": "Yeni ücretsiz oyunları göndereceğim kanalı seç",
+  "cmd_desc_set_role": "Yeni ücretsiz oyunları gönderdiğimde etiketleyeceğim rolü seç!",
+  "cmd_desc_set_language": "Mesajları istediğin dilde göndermem için seç",
+  "cmd_desc_remove_channel": "Ayarlanmış kanalı (yada konuyu) sil",
+  "cmd_desc_remove_role": "Ayarlanmış rolü sil",
+  "cmd_desc_invite": "Davet bağlantımı al",
+  "cmd_desc_help": "Eğer yardıma ihtiyacın varsa bunu kullan",
+  "cmd_desc_debug": "Hata ayıklama için kullanılır",
+  "cmd_desc_up": "Gelecek bedava oyunlara bak",
+  "cmd_desc_free": "Şuanki bedava oyuna bak",
+  "cmd_desc_settings": "Ayarlara bak",
+  "cmd_desc_vote": "Benim için oy ver"
+}
