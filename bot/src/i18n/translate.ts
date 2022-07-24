@@ -32,7 +32,17 @@ export const t = <P extends Join<PathKeys<T>, ".">>({ language, key, vars }: Arg
   let value = langTranslations;
   for (const p of path) {
     // @ts-ignore no point trying to make ts happy
-    value = value[p as any];
+    value = value[p];
+  }
+
+  if (!value) {
+    const english = translations.get("en");
+
+    value = english;
+    for (const p of path) {
+      // @ts-ignore no point trying to make ts happy
+      value = value[p];
+    }
   }
 
   if (vars && Object.keys(vars).length) {
