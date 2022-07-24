@@ -1,4 +1,4 @@
-import { serialize } from "./bot/utils/jsonWorker/initiator.ts";
+import { serialize } from "~json/initiator.ts";
 import { config } from "./config.ts";
 import { Method } from "./types.ts";
 import { logger } from "./utils/logger.ts";
@@ -49,9 +49,11 @@ export async function api<TData>({
         throw json;
       }
     })
-    .catch((err) => {
+    .catch(async (err) => {
       logger.error(
-        `API request failed\nRequest url: ${config.API_BASEURL}${path}\nError: ${err}`
+        `API request failed\nRequest url: ${
+          config.API_BASEURL
+        }${path}\nError: ${await serialize(err)}`
       );
 
       return {

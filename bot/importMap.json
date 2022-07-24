@@ -6,6 +6,7 @@
     "zod": "https://deno.land/x/zod@v3.17.3/mod.ts",
     "colors": "https://deno.land/std@0.149.0/fmt/colors.ts",
     "~logger": "./src/utils/logger.ts",
-    "~config": "./src/config.ts"
+    "~config": "./src/config.ts",
+    "~json/": "./src/utils/jsonWorker/"
   }
 }

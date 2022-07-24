@@ -31,8 +31,10 @@ const handleConnection = async (connection: Deno.Conn) => {
     const json = await requestEvent.request.json().catch(() => null);
 
     const proxyTo = `${BASE_URL}/${requestEvent.request.url.substring(
-      rest.customUrl.length
-    )}`.replace("//", "/");
+      requestEvent.request.url.startsWith("/")
+        ? rest.customUrl.length + 1
+        : rest.customUrl.length
+    )}`;
 
     try {
       const result = await rest.runMethod(
@@ -67,7 +69,7 @@ const handleConnection = async (connection: Deno.Conn) => {
       logger.error(`Request body: ${JSON.stringify(json)}`);
       logger.error(`Error: ${err.stack}`);
 
-      const statusCode = err.match(/\(\d+\) /)?.[0].replace(/\D/g, "");
+      const statusCode = err.message.match(/\(\d+\) /)?.[0].replace(/\D/g, "");
 
       requestEvent.respondWith(
         new Response(undefined, {

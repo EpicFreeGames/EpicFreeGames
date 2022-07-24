@@ -1,6 +1,7 @@
 import { DiscordGuild } from "discordeno";
+import { deserialize, serialize } from "~json/initiator.ts";
+import { logger } from "../utils/logger.ts";
 import { redis } from "./mod.ts";
-import { deserialize, serialize } from "./utils/jsonWorker/initiator.ts";
 
 export const redisGet = async <TData>(
   key: string
@@ -14,7 +15,7 @@ export const redisGet = async <TData>(
 
     return data;
   } catch (err) {
-    console.log(err);
+    logger.error(err);
 
     return undefined;
   }
@@ -32,7 +33,7 @@ export const redisSet = async (
 
     return true;
   } catch (err) {
-    console.log(err);
+    logger.error(err);
 
     return false;
   }
@@ -44,7 +45,7 @@ export const redisDelete = async (...keys: string[]): Promise<boolean> => {
 
     return true;
   } catch (err) {
-    console.log(err);
+    logger.error(err);
 
     return false;
   }
