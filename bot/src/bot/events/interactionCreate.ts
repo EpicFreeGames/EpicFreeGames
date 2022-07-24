@@ -1,7 +1,7 @@
 import { ApplicationCommandOptionTypes, EventHandlers, Interaction } from "discordeno";
 import { logger } from "~logger";
 import { api } from "../../api.ts";
-import { defaultCurrency, defaultLanguage } from "../../i18n/languages.ts";
+import { defaultCurrency, defaultLanguage, languages } from "../../i18n/languages.ts";
 import { Server } from "../../types.ts";
 import { commands } from "../commands/mod.ts";
 import { bot } from "../mod.ts";
@@ -23,7 +23,9 @@ export const interactionCreateHandler: EventHandlers["interactionCreate"] = asyn
   });
 
   if (!error && server) {
-    server.language && (language = server.language);
+    if (server.languageCode !== defaultLanguage.code && languages.has(server.languageCode))
+      language = languages.get(server.languageCode)!;
+
     server.currency && (currency = server.currency);
   }
 

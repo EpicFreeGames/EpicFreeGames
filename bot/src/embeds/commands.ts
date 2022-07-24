@@ -1,7 +1,7 @@
 import { Embed } from "discordeno";
 import { config } from "../config.ts";
 import { t } from "../i18n/translate.ts";
-import { Language, Server } from "../types.ts";
+import { Currency, Language, Server } from "../types.ts";
 import { colors, utils } from "./embedUtils.ts";
 
 export const help = (language: Language): Embed => ({
@@ -41,7 +41,11 @@ export const debug = (guildId: string): Embed => ({
   description: utils.bold(`Guild ID: ${guildId}`),
 });
 
-export const settings = (server: Server | undefined, language: Language): Embed => ({
+export const settings = (
+  server: Server | undefined,
+  language: Language,
+  currency: Currency
+): Embed => ({
   title: t({ language, key: "settings" }),
   color: colors.gray,
   description:
@@ -52,10 +56,10 @@ export const settings = (server: Server | undefined, language: Language): Embed 
     settingsUtils.showRole(server, language) +
     "\n\n" +
     utils.bold(`${t({ language, key: "language" })}: `) +
-    (server?.language?.nativeName ?? "English") +
+    language.nativeName +
     "\n\n" +
     utils.bold(`${t({ language, key: "currency" })}: `) +
-    (server?.currency?.name ?? "$ Dollar (USD)") +
+    currency.name +
     utils.footer(language),
 });
 

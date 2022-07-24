@@ -43,7 +43,6 @@ export type Server = {
   roleId: string | null;
   channelId: string | null;
   threadId: string | null;
-  language: Language;
   languageCode: Language["code"];
   currency: Currency;
   currencyCode: Currency["code"];

@@ -104,7 +104,7 @@ export const setChannelCommand = async ({ bot, i, lang, curr }: CommandExecutePr
       flags: 64,
       embeds: [
         embeds.success.channelSet(channelId, lang),
-        embeds.commands.settings(updatedServer, lang),
+        embeds.commands.settings(updatedServer, lang, curr),
       ],
     },
   });

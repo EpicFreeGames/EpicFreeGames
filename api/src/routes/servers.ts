@@ -79,48 +79,6 @@ router.put(
   )
 );
 
-router.put(
-  "/:serverId/channel",
-  auth(Flags.EditServers),
-  withValidation(
-    {
-      params: z
-        .object({
-          serverId: z.string(),
-        })
-        .strict(),
-      body: z
-        .object({
-          channelId: z.string(),
-          webhookId: z.string(),
-          webhookToken: z.string(),
-        })
-        .strict(),
-    },
-    async (req, res) => {
-      const { serverId } = req.params;
-      const { channelId, webhookId, webhookToken } = req.body;
-
-      const updatedServer = await prisma.server.upsert({
-        where: { id: serverId },
-        update: {
-          channelId,
-          webhookId,
-          webhookToken,
-        },
-        create: {
-          id: serverId,
-          channelId,
-          webhookId,
-          webhookToken,
-        },
-      });
-
-      res.json(updatedServer);
-    }
-  )
-);
-
 router.delete(
   "/:serverId/channel",
   auth(Flags.EditServers),
@@ -296,6 +254,67 @@ router.delete(
           channelId,
           webhookId,
           webhookToken,
+        },
+      });
+
+      res.json(updatedServer);
+    }
+  )
+);
+
+router.put(
+  "/:serverId/language",
+  auth(Flags.EditServers),
+  withValidation(
+    {
+      body: z.object({
+        languageCode: z.string(),
+      }),
+    },
+    async (req, res) => {
+      const { serverId } = req.params;
+      const { languageCode } = req.body;
+
+      const updatedServer = await prisma.server.update({
+        where: { id: serverId },
+        data: {
+          languageCode,
+        },
+      });
+
+      res.json(updatedServer);
+    }
+  )
+);
+
+router.put(
+  "/:serverId/currency",
+  auth(Flags.EditServers),
+  withValidation(
+    {
+      body: z.object({
+        currencyCode: z.string(),
+      }),
+    },
+    async (req, res) => {
+      const { serverId } = req.params;
+      const { currencyCode } = req.body;
+
+      const currency = await prisma.currency.findUnique({
+        where: { code: currencyCode },
+      });
+
+      if (!currency)
+        return res.status(400).json({
+          statusCode: 400,
+          error: "Bad Request",
+          message: "Invalid currency code",
+        });
+
+      const updatedServer = await prisma.server.update({
+        where: { id: serverId },
+        data: {
+          currencyCode,
         },
       });
 

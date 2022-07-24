@@ -8,7 +8,7 @@ import { hasPermsOnChannel } from "../../helpers/hasPerms.ts";
 import { getRoleId } from "../../utils/interactionOptions.ts";
 import { CommandExecuteProps } from "../mod.ts";
 
-export const setRoleCommand = async ({ bot, i, server, lang }: CommandExecuteProps) => {
+export const setRoleCommand = async ({ bot, i, server, lang, curr }: CommandExecuteProps) => {
   // server must have a channel set to set a role
   if (!server?.channelId)
     return await bot.helpers.sendInteractionResponse(i.id, i.token, {
@@ -57,7 +57,10 @@ export const setRoleCommand = async ({ bot, i, server, lang }: CommandExecutePro
       flags: 64,
       embeds: error
         ? [embeds.errors.genericError()]
-        : [embeds.success.roleSet(embed, lang), embeds.commands.settings(updatedServer, lang)],
+        : [
+            embeds.success.roleSet(embed, lang),
+            embeds.commands.settings(updatedServer, lang, curr),
+          ],
     },
   });
 };
