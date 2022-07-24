@@ -1,19 +1,8 @@
-import {
-  Bot,
-  Channel,
-  Collection,
-  Guild,
-  PermissionStrings,
-  separateOverwrites,
-} from "discordeno";
+import { Bot, Channel, Collection, Guild, PermissionStrings, separateOverwrites } from "discordeno";
 
 export type ResultMap = Collection<PermissionStrings, boolean>;
 
-const setAllPerms = (
-  neededPerms: PermissionStrings[],
-  resultMap: ResultMap,
-  setTo: boolean
-) => {
+const setAllPerms = (neededPerms: PermissionStrings[], resultMap: ResultMap, setTo: boolean) => {
   neededPerms.forEach((perm) => resultMap.set(perm, setTo));
   return resultMap;
 };
@@ -56,8 +45,7 @@ export const hasPermsOnChannel = async (
     };
 
   for (const packedOverwrite of channel.permissionOverwrites) {
-    const [type, id, overwriteAllow, overwriteDeny] =
-      separateOverwrites(packedOverwrite);
+    const [type, id, overwriteAllow, overwriteDeny] = separateOverwrites(packedOverwrite);
 
     // @everyone
     if (type == 0 && id == guild.id) {
@@ -84,17 +72,19 @@ export const hasPermsOnChannel = async (
     }
   }
 
+  let hasPerms = true;
+
   for (const neededPermission of neededPerms) {
     const neededAsBigInt = BigInt(bot.utils.calculateBits([neededPermission]));
 
-    result.set(
-      neededPermission,
-      (neededAsBigInt & permissions) === neededAsBigInt
-    );
+    const hasPerm = (neededAsBigInt & permissions) === neededAsBigInt;
+    if (!hasPerm) hasPerms = false;
+
+    result.set(neededPermission, hasPerm);
   }
 
   return {
     details: result,
-    hasPerms: true,
+    hasPerms,
   };
 };
