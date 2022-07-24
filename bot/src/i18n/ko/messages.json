@@ -12,6 +12,8 @@
   "bot_admins_only": "봇 관리자만 해당 명령어를 사용할 수 있습니다.",
   "manage_webhooks": "웹훅 관리",
   "role_set_success_desc": "무료 게임이 게시되면 <role>역할을 언급할게요!",
+  "channel_thread_set_success_desc": "앞으로 <channel>에서 알림을 보낼게요!",
+  "channel_thread_remove_success_desc": "더 이상 이 서버에서 무료게임을 알려드리지 않아요.",
   "role_remove_success_desc": "이제 더이상 <role>역할을 언급하지 않습니다.",
   "updated_settings": "변경된 설정:",
   "current_settings": "현재 설정:",
@@ -33,7 +35,5 @@
   "settings": "설정",
   "help": "도움말",
   "webhooks_notification": "이제 웹훅을 지원합니다! 웹훅은 제가 더 빨리 알림을 보낼 수 있게 해줘요. 서버 관리자님, `/set channel` 또는 `/set thread`을 입력하여 웹훅을 통해 알림을 받을 수 있게 설정해주세요.",
-  "slash_notification": "슬래쉬 (/) 명령어가 올바르게 작동하지 않나요? (여기)를 눌러주세요. 봇을 내보냈다가 다시 부르는 일은 제가 대신 할게요.",
-  "channel_thread_set_success_desc": "앞으로 <channel>에서 알림을 보낼게요!",
-  "channel_thread_remove_success_desc": "더 이상 이 서버에서 무료게임을 알려드리지 않아요."
+  "slash_notification": "슬래쉬 (/) 명령어가 올바르게 작동하지 않나요? (여기)를 눌러주세요. 봇을 내보냈다가 다시 부르는 일은 제가 대신 할게요."
 }
