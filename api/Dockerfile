@@ -15,7 +15,7 @@ RUN yarn --pure-lockfile
 
 COPY ./src ./src
 RUN yarn build
-RUN npx prisma generate
+RUN yarn prisma generate
 
 FROM base as runner
 
