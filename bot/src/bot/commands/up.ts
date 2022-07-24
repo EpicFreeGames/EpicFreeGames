@@ -3,7 +3,7 @@ import { api } from "../../api.ts";
 import { gameEmbed } from "../../embeds/games.ts";
 import { embeds } from "../../embeds/mod.ts";
 import { Game } from "../../types.ts";
-import { Command } from "./mod.ts";
+import { Command, EphemeralFlag } from "./mod.ts";
 
 export const upCommand: Command = {
   name: "up",
@@ -21,6 +21,7 @@ export const upCommand: Command = {
     await bot.helpers.sendInteractionResponse(i.id, i.token, {
       type: InteractionResponseTypes.ChannelMessageWithSource,
       data: {
+        ...(!!error && { flags: EphemeralFlag }),
         embeds: error
           ? [embeds.errors.genericError()]
           : games.length

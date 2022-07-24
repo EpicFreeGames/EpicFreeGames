@@ -6,7 +6,7 @@ import {
 import { api } from "../../api.ts";
 import { embeds } from "../../embeds/mod.ts";
 import { Server } from "../../types.ts";
-import { Command, CommandExecuteProps } from "./mod.ts";
+import { Command, CommandExecuteProps, EphemeralFlag } from "./mod.ts";
 
 export const removeCommand: Command = {
   name: "remove",
@@ -26,31 +26,26 @@ export const removeCommand: Command = {
   ],
 
   needsGuild: true,
+  needsManageGuild: true,
   type: ApplicationCommandTypes.ChatInput,
 
   execute: ({ commandName, ...rest }) => {
-    if (commandName.includes("channel"))
-      return removeChannelHandler({ commandName, ...rest });
+    if (commandName.includes("channel")) return removeChannelHandler({ commandName, ...rest });
 
-    if (commandName.includes("role"))
-      return removeRoleHandler({ commandName, ...rest });
+    if (commandName.includes("role")) return removeRoleHandler({ commandName, ...rest });
   },
 };
 
-const removeChannelHandler = async ({
-  bot,
-  i,
-  server,
-  lang,
-}: CommandExecuteProps) => {
+const removeChannelHandler = async ({ bot, i, server, lang, curr }: CommandExecuteProps) => {
   // if no channelId, don't bother calling api
   if (!server?.channelId)
     return await bot.helpers.sendInteractionResponse(i.id, i.token, {
       type: InteractionResponseTypes.ChannelMessageWithSource,
       data: {
+        flags: EphemeralFlag,
         embeds: [
           embeds.success.currentSettings(lang),
-          embeds.commands.settings(server, lang),
+          embeds.commands.settings(server, lang, curr),
         ],
       },
     });
@@ -63,30 +58,27 @@ const removeChannelHandler = async ({
   await bot.helpers.sendInteractionResponse(i.id, i.token, {
     type: InteractionResponseTypes.ChannelMessageWithSource,
     data: {
+      flags: EphemeralFlag,
       embeds: error
         ? [embeds.errors.genericError()]
         : [
             embeds.success.updatedSettings(lang),
-            embeds.commands.settings(updatedServer, lang),
+            embeds.commands.settings(updatedServer, lang, curr),
           ],
     },
   });
 };
 
-const removeRoleHandler = async ({
-  bot,
-  i,
-  server,
-  lang,
-}: CommandExecuteProps) => {
+const removeRoleHandler = async ({ bot, i, server, lang, curr }: CommandExecuteProps) => {
   // if no channelId, don't bother calling api
   if (!server?.channelId)
     return await bot.helpers.sendInteractionResponse(i.id, i.token, {
       type: InteractionResponseTypes.ChannelMessageWithSource,
       data: {
+        flags: EphemeralFlag,
         embeds: [
           embeds.success.currentSettings(lang),
-          embeds.commands.settings(server, lang),
+          embeds.commands.settings(server, lang, curr),
         ],
       },
     });
@@ -99,11 +91,12 @@ const removeRoleHandler = async ({
   await bot.helpers.sendInteractionResponse(i.id, i.token, {
     type: InteractionResponseTypes.ChannelMessageWithSource,
     data: {
+      flags: EphemeralFlag,
       embeds: error
         ? [embeds.errors.genericError()]
         : [
             embeds.success.updatedSettings(lang),
-            embeds.commands.settings(updatedServer, lang),
+            embeds.commands.settings(updatedServer, lang, curr),
           ],
     },
   });

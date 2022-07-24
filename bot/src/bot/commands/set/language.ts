@@ -9,7 +9,7 @@ import { languages } from "../../../i18n/languages.ts";
 import { Server } from "../../../types.ts";
 import { bot } from "../../mod.ts";
 import { getString } from "../../utils/interactionOptions.ts";
-import { CommandExecuteProps } from "../mod.ts";
+import { CommandExecuteProps, EphemeralFlag } from "../mod.ts";
 
 export const setLanguageCommand = async ({ i, lang, curr, ...rest }: CommandExecuteProps) => {
   if (i.type === InteractionTypes.ApplicationCommandAutocomplete)
@@ -30,7 +30,7 @@ export const setLanguageCommand = async ({ i, lang, curr, ...rest }: CommandExec
     return await bot.helpers.sendInteractionResponse(i.id, i.token, {
       type: InteractionResponseTypes.ChannelMessageWithSource,
       data: {
-        flags: 64,
+        flags: EphemeralFlag,
         embeds: [embeds.errors.genericError()],
       },
     });
@@ -40,7 +40,7 @@ export const setLanguageCommand = async ({ i, lang, curr, ...rest }: CommandExec
   await bot.helpers.sendInteractionResponse(i.id, i.token, {
     type: InteractionResponseTypes.ChannelMessageWithSource,
     data: {
-      flags: 64,
+      flags: EphemeralFlag,
       embeds: [
         embeds.success.updatedSettings(newLanguage),
         embeds.commands.settings(updatedServer, newLanguage, curr),
@@ -49,7 +49,7 @@ export const setLanguageCommand = async ({ i, lang, curr, ...rest }: CommandExec
   });
 };
 
-const autoCompleteHandler = async ({ bot, i, lang, curr }: CommandExecuteProps) => {
+const autoCompleteHandler = async ({ bot, i }: CommandExecuteProps) => {
   const dirtyQuery = getString(i, "language") ?? "";
 
   const query = dirtyQuery?.toLowerCase().trim();

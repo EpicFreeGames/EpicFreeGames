@@ -8,13 +8,13 @@ import { getChannel } from "../../helpers/getChannel.ts";
 import { getGuild } from "../../helpers/getGuild.ts";
 import { hasPermsOnChannel } from "../../helpers/hasPerms.ts";
 import { getChannelId } from "../../utils/interactionOptions.ts";
-import { CommandExecuteProps } from "../mod.ts";
+import { CommandExecuteProps, EphemeralFlag } from "../mod.ts";
 
 export const setChannelCommand = async ({ bot, i, lang, curr }: CommandExecuteProps) => {
   await bot.helpers.sendInteractionResponse(i.id, i.token, {
     type: InteractionResponseTypes.DeferredChannelMessageWithSource,
     data: {
-      flags: 64,
+      flags: EphemeralFlag,
     },
   });
 
@@ -37,7 +37,7 @@ export const setChannelCommand = async ({ bot, i, lang, curr }: CommandExecutePr
     return await bot.helpers.sendInteractionResponse(i.id, i.token, {
       type: InteractionResponseTypes.UpdateMessage,
       data: {
-        flags: 64,
+        flags: EphemeralFlag,
         embeds: [embeds.errors.missingPermissions(channelId, lang, details)],
       },
     });
@@ -51,7 +51,7 @@ export const setChannelCommand = async ({ bot, i, lang, curr }: CommandExecutePr
     return await bot.helpers.sendInteractionResponse(i.id, i.token, {
       type: InteractionResponseTypes.UpdateMessage,
       data: {
-        flags: 64,
+        flags: EphemeralFlag,
         embeds: [embeds.errors.genericError()],
       },
     });
@@ -74,7 +74,7 @@ export const setChannelCommand = async ({ bot, i, lang, curr }: CommandExecutePr
     return await bot.helpers.sendInteractionResponse(i.id, i.token, {
       type: InteractionResponseTypes.UpdateMessage,
       data: {
-        flags: 64,
+        flags: EphemeralFlag,
         embeds: [embeds.errors.genericError()],
       },
     });
@@ -93,7 +93,7 @@ export const setChannelCommand = async ({ bot, i, lang, curr }: CommandExecutePr
     return await bot.helpers.sendInteractionResponse(i.id, i.token, {
       type: InteractionResponseTypes.UpdateMessage,
       data: {
-        flags: 64,
+        flags: EphemeralFlag,
         embeds: [embeds.errors.genericError()],
       },
     });
@@ -101,7 +101,7 @@ export const setChannelCommand = async ({ bot, i, lang, curr }: CommandExecutePr
   await bot.helpers.sendInteractionResponse(i.id, i.token, {
     type: InteractionResponseTypes.UpdateMessage,
     data: {
-      flags: 64,
+      flags: EphemeralFlag,
       embeds: [
         embeds.success.channelSet(channelId, lang),
         embeds.commands.settings(updatedServer, lang, curr),

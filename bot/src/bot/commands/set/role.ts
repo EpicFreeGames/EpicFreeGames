@@ -6,7 +6,7 @@ import { getChannel } from "../../helpers/getChannel.ts";
 import { getGuild } from "../../helpers/getGuild.ts";
 import { hasPermsOnChannel } from "../../helpers/hasPerms.ts";
 import { getRoleId } from "../../utils/interactionOptions.ts";
-import { CommandExecuteProps } from "../mod.ts";
+import { CommandExecuteProps, EphemeralFlag } from "../mod.ts";
 
 export const setRoleCommand = async ({ bot, i, server, lang, curr }: CommandExecuteProps) => {
   // server must have a channel set to set a role
@@ -14,7 +14,7 @@ export const setRoleCommand = async ({ bot, i, server, lang, curr }: CommandExec
     return await bot.helpers.sendInteractionResponse(i.id, i.token, {
       type: InteractionResponseTypes.ChannelMessageWithSource,
       data: {
-        flags: 64,
+        flags: EphemeralFlag,
         embeds: [embeds.errors.channelNotSet(lang)],
       },
     });
@@ -38,7 +38,7 @@ export const setRoleCommand = async ({ bot, i, server, lang, curr }: CommandExec
       return await bot.helpers.sendInteractionResponse(i.id, i.token, {
         type: InteractionResponseTypes.ChannelMessageWithSource,
         data: {
-          flags: 64,
+          flags: EphemeralFlag,
           embeds: [embeds.errors.missingPermissions(channel.id, lang, details)],
         },
       });
@@ -55,7 +55,7 @@ export const setRoleCommand = async ({ bot, i, server, lang, curr }: CommandExec
   await bot.helpers.sendInteractionResponse(i.id, i.token, {
     type: InteractionResponseTypes.ChannelMessageWithSource,
     data: {
-      flags: 64,
+      flags: EphemeralFlag,
       embeds: error
         ? [embeds.errors.genericError()]
         : [

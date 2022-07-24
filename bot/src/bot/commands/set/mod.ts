@@ -53,6 +53,7 @@ export const setCommand: Command = {
   ],
 
   needsGuild: true,
+  needsManageGuild: true,
   type: ApplicationCommandTypes.ChatInput,
 
   execute: ({ commandName, ...rest }) => {
