@@ -12,6 +12,8 @@
   "bot_admins_only": "Für diesen Befehl müssen Sie einer der Bot-Admins sein",
   "manage_webhooks": "Webhooks verwalten",
   "role_set_success_desc": "Ich werde <role> erwähnen/benachrichtigen, wenn ich über kostenlose Spiele informiere!",
+  "channel_thread_set_success_desc": "Ich werde anfangen, über kostenlose Spiele auf <channel> zu benachrichtigen!",
+  "channel_thread_remove_success_desc": "Ich werde nicht mehr über kostenlose Spiele auf diesem Server benachrichtigen.",
   "role_remove_success_desc": "Ich werde <role> nicht mehr erwähnen/ansprechen, wenn ich über kostenlose Spiele informiere",
   "updated_settings": "Hier sind die aktualisierten Einstellungen:",
   "current_settings": "Hier sind die aktuellen Einstellungen:",
@@ -33,7 +35,5 @@
   "settings": "Einstellungen",
   "help": "Hilfe",
   "webhooks_notification": "Heutzutage unterstütze ich Webhooks! Sie ermöglichen es mir, die Benachrichtigungen viel schneller zu versenden. Server-Administratoren, bitte tun Sie `/set channel` (oder `/set thread`), um Benachrichtigungen durch Webhooks zu aktivieren.",
-  "slash_notification": "Slash (/)-Befehle funktionieren nicht? (Klicken Sie hier), um den Bot erneut zu Ihrem Server hinzuzufügen, wobei die Slash-Befehle aktiviert sind. (Kicken ist nicht erforderlich)",
-  "channel_thread_set_success_desc": "Ich werde anfangen, über kostenlose Spiele auf <channel> zu benachrichtigen!",
-  "channel_thread_remove_success_desc": "Ich werde nicht mehr über kostenlose Spiele auf diesem Server benachrichtigen."
+  "slash_notification": "Slash (/)-Befehle funktionieren nicht? (Klicken Sie hier), um den Bot erneut zu Ihrem Server hinzuzufügen, wobei die Slash-Befehle aktiviert sind. (Kicken ist nicht erforderlich)"
 }
