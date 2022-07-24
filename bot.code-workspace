@@ -23,6 +23,9 @@
     },
     "editor.defaultFormatter": "denoland.vscode-deno",
     "deno.internalDebug": true,
-    "deno.suggest.completeFunctionCalls": true,
+    "deno.suggest.completeFunctionCalls": true
+  },
+  "extensions": {
+    "recommendations": ["denoland.vscode-deno"]
   }
 }
