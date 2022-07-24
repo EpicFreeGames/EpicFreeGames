@@ -5,8 +5,14 @@ export type Game = {
   name: string;
   displayName: string;
   imageUrl: string;
-  start: Date;
-  end: Date;
+  /**
+   * Date as an ISO string
+   */
+  start: string;
+  /**
+   * Date as an ISO string
+   */
+  end: string;
   path: string;
   confirmed: boolean;
   prices: [

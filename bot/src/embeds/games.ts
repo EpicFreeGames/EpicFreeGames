@@ -5,18 +5,17 @@ import { Currency, Game, Language } from "../types.ts";
 import { getGamePrice } from "../utils/getGamePrice.ts";
 import { colors, utils } from "./embedUtils.ts";
 
-export const gameEmbed = (
-  game: Game,
-  language: Language,
-  currency: Currency
-): Embed => {
+export const gameEmbed = (game: Game, language: Language, currency: Currency): Embed => {
   const now = Date.now() / 1000;
-  const start = game.start.getTime() / 1000;
-  const end = game.end.getTime() / 1000;
+  const start = new Date(game.start).getTime() / 1000;
+  const end = new Date(game.end).getTime() / 1000;
 
   return {
     title: game.displayName,
     color: 0x2f3136,
+    image: {
+      url: game.imageUrl,
+    },
     // prettier-ignore
     description:
       t(language, "open_in") +
