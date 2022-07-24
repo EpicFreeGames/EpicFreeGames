@@ -1,91 +1,91 @@
 import { Currency, Language } from "../types.ts";
 
-import af_commands from "./af/commands.json" assert { type: "json" };
-import af from "./af/messages.json" assert { type: "json" };
+import af_commands from "./t10n/af/commands.json" assert { type: "json" };
+import af from "./t10n/af/messages.json" assert { type: "json" };
 
-import ar_commands from "./ar/commands.json" assert { type: "json" };
-import ar from "./ar/messages.json" assert { type: "json" };
+import ar_commands from "./t10n/ar/commands.json" assert { type: "json" };
+import ar from "./t10n/ar/messages.json" assert { type: "json" };
 
-import bg_commands from "./bg/commands.json" assert { type: "json" };
-import bg from "./bg/messages.json" assert { type: "json" };
-import bg_old from "./bg/old-messages.json" assert { type: "json" };
+import bg_commands from "./t10n/bg/commands.json" assert { type: "json" };
+import bg from "./t10n/bg/messages.json" assert { type: "json" };
+import bg_old from "./t10n/bg/old-messages.json" assert { type: "json" };
 
-import cs_commands from "./cs/commands.json" assert { type: "json" };
-import cs from "./cs/messages.json" assert { type: "json" };
-import cs_old from "./cs/old-messages.json" assert { type: "json" };
+import cs_commands from "./t10n/cs/commands.json" assert { type: "json" };
+import cs from "./t10n/cs/messages.json" assert { type: "json" };
+import cs_old from "./t10n/cs/old-messages.json" assert { type: "json" };
 
-import de_commands from "./de/commands.json" assert { type: "json" };
-import de from "./de/messages.json" assert { type: "json" };
+import de_commands from "./t10n/de/commands.json" assert { type: "json" };
+import de from "./t10n/de/messages.json" assert { type: "json" };
 
-import en_commands from "./en/commands.json" assert { type: "json" };
-import en from "./en/messages.json" assert { type: "json" };
+import en_commands from "./t10n/en/commands.json" assert { type: "json" };
+import en from "./t10n/en/messages.json" assert { type: "json" };
 
-import es_commands from "./es/commands.json" assert { type: "json" };
-import es from "./es/messages.json" assert { type: "json" };
+import es_commands from "./t10n/es/commands.json" assert { type: "json" };
+import es from "./t10n/es/messages.json" assert { type: "json" };
 
-import fa_commands from "./fa/commands.json" assert { type: "json" };
-import fa from "./fa/messages.json" assert { type: "json" };
-import fa_old from "./fa/old-messages.json" assert { type: "json" };
+import fa_commands from "./t10n/fa/commands.json" assert { type: "json" };
+import fa from "./t10n/fa/messages.json" assert { type: "json" };
+import fa_old from "./t10n/fa/old-messages.json" assert { type: "json" };
 
-import fr_commands from "./fr/commands.json" assert { type: "json" };
-import fr from "./fr/messages.json" assert { type: "json" };
+import fr_commands from "./t10n/fr/commands.json" assert { type: "json" };
+import fr from "./t10n/fr/messages.json" assert { type: "json" };
 
-import he_commands from "./he/commands.json" assert { type: "json" };
-import he from "./he/messages.json" assert { type: "json" };
+import he_commands from "./t10n/he/commands.json" assert { type: "json" };
+import he from "./t10n/he/messages.json" assert { type: "json" };
 
-import hi_commands from "./hi/commands.json" assert { type: "json" };
-import hi from "./hi/messages.json" assert { type: "json" };
-import hi_old from "./hi/old-messages.json" assert { type: "json" };
+import hi_commands from "./t10n/hi/commands.json" assert { type: "json" };
+import hi from "./t10n/hi/messages.json" assert { type: "json" };
+import hi_old from "./t10n/hi/old-messages.json" assert { type: "json" };
 
-import hu_commands from "./hu/commands.json" assert { type: "json" };
-import hu from "./hu/messages.json" assert { type: "json" };
+import hu_commands from "./t10n/hu/commands.json" assert { type: "json" };
+import hu from "./t10n/hu/messages.json" assert { type: "json" };
 
-import id_commands from "./id/commands.json" assert { type: "json" };
-import id from "./id/messages.json" assert { type: "json" };
-import id_old from "./id/old-messages.json" assert { type: "json" };
+import id_commands from "./t10n/id/commands.json" assert { type: "json" };
+import id from "./t10n/id/messages.json" assert { type: "json" };
+import id_old from "./t10n/id/old-messages.json" assert { type: "json" };
 
-import it_commands from "./it/commands.json" assert { type: "json" };
-import it from "./it/messages.json" assert { type: "json" };
-import it_old from "./it/old-messages.json" assert { type: "json" };
+import it_commands from "./t10n/it/commands.json" assert { type: "json" };
+import it from "./t10n/it/messages.json" assert { type: "json" };
+import it_old from "./t10n/it/old-messages.json" assert { type: "json" };
 
-import ja_commands from "./ja/commands.json" assert { type: "json" };
-import ja from "./ja/messages.json" assert { type: "json" };
-import ja_old from "./ja/old-messages.json" assert { type: "json" };
+import ja_commands from "./t10n/ja/commands.json" assert { type: "json" };
+import ja from "./t10n/ja/messages.json" assert { type: "json" };
+import ja_old from "./t10n/ja/old-messages.json" assert { type: "json" };
 
-import ka_commands from "./ka/commands.json" assert { type: "json" };
-import ka from "./ka/messages.json" assert { type: "json" };
-import ka_old from "./ka/old-messages.json" assert { type: "json" };
+import ka_commands from "./t10n/ka/commands.json" assert { type: "json" };
+import ka from "./t10n/ka/messages.json" assert { type: "json" };
+import ka_old from "./t10n/ka/old-messages.json" assert { type: "json" };
 
-import ko_commands from "./ko/commands.json" assert { type: "json" };
-import ko from "./ko/messages.json" assert { type: "json" };
+import ko_commands from "./t10n/ko/commands.json" assert { type: "json" };
+import ko from "./t10n/ko/messages.json" assert { type: "json" };
 
-import nl_commands from "./nl/commands.json" assert { type: "json" };
-import nl from "./nl/messages.json" assert { type: "json" };
-import nl_old from "./nl/old-messages.json" assert { type: "json" };
+import nl_commands from "./t10n/nl/commands.json" assert { type: "json" };
+import nl from "./t10n/nl/messages.json" assert { type: "json" };
+import nl_old from "./t10n/nl/old-messages.json" assert { type: "json" };
 
-import pl_commands from "./pl/commands.json" assert { type: "json" };
-import pl from "./pl/messages.json" assert { type: "json" };
+import pl_commands from "./t10n/pl/commands.json" assert { type: "json" };
+import pl from "./t10n/pl/messages.json" assert { type: "json" };
 
-import pt_commands from "./pt/commands.json" assert { type: "json" };
-import pt from "./pt/messages.json" assert { type: "json" };
-import pt_old from "./pt/old-messages.json" assert { type: "json" };
+import pt_commands from "./t10n/pt/commands.json" assert { type: "json" };
+import pt from "./t10n/pt/messages.json" assert { type: "json" };
+import pt_old from "./t10n/pt/old-messages.json" assert { type: "json" };
 
-import ro_commands from "./ro/commands.json" assert { type: "json" };
-import ro from "./ro/messages.json" assert { type: "json" };
+import ro_commands from "./t10n/ro/commands.json" assert { type: "json" };
+import ro from "./t10n/ro/messages.json" assert { type: "json" };
 
-import ru_commands from "./ru/commands.json" assert { type: "json" };
-import ru from "./ru/messages.json" assert { type: "json" };
-import ru_old from "./ru/old-messages.json" assert { type: "json" };
+import ru_commands from "./t10n/ru/commands.json" assert { type: "json" };
+import ru from "./t10n/ru/messages.json" assert { type: "json" };
+import ru_old from "./t10n/ru/old-messages.json" assert { type: "json" };
 
-import tr_commands from "./tr/commands.json" assert { type: "json" };
-import tr from "./tr/messages.json" assert { type: "json" };
+import tr_commands from "./t10n/tr/commands.json" assert { type: "json" };
+import tr from "./t10n/tr/messages.json" assert { type: "json" };
 
-import uk_commands from "./uk/commands.json" assert { type: "json" };
-import uk from "./uk/messages.json" assert { type: "json" };
-import uk_old from "./uk/old-messages.json" assert { type: "json" };
+import uk_commands from "./t10n/uk/commands.json" assert { type: "json" };
+import uk from "./t10n/uk/messages.json" assert { type: "json" };
+import uk_old from "./t10n/uk/old-messages.json" assert { type: "json" };
 
-import vi_commands from "./vi/commands.json" assert { type: "json" };
-import vi from "./vi/messages.json" assert { type: "json" };
+import vi_commands from "./t10n/vi/commands.json" assert { type: "json" };
+import vi from "./t10n/vi/messages.json" assert { type: "json" };
 
 export const languages = {
   af: {
