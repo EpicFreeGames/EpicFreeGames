@@ -6,8 +6,7 @@ import { getBase64Image } from "./utils/getBase64Image.ts";
 
 const env = dotenvConfig();
 
-const Intents: GatewayIntents =
-  GatewayIntents.DirectMessages | GatewayIntents.Guilds;
+const Intents: GatewayIntents = GatewayIntents.DirectMessages | GatewayIntents.Guilds;
 
 const envSchema = z.object({
   BOT_TOKEN: z.string().refine((v) => !!BigInt(atob(v.split(".")[0]))),
@@ -15,17 +14,13 @@ const envSchema = z.object({
   REDISHOST: z.string(),
   REDISPORT: z.string().transform(Number),
 
-  GATEWAY_PROXY_URL: z
-    .string()
-    .transform((v) => (v.endsWith("/") ? v.slice(0, -1) : v)),
+  GATEWAY_PROXY_URL: z.string().transform((v) => (v.endsWith("/") ? v.slice(0, -1) : v)),
   GATEWAY_PROXY_AUTH: z.string(),
 
   BOT_URL: z.string(),
   BOT_AUTH: z.string().transform((v) => (v.endsWith("/") ? v.slice(0, -1) : v)),
 
-  REST_PROXY_URL: z
-    .string()
-    .transform((v) => (v.endsWith("/") ? v.slice(0, -1) : v)),
+  REST_PROXY_URL: z.string().transform((v) => (v.endsWith("/") ? v.slice(0, -1) : v)),
   REST_PROXY_AUTH: z.string(),
 
   DEV_GUILD_ID: z.string().optional(),
@@ -54,10 +49,7 @@ const result = envSchema.safeParse(
 );
 
 if (!result.success) {
-  logger.error(
-    "❌ Invalid environment variables:",
-    JSON.stringify(result.error.format(), null, 4)
-  );
+  logger.error("❌ Invalid environment variables:", JSON.stringify(result.error.format(), null, 4));
 
   Deno.exit(1);
 }

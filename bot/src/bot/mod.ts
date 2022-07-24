@@ -1,8 +1,4 @@
-import {
-  createBot,
-  createRestManager,
-  DiscordGatewayPayload,
-} from "discordeno";
+import { createBot, createRestManager, DiscordGatewayPayload } from "discordeno";
 import { connect } from "https://deno.land/x/redis@v0.26.0/redis.ts";
 import { logger } from "~logger";
 import { config } from "../config.ts";
