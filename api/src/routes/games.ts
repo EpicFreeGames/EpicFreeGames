@@ -24,6 +24,9 @@ gameRouter.get("/free", auth(Flags.GetGames), async (req, res) => {
         gt: new Date(),
       },
     },
+    include: {
+      prices: true,
+    },
   });
 
   res.send(games);
@@ -40,6 +43,9 @@ gameRouter.get("/up", auth(Flags.GetGames), async (req, res) => {
         gt: new Date(),
       },
     },
+    include: {
+      prices: true,
+    },
   });
 
   res.send(games);
@@ -49,6 +55,9 @@ gameRouter.get("/not-confirmed", auth(Flags.GetGames), async (req, res) => {
   const games = await prisma.game.findMany({
     where: {
       confirmed: false,
+    },
+    include: {
+      prices: true,
     },
   });
 
