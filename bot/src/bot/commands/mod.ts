@@ -9,6 +9,7 @@ import { logger } from "~logger";
 import { Currency, Language, Server } from "../../types.ts";
 import { freeCommand } from "./free.ts";
 import { helpCommand } from "./help.ts";
+import { inviteCommand } from "./invite.ts";
 import { removeCommand } from "./remove.ts";
 import { setCommand } from "./set/mod.ts";
 import { settingsCommand } from "./settings.ts";
@@ -53,6 +54,7 @@ export const initCommands = () => {
   commands.set("free", freeCommand);
   commands.set("up", upCommand);
   commands.set("help", helpCommand);
+  commands.set("invite", inviteCommand);
 
   commands.set("remove", removeCommand);
   commands.set("set", setCommand);
