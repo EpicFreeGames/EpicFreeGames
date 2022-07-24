@@ -11,6 +11,7 @@ import { freeCommand } from "./free.ts";
 import { helpCommand } from "./help.ts";
 import { removeCommand } from "./remove.ts";
 import { setCommand } from "./set/mod.ts";
+import { settingsCommand } from "./settings.ts";
 import { upCommand } from "./up.ts";
 
 export type CommandExecuteProps = {
@@ -55,4 +56,6 @@ export const initCommands = () => {
 
   commands.set("remove", removeCommand);
   commands.set("set", setCommand);
+
+  commands.set("settings", settingsCommand);
 };
