@@ -14,6 +14,7 @@ export const setRoleCommand = async ({ bot, i, server, lang, curr }: CommandExec
     return await bot.helpers.sendInteractionResponse(i.id, i.token, {
       type: InteractionResponseTypes.ChannelMessageWithSource,
       data: {
+        flags: 64,
         embeds: [embeds.errors.channelNotSet(lang)],
       },
     });
