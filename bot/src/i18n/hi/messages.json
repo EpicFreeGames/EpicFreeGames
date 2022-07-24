@@ -12,6 +12,8 @@
   "bot_admins_only": "इस कमांड का उपयोग करने के लिए आपका बॉट एडमिन होना अनिवार्य है",
   "manage_webhooks": "वेबहुक मैनेज करें",
   "role_set_success_desc": "में मुफ़्त गेम्स के बारे सूचित करते समय <role> को पिंग करूँगा!",
+  "channel_thread_set_success_desc": "मैं अब से <channel> पर मुफ़्त गेम्स के बारे में सूचित करूँगा!",
+  "channel_thread_remove_success_desc": "मैं अब से इस सर्वर पर मुफ़्त गेम के बारे में सूचित नहीं करूँगा।",
   "role_remove_success_desc": "अब से मैं मुफ्त गेम्स के बारे में सूचित करते समय <role> को पिंग नहीं करूँगा!",
   "updated_settings": "ये वर्तमान सेटिंग्स हैं:",
   "current_settings": "ये वर्तमान सेटिंग हैं:",
@@ -25,7 +27,5 @@
   "role": "भूमिका",
   "language": "भाषा",
   "currency": "मुद्रा",
-  "help": "सहायता",
-  "channel_thread_set_success_desc": "मैं अब से <channel> पर मुफ़्त गेम्स के बारे में सूचित करूँगा!",
-  "channel_thread_remove_success_desc": "मैं अब से इस सर्वर पर मुफ़्त गेम के बारे में सूचित नहीं करूँगा।"
+  "help": "सहायता"
 }
