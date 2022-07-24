@@ -1,4 +1,5 @@
 import { blue, bold, magenta, red } from "colors";
+import { config } from "../config.ts";
 
 const timestamp = () => {
   const today = new Date();
@@ -22,29 +23,11 @@ const timestamp = () => {
 export const logger = {
   // deno-lint-ignore no-explicit-any
   debug: (...args: any[]) =>
-    console.log(
-      magenta(
-        `${bold(`${timestamp()} [DEBUG]`)} ${args
-          .map((a) => a.toString())
-          .join(" ")}`
-      )
-    ),
+    config.DEBUG && console.debug(...[magenta(`${bold(`${timestamp()} [DEBUG]`)}`), ...args]),
 
   // deno-lint-ignore no-explicit-any
-  error: (...args: any[]) =>
-    console.log(
-      red(
-        `${bold(`${timestamp()} [DEBUG]`)} ${args
-          .map((a) => a.toString())
-          .join(" ")}`
-      )
-    ),
+  error: (...args: any[]) => console.error(...[red(`${bold(`${timestamp()} [ERROR]`)}`), ...args]),
 
   // deno-lint-ignore no-explicit-any
-  info: (...args: any[]) =>
-    blue(
-      `${bold(`${timestamp()} [INFO]`)} ${args
-        .map((a) => a.toString())
-        .join(" ")}`
-    ),
+  info: (...args: any[]) => console.info(...[blue(`${bold(`${timestamp()} [INFO]`)}`), ...args]),
 };

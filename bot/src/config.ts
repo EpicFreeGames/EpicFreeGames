@@ -9,6 +9,8 @@ const env = dotenvConfig();
 const Intents: GatewayIntents = GatewayIntents.DirectMessages | GatewayIntents.Guilds;
 
 const envSchema = z.object({
+  DEBUG: z.any().optional(),
+
   BOT_TOKEN: z.string().refine((v) => !!BigInt(atob(v.split(".")[0]))),
 
   REDISHOST: z.string(),
