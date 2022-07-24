@@ -7,10 +7,7 @@ import { getBase64Image } from "./utils/getBase64Image.ts";
 const env = dotenvConfig();
 
 const Intents: GatewayIntents =
-  GatewayIntents.MessageContent |
-  GatewayIntents.GuildMessages |
-  GatewayIntents.DirectMessages |
-  GatewayIntents.Guilds;
+  GatewayIntents.DirectMessages | GatewayIntents.Guilds;
 
 const envSchema = z.object({
   BOT_TOKEN: z.string().refine((v) => !!BigInt(atob(v.split(".")[0]))),
