@@ -27,8 +27,10 @@ export const setChannelCommand = async ({ bot, i, lang, curr }: CommandExecutePr
   if (!channel || !guild) return; // won't happen, but just in case
 
   const { details, hasPerms } = await hasPermsOnChannel(bot, channel, guild, [
-    "MANAGE_WEBHOOKS",
     "VIEW_CHANNEL",
+    "MANAGE_WEBHOOKS",
+    "SEND_MESSAGES",
+    "EMBED_LINKS",
   ]);
 
   if (!hasPerms)
