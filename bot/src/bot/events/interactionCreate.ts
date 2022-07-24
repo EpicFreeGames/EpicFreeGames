@@ -1,6 +1,13 @@
-import { ApplicationCommandOptionTypes, EventHandlers, Interaction } from "discordeno";
+import {
+  ApplicationCommandOptionTypes,
+  EventHandlers,
+  Interaction,
+  InteractionResponseTypes,
+  PermissionStrings,
+} from "discordeno";
 import { logger } from "~logger";
 import { api } from "../../api.ts";
+import { embeds } from "../../embeds/mod.ts";
 import { defaultCurrency, defaultLanguage, languages } from "../../i18n/languages.ts";
 import { Server } from "../../types.ts";
 import { commands } from "../commands/mod.ts";
@@ -11,6 +18,8 @@ export const interactionCreateHandler: EventHandlers["interactionCreate"] = asyn
   if (!command) return;
 
   if (command.needsGuild && !i.guildId) return;
+
+  logger.debug(`Executing command: ${command.name}`);
 
   let language = defaultLanguage;
   let currency = defaultCurrency;
@@ -29,9 +38,16 @@ export const interactionCreateHandler: EventHandlers["interactionCreate"] = asyn
     server.currency && (currency = server.currency);
   }
 
-  try {
-    logger.debug(`Executing command: ${command.name}`);
+  if (command.needsManageGuild && !hasPerms(i, ["MANAGE_GUILD"]))
+    return await bot.helpers.sendInteractionResponse(i.id, i.token, {
+      type: InteractionResponseTypes.ChannelMessageWithSource,
+      data: {
+        flags: 64,
+        embeds: [embeds.errors.unauthorized.manageGuildCommand(language)],
+      },
+    });
 
+  try {
     await command.execute({
       bot,
       i,
@@ -80,4 +96,13 @@ const getCommandName = (i: Interaction): string => {
   );
 
   return `/${i?.data?.name}${subCmd ? ` ${subCmd.name}` : ""}`;
+};
+
+const hasPerms = (i: Interaction, neededPerms: PermissionStrings[]): boolean => {
+  const memberPerms = i.member?.permissions;
+  if (!memberPerms) return false;
+
+  const neededBigint = bot.transformers.snowflake(bot.utils.calculateBits(neededPerms));
+
+  return (memberPerms & neededBigint) === neededBigint;
 };

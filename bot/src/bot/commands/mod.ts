@@ -1,7 +1,6 @@
 import {
   ApplicationCommandOption,
   ApplicationCommandTypes,
-  BitwisePermissionFlags,
   Bot,
   Collection,
   Interaction,
@@ -31,7 +30,7 @@ export type Command = {
   /** Defaults to `Guild` */
   scope?: "Global" | "Guild";
   needsGuild: boolean;
-  neededPermissions?: BitwisePermissionFlags;
+  needsManageGuild?: boolean;
   execute: (props: CommandExecuteProps) => unknown;
   subCommands?: Array<SubCommandGroup | SubCommand>;
 };
@@ -42,6 +41,8 @@ export type SubCommandGroup = {
   name: string;
   subCommands: SubCommand[];
 };
+
+export const EphemeralFlag = 64;
 
 export const commands = new Collection<string, Command>();
 
