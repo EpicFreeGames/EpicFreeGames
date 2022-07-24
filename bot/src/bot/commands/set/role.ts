@@ -27,13 +27,13 @@ export const setRoleCommand = async ({
   const role = guild?.roles.get(roleId);
   if (!role) return; // won't happen, but just in case
 
-  const { error, data: updatedServer } = await api<Server>(
-    "PUT",
-    `/servers/${server.id}/role`,
-    {
+  const { error, data: updatedServer } = await api<Server>({
+    method: "PUT",
+    path: `/servers/${server.id}/role`,
+    body: {
       roleId: String(role.id),
-    }
-  );
+    },
+  });
 
   await bot.helpers.sendInteractionResponse(i.id, i.token, {
     type: InteractionResponseTypes.ChannelMessageWithSource,

@@ -80,15 +80,15 @@ export const setChannelCommand = async ({
         },
       });
 
-    const { error, data: updatedServer } = await api<Server>(
-      "PUT",
-      `/servers/${i.guildId}/channel`,
-      {
+    const { error, data: updatedServer } = await api<Server>({
+      method: "PUT",
+      path: `/servers/${i.guildId}/channel`,
+      body: {
         channelId: String(channelId),
         webhookId: String(webhook.id),
         webhookToken: String(webhook.token),
-      }
-    );
+      },
+    });
 
     if (error)
       return await bot.helpers.sendInteractionResponse(i.id, i.token, {

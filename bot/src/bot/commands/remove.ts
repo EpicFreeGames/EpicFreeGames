@@ -55,10 +55,10 @@ const removeChannelHandler = async ({
       },
     });
 
-  const { error, data: updatedServer } = await api<Server>(
-    "DELETE",
-    `/servers/${server.id}/channel`
-  );
+  const { error, data: updatedServer } = await api<Server>({
+    method: "DELETE",
+    path: `/servers/${server.id}/role`,
+  });
 
   await bot.helpers.sendInteractionResponse(i.id, i.token, {
     type: InteractionResponseTypes.ChannelMessageWithSource,
@@ -91,10 +91,10 @@ const removeRoleHandler = async ({
       },
     });
 
-  const { error, data: updatedServer } = await api<Server>(
-    "DELETE",
-    `/servers/${server.id}/role`
-  );
+  const { error, data: updatedServer } = await api<Server>({
+    method: "DELETE",
+    path: `/servers/${server.id}/role`,
+  });
 
   await bot.helpers.sendInteractionResponse(i.id, i.token, {
     type: InteractionResponseTypes.ChannelMessageWithSource,

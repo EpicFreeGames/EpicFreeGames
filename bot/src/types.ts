@@ -1,4 +1,5 @@
-export type Method = "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
+export type Method = "GET" | "HEAD" | "POST" | "PUT" | "DELETE" | "PATCH";
+export type RestMethod = Exclude<Method, "HEAD">;
 
 export type Game = {
   name: string;

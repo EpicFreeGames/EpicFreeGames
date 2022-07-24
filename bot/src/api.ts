@@ -13,18 +13,30 @@ type ApiResponse<TData> =
       data?: never;
     };
 
-export const api = async <TData>(
-  method: Method,
-  path: string,
-  data?: Record<string, string | number | null | undefined>
-): Promise<ApiResponse<TData>> =>
-  fetch(`${config.API_BASEURL}${path}`, {
+type Args =
+  | {
+      method: Exclude<Method, "GET" | "HEAD">;
+      path: string;
+      body?: Record<string, string | number | null | undefined>;
+    }
+  | {
+      method: "GET" | "HEAD";
+      path: string;
+      body?: never;
+    };
+
+export async function api<TData>({
+  method,
+  path,
+  body,
+}: Args): Promise<ApiResponse<TData>> {
+  return fetch(`${config.API_BASEURL}${path}`, {
     method,
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bot ${config.API_TOKEN}`,
     },
-    body: await serialize(data ? data : {}),
+    ...(!!body && { body: await serialize(body) }),
   })
     .then(async (res) => {
       const json = await res.json();
@@ -46,3 +58,4 @@ export const api = async <TData>(
         error: err,
       };
     });
+}

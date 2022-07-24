@@ -13,7 +13,10 @@ export const upCommand: Command = {
   type: ApplicationCommandTypes.ChatInput,
 
   execute: async ({ bot, i, lang, curr }) => {
-    const { error, data: games } = await api<Game[]>("GET", "/games/up");
+    const { error, data: games } = await api<Game[]>({
+      method: "GET",
+      path: "/games/upcoming",
+    });
 
     await bot.helpers.sendInteractionResponse(i.id, i.token, {
       type: InteractionResponseTypes.ChannelMessageWithSource,

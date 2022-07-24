@@ -13,7 +13,10 @@ export const freeCommand: Command = {
   type: ApplicationCommandTypes.ChatInput,
 
   execute: async ({ bot, i, lang, curr }) => {
-    const { error, data: games } = await api<Game[]>("GET", "/games/free");
+    const { error, data: games } = await api<Game[]>({
+      method: "GET",
+      path: "/games/free",
+    });
 
     await bot.helpers.sendInteractionResponse(i.id, i.token, {
       type: InteractionResponseTypes.ChannelMessageWithSource,

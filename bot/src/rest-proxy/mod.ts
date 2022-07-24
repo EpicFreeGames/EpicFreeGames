@@ -1,6 +1,6 @@
 import { BASE_URL, createRestManager } from "discordeno";
 import { config } from "../config.ts";
-import { Method } from "../types.ts";
+import { RestMethod } from "../types.ts";
 import { logger } from "../utils/logger.ts";
 
 const rest = createRestManager({
@@ -37,7 +37,7 @@ const handleConnection = async (connection: Deno.Conn) => {
     try {
       const result = await rest.runMethod(
         rest,
-        requestEvent.request.method as Method,
+        requestEvent.request.method as RestMethod,
         proxyTo,
         json
       );

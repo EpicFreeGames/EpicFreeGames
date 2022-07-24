@@ -22,10 +22,10 @@ export const interactionCreateHandler: EventHandlers["interactionCreate"] =
 
     const commandName = getCommandName(i);
 
-    const { error, data: server } = await api<Server | undefined>(
-      "GET",
-      `/servers/${i.guildId}`
-    );
+    const { error, data: server } = await api<Server | undefined>({
+      method: "GET",
+      path: `/servers/${i.guildId}`,
+    });
 
     if (!error && server) {
       language = server.language;
@@ -44,11 +44,15 @@ export const interactionCreateHandler: EventHandlers["interactionCreate"] =
         curr: currency,
       });
 
-      const { error } = await api("POST", "/logs/commands", {
-        command: commandName,
-        senderId: String(i.user.id),
-        serverId: String(i.guildId),
-        error: null,
+      const { error } = await api({
+        method: "POST",
+        path: "/logs/commands",
+        body: {
+          command: commandName,
+          senderId: String(i.user.id),
+          serverId: String(i.guildId),
+          error: null,
+        },
       });
       !!error && logger.error("Error logging command:", error);
 
@@ -59,11 +63,15 @@ export const interactionCreateHandler: EventHandlers["interactionCreate"] =
         `Command failed: ${command.name}, error: \n${err?.stack ?? err}`
       );
 
-      const { error } = await api("POST", "/logs/commands", {
-        command: commandName,
-        senderId: String(i.user.id),
-        serverId: String(i.guildId),
-        error: err?.stack ?? err,
+      const { error } = await api({
+        method: "POST",
+        path: "/logs/commands",
+        body: {
+          command: commandName,
+          senderId: String(i.user.id),
+          serverId: String(i.guildId),
+          error: err?.stack ?? err,
+        },
       });
       !!error && logger.error("Error logging command:", error);
     }
