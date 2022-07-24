@@ -12,6 +12,8 @@
   "bot_admins_only": "Ehhez a parancshoz a bot egyik adminjának kell lenned",
   "manage_webhooks": "Webhookok kezelése",
   "role_set_success_desc": "Megemlítem/megjelölöm a(z) <role> rangot, amikor értesítek az ingyenes játékokról!",
+  "channel_thread_set_success_desc": "Elkezdek értesíteni az ingyenes játékokról a(z) <channel> csatornán!",
+  "channel_thread_remove_success_desc": "Többé nem értesítek az ingyenes játékokról ezen a szerveren.",
   "role_remove_success_desc": "Többé nem fogom megemlíteni/megjelölni a(z) <role> rangot, amikor értesítek az ingyenes játékokról",
   "updated_settings": "Itt vannak a frissített beállítások:",
   "current_settings": "Itt vannak a jelenlegi beállítások:",
@@ -33,7 +35,5 @@
   "settings": "Beállítások",
   "help": "Segítség",
   "webhooks_notification": "Mostanában támogatom a webhookokat! Segítségükkel sokkal gyorsabban tudom elküldeni az értesítéseket. Szerver adminok kérlek, a `/set channel` (vagy `/set thread`) paranccsal tudjátok engedélyezni a webhookokon keresztüli értesítéseket.",
-  "slash_notification": "A perjeles (/) parancsok nem működnek? (Kattints ide), hogy hozzáadd a botot a szerveredhez a slash parancsok engedélyezésével. (Kirúgás nem szükséges)",
-  "channel_thread_set_success_desc": "Elkezdek értesíteni az ingyenes játékokról a(z) <channel> csatornán!",
-  "channel_thread_remove_success_desc": "Többé nem értesítek az ingyenes játékokról ezen a szerveren."
+  "slash_notification": "A perjeles (/) parancsok nem működnek? (Kattints ide), hogy hozzáadd a botot a szerveredhez a slash parancsok engedélyezésével. (Kirúgás nem szükséges)"
 }

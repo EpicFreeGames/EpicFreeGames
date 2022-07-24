@@ -12,6 +12,8 @@
   "bot_admins_only": "פקודה זו מחייבת אותך להיות אחד ממנהלי הבוט",
   "manage_webhooks": "נהל webhooks",
   "role_set_success_desc": "אני אזכיר/פינג את <role> כאשר אודיע על משחקים בחינם!",
+  "channel_thread_set_success_desc": "אתחיל להודיע ​​על משחקים בחינם ב-<channel>!",
+  "channel_thread_remove_success_desc": "לא אודיע עוד על משחקים חינמיים בשרת הזה.",
   "role_remove_success_desc": "אני כבר לא אזכיר/פינג את <role> כשאני מודיע על משחקים חינמיים",
   "updated_settings": "להלן ההגדרות המעודכנות:",
   "current_settings": "להלן ההגדרות הנוכחיות:",
@@ -33,7 +35,5 @@
   "settings": "הגדרות",
   "help": "עזרה",
   "webhooks_notification": "אני תומך ב-webhooks בימינו! הם מאפשרים לי לשלוח את ההתראות הרבה יותר מהר. מנהלי שרת, נא לעשות `/set channel` (או `/set thread`) כדי לאפשר התראות דרך webhooks.",
-  "slash_notification": "פקודות סלאש (/) לא עובדות? (לחץ כאן) כדי להוסיף את הבוט שוב לשרת שלך עם הפקודות הלוכסניות מופעלות. (אין צורך בבעיטה)",
-  "channel_thread_set_success_desc": "אתחיל להודיע ​​על משחקים בחינם ב-<channel>!",
-  "channel_thread_remove_success_desc": "לא אודיע עוד על משחקים חינמיים בשרת הזה."
+  "slash_notification": "פקודות סלאש (/) לא עובדות? (לחץ כאן) כדי להוסיף את הבוט שוב לשרת שלך עם הפקודות הלוכסניות מופעלות. (אין צורך בבעיטה)"
 }

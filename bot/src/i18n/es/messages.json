@@ -12,6 +12,8 @@
   "bot_admins_only": "Este comando requiere que seas uno de los administradores de bot",
   "manage_webhooks": "Administrar webhooks",
   "role_set_success_desc": "¡Mencionaré/haré ping <role> cuando se notifique sobre juegos gratis!",
+  "channel_thread_set_success_desc": "¡Empezaré a notificar sobre juegos gratuitos en <channel>!",
+  "channel_thread_remove_success_desc": "Ya no notificaré sobre juegos gratuitos en este servidor.",
   "role_remove_success_desc": "Ya no mencionaré/haré ping <role> cuando se notifique sobre juegos gratis",
   "updated_settings": "Aquí están los ajustes actualizados:",
   "current_settings": "Aquí están los ajustes actuales:",
@@ -32,8 +34,6 @@
   "currency": "Divisa",
   "settings": "Ajustes",
   "help": "Ayuda",
-  "webhooks_notification": "¡Hoy apoyo los webhooks! Me permiten enviar las notificaciones mucho más rápido. Administradores del servidor, por favor haga `/set channel` (o `/set thread`) para habilitar las notificaciones a través de webhooks.",
-  "slash_notification": "¿Comandos de barra (/) que no funcionan? (Haz clic aquí) para añadir el bot otra vez a tu servidor con los comandos de barra activados. (No se requiere expulsar)",
-  "channel_thread_set_success_desc": "¡Empezaré a notificar sobre juegos gratuitos en <channel>!",
-  "channel_thread_remove_success_desc": "Ya no notificaré sobre juegos gratuitos en este servidor."
+  "webhooks_notification": "¡Hoy apoyo los webhooks! Me permiten enviar las notificaciones mucho más rápido. Administradores del servidor, por favor haz `/set channel` (o `/set thread`) para habilitar las notificaciones a través de webhooks.",
+  "slash_notification": "¿Comandos de barra (/) que no funcionan? (Haz clic aquí) para añadir el bot otra vez a tu servidor con los comandos de barra activados. (No se requiere expulsar)"
 }

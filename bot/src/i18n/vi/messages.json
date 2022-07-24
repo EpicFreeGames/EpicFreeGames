@@ -12,6 +12,8 @@
   "bot_admins_only": "Lệnh này yêu cầu bạn phải là một trong những quản trị bot",
   "manage_webhooks": "Quản lý webhook",
   "role_set_success_desc": "Tôi sẽ đề cập đến/ping <role> khi thông báo về các trò chơi miễn phí!",
+  "channel_thread_set_success_desc": "Tôi sẽ bắt đầu thông báo về các trò chơi miễn phí trên <channel>!",
+  "channel_thread_remove_success_desc": "Tôi sẽ không thông báo về các trò chơi miễn phí trên máy chủ này nữa.",
   "role_remove_success_desc": "Tôi sẽ không đề cập đến/ping <role> khi thông báo về các trò chơi miễn phí",
   "updated_settings": "Đây là cài đặt hiện tại:",
   "current_settings": "Đây là cài đặt hiện tại:",
@@ -33,7 +35,5 @@
   "settings": "Cài đặt",
   "help": "Trợ giúp",
   "webhooks_notification": "Tôi ủng hộ webhooks ngày nay! Chúng cho phép tôi gửi thông báo nhanh hơn rất nhiều. Quản trị viên máy chủ, vui lòng thực hiện `/set channel` (hoặc `/set thread`) để bật thông báo qua webhook.",
-  "slash_notification": "Lệnh Slash (/) không hoạt động? (Nhấp vào đây) để thêm bot một lần nữa vào máy chủ của bạn với các lệnh gạch chéo được bật. (Đá không bắt buộc)",
-  "channel_thread_set_success_desc": "Tôi sẽ bắt đầu thông báo về các trò chơi miễn phí trên <channel>!",
-  "channel_thread_remove_success_desc": "Tôi sẽ không thông báo về các trò chơi miễn phí trên máy chủ này nữa."
+  "slash_notification": "Lệnh Slash (/) không hoạt động? (Nhấp vào đây) để thêm bot một lần nữa vào máy chủ của bạn với các lệnh gạch chéo được bật. (Đá không bắt buộc)"
 }

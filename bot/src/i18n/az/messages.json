@@ -12,6 +12,8 @@
   "bot_admins_only": "Bu əmrdən istifadə etmək üçün siz bot adminlərindən biri olmalısınız",
   "manage_webhooks": "Webhookları idarə et",
   "role_set_success_desc": "Pulsuz oyunlar xəbərdarlığında <role> qeyd edəcəm!",
+  "channel_thread_set_success_desc": "<channel> kanalda pulsuz oyunlar barədə xəbərdarlığa başlayacağam!",
+  "channel_thread_remove_success_desc": "Mən daha bu serverdə pulsuz oyunlar haqqında məlumat verməyəcəyəm.",
   "role_remove_success_desc": "Pulsuz oyunlar xəbərdarlığında <role> qeyd etməyəcəyəm",
   "updated_settings": "Budur yenilənmiş parametrlər:",
   "current_settings": "Budur cari parametrlər:",
@@ -33,7 +35,5 @@
   "settings": "Parametrlər",
   "help": "Kömək",
   "webhooks_notification": "İndiki vaxtda webhookları dəstəkləyirəm! Bildirişləri daha sürətli göndərməyə icazə verirlər. Server idarəçiləri, zəhmət olmasa webhook vasitəsilə bildirişləri aktivləşdirmək üçün `/set channel` (və ya `/set thread`) edin.",
-  "slash_notification": "Slaş (/) əmrləri işləmir? (Buraya basın) botu slaş əmrləri ilə serverinizə geri əlavə etmək üçün (Kik tələb olunmur)",
-  "channel_thread_set_success_desc": "<channel> kanalda pulsuz oyunlar barədə xəbərdarlığa başlayacağam!",
-  "channel_thread_remove_success_desc": "Mən daha bu serverdə pulsuz oyunlar haqqında məlumat verməyəcəyəm."
+  "slash_notification": "Slaş (/) əmrləri işləmir? (Buraya basın) botu slaş əmrləri ilə serverinizə geri əlavə etmək üçün (Kik tələb olunmur)"
 }

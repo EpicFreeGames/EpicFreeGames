@@ -12,6 +12,8 @@
   "bot_admins_only": "Bu komut için bot yönetici'lerinden birisi olmanız gerekiyor",
   "manage_webhooks": "Webhook'ları yönet",
   "role_set_success_desc": "Ücretsiz oyunlar geldiğinde <role> adlı rolü haberdar edeceğim!",
+  "channel_thread_set_success_desc": "<channel> kanalında bedava oyunlar için haberdar edeceğim!",
+  "channel_thread_remove_success_desc": "Bu sunucu'yu artık bedava oyun'lardan haberdar etmeyeceğim.",
   "role_remove_success_desc": "Artık ücretsiz oyunlar geldiğinde <role> adlı rolü haberdar etmeyeceğim",
   "updated_settings": "Güncellenen ayarlar:",
   "current_settings": "Şuanki ayarlar:",
@@ -33,7 +35,5 @@
   "settings": "Ayarlar",
   "help": "Yardım",
   "webhooks_notification": "Bugünlerde webhook'lar ile destek veriyorum! Bu bana daha hızlı bildiğim göndememe yardım ediyor. Sunucu yönetici'leri, lütfen ``/set channel` (ya da `/set thread`) komutlarını ile webhook bildirimlerini aktive edin.",
-  "slash_notification": "Eğik çizgi (/) komutları çalışmıyor mu? (Buraya tıkla) basın ve tekrar botu sunucunuza eğik çizgi komutları aktifken ekleyin. (Botu atmanız gerekmiyor)",
-  "channel_thread_set_success_desc": "<channel> kanalında bedava oyunlar için haberdar edeceğim!",
-  "channel_thread_remove_success_desc": "Bu sunucu'yu artık bedava oyun'lardan haberdar etmeyeceğim."
+  "slash_notification": "Eğik çizgi (/) komutları çalışmıyor mu? (Buraya tıkla) basın ve tekrar botu sunucunuza eğik çizgi komutları aktifken ekleyin. (Botu atmanız gerekmiyor)"
 }
