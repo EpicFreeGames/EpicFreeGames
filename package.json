@@ -1,5 +1,5 @@
 {
-  "name": "freegames-bot-monorepo",
+  "name": "epicfreegames-monorepo",
   "scripts": {
     "dev": "docker compose up --build -V --attach api --attach bot_rest-proxy --attach bot_gateway-proxy --attach bot_bot",
     "db": "cd ./api/ && yarn dotenv -e ../.env-api yarn prisma studio",

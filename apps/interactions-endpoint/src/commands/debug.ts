@@ -1,9 +1,0 @@
-import { embeds, SlashCommand } from "shared-discord-stuff";
-import { CommandTypes } from "shared";
-
-export const command: SlashCommand = {
-  type: CommandTypes.EVERYONE,
-  needsGuild: true,
-  execute: async (i, guild, language, currency) =>
-    i.reply({ embeds: [embeds.commands.debug(i.guildId!)], ephemeral: true }),
-};
