@@ -31,9 +31,7 @@ const handleConnection = async (connection: Deno.Conn) => {
 
     const json = await requestEvent.request.json().catch(() => null);
 
-    const proxyTo = `${BASE_URL}${requestEvent.request.url.substring(
-      rest.customUrl.length
-    )}`;
+    const proxyTo = `${BASE_URL}${new URL(requestEvent.request.url).pathname}`;
 
     try {
       const result = await rest.runMethod(
