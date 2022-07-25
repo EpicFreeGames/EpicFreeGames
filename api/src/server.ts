@@ -22,12 +22,13 @@ export const createServer = async (redisStore: RedisStore) => {
       secret: config.APP_SECRET,
       resave: false,
       saveUninitialized: false,
+      name: "sid",
       cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 7,
         httpOnly: true,
         sameSite: "strict",
-        secure: true,
-        path: "/",
+        path: "/api",
+        // secure: true, TODO: only when in production
       },
     })
   );
