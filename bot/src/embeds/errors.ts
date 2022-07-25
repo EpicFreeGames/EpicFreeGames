@@ -5,12 +5,14 @@ import { t } from "../i18n/translate.ts";
 import { Language } from "../types.ts";
 import { colors, utils } from "./embedUtils.ts";
 
+// prettier-ignore
 const permissionMap = new Map([
-  ["MANAGE_WEBHOOKS", "Manage webhooks  "],
-  ["VIEW_CHANNEL", "View channel     "],
-  ["SEND_MESSAGES", "Send messages    "],
-  ["MENTION_EVERYONE", "Mention everyone "],
-  ["EMBED_LINKS", "Embed links      "],
+  ["MANAGE_WEBHOOKS",          "Manage webhooks          "],
+  ["VIEW_CHANNEL",             "View channel             "],
+  ["SEND_MESSAGES",            "Send messages            "],
+  ["MENTION_EVERYONE",         "Mention everyone         "],
+  ["EMBED_LINKS",              "Embed links              "],
+  ["SEND_MESSAGES_IN_THREADS", "Send messages in threads "],
 ]);
 
 export const missingPermissions = (

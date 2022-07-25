@@ -1,15 +1,5 @@
-import {
-  Bot,
-  DiscordGuildRoleDelete,
-  DiscordUnavailableGuild,
-} from "discordeno";
-import {
-  getCachedGuild,
-  redisDelete,
-  redisGuildId,
-  redisSet,
-  setGuildToCache,
-} from "../redis.ts";
+import { Bot, DiscordChannel, DiscordGuildRoleDelete, DiscordUnavailableGuild } from "discordeno";
+import { getCachedGuild, redisDelete, redisGuildId, redisSet, setGuildToCache } from "../redis.ts";
 
 export const handleCache = (bot: Bot): Bot => {
   // get unmodified transformers
@@ -49,9 +39,7 @@ export const handleCache = (bot: Bot): Bot => {
     if (result) {
       (async () => {
         if (payload.channel.guild_id && result.guildId) {
-          const guild = await getCachedGuild(
-            bot.transformers.snowflake(payload.channel.guild_id)
-          );
+          const guild = await getCachedGuild(bot.transformers.snowflake(payload.channel.guild_id));
 
           if (guild) {
             guild.channels ??= [];
@@ -63,6 +51,11 @@ export const handleCache = (bot: Bot): Bot => {
             // if channel is found in cached guild, update it
             if (indexOfUpdatedChannel > 0) {
               guild.channels[indexOfUpdatedChannel] = { ...payload.channel };
+
+              await setGuildToCache(guild);
+            } else {
+              // new channel, add to guild.channels
+              guild.channels.push({ ...payload.channel });
 
               await setGuildToCache(guild);
             }
@@ -80,9 +73,9 @@ export const handleCache = (bot: Bot): Bot => {
 
 const handleCacheRemovals = (bot: Bot) => {
   // get unmodified handlers
-  const { GUILD_DELETE, GUILD_ROLE_DELETE } = bot.handlers;
+  const { GUILD_DELETE, GUILD_ROLE_DELETE, CHANNEL_DELETE, THREAD_DELETE } = bot.handlers;
 
-  bot.handlers.GUILD_DELETE = function (_, data, shardId) {
+  bot.handlers.GUILD_DELETE = (_, data, shardId) => {
     const payload = data.d as DiscordUnavailableGuild;
     const id = bot.transformers.snowflake(payload.id);
 
@@ -91,7 +84,7 @@ const handleCacheRemovals = (bot: Bot) => {
     GUILD_DELETE(bot, data, shardId);
   };
 
-  bot.handlers.GUILD_ROLE_DELETE = function (_, data, shardId) {
+  bot.handlers.GUILD_ROLE_DELETE = (_, data, shardId) => {
     const payload = data.d as DiscordGuildRoleDelete;
     const guildId = bot.transformers.snowflake(payload.guild_id);
 
@@ -106,5 +99,41 @@ const handleCacheRemovals = (bot: Bot) => {
     })();
 
     GUILD_ROLE_DELETE(bot, data, shardId);
+  };
+
+  bot.handlers.CHANNEL_DELETE = (_, data, shardId) => {
+    CHANNEL_DELETE(bot, data, shardId);
+
+    const payload = data.d as DiscordChannel;
+    if (!payload.guild_id) return;
+
+    const guildId = bot.transformers.snowflake(payload.guild_id);
+
+    (async () => {
+      const guild = await getCachedGuild(guildId);
+
+      if (guild && guild.channels) {
+        guild.channels.filter((channel) => channel.id !== payload.id);
+        await setGuildToCache(guild);
+      }
+    })();
+  };
+
+  bot.handlers.THREAD_DELETE = (_, data, shardId) => {
+    THREAD_DELETE(bot, data, shardId);
+
+    const payload = data.d as DiscordChannel;
+    if (!payload.guild_id) return;
+
+    const guildId = bot.transformers.snowflake(payload.guild_id);
+
+    (async () => {
+      const guild = await getCachedGuild(guildId);
+
+      if (guild && guild.channels) {
+        guild.channels.filter((channel) => channel.id !== payload.id);
+        await setGuildToCache(guild);
+      }
+    })();
   };
 };

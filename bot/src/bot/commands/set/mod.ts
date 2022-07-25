@@ -4,6 +4,7 @@ import { setChannelCommand } from "./channel.ts";
 import { setCurrencyCommand } from "./currency.ts";
 import { setLanguageCommand } from "./language.ts";
 import { setRoleCommand } from "./role.ts";
+import { setThreadCommand } from "./thread.ts";
 
 export const setCommand: Command = {
   name: "set",
@@ -20,6 +21,20 @@ export const setCommand: Command = {
           channelTypes: [ChannelTypes.GuildNews, ChannelTypes.GuildText],
           name: "channel",
           description: "A channel of your choice",
+          required: true,
+        },
+      ],
+    },
+    {
+      name: "thread",
+      description: "Pick a thread I'll post new free games on",
+      type: ApplicationCommandOptionTypes.SubCommand,
+      options: [
+        {
+          type: ApplicationCommandOptionTypes.Channel,
+          channelTypes: [ChannelTypes.GuildNewsThread, ChannelTypes.GuildPublicThread],
+          name: "thread",
+          description: "A public thread of your choice",
           required: true,
         },
       ],
@@ -76,6 +91,7 @@ export const setCommand: Command = {
     else if (commandName.includes("role")) return setRoleCommand({ commandName, ...rest });
     else if (commandName.includes("language")) return setLanguageCommand({ commandName, ...rest });
     else if (commandName.includes("currency")) return setCurrencyCommand({ commandName, ...rest });
+    else if (commandName.includes("thread")) return setThreadCommand({ commandName, ...rest });
   },
 };
 
