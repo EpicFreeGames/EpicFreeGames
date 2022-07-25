@@ -4,6 +4,7 @@ import { logger } from "~logger";
 import { api } from "../../../api.ts";
 import { embeds } from "../../../embeds/mod.ts";
 import { Game, Server } from "../../../types.ts";
+import { executeWebhook } from "../../../utils/webhook.ts";
 import { getChannel } from "../../helpers/getChannel.ts";
 import { getGuild } from "../../helpers/getGuild.ts";
 import { hasPermsOnChannel } from "../../helpers/hasPerms.ts";
@@ -116,7 +117,9 @@ export const setChannelCommand = async ({ bot, i, lang, curr }: CommandExecutePr
 
   if (gameError || !freeGames.length) return;
 
-  await bot.helpers.sendWebhook(webhook.id, webhook.token!, {
+  await executeWebhook({
+    id: String(webhook.id),
+    token: String(webhook.token),
     embeds: freeGames.map((game) => embeds.games.gameEmbed(game, lang, curr)),
   });
 };
