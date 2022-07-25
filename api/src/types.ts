@@ -1,3 +1,4 @@
+import { User } from "@prisma/client";
 import { NextFunction, Request, Response } from "express";
 
 export interface Middleware {
@@ -6,6 +7,6 @@ export interface Middleware {
 
 declare module "express-session" {
   interface SessionData {
-    flags: number;
+    user: User;
   }
 }

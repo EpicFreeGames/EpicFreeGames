@@ -1,3 +1,4 @@
+import { prisma } from "..";
 import { config } from "../config";
 import { withValidation } from "../utils/withValidation";
 import axios from "axios";
@@ -6,7 +7,7 @@ import { z } from "zod";
 
 export const authRouter = Router();
 
-authRouter.post(
+authRouter.get(
   "/callback/discord",
   withValidation(
     {
@@ -27,31 +28,56 @@ authRouter.post(
         redirect_uri: `${config.APP_URL}/api/auth/callback/discord`,
       });
 
-      const tokenResponse = await axios.post(
-        `${config.DISCORD_API_BASEURL}/oauth2/token`,
-        params.toString(),
-        {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-        }
-      );
+      try {
+        const tokenResponse = await axios.post(
+          `${config.DISCORD_API_BASEURL}/oauth2/token`,
+          params.toString(),
+          {
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+          }
+        );
 
-      const { access_token } = tokenResponse.data;
-      if (!access_token) throw new Error("No access token");
+        const { access_token } = tokenResponse.data;
+        if (!access_token) throw new Error("No access token");
 
-      const userResponse = await axios.get(
-        `${config.DISCORD_API_BASEURL}/oauth2/@me`,
-        {
+        const userResponse = await axios.get(`${config.DISCORD_API_BASEURL}/oauth2/@me`, {
           headers: {
             Authorization: `Bearer ${access_token}`,
           },
-        }
-      );
+        });
 
-      console.log(userResponse.data);
+        const userId = userResponse?.data?.user?.id;
+        if (!userId)
+          return res.status(400).json({
+            statusCode: 400,
+            error: "Bad request",
+            message: "Invalid token",
+          });
 
-      res.status(200);
+        const user = await prisma.user.upsert({
+          where: { discordId: userId },
+          create: {
+            discordId: userId,
+            flags: 0,
+          },
+          update: {
+            discordId: userId,
+          },
+        });
+
+        req.session.user = user;
+        //res.redirect("/");
+      } catch (err) {
+        console.log(err);
+
+        const status = err?.response?.status ?? 500;
+        res.status(status).json({
+          status,
+          message: "Authentication failed",
+        });
+      }
     }
   )
 );

@@ -8,7 +8,7 @@ export const auth =
   async (req, res, next) => {
     const botToken = req.headers.authorization?.split("Bot ")?.at(1);
 
-    if (!botToken && !req.session?.flags)
+    if (!botToken && !req.session?.user?.id)
       return res.status(401).json({
         statusCode: 401,
         error: "Unauthorized",
@@ -17,7 +17,8 @@ export const auth =
 
     if (botToken && safeEqual(botToken, config.BOT_SECRET)) return next();
 
-    if (req.session?.flags && !hasPermission(req.session.flags, requiredFlags))
+    const userFlags = req.session?.user?.flags;
+    if (userFlags && !hasPermission(userFlags, requiredFlags))
       return res.status(403).json({
         statusCode: 403,
         error: "Forbidden",
@@ -35,5 +36,4 @@ const hasPermission = (flags: number, requiredFlags: Flags[]) => {
   return hasFlag(flags, totalRequired);
 };
 
-const hasFlag = (flags: number, requiredFlag: Flags) =>
-  (flags & requiredFlag) === requiredFlag;
+const hasFlag = (flags: number, requiredFlag: Flags) => (flags & requiredFlag) === requiredFlag;

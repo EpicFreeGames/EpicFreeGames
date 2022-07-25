@@ -44,4 +44,21 @@ router.post(
   )
 );
 
+router.get("/@me", auth(), async (req, res) => {
+  const userId = req.session.user!.id;
+
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+  });
+
+  if (!user)
+    return res.status(404).send({
+      statusCode: 404,
+      error: "Not found",
+      message: "User not found",
+    });
+
+  return res.json(user);
+});
+
 export const userRouter = router;
