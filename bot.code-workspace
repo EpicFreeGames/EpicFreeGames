@@ -17,15 +17,15 @@
     "deno.importMap": "./bot/importMap.json",
     "deno.suggest.autoImports": true,
     "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.codeActionsOnSave": {
       "source.organizeImports": true,
       "source.fixAll": true
     },
-    "editor.defaultFormatter": "denoland.vscode-deno",
     "deno.internalDebug": true,
     "deno.suggest.completeFunctionCalls": true
   },
   "extensions": {
-    "recommendations": ["denoland.vscode-deno"]
+    "recommendations": ["denoland.vscode-deno", "esbenp.prettier-vscode"]
   }
 }
