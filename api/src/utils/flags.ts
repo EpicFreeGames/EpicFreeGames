@@ -16,4 +16,8 @@ export enum Flags {
   EditServers = 1 << 11,
 
   EditUsers = 1 << 12,
+
+  GetCurrencies = 1 << 13,
+  EditCurrencies = 1 << 14,
+  AddCurrencies = 1 << 15,
 }

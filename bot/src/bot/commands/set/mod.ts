@@ -1,6 +1,7 @@
 import { ApplicationCommandOptionTypes, ApplicationCommandTypes, ChannelTypes } from "discordeno";
 import { Command } from "../mod.ts";
 import { setChannelCommand } from "./channel.ts";
+import { setCurrencyCommand } from "./currency.ts";
 import { setLanguageCommand } from "./language.ts";
 import { setRoleCommand } from "./role.ts";
 
@@ -44,7 +45,21 @@ export const setCommand: Command = {
         {
           type: ApplicationCommandOptionTypes.String,
           name: "language",
-          description: "A language of your choice",
+          description: "Language",
+          required: true,
+          autocomplete: true,
+        },
+      ],
+    },
+    {
+      name: "currency",
+      description: "Pick a currency you'd like the prices to be in",
+      type: ApplicationCommandOptionTypes.SubCommand,
+      options: [
+        {
+          type: ApplicationCommandOptionTypes.String,
+          name: "currency",
+          description: "Currency",
           required: true,
           autocomplete: true,
         },
@@ -60,5 +75,18 @@ export const setCommand: Command = {
     if (commandName.includes("channel")) return setChannelCommand({ commandName, ...rest });
     else if (commandName.includes("role")) return setRoleCommand({ commandName, ...rest });
     else if (commandName.includes("language")) return setLanguageCommand({ commandName, ...rest });
+    else if (commandName.includes("currency")) return setCurrencyCommand({ commandName, ...rest });
   },
+};
+
+type SorterProps = {
+  a: string;
+  b: string;
+  query: string;
+};
+
+export const autoCompleteSorter = ({ a, b, query }: SorterProps) => {
+  if (a.indexOf(query) < b.indexOf(query)) return -1;
+  else if (a.indexOf(query) > b.indexOf(query)) return 1;
+  else return 0;
 };
