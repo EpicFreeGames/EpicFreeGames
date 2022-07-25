@@ -29,20 +29,16 @@ export const setRoleCommand = async ({ bot, i, server, lang, curr }: CommandExec
   if (!role || !guild || !channel) return; // won't happen, but just for fun
 
   const { toDb, embed } = makeSenseOfRole(role);
-  if (embed === "@everyone") {
-    const { hasPerms, details } = await hasPermsOnChannel(bot, channel, guild, [
-      "MENTION_EVERYONE",
-    ]);
+  const { hasPerms, details } = await hasPermsOnChannel(bot, channel, guild, ["MENTION_EVERYONE"]);
 
-    if (!hasPerms)
-      return await bot.helpers.sendInteractionResponse(i.id, i.token, {
-        type: InteractionResponseTypes.ChannelMessageWithSource,
-        data: {
-          flags: EphemeralFlag,
-          embeds: [embeds.errors.missingPermissions(channel.id, lang, details)],
-        },
-      });
-  }
+  if (!hasPerms)
+    return await bot.helpers.sendInteractionResponse(i.id, i.token, {
+      type: InteractionResponseTypes.ChannelMessageWithSource,
+      data: {
+        flags: EphemeralFlag,
+        embeds: [embeds.errors.missingPermissions(channel.id, lang, details)],
+      },
+    });
 
   const { error, data: updatedServer } = await api<Server>({
     method: "PUT",
