@@ -23,6 +23,8 @@ bot.rest = createRestManager({
 export const redis = await connect({
   hostname: config.REDISHOST,
   port: config.REDISPORT,
+  username: config.REDISUSER,
+  password: config.REDISPASS,
 });
 logger.info("Connected to Redis");
 
