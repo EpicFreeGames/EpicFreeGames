@@ -14,13 +14,13 @@ export const setCurrencyCommand = async ({ bot, i, lang, curr, ...rest }: Comman
   if (i.type === InteractionTypes.ApplicationCommandAutocomplete)
     return autoCompleteHandler({ i, lang, curr, bot, ...rest });
 
-  const CurrencyCode = getString(i, "currency");
+  const currencyCode = getString(i, "currency");
 
   const { error, data: updatedServer } = await api<Server>({
     method: "PUT",
     path: `/servers/${i.guildId}/currency`,
     body: {
-      CurrencyCode,
+      currencyCode,
     },
   });
 

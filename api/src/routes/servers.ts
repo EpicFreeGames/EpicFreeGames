@@ -316,6 +316,9 @@ router.put(
         data: {
           currencyCode,
         },
+        include: {
+          currency: true,
+        },
       });
 
       res.json(updatedServer);
