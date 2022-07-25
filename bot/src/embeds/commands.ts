@@ -49,16 +49,16 @@ export const settings = (
   title: t({ language, key: "settings" }),
   color: colors.gray,
   description:
-    utils.bold(`${t({ language, key: "channel" })}/${t({ language, key: "thread" })}: `) +
+    utils.bold(`${t({ language, key: "channel" })}/${t({ language, key: "thread" })}:\n`) +
     settingsUtils.showChannelOrThread(server, language) +
     "\n\n" +
-    utils.bold(`${t({ language, key: "role" })}: `) +
+    utils.bold(`${t({ language, key: "role" })}:\n`) +
     settingsUtils.showRole(server, language) +
     "\n\n" +
-    utils.bold(`${t({ language, key: "language" })}: `) +
+    utils.bold(`${t({ language, key: "language" })}:\n`) +
     language.nativeName +
     "\n\n" +
-    utils.bold(`${t({ language, key: "currency" })}: `) +
+    utils.bold(`${t({ language, key: "currency" })}:\n`) +
     currency.name +
     utils.footer(language),
 });
