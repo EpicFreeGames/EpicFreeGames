@@ -1,18 +1,21 @@
 import { config } from "./config";
 import connectRedis from "connect-redis";
 import expressSession from "express-session";
-import { createClient } from "redis";
+import Redis from "ioredis";
 
 export const createRedisStore = async () => {
-  const RedisStore = connectRedis(expressSession);
-  const redisClient = createClient({
-    url: `redis://${config.REDISHOST}:${config.REDISPORT}`,
+  const redis = new Redis({
+    host: config.REDISHOST,
+    port: config.REDISPORT,
+    username: config.REDISUSER,
+    password: config.REDISPASS,
+    lazyConnect: true,
   });
 
-  redisClient.on("error", (err) => console.log("REDIS ERROR:", err));
+  const RedisStore = connectRedis(expressSession);
 
   return {
-    store: new RedisStore({ client: redisClient }),
-    client: redisClient,
+    store: new RedisStore({ client: redis }),
+    client: redis,
   };
 };
