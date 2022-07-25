@@ -120,6 +120,8 @@ export const setChannelCommand = async ({ bot, i, lang, curr }: CommandExecutePr
   await executeWebhook({
     id: String(webhook.id),
     token: String(webhook.token),
-    embeds: freeGames.map((game) => embeds.games.gameEmbed(game, lang, curr)),
+    options: {
+      embeds: freeGames.map((game) => embeds.games.gameEmbed(game, lang, curr)),
+    },
   });
 };
