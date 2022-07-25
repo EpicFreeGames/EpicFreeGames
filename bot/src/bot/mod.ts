@@ -26,22 +26,22 @@ export const redis = await connect({
 });
 logger.info("Connected to Redis");
 
+initEvents();
+initCommands();
+
 if (config.SLASH_COMMANDS) {
+  const commandList = commands.map((c) => ({
+    name: c.name,
+    description: c.description,
+    options: c.options,
+    type: c.type,
+  }));
+
   await bot.helpers
-    .upsertApplicationCommands(
-      commands.map((c) => ({
-        name: c.name,
-        description: c.description,
-        options: c.options,
-        type: c.type,
-      }))
-    )
+    .upsertApplicationCommands(commandList)
     .then(() => logger.info("Commands updated."))
     .catch((err) => logger.error("Error updating slash commands:", err));
 }
-
-initEvents();
-initCommands();
 
 const httpServer = Deno.listen({ port: 3000 });
 logger.info("🚀 Bot listening for events on port 3000");

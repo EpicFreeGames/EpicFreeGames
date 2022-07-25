@@ -6,7 +6,10 @@ const Intents: GatewayIntents = GatewayIntents.DirectMessages | GatewayIntents.G
 
 const envSchema = z.object({
   DEBUG: z.any().optional(),
-  SLASH_COMMANDS: z.any().optional(),
+  SLASH_COMMANDS: z
+    .any()
+    .optional()
+    .transform((v) => !!v),
 
   BOT_TOKEN: z.string().refine((v) => !!BigInt(atob(v.split(".")[0]))),
 
