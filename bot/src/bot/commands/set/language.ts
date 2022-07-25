@@ -2,13 +2,14 @@ import {
   ApplicationCommandOptionChoice,
   InteractionResponseTypes,
   InteractionTypes,
-} from "https://deno.land/x/discordeno@13.0.0-rc45/mod.ts";
+} from "discordeno";
 import { api } from "../../../api.ts";
 import { embeds } from "../../../embeds/mod.ts";
 import { languages } from "../../../i18n/languages.ts";
 import { Server } from "../../../types.ts";
 import { getString } from "../../utils/interactionOptions.ts";
 import { CommandExecuteProps, EphemeralFlag } from "../mod.ts";
+import { autoCompleteSorter } from "./mod.ts";
 
 export const setLanguageCommand = async ({ bot, i, lang, curr, ...rest }: CommandExecuteProps) => {
   if (i.type === InteractionTypes.ApplicationCommandAutocomplete)
@@ -58,12 +59,9 @@ const autoCompleteHandler = async ({ bot, i }: CommandExecuteProps) => {
   if (query) {
     results = [...languages.entries()]
       .filter(([_k, v]) => v.nativeName.toLowerCase().includes(query))
-      .sort(([_aKey, aValue], [_bKey, bValue]) => {
-        if (aValue.nativeName.toLowerCase().startsWith(query)) return -1;
-        if (bValue.nativeName.toLowerCase().startsWith(query)) return 1;
-
-        return 0;
-      })
+      .sort(([_aKey, aValue], [_bKey, bValue]) =>
+        autoCompleteSorter({ a: aValue.nativeName, b: bValue.nativeName, query })
+      )
       .slice(0, 20)
       .map(([_key, value]) => ({
         name: value.nativeName,
