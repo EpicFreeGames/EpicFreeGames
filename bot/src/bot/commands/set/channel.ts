@@ -21,7 +21,6 @@ export const setChannelCommand = async ({ bot, i, lang, curr }: CommandExecutePr
   const channelId = getChannelId(i, "channel");
   if (!channelId) return; // won't happen, but just in case
 
-  // first time setup
   const channel = await getChannel(bot, i.guildId!, channelId);
   const guild = await getGuild(bot, i.guildId!);
   if (!channel || !guild) return; // won't happen, but just in case
