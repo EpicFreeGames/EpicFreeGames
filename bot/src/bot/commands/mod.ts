@@ -14,6 +14,7 @@ import { removeCommand } from "./remove.ts";
 import { setCommand } from "./set/mod.ts";
 import { settingsCommand } from "./settings.ts";
 import { upCommand } from "./up.ts";
+import { voteCommand } from "./vote.ts";
 
 export type CommandExecuteProps = {
   bot: Bot;
@@ -55,6 +56,7 @@ export const initCommands = () => {
   commands.set("up", upCommand);
   commands.set("help", helpCommand);
   commands.set("invite", inviteCommand);
+  commands.set("vote", voteCommand);
 
   commands.set("remove", removeCommand);
   commands.set("set", setCommand);

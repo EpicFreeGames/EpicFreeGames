@@ -20,10 +20,15 @@ export const help = (language: Language): Embed => ({
 export const vote = (language: Language): Embed => ({
   title: t({ language, key: "vote" }),
   color: colors.blue,
-  image: {
-    url: config.GIFS_VOTE,
-  },
-  description: config.LINKS_VOTE,
+  description:
+    utils.bold("Top.gg") +
+    "\n" +
+    config.VOTE_TOPGG +
+    "\n\n" +
+    utils.bold("Discordlist.gg") +
+    "\n" +
+    config.VOTE_DLISTGG +
+    utils.footer(language),
 });
 
 export const invite = (language: Language): Embed => ({

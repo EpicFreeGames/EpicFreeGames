@@ -38,11 +38,13 @@ const envSchema = z.object({
 
   LINKS_BOT_INVITE: z.string(),
   LINKS_SERVER_INVITE: z.string(),
-  LINKS_VOTE: z.string(),
   LINKS_WEBSITE: z.string(),
   LINKS_COMMANDS: z.string(),
   LINKS_BROWSER_REDIRECT: z.string(),
   LINKS_LAUNCHER_REDIRECT: z.string(),
+
+  VOTE_TOPGG: z.string(),
+  VOTE_DLISTGG: z.string(),
 
   NAME_ON_WEBHOOK: z.string(),
   LOGO_URL_ON_WEBHOOK: z.string(),
