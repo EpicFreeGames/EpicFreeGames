@@ -1,5 +1,5 @@
 import { blue, bold, magenta, red } from "colors";
-import { config } from "../config.ts";
+import { config } from "~config";
 
 const timestamp = () => {
   const today = new Date();

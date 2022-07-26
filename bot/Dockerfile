@@ -10,10 +10,8 @@ COPY ${FOLDER} ${FOLDER}
 COPY ./importMap.json ./importMap.json
 COPY ./deno.json ./deno.json
 
-COPY ./src/*.ts ./src/
-COPY ./src/embeds ./src/embeds
-COPY ./src/i18n ./src/i18n
-COPY ./src/utils ./src/utils
+COPY ./src/config.ts ./src/config.ts
+COPY ./src/_shared ./src/_shared
 
 RUN deno cache ${FOLDER}/mod.ts
 

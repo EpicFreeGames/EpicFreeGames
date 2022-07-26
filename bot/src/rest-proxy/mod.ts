@@ -1,8 +1,8 @@
 import { BASE_URL, createRestManager } from "discordeno";
-import { config } from "../config.ts";
-import { RestMethod } from "../types.ts";
-import { serialize } from "../utils/jsonWorker/initiator.ts";
-import { logger } from "../utils/logger.ts";
+import { config } from "~config";
+import { RestMethod } from "~shared/types.ts";
+import { serialize } from "~shared/utils/jsonWorker/initiator.ts";
+import { logger } from "~shared/utils/logger.ts";
 
 const rest = createRestManager({
   token: config.BOT_TOKEN,
@@ -19,8 +19,7 @@ const handleConnection = async (connection: Deno.Conn) => {
   for await (const requestEvent of httpConnection) {
     if (
       !config.REST_PROXY_AUTH ||
-      config.REST_PROXY_AUTH !==
-        requestEvent.request.headers.get("AUTHORIZATION")
+      config.REST_PROXY_AUTH !== requestEvent.request.headers.get("AUTHORIZATION")
     ) {
       return requestEvent.respondWith(
         new Response(JSON.stringify({ error: "Invalid authorization key." }), {

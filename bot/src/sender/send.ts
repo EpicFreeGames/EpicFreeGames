@@ -1,6 +1,6 @@
-import { api } from "../api.ts";
-import { Game, Server } from "../types.ts";
-import { logger } from "../utils/logger.ts";
+import { api } from "~shared/api.ts";
+import { Game, Server } from "~shared/types.ts";
+import { logger } from "~shared/utils/logger.ts";
 import { channelSender } from "./channel.ts";
 import { hookSender } from "./hook.ts";
 

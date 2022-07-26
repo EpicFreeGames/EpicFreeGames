@@ -1,6 +1,6 @@
-import { serialize } from "~json/initiator.ts";
-import { config } from "./config.ts";
+import { config } from "~config";
 import { Method } from "./types.ts";
+import { serialize } from "./utils/jsonWorker/initiator.ts";
 import { logger } from "./utils/logger.ts";
 
 type ApiResponse<TData> =

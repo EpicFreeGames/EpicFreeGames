@@ -1,5 +1,5 @@
 import { createRestManager } from "https://deno.land/x/discordeno@13.0.0-rc45/mod.ts";
-import { config } from "../config.ts";
+import { config } from "~config";
 
 export const botRest = createRestManager({
   token: config.BOT_TOKEN,

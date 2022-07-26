@@ -1,7 +1,7 @@
 import { DiscordGuild } from "discordeno";
 import { connect, Redis } from "redis";
-import { deserialize, serialize } from "~json/initiator.ts";
-import { config } from "./config.ts";
+import { config } from "~config";
+import { deserialize, serialize } from "./utils/jsonWorker/initiator.ts";
 import { logger } from "./utils/logger.ts";
 
 export let redis: Redis | null = null;

@@ -1,10 +1,10 @@
 import { PermissionStrings } from "discordeno";
-import { embeds } from "../embeds/mod.ts";
-import { languages } from "../i18n/languages.ts";
-import { Game } from "../types.ts";
-import { getChannel } from "../utils/getChannel.ts";
-import { getGuild } from "../utils/getGuild.ts";
-import { hasPermsOnChannel } from "../utils/hasPerms.ts";
+import { embeds } from "~shared/embeds/mod.ts";
+import { languages } from "~shared/i18n/languages.ts";
+import { Game } from "~shared/types.ts";
+import { getChannel } from "~shared/utils/getChannel.ts";
+import { getGuild } from "~shared/utils/getGuild.ts";
+import { hasPermsOnChannel } from "~shared/utils/hasPerms.ts";
 import { sender } from "./mod.ts";
 import { ChannelServer } from "./send.ts";
 import { displayRole, logLog, wait } from "./utils.ts";

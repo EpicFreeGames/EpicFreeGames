@@ -1,7 +1,7 @@
-import { embeds } from "../embeds/mod.ts";
-import { languages } from "../i18n/languages.ts";
-import { Game } from "../types.ts";
-import { executeWebhook } from "../utils/webhook.ts";
+import { embeds } from "~shared/embeds/mod.ts";
+import { languages } from "~shared/i18n/languages.ts";
+import { Game } from "~shared/types.ts";
+import { executeWebhook } from "~shared/utils/webhook.ts";
 import { sender } from "./mod.ts";
 import { HookServer } from "./send.ts";
 import { logLog, wait } from "./utils.ts";

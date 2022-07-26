@@ -5,8 +5,8 @@ import {
   Collection,
   Interaction,
 } from "discordeno";
-import { logger } from "~logger";
-import { Currency, Language, Server } from "../../types.ts";
+import { Currency, Language, Server } from "~shared/types.ts";
+import { logger } from "~shared/utils/logger.ts";
 import { freeCommand } from "./free.ts";
 import { helpCommand } from "./help.ts";
 import { inviteCommand } from "./invite.ts";

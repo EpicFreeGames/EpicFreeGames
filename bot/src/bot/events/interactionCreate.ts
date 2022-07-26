@@ -5,11 +5,11 @@ import {
   InteractionResponseTypes,
   PermissionStrings,
 } from "discordeno";
-import { logger } from "~logger";
-import { api } from "../../api.ts";
-import { embeds } from "../../embeds/mod.ts";
-import { defaultCurrency, defaultLanguage, languages } from "../../i18n/languages.ts";
-import { Server } from "../../types.ts";
+import { api } from "~shared/api.ts";
+import { embeds } from "~shared/embeds/mod.ts";
+import { defaultCurrency, defaultLanguage, languages } from "~shared/i18n/languages.ts";
+import { Server } from "~shared/types.ts";
+import { logger } from "~shared/utils/logger.ts";
 import { commands } from "../commands/mod.ts";
 import { bot } from "../mod.ts";
 

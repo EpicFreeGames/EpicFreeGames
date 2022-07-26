@@ -5,8 +5,8 @@ import {
   routes,
   transformGatewayBot,
 } from "discordeno";
-import { config } from "../config.ts";
-import { logger } from "../utils/logger.ts";
+import { config } from "~config";
+import { logger } from "~shared/utils/logger.ts";
 
 const queue: GatewayQueue = {
   processing: false,

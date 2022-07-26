@@ -1,6 +1,6 @@
-import { api } from "../api.ts";
-import { SendingLog } from "../types.ts";
-import { logger } from "../utils/logger.ts";
+import { api } from "~shared/api.ts";
+import { SendingLog } from "~shared/types.ts";
+import { logger } from "~shared/utils/logger.ts";
 
 export const displayRole = (roleId?: string | null): string | undefined => {
   let role: string | undefined = undefined;

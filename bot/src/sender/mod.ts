@@ -1,9 +1,9 @@
 import { createBot } from "discordeno";
-import { handleCache } from "../cache.ts";
-import { config } from "../config.ts";
-import { connectRedis } from "../redis.ts";
-import { botRest } from "../utils/botRest.ts";
-import { logger } from "../utils/logger.ts";
+import { config } from "~config";
+import { handleCache } from "~shared/cache.ts";
+import { connectRedis } from "~shared/redis.ts";
+import { botRest } from "~shared/utils/botRest.ts";
+import { logger } from "~shared/utils/logger.ts";
 import { send } from "./send.ts";
 
 export const sender = handleCache(

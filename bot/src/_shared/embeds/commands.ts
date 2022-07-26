@@ -1,5 +1,5 @@
 import { Embed } from "discordeno";
-import { config } from "../config.ts";
+import { config } from "~config";
 import { t } from "../i18n/translate.ts";
 import { Currency, Language, Server } from "../types.ts";
 import { colors, utils } from "./embedUtils.ts";

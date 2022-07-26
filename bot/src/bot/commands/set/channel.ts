@@ -1,13 +1,13 @@
 import { InteractionResponseTypes, PermissionStrings } from "discordeno";
 import { config } from "~config";
-import { logger } from "~logger";
-import { api } from "../../../api.ts";
-import { embeds } from "../../../embeds/mod.ts";
-import { Game, Server } from "../../../types.ts";
-import { getChannel } from "../../../utils/getChannel.ts";
-import { getGuild } from "../../../utils/getGuild.ts";
-import { hasPermsOnChannel } from "../../../utils/hasPerms.ts";
-import { executeWebhook } from "../../../utils/webhook.ts";
+import { api } from "~shared/api.ts";
+import { embeds } from "~shared/embeds/mod.ts";
+import { Game, Server } from "~shared/types.ts";
+import { getChannel } from "~shared/utils/getChannel.ts";
+import { getGuild } from "~shared/utils/getGuild.ts";
+import { hasPermsOnChannel } from "~shared/utils/hasPerms.ts";
+import { logger } from "~shared/utils/logger.ts";
+import { executeWebhook } from "~shared/utils/webhook.ts";
 import { getChannelId } from "../../utils/interactionOptions.ts";
 import { CommandExecuteProps, EphemeralFlag } from "../mod.ts";
 
