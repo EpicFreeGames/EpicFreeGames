@@ -1,0 +1,15 @@
+{
+  "cmd_desc_set_currency": "Wybierz walutę w której chcesz widzieć ceny",
+  "cmd_desc_set_thread": "Wybierz wątek w którym mam wysyłać darmowe gry",
+  "cmd_desc_set_channel": "Wybierz kanał w którym będę wysyłał nowe darmowe gry",
+  "cmd_desc_set_language": "Wybierz język, w którym chcesz widzieć wiadomości",
+  "cmd_desc_remove_channel": "Usuń ustawiony kanał (lub wątek)",
+  "cmd_desc_remove_role": "Usuń ustawioną rolę",
+  "cmd_desc_invite": "Uzyskaj link z zaproszeniem",
+  "cmd_desc_help": "Użyj tego, jeśli potrzebujesz pomocy",
+  "cmd_desc_debug": "Używane do debugowania",
+  "cmd_desc_up": "Zobacz nadchodzące darmowe gry",
+  "cmd_desc_free": "Zobacz bieżące darmowe gry",
+  "cmd_desc_settings": "Zobacz ustawienia",
+  "cmd_desc_vote": "Zagłosuj na mnie"
+}
