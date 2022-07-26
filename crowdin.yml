@@ -1,19 +1,20 @@
-"project_id_env" : "CROWDIN_PROJECT_ID"
-"api_token_env" : "CROWDIN_PERSONAL_TOKEN"
-"base_path" : "."
-"base_url_env" : "CROWDIN_BASE_URL"
+"project_id_env": "CROWDIN_PROJECT_ID"
+"api_token_env": "CROWDIN_PERSONAL_TOKEN"
+"base_path": "."
+"base_url_env": "CROWDIN_BASE_URL"
 
 "preserve_hierarchy": true
 
-files: [
- {
-  "source" : "/bot/src/i18n/t10s/en/messages.json",
-  "translation" : "/bot/src/i18n/t10s/%two_letters_code%/%original_file_name%",
-  "dest" : "messages.json",
- }, 
- {
-  "source" : "/bot/src/i18n/t10s/en/commands.json",
-  "translation" : "/bot/src/i18n/t10s/%two_letters_code%/%original_file_name%",
-  "dest" : "commands.json",
- }
-]
+files:
+  [
+    {
+      "source": "/bot/src/_shared/i18n/t10s/en/messages.json",
+      "translation": "/bot/src/_shared/i18n/t10s/%two_letters_code%/%original_file_name%",
+      "dest": "messages.json",
+    },
+    {
+      "source": "/bot/src/_shared/i18n/t10s/en/commands.json",
+      "translation": "/bot/src/_shared/i18n/t10s/%two_letters_code%/%original_file_name%",
+      "dest": "commands.json",
+    },
+  ]
