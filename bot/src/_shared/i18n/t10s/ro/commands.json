@@ -1,0 +1,14 @@
+{
+  "cmd_desc_set_currency": "Alege o monedă în care dorești ca prețurile să fie în",
+  "cmd_desc_set_thread": "Alege un fir unde voi posta noi jocuri gratuite",
+  "cmd_desc_set_language": "Alegeți o limbă în care doriți ca mesajele mele să fie în",
+  "cmd_desc_remove_channel": "Elimină canalul setat (sau firul setat)",
+  "cmd_desc_remove_role": "Elimină rolul setat",
+  "cmd_desc_invite": "Obține link-ul meu de invitație",
+  "cmd_desc_help": "Folosește asta dacă ai nevoie de puțin ajutor",
+  "cmd_desc_debug": "Utilizat pentru depanare",
+  "cmd_desc_up": "Vezi jocurile gratuite ce urmează",
+  "cmd_desc_free": "Vezi jocurile gratis curente",
+  "cmd_desc_settings": "Vezi setările",
+  "cmd_desc_vote": "Votează-mă"
+}
