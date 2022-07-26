@@ -17,7 +17,7 @@ type Args =
   | {
       method: Exclude<Method, "GET" | "HEAD">;
       path: string;
-      body?: Record<string, string | number | null | undefined>;
+      body?: Record<string, string | number | boolean | null | undefined>;
     }
   | {
       method: "GET" | "HEAD";
@@ -25,11 +25,7 @@ type Args =
       body?: never;
     };
 
-export async function api<TData>({
-  method,
-  path,
-  body,
-}: Args): Promise<ApiResponse<TData>> {
+export async function api<TData>({ method, path, body }: Args): Promise<ApiResponse<TData>> {
   return fetch(`${config.API_BASEURL}${path}`, {
     method,
     headers: {
@@ -51,9 +47,9 @@ export async function api<TData>({
     })
     .catch(async (err) => {
       logger.error(
-        `API request failed\nRequest url: ${
-          config.API_BASEURL
-        }${path}\nError: ${await serialize(err)}`
+        `API request failed\nRequest url: ${config.API_BASEURL}${path}\nError: ${await serialize(
+          err
+        )}`
       );
 
       return {

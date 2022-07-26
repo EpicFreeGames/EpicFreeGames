@@ -3,11 +3,11 @@ import { api } from "../../../api.ts";
 import { config } from "../../../config.ts";
 import { embeds } from "../../../embeds/mod.ts";
 import { Game, Server } from "../../../types.ts";
+import { getChannel } from "../../../utils/getChannel.ts";
+import { getGuild } from "../../../utils/getGuild.ts";
+import { hasPermsOnChannel } from "../../../utils/hasPerms.ts";
 import { logger } from "../../../utils/logger.ts";
 import { executeWebhook } from "../../../utils/webhook.ts";
-import { getChannel } from "../../helpers/getChannel.ts";
-import { getGuild } from "../../helpers/getGuild.ts";
-import { hasPermsOnChannel } from "../../helpers/hasPerms.ts";
 import { getChannelId } from "../../utils/interactionOptions.ts";
 import { CommandExecuteProps, EphemeralFlag } from "../mod.ts";
 
@@ -127,12 +127,12 @@ export const setThreadCommand = async ({ bot, i, lang, curr, server }: CommandEx
 
   if (gameError || !freeGames.length) return;
 
-  await executeWebhook({
+  await executeWebhook(bot, {
     id: String(webhook.id),
     token: String(webhook.token),
     options: {
       embeds: freeGames.map((game) => embeds.games.gameEmbed(game, lang, curr)),
-      threadId,
     },
+    threadId: String(threadId),
   });
 };

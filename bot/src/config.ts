@@ -16,7 +16,10 @@ const envSchema = z.object({
   REDISHOST: z.string(),
   REDISPORT: z.string().transform(Number),
   REDISUSER: z.string().optional(),
-  REDISPASS: z.string().optional(),
+  REDISPASSWORD: z.string().optional(),
+
+  SENDER_URL: z.string(),
+  SENDER_AUTH: z.string(),
 
   GATEWAY_PROXY_URL: z.string().transform((v) => (v.endsWith("/") ? v.slice(0, -1) : v)),
   GATEWAY_PROXY_AUTH: z.string(),

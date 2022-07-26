@@ -1,17 +1,17 @@
-import { BASE_URL, ExecuteWebhook } from "discordeno";
-import { bot } from "../bot/mod.ts";
+import { BASE_URL, Bot, ExecuteWebhook } from "discordeno";
 
 type ExecuteWebhookProps = {
   id: string;
   token: string;
-  options: Omit<ExecuteWebhook, "file">;
+  options: Omit<ExecuteWebhook, "file" | "threadId">;
+  threadId?: string | null;
   wait?: boolean;
 };
 
-export const executeWebhook = (props: ExecuteWebhookProps) => {
+export const executeWebhook = (bot: Bot, props: ExecuteWebhookProps) => {
   const params = new URLSearchParams();
 
-  if (props.options.threadId) params.append("thread_id", String(props.options.threadId));
+  if (props.threadId) params.append("thread_id", props.threadId);
   if (props.wait) params.append("wait", props.wait.toString());
 
   return fetch(`${BASE_URL}/webhooks/${props.id}/${props.token}?${params.toString()}`, {

@@ -1,10 +1,11 @@
-import { createBot, createRestManager, DiscordGatewayPayload } from "discordeno";
-import { connect } from "https://deno.land/x/redis@v0.26.0/redis.ts";
+import { createBot, DiscordGatewayPayload } from "discordeno";
 import { logger } from "~logger";
+import { handleCache } from "../cache.ts";
 import { config } from "../config.ts";
+import { connectRedis } from "../redis.ts";
+import { botRest } from "../utils/botRest.ts";
 import { commands, initCommands } from "./commands/mod.ts";
 import { initEvents } from "./events/mod.ts";
-import { handleCache } from "./utils/cache.ts";
 
 export const bot = handleCache(
   createBot({
@@ -14,22 +15,12 @@ export const bot = handleCache(
   })
 );
 
-bot.rest = createRestManager({
-  token: config.BOT_TOKEN,
-  secretKey: config.REST_PROXY_AUTH,
-  customUrl: config.REST_PROXY_URL,
-});
-
-export const redis = await connect({
-  hostname: config.REDISHOST,
-  port: config.REDISPORT,
-  username: config.REDISUSER,
-  password: config.REDISPASS,
-});
-logger.info("Connected to Redis");
+bot.rest = botRest;
 
 initEvents();
 initCommands();
+
+await connectRedis();
 
 if (config.SLASH_COMMANDS) {
   const commandList = commands.map((c) => ({

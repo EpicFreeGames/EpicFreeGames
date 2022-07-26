@@ -2,9 +2,9 @@ import { InteractionResponseTypes, Role } from "discordeno";
 import { api } from "../../../api.ts";
 import { embeds } from "../../../embeds/mod.ts";
 import { Server } from "../../../types.ts";
-import { getChannel } from "../../helpers/getChannel.ts";
-import { getGuild } from "../../helpers/getGuild.ts";
-import { hasPermsOnChannel } from "../../helpers/hasPerms.ts";
+import { getChannel } from "../../../utils/getChannel.ts";
+import { getGuild } from "../../../utils/getGuild.ts";
+import { hasPermsOnChannel } from "../../../utils/hasPerms.ts";
 import { getRoleId } from "../../utils/interactionOptions.ts";
 import { CommandExecuteProps, EphemeralFlag } from "../mod.ts";
 

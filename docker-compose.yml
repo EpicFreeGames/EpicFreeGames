@@ -51,12 +51,28 @@ services:
       - .env-bot
     restart: unless-stopped
 
+  bot_sender:
+    depends_on:
+      - redis
+      - api
+      - bot_rest-proxy
+      - bot_gateway-proxy
+    build:
+      context: ./bot
+      args:
+        - SCOPE=sender
+    image: bot/sender
+    env_file:
+      - .env-bot
+    restart: unless-stopped
+
   bot_bot:
     depends_on:
       - redis
       - api
       - bot_rest-proxy
       - bot_gateway-proxy
+      - bot_sender
     build:
       context: ./bot
       args:

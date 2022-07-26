@@ -3,6 +3,7 @@ import { authRouter } from "./routes/auth";
 import { currencyRouter } from "./routes/currencies";
 import { gameRouter } from "./routes/games";
 import { logRouter } from "./routes/logs";
+import { sendsRouter } from "./routes/sends";
 import { serverRouter } from "./routes/servers";
 import { userRouter } from "./routes/users";
 import { RedisStore } from "connect-redis";
@@ -47,6 +48,7 @@ const registerRoutes = (app: Express) => {
   router.use("/logs", logRouter);
   router.use("/auth", authRouter);
   router.use("/currencies", currencyRouter);
+  router.use("/sends", sendsRouter);
 
   app.use("/api", router);
 };

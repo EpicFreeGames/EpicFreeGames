@@ -1,8 +1,8 @@
 import { Embed } from "discordeno";
-import { ResultMap } from "../bot/helpers/hasPerms.ts";
 import { config } from "../config.ts";
 import { t } from "../i18n/translate.ts";
 import { Language } from "../types.ts";
+import { ResultMap } from "../utils/hasPerms.ts";
 import { colors, utils } from "./embedUtils.ts";
 
 // prettier-ignore

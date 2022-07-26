@@ -327,47 +327,46 @@ router.put(
 );
 
 router.get("/counts", auth(Flags.GetServers), async (req, res) => {
-  const [total, sendable, hasOnlyChannel, hasWebhook, hasRole] =
-    await prisma.$transaction([
-      // total
-      prisma.server.count(),
-      // sendable
-      prisma.server.count({
-        where: {
-          channelId: {
-            not: null,
-          },
+  const [total, sendable, hasOnlyChannel, hasWebhook, hasRole] = await prisma.$transaction([
+    // total
+    prisma.server.count(),
+    // sendable
+    prisma.server.count({
+      where: {
+        channelId: {
+          not: null,
         },
-      }),
-      // has only channel
-      prisma.server.count({
-        where: {
-          channelId: {
-            not: null,
-          },
+      },
+    }),
+    // has only channel
+    prisma.server.count({
+      where: {
+        channelId: {
+          not: null,
+        },
+        webhookId: null,
+        webhookToken: null,
+      },
+    }),
+    // has webhook
+    prisma.server.count({
+      where: {
+        NOT: {
+          channelId: null,
           webhookId: null,
           webhookToken: null,
         },
-      }),
-      // has webhook
-      prisma.server.count({
-        where: {
-          NOT: {
-            channelId: null,
-            webhookId: null,
-            webhookToken: null,
-          },
+      },
+    }),
+    // has role
+    prisma.server.count({
+      where: {
+        roleId: {
+          not: null,
         },
-      }),
-      // has role
-      prisma.server.count({
-        where: {
-          roleId: {
-            not: null,
-          },
-        },
-      }),
-    ]);
+      },
+    }),
+  ]);
 
   res.send({
     total,

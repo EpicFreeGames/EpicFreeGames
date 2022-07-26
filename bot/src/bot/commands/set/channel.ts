@@ -1,17 +1,17 @@
-import { InteractionResponseTypes } from "discordeno";
+import { InteractionResponseTypes, PermissionStrings } from "discordeno";
 import { config } from "~config";
 import { logger } from "~logger";
 import { api } from "../../../api.ts";
 import { embeds } from "../../../embeds/mod.ts";
 import { Game, Server } from "../../../types.ts";
+import { getChannel } from "../../../utils/getChannel.ts";
+import { getGuild } from "../../../utils/getGuild.ts";
+import { hasPermsOnChannel } from "../../../utils/hasPerms.ts";
 import { executeWebhook } from "../../../utils/webhook.ts";
-import { getChannel } from "../../helpers/getChannel.ts";
-import { getGuild } from "../../helpers/getGuild.ts";
-import { hasPermsOnChannel } from "../../helpers/hasPerms.ts";
 import { getChannelId } from "../../utils/interactionOptions.ts";
 import { CommandExecuteProps, EphemeralFlag } from "../mod.ts";
 
-export const setChannelCommand = async ({ bot, i, lang, curr }: CommandExecuteProps) => {
+export const setChannelCommand = async ({ bot, i, server, lang, curr }: CommandExecuteProps) => {
   await bot.helpers.sendInteractionResponse(i.id, i.token, {
     type: InteractionResponseTypes.DeferredChannelMessageWithSource,
     data: {
@@ -29,8 +29,9 @@ export const setChannelCommand = async ({ bot, i, lang, curr }: CommandExecutePr
   const { details, hasPerms } = await hasPermsOnChannel(bot, channel, guild, [
     "VIEW_CHANNEL",
     "MANAGE_WEBHOOKS",
-    "SEND_MESSAGES",
+    "SEND_MESSAGES_IN_THREADS",
     "EMBED_LINKS",
+    ...(server?.roleId ? ["MENTION_EVERYONE" as PermissionStrings] : []), // check only if server has a set role
   ]);
 
   if (!hasPerms)
@@ -117,7 +118,7 @@ export const setChannelCommand = async ({ bot, i, lang, curr }: CommandExecutePr
 
   if (gameError || !freeGames.length) return;
 
-  await executeWebhook({
+  await executeWebhook(bot, {
     id: String(webhook.id),
     token: String(webhook.token),
     options: {

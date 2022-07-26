@@ -57,12 +57,13 @@ model Currency {
 }
 
 model SendingLog {
-  id        String @id @default(cuid())
+  id        String  @id @default(cuid())
   sendingId String
   type      String
   result    String
+  success   Boolean
   serverId  String
-  server    Server @relation(fields: [serverId], references: [id])
+  server    Server  @relation(fields: [serverId], references: [id])
 }
 
 model CommandLog {

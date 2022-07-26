@@ -31,26 +31,4 @@ router.post(
   )
 );
 
-router.post(
-  "/sends",
-  auth(Flags.AddSendingLogs),
-  withValidation(
-    {
-      body: z.object({
-        serverId: z.string(),
-        sendingId: z.string(),
-        type: z.string(),
-        result: z.string(),
-      }),
-    },
-    async (req, res) => {
-      const addedLog = await prisma.sendingLog.create({
-        data: req.body,
-      });
-
-      return res.send(addedLog);
-    }
-  )
-);
-
 export const logRouter = router;

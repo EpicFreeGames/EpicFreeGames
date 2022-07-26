@@ -1,7 +1,4 @@
-import {
-  ApplicationCommandTypes,
-  InteractionResponseTypes,
-} from "https://deno.land/x/discordeno@13.0.0-rc45/mod.ts";
+import { ApplicationCommandTypes, InteractionResponseTypes } from "discordeno";
 import { embeds } from "../../embeds/mod.ts";
 import { Command, EphemeralFlag } from "./mod.ts";
 

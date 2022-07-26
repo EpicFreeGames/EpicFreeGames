@@ -49,6 +49,14 @@ export type Server = {
   createdAt: number;
 };
 
+export type SendingLog = {
+  sendingId: string;
+  type: string;
+  result: string;
+  success: boolean;
+  serverId: string;
+};
+
 export interface ISendingStats {
   id: string;
   speed: number;
