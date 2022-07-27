@@ -100,7 +100,8 @@ services:
     restart: unless-stopped
     volumes:
       - ./dash/src:/app/src:r
-    command: deno run --watch -A ./src/dev.ts
+      - ./dash/twind.config.ts:/app/twind.config.ts:r
+    command: deno run -A --watch= src/dev.ts twind.config.ts
 
   reverse-proxy:
     depends_on:
