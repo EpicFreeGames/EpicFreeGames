@@ -19,6 +19,15 @@ export const Base = ({ children, title }: Props) => (
             background-color: rgb(17, 24, 39);
             color: rgb(236, 237, 238);
           }
+
+          input {
+            appearance: none;
+            boxSizing: border-box;
+          }
+
+          input:focus {
+            outline: none;
+          }
         `}
       </style>
     </Head>
