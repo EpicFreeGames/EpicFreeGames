@@ -1,6 +1,3 @@
-export type Method = "GET" | "HEAD" | "POST" | "PUT" | "DELETE" | "PATCH";
-export type RestMethod = Exclude<Method, "HEAD">;
-
 export type GamePrice = {
   value: number;
   formattedValue: string;
