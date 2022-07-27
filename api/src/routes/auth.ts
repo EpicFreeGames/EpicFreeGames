@@ -25,7 +25,7 @@ authRouter.get(
         client_secret: config.DISCORD_CLIENT_SECRET,
         grant_type: "authorization_code",
         code,
-        redirect_uri: `${config.APP_URL}/api/auth/callback/discord`,
+        redirect_uri: config.DISCORD_REDIRECT_URI,
       });
 
       try {
@@ -68,7 +68,7 @@ authRouter.get(
         });
 
         req.session.user = user;
-        //res.redirect("/");
+        res.redirect(303, "/dash");
       } catch (err) {
         console.log(err);
 

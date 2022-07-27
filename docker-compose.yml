@@ -15,8 +15,6 @@ services:
     build:
       context: ./api
       dockerfile: Dockerfile.dev
-    ports:
-      - "3000:3000"
     env_file:
       - .env-api
     restart: unless-stopped
@@ -85,5 +83,39 @@ services:
       - ./bot/src:/app/src:r
     command: "deno run --watch -A ./src/bot/mod.ts"
 
+  dash:
+    depends_on:
+      - redis
+      - api
+      - bot_rest-proxy
+      - bot_gateway-proxy
+      - bot_sender
+      - bot_bot
+    build:
+      context: ./dash
+      dockerfile: Dockerfile
+    image: dash/dash
+    env_file:
+      - .env-dash
+    restart: unless-stopped
+    volumes:
+      - ./dash/src:/app/src:r
+    command: deno run --watch -A ./src/dev.ts
+
+  reverse-proxy:
+    depends_on:
+      - redis
+      - api
+      - bot_rest-proxy
+      - bot_gateway-proxy
+      - bot_sender
+      - bot_bot
+      - dash
+    image: nginx:latest
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./nginx-dev.conf:/etc/nginx/nginx.conf:r
 volumes:
   redis:

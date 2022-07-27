@@ -9,6 +9,7 @@ const envSchema = z.object({
   REDISPASSWORD: z.string().optional(),
 
   APP_URL: z.string(),
+  DISCORD_REDIRECT_URI: z.string(),
 
   APP_SECRET: z.string(),
   BOT_SECRET: z.string(),
