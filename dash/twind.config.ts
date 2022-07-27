@@ -5,7 +5,8 @@ import { Configuration } from "twind";
 /** @type {import('twind').Configuration} */
 
 const config: Configuration = {
-  mode: "silent",
+  mode: "strict",
+  theme: {},
 };
 
 export default config;

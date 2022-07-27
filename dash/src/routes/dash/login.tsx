@@ -34,12 +34,12 @@ export default function Login({ data }: PageProps<Data>) {
   return (
     <Base title="Login">
       <div
-        class={tw`flex flex-col justify-center items-center gap-14 max-w-screen-lg mx-auto h-screen`}
+        className={tw`flex flex-col justify-center items-center gap-14 max-w-screen-lg mx-auto h-screen`}
       >
-        <h1 class={tw`font-bold text-5xl`}>Login</h1>
+        <h1 className={tw`font-bold text-5xl`}>Login</h1>
 
         <a
-          class={tw`py-2 px-6 bg-[#5865F2] rounded-md`}
+          className={tw`py-2 px-6 bg-[#5865F2] rounded-md`}
           href={`https://discord.com/api/oauth2/authorize?client_id=${data.clientId}&redirect_uri=${data.redirectUri}&response_type=code&scope=identify`}
         >
           Login with Discord

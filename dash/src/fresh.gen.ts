@@ -4,17 +4,21 @@
 
 import * as $0 from "./routes/dash/_middleware.ts";
 import * as $1 from "./routes/dash/games.tsx";
-import * as $2 from "./routes/dash/i18n.tsx";
-import * as $3 from "./routes/dash/index.tsx";
-import * as $4 from "./routes/dash/login.tsx";
+import * as $2 from "./routes/dash/games/add.tsx";
+import * as $3 from "./routes/dash/games/index.tsx";
+import * as $4 from "./routes/dash/i18n.tsx";
+import * as $5 from "./routes/dash/index.tsx";
+import * as $6 from "./routes/dash/login.tsx";
 
 const manifest = {
   routes: {
     "./routes/dash/_middleware.ts": $0,
     "./routes/dash/games.tsx": $1,
-    "./routes/dash/i18n.tsx": $2,
-    "./routes/dash/index.tsx": $3,
-    "./routes/dash/login.tsx": $4,
+    "./routes/dash/games/add.tsx": $2,
+    "./routes/dash/games/index.tsx": $3,
+    "./routes/dash/i18n.tsx": $4,
+    "./routes/dash/index.tsx": $5,
+    "./routes/dash/login.tsx": $6,
   },
   islands: {},
   baseUrl: import.meta.url,

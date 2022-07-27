@@ -64,7 +64,7 @@ gameRouter.get("/not-confirmed", auth(Flags.GetGames), async (req, res) => {
   res.send(games);
 });
 
-gameRouter.post(
+gameRouter.patch(
   "/:gameId",
   auth(Flags.EditGames),
   withValidation(
@@ -117,6 +117,46 @@ gameRouter.post(
   )
 );
 
+gameRouter.post(
+  "/",
+  auth(Flags.AddGames),
+  withValidation(
+    {
+      query: z
+        .object({
+          name: z.string().transform(decodeURIComponent),
+          displayName: z.string().transform(decodeURIComponent),
+          imageUrl: z.string().transform(decodeURIComponent),
+          start: z.string().transform(decodeURIComponent),
+          end: z.string().transform(decodeURIComponent),
+          path: z.string().transform(decodeURIComponent),
+          usdPrice: z.string().transform(decodeURIComponent),
+          priceValue: z.string().transform(decodeURIComponent),
+        })
+        .strict(),
+    },
+    async (req, res) => {
+      const { usdPrice, priceValue, ...rest } = req.query;
+
+      const createdGame = await prisma.game.create({
+        data: {
+          ...rest,
+          confirmed: false,
+          prices: {
+            create: {
+              formattedValue: usdPrice,
+              value: Number(priceValue),
+              currencyCode: "USD",
+            },
+          },
+        },
+      });
+
+      res.send(createdGame);
+    }
+  )
+);
+
 gameRouter.put(
   "/",
   auth(Flags.PutGames),
@@ -147,9 +187,7 @@ gameRouter.put(
         const availableCurrencies = await prisma.currency.findMany();
 
         const formattedPrices = prices.reduce((acc, p) => {
-          const currency = availableCurrencies.find(
-            (c) => c.code === p.currencyCode
-          );
+          const currency = availableCurrencies.find((c) => c.code === p.currencyCode);
 
           if (currency) {
             acc.push({
