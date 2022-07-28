@@ -9,7 +9,7 @@ import { z } from "zod";
 export const gameRouter = Router();
 
 gameRouter.get("/", auth(Flags.GetGames), async (req, res) => {
-  const games = await prisma.game.findMany();
+  const games = await prisma.game.findMany({ include: { prices: true } });
 
   res.send(games);
 });
@@ -102,6 +102,7 @@ gameRouter.patch(
         data: {
           ...req.body,
         },
+        include: { prices: true },
       });
 
       if (!game) {
@@ -122,7 +123,7 @@ gameRouter.post(
   auth(Flags.AddGames),
   withValidation(
     {
-      query: z
+      body: z
         .object({
           name: z.string().transform(decodeURIComponent),
           displayName: z.string().transform(decodeURIComponent),
@@ -136,20 +137,23 @@ gameRouter.post(
         .strict(),
     },
     async (req, res) => {
-      const { usdPrice, priceValue, ...rest } = req.query;
+      const { usdPrice, priceValue, start, end, ...rest } = req.body;
 
       const createdGame = await prisma.game.create({
         data: {
           ...rest,
+          start: new Date(start),
+          end: new Date(end),
           confirmed: false,
           prices: {
             create: {
-              formattedValue: usdPrice,
               value: Number(priceValue),
+              formattedValue: usdPrice,
               currencyCode: "USD",
             },
           },
         },
+        include: { prices: true },
       });
 
       res.send(createdGame);
@@ -213,9 +217,7 @@ gameRouter.put(
             ...rest,
             prices: {
               upsert: formattedPrices.map((price) => ({
-                where: {
-                  currencyCode: price.currencyCode,
-                },
+                where: {},
                 create: price,
                 update: price,
               })),
@@ -226,9 +228,7 @@ gameRouter.put(
             displayName: game.name,
             prices: {
               connectOrCreate: formattedPrices.map((price) => ({
-                where: {
-                  currencyCode: price.currencyCode,
-                },
+                where: {},
                 create: price,
               })),
             },
