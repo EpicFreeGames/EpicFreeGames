@@ -17,8 +17,9 @@ export const auth =
 
     if (botToken && safeEqual(botToken, config.BOT_SECRET)) return next();
 
-    const userFlags = req.session?.user?.flags;
-    if (userFlags && !hasPermission(userFlags, requiredFlags))
+    const userFlags = req.session?.user?.flags || 0;
+
+    if (!hasPermission(userFlags, requiredFlags))
       return res.status(403).json({
         statusCode: 403,
         error: "Forbidden",
@@ -31,7 +32,7 @@ export const auth =
 const hasPermission = (flags: number, requiredFlags: Flags[]) => {
   if (hasFlag(flags, Flags.ADMIN)) return true;
 
-  const totalRequired = requiredFlags.reduce((acc, flag) => acc | flag);
+  const totalRequired = requiredFlags?.reduce((acc, flag) => acc | flag, 0);
 
   return hasFlag(flags, totalRequired);
 };

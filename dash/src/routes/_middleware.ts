@@ -6,7 +6,7 @@ import { MiddlewareHandlerContext } from "../utils/freshTypes.ts";
 export const handler = async (req: Request, ctx: MiddlewareHandlerContext) => {
   const path = new URL(req.url).pathname;
 
-  if (path === "/login") return ctx.next();
+  if (path === "/login" || path === "/discord-callback") return ctx.next();
 
   const cookies = getCookies(req.headers);
 

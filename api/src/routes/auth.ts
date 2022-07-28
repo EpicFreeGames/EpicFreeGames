@@ -1,5 +1,6 @@
 import { prisma } from "..";
 import { config } from "../config";
+import { auth } from "../utils/auth";
 import { withValidation } from "../utils/withValidation";
 import axios from "axios";
 import { Router } from "express";
@@ -8,7 +9,7 @@ import { z } from "zod";
 export const authRouter = Router();
 
 authRouter.get(
-  "/callback/discord",
+  "/discord",
   withValidation(
     {
       query: z
@@ -75,9 +76,12 @@ authRouter.get(
         });
 
         req.session.user = user;
-        res.redirect(303, "/dash");
+        res.status(204).end();
       } catch (err) {
-        console.log(err);
+        console.log(
+          `Error logging user in: ${err?.message}\nResponse data:`,
+          JSON.stringify(err?.response?.data)
+        );
 
         const status = err?.response?.status ?? 500;
         res.status(status).json({
@@ -88,3 +92,7 @@ authRouter.get(
     }
   )
 );
+
+authRouter.post("/logout", auth(), async (req, res) => {
+  req.session.destroy(() => res.redirect(303, "/"));
+});

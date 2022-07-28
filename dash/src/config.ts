@@ -5,6 +5,8 @@ const envSchema = z.object({
 
   DISCORD_CLIENT_ID: z.string(),
   DISCORD_REDIRECT_URI: z.string(),
+
+  ENV: z.enum(["dev", "prod"]),
 });
 
 const result = envSchema.safeParse(Deno.env.toObject());

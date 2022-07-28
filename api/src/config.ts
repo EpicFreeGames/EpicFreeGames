@@ -21,7 +21,7 @@ const envSchema = z.object({
   DISCORD_REDIRECT_URL: z.string(),
 
   PORT: z.string().transform(Number),
-  ENV: z.string(),
+  ENV: z.enum(["dev", "prod"]),
 });
 
 const env = envSchema.safeParse(process.env);

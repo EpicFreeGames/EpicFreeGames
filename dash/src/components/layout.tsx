@@ -18,7 +18,11 @@ export const Layout = ({ children, title }: Props) => (
           <NavLink href="/i18n">I18n</NavLink>
         </div>
 
-        <NavLink href="/api/logout">Logout</NavLink>
+        <form action="http://localhost:3000/api/auth/logout" method="POST">
+          <button type="submit" className={tw`px-3 py-2 bg-gray-700 rounded-md`}>
+            Logout
+          </button>
+        </form>
       </div>
     </nav>
 

@@ -5,6 +5,8 @@ import { h } from "preact";
 import { tw } from "twind";
 import { Base } from "../components/base.tsx";
 import { config } from "../config.ts";
+import { User } from "../types.ts";
+import { api } from "../utils/api.ts";
 
 type Data = {
   clientId: string;
@@ -12,16 +14,26 @@ type Data = {
 };
 
 export const handler: Handlers<Data | null> = {
-  GET: (req, ctx) => {
+  GET: async (req, ctx) => {
     const cookies = getCookies(req.headers);
-    // logged in, redirect to dashboard
-    if (cookies.sid)
-      return new Response("", {
-        status: 303,
-        headers: {
-          Location: "/dash",
-        },
+    // test cookie, if valid, redirect to /
+    if (cookies.sid) {
+      const { error, data: user } = await api<User>({
+        method: "GET",
+        path: "/users/@me",
+        auth: cookies.sid,
       });
+
+      error && console.error(error);
+
+      if (user && !error)
+        return new Response("", {
+          status: 303,
+          headers: {
+            Location: "/",
+          },
+        });
+    }
 
     return ctx.render({
       clientId: config.DISCORD_CLIENT_ID,

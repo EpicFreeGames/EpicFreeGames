@@ -7,10 +7,12 @@ type ApiResponse<TData> =
   | {
       error?: never;
       data: TData;
+      response: Response;
     }
   | {
       error: Record<string, unknown>;
       data?: never;
+      response?: never;
     };
 
 type Args =
@@ -38,14 +40,24 @@ export function api<TData>({ method, path, body, auth }: Args): Promise<ApiRespo
     ...(!!body && { body: typeof body === "string" ? body : JSON.stringify(body) }),
   })
     .then(async (res) => {
-      const json = await res.json();
-
       if (res.ok) {
+        if (res.status !== 204) {
+          const json = await res.json();
+
+          return {
+            data: json,
+            response: res,
+          };
+        }
+
         return {
-          data: json,
+          data: undefined,
+          response: res,
         };
       } else {
-        throw json;
+        const json = await res.json().catch(() => null);
+
+        throw json || "unknown error";
       }
     })
     .catch((err) => {
