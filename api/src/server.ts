@@ -16,6 +16,7 @@ export const createServer = async (redisStore: RedisStore) => {
 
   app.use(express.json());
   app.use(cookieParser());
+  app.set("trust proxy", 1);
 
   app.use(
     expressSession({
@@ -28,7 +29,7 @@ export const createServer = async (redisStore: RedisStore) => {
         maxAge: 1000 * 60 * 60 * 24 * 7,
         httpOnly: true,
         sameSite: "lax",
-        // secure: config.ENV === "prod",
+        secure: config.ENV === "prod",
       },
     })
   );
