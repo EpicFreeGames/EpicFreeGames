@@ -56,6 +56,13 @@ authRouter.get(
             message: "Invalid token",
           });
 
+        if (!config.ALLOWED_USER_IDS.includes(userId))
+          return res.status(403).json({
+            statusCode: 403,
+            error: "Forbidden",
+            message: "You're not allowed to login",
+          });
+
         const user = await prisma.user.upsert({
           where: { discordId: userId },
           create: {
