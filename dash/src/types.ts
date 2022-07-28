@@ -1,3 +1,10 @@
+export type User = {
+  id: string;
+  discordId: string;
+  name: string;
+  flags: number;
+};
+
 export type GamePrice = {
   value: number;
   formattedValue: string;

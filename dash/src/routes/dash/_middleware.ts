@@ -1,19 +1,9 @@
-import { MiddlewareHandlerContext } from "$fresh/server.ts";
 import { getCookies } from "$std/http/cookie.ts";
+import { User } from "../../types.ts";
 import { api } from "../../utils/api.ts";
+import { MiddlewareHandlerContext } from "../../utils/freshTypes.ts";
 
-export type User = {
-  id: string;
-  discordId: string;
-  name: string;
-  flags: number;
-};
-
-export type State = {
-  user: User | null;
-};
-
-export const handler = async (req: Request, ctx: MiddlewareHandlerContext<State>) => {
+export const handler = async (req: Request, ctx: MiddlewareHandlerContext) => {
   const path = new URL(req.url).pathname;
 
   if (path === "/dash/login") return ctx.next();
@@ -44,7 +34,10 @@ export const handler = async (req: Request, ctx: MiddlewareHandlerContext<State>
       },
     });
 
-  ctx.state.user = user;
+  ctx.state = {
+    user,
+    auth: cookies.sid,
+  };
 
   return ctx.next();
 };
