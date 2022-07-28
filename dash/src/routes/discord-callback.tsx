@@ -20,6 +20,8 @@ export const handler: Handlers = {
         { status: Number(error?.status ?? 500) }
       );
 
+    console.log({ error, response });
+
     return new Response(null, {
       status: 303,
       headers: { Location: "/", "Set-Cookie": response.headers.get("Set-Cookie")! },
