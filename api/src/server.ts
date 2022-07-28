@@ -28,7 +28,7 @@ export const createServer = async (redisStore: RedisStore) => {
         maxAge: 1000 * 60 * 60 * 24 * 7,
         httpOnly: true,
         sameSite: "lax",
-        secure: config.ENV === "prod",
+        // secure: config.ENV === "prod",
       },
     })
   );
