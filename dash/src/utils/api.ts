@@ -18,7 +18,7 @@ type Args =
       method: Exclude<Method, "GET" | "HEAD">;
       path: string;
       auth?: string;
-      body?: Record<string, string | number | boolean | null | undefined>;
+      body?: Record<string, string | number | boolean | null | undefined> | string;
     }
   | {
       method: "GET" | "HEAD";
@@ -35,7 +35,7 @@ export function api<TData>({ method, path, body, auth }: Args): Promise<ApiRespo
       "Content-Type": "application/json",
       ...(auth ? { Cookie: `sid=${auth}` } : {}),
     },
-    ...(!!body && { body: JSON.stringify(body) }),
+    ...(!!body && { body: typeof body === "string" ? body : JSON.stringify(body) }),
   })
     .then(async (res) => {
       const json = await res.json();
