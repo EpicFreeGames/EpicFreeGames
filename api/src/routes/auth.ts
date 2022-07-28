@@ -25,7 +25,7 @@ authRouter.get(
         client_secret: config.DISCORD_CLIENT_SECRET,
         grant_type: "authorization_code",
         code,
-        redirect_uri: config.DISCORD_REDIRECT_URI,
+        redirect_uri: config.DISCORD_REDIRECT_URL,
       });
 
       try {
