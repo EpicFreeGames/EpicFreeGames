@@ -1,12 +1,12 @@
 import { getCookies } from "$std/http/cookie.ts";
-import { User } from "../../types.ts";
-import { api } from "../../utils/api.ts";
-import { MiddlewareHandlerContext } from "../../utils/freshTypes.ts";
+import { User } from "../types.ts";
+import { api } from "../utils/api.ts";
+import { MiddlewareHandlerContext } from "../utils/freshTypes.ts";
 
 export const handler = async (req: Request, ctx: MiddlewareHandlerContext) => {
   const path = new URL(req.url).pathname;
 
-  if (path === "/dash/login") return ctx.next();
+  if (path === "/login") return ctx.next();
 
   const cookies = getCookies(req.headers);
 
@@ -14,7 +14,7 @@ export const handler = async (req: Request, ctx: MiddlewareHandlerContext) => {
     return new Response("", {
       status: 303,
       headers: {
-        location: "/dash/login",
+        location: "/login",
       },
     });
 
@@ -30,7 +30,7 @@ export const handler = async (req: Request, ctx: MiddlewareHandlerContext) => {
     return new Response("", {
       status: 303,
       headers: {
-        location: "/dash/login",
+        location: "/login",
       },
     });
 

@@ -3,8 +3,8 @@ import { Handlers, PageProps } from "$fresh/server.ts";
 import { getCookies } from "$std/http/cookie.ts";
 import { h } from "preact";
 import { tw } from "twind";
-import { Base } from "../../components/base.tsx";
-import { config } from "../../config.ts";
+import { Base } from "../components/base.tsx";
+import { config } from "../config.ts";
 
 type Data = {
   clientId: string;

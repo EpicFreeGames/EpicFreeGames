@@ -1,6 +1,6 @@
 /** @jsx h */
 import { h } from "preact";
-import { Layout } from "../../components/layout.tsx";
+import { Layout } from "../components/layout.tsx";
 
 export default function DashIndex() {
   return (

@@ -1,11 +1,11 @@
 /** @jsx h */
 import { h } from "preact";
 import { tw } from "twind";
-import { Input } from "../../../components/Input.tsx";
-import { Layout } from "../../../components/layout.tsx";
-import { Game } from "../../../types.ts";
-import { api } from "../../../utils/api.ts";
-import { Handlers } from "../../../utils/freshTypes.ts";
+import { Input } from "../../components/Input.tsx";
+import { Layout } from "../../components/layout.tsx";
+import { Game } from "../../types.ts";
+import { api } from "../../utils/api.ts";
+import { Handlers } from "../../utils/freshTypes.ts";
 
 export const handler: Handlers = {
   POST: async (req, ctx) => {
@@ -29,7 +29,7 @@ export const handler: Handlers = {
     return new Response(null, {
       status: 303,
       headers: {
-        Location: "/dash/games",
+        Location: "/games",
       },
     });
   },
@@ -41,7 +41,7 @@ export default function AddGamePage() {
       <div className={tw`flex gap-2 justify-between mb-3`}>
         <h1 className={tw`text-4xl`}>Add a game</h1>
 
-        <a className={tw`px-3 py-2 bg-gray-700 rounded-md`} href="/dash/games">
+        <a className={tw`px-3 py-2 bg-gray-700 rounded-md`} href="/games">
           Back to games
         </a>
       </div>
@@ -58,7 +58,7 @@ export default function AddGamePage() {
           <Input name="priceValue" type="number" label="USD price (49.99)" required />
 
           <div className={tw`flex gap-2 justify-between`}>
-            <a className={tw`px-3 py-2`} href="/dash/games">
+            <a className={tw`px-3 py-2`} href="/games">
               Cancel
             </a>
 

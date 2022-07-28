@@ -2,10 +2,10 @@
 import { PageProps } from "$fresh/server.ts";
 import { ComponentChildren, h } from "preact";
 import { tw } from "twind";
-import { Layout } from "../../../components/layout.tsx";
-import { Game } from "../../../types.ts";
-import { api } from "../../../utils/api.ts";
-import { Handlers } from "../../../utils/freshTypes.ts";
+import { Layout } from "../../components/layout.tsx";
+import { Game } from "../../types.ts";
+import { api } from "../../utils/api.ts";
+import { Handlers } from "../../utils/freshTypes.ts";
 
 export const handler: Handlers<Game[]> = {
   GET: async (_req, ctx) => {
@@ -35,7 +35,7 @@ export default function GamesPage({ data }: PageProps<Game[] | null>) {
       <div className={tw`flex gap-2 justify-between`}>
         <h1 className={tw`text-4xl`}>Games</h1>
 
-        <a className={tw`px-3 py-2 bg-gray-700 rounded-md`} href="/dash/games/add">
+        <a className={tw`px-3 py-2 bg-gray-700 rounded-md`} href="/games/add">
           Add a game
         </a>
       </div>

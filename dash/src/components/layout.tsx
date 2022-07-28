@@ -14,8 +14,8 @@ export const Layout = ({ children, title }: Props) => (
     <nav className={tw`bg-gray-800`}>
       <div className={tw`max-w-screen-lg mx-auto flex justify-between p-4`}>
         <div className={tw`flex gap-4`}>
-          <NavLink href="/dash/games">Games</NavLink>
-          <NavLink href="/dash/i18n">I18n</NavLink>
+          <NavLink href="/games">Games</NavLink>
+          <NavLink href="/i18n">I18n</NavLink>
         </div>
 
         <NavLink href="/api/logout">Logout</NavLink>

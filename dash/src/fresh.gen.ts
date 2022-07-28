@@ -2,21 +2,21 @@
 // This file SHOULD be checked into source version control.
 // This file is automatically updated during development when running `dev.ts`.
 
-import * as $0 from "./routes/dash/_middleware.ts";
-import * as $1 from "./routes/dash/games/add.tsx";
-import * as $2 from "./routes/dash/games/index.tsx";
-import * as $3 from "./routes/dash/i18n.tsx";
-import * as $4 from "./routes/dash/index.tsx";
-import * as $5 from "./routes/dash/login.tsx";
+import * as $0 from "./routes/_middleware.ts";
+import * as $1 from "./routes/games/add.tsx";
+import * as $2 from "./routes/games/index.tsx";
+import * as $3 from "./routes/i18n.tsx";
+import * as $4 from "./routes/index.tsx";
+import * as $5 from "./routes/login.tsx";
 
 const manifest = {
   routes: {
-    "./routes/dash/_middleware.ts": $0,
-    "./routes/dash/games/add.tsx": $1,
-    "./routes/dash/games/index.tsx": $2,
-    "./routes/dash/i18n.tsx": $3,
-    "./routes/dash/index.tsx": $4,
-    "./routes/dash/login.tsx": $5,
+    "./routes/_middleware.ts": $0,
+    "./routes/games/add.tsx": $1,
+    "./routes/games/index.tsx": $2,
+    "./routes/i18n.tsx": $3,
+    "./routes/index.tsx": $4,
+    "./routes/login.tsx": $5,
   },
   islands: {},
   baseUrl: import.meta.url,
