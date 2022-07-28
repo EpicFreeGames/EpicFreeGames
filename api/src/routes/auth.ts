@@ -76,6 +76,9 @@ authRouter.get(
         });
 
         req.session.user = user;
+
+        console.log({ user });
+
         res.status(204).end();
       } catch (err) {
         console.log(
