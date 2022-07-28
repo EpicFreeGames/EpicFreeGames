@@ -27,7 +27,7 @@ model GamePrice {
   formattedValue String
   gameId         String
   game           Game     @relation(fields: [gameId], references: [id], onDelete: Cascade)
-  currencyCode   String   @unique
+  currencyCode   String
   currency       Currency @relation(fields: [currencyCode], references: [code], onDelete: Cascade)
 }
 
