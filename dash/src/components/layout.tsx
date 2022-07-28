@@ -18,9 +18,7 @@ export const Layout = ({ children, title }: Props) => (
           <NavLink href="/dash/i18n">I18n</NavLink>
         </div>
 
-        <a href="/api/logout" className={tw`px-3 py-2 bg-gray-700 rounded-md`}>
-          Logout
-        </a>
+        <NavLink href="/api/logout">Logout</NavLink>
       </div>
     </nav>
 
