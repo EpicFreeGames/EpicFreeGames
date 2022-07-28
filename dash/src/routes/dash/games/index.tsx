@@ -4,9 +4,32 @@ import { ComponentChildren, h } from "preact";
 import { tw } from "twind";
 import { Layout } from "../../../components/layout.tsx";
 import { Game } from "../../../types.ts";
-import { User } from "./../_middleware.ts";
+import { api } from "../../../utils/api.ts";
+import { Handlers } from "../../../utils/freshTypes.ts";
 
-export default function GamesPage({ data }: PageProps<User | null>) {
+export const handler: Handlers<Game[]> = {
+  GET: async (_req, ctx) => {
+    const { error, data: games } = await api<Game[]>({
+      method: "GET",
+      path: "/games",
+      auth: ctx.state.auth,
+    });
+
+    if (error)
+      return new Response(
+        JSON.stringify({
+          error: error?.message,
+        }),
+        { status: Number(error?.status ?? 500) }
+      );
+
+    return ctx.render(games);
+  },
+};
+
+export default function GamesPage({ data }: PageProps<Game[] | null>) {
+  if (!data) return null;
+
   return (
     <Layout title="Games">
       <div className={tw`flex gap-2 justify-between`}>
@@ -17,7 +40,11 @@ export default function GamesPage({ data }: PageProps<User | null>) {
         </a>
       </div>
 
-      <div className={tw`flex flex-col gap-3`}></div>
+      <div className={tw`flex flex-col gap-3`}>
+        {data.map((game) => (
+          <Game key={game.name} game={game} />
+        ))}
+      </div>
     </Layout>
   );
 }
@@ -32,7 +59,11 @@ const Game = ({ game }: { game: Game }) => {
       </div>
 
       <div className={tw`flex gap-2`}>
-        <img className={tw`max-w-full max-h-full`} src={game.imageUrl} alt={game.displayName} />
+        <img
+          className={tw`max-w-[16rem] max-h-[16rem] object-cover`}
+          src={game.imageUrl}
+          alt={game.displayName}
+        />
 
         <div className={tw`flex gap-2 w-full`}>
           <div className={tw`flex flex-col gap-2`}>
