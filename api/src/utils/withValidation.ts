@@ -13,11 +13,7 @@ interface ValidationProps<TBody, TParams, TQueryString> {
 }
 
 export const withValidation =
-  <
-    TBody extends z.ZodTypeAny,
-    TParams extends z.ZodTypeAny,
-    TQueryString extends z.ZodTypeAny
-  >(
+  <TBody extends z.ZodTypeAny, TParams extends z.ZodTypeAny, TQueryString extends z.ZodTypeAny>(
     { body, query, params }: ValidationProps<TBody, TParams, TQueryString>,
     handler: Handler<z.infer<TBody>, z.infer<TParams>, z.infer<TQueryString>>
   ): Middleware =>
