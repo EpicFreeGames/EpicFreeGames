@@ -4,7 +4,7 @@ const envSchema = z.object({
   API_BASEURL: z.string(),
 
   DISCORD_CLIENT_ID: z.string(),
-  DISCORD_REDIRECT_URI: z.string(),
+  DISCORD_REDIRECT_URL: z.string(),
 });
 
 const result = envSchema.safeParse(Deno.env.toObject());

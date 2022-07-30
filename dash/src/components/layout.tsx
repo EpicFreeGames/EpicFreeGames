@@ -19,7 +19,7 @@ export const Layout = ({ children, title }: Props) => (
         </div>
 
         <form action="http://localhost:3000/api/auth/logout" method="POST">
-          <button type="submit" className={tw`px-3 py-2 bg-gray-700 rounded-md`}>
+          <button type="submit" className={tw`btn bg-gray-700`}>
             Logout
           </button>
         </form>
@@ -31,7 +31,7 @@ export const Layout = ({ children, title }: Props) => (
 );
 
 const NavLink = ({ children, href }: { children: ComponentChildren; href: string }) => (
-  <a href={href} className={tw`px-3 py-2 bg-gray-700 rounded-md`}>
+  <a href={href} className={tw`btn bg-gray-700`}>
     {children}
   </a>
 );

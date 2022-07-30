@@ -5,7 +5,7 @@ import { h } from "preact";
 import { tw } from "twind";
 import { Base } from "../components/base.tsx";
 import { config } from "../config.ts";
-import { User } from "../types.ts";
+import { IUser } from "../types.ts";
 import { api } from "../utils/api.ts";
 
 type Data = {
@@ -18,7 +18,7 @@ export const handler: Handlers<Data | null> = {
     const cookies = getCookies(req.headers);
     // test cookie, if valid, redirect to /
     if (cookies.sid) {
-      const { error, data: user } = await api<User>({
+      const { error, data: user } = await api<IUser>({
         method: "GET",
         path: "/users/@me",
         auth: cookies.sid,
@@ -37,7 +37,7 @@ export const handler: Handlers<Data | null> = {
 
     return ctx.render({
       clientId: config.DISCORD_CLIENT_ID,
-      redirectUri: encodeURI(config.DISCORD_REDIRECT_URI),
+      redirectUri: encodeURI(config.DISCORD_REDIRECT_URL),
     });
   },
 };

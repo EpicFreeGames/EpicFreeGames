@@ -1,5 +1,5 @@
 import { getCookies } from "$std/http/cookie.ts";
-import { User } from "../types.ts";
+import { IUser } from "../types.ts";
 import { api } from "../utils/api.ts";
 import { MiddlewareHandlerContext } from "../utils/freshTypes.ts";
 
@@ -18,7 +18,7 @@ export const handler = async (req: Request, ctx: MiddlewareHandlerContext) => {
       },
     });
 
-  const { error, data: user } = await api<User>({
+  const { error, data: user } = await api<IUser>({
     method: "GET",
     path: "/users/@me",
     auth: cookies.sid,

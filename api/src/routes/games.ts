@@ -14,6 +14,30 @@ gameRouter.get("/", auth(Flags.GetGames), async (req, res) => {
   res.send(games);
 });
 
+gameRouter.get(
+  "/:gameId",
+  auth(Flags.GetGames),
+  withValidation(
+    {
+      params: z.object({
+        gameId: z.string(),
+      }),
+    },
+    async (req, res) => {
+      const { gameId } = req.params;
+
+      const game = await prisma.game.findUnique({
+        where: {
+          id: gameId,
+        },
+        include: { prices: true },
+      });
+
+      res.send(game);
+    }
+  )
+);
+
 gameRouter.get("/free", auth(Flags.GetGames), async (req, res) => {
   const games = await prisma.game.findMany({
     where: {
@@ -95,12 +119,16 @@ gameRouter.patch(
         .strict(),
     },
     async (req, res) => {
+      const { start, end, ...rest } = req.body;
+
       const game = await prisma.game.update({
         where: {
           id: req.params.gameId,
         },
         data: {
-          ...req.body,
+          ...(start && { start: new Date(start) }),
+          ...(end && { end: new Date(end) }),
+          ...rest,
         },
         include: { prices: true },
       });

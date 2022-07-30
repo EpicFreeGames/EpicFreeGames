@@ -1,17 +1,18 @@
-export type User = {
+export type IUser = {
   id: string;
   discordId: string;
   name: string;
   flags: number;
 };
 
-export type GamePrice = {
+export type IGamePrice = {
   value: number;
   formattedValue: string;
   currencyCode: string;
 };
 
-export type Game = {
+export type IGame = {
+  id: string;
   name: string;
   displayName: string;
   imageUrl: string;
@@ -25,16 +26,16 @@ export type Game = {
   end: string;
   path: string;
   confirmed: boolean;
-  prices: GamePrice[];
+  prices: IGamePrice[];
 };
 
-export type Language = {
+export type ILanguage = {
   code: string;
   englishName: string;
   nativeName: string;
 };
 
-export type Currency = {
+export type ICurrency = {
   code: string;
   name: string;
   apiValue: string;
@@ -42,40 +43,13 @@ export type Currency = {
   afterPrice: string;
 };
 
-export type Server = {
+export type IServer = {
   id: string;
   roleId: string | null;
   channelId: string | null;
   threadId: string | null;
-  languageCode: Language["code"];
-  currency: Currency;
-  currencyCode: Currency["code"];
+  languageCode: ILanguage["code"];
+  currency: ICurrency;
+  currencyCode: ICurrency["code"];
   createdAt: number;
 };
-
-export type SendingLog = {
-  sendingId: string;
-  type: string;
-  result: string;
-  success: boolean;
-  serverId: string;
-};
-
-export interface ISendingStats {
-  id: string;
-  speed: number;
-  sent: number;
-  target: number;
-  eta: number;
-  startedAt: number;
-  gameNames: string[];
-}
-
-export interface IFinishedSendingStats {
-  id: string;
-  averageSpeed: number;
-  sentCount: number;
-  startedAt: number;
-  finishedAt: number;
-  gameNames: string[];
-}

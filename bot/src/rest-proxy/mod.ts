@@ -10,8 +10,10 @@ const rest = createRestManager({
   customUrl: config.REST_PROXY_URL,
 });
 
-const httpServer = Deno.listen({ port: 3000 });
-logger.info("REST server listening on port 3000");
+const port = Number(Deno.env.get("PORT")) || 3000;
+
+const httpServer = Deno.listen({ port });
+logger.info(`REST server listening on port ${port}`);
 
 const handleConnection = async (connection: Deno.Conn) => {
   const httpConnection = Deno.serveHttp(connection);

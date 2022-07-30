@@ -24,4 +24,4 @@ function render(ctx: RenderContext, render: InnerRenderFunction) {
   ctx.state.set("twind", newSnapshot);
 }
 
-await start(manifest, { render });
+await start(manifest, { render, port: Number(Deno.env.get("PORT")) || 3000 });

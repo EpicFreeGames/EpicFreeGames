@@ -15,7 +15,5 @@ export const prisma = new PrismaClient();
 
   const server = await createServer(store);
 
-  server.listen(config.PORT, () =>
-    console.log(`Listening on port ${config.PORT}`)
-  );
+  server.listen(config.PORT, () => console.log(`API listening on port ${config.PORT}`));
 })();

@@ -1,13 +1,13 @@
 /** @jsx h */
-import { User } from "../types.ts";
+import { IUser } from "../types.ts";
 import { api } from "../utils/api.ts";
 import { Handlers } from "../utils/freshTypes.ts";
 
 export const handler: Handlers = {
-  GET: async (req, ctx) => {
+  GET: async (req, _ctx) => {
     const code = new URL(req.url).searchParams.get("code");
 
-    const { error, response } = await api<User & { sid: string }>({
+    const { error, response } = await api<IUser & { sid: string }>({
       method: "GET",
       path: `/auth/discord?code=${code}`,
     });

@@ -36,8 +36,10 @@ if (config.SLASH_COMMANDS) {
     .catch((err) => logger.error("Error updating slash commands:", err));
 }
 
-const httpServer = Deno.listen({ port: 3000 });
-logger.info("🚀 Bot listening for events on port 3000");
+const port = Number(Deno.env.get("PORT")) || 3000;
+
+const httpServer = Deno.listen({ port });
+logger.info(`Bot listening for events on port ${port}`);
 
 for await (const conn of httpServer) {
   (async () => {

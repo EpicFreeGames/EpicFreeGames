@@ -8,6 +8,7 @@
     "twind": "https://esm.sh/twind@0.16.17",
     "twind/": "https://esm.sh/twind@0.16.17/",
     "zod": "https://deno.land/x/zod@v3.17.3/mod.ts",
-    "~config": "./src/config.ts"
+    "~config": "./src/config.ts",
+    "icons": "https://esm.sh/tabler-icons-react@1.54.0"
   }
 }

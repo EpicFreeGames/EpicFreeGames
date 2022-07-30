@@ -18,8 +18,10 @@ sender.rest = botRest;
 
 await connectRedis();
 
-const httpServer = Deno.listen({ port: 3000 });
-logger.info("Sender listening for events on port 3000");
+const port = Number(Deno.env.get("PORT")) || 3000;
+
+const httpServer = Deno.listen({ port });
+logger.info(`Sender listening for events on port ${port}`);
 
 for await (const conn of httpServer) {
   (async () => {
