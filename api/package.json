@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "build": "rm -rf dist && ./node_modules/.bin/tsc -p ./tsconfig.json",
-    "dev": "nodemon -e ts,json --watch ./src/ --exec 'yarn build && node ./dist/index.js'",
+    "dev": "nodemon -q -e ts,json --watch ./src/ --exec 'yarn build && node ./dist/index.js'",
     "format": "prettier --write \"**/*.{ts,tsx,json}\""
   },
   "dependencies": {

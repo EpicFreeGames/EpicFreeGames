@@ -1,0 +1,47 @@
+scripts:
+  start:
+    pll:
+      - desc: API
+        cmd: cd ./api && yarn dev
+        envFile: .env-api
+        env:
+          PORT: "3001"
+
+      - desc: bot-rest-proxy
+        cmd: |
+          ./wait.sh 3001 5 &&
+          cd ./bot && deno run -A --watch src/rest-proxy/mod.ts
+        envFile: .env-bot
+        env:
+          PORT: "3010"
+
+      - desc: bot-gateway-proxy
+        cmd: |
+          ./wait.sh 3010 10 && 
+          cd ./bot && deno run -A --watch src/gateway-proxy/mod.ts
+        envFile: .env-bot
+
+      - desc: bot-sender
+        cmd: |
+          ./wait.sh 3010 10 && 
+          cd ./bot && deno run -A --watch src/sender/mod.ts
+        envFile: .env-bot
+        env:
+          PORT: "3011"
+
+      - desc: bot-bot
+        cmd: |
+          ./wait.sh 3010 10 && 
+          ./wait.sh 3011 5 && 
+          cd ./bot && deno run -A --watch src/bot/mod.ts
+        envFile: .env-bot
+        env:
+          PORT: "3012"
+
+      - desc: Dashboard
+        cmd: |
+          ./wait.sh 3001 5 && 
+          cd ./dash && deno run -A --watch= src/dev.ts twind.config.ts
+        envFile: ./.env-dash
+        env:
+          PORT: "3000"
