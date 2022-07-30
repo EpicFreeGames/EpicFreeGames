@@ -23,14 +23,14 @@ export const GameForm = ({ game }: Props) => {
           name="start"
           label="Sale starts"
           type="datetime-local"
-          defaultValue={getHtmlDate(game?.start!)}
+          defaultValue={isEditing ? getHtmlDate(game?.start) : ""}
           required
         />
         <Input
           name="end"
           label="Sale ends"
           type="datetime-local"
-          defaultValue={getHtmlDate(game?.end!)}
+          defaultValue={isEditing ? getHtmlDate(game?.end) : ""}
           required
         />
         {!isEditing && (
