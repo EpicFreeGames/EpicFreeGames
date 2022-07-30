@@ -4,23 +4,25 @@
 
 import * as $0 from "./routes/_middleware.ts";
 import * as $1 from "./routes/discord-callback.tsx";
-import * as $2 from "./routes/games/[gameId]/edit.tsx";
-import * as $3 from "./routes/games/add.tsx";
-import * as $4 from "./routes/games/index.tsx";
-import * as $5 from "./routes/i18n.tsx";
-import * as $6 from "./routes/index.tsx";
-import * as $7 from "./routes/login.tsx";
+import * as $2 from "./routes/games/[gameId]/delete.tsx";
+import * as $3 from "./routes/games/[gameId]/edit.tsx";
+import * as $4 from "./routes/games/add.tsx";
+import * as $5 from "./routes/games/index.tsx";
+import * as $6 from "./routes/i18n.tsx";
+import * as $7 from "./routes/index.tsx";
+import * as $8 from "./routes/login.tsx";
 
 const manifest = {
   routes: {
     "./routes/_middleware.ts": $0,
     "./routes/discord-callback.tsx": $1,
-    "./routes/games/[gameId]/edit.tsx": $2,
-    "./routes/games/add.tsx": $3,
-    "./routes/games/index.tsx": $4,
-    "./routes/i18n.tsx": $5,
-    "./routes/index.tsx": $6,
-    "./routes/login.tsx": $7,
+    "./routes/games/[gameId]/delete.tsx": $2,
+    "./routes/games/[gameId]/edit.tsx": $3,
+    "./routes/games/add.tsx": $4,
+    "./routes/games/index.tsx": $5,
+    "./routes/i18n.tsx": $6,
+    "./routes/index.tsx": $7,
+    "./routes/login.tsx": $8,
   },
   islands: {},
   baseUrl: import.meta.url,

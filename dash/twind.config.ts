@@ -18,10 +18,11 @@ const config: Configuration = {
       py-2
       px-3
       rounded-md
-      hover:bg-opacity-60
+      hover:bg-opacity-80
       transition-all
       transform-gpu
-      active:bg-opacity-40
+      active:bg-opacity-60
+      !outline-none
     `,
   },
 };

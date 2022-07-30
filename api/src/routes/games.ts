@@ -147,6 +147,41 @@ gameRouter.patch(
 );
 
 gameRouter.post(
+  "/:gameId/toggle-confirmed",
+  auth(Flags.EditGames),
+  withValidation(
+    {
+      params: z
+        .object({
+          gameId: z.string(),
+        })
+        .strict(),
+    },
+    async (req, res) => {
+      const gameId = req.params.gameId;
+
+      const game = await prisma.game.findUnique({ where: { id: gameId } });
+
+      if (!game) {
+        return res.status(404).json({
+          statusCode: 404,
+          error: "Not Found",
+          message: "Game not found",
+        });
+      }
+
+      const updatedGame = await prisma.game.update({
+        where: { id: gameId },
+        data: { confirmed: !game?.confirmed },
+        include: { prices: true },
+      });
+
+      res.send(updatedGame);
+    }
+  )
+);
+
+gameRouter.post(
   "/",
   auth(Flags.AddGames),
   withValidation(
@@ -270,6 +305,33 @@ gameRouter.put(
           message: "Some prices were excluded due to non-existing currency",
           excluded: Array.from(excludedPriceCodes.entries()),
         });
+
+      res.status(204).send();
+    }
+  )
+);
+
+gameRouter.delete(
+  "/:gameId",
+  auth(Flags.DeleteGames),
+  withValidation(
+    {
+      params: z.object({
+        gameId: z.string(),
+      }),
+    },
+    async (req, res) => {
+      const gameId = req.params.gameId;
+
+      const deletedGame = await prisma.game.delete({ where: { id: gameId } });
+
+      if (!deletedGame) {
+        return res.status(404).json({
+          statusCode: 404,
+          error: "Not Found",
+          message: "Game not found",
+        });
+      }
 
       res.status(204).send();
     }

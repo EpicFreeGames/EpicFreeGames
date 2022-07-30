@@ -1,7 +1,7 @@
 /** @jsx h */
 import { h } from "preact";
 import { tw } from "twind";
-import { GameForm } from "../../components/Games/GameForm.tsx";
+import { Input } from "../../components/Input.tsx";
 import { Layout } from "../../components/layout.tsx";
 import { IGame } from "../../types.ts";
 import { api } from "../../utils/api.ts";
@@ -46,7 +46,26 @@ export default function AddGamePage() {
         </a>
       </div>
 
-      <GameForm />
+      <div className={tw`bg-gray-700 rounded-md mx-auto max-w-[400px] p-3`}>
+        <form className={tw`flex flex-col gap-3`} method="POST">
+          <Input name="name" label="Name" required />
+          <Input name="displayName" label="Display name" required />
+          <Input name="path" label="Path" required />
+          <Input name="imageUrl" label="Image URL" required />
+          <Input name="start" label="Sale starts" type="datetime-local" required />
+          <Input name="end" label="Sale ends" type="datetime-local" required />
+          <Input name="usdPrice" label="Formatted USD price ($49.99)" required />
+          <Input name="priceValue" type="number" label="USD price (49.99)" required />
+
+          <div className={tw`flex gap-2 justify-between items-center`}>
+            <a className={tw`btn bg-gray-600`} href="/games">
+              Cancel
+            </a>
+
+            <button className={tw`btn bg-gray-800`}>Add</button>
+          </div>
+        </form>
+      </div>
     </Layout>
   );
 }

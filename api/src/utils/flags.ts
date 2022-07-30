@@ -5,20 +5,21 @@ export enum Flags {
   PutGames = 1 << 3,
   GetGames = 1 << 4,
   EditGames = 1 << 5,
+  DeleteGames = 1 << 6,
 
-  AddSendingLogs = 1 << 6,
-  GetSendingLogs = 1 << 7,
+  AddSendingLogs = 1 << 7,
+  GetSendingLogs = 1 << 8,
 
-  AddCommandLogs = 1 << 8,
-  GetCommandLogs = 1 << 9,
+  AddCommandLogs = 1 << 9,
+  GetCommandLogs = 1 << 10,
 
-  AddServers = 1 << 10,
-  GetServers = 1 << 11,
-  EditServers = 1 << 12,
+  AddServers = 1 << 11,
+  GetServers = 1 << 12,
+  EditServers = 1 << 13,
 
-  EditUsers = 1 << 13,
+  EditUsers = 1 << 14,
 
-  GetCurrencies = 1 << 14,
-  EditCurrencies = 1 << 15,
-  AddCurrencies = 1 << 16,
+  GetCurrencies = 1 << 15,
+  EditCurrencies = 1 << 16,
+  AddCurrencies = 1 << 17,
 }

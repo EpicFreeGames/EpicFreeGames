@@ -9,7 +9,7 @@ scripts:
 
       - desc: bot-rest-proxy
         cmd: |
-          ./wait.sh 3001 5 &&
+          ./wait.sh 3001 15 &&
           cd ./bot && deno run -A --watch src/rest-proxy/mod.ts
         envFile: .env-bot
         env:
@@ -17,13 +17,13 @@ scripts:
 
       - desc: bot-gateway-proxy
         cmd: |
-          ./wait.sh 3010 10 && 
+          ./wait.sh 3010 15 && 
           cd ./bot && deno run -A --watch src/gateway-proxy/mod.ts
         envFile: .env-bot
 
       - desc: bot-sender
         cmd: |
-          ./wait.sh 3010 10 && 
+          ./wait.sh 3010 15 && 
           cd ./bot && deno run -A --watch src/sender/mod.ts
         envFile: .env-bot
         env:
@@ -31,8 +31,8 @@ scripts:
 
       - desc: bot-bot
         cmd: |
-          ./wait.sh 3010 10 && 
-          ./wait.sh 3011 5 && 
+          ./wait.sh 3010 15 && 
+          ./wait.sh 3011 15 && 
           cd ./bot && deno run -A --watch src/bot/mod.ts
         envFile: .env-bot
         env:
@@ -40,7 +40,7 @@ scripts:
 
       - desc: Dashboard
         cmd: |
-          ./wait.sh 3001 5 && 
+          ./wait.sh 3001 15 && 
           cd ./dash && deno run -A --watch= src/dev.ts twind.config.ts
         envFile: ./.env-dash
         env:
