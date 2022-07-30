@@ -2,7 +2,7 @@
 import { PageProps } from "$fresh/server.ts";
 import { h } from "preact";
 import { tw } from "twind";
-import { Game } from "../../components/games/Game.tsx";
+import { Game } from "../../components/Games/Game.tsx";
 import { Layout } from "../../components/layout.tsx";
 import { IGame } from "../../types.ts";
 import { api } from "../../utils/api.ts";

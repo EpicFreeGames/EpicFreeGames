@@ -1,7 +1,7 @@
 /** @jsx h */
 import { h } from "preact";
 import { tw } from "twind";
-import { GameForm } from "../../components/games/gameForm.tsx";
+import { GameForm } from "../../components/Games/GameForm.tsx";
 import { Layout } from "../../components/layout.tsx";
 import { IGame } from "../../types.ts";
 import { api } from "../../utils/api.ts";
