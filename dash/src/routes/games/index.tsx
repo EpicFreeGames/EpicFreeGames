@@ -106,7 +106,7 @@ const Game = ({ game }: { game: IGame }) => {
 
         <div className={tw`flex flex-col gap-2 w-full md:flex-row`}>
           <div className={tw`flex flex-col gap-2`}>
-            <Spec title="Name:" value={game.name} />
+            <Spec title="Name:" value={game.name} wordWrap />
             <Spec title="Path:" value={game.path} />
             <Spec title="Sale starts:" value={game.start} />
             <Spec title="Sale ends:" value={game.end} />
@@ -144,8 +144,8 @@ const Confirmed = ({ game }: { game: IGame }) => (
   </form>
 );
 
-const Spec = ({ title, value }: { title: string; value: string }) => (
-  <p className={tw`bg-gray-800 p-3 rounded-md`}>
+const Spec = ({ title, value, wordWrap }: { title: string; value: string; wordWrap?: boolean }) => (
+  <p className={tw`bg-gray-800 p-3 rounded-md ${wordWrap ? "" : "whitespace-nowrap"}`}>
     <b className={tw`text-[17px]`}>{title}</b> <br /> {value}
   </p>
 );
