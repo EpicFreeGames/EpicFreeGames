@@ -2,6 +2,7 @@
 import { PageProps } from "$fresh/server.ts";
 import { h } from "preact";
 import { tw } from "twind";
+import { BackButton } from "../../../components/BackButton.tsx";
 import { Layout } from "../../../components/layout.tsx";
 import { IGame } from "../../../types.ts";
 import { api } from "../../../utils/api.ts";
@@ -59,9 +60,7 @@ export default function GameDeletePage({ data: game }: PageProps<IGame>) {
       <div className={tw`flex gap-2 justify-between mb-3`}>
         <h1 className={tw`text-4xl`}>Delete game</h1>
 
-        <a className={tw`btn bg-gray-700`} href="/games">
-          Back to games
-        </a>
+        <BackButton href="/games" />
       </div>
 
       <div className={tw`bg-gray-700 rounded-md mx-auto max-w-[400px] p-3`}>

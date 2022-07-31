@@ -15,9 +15,7 @@ export const Input = ({ label, className, name, required, ...rest }: Props) => {
         name={name}
         autocomplete="off"
         required={required}
-        className={
-          tw`bg-gray-600 rounded-md p-2 focus:ring transition-shadow duration-200` + " " + className
-        }
+        className={tw`bg-gray-600 rounded-md p-2 focus:shadow-focus focus-within:shadow-focus duration-200`}
         {...rest}
       />
     );
@@ -34,9 +32,7 @@ export const Input = ({ label, className, name, required, ...rest }: Props) => {
         name={name}
         autocomplete="off"
         required={required}
-        className={
-          tw`bg-gray-600 rounded-md p-2 focus:ring transition-shadow duration-200` + " " + className
-        }
+        className={tw`bg-gray-600 rounded-md p-2 focus:shadow-focus focus-within:shadow-focus duration-200`}
         {...rest}
       />
     </div>

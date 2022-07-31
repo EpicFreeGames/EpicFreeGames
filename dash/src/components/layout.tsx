@@ -1,5 +1,6 @@
 /** @jsx h */
 /** @jsxFrag Fragment */
+import { Logout } from "icons";
 import { ComponentChildren, h } from "preact";
 import { tw } from "twind";
 import { Base } from "./base.tsx";
@@ -15,12 +16,12 @@ export const Layout = ({ children, title }: Props) => (
       <div className={tw`max-w-screen-lg mx-auto flex justify-between p-4`}>
         <div className={tw`flex gap-4`}>
           <NavLink href="/games">Games</NavLink>
-          <NavLink href="/i18n">I18n</NavLink>
+          <NavLink href="/currencies">Currencies</NavLink>
         </div>
 
         <form action="http://localhost:3000/api/auth/logout" method="POST">
-          <button type="submit" className={tw`btn bg-gray-700`}>
-            Logout
+          <button type="submit" className={tw`iconBtn bg-gray-700`}>
+            <Logout />
           </button>
         </form>
       </div>
@@ -31,7 +32,7 @@ export const Layout = ({ children, title }: Props) => (
 );
 
 const NavLink = ({ children, href }: { children: ComponentChildren; href: string }) => (
-  <a href={href} className={tw`btn bg-gray-700`}>
+  <a tabIndex={1} href={href} className={tw`btn bg-gray-700`}>
     {children}
   </a>
 );
