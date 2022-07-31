@@ -97,8 +97,6 @@ export default function EditGamePage({ data: game }: PageProps<IGame>) {
             defaultValue={getHtmlDate(game?.end)}
             required
           />
-          <Input name="usdPrice" label="Formatted USD price ($49.99)" required />
-          <Input name="priceValue" type="number" label="USD price (49.99)" required />
 
           <div className={tw`flex gap-2 justify-between items-center`}>
             <a className={tw`btn bg-gray-600`} href="/games">
