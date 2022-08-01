@@ -41,19 +41,20 @@ export const handler: Handlers<IGame[]> = {
   },
 };
 
-export default function GamesPage({ data }: PageProps<IGame[] | null>) {
+export default function GamesPage({ data, url }: PageProps<IGame[] | null>) {
   if (!data) return null;
 
   return (
-    <Layout title="Games">
-      <div className={tw`flex gap-2 justify-between mb-4`}>
-        <h1 className={tw`flex justify-center items-center text-3xl halfMax:text-4xl`}>Games</h1>
-
+    <Layout
+      title="Games"
+      titleButton={
         <a className={tw`btn bg-gray-700`} href="/games/add">
           Add a game
         </a>
-      </div>
-
+      }
+      url={url}
+      segments={["Games"]}
+    >
       <div className={tw`flex flex-col gap-3`}>
         {data.map((game) => (
           <Game key={game.name} game={game} />
@@ -139,8 +140,8 @@ const Spec = ({ title, value, wordWrap }: { title: string; value: string; wordWr
 );
 
 const Details = ({ children, summary }: { children: ComponentChildren; summary: string }) => (
-  <details className={tw`bg-gray-800 p-3 rounded-md`}>
-    <summary>
+  <details className={tw`bg-gray-800 p-3 rounded-md focusVisibleStyles`}>
+    <summary className={tw`p-1 rounded-md focusVisibleStyles`}>
       <b className={tw`text-[17px]`}>{summary}</b>
     </summary>
 

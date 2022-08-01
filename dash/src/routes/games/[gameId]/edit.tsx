@@ -52,15 +52,14 @@ export const handler: Handlers<IGame> = {
   },
 };
 
-export default function EditGamePage({ data: game }: PageProps<IGame>) {
+export default function EditGamePage({ data: game, url }: PageProps<IGame>) {
   return (
-    <Layout title="Edit game">
-      <div className={tw`flex gap-2 justify-between mb-3`}>
-        <h1 className={tw`text-4xl`}>Edit game</h1>
-
-        <BackButton href="/games" />
-      </div>
-
+    <Layout
+      title="Edit a game"
+      titleButton={<BackButton href="/games" />}
+      url={url}
+      segments={["Games", game.displayName, "Edit"]}
+    >
       <div className={tw`bg-gray-700 rounded-md mx-auto max-w-[400px] p-3`}>
         <h2 className={tw`text-2xl mb-2`}>
           Edit <b>{game.displayName}</b>

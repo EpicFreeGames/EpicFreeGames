@@ -19,6 +19,14 @@ const config: Configuration = {
     halfMax: "@media(min-width: 600px)",
   },
   plugins: {
+    focusVisibleStyles: `transition-shadow !outline-none focus:outline-none focus-visible:ring focus-visible:ring-2 focus-visible:ring-blue-500`,
+    focusStyles: `
+      transition-shadow
+      !outline-none
+      focus:outline-none
+      focus:ring focus-within:ring 
+      focus:ring-2 focus-within:ring-2 
+      focus:ring-blue-500 focus-within:ring-blue-500`,
     btn: `
       flex
       items-center
@@ -30,9 +38,9 @@ const config: Configuration = {
       rounded-md
       hover:bg-opacity-80
       active:bg-opacity-60
-      focus-visible:shadow-focus
       transition-all
       transform-gpu
+      focusVisibleStyles
     `,
 
     iconBtn: `
@@ -44,11 +52,11 @@ const config: Configuration = {
       rounded-md
       hover:bg-opacity-80
       active:bg-opacity-60
-      focus-visible:shadow-focus
       transition-all
       transform-gpu
       p-2
       gap-1
+      focusVisibleStyles
     `,
 
     iconBtnText: `
@@ -60,13 +68,13 @@ const config: Configuration = {
       rounded-md
       hover:bg-opacity-80
       active:bg-opacity-60
-      focus-visible:shadow-focus
       transition-all
       transform-gpu
       py-2
       pl-1
       pr-3
       gap-1
+      focusVisibleStyles
     `,
   },
 };

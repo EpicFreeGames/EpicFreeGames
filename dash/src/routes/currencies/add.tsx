@@ -1,4 +1,5 @@
 /** @jsx h */
+import { PageProps } from "$fresh/server.ts";
 import { h } from "preact";
 import { tw } from "twind";
 import { BackButton } from "../../components/BackButton.tsx";
@@ -30,15 +31,14 @@ export const handler: Handlers = {
   },
 };
 
-export default function AddCurrencyPage() {
+export default function AddCurrencyPage({ url }: PageProps) {
   return (
-    <Layout title="Add a game">
-      <div className={tw`flex gap-2 justify-between mb-3`}>
-        <h1 className={tw`text-4xl`}>Add a currency</h1>
-
-        <BackButton href="/currencies" />
-      </div>
-
+    <Layout
+      title="Add a currency"
+      titleButton={<BackButton href="/currencies" />}
+      url={url}
+      segments={["Currencies", "Add a currency"]}
+    >
       <div className={tw`bg-gray-700 rounded-md mx-auto max-w-[400px] p-3`}>
         <form className={tw`flex flex-col gap-3`} method="POST">
           <Input name="code" label="Code" required />

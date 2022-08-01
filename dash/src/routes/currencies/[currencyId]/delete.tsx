@@ -42,15 +42,14 @@ export const handler: Handlers<ICurrency> = {
   },
 };
 
-export default function DeleteCurrencyPage({ data: currency }: PageProps<ICurrency>) {
+export default function DeleteCurrencyPage({ data: currency, url }: PageProps<ICurrency>) {
   return (
-    <Layout title="Delete currency">
-      <div className={tw`flex gap-2 justify-between mb-3`}>
-        <h1 className={tw`text-4xl`}>Delete currency</h1>
-
-        <BackButton href="/currencies" />
-      </div>
-
+    <Layout
+      title="Delete currency"
+      titleButton={<BackButton href="/currencies" />}
+      url={url}
+      segments={["Currencies", currency.name, "Delete"]}
+    >
       <div className={tw`bg-gray-700 rounded-md mx-auto max-w-[400px] p-3`}>
         <h2>
           Are you sure you want to delete <b>{currency.name}</b>?

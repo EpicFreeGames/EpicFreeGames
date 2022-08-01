@@ -42,15 +42,14 @@ export const handler: Handlers<IGame> = {
   },
 };
 
-export default function DeleteGamePage({ data: game }: PageProps<IGame>) {
+export default function DeleteGamePage({ data: game, url }: PageProps<IGame>) {
   return (
-    <Layout title="Delete game">
-      <div className={tw`flex gap-2 justify-between mb-3`}>
-        <h1 className={tw`text-4xl`}>Delete game</h1>
-
-        <BackButton href="/games" />
-      </div>
-
+    <Layout
+      title="Delete a game"
+      titleButton={<BackButton href="/games" />}
+      url={url}
+      segments={["Games", game.displayName, "Delete"]}
+    >
       <div className={tw`bg-gray-700 rounded-md mx-auto max-w-[400px] p-3`}>
         <h2>
           Are you sure you want to delete <b>{game.displayName}</b>?

@@ -22,19 +22,18 @@ export const handler: Handlers<ICurrency[]> = {
   },
 };
 
-export default function I18nPage({ data }: PageProps<ICurrency[]>) {
+export default function I18nPage({ data, url }: PageProps<ICurrency[]>) {
   return (
-    <Layout title="I18n">
-      <div className={tw`flex gap-2 justify-between mb-4`}>
-        <h1 className={tw`flex justify-center items-center text-3xl halfMax:text-4xl`}>
-          Currencies
-        </h1>
-
+    <Layout
+      title="Currencies"
+      titleButton={
         <a className={tw`btn bg-gray-700`} href="/currencies/add">
           Add a currency
         </a>
-      </div>
-
+      }
+      url={url}
+      segments={["Currencies"]}
+    >
       <div className={tw`grid grid-cols-1 gap-3 max:grid-cols-2`}>
         {data.map((currency) => (
           <Currnecy key={currency.name} currency={currency} />

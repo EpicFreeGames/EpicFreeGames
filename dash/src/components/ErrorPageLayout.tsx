@@ -1,5 +1,4 @@
 /** @jsx h */
-/** @jsxFrag Fragment */
 import { h } from "preact";
 import { tw } from "twind";
 import { Base } from "./base.tsx";
