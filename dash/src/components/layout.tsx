@@ -19,11 +19,9 @@ export const Layout = ({ children, title }: Props) => (
           <NavLink href="/currencies">Currencies</NavLink>
         </div>
 
-        <form action="http://localhost:3000/api/auth/logout" method="POST">
-          <button type="submit" className={tw`iconBtn bg-gray-700`}>
-            <Logout />
-          </button>
-        </form>
+        <a className={tw`iconBtn bg-gray-700`} href="/logout">
+          <Logout />
+        </a>
       </div>
     </nav>
 

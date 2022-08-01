@@ -3,7 +3,7 @@ import { PageProps } from "$fresh/server.ts";
 import { Edit, Trash } from "icons";
 import { h } from "preact";
 import { tw } from "twind";
-import { Layout } from "../../components/layout.tsx";
+import { Layout } from "../../components/Layout.tsx";
 import { ICurrency } from "../../types.ts";
 import { api } from "../../utils/api.ts";
 import { Handlers } from "../../utils/freshTypes.ts";
@@ -16,13 +16,7 @@ export const handler: Handlers<ICurrency[]> = {
       auth: ctx.state.auth,
     });
 
-    if (error)
-      return new Response(
-        JSON.stringify({
-          error: error?.message,
-        }),
-        { status: Number(error?.status ?? 500) }
-      );
+    if (error) return error;
 
     return ctx.render(currencies);
   },

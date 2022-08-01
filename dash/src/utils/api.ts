@@ -10,7 +10,7 @@ type ApiResponse<TData> =
       response: Response;
     }
   | {
-      error: Record<string, unknown>;
+      error: Response;
       data?: never;
       response?: never;
     };
@@ -56,8 +56,30 @@ export function api<TData>({ method, path, body, auth }: Args): Promise<ApiRespo
         };
       } else {
         const json = await res.json().catch(() => null);
+        console.error(json || "unknown error");
 
-        throw json || "unknown error";
+        const errorStuff = new URLSearchParams();
+
+        errorStuff.append("statusCode", String(res.status || 500));
+        errorStuff.append("error", json?.error || "unknown error");
+        errorStuff.append("message", json?.message || "unknown error");
+
+        console.error(
+          `API request failed\nRequest url: ${config.API_BASEURL}${path}\nError: ${JSON.stringify(
+            json,
+            null,
+            2
+          )}`
+        );
+
+        return {
+          error: new Response(null, {
+            status: 303,
+            headers: {
+              Location: `/error?${errorStuff.toString()}`,
+            },
+          }),
+        };
       }
     })
     .catch((err) => {
@@ -69,8 +91,19 @@ export function api<TData>({ method, path, body, auth }: Args): Promise<ApiRespo
         )}`
       );
 
+      const errorStuff = new URLSearchParams();
+
+      errorStuff.append("statusCode", String(err?.status || 500));
+      errorStuff.append("error", err?.message || "unknown error");
+      errorStuff.append("message", err?.message || "unknown error");
+
       return {
-        error: err,
+        error: new Response(null, {
+          status: 303,
+          headers: {
+            Location: `/error?${errorStuff.toString()}`,
+          },
+        }),
       };
     });
 }

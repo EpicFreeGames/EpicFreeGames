@@ -3,7 +3,7 @@ import { h } from "preact";
 import { tw } from "twind";
 import { BackButton } from "../../components/BackButton.tsx";
 import { Input } from "../../components/Input.tsx";
-import { Layout } from "../../components/layout.tsx";
+import { Layout } from "../../components/Layout.tsx";
 import { ICurrency } from "../../types.ts";
 import { api } from "../../utils/api.ts";
 import { Handlers } from "../../utils/freshTypes.ts";
@@ -19,13 +19,7 @@ export const handler: Handlers = {
       auth: ctx.state.auth,
     });
 
-    if (error)
-      return new Response(
-        JSON.stringify({
-          error: error?.message,
-        }),
-        { status: Number(error?.status ?? 500) }
-      );
+    if (error) return error;
 
     return new Response(null, {
       status: 303,

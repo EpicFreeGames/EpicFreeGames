@@ -3,7 +3,7 @@ import { h } from "preact";
 import { tw } from "twind";
 import { BackButton } from "../../components/BackButton.tsx";
 import { Input } from "../../components/Input.tsx";
-import { Layout } from "../../components/layout.tsx";
+import { Layout } from "../../components/Layout.tsx";
 import { IGame } from "../../types.ts";
 import { api } from "../../utils/api.ts";
 import { Handlers } from "../../utils/freshTypes.ts";
@@ -19,13 +19,7 @@ export const handler: Handlers = {
       auth: ctx.state.auth,
     });
 
-    if (error)
-      return new Response(
-        JSON.stringify({
-          error: error?.message,
-        }),
-        { status: Number(error?.status ?? 500) }
-      );
+    if (error) return error;
 
     return new Response(null, {
       status: 303,
@@ -54,7 +48,7 @@ export default function AddGamePage() {
           <Input name="start" label="Sale starts" type="datetime-local" required />
           <Input name="end" label="Sale ends" type="datetime-local" required />
           <Input name="usdPrice" label="Formatted USD price ($49.99)" required />
-          <Input name="priceValue" type="number" label="USD price (49.99)" required />
+          <Input name="priceValue" type="number" label="USD price (49.99)" step={0.01} required />
 
           <div className={tw`flex gap-2 justify-between items-center`}>
             <a className={tw`btn bg-gray-600`} href="/games">

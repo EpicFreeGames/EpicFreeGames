@@ -9,12 +9,14 @@ import * as $3 from "./routes/currencies/[currencyId]/edit.tsx";
 import * as $4 from "./routes/currencies/add.tsx";
 import * as $5 from "./routes/currencies/index.tsx";
 import * as $6 from "./routes/discord-callback.tsx";
-import * as $7 from "./routes/games/[gameId]/delete.tsx";
-import * as $8 from "./routes/games/[gameId]/edit.tsx";
-import * as $9 from "./routes/games/add.tsx";
-import * as $10 from "./routes/games/index.tsx";
-import * as $11 from "./routes/index.tsx";
-import * as $12 from "./routes/login.tsx";
+import * as $7 from "./routes/error.tsx";
+import * as $8 from "./routes/games/[gameId]/delete.tsx";
+import * as $9 from "./routes/games/[gameId]/edit.tsx";
+import * as $10 from "./routes/games/add.tsx";
+import * as $11 from "./routes/games/index.tsx";
+import * as $12 from "./routes/index.tsx";
+import * as $13 from "./routes/login.tsx";
+import * as $14 from "./routes/logout.tsx";
 
 const manifest = {
   routes: {
@@ -25,12 +27,14 @@ const manifest = {
     "./routes/currencies/add.tsx": $4,
     "./routes/currencies/index.tsx": $5,
     "./routes/discord-callback.tsx": $6,
-    "./routes/games/[gameId]/delete.tsx": $7,
-    "./routes/games/[gameId]/edit.tsx": $8,
-    "./routes/games/add.tsx": $9,
-    "./routes/games/index.tsx": $10,
-    "./routes/index.tsx": $11,
-    "./routes/login.tsx": $12,
+    "./routes/error.tsx": $7,
+    "./routes/games/[gameId]/delete.tsx": $8,
+    "./routes/games/[gameId]/edit.tsx": $9,
+    "./routes/games/add.tsx": $10,
+    "./routes/games/index.tsx": $11,
+    "./routes/index.tsx": $12,
+    "./routes/login.tsx": $13,
+    "./routes/logout.tsx": $14,
   },
   islands: {},
   baseUrl: import.meta.url,

@@ -3,7 +3,7 @@ import { PageProps } from "$fresh/server.ts";
 import { Edit, Trash } from "icons";
 import { ComponentChildren, h } from "preact";
 import { tw } from "twind";
-import { Layout } from "../../components/layout.tsx";
+import { Layout } from "../../components/Layout.tsx";
 import { IGame } from "../../types.ts";
 import { api } from "../../utils/api.ts";
 import { Handlers } from "../../utils/freshTypes.ts";
@@ -16,13 +16,7 @@ export const handler: Handlers<IGame[]> = {
       auth: ctx.state.auth,
     });
 
-    if (error)
-      return new Response(
-        JSON.stringify({
-          error: error?.message,
-        }),
-        { status: Number(error?.status ?? 500) }
-      );
+    if (error) return error;
 
     return ctx.render(games);
   },
@@ -36,13 +30,7 @@ export const handler: Handlers<IGame[]> = {
       auth: ctx.state.auth,
     });
 
-    if (error)
-      return new Response(
-        JSON.stringify({
-          error: error?.message,
-        }),
-        { status: Number(error?.status ?? 500) }
-      );
+    if (error) return error;
 
     return new Response(null, {
       status: 303,
