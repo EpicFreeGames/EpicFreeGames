@@ -97,3 +97,37 @@ authRouter.get(
 authRouter.post("/logout", auth(), async (req, res) => {
   req.session.destroy(() => res.redirect(303, "/"));
 });
+
+if (config.ENV === "dev") {
+  authRouter.get("/dev", async (req, res) => {
+    try {
+      const userId = config.ALLOWED_USER_IDS[0]!;
+
+      const user = await prisma.user.upsert({
+        where: { discordId: userId },
+        create: {
+          discordId: userId,
+          flags: 0,
+        },
+        update: {
+          discordId: userId,
+        },
+      });
+
+      req.session.user = user;
+
+      res.status(204).end();
+    } catch (err) {
+      console.log(
+        `DEV Error logging user in: ${err?.message}\nResponse data:`,
+        JSON.stringify(err?.response?.data)
+      );
+
+      const status = err?.response?.status ?? 500;
+      res.status(status).json({
+        status,
+        message: "Authentication failed",
+      });
+    }
+  });
+}

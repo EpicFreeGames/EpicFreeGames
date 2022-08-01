@@ -5,12 +5,12 @@ import { h } from "preact";
 import { tw } from "twind";
 import { Base } from "../components/base.tsx";
 import { config } from "../config.ts";
-import { IUser } from "../types.ts";
 import { api } from "../utils/api.ts";
 
 type Data = {
   clientId: string;
   redirectUri: string;
+  dev: boolean;
 };
 
 export const handler: Handlers<Data | null> = {
@@ -18,7 +18,7 @@ export const handler: Handlers<Data | null> = {
     const cookies = getCookies(req.headers);
     // test cookie, if valid, redirect to /
     if (cookies.sid) {
-      const { error, data: user } = await api<IUser>({
+      const { error } = await api({
         method: "GET",
         path: "/users/@me",
         auth: cookies.sid,
@@ -26,7 +26,7 @@ export const handler: Handlers<Data | null> = {
 
       error && console.error(error);
 
-      if (user && !error)
+      if (!error)
         return new Response("", {
           status: 303,
           headers: {
@@ -38,8 +38,24 @@ export const handler: Handlers<Data | null> = {
     return ctx.render({
       clientId: config.DISCORD_CLIENT_ID,
       redirectUri: encodeURI(config.DISCORD_REDIRECT_URL),
+      dev: config.ENV === "dev",
     });
   },
+  ...(config.ENV === "dev" && {
+    POST: async (req, ctx) => {
+      const { error, response } = await api({
+        method: "GET",
+        path: `/auth/dev`,
+      });
+
+      if (error) return error;
+
+      return new Response(null, {
+        status: 303,
+        headers: { Location: "/", "Set-Cookie": response.headers.get("Set-Cookie")! },
+      });
+    },
+  }),
 };
 
 export default function Login({ data }: PageProps<Data>) {
@@ -56,6 +72,14 @@ export default function Login({ data }: PageProps<Data>) {
         >
           Login with Discord
         </a>
+
+        {data.dev && (
+          <form method="post">
+            <button type="submit" className={tw`py-2 px-6 bg-green-500 rounded-md`}>
+              Dev login
+            </button>
+          </form>
+        )}
       </div>
     </Base>
   );
