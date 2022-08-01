@@ -36,11 +36,11 @@ export const Layout = ({ children, title, titleButton, url, segments }: Props) =
         </div>
       </nav>
 
-      <main className={tw`max-w-screen-lg mx-auto halfMax:px-3 max:px-4`}>
-        <div className={tw`flex flex-col gap-1 px-3 py-1 halfMax:py-4 halfMax:px-0`}>
+      <main className={tw`max-w-screen-lg mx-auto`}>
+        <div className={tw`flex flex-col pl-2 pb-1 halfMax:py-2`}>
           {hasPath && <Path url={url} segments={segments} />}
 
-          <div className={tw`flex gap-3 justify-between ${hasPath ? "mb-1" : "py-2"}`}>
+          <div className={tw`flex justify-between pb-2 pr-2`}>
             <h1 className={tw`flex items-center text-3xl halfMax:text-4xl`}>{title}</h1>
 
             {titleButton}
@@ -52,6 +52,7 @@ export const Layout = ({ children, title, titleButton, url, segments }: Props) =
     </Base>
   );
 };
+
 const NavLink = ({ children, href }: { children: ComponentChildren; href: string }) => (
   <a tabIndex={1} href={href} className={tw`btn bg-gray-700`}>
     {children}

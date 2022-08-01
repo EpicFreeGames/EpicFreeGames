@@ -19,9 +19,8 @@ const config: Configuration = {
     halfMax: "@media(min-width: 600px)",
   },
   plugins: {
-    focusVisibleStyles: `transition-shadow !outline-none focus:outline-none focus-visible:ring focus-visible:ring-2 focus-visible:ring-blue-500`,
+    focusVisibleStyles: `!outline-none focus:outline-none focus-visible:ring focus-visible:ring-2 focus-visible:ring-blue-500`,
     focusStyles: `
-      transition-shadow
       !outline-none
       focus:outline-none
       focus:ring focus-within:ring 
