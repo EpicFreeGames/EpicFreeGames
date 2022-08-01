@@ -47,7 +47,8 @@ model Server {
 }
 
 model Currency {
-  code           String      @id @unique
+  id             String      @id @default(cuid())
+  code           String      @unique
   name           String
   apiValue       String
   inFrontOfPrice String      @default("")
