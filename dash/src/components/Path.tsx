@@ -13,12 +13,14 @@ export const Path = ({ url, segments }: Props) => {
   const urlSegments = url.pathname.split("/").slice(1);
 
   return (
-    <div className={tw`flex gap-2 items-center`}>
+    <div
+      className={tw`flex gap-2 items-center whitespace-nowrap overflow-y-hidden w-full overflow-x-scroll py-2`}
+    >
       <Segment href="/" title="Home" />
 
       {urlSegments.map((_, index) => (
         <>
-          <ChevronRight size={15} />
+          <ChevronRight size={15} className={tw`min-w-[1rem]`} />
 
           <Segment
             href={`/${urlSegments.slice(0, index + 1).join("/")}`}

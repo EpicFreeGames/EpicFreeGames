@@ -54,3 +54,15 @@ export type IServer = {
   currencyCode: ICurrency["code"];
   createdAt: number;
 };
+
+export type ICounts = {
+  total: number;
+  sendable: number;
+  hasWebhook: number;
+  hasRole: number;
+  hasThread: number;
+  hasChangedLanguage: number;
+  hasChangedCurrency: number;
+  hasOnlyChannel: number;
+  webhookAdoption: string;
+};

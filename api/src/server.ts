@@ -1,6 +1,7 @@
 import { config } from "./config";
 import { authRouter } from "./routes/auth";
 import { currencyRouter } from "./routes/currencies";
+import { dashboardRouter } from "./routes/dashboard";
 import { gameRouter } from "./routes/games";
 import { logRouter } from "./routes/logs";
 import { sendsRouter } from "./routes/sends";
@@ -49,6 +50,7 @@ const registerRoutes = (app: Express) => {
   router.use("/auth", authRouter);
   router.use("/currencies", currencyRouter);
   router.use("/sends", sendsRouter);
+  router.use("/dashboard", dashboardRouter);
 
   app.use("/api", router);
 };
