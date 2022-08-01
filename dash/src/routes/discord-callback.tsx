@@ -12,13 +12,7 @@ export const handler: Handlers = {
       path: `/auth/discord?code=${code}`,
     });
 
-    if (error)
-      return new Response(
-        JSON.stringify({
-          error: error?.message,
-        }),
-        { status: Number(error?.status ?? 500) }
-      );
+    if (error) return error;
 
     return new Response(null, {
       status: 303,
