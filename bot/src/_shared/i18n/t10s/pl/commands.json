@@ -2,7 +2,6 @@
   "cmd_desc_set_currency": "Wybierz walutę w której chcesz widzieć ceny",
   "cmd_desc_set_thread": "Wybierz wątek w którym mam wysyłać darmowe gry",
   "cmd_desc_set_channel": "Wybierz kanał w którym będę wysyłał nowe darmowe gry",
-  "cmd_desc_set_role": "Wybierz rolę którą mam spingować gdy pojawi się nowa darmowa gra!",
   "cmd_desc_set_language": "Wybierz język, w którym chcesz widzieć wiadomości",
   "cmd_desc_remove_channel": "Usuń ustawiony kanał (lub wątek)",
   "cmd_desc_remove_role": "Usuń ustawioną rolę",
