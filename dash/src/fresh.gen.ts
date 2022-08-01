@@ -2,29 +2,35 @@
 // This file SHOULD be checked into source version control.
 // This file is automatically updated during development when running `dev.ts`.
 
-import * as $0 from "./routes/_middleware.ts";
-import * as $1 from "./routes/currencies/add-currency.tsx";
-import * as $2 from "./routes/currencies/index.tsx";
-import * as $3 from "./routes/discord-callback.tsx";
-import * as $4 from "./routes/games/[gameId]/delete.tsx";
-import * as $5 from "./routes/games/[gameId]/edit.tsx";
-import * as $6 from "./routes/games/add.tsx";
-import * as $7 from "./routes/games/index.tsx";
-import * as $8 from "./routes/index.tsx";
-import * as $9 from "./routes/login.tsx";
+import * as $0 from "./routes/_404.tsx";
+import * as $1 from "./routes/_middleware.ts";
+import * as $2 from "./routes/currencies/[currencyId]/delete.tsx";
+import * as $3 from "./routes/currencies/[currencyId]/edit.tsx";
+import * as $4 from "./routes/currencies/add.tsx";
+import * as $5 from "./routes/currencies/index.tsx";
+import * as $6 from "./routes/discord-callback.tsx";
+import * as $7 from "./routes/games/[gameId]/delete.tsx";
+import * as $8 from "./routes/games/[gameId]/edit.tsx";
+import * as $9 from "./routes/games/add.tsx";
+import * as $10 from "./routes/games/index.tsx";
+import * as $11 from "./routes/index.tsx";
+import * as $12 from "./routes/login.tsx";
 
 const manifest = {
   routes: {
-    "./routes/_middleware.ts": $0,
-    "./routes/currencies/add-currency.tsx": $1,
-    "./routes/currencies/index.tsx": $2,
-    "./routes/discord-callback.tsx": $3,
-    "./routes/games/[gameId]/delete.tsx": $4,
-    "./routes/games/[gameId]/edit.tsx": $5,
-    "./routes/games/add.tsx": $6,
-    "./routes/games/index.tsx": $7,
-    "./routes/index.tsx": $8,
-    "./routes/login.tsx": $9,
+    "./routes/_404.tsx": $0,
+    "./routes/_middleware.ts": $1,
+    "./routes/currencies/[currencyId]/delete.tsx": $2,
+    "./routes/currencies/[currencyId]/edit.tsx": $3,
+    "./routes/currencies/add.tsx": $4,
+    "./routes/currencies/index.tsx": $5,
+    "./routes/discord-callback.tsx": $6,
+    "./routes/games/[gameId]/delete.tsx": $7,
+    "./routes/games/[gameId]/edit.tsx": $8,
+    "./routes/games/add.tsx": $9,
+    "./routes/games/index.tsx": $10,
+    "./routes/index.tsx": $11,
+    "./routes/login.tsx": $12,
   },
   islands: {},
   baseUrl: import.meta.url,

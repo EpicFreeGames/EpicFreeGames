@@ -4,17 +4,17 @@ import { h } from "preact";
 import { tw } from "twind";
 import { BackButton } from "../../../components/BackButton.tsx";
 import { Layout } from "../../../components/layout.tsx";
-import { IGame } from "../../../types.ts";
+import { ICurrency } from "../../../types.ts";
 import { api } from "../../../utils/api.ts";
 import { Handlers } from "../../../utils/freshTypes.ts";
 
-export const handler: Handlers<IGame> = {
+export const handler: Handlers<ICurrency> = {
   GET: async (_req, ctx) => {
-    const gameId = ctx.params.gameId;
+    const currencyId = ctx.params.currencyId;
 
-    const { error, data: game } = await api<IGame>({
+    const { error, data: currency } = await api<ICurrency>({
       method: "GET",
-      path: `/games/${gameId}`,
+      path: `/currencies/${currencyId}`,
       auth: ctx.state.auth,
     });
 
@@ -26,14 +26,14 @@ export const handler: Handlers<IGame> = {
         { status: Number(error?.status ?? 500) }
       );
 
-    return ctx.render(game);
+    return ctx.render(currency);
   },
   POST: async (_req, ctx) => {
-    const gameId = ctx.params.gameId;
+    const currencyId = ctx.params.currencyId;
 
-    const { error } = await api<IGame>({
+    const { error } = await api<ICurrency>({
       method: "DELETE",
-      path: `/games/${gameId}`,
+      path: `/currencies/${currencyId}`,
       auth: ctx.state.auth,
     });
 
@@ -48,34 +48,34 @@ export const handler: Handlers<IGame> = {
     return new Response(null, {
       status: 303,
       headers: {
-        Location: "/games",
+        Location: "/currencies",
       },
     });
   },
 };
 
-export default function DeleteGamePage({ data: game }: PageProps<IGame>) {
+export default function DeleteCurrencyPage({ data: currency }: PageProps<ICurrency>) {
   return (
-    <Layout title="Delete game">
+    <Layout title="Delete currency">
       <div className={tw`flex gap-2 justify-between mb-3`}>
-        <h1 className={tw`text-4xl`}>Delete game</h1>
+        <h1 className={tw`text-4xl`}>Delete currency</h1>
 
-        <BackButton href="/games" />
+        <BackButton href="/currencies" />
       </div>
 
       <div className={tw`bg-gray-700 rounded-md mx-auto max-w-[400px] p-3`}>
         <h2>
-          Are you sure you want to delete <b>{game.displayName}</b>?
+          Are you sure you want to delete <b>{currency.name}</b>?
         </h2>
 
         <form className={tw`flex flex-col gap-3`} method="POST">
           <div className={tw`flex gap-2 justify-between mt-4 items-center`}>
-            <a className={tw`btn bg-gray-600`} href="/games">
+            <a className={tw`btn bg-gray-600`} href="/currencies">
               Cancel
             </a>
 
             <button type="submit" className={tw`btn bg-red-700`}>
-              Delete
+              Yes, delete
             </button>
           </div>
         </form>

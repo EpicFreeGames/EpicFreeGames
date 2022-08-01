@@ -36,6 +36,7 @@ export type ILanguage = {
 };
 
 export type ICurrency = {
+  id: string;
   code: string;
   name: string;
   apiValue: string;

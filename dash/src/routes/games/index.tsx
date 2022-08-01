@@ -59,7 +59,7 @@ export default function GamesPage({ data }: PageProps<IGame[] | null>) {
   return (
     <Layout title="Games">
       <div className={tw`flex gap-2 justify-between mb-4`}>
-        <h1 className={tw`flex justify-center items-center text-3xl md:text-4xl`}>Games</h1>
+        <h1 className={tw`flex justify-center items-center text-3xl halfMax:text-4xl`}>Games</h1>
 
         <a className={tw`btn bg-gray-700`} href="/games/add">
           Add a game
@@ -78,8 +78,8 @@ export default function GamesPage({ data }: PageProps<IGame[] | null>) {
 const Game = ({ game }: { game: IGame }) => {
   return (
     <div className={tw`bg-gray-700 p-3 rounded-md flex flex-col gap-3`}>
-      <div className={tw`flex gap-2 justify-between w-full flex-col md:flex-row`}>
-        <h2 className={tw`bg-gray-800 py-2 px-3 rounded-md text-lg md:text-2xl`}>
+      <div className={tw`flex gap-2 justify-between w-full flex-col halfMax:flex-row`}>
+        <h2 className={tw`bg-gray-800 py-2 px-3 rounded-md text-lg halfMax:text-2xl`}>
           {game.displayName}
         </h2>
 
@@ -104,7 +104,7 @@ const Game = ({ game }: { game: IGame }) => {
           alt={game.displayName}
         />
 
-        <div className={tw`flex flex-col gap-2 w-full md:flex-row`}>
+        <div className={tw`flex flex-col gap-2 w-full halfMax:flex-row`}>
           <div className={tw`flex flex-col gap-2`}>
             <Spec title="Name:" value={game.name} wordWrap />
             <Spec title="Path:" value={game.path} />

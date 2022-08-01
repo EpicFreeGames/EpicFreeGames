@@ -15,6 +15,8 @@ const config: Configuration = {
   },
   variants: {
     focus: "[@media(any-hover:hover){&:hover}]",
+    max: "@media(min-width: 1200px)",
+    halfMax: "@media(min-width: 600px)",
   },
   plugins: {
     btn: `
