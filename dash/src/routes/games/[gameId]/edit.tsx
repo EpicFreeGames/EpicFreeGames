@@ -40,13 +40,7 @@ export const handler: Handlers<IGame> = {
       auth: ctx.state.auth,
     });
 
-    if (error)
-      return new Response(
-        JSON.stringify({
-          error: error?.message,
-        }),
-        { status: Number(error?.status ?? 500) }
-      );
+    if (error) return error;
 
     return ctx.render(game);
   },
