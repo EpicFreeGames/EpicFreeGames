@@ -21,8 +21,26 @@ services:
     volumes:
       - ./api/src:/app/src:r
     ports:
-      - "3000:3000"
+      - "3001:3000"
     command: yarn dev
+
+  dash:
+    depends_on:
+      - redis
+      - api
+    build:
+      context: ./dash
+      dockerfile: Dockerfile
+    image: dash/dash
+    env_file:
+      - .env-dash
+    restart: unless-stopped
+    volumes:
+      - ./dash/src:/app/src:r
+      - ./dash/twind.config.ts:/app/twind.config.ts:r
+    ports:
+      - "3000:3000"
+    command: deno run -A --watch= src/dev.ts twind.config.ts
 
   bot_rest-proxy:
     depends_on:
@@ -84,28 +102,6 @@ services:
     volumes:
       - ./bot/src:/app/src:r
     command: "deno run --watch -A ./src/bot/mod.ts"
-
-  dash:
-    depends_on:
-      - redis
-      - api
-      - bot_rest-proxy
-      - bot_gateway-proxy
-      - bot_sender
-      - bot_bot
-    build:
-      context: ./dash
-      dockerfile: Dockerfile
-    image: dash/dash
-    env_file:
-      - .env-dash
-    restart: unless-stopped
-    volumes:
-      - ./dash/src:/app/src:r
-      - ./dash/twind.config.ts:/app/twind.config.ts:r
-    ports:
-      - "3001:8000"
-    command: deno run -A --watch= src/dev.ts twind.config.ts
 
 volumes:
   redis:
