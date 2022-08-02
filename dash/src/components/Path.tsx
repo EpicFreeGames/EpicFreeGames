@@ -62,6 +62,6 @@ const pathBtnStyles = (active?: boolean) => tw`
   ${
     active
       ? "bg-gray-400 ring-1 ring-gray-500"
-      : "bg-gray-600 hover:bg-opacity-[25%] active:bg-opacity-[15%] focusVisibleStyles"
+      : "bg-gray-600 hover:bg-opacity-30 active:bg-opacity-20 focusVisibleStyles"
   }
   `;
