@@ -26,61 +26,39 @@ export default function DashIndex({ data: counts }: PageProps<ICounts>) {
     <Layout title="Dashboard">
       <div className={tw`flex flex-col gap-2`}>
         <div className={tw`grid gap-2 grid-cols-1 halfMax:grid-cols-2`}>
-          <div className={tw`p-3 bg-gray-600 rounded-md flex flex-col items-center gap-2`}>
-            <h2 className={tw`text-2xl font-bold`}>Total servers in db</h2>
-            <p className={tw`text-lg `}>{counts.total}</p>
-          </div>
-
-          <div className={tw`p-3 bg-gray-600 rounded-md flex flex-col items-center gap-2`}>
-            <h2 className={tw`text-2xl font-bold`}>Total commands</h2>
-            <p className={tw`text-lg `}>{counts.sendable}</p>
-          </div>
+          <DashItem title="Total servers in db" value={counts.total} />
+          <DashItem title="Total commands" value={counts.totalCommands} />
         </div>
 
         <div className={tw`grid gap-2 grid-cols-1 halfMax:grid-cols-2 max:grid-cols-4`}>
-          <div className={tw`p-3 bg-gray-600 rounded-md flex flex-col items-center gap-2`}>
-            <h2 className={tw`text-2xl font-bold`}>Sendable</h2>
-            <p className={tw`text-lg `}>{counts.sendable}</p>
-          </div>
-
-          <div className={tw`p-3 bg-gray-600 rounded-md flex flex-col items-center gap-2`}>
-            <h2 className={tw`text-2xl font-bold`}>Only a channel</h2>
-            <p className={tw`text-lg `}>{counts.hasOnlyChannel}</p>
-          </div>
-
-          <div className={tw`p-3 bg-gray-600 rounded-md flex flex-col items-center gap-2`}>
-            <h2 className={tw`text-2xl font-bold`}>Webhook</h2>
-            <p className={tw`text-lg `}>{counts.hasWebhook}</p>
-          </div>
-
-          <div className={tw`p-3 bg-gray-600 rounded-md flex flex-col items-center gap-2`}>
-            <h2 className={tw`text-2xl font-bold`}>Webhook adoption</h2>
-            <p className={tw`text-lg `}>{counts.webhookAdoption}</p>
-          </div>
+          <DashItem title="Sendable" value={counts.sendable} />
+          <DashItem title="Only a channel" value={counts.hasOnlyChannel} />
+          <DashItem title="Webhook" value={counts.hasWebhook} />
+          <DashItem title="Webhook adoption" value={counts.webhookAdoption} />
         </div>
 
         <div className={tw`grid gap-2 grid-cols-1 halfMax:grid-cols-2 max:grid-cols-4`}>
-          <div className={tw`p-3 bg-gray-600 rounded-md flex flex-col items-center gap-2`}>
-            <h2 className={tw`text-lg font-bold`}>Has set a role</h2>
-            <p className={tw`text-lg `}>{counts.hasRole}</p>
-          </div>
-
-          <div className={tw`p-3 bg-gray-600 rounded-md flex flex-col items-center gap-2`}>
-            <h2 className={tw`text-lg font-bold`}>Has changed language</h2>
-            <p className={tw`text-lg `}>{counts.hasChangedLanguage}</p>
-          </div>
-
-          <div className={tw`p-3 bg-gray-600 rounded-md flex flex-col items-center gap-2`}>
-            <h2 className={tw`text-lg font-bold`}>Has changed currency</h2>
-            <p className={tw`text-lg `}>{counts.hasChangedCurrency}</p>
-          </div>
-
-          <div className={tw`p-3 bg-gray-600 rounded-md flex flex-col items-center gap-2`}>
-            <h2 className={tw`text-lg font-bold`}>Has set a thread</h2>
-            <p className={tw`text-lg `}>{counts.hasThread}</p>
-          </div>
+          <DashItem title="Has set a thread" value={counts.hasThread} small />
+          <DashItem title="Has set a role" value={counts.hasRole} small />
+          <DashItem title="Has changed currency" value={counts.hasChangedCurrency} small />
+          <DashItem title="Has changed language" value={counts.hasChangedLanguage} small />
         </div>
       </div>
     </Layout>
   );
 }
+
+const DashItem = ({
+  title,
+  value,
+  small,
+}: {
+  title: string;
+  value: number | string;
+  small?: boolean;
+}) => (
+  <div className={tw`p-3 bg-gray-600 rounded-md flex flex-col gap-2 halfMax:items-center`}>
+    <h2 className={tw`${small ? "text-lg" : "text-2xl"} font-bold `}>{title}</h2>
+    <p className={tw`text-lg `}>{value}</p>
+  </div>
+);
