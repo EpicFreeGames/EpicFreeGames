@@ -20,6 +20,7 @@ type Props = {
 
 export const Layout = ({ children, title, titleButton, url, segments }: Props) => {
   const hasPath = !!(url && segments);
+  const hasButton = !!titleButton;
 
   return (
     <Base title={title}>
@@ -36,12 +37,14 @@ export const Layout = ({ children, title, titleButton, url, segments }: Props) =
         </div>
       </nav>
 
-      <main className={tw`max-w-screen-lg mx-auto`}>
-        <div className={tw`flex flex-col pl-2 pb-1 halfMax:py-2`}>
+      <main className={tw`max-w-screen-lg mx-auto halfMax:px-4`}>
+        <div className={tw`flex flex-col`}>
           {hasPath && <Path url={url} segments={segments} />}
 
-          <div className={tw`flex justify-between pb-2 pr-2`}>
-            <h1 className={tw`flex items-center text-3xl halfMax:text-4xl`}>{title}</h1>
+          <div
+            className={tw`flex justify-between pb-3 px-3 halfMax:px-0 ${hasButton ? "" : "pt-3"}`}
+          >
+            <h1 className={tw`flex items-center text-2xl halfMax:text-4xl`}>{title}</h1>
 
             {titleButton}
           </div>

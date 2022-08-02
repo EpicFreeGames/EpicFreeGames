@@ -14,7 +14,7 @@ export const Path = ({ url, segments }: Props) => {
 
   return (
     <div
-      className={tw`flex gap-2 items-center whitespace-nowrap overflow-y-hidden w-full overflow-x-scroll py-3`}
+      className={tw`flex gap-2 items-center whitespace-nowrap overflow-y-hidden w-full overflow-x-scroll p-3`}
     >
       <Segment href="/" title="Home" />
 
