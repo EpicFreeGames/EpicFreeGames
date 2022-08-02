@@ -26,6 +26,7 @@ const config: Configuration = {
       focus:ring focus-within:ring 
       focus:ring-2 focus-within:ring-2 
       focus:ring-blue-500 focus-within:ring-blue-500`,
+
     btn: `
       flex
       items-center
@@ -40,6 +41,8 @@ const config: Configuration = {
       transition-all
       transform-gpu
       focusVisibleStyles
+      text-[0.95rem]
+      halfMax:text-[1rem]
     `,
 
     iconBtn: `
