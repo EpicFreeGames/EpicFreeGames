@@ -6,15 +6,65 @@ import { GamePrice } from "@prisma/client";
 import { Router } from "express";
 import { z } from "zod";
 
-export const gameRouter = Router();
+const router = Router();
 
-gameRouter.get("/", auth(Flags.GetGames), async (req, res) => {
+router.get("/", auth(Flags.GetGames), async (req, res) => {
   const games = await prisma.game.findMany({ include: { prices: true } });
 
   res.send(games);
 });
 
-gameRouter.get(
+router.get("/free", auth(Flags.GetGames), async (req, res) => {
+  const games = await prisma.game.findMany({
+    where: {
+      start: {
+        lt: new Date(),
+      },
+      end: {
+        gt: new Date(),
+      },
+    },
+    include: {
+      prices: true,
+    },
+  });
+
+  res.send(games);
+});
+
+router.get("/up", auth(Flags.GetGames), async (req, res) => {
+  const games = await prisma.game.findMany({
+    where: {
+      confirmed: true,
+      start: {
+        gt: new Date(),
+      },
+      end: {
+        gt: new Date(),
+      },
+    },
+    include: {
+      prices: true,
+    },
+  });
+
+  res.send(games);
+});
+
+router.get("/not-confirmed", auth(Flags.GetGames), async (req, res) => {
+  const games = await prisma.game.findMany({
+    where: {
+      confirmed: false,
+    },
+    include: {
+      prices: true,
+    },
+  });
+
+  res.send(games);
+});
+
+router.get(
   "/:gameId",
   auth(Flags.GetGames),
   withValidation(
@@ -38,57 +88,7 @@ gameRouter.get(
   )
 );
 
-gameRouter.get("/free", auth(Flags.GetGames), async (req, res) => {
-  const games = await prisma.game.findMany({
-    where: {
-      start: {
-        lt: new Date(),
-      },
-      end: {
-        gt: new Date(),
-      },
-    },
-    include: {
-      prices: true,
-    },
-  });
-
-  res.send(games);
-});
-
-gameRouter.get("/up", auth(Flags.GetGames), async (req, res) => {
-  const games = await prisma.game.findMany({
-    where: {
-      confirmed: true,
-      start: {
-        gt: new Date(),
-      },
-      end: {
-        gt: new Date(),
-      },
-    },
-    include: {
-      prices: true,
-    },
-  });
-
-  res.send(games);
-});
-
-gameRouter.get("/not-confirmed", auth(Flags.GetGames), async (req, res) => {
-  const games = await prisma.game.findMany({
-    where: {
-      confirmed: false,
-    },
-    include: {
-      prices: true,
-    },
-  });
-
-  res.send(games);
-});
-
-gameRouter.patch(
+router.patch(
   "/:gameId",
   auth(Flags.EditGames),
   withValidation(
@@ -146,7 +146,7 @@ gameRouter.patch(
   )
 );
 
-gameRouter.post(
+router.post(
   "/:gameId/toggle-confirmed",
   auth(Flags.EditGames),
   withValidation(
@@ -181,7 +181,7 @@ gameRouter.post(
   )
 );
 
-gameRouter.post(
+router.post(
   "/",
   auth(Flags.AddGames),
   withValidation(
@@ -224,7 +224,7 @@ gameRouter.post(
   )
 );
 
-gameRouter.put(
+router.put(
   "/",
   auth(Flags.PutGames),
   withValidation(
@@ -311,7 +311,7 @@ gameRouter.put(
   )
 );
 
-gameRouter.delete(
+router.delete(
   "/:gameId",
   auth(Flags.DeleteGames),
   withValidation(
@@ -337,3 +337,5 @@ gameRouter.delete(
     }
   )
 );
+
+export const gameRouter = router;
