@@ -1,18 +1,11 @@
 /** @jsx h */
 
 import { Configuration } from "twind";
-import { blueGray } from "twind/colors";
 
 /** @type {import('twind').Configuration} */
 const config: Configuration = {
   mode: "strict",
-  theme: {
-    extend: {
-      boxShadow: {
-        focus: `0 0 0 3px ${blueGray[400]}`,
-      },
-    },
-  },
+
   variants: {
     focus: "[@media(any-hover:hover){&:hover}]",
     max: "@media(min-width: 1024px)",
