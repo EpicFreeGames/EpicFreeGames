@@ -15,8 +15,8 @@ const config: Configuration = {
   },
   variants: {
     focus: "[@media(any-hover:hover){&:hover}]",
-    max: "@media(min-width: 1200px)",
-    halfMax: "@media(min-width: 600px)",
+    max: "@media(min-width: 1024px)",
+    halfMax: "@media(min-width: 512px)",
   },
   plugins: {
     focusVisibleStyles: `!outline-none focus:outline-none focus-visible:ring focus-visible:ring-2 focus-visible:ring-blue-500`,
