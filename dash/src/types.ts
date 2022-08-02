@@ -65,4 +65,5 @@ export type ICounts = {
   hasChangedCurrency: number;
   hasOnlyChannel: number;
   webhookAdoption: string;
+  totalCommands: number;
 };

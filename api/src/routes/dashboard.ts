@@ -15,6 +15,7 @@ router.get("/counts", auth(Flags.GetDashboard), async (req, res) => {
     hasChangedCurrency,
     hasThread,
     hasOnlyChannel,
+    totalCommands,
   ] = await prisma.$transaction([
     // total
     prisma.server.count(),
@@ -78,6 +79,8 @@ router.get("/counts", auth(Flags.GetDashboard), async (req, res) => {
         webhookToken: null,
       },
     }),
+    // total commands
+    prisma.commandLog.count(),
   ]);
 
   const webhookAdoption = `${(hasWebhook / sendable) * 100 || 0} %`;
@@ -92,6 +95,7 @@ router.get("/counts", auth(Flags.GetDashboard), async (req, res) => {
     hasChangedCurrency,
     webhookAdoption,
     hasOnlyChannel,
+    totalCommands,
   });
 });
 
