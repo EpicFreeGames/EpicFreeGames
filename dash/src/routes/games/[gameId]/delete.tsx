@@ -50,21 +50,23 @@ export default function DeleteGamePage({ data: game, url }: PageProps<IGame>) {
       url={url}
       segments={["Games", game.displayName, "Delete"]}
     >
-      <div className={tw`bg-gray-700 rounded-md mx-auto max-w-[400px] p-3`}>
+      <div className={tw`flex flex-col gap-4 bg-gray-700 rounded-md mx-auto max-w-[400px] p-3`}>
         <h2>
-          Are you sure you want to delete <b>{game.displayName}</b>?
+          Are you sure you want to delete{" "}
+          <b className={tw`whitespace-nowrap`}>{game.displayName}</b>?
         </h2>
 
-        <form className={tw`flex flex-col gap-3`} method="POST">
-          <div className={tw`flex gap-2 justify-between  items-center`}>
-            <a className={tw`btn bg-gray-600`} href="/games">
-              Cancel
-            </a>
+        <form className={`flex gap-4 justify-between items-center`} method="POST">
+          <a className={tw`btn bg-gray-600`} href="/games">
+            Cancel
+          </a>
 
-            <button type="submit" className={tw`btn bg-red-700`}>
-              Delete
-            </button>
-          </div>
+          <button
+            type="submit"
+            className={tw`btn bg-red-500 bg-opacity-50 border-1 border-red-500`}
+          >
+            Delete
+          </button>
         </form>
       </div>
     </Layout>

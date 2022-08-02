@@ -50,21 +50,22 @@ export default function DeleteCurrencyPage({ data: currency, url }: PageProps<IC
       url={url}
       segments={["Currencies", currency.name, "Delete"]}
     >
-      <div className={tw`bg-gray-700 rounded-md mx-auto max-w-[400px] p-3`}>
+      <div className={tw`flex flex-col gap-4 bg-gray-700 rounded-md mx-auto max-w-[400px] p-3`}>
         <h2>
-          Are you sure you want to delete <b>{currency.name}</b>?
+          Are you sure you want to delete <b className={tw`whitespace-nowrap`}>{currency.name}</b>?
         </h2>
 
-        <form className={tw`flex flex-col gap-3`} method="POST">
-          <div className={tw`flex gap-2 justify-between  items-center`}>
-            <a className={tw`btn bg-gray-600`} href="/currencies">
-              Cancel
-            </a>
+        <form className={tw`flex gap-4 justify-between items-center`} method="POST">
+          <a className={tw`btn bg-gray-600`} href="/currencies">
+            Cancel
+          </a>
 
-            <button type="submit" className={tw`btn bg-red-700`}>
-              Yes, delete
-            </button>
-          </div>
+          <button
+            type="submit"
+            className={tw`btn bg-red-500 bg-opacity-50 border-1 border-red-500`}
+          >
+            Yes, delete
+          </button>
         </form>
       </div>
     </Layout>

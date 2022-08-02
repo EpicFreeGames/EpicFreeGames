@@ -81,7 +81,10 @@ export default function EditCurrencyPage({ data: currency, url }: PageProps<ICur
               Cancel
             </a>
 
-            <button type="submit" className={tw`btn bg-gray-800`}>
+            <button
+              type="submit"
+              className={tw`bg-gray-800 bg-opacity-50 border-1 border-gray-500`}
+            >
               Save
             </button>
           </div>
