@@ -29,7 +29,6 @@ export const setChannelCommand = async ({ bot, i, server, lang, curr }: CommandE
   const { details, hasPerms } = await hasPermsOnChannel(bot, channel, guild, [
     "VIEW_CHANNEL",
     "MANAGE_WEBHOOKS",
-    "SEND_MESSAGES_IN_THREADS",
     "EMBED_LINKS",
     ...(server?.roleId ? ["MENTION_EVERYONE" as PermissionStrings] : []), // check only if server has a set role
   ]);
