@@ -67,7 +67,7 @@ export default function Login({ data }: PageProps<Data>) {
         <h1 className={tw`font-bold text-5xl`}>Login</h1>
 
         <a
-          className={tw`py-2 px-6 bg-[#5865F2] rounded-md`}
+          className={tw`btn bg-[#5865F2]`}
           href={`https://discord.com/api/oauth2/authorize?client_id=${data.clientId}&redirect_uri=${data.redirectUri}&response_type=code&scope=identify`}
         >
           Login with Discord
@@ -75,7 +75,7 @@ export default function Login({ data }: PageProps<Data>) {
 
         {data.dev && (
           <form method="post">
-            <button type="submit" className={tw`py-2 px-6 bg-green-500 rounded-md`}>
+            <button type="submit" className={tw`btn bg-green-500`}>
               Dev login
             </button>
           </form>
