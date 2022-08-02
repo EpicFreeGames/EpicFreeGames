@@ -72,6 +72,16 @@ export function api<TData>({ method, path, body, auth }: Args): Promise<ApiRespo
           )}`
         );
 
+        if (res.status === 401)
+          return {
+            error: new Response(null, {
+              status: 303,
+              headers: {
+                Location: "/login",
+              },
+            }),
+          };
+
         return {
           error: new Response(null, {
             status: 303,
