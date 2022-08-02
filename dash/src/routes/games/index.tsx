@@ -88,7 +88,7 @@ const Game = ({ game }: { game: IGame }) => {
 
       <div className={tw`flex flex-col items-center gap-2 lg:flex-row lg:items-start`}>
         <img
-          className={tw`w-full max-w-[16rem] object-scale-down rounded-md`}
+          className={tw`w-full max-w-[16rem] rounded-md`}
           src={game.imageUrl}
           alt={game.displayName}
         />
