@@ -2,7 +2,6 @@
   "cmd_desc_set_currency": "Wählen Sie eine Währung, in der die Preise angezeigt werden sollen",
   "cmd_desc_set_thread": "Wähle einen Thread, in dem ich neue kostenlose Spiele posten werde",
   "cmd_desc_set_channel": "Wählen Sie einen Channel, auf dem ich neue kostenlose Spiele veröffentlichen werde",
-  "cmd_desc_set_role": "Wähle eine Rolle, die ich anpingen werde, wenn ein neues Spiel frei wird!",
   "cmd_desc_set_language": "Wählen Sie eine Sprache, in der Sie meine Nachrichten erhalten möchten",
   "cmd_desc_remove_channel": "Entfernen Sie den eingestellten Channel (oder das Thread)",
   "cmd_desc_remove_role": "Entfernen Sie die eingestellte Rolle",
