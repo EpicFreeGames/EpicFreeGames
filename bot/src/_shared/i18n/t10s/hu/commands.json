@@ -2,7 +2,6 @@
   "cmd_desc_set_currency": "Válaszd ki azt a pénznemet, amelyben az árakat szeretnéd megjeleníteni",
   "cmd_desc_set_thread": "Válassz egy gondolatmenetet, ahová új ingyenes játékokat teszek közzé",
   "cmd_desc_set_channel": "Válassz egy csatornát, ahová új ingyenes játékokat teszek közzé",
-  "cmd_desc_set_role": "Válassz egy rangot, amit majd pingelek, ha egy új játék ingyenes lesz!",
   "cmd_desc_set_language": "Válassz ki egy nyelvet, amelyen szeretnéd, hogy az üzeneteim legyenek",
   "cmd_desc_remove_channel": "A beállított csatorna eltávolítása (vagy gondolatmenet)",
   "cmd_desc_remove_role": "A beállított rang eltávolítása",
