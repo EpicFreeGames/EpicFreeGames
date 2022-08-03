@@ -6,7 +6,7 @@ import {
 import { displayRole } from "../../sender/utils.ts";
 import { embeds } from "../../_shared/embeds/mod.ts";
 import { executeWebhook } from "../../_shared/utils/webhook.ts";
-import { Command } from "./mod.ts";
+import { Command, EphemeralFlag } from "./mod.ts";
 export const testCommand: Command = {
   name: "test",
   description: "Send a test notification",
@@ -32,6 +32,16 @@ export const testCommand: Command = {
       options: {
         ...(role ? { content: role } : {}),
         embeds: [{ title: "Test message", description: "Testing testing..." }],
+      },
+    });
+
+    await sendInteractionResponse(bot, i.id, i.token, {
+      type: InteractionResponseTypes.ChannelMessageWithSource,
+      data: {
+        flags: EphemeralFlag,
+        content: `Test message was sent to <#${
+          server.threadId || server.channelId
+        }>, go check it out!`,
       },
     });
   },
