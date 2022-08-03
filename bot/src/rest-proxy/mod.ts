@@ -1,14 +1,11 @@
-import { BASE_URL, createRestManager } from "discordeno";
+import { BASE_URL } from "discordeno";
 import { config } from "~config";
 import { RestMethod } from "~shared/types.ts";
 import { serialize } from "~shared/utils/jsonWorker/initiator.ts";
 import { logger } from "~shared/utils/logger.ts";
+import { botRest } from "../_shared/utils/botRest.ts";
 
-const rest = createRestManager({
-  token: config.BOT_TOKEN,
-  secretKey: config.REST_PROXY_AUTH,
-  customUrl: config.REST_PROXY_URL,
-});
+const rest = botRest;
 
 const port = Number(Deno.env.get("PORT")) || 3000;
 
@@ -66,11 +63,9 @@ const handleConnection = async (connection: Deno.Conn) => {
         )}\nError: ${err.stack}`
       );
 
-      const statusCode = err.message.match(/\(\d+\) /)?.[0].replace(/\D/g, "");
-
       requestEvent.respondWith(
-        new Response(undefined, {
-          status: statusCode ?? 500,
+        new Response(err.body, {
+          status: err.status ?? 500,
         })
       );
     }
