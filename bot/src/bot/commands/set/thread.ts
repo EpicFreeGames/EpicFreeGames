@@ -7,7 +7,7 @@ import { getChannel } from "~shared/utils/getChannel.ts";
 import { getGuild } from "~shared/utils/getGuild.ts";
 import { hasPermsOnChannel } from "~shared/utils/hasPerms.ts";
 import { logger } from "~shared/utils/logger.ts";
-import { executeWebhook } from "~shared/utils/webhook.ts";
+import { createWebhook, executeWebhook, removeWebhook } from "~shared/utils/webhook.ts";
 import { getChannelId } from "../../utils/interactionOptions.ts";
 import { CommandExecuteProps, EphemeralFlag } from "../mod.ts";
 
@@ -33,6 +33,10 @@ export const setThreadCommand = async ({ bot, i, lang, curr, server }: CommandEx
   if (!parentChannel) return; // shouldn't ever happen
 
   const parentId = parentChannel.id;
+
+  // remove the previous webhook if new channel !== old channel
+  if (server?.webhookId && server?.webhookToken && server?.channelId !== String(parentId))
+    removeWebhook(server.webhookId, server.webhookToken);
 
   const { details, hasPerms } = await hasPermsOnChannel(bot, parentChannel, guild, [
     "VIEW_CHANNEL",
@@ -67,17 +71,33 @@ export const setThreadCommand = async ({ bot, i, lang, curr, server }: CommandEx
 
   let webhook = parentsWebhooks.find((webhook) => webhook.user?.id === bot.id);
 
-  if (!webhook)
-    webhook = await bot.helpers
-      .createWebhook(parentId, {
-        name: config.NAME_ON_WEBHOOK,
-        avatar: config.LOGO_URL_ON_WEBHOOK,
-        reason: "The free game notifications will be delivered via this webhook",
-      })
-      .catch((error) => {
-        logger.error("failed creating a new webhook (thread):", error);
-        return undefined;
+  if (!webhook) {
+    if (parentsWebhooks.size === 10)
+      return await bot.helpers.sendInteractionResponse(i.id, i.token, {
+        type: InteractionResponseTypes.UpdateMessage,
+        data: {
+          flags: EphemeralFlag,
+          embeds: [embeds.errors.maxNumberOfWebhooks(lang)],
+        },
       });
+
+    const { error, data } = await createWebhook(bot, parentId, {
+      name: config.NAME_ON_WEBHOOK,
+      avatar: config.BASE64_LOGO_ON_WEBHOOK,
+      reason: "The free game notifications will be delivered via this webhook",
+    });
+
+    if (error)
+      return await bot.helpers.sendInteractionResponse(i.id, i.token, {
+        type: InteractionResponseTypes.UpdateMessage,
+        data: {
+          flags: EphemeralFlag,
+          embeds: [embeds.errors.genericError()],
+        },
+      });
+
+    webhook = data;
+  }
 
   if (!webhook)
     return await bot.helpers.sendInteractionResponse(i.id, i.token, {
