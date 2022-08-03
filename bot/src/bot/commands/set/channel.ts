@@ -7,7 +7,7 @@ import { getChannel } from "~shared/utils/getChannel.ts";
 import { getGuild } from "~shared/utils/getGuild.ts";
 import { hasPermsOnChannel } from "~shared/utils/hasPerms.ts";
 import { logger } from "~shared/utils/logger.ts";
-import { executeWebhook } from "~shared/utils/webhook.ts";
+import { createWebhook, executeWebhook, removeWebhook } from "~shared/utils/webhook.ts";
 import { getChannelId } from "../../utils/interactionOptions.ts";
 import { CommandExecuteProps, EphemeralFlag } from "../mod.ts";
 
@@ -25,6 +25,10 @@ export const setChannelCommand = async ({ bot, i, server, lang, curr }: CommandE
   const channel = await getChannel(bot, i.guildId!, channelId);
   const guild = await getGuild(bot, i.guildId!);
   if (!channel || !guild) return; // won't happen, but just in case
+
+  // remove the previous webhook if new channel !== old channel
+  if (server?.webhookId && server?.webhookToken && server?.channelId !== String(channelId))
+    removeWebhook(server.webhookId, server.webhookToken);
 
   const { details, hasPerms } = await hasPermsOnChannel(bot, channel, guild, [
     "VIEW_CHANNEL",
@@ -58,26 +62,33 @@ export const setChannelCommand = async ({ bot, i, server, lang, curr }: CommandE
 
   let webhook = channelsWebhooks.find((webhook) => webhook.user?.id === bot.id);
 
-  if (!webhook)
-    webhook = await bot.helpers
-      .createWebhook(channelId, {
-        name: config.NAME_ON_WEBHOOK,
-        avatar: config.LOGO_URL_ON_WEBHOOK,
-        reason: "The free game notifications will be delivered via this webhook",
-      })
-      .catch((error) => {
-        logger.error("failed creating a new webhook:", error);
-        return undefined;
+  if (!webhook) {
+    if (channelsWebhooks.size === 10)
+      return await bot.helpers.sendInteractionResponse(i.id, i.token, {
+        type: InteractionResponseTypes.UpdateMessage,
+        data: {
+          flags: EphemeralFlag,
+          embeds: [embeds.errors.maxNumberOfWebhooks(lang)],
+        },
       });
 
-  if (!webhook)
-    return await bot.helpers.sendInteractionResponse(i.id, i.token, {
-      type: InteractionResponseTypes.UpdateMessage,
-      data: {
-        flags: EphemeralFlag,
-        embeds: [embeds.errors.genericError()],
-      },
+    const { error, data } = await createWebhook(bot, channelId, {
+      name: config.NAME_ON_WEBHOOK,
+      avatar: config.BASE64_LOGO_ON_WEBHOOK,
+      reason: "The free game notifications will be delivered via this webhook",
     });
+
+    if (error)
+      return await bot.helpers.sendInteractionResponse(i.id, i.token, {
+        type: InteractionResponseTypes.UpdateMessage,
+        data: {
+          flags: EphemeralFlag,
+          embeds: [embeds.errors.genericError()],
+        },
+      });
+
+    webhook = data;
+  }
 
   const { error, data: updatedServer } = await api<Server>({
     method: "PUT",

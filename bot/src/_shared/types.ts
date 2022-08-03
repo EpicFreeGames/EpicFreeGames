@@ -43,6 +43,8 @@ export type Server = {
   roleId: string | null;
   channelId: string | null;
   threadId: string | null;
+  webhookId: string | null;
+  webhookToken: string | null;
   languageCode: Language["code"];
   currency: Currency;
   currencyCode: Currency["code"];
