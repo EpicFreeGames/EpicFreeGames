@@ -1,7 +1,6 @@
 {
   "cmd_desc_set_currency": "Alege o monedă în care dorești ca prețurile să fie în",
   "cmd_desc_set_thread": "Alege un fir unde voi posta noi jocuri gratuite",
-  "cmd_desc_set_role": "Alege un rol pe care îl voi da tag când un nou joc va fi gratuit!",
   "cmd_desc_set_language": "Alegeți o limbă în care doriți ca mesajele mele să fie în",
   "cmd_desc_remove_channel": "Elimină canalul setat (sau firul setat)",
   "cmd_desc_remove_role": "Elimină rolul setat",
