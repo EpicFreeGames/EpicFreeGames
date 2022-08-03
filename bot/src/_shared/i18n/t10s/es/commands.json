@@ -2,7 +2,6 @@
   "cmd_desc_set_currency": "Elige una divisa en la que te gustaría que los precios estuvieran",
   "cmd_desc_set_thread": "Elige un hilo donde publicaré nuevos juegos gratuitos",
   "cmd_desc_set_channel": "Elige un canal donde publicaré nuevos juegos gratuitos",
-  "cmd_desc_set_role": "¡Escoge un cargo que haré ping cuando un nuevo juego sea gratis!",
   "cmd_desc_set_language": "Selecciona un idioma en el que quieras que estén mis mensajes",
   "cmd_desc_remove_channel": "Eliminar el canal establecido (o hilo)",
   "cmd_desc_remove_role": "Eliminar el cargo establecido",
