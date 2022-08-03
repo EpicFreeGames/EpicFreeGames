@@ -34,6 +34,7 @@ const envSchema = z.object({
 
   API_BOT_SECRET: z.string(),
   API_BASEURL: z.string(),
+  DISCORD_API_BASEURL: z.string(),
 
   GIFS_VOTE: z.string(),
   GIFS_INVITE: z.string(),
@@ -65,5 +66,7 @@ export const config = {
   ...result.data,
   BOT_ID: BigInt(atob(result.data.BOT_TOKEN.split(".")[0])),
   Intents,
-  BASE64_LOGO_ON_WEBHOOK: await getBase64Image(result.data.LOGO_URL_ON_WEBHOOK),
+  BASE64_LOGO_ON_WEBHOOK: `data:image/png;base64,${await getBase64Image(
+    result.data.LOGO_URL_ON_WEBHOOK
+  )}`,
 };
