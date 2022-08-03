@@ -13,7 +13,7 @@ model Game {
   id          String      @id @default(cuid())
   name        String      @unique
   displayName String
-  imageUrl    String
+  imageUrl    String      @db.Text
   start       DateTime
   end         DateTime
   confirmed   Boolean     @default(false)
