@@ -2,7 +2,6 @@
   "cmd_desc_set_currency": "בחר מטבע שבו תרצה שהמחירים יהיו",
   "cmd_desc_set_thread": "בחר שרשור שבו אפרסם משחקים חדשים בחינם",
   "cmd_desc_set_channel": "בחר ערוץ שבו אפרסם משחקים חדשים בחינם",
-  "cmd_desc_set_role": "בחר תפקיד שאעשה פינג כשמשחק חדש יגיע בחינם!",
   "cmd_desc_set_language": "בחר בשפה שבה תרצה שההודעות שלי יהיו",
   "cmd_desc_remove_channel": "הסר את הערוץ שנקבע (או החוט)",
   "cmd_desc_remove_role": "הסר את התפקיד שנקבע",
