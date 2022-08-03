@@ -2,7 +2,6 @@
   "cmd_desc_set_currency": "Kies 'n geldeenheid waarin jy wil hê die pryse moet wees",
   "cmd_desc_set_thread": "Kies 'n draad waarop ek nuwe gratis speletjies sal plaas",
   "cmd_desc_set_channel": "Kies 'n kanaal waarop ek nuwe gratis speletjies sal plaas",
-  "cmd_desc_set_role": "Kies 'n rol wat ek sal ping wanneer 'n nuwe speletjie gratis kom!",
   "cmd_desc_set_language": "Kies 'n taal waarin jy wil hê my boodskappe moet wees",
   "cmd_desc_remove_channel": "Verwyder die vasgestelde kanaal (of draad)",
   "cmd_desc_remove_role": "Verwyder die vasgestelde rol",
