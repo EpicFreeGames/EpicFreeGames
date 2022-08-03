@@ -13,6 +13,7 @@ import { inviteCommand } from "./invite.ts";
 import { removeCommand } from "./remove.ts";
 import { setCommand } from "./set/mod.ts";
 import { settingsCommand } from "./settings.ts";
+import { testCommand } from "./test.ts";
 import { upCommand } from "./up.ts";
 import { voteCommand } from "./vote.ts";
 
@@ -30,8 +31,6 @@ export type Command = {
   description: string;
   options?: ApplicationCommandOption[];
   type: ApplicationCommandTypes;
-  /** Defaults to `Guild` */
-  scope?: "Global" | "Guild";
   needsGuild: boolean;
   needsManageGuild?: boolean;
   execute: (props: CommandExecuteProps) => unknown;
@@ -62,4 +61,5 @@ export const initCommands = () => {
   commands.set("set", setCommand);
 
   commands.set("settings", settingsCommand);
+  commands.set("test", testCommand);
 };
