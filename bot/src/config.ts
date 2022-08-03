@@ -21,9 +21,6 @@ const envSchema = z.object({
   SENDER_URL: z.string(),
   SENDER_AUTH: z.string(),
 
-  GATEWAY_PROXY_URL: z.string().transform((v) => (v.endsWith("/") ? v.slice(0, -1) : v)),
-  GATEWAY_PROXY_AUTH: z.string(),
-
   BOT_URL: z.string(),
   BOT_AUTH: z.string().transform((v) => (v.endsWith("/") ? v.slice(0, -1) : v)),
 
