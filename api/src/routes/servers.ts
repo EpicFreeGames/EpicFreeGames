@@ -1,4 +1,4 @@
-import { prisma } from "..";
+import prisma from "../prisma";
 import { auth } from "../utils/auth";
 import { Flags } from "../utils/flags";
 import { withValidation } from "../utils/withValidation";
@@ -6,6 +6,12 @@ import { Router } from "express";
 import { z } from "zod";
 
 const router = Router();
+
+router.get("/", auth(Flags.GetServers), async (req, res) => {
+  const servers = await prisma.server.findMany({ include: { currency: true }, take: 10000 });
+
+  res.json(servers);
+});
 
 router.get(
   "/:serverId",
@@ -59,6 +65,8 @@ router.put(
       const { serverId } = req.params;
       const { channelId, webhookId, webhookToken } = req.body;
 
+      const start = Date.now();
+
       const updatedServer = await prisma.server.upsert({
         where: { id: serverId },
         update: {
@@ -71,8 +79,24 @@ router.put(
           channelId,
           webhookId,
           webhookToken,
+          languageCode: "en",
+          currency: {
+            connectOrCreate: {
+              create: {
+                code: "USD",
+                apiValue: "US",
+                name: "$ Dollar (USD)",
+                inFrontOfPrice: "$",
+              },
+              where: { code: "USD" },
+            },
+          },
         },
       });
+
+      const end = Date.now();
+
+      console.info(`Updated server ${serverId} in ${end - start}ms`);
 
       res.json(updatedServer);
     }
@@ -101,6 +125,13 @@ router.delete(
           webhookToken: null,
         },
       });
+
+      if (!updatedServer)
+        return res.status(404).send({
+          statusCode: 404,
+          error: "Not found",
+          message: "Server not found",
+        });
 
       res.json(updatedServer);
     }
@@ -135,6 +166,18 @@ router.put(
         create: {
           id: serverId,
           roleId,
+          languageCode: "en",
+          currency: {
+            connectOrCreate: {
+              create: {
+                code: "USD",
+                apiValue: "US",
+                name: "$ Dollar (USD)",
+                inFrontOfPrice: "$",
+              },
+              where: { code: "USD" },
+            },
+          },
         },
       });
 
@@ -164,6 +207,13 @@ router.delete(
         },
       });
 
+      if (!updatedServer)
+        return res.status(404).send({
+          statusCode: 404,
+          error: "Not found",
+          message: "Server not found",
+        });
+
       res.json(updatedServer);
     }
   )
@@ -207,6 +257,18 @@ router.put(
           channelId,
           webhookId,
           webhookToken,
+          languageCode: "en",
+          currency: {
+            connectOrCreate: {
+              create: {
+                code: "USD",
+                apiValue: "US",
+                name: "$ Dollar (USD)",
+                inFrontOfPrice: "$",
+              },
+              where: { code: "USD" },
+            },
+          },
         },
       });
 
@@ -225,37 +287,26 @@ router.delete(
           serverId: z.string(),
         })
         .strict(),
-      body: z
-        .object({
-          threadId: z.string(),
-          channelId: z.string(),
-          webhookId: z.string(),
-          webhookToken: z.string(),
-        })
-        .strict(),
     },
     async (req, res) => {
       const { serverId } = req.params;
-      const { threadId, channelId, webhookId, webhookToken } = req.body;
 
-      const updatedServer = await prisma.server.upsert({
+      const updatedServer = await prisma.server.update({
         where: { id: serverId },
-        update: {
-          threadId,
-
-          channelId,
-          webhookId,
-          webhookToken,
-        },
-        create: {
-          id: serverId,
-          threadId,
-
-          channelId,
-          webhookId,
-          webhookToken,
+        data: {
+          threadId: null,
+          channelId: null,
+          webhookId: null,
+          webhookToken: null,
         },
       });
+
+      if (!updatedServer)
+        return res.status(404).send({
+          statusCode: 404,
+          error: "Not found",
+          message: "Server not found",
+        });
 
       res.json(updatedServer);
     }
@@ -275,9 +326,24 @@ router.put(
       const { serverId } = req.params;
       const { languageCode } = req.body;
 
-      const updatedServer = await prisma.server.update({
+      const updatedServer = await prisma.server.upsert({
         where: { id: serverId },
-        data: {
+        create: {
+          id: serverId,
+          languageCode,
+          currency: {
+            connectOrCreate: {
+              create: {
+                code: "USD",
+                apiValue: "US",
+                name: "$ Dollar (USD)",
+                inFrontOfPrice: "$",
+              },
+              where: { code: "USD" },
+            },
+          },
+        },
+        update: {
           languageCode,
         },
       });
@@ -311,10 +377,19 @@ router.put(
           message: "Invalid currency code",
         });
 
-      const updatedServer = await prisma.server.update({
+      const updatedServer = await prisma.server.upsert({
         where: { id: serverId },
-        data: {
-          currencyCode,
+        create: {
+          id: serverId,
+          languageCode: "en",
+          currency: {
+            connect: { id: currency.id },
+          },
+        },
+        update: {
+          currency: {
+            connect: { id: currency.id },
+          },
         },
         include: {
           currency: true,

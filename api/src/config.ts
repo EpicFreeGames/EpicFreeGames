@@ -20,6 +20,9 @@ const envSchema = z.object({
   DISCORD_API_BASEURL: z.string(),
   DISCORD_REDIRECT_URL: z.string(),
 
+  SENDER_URL: z.string(),
+  SENDER_AUTH: z.string(),
+
   PORT: z.string().transform(Number),
   ENV: z.enum(["dev", "prod"]),
 });

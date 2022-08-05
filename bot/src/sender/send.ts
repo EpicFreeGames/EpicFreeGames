@@ -1,4 +1,3 @@
-import { api } from "~shared/api.ts";
 import { Game, Server } from "~shared/types.ts";
 import { logger } from "~shared/utils/logger.ts";
 import { channelSender } from "./channel.ts";
@@ -7,7 +6,7 @@ import { hookSender } from "./hook.ts";
 export type HookServer = Server & { webhookId: string; webhookToken: string; channelId: string };
 export type ChannelServer = Server & { channelId: string };
 
-type ToSend = {
+type Stuff = {
   servers: {
     hook: HookServer[];
     noHook: ChannelServer[];
@@ -15,28 +14,11 @@ type ToSend = {
   games: Game[];
 };
 
-export const send = async (sendingId?: string) => {
-  const { error, data: toSend } = await api<ToSend>({
-    method: "GET",
-    path: `/sends/to-send${sendingId ? `?sendingId=${sendingId}` : ""}`,
-  });
+export const send = (sendingId: string, stuff: Stuff) => {
+  const { servers, games } = stuff;
 
-  if (error) {
-    logger.error(error);
-    return false;
-  }
-
-  const { servers, games } = toSend;
-
-  if (!servers.hook.length && !servers.noHook.length) {
-    logger.info("no servers to send to");
-    return false;
-  }
-
-  const innerSendingId = sendingId || Math.random().toString().slice(0, 15);
-
-  hookSender(games, servers.hook, innerSendingId);
-  channelSender(games, servers.noHook, innerSendingId);
+  hookSender(games, servers.hook, sendingId);
+  channelSender(games, servers.noHook, sendingId);
 
   logger.info("senders started");
 

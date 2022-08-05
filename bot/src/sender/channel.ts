@@ -2,12 +2,14 @@ import { PermissionStrings } from "discordeno";
 import { embeds } from "~shared/embeds/mod.ts";
 import { languages } from "~shared/i18n/languages.ts";
 import { Game } from "~shared/types.ts";
+import { displayRole } from "~shared/utils/displayRole.ts";
 import { getChannel } from "~shared/utils/getChannel.ts";
 import { getGuild } from "~shared/utils/getGuild.ts";
 import { hasPermsOnChannel } from "~shared/utils/hasPerms.ts";
+import { logger } from "~shared/utils/logger.ts";
 import { sender } from "./mod.ts";
 import { ChannelServer } from "./send.ts";
-import { displayRole, logLog, wait } from "./utils.ts";
+import { logLog, wait } from "./utils.ts";
 
 export const channelSender = async (games: Game[], servers: ChannelServer[], sendingId: string) => {
   for (const server of servers) {
@@ -63,7 +65,7 @@ export const channelSender = async (games: Game[], servers: ChannelServer[], sen
           embeds: gameEmbeds,
         })
         .then((msg) => {
-          console.log(`new msg` + msg.id);
+          logger.info(`(message) ${sendingId} sent ${games.length} games to ${server.id}`);
         });
     });
   }

@@ -19,6 +19,8 @@ model Game {
   confirmed   Boolean     @default(false)
   path        String
   prices      GamePrice[]
+  Sending     Sending?    @relation(fields: [sendingId], references: [id])
+  sendingId   String?
 }
 
 model GamePrice {
@@ -39,8 +41,8 @@ model Server {
   webhookId    String?
   webhookToken String?
   languageCode String?
-  currencyCode String?
-  currency     Currency?    @relation(fields: [currencyCode], references: [code])
+  currencyId   String
+  currency     Currency     @relation(fields: [currencyId], references: [id])
   createdAt    DateTime     @default(now())
   commandLogs  CommandLog[]
   sendingLogs  SendingLog[]
@@ -57,16 +59,6 @@ model Currency {
   prices         GamePrice[]
 }
 
-model SendingLog {
-  id        String  @id @default(cuid())
-  sendingId String
-  type      String
-  result    String
-  success   Boolean
-  serverId  String
-  server    Server  @relation(fields: [serverId], references: [id])
-}
-
 model CommandLog {
   id       String  @id @default(cuid())
   command  String
@@ -74,6 +66,30 @@ model CommandLog {
   serverId String?
   server   Server? @relation(fields: [serverId], references: [id], onDelete: Cascade)
   error    String?
+}
+
+model SendingLog {
+  id        String  @id @default(cuid())
+  type      String
+  result    String
+  success   Boolean
+  serverId  String
+  server    Server  @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  sending   Sending @relation(fields: [sendingId], references: [id], onDelete: Cascade)
+  sendingId String
+}
+
+model Sending {
+  id     String        @id @default(cuid())
+  logs   SendingLog[]
+  games  Game[]
+  status SendingStatus
+}
+
+enum SendingStatus {
+  IDLE
+  SENDING
+  SENT
 }
 
 model User {

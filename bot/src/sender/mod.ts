@@ -35,9 +35,9 @@ for await (const conn of httpServer) {
           })
         );
 
-      const { sendingId } = await requestEvent.request.json();
+      const { sendingId, servers, games } = await requestEvent.request.json();
 
-      const startedSending = send(sendingId);
+      const startedSending = send(sendingId, { servers, games });
 
       if (!startedSending)
         return requestEvent.respondWith(

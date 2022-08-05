@@ -24,4 +24,9 @@ export enum Flags {
   AddCurrencies = 1 << 17,
 
   GetDashboard = 1 << 18,
+
+  Send = 1 << 19,
+  GetSendings = 1 << 20,
+  AddSendings = 1 << 21,
+  EditSendings = 1 << 22,
 }
