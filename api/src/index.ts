@@ -1,14 +1,10 @@
 import { config } from "./config";
+// @ts-ignore
+import prisma from "./prisma";
 import { createRedisStore } from "./redis";
 import { createServer } from "./server";
-import { PrismaClient } from "@prisma/client";
-
-export const prisma = new PrismaClient();
 
 (async () => {
-  await prisma.$connect();
-  console.log("Connected to database");
-
   const { client, store } = await createRedisStore();
   await client.connect();
   console.log("Connected to Redis");

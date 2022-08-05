@@ -1,4 +1,4 @@
-import { prisma } from "..";
+import prisma from "../prisma";
 import { auth } from "../utils/auth";
 import { Flags } from "../utils/flags";
 import { withValidation } from "../utils/withValidation";
@@ -102,14 +102,6 @@ router.patch(
           end: z.string().optional(),
           path: z.string().optional(),
           confirmed: z.boolean().optional(),
-          prices: z
-            .array(
-              z.object({
-                value: z.number(),
-                currencyCode: z.string(),
-              })
-            )
-            .optional(),
         })
         .strict(),
       params: z

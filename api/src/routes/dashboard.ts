@@ -1,4 +1,4 @@
-import { prisma } from "..";
+import prisma from "../prisma";
 import { auth } from "../utils/auth";
 import { Flags } from "../utils/flags";
 import { Router } from "express";
@@ -56,8 +56,10 @@ router.get("/counts", auth(Flags.GetDashboard), async (req, res) => {
     // has changed currency
     prisma.server.count({
       where: {
-        currencyCode: {
-          not: "USD",
+        currency: {
+          code: {
+            not: "USD",
+          },
         },
       },
     }),
