@@ -7,8 +7,7 @@ export const createRedisStore = async () => {
   const redis = new Redis({
     host: config.REDISHOST,
     port: config.REDISPORT,
-    username: config.REDISUSER,
-    password: config.REDISPASSWORD,
+    password: config.REDISPASS,
     lazyConnect: true,
   });
 
