@@ -1,7 +1,7 @@
 /** @jsx h */
 import { h } from "preact";
 import { tw } from "twind";
-import { Base } from "./base.tsx";
+import { Base } from "./Layout/base.tsx";
 
 type Props = {
   statusCode: string;

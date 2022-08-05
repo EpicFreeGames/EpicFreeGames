@@ -67,3 +67,15 @@ export type ICounts = {
   webhookAdoption: string;
   totalCommands: number;
 };
+
+export type ISendingLog = {
+  id: string;
+  type: "MESSAGE" | "WEBHOOK";
+};
+
+export type ISending = {
+  id: string;
+  logs: never;
+  games: IGame[] | null;
+  status: "IDLE" | "SENDING" | "SENT";
+};

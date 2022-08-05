@@ -1,7 +1,7 @@
 /** @jsx h */
+import { api } from "~utils/api.ts";
+import { Handlers } from "~utils/freshTypes.ts";
 import { IUser } from "../types.ts";
-import { api } from "../utils/api.ts";
-import { Handlers } from "../utils/freshTypes.ts";
 
 export const handler: Handlers = {
   GET: async (req, _ctx) => {

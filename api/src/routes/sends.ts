@@ -10,9 +10,11 @@ import { z } from "zod";
 const router = Router();
 
 router.get("/", auth(Flags.GetSendings), async (req, res) => {
-  const sendings = await prisma.sending.findMany({ include: { games: true } });
+  const sends = await prisma.sending.findMany({
+    include: { games: true },
+  });
 
-  res.json(sendings);
+  res.json(sends);
 });
 
 router.get(
@@ -38,6 +40,42 @@ router.get(
           .json({ statusCode: 404, error: "Not found", message: "Sending not found" });
 
       res.json(sending);
+    }
+  )
+);
+
+router.patch(
+  "/:sendingId",
+  auth(Flags.GetSendings),
+  withValidation(
+    {
+      params: z.object({
+        sendingId: z.string(),
+      }),
+      body: z.object({
+        gameIds: z.array(z.string()),
+      }),
+    },
+    async (req, res) => {
+      const { sendingId } = req.params;
+      const { gameIds } = req.body;
+
+      const updatedSending = await prisma.sending.update({
+        where: { id: sendingId },
+        data: {
+          games: {
+            connect: gameIds.map((gameId) => ({ id: gameId })),
+          },
+        },
+        include: { games: true },
+      });
+
+      if (!updatedSending)
+        return res
+          .status(404)
+          .json({ statusCode: 404, error: "Not found", message: "Sending not found" });
+
+      res.json(updatedSending);
     }
   )
 );

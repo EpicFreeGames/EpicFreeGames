@@ -2,10 +2,10 @@
 import { PageProps } from "$fresh/server.ts";
 import { h } from "preact";
 import { tw } from "twind";
-import { Layout } from "../components/Layout.tsx";
+import { Layout } from "~components/Layout/Layout.tsx";
+import { api } from "~utils/api.ts";
+import { Handlers } from "~utils/freshTypes.ts";
 import { ICounts } from "../types.ts";
-import { api } from "../utils/api.ts";
-import { Handlers } from "../utils/freshTypes.ts";
 
 export const handler: Handlers<ICounts> = {
   GET: async (_req, ctx) => {

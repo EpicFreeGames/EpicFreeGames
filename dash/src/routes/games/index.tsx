@@ -3,10 +3,10 @@ import { PageProps } from "$fresh/server.ts";
 import { Edit, Trash } from "icons";
 import { ComponentChildren, h } from "preact";
 import { tw } from "twind";
-import { Layout } from "../../components/Layout.tsx";
+import { Layout } from "~components/Layout/Layout.tsx";
+import { api } from "~utils/api.ts";
+import { Handlers } from "~utils/freshTypes.ts";
 import { IGame } from "../../types.ts";
-import { api } from "../../utils/api.ts";
-import { Handlers } from "../../utils/freshTypes.ts";
 
 export const handler: Handlers<IGame[]> = {
   GET: async (_req, ctx) => {
@@ -47,11 +47,11 @@ export default function GamesPage({ data, url }: PageProps<IGame[] | null>) {
   return (
     <Layout
       title="Games"
-      titleButton={
+      titleButtons={[
         <a className={tw`btn bg-gray-700`} href="/games/add">
           Add a game
-        </a>
-      }
+        </a>,
+      ]}
       url={url}
       segments={["Games"]}
     >

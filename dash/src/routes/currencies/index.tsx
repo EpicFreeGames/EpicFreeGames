@@ -3,10 +3,10 @@ import { PageProps } from "$fresh/server.ts";
 import { Edit, Trash } from "icons";
 import { h } from "preact";
 import { tw } from "twind";
-import { Layout } from "../../components/Layout.tsx";
+import { Layout } from "~components/Layout/Layout.tsx";
+import { api } from "~utils/api.ts";
+import { Handlers } from "~utils/freshTypes.ts";
 import { ICurrency } from "../../types.ts";
-import { api } from "../../utils/api.ts";
-import { Handlers } from "../../utils/freshTypes.ts";
 
 export const handler: Handlers<ICurrency[]> = {
   GET: async (_req, ctx) => {
@@ -26,11 +26,11 @@ export default function I18nPage({ data, url }: PageProps<ICurrency[]>) {
   return (
     <Layout
       title="Currencies"
-      titleButton={
+      titleButtons={[
         <a className={tw`btn bg-gray-700`} href="/currencies/add">
           Add a currency
-        </a>
-      }
+        </a>,
+      ]}
       url={url}
       segments={["Currencies"]}
     >

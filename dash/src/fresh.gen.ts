@@ -17,6 +17,11 @@ import * as $11 from "./routes/games/index.tsx";
 import * as $12 from "./routes/index.tsx";
 import * as $13 from "./routes/login.tsx";
 import * as $14 from "./routes/logout.tsx";
+import * as $15 from "./routes/sends/[sendingId]/delete.tsx";
+import * as $16 from "./routes/sends/[sendingId]/edit.tsx";
+import * as $17 from "./routes/sends/[sendingId]/send.tsx";
+import * as $18 from "./routes/sends/add.tsx";
+import * as $19 from "./routes/sends/index.tsx";
 
 const manifest = {
   routes: {
@@ -35,6 +40,11 @@ const manifest = {
     "./routes/index.tsx": $12,
     "./routes/login.tsx": $13,
     "./routes/logout.tsx": $14,
+    "./routes/sends/[sendingId]/delete.tsx": $15,
+    "./routes/sends/[sendingId]/edit.tsx": $16,
+    "./routes/sends/[sendingId]/send.tsx": $17,
+    "./routes/sends/add.tsx": $18,
+    "./routes/sends/index.tsx": $19,
   },
   islands: {},
   baseUrl: import.meta.url,

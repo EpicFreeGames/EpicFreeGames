@@ -3,9 +3,9 @@ import { Handlers, PageProps } from "$fresh/server.ts";
 import { getCookies } from "$std/http/cookie.ts";
 import { h } from "preact";
 import { tw } from "twind";
-import { Base } from "../components/base.tsx";
-import { config } from "../config.ts";
-import { api } from "../utils/api.ts";
+import { Base } from "~components/Layout/base.tsx";
+import { config } from "~config";
+import { api } from "~utils/api.ts";
 
 type Data = {
   clientId: string;

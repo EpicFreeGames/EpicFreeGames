@@ -1,7 +1,7 @@
 /** @jsx h */
 import { PageProps } from "$fresh/server.ts";
 import { h } from "preact";
-import { ErrorPageLayout } from "../components/ErrorPageLayout.tsx";
+import { ErrorPageLayout } from "~components/ErrorPageLayout.tsx";
 
 export default function ErrorPage(props: PageProps) {
   const error = props.url.searchParams.get("error");

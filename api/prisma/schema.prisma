@@ -69,13 +69,13 @@ model CommandLog {
 }
 
 model SendingLog {
-  id        String  @id @default(cuid())
-  type      String
+  id        String         @id @default(cuid())
+  type      SendingLogType
   result    String
   success   Boolean
   serverId  String
-  server    Server  @relation(fields: [serverId], references: [id], onDelete: Cascade)
-  sending   Sending @relation(fields: [sendingId], references: [id], onDelete: Cascade)
+  server    Server         @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  sending   Sending        @relation(fields: [sendingId], references: [id], onDelete: Cascade)
   sendingId String
 }
 
@@ -86,14 +86,19 @@ model Sending {
   status SendingStatus
 }
 
-enum SendingStatus {
-  IDLE
-  SENDING
-  SENT
-}
-
 model User {
   id        String @id @default(cuid())
   discordId String @unique
   flags     Int    @default(0)
+}
+
+enum SendingLogType {
+  MESSAGE
+  WEBHOOK
+}
+
+enum SendingStatus {
+  IDLE
+  SENDING
+  SENT
 }

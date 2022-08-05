@@ -2,12 +2,12 @@
 import { PageProps } from "$fresh/server.ts";
 import { h } from "preact";
 import { tw } from "twind";
-import { BackButton } from "../../../components/BackButton.tsx";
+import { BackButton } from "~components/Layout/BackButton.tsx";
+import { Layout } from "~components/Layout/Layout.tsx";
+import { api } from "~utils/api.ts";
+import { Handlers } from "~utils/freshTypes.ts";
 import { Input } from "../../../components/Input.tsx";
-import { Layout } from "../../../components/Layout.tsx";
 import { ICurrency } from "../../../types.ts";
-import { api } from "../../../utils/api.ts";
-import { Handlers } from "../../../utils/freshTypes.ts";
 
 export const handler: Handlers<ICurrency> = {
   POST: async (req, ctx) => {
@@ -50,7 +50,7 @@ export default function EditCurrencyPage({ data: currency, url }: PageProps<ICur
   return (
     <Layout
       title="Edit currency"
-      titleButton={<BackButton href="/currencies" />}
+      titleButtons={[<BackButton href="/currencies" />]}
       url={url}
       segments={["Currencies", currency.name, "Edit"]}
     >
