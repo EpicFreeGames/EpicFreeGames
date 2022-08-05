@@ -60,5 +60,5 @@ export const withValidation =
       req.params = result.data;
     }
 
-    handler(req, res);
+    await handler(req, res);
   };
