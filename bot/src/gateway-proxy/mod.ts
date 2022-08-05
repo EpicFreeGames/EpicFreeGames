@@ -27,7 +27,7 @@ async function handleQueue() {
   const event = queue.events.shift();
   // QUEUE IS EMPTY
   if (!event) {
-    console.log("GATEWAY QUEUE ENDING");
+    logger.debug("GATEWAY QUEUE EMPTY");
     queue.processing = false;
     return;
   }
