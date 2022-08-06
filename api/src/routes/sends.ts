@@ -64,7 +64,7 @@ router.patch(
         where: { id: sendingId },
         data: {
           games: {
-            connect: gameIds.map((gameId) => ({ id: gameId })),
+            set: gameIds.map((gameId) => ({ id: gameId })),
           },
         },
         include: { games: true },
