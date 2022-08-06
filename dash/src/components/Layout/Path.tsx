@@ -11,6 +11,8 @@ type Props = {
 
 export const Path = ({ url, segments }: Props) => {
   const urlSegments = url.pathname.split("/").slice(1);
+  if (urlSegments.length !== segments.length)
+    throw Error("url segments and segments must have the same length");
 
   return (
     <div
@@ -24,7 +26,7 @@ export const Path = ({ url, segments }: Props) => {
 
           <Segment
             href={`/${urlSegments.slice(0, index + 1).join("/")}`}
-            title={segments[index]}
+            title={segments[index]!}
             active={index === urlSegments.length - 1}
           />
         </>

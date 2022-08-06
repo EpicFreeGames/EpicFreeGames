@@ -60,7 +60,7 @@ export default function DeleteCurrencyPage({ data: currency, url }: PageProps<IC
             Cancel
           </a>
 
-          <button type="submit" className={tw`btn btn-red-border`}>
+          <button type="submit" className={tw`btn-red-border`}>
             Yes, delete
           </button>
         </form>

@@ -71,7 +71,7 @@ const Sending = ({ sending }: SendingProps) => {
             {showEdit && (
               <a
                 title="Edit sending"
-                className={tw`btn bg-gray-800`}
+                className={tw`btn-dark-gray`}
                 href={`/sends/${sending.id}/edit`}
               >
                 <Edit size={25} />
@@ -80,14 +80,14 @@ const Sending = ({ sending }: SendingProps) => {
             {showDelete && (
               <a
                 title="Delete sending"
-                className={tw`btn bg-gray-800`}
+                className={tw`btn-dark-gray`}
                 href={`/sends/${sending.id}/delete`}
               >
                 <Trash size={25} className={tw`text-red-500`} />
               </a>
             )}
             {showSend && (
-              <a title="Send" className={tw`btn bg-gray-800`} href={`/sends/${sending.id}/send`}>
+              <a title="Send" className={tw`btn-dark-gray`} href={`/sends/${sending.id}/send`}>
                 Send
               </a>
             )}

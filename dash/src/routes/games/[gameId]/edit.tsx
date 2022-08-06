@@ -7,6 +7,7 @@ import { BackButton } from "~components/Layout/BackButton.tsx";
 import { Layout } from "~components/Layout/Layout.tsx";
 import { api } from "~utils/api.ts";
 import { Handlers } from "~utils/freshTypes.ts";
+import { getHtmlDate } from "~utils/string.tsx";
 import { IGame } from "../../../types.ts";
 
 export const handler: Handlers<IGame> = {
@@ -17,7 +18,7 @@ export const handler: Handlers<IGame> = {
     const { error } = await api<IGame>({
       method: "PATCH",
       path: `/games/${gameId}`,
-      body: JSON.stringify(Object.fromEntries(formData)),
+      body: JSON.stringify(formData),
       auth: ctx.state.auth,
     });
 
@@ -96,9 +97,3 @@ export default function EditGamePage({ data: game, url }: PageProps<IGame>) {
     </Layout>
   );
 }
-
-const getHtmlDate = (date: string) => {
-  const [start, end] = new Date(date).toISOString().split("T");
-
-  return `${start}T${end.slice(0, 5)}`;
-};

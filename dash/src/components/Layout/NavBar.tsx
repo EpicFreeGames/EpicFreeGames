@@ -1,7 +1,7 @@
 /** @jsx h */
 /** @jsxFrag Fragment */
 import { Logout } from "icons";
-import { ComponentChildren, Fragment, h } from "preact";
+import { ComponentChildren, h } from "preact";
 import { tw } from "twind";
 
 export const NavBar = () => {

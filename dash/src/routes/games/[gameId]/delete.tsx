@@ -57,11 +57,11 @@ export default function DeleteGamePage({ data: game, url }: PageProps<IGame>) {
         </h2>
 
         <form className={`flex gap-4 justify-between items-center`} method="POST">
-          <a className={tw`btn bg-gray-600`} href="/games">
+          <a className={tw`btn-light-gray`} href="/games">
             Cancel
           </a>
 
-          <button type="submit" className={tw`btn btn-red-border`}>
+          <button type="submit" className={tw`btn-red-border`}>
             Delete
           </button>
         </form>

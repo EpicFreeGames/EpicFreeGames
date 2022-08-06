@@ -7,7 +7,6 @@ import { Layout } from "~components/Layout/Layout.tsx";
 import { api } from "~utils/api.ts";
 import { Handlers } from "~utils/freshTypes.ts";
 import { IGame, ISending } from "../../../types.ts";
-import { arrayToCoolString } from "../../../utils/string.tsx";
 
 type PagePropsData = {
   sending: ISending;
@@ -61,8 +60,6 @@ export const handler: Handlers<PagePropsData> = {
 };
 
 export default function EditGamePage({ data: { sending, games }, url }: PageProps<PagePropsData>) {
-  const coolString = arrayToCoolString(sending.games?.map((g) => g.name) ?? []);
-
   return (
     <Layout
       title="Edit a sending"
@@ -106,9 +103,3 @@ export default function EditGamePage({ data: { sending, games }, url }: PageProp
     </Layout>
   );
 }
-
-const getHtmlDate = (date: string) => {
-  const [start, end] = new Date(date).toISOString().split("T");
-
-  return `${start}T${end.slice(0, 5)}`;
-};

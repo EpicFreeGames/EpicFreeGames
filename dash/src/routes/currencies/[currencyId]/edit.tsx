@@ -2,11 +2,11 @@
 import { PageProps } from "$fresh/server.ts";
 import { h } from "preact";
 import { tw } from "twind";
+import { Input } from "~components/Input.tsx";
 import { BackButton } from "~components/Layout/BackButton.tsx";
 import { Layout } from "~components/Layout/Layout.tsx";
 import { api } from "~utils/api.ts";
 import { Handlers } from "~utils/freshTypes.ts";
-import { Input } from "../../../components/Input.tsx";
 import { ICurrency } from "../../../types.ts";
 
 export const handler: Handlers<ICurrency> = {
@@ -17,7 +17,7 @@ export const handler: Handlers<ICurrency> = {
     const { error } = await api<ICurrency>({
       method: "PATCH",
       path: `/currencies/${currencyId}`,
-      body: JSON.stringify(Object.fromEntries(formData)),
+      body: JSON.stringify(formData),
       auth: ctx.state.auth,
     });
 
@@ -90,9 +90,3 @@ export default function EditCurrencyPage({ data: currency, url }: PageProps<ICur
     </Layout>
   );
 }
-
-const getHtmlDate = (date: string) => {
-  const [start, end] = new Date(date).toISOString().split("T");
-
-  return `${start}T${end.slice(0, 5)}`;
-};

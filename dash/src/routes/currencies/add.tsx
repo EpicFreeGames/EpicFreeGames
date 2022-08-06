@@ -16,7 +16,7 @@ export const handler: Handlers = {
     const { error } = await api<ICurrency>({
       method: "POST",
       path: "/currencies",
-      body: JSON.stringify(Object.fromEntries(formData)),
+      body: JSON.stringify(formData),
       auth: ctx.state.auth,
     });
 

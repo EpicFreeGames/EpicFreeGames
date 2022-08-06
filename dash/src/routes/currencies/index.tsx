@@ -51,10 +51,10 @@ const Currnecy = ({ currency }: { currency: ICurrency }) => (
       </h2>
 
       <div className={tw`flex gap-2`}>
-        <a className={tw`btn bg-gray-800`} href={`/currencies/${currency.id}/edit`}>
+        <a className={tw`btn-light-gray`} href={`/currencies/${currency.id}/edit`}>
           <Edit size={25} />
         </a>
-        <a className={tw`btn bg-gray-800`} href={`/currencies/${currency.id}/delete`}>
+        <a className={tw`btn-light-gray`} href={`/currencies/${currency.id}/delete`}>
           <Trash size={25} className={tw`text-red-500`} />
         </a>
       </div>
