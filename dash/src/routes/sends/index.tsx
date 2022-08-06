@@ -30,7 +30,7 @@ export default function GamesPage({ data: sends, url }: PageProps<ISending[] | n
     <Layout
       title="Sends"
       titleButtons={[
-        <a className={tw`btn bg-gray-700`} href="/sends/add">
+        <a className={tw`btn-gray`} href="/sends/add">
           Add a sending
         </a>,
       ]}
@@ -51,8 +51,7 @@ type SendingProps = {
 };
 
 const Sending = ({ sending }: SendingProps) => {
-  const gameNames = sending.games?.map((game) => game.name) ?? [];
-  const coolString = arrayToCoolString(gameNames);
+  const coolString = arrayToCoolString(sending.games?.map((g) => g.name) ?? []);
 
   const showDelete = sending.status !== "SENDING";
   const showEdit = sending.status !== "SENDING" && sending.status !== "SENT";
@@ -62,13 +61,13 @@ const Sending = ({ sending }: SendingProps) => {
 
   return (
     <div className={tw`bg-gray-700 p-3 rounded-md flex flex-col gap-3`}>
-      <div className={tw`flex gap-2 justify-between w-full flex-col halfMax:flex-row`}>
-        <h2 className={tw`bg-gray-800 py-2 px-3 rounded-md text-lg halfMax:text-2xl`}>
+      <div className={tw`flex gap-2 justify-between w-full flex-wrap`}>
+        <h2 className={tw`bg-gray-800 py-2 px-3 rounded-md text-lg halfMax:text-2xl w-max`}>
           {sending.id}
         </h2>
 
         {showButtons && (
-          <div className={tw`flex gap-2`}>
+          <div className={tw`flex gap-2 w-max`}>
             {showEdit && (
               <a
                 title="Edit sending"

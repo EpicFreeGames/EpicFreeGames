@@ -51,11 +51,11 @@ export default function AddGamePage({ url }: PageProps) {
           <Input name="priceValue" type="number" label="USD price (49.99)" step={0.01} required />
 
           <div className={tw`flex gap-2 justify-between items-center`}>
-            <a className={tw`btn bg-gray-600`} href="/games">
+            <a className={tw`btn-light-gray`} href="/games">
               Cancel
             </a>
 
-            <button className={tw`btn bg-gray-800`}>Add</button>
+            <button className={tw`btn-blue-border`}>Add</button>
           </div>
         </form>
       </div>

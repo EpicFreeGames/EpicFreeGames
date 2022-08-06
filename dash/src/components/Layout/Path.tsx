@@ -49,19 +49,13 @@ const Segment = ({ title, href, active }: SegmentProps) =>
   );
 
 const pathBtnStyles = (active?: boolean) => tw`
-  py-1 
+  py-1
   px-2
-  text-[0.8rem] 
-  bg-opacity-40 
-  rounded-md 
-  !outline-none
-  select-none
-  rounded-md
-  transition-all
-  transform-gpu 
+  baseBtn 
+  text-[0.8rem]
+  bg-opacity-40
   ${
     active
-      ? "bg-gray-400 ring-1 ring-gray-500"
-      : "bg-gray-600 hover:bg-opacity-30 active:bg-opacity-20 focusVisibleStyles"
-  }
-  `;
+      ? "bg(gray-400) ring(1 gray-500)"
+      : "cursor-pointer bg(gray-600 hover:(gray-500 opacity-40) active:(gray-400 opacity-40))"
+  }`;

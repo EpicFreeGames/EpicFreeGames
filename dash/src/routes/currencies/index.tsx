@@ -27,7 +27,7 @@ export default function I18nPage({ data, url }: PageProps<ICurrency[]>) {
     <Layout
       title="Currencies"
       titleButtons={[
-        <a className={tw`btn bg-gray-700`} href="/currencies/add">
+        <a className={tw`btn-gray`} href="/currencies/add">
           Add a currency
         </a>,
       ]}

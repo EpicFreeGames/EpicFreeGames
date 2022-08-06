@@ -61,10 +61,7 @@ export default function DeleteGamePage({ data: game, url }: PageProps<IGame>) {
             Cancel
           </a>
 
-          <button
-            type="submit"
-            className={tw`btn bg-red-500 bg-opacity-50 border-1 border-red-500`}
-          >
+          <button type="submit" className={tw`btn btn-red-border`}>
             Delete
           </button>
         </form>

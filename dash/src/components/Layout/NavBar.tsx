@@ -8,13 +8,13 @@ export const NavBar = () => {
   return (
     <nav className={tw`bg-gray-800`}>
       <div className={tw`max-w-screen-lg mx-auto flex justify-between p-3 halfMax:p-4`}>
-        <div className={tw`flex gap-4`}>
+        <div className={tw`flex gap-3 halfMax:gap-4`}>
           <NavLink href="/games">Games</NavLink>
           <NavLink href="/currencies">Currencies</NavLink>
           <NavLink href="/sends">Sends</NavLink>
         </div>
 
-        <a className={tw`iconBtn bg-gray-700`} href="/logout">
+        <a className={tw`iconBtn btn-gray`} href="/logout">
           <Logout />
         </a>
       </div>
@@ -23,7 +23,7 @@ export const NavBar = () => {
 };
 
 const NavLink = ({ children, href }: { children: ComponentChildren; href: string }) => (
-  <a tabIndex={1} href={href} className={tw`btn bg-gray-700`}>
+  <a tabIndex={1} href={href} className={tw`btn-gray cursor-pointer`}>
     {children}
   </a>
 );

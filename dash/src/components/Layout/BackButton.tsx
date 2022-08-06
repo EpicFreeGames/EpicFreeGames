@@ -8,7 +8,7 @@ type Props = {
 };
 
 export const BackButton = ({ href }: Props) => (
-  <a href={href} className={tw`bg-gray-700 iconBtnText`}>
+  <a href={href} className={tw`btn-gray iconBtnText`}>
     <ChevronLeft /> Back
   </a>
 );

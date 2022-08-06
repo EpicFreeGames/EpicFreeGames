@@ -2,7 +2,6 @@
 /** @jsxFrag Fragment */
 import { Head } from "$fresh/runtime.ts";
 import { ComponentChildren, Fragment, h } from "preact";
-import { apply } from "twind";
 
 type Props = {
   children: ComponentChildren;
@@ -16,22 +15,13 @@ export const Base = ({ children, title }: Props) => (
 
       <style>
         {`
-          *:focus-visible {
-            ${apply`ring ring-1 ring-gray-500`}
+          * {
+            -webkit-tap-highlight-color: transparent
           }
 
           body {
             background-color: rgb(17, 24, 39);
             color: rgb(236, 237, 238);
-          }
-
-          input {
-            appearance: none;
-            boxSizing: border-box;
-          }
-
-          input:focus {
-            outline: none;
           }
         `}
       </style>

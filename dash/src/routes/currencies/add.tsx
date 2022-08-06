@@ -48,11 +48,11 @@ export default function AddCurrencyPage({ url }: PageProps) {
           <Input name="afterPrice" label="After price" />
 
           <div className={tw`flex gap-2 justify-between items-center`}>
-            <a className={tw`btn bg-gray-600`} href="/currencies">
+            <a className={tw`btn-light-gray`} href="/currencies">
               Cancel
             </a>
 
-            <button type="submit" className={tw`btn bg-gray-800`}>
+            <button type="submit" className={tw`btn-blue-border`}>
               Add
             </button>
           </div>

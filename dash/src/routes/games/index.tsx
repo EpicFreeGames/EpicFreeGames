@@ -48,7 +48,7 @@ export default function GamesPage({ data, url }: PageProps<IGame[] | null>) {
     <Layout
       title="Games"
       titleButtons={[
-        <a className={tw`btn bg-gray-700`} href="/games/add">
+        <a className={tw`btn-gray`} href="/games/add">
           Add a game
         </a>,
       ]}
@@ -75,11 +75,11 @@ const Game = ({ game }: { game: IGame }) => {
         <div className={tw`flex gap-2 justify-between`}>
           <Confirmed game={game} />
 
-          <div className={tw`flex gap-2`}>
-            <a className={tw`btn bg-gray-800`} href={`/games/${game.id}/edit`}>
+          <div className={tw`flex gap-2 justify-end`}>
+            <a className={tw`btn-dark-gray`} href={`/games/${game.id}/edit`}>
               <Edit size={25} />
             </a>
-            <a className={tw`btn bg-gray-800`} href={`/games/${game.id}/delete`}>
+            <a className={tw`btn-dark-gray`} href={`/games/${game.id}/delete`}>
               <Trash size={25} className={tw`text-red-500`} />
             </a>
           </div>
@@ -124,9 +124,7 @@ const Confirmed = ({ game }: { game: IGame }) => (
   <form method="POST">
     <input type="hidden" name="gameId" value={game.id} />
     <button
-      className={tw`btn ${
-        game.confirmed ? "text-green-500" : "text-red-500"
-      } bg-gray-800 py-2 h-full`}
+      className={tw`btn-dark-gray ${game.confirmed ? "text-green-500" : "text-red-500"} h-full`}
     >
       {game.confirmed ? "Confirmed" : "Not confirmed"}
     </button>

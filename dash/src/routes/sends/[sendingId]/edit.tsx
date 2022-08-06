@@ -7,7 +7,7 @@ import { Layout } from "~components/Layout/Layout.tsx";
 import { api } from "~utils/api.ts";
 import { Handlers } from "~utils/freshTypes.ts";
 import { IGame, ISending } from "../../../types.ts";
-import { getGameNames } from "../../../utils/string.tsx";
+import { arrayToCoolString } from "../../../utils/string.tsx";
 
 type PagePropsData = {
   sending: ISending;
@@ -61,6 +61,8 @@ export const handler: Handlers<PagePropsData> = {
 };
 
 export default function EditGamePage({ data: { sending, games }, url }: PageProps<PagePropsData>) {
+  const coolString = arrayToCoolString(sending.games?.map((g) => g.name) ?? []);
+
   return (
     <Layout
       title="Edit a sending"
@@ -69,34 +71,35 @@ export default function EditGamePage({ data: { sending, games }, url }: PageProp
       segments={["Sends", sending.id, "Edit"]}
     >
       <div className={tw`bg-gray-700 rounded-md mx-auto max-w-[400px] p-3`}>
-        <h2 className={tw`text-2xl mb-2`}>Edit sending with {getGameNames(games)}</h2>
+        <h2 className={tw`text-2xl mb-2`}>Edit sending</h2>
 
         <form className={tw`flex flex-col gap-3`} method="POST">
           <p>Select games</p>
 
           <select
-            className={tw`bg-transparent appearance-none`}
+            className={tw`appearance-none bg-gray-600 rounded-md p-2 focusStyles duration-200`}
             name="gameIds"
             label="Games"
-            defaultValue={sending.games?.map((g) => g.name).join(",")}
             required
             multiple
           >
             {games?.map((game) => (
-              <option key={game.id} value={game.id}>
+              <option
+                key={game.id}
+                value={game.id}
+                selected={!!sending.games?.find((g) => g.id === game.id)}
+              >
                 {game.name}
               </option>
             ))}
           </select>
 
           <div className={tw`flex gap-2 justify-between items-center`}>
-            <a className={tw`btn bg-gray-600`} href="/games">
+            <a className={tw`btn-light-gray`} href="/games">
               Cancel
             </a>
 
-            <button className={tw`btn bg-gray-800 bg-opacity-50 border-1 border-gray-500`}>
-              Save
-            </button>
+            <button className={tw`btn-blue-border`}>Save</button>
           </div>
         </form>
       </div>

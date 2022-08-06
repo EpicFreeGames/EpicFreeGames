@@ -77,14 +77,11 @@ export default function EditCurrencyPage({ data: currency, url }: PageProps<ICur
           />
 
           <div className={tw`flex gap-2 justify-between items-center`}>
-            <a className={tw`btn bg-gray-600`} href="/currencies">
+            <a className={tw`btn-light-gray`} href="/currencies">
               Cancel
             </a>
 
-            <button
-              type="submit"
-              className={tw`bg-gray-800 bg-opacity-50 border-1 border-gray-500`}
-            >
+            <button type="submit" className={tw`btn-blue-border`}>
               Save
             </button>
           </div>

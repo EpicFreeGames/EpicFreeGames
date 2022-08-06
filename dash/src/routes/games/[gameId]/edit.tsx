@@ -85,13 +85,11 @@ export default function EditGamePage({ data: game, url }: PageProps<IGame>) {
           />
 
           <div className={tw`flex gap-2 justify-between items-center`}>
-            <a className={tw`btn bg-gray-600`} href="/games">
+            <a className={tw`btn-light-gray`} href="/games">
               Cancel
             </a>
 
-            <button className={tw`btn bg-gray-800 bg-opacity-50 border-1 border-gray-500`}>
-              Save
-            </button>
+            <button className={tw`btn-blue-border`}>Save</button>
           </div>
         </form>
       </div>

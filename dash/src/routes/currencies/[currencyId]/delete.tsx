@@ -56,14 +56,11 @@ export default function DeleteCurrencyPage({ data: currency, url }: PageProps<IC
         </h2>
 
         <form className={tw`flex gap-4 justify-between items-center`} method="POST">
-          <a className={tw`btn bg-gray-600`} href="/currencies">
+          <a className={tw`btn-light-gray`} href="/currencies">
             Cancel
           </a>
 
-          <button
-            type="submit"
-            className={tw`btn bg-red-500 bg-opacity-50 border-1 border-red-500`}
-          >
+          <button type="submit" className={tw`btn btn-red-border`}>
             Yes, delete
           </button>
         </form>
