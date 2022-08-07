@@ -19,6 +19,7 @@
     "strictPropertyInitialization": true
   },
   "tasks": {
-    "typecheck": "deno lint && deno check src/main.ts"
+    "typecheck": "deno check src/main.ts",
+    "lint": "deno lint"
   }
 }
