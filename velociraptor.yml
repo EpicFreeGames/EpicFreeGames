@@ -2,8 +2,7 @@ scripts:
   start:
     pll:
       - desc: API
-        cmd: cd ./api && yarn dev
-        envFile: .env-api
+        cmd: cd ./api && dotenv -e ../.env-api yarn dev
         env:
           PORT: "3001"
 
