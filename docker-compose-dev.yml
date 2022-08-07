@@ -1,0 +1,107 @@
+version: "3.9"
+
+services:
+  redis:
+    image: redis/redis-stack
+    volumes:
+      - redis:/data
+    restart: unless-stopped
+    ports:
+      - "3002:8001"
+
+  api:
+    depends_on:
+      - redis
+    build:
+      context: ./api
+      dockerfile: Dockerfile.dev
+    env_file:
+      - .env-api
+    restart: unless-stopped
+    volumes:
+      - ./api/src:/app/src:r
+    ports:
+      - "3001:3000"
+    command: yarn dev
+
+  dash:
+    depends_on:
+      - redis
+      - api
+    build:
+      context: ./dash
+      dockerfile: Dockerfile
+    image: dash/dash
+    env_file:
+      - .env-dash
+    restart: unless-stopped
+    volumes:
+      - ./dash/src:/app/src:r
+      - ./dash/twind.config.ts:/app/twind.config.ts:r
+    ports:
+      - "3000:3000"
+    command: deno run -A --watch= src/dev.ts twind.config.ts
+
+  bot_rest-proxy:
+    depends_on:
+      - redis
+      - api
+    build:
+      context: ./bot
+      args:
+        - SCOPE=rest-proxy
+    image: bot/rest-proxy
+    env_file:
+      - .env-bot
+    restart: unless-stopped
+
+  bot_gateway-proxy:
+    depends_on:
+      - redis
+      - api
+      - bot_rest-proxy
+    build:
+      context: ./bot
+      args:
+        - SCOPE=gateway-proxy
+    image: bot/gateway-proxy
+    env_file:
+      - .env-bot
+    restart: unless-stopped
+
+  bot_sender:
+    depends_on:
+      - redis
+      - api
+      - bot_rest-proxy
+      - bot_gateway-proxy
+    build:
+      context: ./bot
+      args:
+        - SCOPE=sender
+    image: bot/sender
+    env_file:
+      - .env-bot
+    restart: unless-stopped
+
+  bot_bot:
+    depends_on:
+      - redis
+      - api
+      - bot_rest-proxy
+      - bot_gateway-proxy
+      - bot_sender
+    build:
+      context: ./bot
+      args:
+        - SCOPE=bot
+    image: bot/bot
+    env_file:
+      - .env-bot
+    restart: unless-stopped
+    volumes:
+      - ./bot/src:/app/src:r
+    command: "deno run --watch -A ./src/bot/mod.ts"
+
+volumes:
+  redis:

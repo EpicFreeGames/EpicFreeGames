@@ -4,104 +4,118 @@ services:
   redis:
     image: redis/redis-stack
     volumes:
-      - redis:/data
+      - ./redis:/data
     restart: unless-stopped
-    ports:
-      - "3002:8001"
-
-  api:
-    depends_on:
-      - redis
-    build:
-      context: ./api
-      dockerfile: Dockerfile.dev
-    env_file:
-      - .env-api
-    restart: unless-stopped
-    volumes:
-      - ./api/src:/app/src:r
-    ports:
-      - "3001:3000"
-    command: yarn dev
-
-  dash:
-    depends_on:
-      - redis
-      - api
-    build:
-      context: ./dash
-      dockerfile: Dockerfile
-    image: dash/dash
-    env_file:
-      - .env-dash
-    restart: unless-stopped
-    volumes:
-      - ./dash/src:/app/src:r
-      - ./dash/twind.config.ts:/app/twind.config.ts:r
-    ports:
-      - "3000:3000"
-    command: deno run -A --watch= src/dev.ts twind.config.ts
+    networks:
+      - proxy
 
   bot_rest-proxy:
-    depends_on:
-      - redis
-      - api
-    build:
-      context: ./bot
-      args:
-        - SCOPE=rest-proxy
-    image: bot/rest-proxy
-    env_file:
-      - .env-bot
+    image: ${REGISTRY}/${REGISTRY_USER}/efg-bot_rest-proxy:master
     restart: unless-stopped
-
-  bot_gateway-proxy:
-    depends_on:
-      - redis
-      - api
-      - bot_rest-proxy
-    build:
-      context: ./bot
-      args:
-        - SCOPE=gateway-proxy
-    image: bot/gateway-proxy
     env_file:
-      - .env-bot
-    restart: unless-stopped
+      - .env
+    environment:
+      PORT: 3000
+      ENV: prod
+    networks:
+      - proxy
 
   bot_sender:
     depends_on:
       - redis
-      - api
       - bot_rest-proxy
-      - bot_gateway-proxy
-    build:
-      context: ./bot
-      args:
-        - SCOPE=sender
-    image: bot/sender
-    env_file:
-      - .env-bot
+    image: ${REGISTRY}/${REGISTRY_USER}/efg-bot_sender:master
     restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      PORT: 3000
+      ENV: prod
+      REDISHOST: redis
+      REDISPORT: 6379
+    networks:
+      - proxy
+
+  api:
+    depends_on:
+      - redis
+      - bot_sender
+    image: ${REGISTRY}/${REGISTRY_USER}/efg-api:master
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      PORT: 3000
+      ENV: prod
+      REDISHOST: redis
+      REDISPORT: 6379
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.efg-api.entrypoints=https"
+      - "traefik.http.routers.efg-api.tls=true"
+      - "traefik.http.routers.efg-api.service=efg-api"
+      - "traefik.http.routers.efg-api.rule=Host(`staging-api.epicfreegames.net`)"
+      - "traefik.http.services.efg-api.loadbalancer.server.port=3000"
+      - "traefik.docker.network=proxy"
+    networks:
+      - proxy
+
+  dash:
+    depends_on:
+      - api
+    image: ${REGISTRY}/${REGISTRY_USER}/efg-dash:master
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      PORT: 3000
+      ENV: prod
+      REDISHOST: redis
+      REDISPORT: 6379
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.efg-dash.entrypoints=https"
+      - "traefik.http.routers.efg-dash.tls=true"
+      - "traefik.http.routers.efg-dash.service=efg-dash"
+      - "traefik.http.routers.efg-dash.rule=Host(`staging-dash.epicfreegames.net`)"
+      - "traefik.http.services.efg-dash.loadbalancer.server.port=3000"
+      - "traefik.docker.network=proxy"
+    networks:
+      - proxy
+
+  bot_gateway-proxy:
+    depends_on:
+      - bot_rest-proxy
+    image: ${REGISTRY}/${REGISTRY_USER}/efg-bot_gateway-proxy:master
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      PORT: 3000
+      ENV: prod
+      REDISHOST: redis
+      REDISPORT: 6379
+    networks:
+      - proxy
 
   bot_bot:
     depends_on:
-      - redis
       - api
+      - redis
       - bot_rest-proxy
       - bot_gateway-proxy
-      - bot_sender
-    build:
-      context: ./bot
-      args:
-        - SCOPE=bot
-    image: bot/bot
-    env_file:
-      - .env-bot
+    image: ${REGISTRY}/${REGISTRY_USER}/efg-bot_bot:master
     restart: unless-stopped
-    volumes:
-      - ./bot/src:/app/src:r
-    command: "deno run --watch -A ./src/bot/mod.ts"
+    env_file:
+      - .env
+    environment:
+      PORT: 3000
+      ENV: prod
+      REDISHOST: redis
+      REDISPORT: 6379
+    networks:
+      - proxy
 
-volumes:
-  redis:
+networks:
+  proxy:
+    external: true
