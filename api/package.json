@@ -5,6 +5,7 @@
   "scripts": {
     "build": "rm -rf dist && ./node_modules/.bin/tsc -p ./tsconfig.json",
     "dev": "nodemon -q -e ts,json --watch ./src/ --watch ./prisma --exec 'yarn build && node ./dist/index.js'",
+    "typecheck": "tsc --skipLibCheck --noEmit",
     "format": "prettier --write \"**/*.{ts,tsx,json}\""
   },
   "dependencies": {
