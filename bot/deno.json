@@ -1,3 +1,32 @@
 {
-  "importMap": "./importMap.json"
+  "importMap": "./importMap.json",
+  "tasks": {
+    "start-rest-proxy": "deno run -A --watch src/rest-proxy/mod.ts",
+    "start-gateway-proxy": "deno run -A --watch src/gateway-proxy/mod.ts",
+    "start-bot": "deno run -A --watch src/bot/mod.ts",
+
+    "typecheck-bot": "deno check src/bot/mod.ts",
+    "typecheck-sender": "deno check src/sender/mod.ts",
+    "typecheck-rest-proxy": "deno check src/rest-proxy/mod.ts",
+    "typecheck-gateway-proxy": "deno check src/gateway-proxy/mod.ts"
+  },
+  "compilerOptions": {
+    "lib": ["deno.worker"],
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "noUnusedLocals": true,
+    "noImplicitAny": true,
+    "noImplicitOverride": true,
+    "noImplicitThis": true,
+    "noPropertyAccessFromIndexSignature": false,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "useUnknownInCatchVariables": false,
+
+    "strict": true,
+    "strictFunctionTypes": true,
+    "strictNullChecks": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true
+  }
 }
