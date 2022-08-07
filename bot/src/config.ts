@@ -11,7 +11,7 @@ const envSchema = z.object({
     .optional()
     .transform((v) => !!v),
 
-  BOT_TOKEN: z.string().refine((v) => !!BigInt(atob(v.split(".")[0]))),
+  BOT_TOKEN: z.string().refine((v) => !!BigInt(atob(v.split(".")?.at(0) ?? ""))),
 
   REDISHOST: z.string(),
   REDISPORT: z.string().transform(Number),
@@ -61,7 +61,7 @@ if (!result.success) {
 
 export const config = {
   ...result.data,
-  BOT_ID: BigInt(atob(result.data.BOT_TOKEN.split(".")[0])),
+  BOT_ID: BigInt(atob(result.data.BOT_TOKEN.split(".")?.at(0) ?? "")),
   Intents,
   BASE64_LOGO_ON_WEBHOOK: `data:image/png;base64,${await getBase64Image(
     result.data.LOGO_URL_ON_WEBHOOK
