@@ -192,7 +192,7 @@ router.post(
       body: z.object({
         serverId: z.string(),
         sendingId: z.string(),
-        type: z.string(),
+        type: z.enum(["MESSAGE", "WEBHOOK"]),
         result: z.string(),
         success: z.boolean(),
       }),
