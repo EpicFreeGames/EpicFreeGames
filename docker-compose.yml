@@ -17,6 +17,8 @@ services:
     environment:
       PORT: 3000
       ENV: prod
+      REDISHOST: redis
+      REDISPORT: 6379
     networks:
       - proxy
 
