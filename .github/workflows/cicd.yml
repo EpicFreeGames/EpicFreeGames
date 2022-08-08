@@ -1,0 +1,262 @@
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - dev
+  workflow_dispatch:
+
+jobs:
+  api-ci:
+    name: "Api: Typecheck"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel previous workflows
+        uses: styfle/cancel-workflow-action@0.10.0
+        with:
+          access_token: ${{ github.token }}
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup Node with Yarn cache
+        uses: actions/setup-node@v3
+        with: 
+          node-version: 16
+          cache: yarn
+          cache-dependency-path: api/yarn.lock
+
+      - name: Install deps
+        run: cd api && yarn --frozen-lockfile
+
+      - name: Type check
+        run: cd api && yarn prisma generate && yarn typecheck
+
+  api-docker-build-push:
+    name: "Api: Build and push Docker image"
+    needs: api-ci
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel previous workflows
+        uses: styfle/cancel-workflow-action@0.10.0
+        with:
+          access_token: ${{ github.token }}
+      
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Login to the container registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ secrets.REGISTRY }}
+          username: ${{ secrets.REGISTRY_USER }}
+          password: ${{ secrets.REGISTRY_PASS }}
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ secrets.REGISTRY }}/${{ secrets.REGISTRY_USER }}/efg-api
+          tags: | 
+            type=ref,event=branch
+            type=sha
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Cache Docker layers
+        uses: actions/cache@v3
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: ${{ runner.os }}-buildx-
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: ./api
+          platforms: linux/amd64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
+      
+      - name: Move cache
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+
+  dash-ci:
+    name: "Dash: Typecheck"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel previous workflows
+        uses: styfle/cancel-workflow-action@0.10.0
+        with:
+          access_token: ${{ github.token }}
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+
+      - name: Type check
+        run: cd dash && deno task typecheck
+
+  dash-docker-build-push:
+    name: "Dash: Build and push Docker images"
+    needs: dash-ci
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel previous workflows
+        uses: styfle/cancel-workflow-action@0.10.0
+        with:
+          access_token: ${{ github.token }}
+      
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Login to the container registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ secrets.REGISTRY }}
+          username: ${{ secrets.REGISTRY_USER }}
+          password: ${{ secrets.REGISTRY_PASS }}
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ secrets.REGISTRY }}/${{ secrets.REGISTRY_USER }}/efg-dash
+          tags: | 
+            type=ref,event=branch
+            type=sha
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Cache Docker layers
+        uses: actions/cache@v3
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: ${{ runner.os }}-buildx-
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: ./dash
+          platforms: linux/amd64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
+      
+      - name: Move cache
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+          
+  bot-ci:
+    name: "Bot: Typecheck"
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: 
+        part:
+          - bot
+          - sender
+          - rest-proxy
+          - gateway-proxy
+    steps:
+      - name: Cancel previous workflows
+        uses: styfle/cancel-workflow-action@0.10.0
+        with:
+          access_token: ${{ github.token }}
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+
+      - name: Type check
+        run: cd bot && deno task typecheck-${{ matrix.part }}
+  
+  bot-docker-build-push:
+    name: "Bot: Build and push Docker images"
+    needs: bot-ci
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: 
+        part:
+          - bot
+          - sender
+          - rest-proxy
+          - gateway-proxy
+    steps:
+      - name: Cancel previous workflows
+        uses: styfle/cancel-workflow-action@0.10.0
+        with:
+          access_token: ${{ github.token }}
+      
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Login to the container registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ secrets.REGISTRY }}
+          username: ${{ secrets.REGISTRY_USER }}
+          password: ${{ secrets.REGISTRY_PASS }}
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ secrets.REGISTRY }}/${{ secrets.REGISTRY_USER }}/efg-bot_${{ matrix.part }}
+          tags: | 
+            type=ref,event=branch
+            type=sha
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Cache Docker layers
+        uses: actions/cache@v3
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: ${{ runner.os }}-buildx-
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: ./bot
+          platforms: linux/amd64
+          push: true
+          build-args: SCOPE=${{ matrix.part }}
+          tags: ${{ steps.meta.outputs.tags }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
+      
+      - name: Move cache
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+
+  deploy-staging:
+    name: "Deploy to Staging"
+    needs: 
+      - api-docker-build-push
+      - bot-docker-build-push
+      - dash-docker-build-push
+    uses: ./.github/workflows/ssh-deploy.yml
+    secrets: inherit
+    with:
+      service: api dash bot_bot bot_rest-proxy bot_gateway-proxy bot_sender
+      env: Staging

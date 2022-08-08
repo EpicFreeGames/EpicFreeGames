@@ -1,0 +1,58 @@
+name: Restart Docker compose deployment via SSH
+
+on:
+  workflow_call:
+    inputs:
+      service:
+        required: true
+        type: string
+      env:
+        required: true
+        type: string
+    secrets:
+      REGISTRY:
+        required: true
+      REGISTRY_USER:
+        required: true
+      REGISTRY_PASS:
+        required: true
+      SSH_KEY:
+        required: true
+      SSH_CONFIG:
+        required: true
+      SSH_KNOWN_HOSTS:
+        required: true
+      ENV_BASE64:
+        required: true
+
+jobs:
+  main:
+    name: Restart Docker compose deployment via SSH
+    environment: ${{ inputs.env }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel previous workflows
+        uses: styfle/cancel-workflow-action@0.10.0
+        with:
+          access_token: ${{ github.token }}
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh &&
+          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/ssh-key &&
+          chmod 600 ~/.ssh/ssh-key &&
+          echo "${{ secrets.SSH_CONFIG }}" > ~/.ssh/config &&
+          echo "${{ secrets.SSH_KNOWN_HOSTS }}" > ~/.ssh/known_hosts &&
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: Restart Docker compose deployment via SSH
+        run: | 
+          ssh server -q "mkdir -p ~/efg-${{ inputs.env }}" && \
+          rsync ./docker-compose.yml user@server:/home/user/efg-${{ inputs.env }}/docker-compose.yml
+          ssh server -q \
+            "cd ~/efg-${{ inputs.env }} && \
+            echo "${{ secrets.ENV_BASE64 }}" | base64 --decode > .env && \
+            REGISTRY=${{ secrets.REGISTRY }} REGISTRY_USER=${{ secrets.REGISTRY_USER }} docker compose up -d ${{ inputs.service }}"
