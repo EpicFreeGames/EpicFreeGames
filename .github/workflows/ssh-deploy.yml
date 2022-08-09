@@ -58,7 +58,7 @@ jobs:
         run: |
           ssh server -q \
           "cd ~/efg-${{ inputs.env }} && \
-          echo "${{ secrets.ENV_BASE64 }}" | base64 --decode > .env
+          echo "${{ secrets.ENV_BASE64 }}" | base64 --decode > .env"
 
       - name: Recreate containers
         run: |
