@@ -328,26 +328,16 @@ jobs:
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
 
-  api-deploy-staging:
+  api-dash-bot-deploy-staging:
     name: "Api: Deploy to Staging"
     needs: 
       - api-docker-build-push
     uses: ./.github/workflows/ssh-deploy.yml
     secrets: inherit
     with:
-      service: api
+      service: api dash bot_bot bot_sender bot_rest-proxy bot_gateway-proxy
       env: Staging
   
-  dash-deploy-staging:
-    name: "Dash: Deploy to Staging"
-    needs: 
-      - dash-docker-build-push
-    uses: ./.github/workflows/ssh-deploy.yml
-    secrets: inherit
-    with:
-      service: dash
-      env: Staging
-
   front-deploy-staging:
     name: "Front: Deploy to Staging"
     needs: 
@@ -356,14 +346,4 @@ jobs:
     secrets: inherit
     with:
       service: front
-      env: Staging
-
-  bot-deploy-staging:
-    name: "Bot: Deploy to Staging"
-    needs: 
-      - bot-docker-build-push
-    uses: ./.github/workflows/ssh-deploy.yml
-    secrets: inherit
-    with:
-      service: bot_bot bot_sender bot_rest-proxy bot_gateway-proxy
       env: Staging
