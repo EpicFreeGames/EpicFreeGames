@@ -98,7 +98,7 @@ authRouter.post("/logout", auth(), async (req, res) => {
   req.session.destroy(() => res.redirect(303, "/"));
 });
 
-if (config.ENV === "dev") {
+if (config.ENV === "Development") {
   authRouter.get("/dev", async (req, res) => {
     try {
       const userId = config.ALLOWED_USER_IDS[0]!;
