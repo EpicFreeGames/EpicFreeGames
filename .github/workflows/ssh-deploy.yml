@@ -48,10 +48,20 @@ jobs:
           echo "${{ secrets.SSH_KNOWN_HOSTS }}" > ~/.ssh/known_hosts &&
           chmod 600 ~/.ssh/known_hosts
 
-      - name: Restart Docker compose deployment via SSH
-        run: | 
-          ssh server -q "mkdir -p ~/efg-${{ inputs.env }}" && \
-          rsync ./docker-compose.yml user@server:/home/user/efg-${{ inputs.env }}/docker-compose.yml
+      - name: Create folder
+        run: ssh server -q "mkdir -p ~/efg-${{ inputs.env }}"
+        
+      - name: Update Docker compose file
+        run: rsync ./docker-compose.yml user@server:/home/user/efg-${{ inputs.env }}/docker-compose.yml
+
+      - name: Update .env
+        run: |
+          ssh server -q \
+          "cd ~/efg-${{ inputs.env }} && \
+          echo "${{ secrets.ENV_BASE64 }}" | base64 --decode > .env
+
+      - name: Recreate containers
+        run: |
           ssh server -q \
             "cd ~/efg-${{ inputs.env }} && \
             echo "${{ secrets.ENV_BASE64 }}" | base64 --decode > .env && \
