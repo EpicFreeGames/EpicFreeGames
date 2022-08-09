@@ -45,6 +45,7 @@ services:
       ENV: prod
       REDISHOST: redis
       REDISPORT: 6379
+      DENO_DEPLOYMENT_ID: ${COMMIT_SHA}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.efg-dash.entrypoints=https"

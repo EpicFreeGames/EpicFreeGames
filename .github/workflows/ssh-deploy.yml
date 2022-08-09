@@ -55,4 +55,7 @@ jobs:
           ssh server -q \
             "cd ~/efg-${{ inputs.env }} && \
             echo "${{ secrets.ENV_BASE64 }}" | base64 --decode > .env && \
-            REGISTRY=${{ secrets.REGISTRY }} REGISTRY_USER=${{ secrets.REGISTRY_USER }} docker compose up -d ${{ inputs.service }}"
+            REGISTRY=${{ secrets.REGISTRY }} \
+            REGISTRY_USER=${{ secrets.REGISTRY_USER }} \
+            COMMIT_SHA=${{ github.sha }} \
+            docker compose up -d ${{ inputs.service }}"
