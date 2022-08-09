@@ -18,10 +18,10 @@ jobs:
 
       - name: Checkout code
         uses: actions/checkout@v3
-      
+
       - name: Setup Node with Yarn cache
         uses: actions/setup-node@v3
-        with: 
+        with:
           node-version: 16
           cache: yarn
           cache-dependency-path: api/yarn.lock
@@ -41,7 +41,7 @@ jobs:
         uses: styfle/cancel-workflow-action@0.10.0
         with:
           access_token: ${{ github.token }}
-      
+
       - name: Checkout code
         uses: actions/checkout@v3
 
@@ -57,7 +57,7 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: ${{ secrets.REGISTRY }}/${{ secrets.REGISTRY_USER }}/efg-api
-          tags: | 
+          tags: |
             type=ref,event=branch
             type=sha
 
@@ -80,7 +80,7 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
-      
+
       - name: Move cache
         run: |
           rm -rf /tmp/.buildx-cache
@@ -97,7 +97,7 @@ jobs:
 
       - name: Checkout code
         uses: actions/checkout@v3
-      
+
       - name: Setup Deno
         uses: denoland/setup-deno@v1
         with:
@@ -115,7 +115,7 @@ jobs:
         uses: styfle/cancel-workflow-action@0.10.0
         with:
           access_token: ${{ github.token }}
-      
+
       - name: Checkout code
         uses: actions/checkout@v3
 
@@ -131,7 +131,7 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: ${{ secrets.REGISTRY }}/${{ secrets.REGISTRY_USER }}/efg-dash
-          tags: | 
+          tags: |
             type=ref,event=branch
             type=sha
 
@@ -154,7 +154,7 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
-      
+
       - name: Move cache
         run: |
           rm -rf /tmp/.buildx-cache
@@ -171,10 +171,10 @@ jobs:
 
       - name: Checkout code
         uses: actions/checkout@v3
-      
+
       - name: Setup Node with Yarn cache
         uses: actions/setup-node@v3
-        with: 
+        with:
           node-version: 16
           cache: yarn
           cache-dependency-path: front/yarn.lock
@@ -194,7 +194,7 @@ jobs:
         uses: styfle/cancel-workflow-action@0.10.0
         with:
           access_token: ${{ github.token }}
-      
+
       - name: Checkout code
         uses: actions/checkout@v3
 
@@ -210,7 +210,7 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: ${{ secrets.REGISTRY }}/${{ secrets.REGISTRY_USER }}/efg-front
-          tags: | 
+          tags: |
             type=ref,event=branch
             type=sha
 
@@ -233,17 +233,17 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
-      
+
       - name: Move cache
         run: |
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
-          
+
   bot-ci:
     name: "Bot: Typecheck"
     runs-on: ubuntu-latest
     strategy:
-      matrix: 
+      matrix:
         part:
           - bot
           - sender
@@ -257,7 +257,7 @@ jobs:
 
       - name: Checkout code
         uses: actions/checkout@v3
-      
+
       - name: Setup Deno
         uses: denoland/setup-deno@v1
         with:
@@ -265,13 +265,13 @@ jobs:
 
       - name: Type check
         run: cd bot && deno task typecheck-${{ matrix.part }}
-  
+
   bot-docker-build-push:
     name: "Bot: Build and push Docker images"
     needs: bot-ci
     runs-on: ubuntu-latest
     strategy:
-      matrix: 
+      matrix:
         part:
           - bot
           - sender
@@ -282,7 +282,7 @@ jobs:
         uses: styfle/cancel-workflow-action@0.10.0
         with:
           access_token: ${{ github.token }}
-      
+
       - name: Checkout code
         uses: actions/checkout@v3
 
@@ -298,7 +298,7 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: ${{ secrets.REGISTRY }}/${{ secrets.REGISTRY_USER }}/efg-bot_${{ matrix.part }}
-          tags: | 
+          tags: |
             type=ref,event=branch
             type=sha
 
@@ -322,27 +322,42 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
-      
+
       - name: Move cache
         run: |
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
 
-  api-dash-bot-deploy-staging:
-    name: "Api, Dash, Bot: Deploy to Staging"
-    needs: 
-      - api-docker-build-push
-      - dash-docker-build-push
-      - bot-docker-build-push
+  api-deploy-staging:
+    name: "Api: Deploy to Staging"
+    needs: api-docker-build-push
     uses: ./.github/workflows/ssh-deploy.yml
     secrets: inherit
     with:
-      service: api dash bot_bot bot_sender bot_rest-proxy bot_gateway-proxy
+      service: api
       env: Staging
-  
+
+  dash-deploy-staging:
+    name: "Dash: Deploy to Staging"
+    needs: dash-docker-build-push
+    uses: ./.github/workflows/ssh-deploy.yml
+    secrets: inherit
+    with:
+      service: dash
+      env: Staging
+
+  bot-deploy-staging:
+    name: "Bot: Deploy to Staging"
+    needs: bot-docker-build-push
+    uses: ./.github/workflows/ssh-deploy.yml
+    secrets: inherit
+    with:
+      service: "bot_bot bot_sender bot_rest-proxy bot_gateway-proxy"
+      env: Staging
+
   front-deploy-staging:
     name: "Front: Deploy to Staging"
-    needs: 
+    needs:
       - front-docker-build-push
     uses: ./.github/workflows/ssh-deploy.yml
     secrets: inherit
