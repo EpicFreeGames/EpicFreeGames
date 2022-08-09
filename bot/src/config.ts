@@ -34,7 +34,7 @@ const envSchema = z.object({
   EFG_API_BASEURL: z.string(),
   DISCORD_API_BASEURL: z.string(),
 
-  ENV: z.enum(["dev", "staging", "prod"]),
+  ENV: z.enum(["Development", "Staging", "Production"]),
 });
 
 const result = envSchema.safeParse(Deno.env.toObject());

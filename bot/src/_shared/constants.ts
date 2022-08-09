@@ -18,6 +18,5 @@ export const botConstants = {
 
   botLogo: `https://staging.epicfreegames.net/assets/images/logos/${config.ENV}.png`,
 
-  webhookName: (env: string, sending = false) =>
-    `${env}-EpicFreeGames${sending ? "" : " Notifications"}`,
+  webhookName: (sending = false) => `${config.ENV}-EpicFreeGames${sending ? "" : " Notifications"}`,
 };

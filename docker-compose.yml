@@ -19,7 +19,6 @@ services:
       - .env
     environment:
       PORT: 3000
-      ENV: prod
       REDISHOST: redis
       REDISPORT: 6379
     labels:
@@ -42,7 +41,6 @@ services:
       - .env
     environment:
       PORT: 3000
-      ENV: prod
       REDISHOST: redis
       REDISPORT: 6379
       DENO_DEPLOYMENT_ID: ${COMMIT_SHA}
@@ -78,7 +76,6 @@ services:
       - .env
     environment:
       PORT: 3000
-      ENV: prod
       REDISHOST: redis
       REDISPORT: 6379
     networks:
@@ -94,7 +91,6 @@ services:
       - .env
     environment:
       PORT: 3000
-      ENV: prod
       REDISHOST: redis
       REDISPORT: 6379
     networks:
@@ -109,7 +105,6 @@ services:
       - .env
     environment:
       PORT: 3000
-      ENV: prod
       REDISHOST: redis
       REDISPORT: 6379
     networks:
@@ -126,7 +121,6 @@ services:
       - .env
     environment:
       PORT: 3000
-      ENV: prod
       REDISHOST: redis
       REDISPORT: 6379
     networks:

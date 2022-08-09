@@ -22,7 +22,7 @@ const envSchema = z.object({
   SENDER_AUTH: z.string(),
 
   PORT: z.string().transform(Number),
-  ENV: z.enum(["dev", "staging", "prod"]),
+  ENV: z.enum(["Development", "Staging", "Production"]),
 });
 
 const env = envSchema.safeParse(process.env);

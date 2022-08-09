@@ -8,6 +8,7 @@ import { getGuild } from "~shared/utils/getGuild.ts";
 import { hasPermsOnChannel } from "~shared/utils/hasPerms.ts";
 import { logger } from "~shared/utils/logger.ts";
 import { createWebhook, executeWebhook, removeWebhook } from "~shared/utils/webhook.ts";
+import { botConstants } from "../../../_shared/constants.ts";
 import { getChannelId } from "../../utils/interactionOptions.ts";
 import { CommandExecuteProps, EphemeralFlag } from "../mod.ts";
 
@@ -82,8 +83,8 @@ export const setThreadCommand = async ({ bot, i, lang, curr, server }: CommandEx
       });
 
     const { error, data } = await createWebhook(bot, parentId, {
-      name: config.NAME_ON_WEBHOOK,
-      avatar: config.BASE64_LOGO_ON_WEBHOOK,
+      name: botConstants.webhookName(false),
+      avatar: config.BASE64_LOGO,
       reason: "The free game notifications will be delivered via this webhook",
     });
 
