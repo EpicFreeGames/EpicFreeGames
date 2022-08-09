@@ -57,7 +57,11 @@ const env2Schema = envSchema.and(
   })
 );
 
-const result2 = env2Schema.safeParse({ ...result.data, botId, base64Logo });
+const result2 = env2Schema.safeParse({
+  ...result.data,
+  BOT_ID: botId,
+  BASE64_LOGO: base64Logo,
+});
 
 if (!result2.success) {
   console.log(
