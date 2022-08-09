@@ -68,7 +68,7 @@ jobs:
             REGISTRY=${{ secrets.REGISTRY }} \
             REGISTRY_USER=${{ secrets.REGISTRY_USER }} \
             COMMIT_SHA=${{ github.sha }} \
-              docker compose pull \
+              docker compose pull && \
             REGISTRY=${{ secrets.REGISTRY }} \
             REGISTRY_USER=${{ secrets.REGISTRY_USER }} \
             COMMIT_SHA=${{ github.sha }} \
