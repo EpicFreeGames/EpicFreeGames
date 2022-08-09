@@ -58,4 +58,4 @@ jobs:
             REGISTRY=${{ secrets.REGISTRY }} \
             REGISTRY_USER=${{ secrets.REGISTRY_USER }} \
             COMMIT_SHA=${{ github.sha }} \
-            docker compose up -d ${{ inputs.service }}"
+              docker compose up -d ${{ inputs.service }} --force-recreate"
