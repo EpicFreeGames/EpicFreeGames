@@ -60,7 +60,6 @@ jobs:
           tags: |
             type=ref,event=branch
             type=sha
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
@@ -85,7 +84,6 @@ jobs:
         run: |
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
-
   dash-ci:
     name: "Dash: Typecheck"
     runs-on: ubuntu-latest
@@ -134,7 +132,6 @@ jobs:
           tags: |
             type=ref,event=branch
             type=sha
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
@@ -159,7 +156,6 @@ jobs:
         run: |
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
-
   front-ci:
     name: "Front: Typecheck"
     runs-on: ubuntu-latest
@@ -213,7 +209,6 @@ jobs:
           tags: |
             type=ref,event=branch
             type=sha
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
@@ -301,7 +296,6 @@ jobs:
           tags: |
             type=ref,event=branch
             type=sha
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
@@ -328,31 +322,16 @@ jobs:
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
 
-  api-deploy-staging:
-    name: "Api: Deploy to Staging"
-    needs: api-docker-build-push
+  api-dash-bot-deploy-staging:
+    name: "Api, Dash, Bot: Deploy to Staging"
+    needs:
+      - api-docker-build-push
+      - dash-docker-build-push
+      - bot-docker-build-push
     uses: ./.github/workflows/ssh-deploy.yml
     secrets: inherit
     with:
-      service: api
-      env: Staging
-
-  dash-deploy-staging:
-    name: "Dash: Deploy to Staging"
-    needs: dash-docker-build-push
-    uses: ./.github/workflows/ssh-deploy.yml
-    secrets: inherit
-    with:
-      service: dash
-      env: Staging
-
-  bot-deploy-staging:
-    name: "Bot: Deploy to Staging"
-    needs: bot-docker-build-push
-    uses: ./.github/workflows/ssh-deploy.yml
-    secrets: inherit
-    with:
-      service: "bot_bot bot_sender bot_rest-proxy bot_gateway-proxy"
+      service: api dash bot_bot bot_sender bot_rest-proxy bot_gateway-proxy
       env: Staging
 
   front-deploy-staging:
