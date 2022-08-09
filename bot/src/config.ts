@@ -50,15 +50,12 @@ const base64Logo = `data:image/png;base64,${await getBase64Image(
   botConstants.botLogoUrl(result.data.ENV)
 )}`;
 
-const env2Schema = envSchema.and(
-  z.object({
-    BOT_ID: z.bigint(),
-    BASE64_LOGO: z.string(),
-  })
-);
+const env2Schema = z.object({
+  BOT_ID: z.bigint(),
+  BASE64_LOGO: z.string(),
+});
 
 const result2 = env2Schema.safeParse({
-  ...result.data,
   BOT_ID: botId,
   BASE64_LOGO: base64Logo,
 });
