@@ -329,7 +329,7 @@ jobs:
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
 
   api-dash-bot-deploy-staging:
-    name: "Api: Deploy to Staging"
+    name: "Api, Dash, Bot: Deploy to Staging"
     needs: 
       - api-docker-build-push
       - dash-docker-build-push
