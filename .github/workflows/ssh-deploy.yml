@@ -50,7 +50,7 @@ jobs:
 
       - name: Create folder
         run: ssh server -q "mkdir -p ~/efg-${{ inputs.env }}"
-        
+
       - name: Update Docker compose file
         run: rsync ./docker-compose.yml user@server:/home/user/efg-${{ inputs.env }}/docker-compose.yml
 
@@ -65,6 +65,10 @@ jobs:
           ssh server -q \
             "cd ~/efg-${{ inputs.env }} && \
             echo "${{ secrets.ENV_BASE64 }}" | base64 --decode > .env && \
+            REGISTRY=${{ secrets.REGISTRY }} \
+            REGISTRY_USER=${{ secrets.REGISTRY_USER }} \
+            COMMIT_SHA=${{ github.sha }} \
+              docker compose pull \
             REGISTRY=${{ secrets.REGISTRY }} \
             REGISTRY_USER=${{ secrets.REGISTRY_USER }} \
             COMMIT_SHA=${{ github.sha }} \
