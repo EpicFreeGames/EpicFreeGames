@@ -1,4 +1,5 @@
 import { Embed } from "discordeno";
+import { config } from "../../config.ts";
 import { botConstants } from "../constants.ts";
 import { t } from "../i18n/translate.ts";
 import { Currency, Language, Server } from "../types.ts";
@@ -13,7 +14,7 @@ export const help = (language: Language): Embed => ({
     `[${t({ language, key: "support_click_here" })}](${botConstants.serverInvite})` +
     utils.footer(language),
   thumbnail: {
-    url: botConstants.botLogo,
+    url: botConstants.botLogoUrl(config.ENV),
   },
 });
 

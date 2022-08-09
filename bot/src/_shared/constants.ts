@@ -16,7 +16,6 @@ export const botConstants = {
     "Discordlist.gg": "https://discordlist.gg/bot/719806770133991434/vote",
   },
 
-  botLogo: `https://staging.epicfreegames.net/assets/images/logos/${config.ENV}.png`,
   botLogoUrl: (env: string) => `https://staging.epicfreegames.net/assets/images/logos/${env}.png`,
 
   webhookName: (sending = false) => `${config.ENV}-EpicFreeGames${sending ? "" : " Notifications"}`,
