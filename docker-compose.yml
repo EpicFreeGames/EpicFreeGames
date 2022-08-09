@@ -9,35 +9,6 @@ services:
     networks:
       - proxy
 
-  bot_rest-proxy:
-    image: ${REGISTRY}/${REGISTRY_USER}/efg-bot_rest-proxy:master
-    restart: unless-stopped
-    env_file:
-      - .env
-    environment:
-      PORT: 3000
-      ENV: prod
-      REDISHOST: redis
-      REDISPORT: 6379
-    networks:
-      - proxy
-
-  bot_sender:
-    depends_on:
-      - redis
-      - bot_rest-proxy
-    image: ${REGISTRY}/${REGISTRY_USER}/efg-bot_sender:master
-    restart: unless-stopped
-    env_file:
-      - .env
-    environment:
-      PORT: 3000
-      ENV: prod
-      REDISHOST: redis
-      REDISPORT: 6379
-    networks:
-      - proxy
-
   api:
     depends_on:
       - redis
@@ -82,6 +53,51 @@ services:
       - "traefik.http.routers.efg-dash.rule=Host(`staging-dash.epicfreegames.net`)"
       - "traefik.http.services.efg-dash.loadbalancer.server.port=3000"
       - "traefik.docker.network=proxy"
+    networks:
+      - proxy
+
+  front:
+    image: ${REGISTRY}/${REGISTRY_USER}/efg-front:master
+    restart: unless-stopped
+    env_file:
+      - .env
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.efg-front.entrypoints=https"
+      - "traefik.http.routers.efg-front.tls=true"
+      - "traefik.http.routers.efg-front.service=efg-front"
+      - "traefik.http.routers.efg-front.rule=Host(`staging.epicfreegames.net`)"
+      - "traefik.http.services.efg-front.loadbalancer.server.port=3000"
+      - "traefik.docker.network=proxy"
+    networks:
+      - proxy
+
+  bot_rest-proxy:
+    image: ${REGISTRY}/${REGISTRY_USER}/efg-bot_rest-proxy:master
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      PORT: 3000
+      ENV: prod
+      REDISHOST: redis
+      REDISPORT: 6379
+    networks:
+      - proxy
+
+  bot_sender:
+    depends_on:
+      - redis
+      - bot_rest-proxy
+    image: ${REGISTRY}/${REGISTRY_USER}/efg-bot_sender:master
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      PORT: 3000
+      ENV: prod
+      REDISHOST: redis
+      REDISPORT: 6379
     networks:
       - proxy
 

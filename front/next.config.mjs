@@ -8,7 +8,7 @@ export default defineNextConfig({
   redirects: async () => {
     return [
       {
-        source: "/r/website/:path*",
+        source: "/r/browser/:path*",
         destination: "https://epicgames.com/:path*",
         permanent: false,
       },
