@@ -46,7 +46,9 @@ if (!result.success) {
 }
 
 const botId = BigInt(atob(result.data.BOT_TOKEN.split(".")?.at(0) ?? ""));
-const base64Logo = `data:image/png;base64,${await getBase64Image(botConstants.botLogo)}`;
+const base64Logo = `data:image/png;base64,${await getBase64Image(
+  botConstants.botLogoUrl(result.data.ENV)
+)}`;
 
 const env2Schema = envSchema.and(
   z.object({
