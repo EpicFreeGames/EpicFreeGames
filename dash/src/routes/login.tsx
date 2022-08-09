@@ -38,10 +38,10 @@ export const handler: Handlers<Data | null> = {
     return ctx.render({
       clientId: config.DISCORD_CLIENT_ID,
       redirectUri: encodeURI(config.DISCORD_REDIRECT_URL),
-      dev: config.ENV === "dev",
+      dev: config.ENV === "Development",
     });
   },
-  ...(config.ENV === "dev" && {
+  ...(config.ENV === "Development" && {
     POST: async (req, ctx) => {
       const { error, response } = await api({
         method: "GET",
