@@ -1,10 +1,12 @@
 import { z } from "zod";
 
 const envSchema = z.object({
-  API_BASEURL: z.string(),
+  EFG_API_BASEURL: z.string(),
 
   DISCORD_CLIENT_ID: z.string(),
   DISCORD_REDIRECT_URL: z.string(),
+
+  DENO_DEPLOYMENT_ID: z.string(),
 
   ENV: z.enum(["dev", "prod"]),
 });

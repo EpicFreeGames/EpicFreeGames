@@ -1,46 +1,57 @@
 scripts:
+  start-redis: 
+    - desc: Start Redis Docker container
+      cmd: docker run -d --name efg-dev-redis-stack -p 6379:6379 -p 3002:8001 redis/redis-stack:latest
+
   start:
     pll:
       - desc: API
-        cmd: cd ./api && dotenv -e ../.env-api yarn dev
+        cmd: cd ./api && yarn && dotenv -e ../.env-dev yarn dev
         env:
-          PORT: "3001"
+          PORT: "3010"
 
       - desc: bot-rest-proxy
         cmd: |
           ./wait.sh 3001 15 &&
           cd ./bot && deno run -A --watch src/rest-proxy/mod.ts
-        envFile: .env-bot
+        envFile: .env-dev
         env:
-          PORT: "3010"
-
-      - desc: bot-gateway-proxy
-        cmd: |
-          ./wait.sh 3010 15 && 
-          cd ./bot && deno run -A --watch src/gateway-proxy/mod.ts
-        envFile: .env-bot
+          PORT: "3011"
 
       - desc: bot-sender
         cmd: |
           ./wait.sh 3010 15 && 
+          ./wait.sh 3011 15 && 
           cd ./bot && deno run -A --watch src/sender/mod.ts
-        envFile: .env-bot
+        envFile: .env-dev
         env:
-          PORT: "3011"
+          PORT: "3012"
 
       - desc: bot-bot
         cmd: |
           ./wait.sh 3010 15 && 
           ./wait.sh 3011 15 && 
           cd ./bot && deno run -A --watch src/bot/mod.ts
-        envFile: .env-bot
+        envFile: .env-dev
         env:
-          PORT: "3012"
+          PORT: "3013"
+      
+      - desc: bot-gateway-proxy
+        cmd: |
+          ./wait.sh 3011 15 && 
+          cd ./bot && deno run -A --watch src/gateway-proxy/mod.ts
+        envFile: .env-dev
 
       - desc: Dashboard
         cmd: |
-          ./wait.sh 3001 15 && 
+          ./wait.sh 3010 15 && 
           cd ./dash && deno run -A --watch= src/dev.ts twind.config.ts
-        envFile: ./.env-dash
+        envFile: .env-dev
+        env:
+          PORT: "3001"
+      
+      - desc: Front
+        cmd: |
+          cd ./front && yarn && yarn dev
         env:
           PORT: "3000"

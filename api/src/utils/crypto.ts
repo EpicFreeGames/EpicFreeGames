@@ -9,4 +9,4 @@ export const safeEqual = (a: string, b: string) => {
 };
 
 export const hmacSha256 = (plaintext: string) =>
-  createHmac("sha256", config.APP_SECRET).update(plaintext).digest("hex");
+  createHmac("sha256", config.EFG_API_SECRET).update(plaintext).digest("hex");

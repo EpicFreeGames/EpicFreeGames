@@ -1,6 +1,7 @@
 import { GatewayIntents } from "discordeno";
 import { z } from "zod";
 import { getBase64Image } from "~shared/utils/getBase64Image.ts";
+import { botConstants } from "./_shared/constants.ts";
 
 const Intents: GatewayIntents = GatewayIntents.DirectMessages | GatewayIntents.Guilds;
 
@@ -29,26 +30,11 @@ const envSchema = z.object({
 
   DEV_GUILD_ID: z.string().optional(),
 
-  API_BOT_SECRET: z.string(),
-  API_BASEURL: z.string(),
+  EFG_API_BOT_SECRET: z.string(),
+  EFG_API_BASEURL: z.string(),
   DISCORD_API_BASEURL: z.string(),
 
-  GIFS_VOTE: z.string(),
-  GIFS_INVITE: z.string(),
-  PHOTOS_THUMBNAIL: z.string(),
-
-  LINKS_BOT_INVITE: z.string(),
-  LINKS_SERVER_INVITE: z.string(),
-  LINKS_WEBSITE: z.string(),
-  LINKS_COMMANDS: z.string(),
-  LINKS_BROWSER_REDIRECT: z.string(),
-  LINKS_LAUNCHER_REDIRECT: z.string(),
-
-  VOTE_TOPGG: z.string(),
-  VOTE_DLISTGG: z.string(),
-
-  NAME_ON_WEBHOOK: z.string(),
-  LOGO_URL_ON_WEBHOOK: z.string(),
+  ENV: z.enum(["dev", "staging", "prod"]),
 });
 
 const result = envSchema.safeParse(Deno.env.toObject());
@@ -59,11 +45,29 @@ if (!result.success) {
   Deno.exit(1);
 }
 
+const botId = BigInt(atob(result.data.BOT_TOKEN.split(".")?.at(0) ?? ""));
+const base64Logo = `data:image/png;base64,${await getBase64Image(botConstants.botLogo)}`;
+
+const env2Schema = envSchema.and(
+  z.object({
+    BOT_ID: z.bigint(),
+    BASE64_LOGO: z.string(),
+  })
+);
+
+const result2 = env2Schema.safeParse({ ...result.data, botId, base64Logo });
+
+if (!result2.success) {
+  console.log(
+    "❌ Invalid environment variables (schema2):",
+    JSON.stringify(result2.error.format(), null, 4)
+  );
+
+  Deno.exit(1);
+}
+
 export const config = {
   ...result.data,
-  BOT_ID: BigInt(atob(result.data.BOT_TOKEN.split(".")?.at(0) ?? "")),
+  ...result2.data,
   Intents,
-  BASE64_LOGO_ON_WEBHOOK: `data:image/png;base64,${await getBase64Image(
-    result.data.LOGO_URL_ON_WEBHOOK
-  )}`,
 };

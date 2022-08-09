@@ -1,5 +1,5 @@
 import { Embed } from "discordeno";
-import { config } from "~config";
+import { botConstants } from "../constants.ts";
 import { t } from "../i18n/translate.ts";
 import { Currency, Language, Server } from "../types.ts";
 import { colors, utils } from "./embedUtils.ts";
@@ -8,12 +8,12 @@ export const help = (language: Language): Embed => ({
   title: "Help",
   color: colors.green,
   description:
-    `[${t({ language, key: "commands_listed" })}](${config.LINKS_COMMANDS})` +
+    `[${t({ language, key: "commands_listed" })}](${botConstants.websiteCommands})` +
     "\n\n" +
-    `[${t({ language, key: "support_click_here" })}](${config.LINKS_SERVER_INVITE})` +
+    `[${t({ language, key: "support_click_here" })}](${botConstants.serverInvite})` +
     utils.footer(language),
   thumbnail: {
-    url: config.PHOTOS_THUMBNAIL,
+    url: botConstants.botLogo,
   },
 });
 
@@ -21,23 +21,18 @@ export const vote = (language: Language): Embed => ({
   title: t({ language, key: "vote" }),
   color: colors.blue,
   description:
-    utils.bold("Top.gg") +
-    "\n" +
-    config.VOTE_TOPGG +
-    "\n\n" +
-    utils.bold("Discordlist.gg") +
-    "\n" +
-    config.VOTE_DLISTGG +
-    utils.footer(language),
+    Object.entries(botConstants.voteLinks)
+      .map(([name, link]) => `${utils.bold(name)}\n${link}`)
+      .join("\n\n") + utils.footer(language),
 });
 
 export const invite = (language: Language): Embed => ({
   title: t({ language, key: "invite" }),
   color: colors.blue,
   image: {
-    url: config.GIFS_INVITE,
+    url: botConstants.inviteGif,
   },
-  description: config.LINKS_BOT_INVITE,
+  description: botConstants.botInvite,
 });
 
 export const debug = (guildId: string): Embed => ({

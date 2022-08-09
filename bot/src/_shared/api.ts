@@ -26,11 +26,11 @@ type Args =
     };
 
 export async function api<TData>({ method, path, body }: Args): Promise<ApiResponse<TData>> {
-  return fetch(`${config.API_BASEURL}${path}`, {
+  return fetch(`${config.EFG_API_BASEURL}${path}`, {
     method,
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bot ${config.API_BOT_SECRET}`,
+      Authorization: `Bot ${config.EFG_API_BOT_SECRET}`,
     },
     ...(!!body && { body: await serialize(body) }),
   })
@@ -47,9 +47,9 @@ export async function api<TData>({ method, path, body }: Args): Promise<ApiRespo
     })
     .catch(async (err) => {
       logger.error(
-        `API request failed\nRequest url: ${config.API_BASEURL}${path}\nError: ${await serialize(
-          err
-        )}`
+        `API request failed\nRequest url: ${
+          config.EFG_API_BASEURL
+        }${path}\nError: ${await serialize(err)}`
       );
 
       return {

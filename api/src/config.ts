@@ -10,10 +10,8 @@ const envSchema = z.object({
   REDISUSER: z.string().optional(),
   REDISPASS: z.string().optional(),
 
-  APP_URL: z.string(),
-
-  APP_SECRET: z.string(),
-  BOT_SECRET: z.string(),
+  EFG_API_SECRET: z.string(),
+  EFG_API_BOT_SECRET: z.string(),
 
   DISCORD_CLIENT_ID: z.string(),
   DISCORD_CLIENT_SECRET: z.string(),
@@ -24,7 +22,7 @@ const envSchema = z.object({
   SENDER_AUTH: z.string(),
 
   PORT: z.string().transform(Number),
-  ENV: z.enum(["dev", "prod"]),
+  ENV: z.enum(["dev", "staging", "prod"]),
 });
 
 const env = envSchema.safeParse(process.env);

@@ -68,7 +68,9 @@ export default function Login({ data }: PageProps<Data>) {
 
         <a
           className={tw`btn-blue-border`}
-          href={`https://discord.com/api/oauth2/authorize?client_id=${data.clientId}&redirect_uri=${data.redirectUri}&response_type=code&scope=identify`}
+          href={`https://discord.com/api/oauth2/authorize?client_id=${
+            data.clientId
+          }&redirect_uri=${encodeURI(data.redirectUri)}&response_type=code&scope=identify`}
         >
           Login with Discord
         </a>

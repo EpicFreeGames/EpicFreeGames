@@ -1,4 +1,4 @@
-import { config } from "~config";
+import { botConstants } from "../constants.ts";
 import { t } from "../i18n/translate.ts";
 import { Language } from "../types.ts";
 
@@ -30,9 +30,9 @@ const createFooter = (language: Language) => {
 
   const list = [invite, support, website];
   const withVars = [
-    `[${invite}](${config.LINKS_BOT_INVITE})`,
-    `[${support}](${config.LINKS_SERVER_INVITE})`,
-    `[${website}](${config.LINKS_WEBSITE})`,
+    `[${invite}](${botConstants.botInvite})`,
+    `[${support}](${botConstants.serverInvite})`,
+    `[${website}](${botConstants.website})`,
   ];
 
   const separator = " • ";

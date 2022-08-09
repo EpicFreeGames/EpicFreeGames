@@ -120,7 +120,6 @@ services:
       - api
       - redis
       - bot_rest-proxy
-      - bot_gateway-proxy
     image: ${REGISTRY}/${REGISTRY_USER}/efg-bot_bot:master
     restart: unless-stopped
     env_file:

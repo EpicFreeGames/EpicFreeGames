@@ -1,5 +1,5 @@
 import { Embed } from "discordeno";
-import { config } from "~config";
+import { botConstants } from "../constants.ts";
 import { t } from "../i18n/translate.ts";
 import { Language } from "../types.ts";
 import { ResultMap } from "../utils/hasPerms.ts";
@@ -34,7 +34,7 @@ export const missingPermissions = (
       .join("\n") +
     "```" +
     "\n" +
-    utils.link(t({ language, key: "support_click_here" }), config.LINKS_SERVER_INVITE),
+    utils.link(t({ language, key: "support_click_here" }), botConstants.serverInvite),
 });
 
 export const unauthorized = {
@@ -50,7 +50,7 @@ export const unauthorized = {
     description:
       t({ language, key: "manage_guild_needed" }) +
       "\n\n" +
-      utils.link(t({ language, key: "support_click_here" }), config.LINKS_SERVER_INVITE) +
+      utils.link(t({ language, key: "support_click_here" }), botConstants.serverInvite) +
       utils.footer(language),
   }),
 };
@@ -61,7 +61,7 @@ export const maxNumberOfWebhooks = (language: Language): Embed => ({
   description:
     t({ language, key: "ten_webhooks_only" }) +
     "\n\n" +
-    utils.link(t({ language, key: "support_click_here" }), config.LINKS_SERVER_INVITE) +
+    utils.link(t({ language, key: "support_click_here" }), botConstants.serverInvite) +
     utils.footer(language),
 });
 

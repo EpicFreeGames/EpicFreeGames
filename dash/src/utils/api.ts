@@ -30,7 +30,7 @@ type Args =
     };
 
 export function api<TData>({ method, path, body, auth }: Args): Promise<ApiResponse<TData>> {
-  return fetch(`${config.API_BASEURL}${path}`, {
+  return fetch(`${config.EFG_API_BASEURL}${path}`, {
     method,
     credentials: "include",
     headers: {
@@ -65,11 +65,9 @@ export function api<TData>({ method, path, body, auth }: Args): Promise<ApiRespo
         errorStuff.append("message", json?.message || "unknown error");
 
         console.error(
-          `API request failed\nRequest url: ${config.API_BASEURL}${path}\nError: ${JSON.stringify(
-            json,
-            null,
-            2
-          )}`
+          `API request failed\nRequest url: ${
+            config.EFG_API_BASEURL
+          }${path}\nError: ${JSON.stringify(json, null, 2)}`
         );
 
         if (res.status === 401)
@@ -94,7 +92,7 @@ export function api<TData>({ method, path, body, auth }: Args): Promise<ApiRespo
     })
     .catch((err) => {
       console.error(
-        `API request failed\nRequest url: ${config.API_BASEURL}${path}\nError: ${JSON.stringify(
+        `API request failed\nRequest url: ${config.EFG_API_BASEURL}${path}\nError: ${JSON.stringify(
           err,
           null,
           2

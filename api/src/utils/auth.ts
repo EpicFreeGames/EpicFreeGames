@@ -15,7 +15,7 @@ export const auth =
         message: "No auth provided",
       });
 
-    if (botToken && safeEqual(botToken, config.BOT_SECRET)) return next();
+    if (botToken && safeEqual(botToken, config.EFG_API_BOT_SECRET)) return next();
 
     const userFlags = req.session?.user?.flags || 0;
 

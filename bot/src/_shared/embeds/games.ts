@@ -1,5 +1,5 @@
 import { Embed } from "discordeno";
-import { config } from "~config";
+import { botConstants } from "../constants.ts";
 import { t } from "../i18n/translate.ts";
 import { Currency, Game, Language } from "../types.ts";
 import { getGamePrice } from "../utils/getGamePrice.ts";
@@ -24,12 +24,12 @@ export const gameEmbed = (game: Game, language: Language, currency: Currency): E
       
       utils.link(
         "Epicgames.com",
-        `${config.LINKS_BROWSER_REDIRECT}${game.path}`
+        botConstants.browserRedirect(game.path)
       ) +
       " • " +
       utils.link(
         "Epic Launcher",
-        `${config.LINKS_LAUNCHER_REDIRECT}${game.path}`
+        botConstants.launcherRedirect(game.path)
       ) +
 
       "\n\n" +
