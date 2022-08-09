@@ -59,8 +59,6 @@ services:
   front:
     image: ${REGISTRY}/${REGISTRY_USER}/efg-front:master
     restart: unless-stopped
-    env_file:
-      - .env
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.efg-front.entrypoints=https"
