@@ -8,7 +8,7 @@ const envSchema = z.object({
 
   DENO_DEPLOYMENT_ID: z.string(),
 
-  ENV: z.enum(["dev", "prod"]),
+  ENV: z.enum(["Development", "Staging", "Production"]),
 });
 
 const result = envSchema.safeParse(Deno.env.toObject());
