@@ -6,6 +6,7 @@ import { Input } from "~components/Input.tsx";
 import { BackButton } from "~components/Layout/BackButton.tsx";
 import { Layout } from "~components/Layout/Layout.tsx";
 import { api } from "~utils/api.ts";
+import { stringifyFormData } from "~utils/formData.ts";
 import { Handlers } from "~utils/freshTypes.ts";
 import { getHtmlDate } from "~utils/string.tsx";
 import { IGame } from "../../../types.ts";
@@ -18,7 +19,7 @@ export const handler: Handlers<IGame> = {
     const { error } = await api<IGame>({
       method: "PATCH",
       path: `/games/${gameId}`,
-      body: JSON.stringify(formData),
+      body: stringifyFormData(formData),
       auth: ctx.state.auth,
     });
 

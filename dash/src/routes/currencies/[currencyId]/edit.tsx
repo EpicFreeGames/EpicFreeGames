@@ -6,6 +6,7 @@ import { Input } from "~components/Input.tsx";
 import { BackButton } from "~components/Layout/BackButton.tsx";
 import { Layout } from "~components/Layout/Layout.tsx";
 import { api } from "~utils/api.ts";
+import { stringifyFormData } from "~utils/formData.ts";
 import { Handlers } from "~utils/freshTypes.ts";
 import { ICurrency } from "../../../types.ts";
 
@@ -17,7 +18,7 @@ export const handler: Handlers<ICurrency> = {
     const { error } = await api<ICurrency>({
       method: "PATCH",
       path: `/currencies/${currencyId}`,
-      body: JSON.stringify(formData),
+      body: stringifyFormData(formData),
       auth: ctx.state.auth,
     });
 
