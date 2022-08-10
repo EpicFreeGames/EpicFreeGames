@@ -12,6 +12,8 @@ export const handler: Handlers = {
       path: `/auth/discord?code=${code}`,
     });
 
+    console.log({ response, error });
+
     if (error) return error;
 
     return new Response(null, {
