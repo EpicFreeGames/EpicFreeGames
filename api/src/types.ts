@@ -10,3 +10,9 @@ declare module "express-session" {
     user: User;
   }
 }
+
+declare global {
+  interface BigInt {
+    toJSON: () => string;
+  }
+}
