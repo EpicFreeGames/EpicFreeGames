@@ -1,6 +1,7 @@
 import prisma from "../prisma";
 import { auth } from "../utils/auth";
 import { Flags } from "../utils/flags";
+import { discordIdSchema } from "../utils/jsonfix";
 import { withValidation } from "../utils/withValidation";
 import { Router } from "express";
 import { z } from "zod";
@@ -16,7 +17,7 @@ router.post(
         .object({
           command: z.string(),
           senderId: z.string(),
-          serverId: z.string(),
+          serverId: discordIdSchema,
           error: z.string().nullable(),
         })
         .strict(),

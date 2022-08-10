@@ -34,7 +34,7 @@ model GamePrice {
 }
 
 model Server {
-  id           String       @id @unique
+  id           BigInt       @id @unique
   roleId       String?
   channelId    String?
   threadId     String?
@@ -63,7 +63,7 @@ model CommandLog {
   id       String  @id @default(cuid())
   command  String
   senderId String
-  serverId String?
+  serverId BigInt?
   server   Server? @relation(fields: [serverId], references: [id], onDelete: Cascade)
   error    String?
 }
@@ -73,7 +73,7 @@ model SendingLog {
   type      SendingLogType
   result    String
   success   Boolean
-  serverId  String
+  serverId  BigInt
   server    Server         @relation(fields: [serverId], references: [id], onDelete: Cascade)
   sending   Sending        @relation(fields: [sendingId], references: [id], onDelete: Cascade)
   sendingId String

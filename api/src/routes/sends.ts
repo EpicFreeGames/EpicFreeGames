@@ -2,6 +2,7 @@ import { config } from "../config";
 import prisma from "../prisma";
 import { auth } from "../utils/auth";
 import { Flags } from "../utils/flags";
+import { discordIdSchema } from "../utils/jsonfix";
 import { withValidation } from "../utils/withValidation";
 import axios from "axios";
 import { Router } from "express";
@@ -16,6 +17,54 @@ router.get("/", auth(Flags.GetSendings), async (req, res) => {
 
   res.json(sends);
 });
+
+router.get(
+  "/servers-to-send",
+  auth(Flags.GetServers),
+  withValidation(
+    {
+      query: z.object({
+        after: discordIdSchema.optional(),
+        sendingId: z.string().optional(),
+      }),
+    },
+    async (req, res) => {
+      const { after, sendingId } = req.query;
+
+      const servers = await prisma.server.findMany({
+        include: { currency: true },
+        orderBy: {
+          id: "asc",
+        },
+        where: {
+          channelId: { not: null },
+        },
+        take: 10,
+        ...(after
+          ? {
+              cursor: {
+                id: after,
+              },
+              skip: 1,
+            }
+          : {}),
+        ...(sendingId
+          ? {
+              where: {
+                sendingLogs: {
+                  none: {
+                    id: sendingId,
+                  },
+                },
+              },
+            }
+          : {}),
+      });
+
+      res.json(servers);
+    }
+  )
+);
 
 router.get(
   "/:sendingId",
@@ -142,30 +191,7 @@ router.post(
           message: "Sending not found",
         });
 
-      let noHook = await prisma.server.findMany({
-        where: { webhookId: null, webhookToken: null, channelId: { not: null } },
-        include: { currency: true },
-      });
-
-      let hook = await prisma.server.findMany({
-        where: { webhookId: { not: null }, webhookToken: { not: null }, channelId: { not: null } },
-        include: { currency: true },
-      });
-
-      if (sending.logs?.length) {
-        const serverIds = sending.logs.map((s) => s.serverId);
-        noHook = noHook.filter((s) => !serverIds.includes(s.id));
-        hook = hook.filter((s) => !serverIds.includes(s.id));
-      }
-
-      if (!noHook?.length && !hook?.length)
-        return res.status(404).send({
-          statusCode: 404,
-          error: "Not found",
-          message: "No servers found or all got filtered out",
-        });
-
-      await axios({
+      const senderResponse = await axios({
         method: "POST",
         url: config.SENDER_URL,
         headers: {
@@ -173,13 +199,13 @@ router.post(
         },
         data: {
           sendingId,
-          servers: {
-            noHook,
-            hook,
-          },
           games: sending.games,
         },
       });
+
+      console.log(JSON.stringify(senderResponse.data, null, 2));
+
+      res.status(senderResponse.data.success ? 204 : 500).send();
     }
   )
 );
@@ -190,7 +216,7 @@ router.post(
   withValidation(
     {
       body: z.object({
-        serverId: z.string(),
+        serverId: discordIdSchema,
         sendingId: z.string(),
         type: z.enum(["MESSAGE", "WEBHOOK"]),
         result: z.string(),

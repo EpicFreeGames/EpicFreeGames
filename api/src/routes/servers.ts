@@ -1,17 +1,12 @@
 import prisma from "../prisma";
 import { auth } from "../utils/auth";
 import { Flags } from "../utils/flags";
+import { discordIdSchema } from "../utils/jsonfix";
 import { withValidation } from "../utils/withValidation";
 import { Router } from "express";
 import { z } from "zod";
 
 const router = Router();
-
-router.get("/", auth(Flags.GetServers), async (req, res) => {
-  const servers = await prisma.server.findMany({ include: { currency: true }, take: 10000 });
-
-  res.json(servers);
-});
 
 router.get(
   "/:serverId",
@@ -20,7 +15,7 @@ router.get(
     {
       params: z
         .object({
-          serverId: z.string(),
+          serverId: discordIdSchema,
         })
         .strict(),
     },
@@ -50,7 +45,7 @@ router.put(
     {
       params: z
         .object({
-          serverId: z.string(),
+          serverId: discordIdSchema,
         })
         .strict(),
       body: z
@@ -110,7 +105,7 @@ router.delete(
     {
       params: z
         .object({
-          serverId: z.string(),
+          serverId: discordIdSchema,
         })
         .strict(),
     },
@@ -145,7 +140,7 @@ router.put(
     {
       params: z
         .object({
-          serverId: z.string(),
+          serverId: discordIdSchema,
         })
         .strict(),
       body: z
@@ -193,7 +188,7 @@ router.delete(
     {
       params: z
         .object({
-          serverId: z.string(),
+          serverId: discordIdSchema,
         })
         .strict(),
     },
@@ -226,7 +221,7 @@ router.put(
     {
       params: z
         .object({
-          serverId: z.string(),
+          serverId: discordIdSchema,
         })
         .strict(),
       body: z
@@ -284,7 +279,7 @@ router.delete(
     {
       params: z
         .object({
-          serverId: z.string(),
+          serverId: discordIdSchema,
         })
         .strict(),
     },
