@@ -22,6 +22,10 @@ export const ErrorPageLayout = ({ statusCode, error, message }: Props) => {
         </h1>
 
         <p className={tw`text-center text-gray-500`}>{statusMessage}</p>
+
+        <a className={tw`btn-red-border mt-12`} href="/logout">
+          Logout
+        </a>
       </main>
     </Base>
   );
