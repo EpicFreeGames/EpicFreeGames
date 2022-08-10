@@ -3,6 +3,7 @@
   "scripts": {
     "dev": "docker compose up --build -V --attach api --attach bot_rest-proxy --attach bot_gateway-proxy --attach bot_bot --attach dash",
     "db": "cd ./api/ && yarn dotenv -e ../.env-dev yarn prisma studio",
-    "dbpush": "cd ./api/ && yarn dotenv -e ../.env-dev yarn prisma db push"
+    "dbpush": "cd ./api/ && yarn dotenv -e ../.env-dev yarn prisma db push",
+    "dbreset": "cd ./api/ && yarn dotenv -e ../.env-dev yarn prisma migrate reset"
   }
 }

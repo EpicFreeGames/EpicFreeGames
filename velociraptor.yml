@@ -3,6 +3,12 @@ scripts:
     - desc: Start Redis Docker container
       cmd: docker run -d --name efg-dev-redis-stack -p 6379:6379 -p 3002:8001 redis/redis-stack:latest
 
+  start-api:
+    - desc: Start Api
+      cmd: cd ./api && yarn && dotenv -e ../.env-dev yarn dev
+      env:
+        PORT: "3010"
+
   start:
     pll:
       - desc: API
