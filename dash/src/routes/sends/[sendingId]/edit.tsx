@@ -92,7 +92,7 @@ export default function EditGamePage({ data: { sending, games }, url }: PageProp
           </select>
 
           <div className={tw`flex gap-2 justify-between items-center`}>
-            <a className={tw`btn-light-gray`} href="/games">
+            <a className={tw`btn-light-gray`} href="/sends">
               Cancel
             </a>
 
