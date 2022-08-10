@@ -8,10 +8,9 @@ import { getGuild } from "~shared/utils/getGuild.ts";
 import { hasPermsOnChannel } from "~shared/utils/hasPerms.ts";
 import { logger } from "~shared/utils/logger.ts";
 import { sender } from "./mod.ts";
-import { ChannelServer } from "./send.ts";
-import { logLog, wait } from "./utils.ts";
+import { logLog, MessageServer, wait } from "./utils.ts";
 
-export const channelSender = async (games: Game[], servers: ChannelServer[], sendingId: string) => {
+export const messageSender = async (games: Game[], servers: MessageServer[], sendingId: string) => {
   for (const server of servers) {
     await wait(30);
 
@@ -49,7 +48,7 @@ export const channelSender = async (games: Game[], servers: ChannelServer[], sen
         logLog({
           serverId: server.id,
           sendingId,
-          type: "channel",
+          type: "MESSAGE",
           result: `Missing perms, details: ${details
             .map((hasPerm, perm) => `${perm}: ${hasPerm}`)
             .join(", ")}`,

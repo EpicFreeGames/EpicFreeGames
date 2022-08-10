@@ -5,8 +5,7 @@ import { displayRole } from "~shared/utils/displayRole.ts";
 import { executeWebhook } from "~shared/utils/webhook.ts";
 import { logger } from "../_shared/utils/logger.ts";
 import { sender } from "./mod.ts";
-import { HookServer } from "./send.ts";
-import { logLog, wait } from "./utils.ts";
+import { HookServer, logLog, wait } from "./utils.ts";
 
 export const hookSender = async (games: Game[], servers: HookServer[], sendingId: string) => {
   for (const server of servers) {
@@ -35,7 +34,7 @@ export const hookSender = async (games: Game[], servers: HookServer[], sendingId
           return logLog({
             serverId: server.id,
             sendingId,
-            type: "hook",
+            type: "WEBHOOK",
             result: "ok",
             success: true,
           });
@@ -47,7 +46,7 @@ export const hookSender = async (games: Game[], servers: HookServer[], sendingId
           return logLog({
             serverId: server.id,
             sendingId,
-            type: "hook",
+            type: "WEBHOOK",
             result: JSON.stringify(json),
             success: false,
           });
@@ -58,7 +57,7 @@ export const hookSender = async (games: Game[], servers: HookServer[], sendingId
           return logLog({
             serverId: server.id,
             sendingId,
-            type: "hook",
+            type: "WEBHOOK",
             result: status + "",
             success: false,
           });
@@ -66,7 +65,7 @@ export const hookSender = async (games: Game[], servers: HookServer[], sendingId
         return logLog({
           serverId: server.id,
           sendingId,
-          type: "hook",
+          type: "WEBHOOK",
           result: "unknown",
           success: false,
         });
@@ -75,7 +74,7 @@ export const hookSender = async (games: Game[], servers: HookServer[], sendingId
         logLog({
           serverId: server.id,
           sendingId,
-          type: "hook",
+          type: "WEBHOOK",
           success: false,
           result: err?.message,
         })

@@ -4,7 +4,10 @@ import { handleCache } from "~shared/cache.ts";
 import { connectRedis } from "~shared/redis.ts";
 import { botRest } from "~shared/utils/botRest.ts";
 import { logger } from "~shared/utils/logger.ts";
+import { api } from "../_shared/api.ts";
+import { Server } from "../_shared/types.ts";
 import { send } from "./send.ts";
+import { filterServers } from "./utils.ts";
 
 export const sender = handleCache(
   createBot({
@@ -35,17 +38,53 @@ for await (const conn of httpServer) {
           })
         );
 
-      const { sendingId, servers, games } = await requestEvent.request.json();
+      const { sendingId, games } = await requestEvent.request.json();
 
-      const startedSending = send(sendingId, { servers, games });
+      let servers: Server[] = [];
 
-      if (!startedSending)
+      console.log("getting servers");
+
+      let resServers = await api<Server[]>({
+        method: "GET",
+        path: `/sends/servers-to-send`,
+        query: new URLSearchParams({
+          sendingId,
+        }),
+      });
+
+      while (resServers.data?.length) {
+        servers = [...servers, ...resServers.data];
+        console.log(servers.length, "servers");
+
+        resServers = await api<Server[]>({
+          method: "GET",
+          path: `/sends/servers-to-send`,
+          query: new URLSearchParams({
+            sendingId,
+            after: servers.at(-1)?.id + "",
+          }),
+        });
+      }
+
+      const filterResult = filterServers(servers);
+
+      if (filterResult.noServers)
         return requestEvent.respondWith(
-          new Response(JSON.stringify({ message: "sending was not started" }), { status: 500 })
+          new Response(
+            JSON.stringify({
+              message: "sending was not started, all servers got filtered out",
+              success: false,
+            }),
+            {
+              status: 500,
+            }
+          )
         );
 
+      send(sendingId, games, filterResult);
+
       return requestEvent.respondWith(
-        new Response(JSON.stringify({ message: "sending started" }), { status: 200 })
+        new Response(JSON.stringify({ message: "sending started", success: true }), { status: 200 })
       );
     }
   })();
