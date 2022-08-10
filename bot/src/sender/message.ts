@@ -28,7 +28,7 @@ export const messageSender = async (games: Game[], servers: MessageServer[], sen
       logLog({
         serverId: server.id,
         sendingId,
-        type: "channel",
+        type: "MESSAGE",
         result: "channel or guild not found",
         success: false,
       });
