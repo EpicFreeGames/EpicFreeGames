@@ -12,10 +12,18 @@ export const auth =
       return res.status(401).json({
         statusCode: 401,
         error: "Unauthorized",
-        message: "No auth provided",
+        message: "Invalid auth",
       });
 
-    if (botToken && safeEqual(botToken, config.EFG_API_BOT_SECRET)) return next();
+    if (botToken) {
+      if (safeEqual(botToken, config.EFG_API_BOT_SECRET)) return next();
+
+      return res.status(401).json({
+        statusCode: 401,
+        error: "Unauthorized",
+        message: "Invalid auth",
+      });
+    }
 
     const userFlags = req.session?.user?.flags || 0;
 
