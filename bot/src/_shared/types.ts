@@ -53,7 +53,7 @@ export type Server = {
 
 export type SendingLog = {
   sendingId: string;
-  type: string;
+  type: "MESSAGE" | "WEBHOOK";
   result: string;
   success: boolean;
   serverId: string;
