@@ -14,7 +14,7 @@ export const connectRedis = async () => {
   redis = await connect({
     hostname: config.REDISHOST,
     port: config.REDISPORT,
-    password: config.REDISPASSWORD,
+    password: config.REDISPASS,
     username: config.REDISUSER,
   });
 

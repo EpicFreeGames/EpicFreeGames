@@ -17,7 +17,7 @@ const envSchema = z.object({
   REDISHOST: z.string(),
   REDISPORT: z.string().transform(Number),
   REDISUSER: z.string().optional(),
-  REDISPASSWORD: z.string().optional(),
+  REDISPASS: z.string().optional(),
 
   SENDER_URL: z.string(),
   SENDER_AUTH: z.string(),
