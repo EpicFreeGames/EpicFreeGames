@@ -1,5 +1,5 @@
 import { Edit } from "tabler-icons-react";
-import { Dialog, DialogClose } from "~components/Dialog";
+import { Dialog, DialogCloseButton } from "~components/Dialog";
 import { Input } from "~components/Input";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -85,11 +85,9 @@ export const EditGame = ({ game }: Props) => {
         />
 
         <div className="flex gap-2 justify-between items-center">
-          <DialogClose>
-            <button className="btnBase p-2 bg-gray-600 hover:bg-gray-500/80 active:bg-gray-400/60">
-              Cancel
-            </button>
-          </DialogClose>
+          <DialogCloseButton className="btnBase p-2 bg-gray-600 hover:bg-gray-500/80 active:bg-gray-400/60">
+            Cancel
+          </DialogCloseButton>
 
           <button
             type="submit"
