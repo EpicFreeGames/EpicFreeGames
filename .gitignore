@@ -14,7 +14,7 @@ scrapers
 
 .env*
 
-/.next/
+**/.next/
 /out/
 /build
 npm-debug.log*

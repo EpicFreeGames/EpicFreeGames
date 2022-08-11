@@ -1,7 +1,7 @@
 scripts:
   start-redis: 
     - desc: Start Redis Docker container
-      cmd: docker run -d --name efg-dev-redis-stack -p 6379:6379 -p 3002:8001 redis/redis-stack:latest
+      cmd: docker run -d --name efg-dev-redis-stack -v redis:/data -p 6379:6379 -p 3002:8001 redis/redis-stack:latest
 
   start-api:
     - desc: Start Api
@@ -18,7 +18,7 @@ scripts:
 
       - desc: bot-rest-proxy
         cmd: |
-          ./wait.sh 3001 15 &&
+          ./wait.sh 3010 15 &&
           cd ./bot && deno run -A --watch src/rest-proxy/mod.ts
         envFile: .env-dev
         env:
@@ -51,7 +51,7 @@ scripts:
       - desc: Dashboard
         cmd: |
           ./wait.sh 3010 15 && 
-          cd ./dash && deno run -A --watch= src/dev.ts twind.config.ts
+          cd ./next-dash && yarn && yarn dev
         envFile: .env-dev
         env:
           PORT: "3001"

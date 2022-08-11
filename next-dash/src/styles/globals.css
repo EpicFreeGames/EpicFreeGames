@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .btnBase {
+    @apply flex items-center justify-center outline-none select-none cursor-default rounded-md transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500;
+  }
+}
+
+body {
+  @apply bg-gray-900 text-slate-100;
+}
