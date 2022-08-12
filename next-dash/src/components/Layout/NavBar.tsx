@@ -17,6 +17,6 @@ export const NavBar = () => {
 
 const NavLink = ({ children, href }: { children: ReactNode; href: string }) => (
   <Link href={href} passHref>
-    <a className="btnBase p-2 bg-gray-600 hover:bg-gray-500/90 active:bg-gray-400/90">{children}</a>
+    <a className="btnBase bg-gray-600 hover:bg-gray-500/90 active:bg-gray-400/90">{children}</a>
   </Link>
 );

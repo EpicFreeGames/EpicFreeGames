@@ -7,7 +7,7 @@ import { EditGame } from "./EditGame";
 export const Game = ({ game }: { game: IGame }) => {
   return (
     <div className="bg-gray-700 p-3 rounded-md flex flex-col gap-3">
-      <div className="flex gap-2 justify-between w-full flex-col halfMax:flex-row">
+      <div className="flex gap-2 justify-between w-full flex-col halfMax:flex-row items-start">
         <h2 className="bg-gray-800 py-2 px-3 rounded-md text-lg halfMax:text-2xl">
           {game.displayName}
         </h2>
@@ -62,7 +62,7 @@ const Confirmed = ({ game }: { game: IGame }) => {
 
   return (
     <button
-      className={`btnBase px-3 bg-gray-800 hover:bg-gray-900/80 active:bg-gray-900 ${
+      className={`btnBase bg-gray-800 hover:bg-gray-900/80 active:bg-gray-900 ${
         game.confirmed ? "text-green-500" : "text-red-500"
       } h-full`}
       onClick={() => mutateAsync({ gameId: game.id, updateData: { confirmed: !game.confirmed } })}

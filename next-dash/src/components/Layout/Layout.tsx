@@ -44,7 +44,9 @@ export const Layout = ({ children, title, titleButtons, segments }: Props) => {
             {hasButtons && (
               <div className="flex gap-3">
                 {titleButtons.map((TitleButton, i) => (
-                  <TitleButton key={i} />
+                  <div key={i} className="flex items-center">
+                    <TitleButton />
+                  </div>
                 ))}
               </div>
             )}

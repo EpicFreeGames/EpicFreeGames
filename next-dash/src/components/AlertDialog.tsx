@@ -29,7 +29,7 @@ export const AlertDialog = ({ title, description, trigger, action, open, setOpen
 
             <div className="flex justify-between">
               <AlertDialogPrimitive.Cancel asChild>
-                <button className="btnBase p-2 bg-gray-600 hover:bg-gray-500/80 active:bg-gray-400/60">
+                <button className="btnBase bg-gray-600 hover:bg-gray-500/80 active:bg-gray-400/60">
                   Cancel
                 </button>
               </AlertDialogPrimitive.Cancel>

@@ -44,7 +44,7 @@ export const EditGame = ({ game }: Props) => {
       title={`Edit ${game.name}`}
       trigger={
         <button className="btnBase px-3 bg-gray-800 hover:bg-gray-900/80 active:bg-gray-900">
-          <Edit strokeWidth={1.4} size={23} />
+          <Edit strokeWidth={1.3} size={21} />
         </button>
       }
     >
