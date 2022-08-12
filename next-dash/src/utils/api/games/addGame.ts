@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { IGame } from "~types";
 import { ApiError, apiRequest } from "../api";
 import { GameContext } from "./_sharedTypes";
@@ -11,7 +11,12 @@ export type AddGameProps = Omit<IGame, "id" | "sendingId" | "prices"> & {
 const addGameRequest = (props: AddGameProps) => apiRequest<IGame>("/games", "POST", props);
 
 export const useAddGameMutation = () => {
-  const mutation = useMutation<IGame, ApiError, AddGameProps, GameContext>(addGameRequest);
+  const qc = useQueryClient();
+  const mutation = useMutation<IGame, ApiError, AddGameProps, GameContext>(addGameRequest, {
+    onSuccess: () => {
+      qc.invalidateQueries(["games"]);
+    },
+  });
 
   return mutation;
 };

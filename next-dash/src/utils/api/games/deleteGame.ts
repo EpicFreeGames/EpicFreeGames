@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ApiError, apiRequest } from "../api";
 import { GameContext } from "./_sharedTypes";
 
@@ -10,7 +10,12 @@ const deleteGameRequest = ({ gameId }: DeleteGameProps) =>
   apiRequest<void>(`/games/${gameId}`, "DELETE");
 
 export const useDeleteGameMutation = () => {
-  const mutation = useMutation<void, ApiError, DeleteGameProps, GameContext>(deleteGameRequest);
+  const qc = useQueryClient();
+  const mutation = useMutation<void, ApiError, DeleteGameProps, GameContext>(deleteGameRequest, {
+    onSuccess: () => {
+      qc.invalidateQueries(["games"]);
+    },
+  });
 
   return mutation;
 };
