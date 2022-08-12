@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
-import { Trash } from "tabler-icons-react";
 import { useGameMutation } from "~utils/api/games/updateGame";
 import { IGame } from "../../types";
+import { DeleteGame } from "./DeleteGame";
 import { EditGame } from "./EditGame";
 
 export const Game = ({ game }: { game: IGame }) => {
@@ -18,12 +18,7 @@ export const Game = ({ game }: { game: IGame }) => {
           <div className="flex gap-2 justify-end">
             <EditGame game={game} />
 
-            <a
-              className="btnBase px-3 bg-gray-800 hover:bg-gray-900/80 active:bg-gray-900"
-              href={`/games/${game.id}/delete`}
-            >
-              <Trash strokeWidth={1.4} size={23} className="text-red-500" />
-            </a>
+            <DeleteGame game={game} />
           </div>
         </div>
       </div>
