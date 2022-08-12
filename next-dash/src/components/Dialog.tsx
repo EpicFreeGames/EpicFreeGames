@@ -12,27 +12,27 @@ type Props = {
   children: ReactNode;
   trigger: ReactNode;
   title: string | ReactNode;
+  open: boolean;
+  setOpen: (open: boolean) => void;
 };
 
-export const Dialog = ({ children, trigger, title }: Props) => {
-  return (
-    <DialogPrimitive.Root>
-      <DialogPrimitive.Trigger asChild>{trigger}</DialogPrimitive.Trigger>
+export const Dialog = ({ children, trigger, title, setOpen, open }: Props) => (
+  <DialogPrimitive.Root onOpenChange={setOpen} open={open}>
+    <DialogPrimitive.Trigger asChild>{trigger}</DialogPrimitive.Trigger>
 
-      <DialogPrimitive.Portal>
-        <DialogPrimitive.Overlay className="animate-fadeIn bg-gray-900/60 backdrop-blur-sm fixed inset-0" />
-        <DialogPrimitive.Content className="animate-fadeUp bg-gray-900/95 border-[1px] border-gray-700/70 rounded-md fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[90vw] max-w-[450px] p-3">
-          <div className="flex justify-between pb-3">
-            <DialogPrimitive.Title className="text-2xl">{title}</DialogPrimitive.Title>
+    <DialogPrimitive.Portal>
+      <DialogPrimitive.Overlay className="animate-fadeIn bg-gray-900/60 backdrop-blur-sm fixed inset-0" />
+      <DialogPrimitive.Content className="animate-fadeUp bg-gray-900/95 border-[1px] border-gray-700/70 rounded-md fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[90vw] max-w-[450px] p-3">
+        <div className="flex justify-between pb-3">
+          <DialogPrimitive.Title className="text-2xl">{title}</DialogPrimitive.Title>
 
-            <DialogX />
-          </div>
+          <DialogX />
+        </div>
 
-          {children}
-        </DialogPrimitive.Content>
-      </DialogPrimitive.Portal>
-    </DialogPrimitive.Root>
-  );
-};
+        {children}
+      </DialogPrimitive.Content>
+    </DialogPrimitive.Portal>
+  </DialogPrimitive.Root>
+);
 
 export const DialogCloseButton = DialogPrimitive.Close;

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { Trash } from "tabler-icons-react";
 import { AlertDialog } from "~components/AlertDialog";
@@ -9,17 +10,24 @@ type Props = {
 };
 
 export const DeleteGame = ({ game }: Props) => {
+  const [dialogOpen, setDialogOpen] = useState(false);
+
   const { mutateAsync } = useDeleteGameMutation();
 
-  const onSubmit = () =>
-    toast.promise(mutateAsync({ gameId: game.id }), {
+  const onSubmit = async () => {
+    await toast.promise(mutateAsync({ gameId: game.id }), {
       success: "Game deleted",
       error: "Error deleting game",
       loading: "Deleting game",
     });
 
+    setDialogOpen(false);
+  };
+
   return (
     <AlertDialog
+      open={dialogOpen}
+      setOpen={setDialogOpen}
       title="Delete game"
       description={`Are you sure you want to delete ${game.displayName}?`}
       trigger={

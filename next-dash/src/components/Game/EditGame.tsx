@@ -6,12 +6,15 @@ import { IGame } from "~types";
 import { getHtmlDate } from "~utils/getHtmlDate";
 import { UpdateGameProps, useEditGameMutation } from "~utils/api/games/editGame";
 import toast from "react-hot-toast";
+import { useState } from "react";
 
 type Props = {
   game: IGame;
 };
 
 export const EditGame = ({ game }: Props) => {
+  const [dialogOpen, setDialogOpen] = useState(false);
+
   const { mutateAsync } = useEditGameMutation();
 
   const { prices, sendingId, id, ...rest } = game;
@@ -24,15 +27,20 @@ export const EditGame = ({ game }: Props) => {
     },
   });
 
-  const onSubmit = (values: UpdateGameProps["updateData"]) =>
-    toast.promise(mutateAsync({ gameId: game.id, updateData: values }), {
+  const onSubmit = async (values: UpdateGameProps["updateData"]) => {
+    await toast.promise(mutateAsync({ gameId: game.id, updateData: values }), {
       success: "Changes saved",
       error: "Error saving changes",
       loading: "Saving changes",
     });
 
+    setDialogOpen(false);
+  };
+
   return (
     <Dialog
+      open={dialogOpen}
+      setOpen={setDialogOpen}
       title={`Edit ${game.name}`}
       trigger={
         <button className="btnBase px-3 bg-gray-800 hover:bg-gray-900/80 active:bg-gray-900">

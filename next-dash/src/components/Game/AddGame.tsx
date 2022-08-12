@@ -3,21 +3,29 @@ import { Input } from "~components/Input";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { AddGameProps, useAddGameMutation } from "~utils/api/games/addGame";
+import { useState } from "react";
 
 export const AddGame = () => {
+  const [dialogOpen, setDialogOpen] = useState(false);
+
   const { mutateAsync } = useAddGameMutation();
 
   const form = useForm<AddGameProps>();
 
-  const onSubmit = (values: AddGameProps) =>
-    toast.promise(mutateAsync(values), {
-      success: "Adding game",
+  const onSubmit = async (values: AddGameProps) => {
+    await toast.promise(mutateAsync(values), {
+      success: "Game added",
       error: "Error adding game",
-      loading: "Game added",
+      loading: "Adding game",
     });
+
+    setDialogOpen(false);
+  };
 
   return (
     <Dialog
+      open={dialogOpen}
+      setOpen={setDialogOpen}
       title="Add a game"
       trigger={
         <button className="btnBase p-2 bg-gray-600 hover:bg-gray-500/80 active:bg-gray-400/60">

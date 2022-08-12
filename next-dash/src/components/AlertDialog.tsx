@@ -6,11 +6,13 @@ type Props = {
   description?: string | ReactNode;
   trigger: ReactNode;
   action: ReactNode;
+  open: boolean;
+  setOpen: (open: boolean) => void;
 };
 
-export const AlertDialog = ({ title, description, trigger, action }: Props) => {
+export const AlertDialog = ({ title, description, trigger, action, open, setOpen }: Props) => {
   return (
-    <AlertDialogPrimitive.Root>
+    <AlertDialogPrimitive.Root open={open} onOpenChange={setOpen}>
       <AlertDialogPrimitive.Trigger asChild>{trigger}</AlertDialogPrimitive.Trigger>
 
       <AlertDialogPrimitive.Portal>
