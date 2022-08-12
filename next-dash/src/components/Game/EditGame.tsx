@@ -2,25 +2,10 @@ import { Edit } from "tabler-icons-react";
 import { Dialog, DialogCloseButton } from "~components/Dialog";
 import { Input } from "~components/Input";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { IGame } from "~types";
 import { getHtmlDate } from "~utils/getHtmlDate";
 import { useGameMutation } from "~utils/api/games/updateGame";
 import toast from "react-hot-toast";
-
-const formSchema = z
-  .object({
-    name: z.string().optional(),
-    displayName: z.string().optional(),
-    imageUrl: z.string().optional(),
-    start: z.string().optional(),
-    end: z.string().optional(),
-    path: z.string().optional(),
-    confirmed: z.boolean().optional(),
-  })
-  .strict();
-
-type FormSchema = z.infer<typeof formSchema>;
 
 type Props = {
   game: IGame;
@@ -31,7 +16,7 @@ export const EditGame = ({ game }: Props) => {
 
   const { prices, sendingId, id, ...rest } = game;
 
-  const form = useForm<IGame>({
+  const form = useForm({
     defaultValues: {
       ...rest,
       start: getHtmlDate(rest.start),
@@ -39,7 +24,7 @@ export const EditGame = ({ game }: Props) => {
     },
   });
 
-  const onSubmit = (values: FormSchema) =>
+  const onSubmit = (values: typeof rest) =>
     toast.promise(mutateAsync({ gameId: game.id, updateData: values }), {
       success: "Changes saved",
       error: "Error saving changes",
