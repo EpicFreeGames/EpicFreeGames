@@ -98,8 +98,14 @@ router.patch(
           name: z.string().optional(),
           displayName: z.string().optional(),
           imageUrl: z.string().optional(),
-          start: z.string().optional(),
-          end: z.string().optional(),
+          start: z
+            .string()
+            .transform((v) => new Date(v))
+            .optional(),
+          end: z
+            .string()
+            .transform((v) => new Date(v))
+            .optional(),
           path: z.string().optional(),
           confirmed: z.boolean().optional(),
         })
@@ -111,17 +117,11 @@ router.patch(
         .strict(),
     },
     async (req, res) => {
-      const { start, end, ...rest } = req.body;
-
       const game = await prisma.game.update({
         where: {
           id: req.params.gameId,
         },
-        data: {
-          ...(start && { start: new Date(start) }),
-          ...(end && { end: new Date(end) }),
-          ...rest,
-        },
+        data: req.body,
         include: { prices: true },
       });
 
@@ -139,55 +139,20 @@ router.patch(
 );
 
 router.post(
-  "/:gameId/toggle-confirmed",
-  auth(Flags.EditGames),
-  withValidation(
-    {
-      params: z
-        .object({
-          gameId: z.string(),
-        })
-        .strict(),
-    },
-    async (req, res) => {
-      const gameId = req.params.gameId;
-
-      const game = await prisma.game.findUnique({ where: { id: gameId } });
-
-      if (!game) {
-        return res.status(404).json({
-          statusCode: 404,
-          error: "Not Found",
-          message: "Game not found",
-        });
-      }
-
-      const updatedGame = await prisma.game.update({
-        where: { id: gameId },
-        data: { confirmed: !game?.confirmed },
-        include: { prices: true },
-      });
-
-      res.send(updatedGame);
-    }
-  )
-);
-
-router.post(
   "/",
   auth(Flags.AddGames),
   withValidation(
     {
       body: z
         .object({
-          name: z.string().transform(decodeURIComponent),
-          displayName: z.string().transform(decodeURIComponent),
-          imageUrl: z.string().transform(decodeURIComponent),
-          start: z.string().transform(decodeURIComponent),
-          end: z.string().transform(decodeURIComponent),
-          path: z.string().transform(decodeURIComponent),
-          usdPrice: z.string().transform(decodeURIComponent),
-          priceValue: z.string().transform(decodeURIComponent),
+          name: z.string(),
+          displayName: z.string(),
+          imageUrl: z.string(),
+          start: z.string(),
+          end: z.string(),
+          path: z.string(),
+          usdPrice: z.string(),
+          priceValue: z.string(),
         })
         .strict(),
     },
