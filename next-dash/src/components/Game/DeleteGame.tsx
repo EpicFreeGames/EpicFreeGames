@@ -31,14 +31,14 @@ export const DeleteGame = ({ game }: Props) => {
       title="Delete game"
       description={`Are you sure you want to delete ${game.displayName}?`}
       trigger={
-        <button className="btnBase px-3 bg-gray-800 hover:bg-gray-900/80 active:bg-gray-900">
+        <button className="btnBase px-2 bg-gray-800 hover:bg-gray-900/80 active:bg-gray-900">
           <Trash strokeWidth={1.3} size={21} className="text-red-500" />
         </button>
       }
       action={
         <button
           onClick={() => onSubmit()}
-          className="btnBase px-2 py-[0.3rem] text-[0.95rem] border-[1px] border-red-500 bg-red-800/60 hover:bg-red-700/80 active:bg-red-600/80"
+          className="btnBase py-[0.3rem] text-[0.95rem] border-[1px] border-red-500 bg-red-800/60 hover:bg-red-700/80 active:bg-red-600/80"
         >
           Yes, delete
         </button>

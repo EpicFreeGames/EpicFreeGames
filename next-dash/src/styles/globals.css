@@ -4,7 +4,7 @@
 
 @layer components {
   .btnBase {
-    @apply px-2 py-[0.3rem] text-[0.98rem] flex items-center justify-center outline-none select-none cursor-default rounded-md transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500;
+    @apply px-2 py-[0.3rem] flex items-center justify-center outline-none select-none cursor-default rounded-md transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500;
   }
 }
 

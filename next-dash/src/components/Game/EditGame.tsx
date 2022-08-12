@@ -43,7 +43,7 @@ export const EditGame = ({ game }: Props) => {
       setOpen={setDialogOpen}
       title={`Edit ${game.name}`}
       trigger={
-        <button className="btnBase px-3 bg-gray-800 hover:bg-gray-900/80 active:bg-gray-900">
+        <button className="btnBase px-2 bg-gray-800 hover:bg-gray-900/80 active:bg-gray-900">
           <Edit strokeWidth={1.3} size={21} />
         </button>
       }
@@ -67,13 +67,13 @@ export const EditGame = ({ game }: Props) => {
         <Input label="Sale ends" type="datetime-local" required {...form.register("end")} />
 
         <div className="flex gap-2 justify-between items-center">
-          <DialogCloseButton className="btnBase p-2 bg-gray-600 hover:bg-gray-500/80 active:bg-gray-400/60">
+          <DialogCloseButton className="btnBase bg-gray-600 hover:bg-gray-500/80 active:bg-gray-400/60">
             Cancel
           </DialogCloseButton>
 
           <button
             type="submit"
-            className="btnBase py-2 px-2 border-[1px] border-blue-500 bg-blue-800/60 hover:bg-blue-700/80 active:bg-blue-600/80"
+            className="btnBase border-[1px] border-blue-500 bg-blue-800/60 hover:bg-blue-700/80 active:bg-blue-600/80"
           >
             Save
           </button>

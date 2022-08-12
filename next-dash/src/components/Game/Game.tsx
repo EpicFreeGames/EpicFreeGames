@@ -62,7 +62,7 @@ const Confirmed = ({ game }: { game: IGame }) => {
 
   return (
     <button
-      className={`btnBase bg-gray-800 hover:bg-gray-900/80 active:bg-gray-900 ${
+      className={`btnBase px-2 py-[0.4rem] bg-gray-800 hover:bg-gray-900/80 active:bg-gray-900 ${
         game.confirmed ? "text-green-500" : "text-red-500"
       } h-full`}
       onClick={() => mutateAsync({ gameId: game.id, updateData: { confirmed: !game.confirmed } })}
