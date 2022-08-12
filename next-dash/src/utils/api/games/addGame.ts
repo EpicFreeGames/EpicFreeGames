@@ -1,0 +1,17 @@
+import { useMutation } from "@tanstack/react-query";
+import { IGame } from "~types";
+import { ApiError, apiRequest } from "../api";
+import { GameContext } from "./_sharedTypes";
+
+export type AddGameProps = Omit<IGame, "id" | "sendingId" | "prices"> & {
+  usdPrice: string;
+  priceValue: number;
+};
+
+const addGameRequest = (props: AddGameProps) => apiRequest<IGame>("/games", "POST", props);
+
+export const useAddGameMutation = () => {
+  const mutation = useMutation<IGame, ApiError, AddGameProps, GameContext>(addGameRequest);
+
+  return mutation;
+};

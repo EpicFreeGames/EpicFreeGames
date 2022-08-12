@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { ReactNode } from "react";
+import { ElementType, ReactNode } from "react";
 import { Toaster } from "react-hot-toast";
 import { NavBar } from "./NavBar";
 import { Path } from "./Path";
@@ -7,7 +7,7 @@ import { Path } from "./Path";
 type Props = {
   children: ReactNode;
   title: string;
-  titleButtons?: ReactNode[];
+  titleButtons?: ElementType[];
   segments?: string[];
 };
 
@@ -43,8 +43,8 @@ export const Layout = ({ children, title, titleButtons, segments }: Props) => {
 
             {hasButtons && (
               <div className="flex gap-3">
-                {titleButtons.map((button) => (
-                  <>{button}</>
+                {titleButtons.map((TitleButton, i) => (
+                  <TitleButton key={i} />
                 ))}
               </div>
             )}
