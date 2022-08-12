@@ -4,7 +4,7 @@ import { Input } from "~components/Input";
 import { useForm } from "react-hook-form";
 import { IGame } from "~types";
 import { getHtmlDate } from "~utils/getHtmlDate";
-import { useGameMutation } from "~utils/api/games/updateGame";
+import { UpdateGameProps, useEditGameMutation } from "~utils/api/games/editGame";
 import toast from "react-hot-toast";
 
 type Props = {
@@ -12,7 +12,7 @@ type Props = {
 };
 
 export const EditGame = ({ game }: Props) => {
-  const { mutateAsync } = useGameMutation();
+  const { mutateAsync } = useEditGameMutation();
 
   const { prices, sendingId, id, ...rest } = game;
 
@@ -24,7 +24,7 @@ export const EditGame = ({ game }: Props) => {
     },
   });
 
-  const onSubmit = (values: typeof rest) =>
+  const onSubmit = (values: UpdateGameProps["updateData"]) =>
     toast.promise(mutateAsync({ gameId: game.id, updateData: values }), {
       success: "Changes saved",
       error: "Error saving changes",

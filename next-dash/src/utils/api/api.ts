@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import { efgApiBaseUrl } from "~utils/envs";
 
 export const apiRequest = <TData>(path: string, method: string, body?: any) =>
@@ -18,13 +19,15 @@ export const apiRequest = <TData>(path: string, method: string, body?: any) =>
     if (r.ok) {
       return json as TData;
     } else {
-      const errorStuff = json ?? {
+      const error = json ?? {
         statusCode: r.status ?? 500,
         error: r.statusText ?? "Unknown error",
         message: r.statusText ?? "Unknown error",
       };
 
-      throw new Error(errorStuff);
+      toast.error(error.message);
+
+      throw new Error(error.message);
     }
   });
 

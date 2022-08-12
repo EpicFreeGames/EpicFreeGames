@@ -27,6 +27,7 @@ export type IGame = {
   path: string;
   confirmed: boolean;
   prices: IGamePrice[];
+  sendingId: string;
 };
 
 export type ILanguage = {

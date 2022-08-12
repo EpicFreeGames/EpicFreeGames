@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { useGameMutation } from "~utils/api/games/updateGame";
+import { useEditGameMutation } from "~utils/api/games/editGame";
 import { IGame } from "../../types";
 import { DeleteGame } from "./DeleteGame";
 import { EditGame } from "./EditGame";
@@ -58,7 +58,7 @@ export const Game = ({ game }: { game: IGame }) => {
 };
 
 const Confirmed = ({ game }: { game: IGame }) => {
-  const { mutateAsync } = useGameMutation();
+  const { mutateAsync } = useEditGameMutation();
 
   return (
     <button
