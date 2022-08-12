@@ -3,7 +3,6 @@ import { Dialog, DialogCloseButton } from "~components/Dialog";
 import { Input } from "~components/Input";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { IGame } from "~types";
 import { getHtmlDate } from "~utils/getHtmlDate";
 import { useGameMutation } from "~utils/api/games/updateGame";
@@ -30,20 +29,22 @@ type Props = {
 export const EditGame = ({ game }: Props) => {
   const { mutateAsync } = useGameMutation();
 
+  const { prices, sendingId, id, ...rest } = game;
+
   const form = useForm<IGame>({
-    // resolver: zodResolver(formSchema),
-    defaultValues: game,
+    defaultValues: {
+      ...rest,
+      start: getHtmlDate(rest.start),
+      end: getHtmlDate(rest.end),
+    },
   });
 
-  const onSubmit = (values: FormSchema) => {
-    console.log(values);
-
-    // toast.promise(mutateAsync({ gameId: game.id, updateData: values }), {
-    //   success: "Changes saved",
-    //   error: "Error saving changes",
-    //   loading: "Saving changes",
-    // });
-  };
+  const onSubmit = (values: FormSchema) =>
+    toast.promise(mutateAsync({ gameId: game.id, updateData: values }), {
+      success: "Changes saved",
+      error: "Error saving changes",
+      loading: "Saving changes",
+    });
 
   return (
     <Dialog
@@ -55,34 +56,22 @@ export const EditGame = ({ game }: Props) => {
       }
     >
       <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-3">
-        <Input label="Name" defaultValue={game?.name} required {...form.register("name")} />
+        <Input label="Name" defaultValue={game.name} required {...form.register("name")} />
         <Input
           label="Display name"
-          defaultValue={game?.displayName}
+          defaultValue={game.displayName}
           required
           {...form.register("displayName")}
         />
-        <Input label="Path" defaultValue={game?.path} required {...form.register("path")} />
+        <Input label="Path" defaultValue={game.path} required {...form.register("path")} />
         <Input
           label="Image URL"
-          defaultValue={game?.imageUrl}
+          defaultValue={game.imageUrl}
           required
           {...form.register("imageUrl")}
         />
-        <Input
-          label="Sale starts"
-          type="datetime-local"
-          defaultValue={getHtmlDate(game?.start)}
-          required
-          {...form.register("start", { valueAsDate: true })}
-        />
-        <Input
-          label="Sale ends"
-          type="datetime-local"
-          defaultValue={getHtmlDate(game?.end)}
-          required
-          {...form.register("end", { valueAsDate: true })}
-        />
+        <Input label="Sale starts" type="datetime-local" required {...form.register("start")} />
+        <Input label="Sale ends" type="datetime-local" required {...form.register("end")} />
 
         <div className="flex gap-2 justify-between items-center">
           <DialogCloseButton className="btnBase p-2 bg-gray-600 hover:bg-gray-500/80 active:bg-gray-400/60">
