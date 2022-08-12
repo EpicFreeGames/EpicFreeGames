@@ -2,27 +2,25 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { IGame } from "~types";
 import { ApiError, apiRequest } from "../api";
 
-type UpdateGameProps = {
+type DeleteGameProps = {
   gameId: string;
-  updateData: Partial<IGame>;
 };
 
-const updateGame = ({ gameId, updateData }: UpdateGameProps) =>
-  apiRequest<IGame>(`/games/${gameId}`, "PATCH", updateData);
+const deleteGame = ({ gameId }: DeleteGameProps) => apiRequest<void>(`/games/${gameId}`, "DELETE");
 
-export const useGameMutation = () => {
+export const useDeleteGameMutation = () => {
   const qc = useQueryClient();
-  const mutation = useMutation<IGame, ApiError, UpdateGameProps, { prevGames: IGame[] }>(
-    updateGame,
+  const mutation = useMutation<void, ApiError, DeleteGameProps, { prevGames: IGame[] }>(
+    deleteGame,
     {
-      onMutate: async ({ gameId, updateData }) => {
+      onMutate: async ({ gameId }) => {
         await qc.cancelQueries(["games"]);
 
         const prevGames = qc.getQueryData<IGame[]>(["games"]) ?? [];
 
         qc.setQueryData(
           ["games"],
-          prevGames.map((g) => (g.id === gameId ? { ...g, ...updateData } : g))
+          prevGames.filter((g) => g.id !== gameId)
         );
 
         return { prevGames };
