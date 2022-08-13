@@ -1,5 +1,5 @@
 import { config } from "./config";
-import redis from "./redis";
+import redis from "./data/redis";
 import { authRouter } from "./routes/auth";
 import { currencyRouter } from "./routes/currencies";
 import { dashboardRouter } from "./routes/dashboard";

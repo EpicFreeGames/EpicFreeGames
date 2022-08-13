@@ -1,8 +1,8 @@
 import { config } from "./config";
 // @ts-ignore
-import prisma from "./prisma";
+import prisma from "./data/prisma";
 // @ts-ignore
-import redis from "./redis";
+import redis from "./data/redis";
 import { createServer } from "./server";
 
 (async () => {

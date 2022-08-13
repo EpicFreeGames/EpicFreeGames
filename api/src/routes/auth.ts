@@ -1,5 +1,5 @@
 import { config } from "../config";
-import prisma from "../prisma";
+import prisma from "../data/prisma";
 import { auth } from "../utils/auth";
 import { withValidation } from "../utils/withValidation";
 import axios from "axios";

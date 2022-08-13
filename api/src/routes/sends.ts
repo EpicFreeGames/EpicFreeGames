@@ -1,6 +1,6 @@
 import { config } from "../config";
-import prisma from "../prisma";
-import redis from "../redis";
+import prisma from "../data/prisma";
+import redis from "../data/redis";
 import { auth } from "../utils/auth";
 import { Flags } from "../utils/flags";
 import { bigintSchema } from "../utils/jsonfix";

@@ -1,4 +1,4 @@
-import prisma from "../prisma";
+import prisma from "../data/prisma";
 import { auth } from "../utils/auth";
 import { Flags } from "../utils/flags";
 import { withValidation } from "../utils/withValidation";
