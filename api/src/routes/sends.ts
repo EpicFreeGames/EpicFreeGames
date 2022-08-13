@@ -1,8 +1,9 @@
 import { config } from "../config";
 import prisma from "../prisma";
+import redis from "../redis";
 import { auth } from "../utils/auth";
 import { Flags } from "../utils/flags";
-import { discordIdSchema } from "../utils/jsonfix";
+import { bigintSchema } from "../utils/jsonfix";
 import { withValidation } from "../utils/withValidation";
 import axios from "axios";
 import { Router } from "express";
@@ -23,10 +24,12 @@ router.get(
   auth(Flags.GetServers),
   withValidation(
     {
-      query: z.object({
-        after: discordIdSchema.optional(),
-        sendingId: z.string().optional(),
-      }),
+      query: z
+        .object({
+          after: bigintSchema.optional(),
+          sendingId: z.string().optional(),
+        })
+        .strict(),
     },
     async (req, res) => {
       const { after, sendingId } = req.query;
@@ -71,9 +74,11 @@ router.get(
   auth(Flags.GetSendings),
   withValidation(
     {
-      params: z.object({
-        sendingId: z.string(),
-      }),
+      params: z
+        .object({
+          sendingId: z.string(),
+        })
+        .strict(),
     },
     async (req, res) => {
       const { sendingId } = req.params;
@@ -88,7 +93,10 @@ router.get(
           .status(404)
           .json({ statusCode: 404, error: "Not found", message: "Sending not found" });
 
-      res.json(sending);
+      const successes = await redis.get(`sending:${sendingId}:successes`);
+      const failures = await redis.get(`sending:${sendingId}:failures`);
+
+      res.json({ ...sending, successes, failures });
     }
   )
 );
@@ -98,12 +106,16 @@ router.patch(
   auth(Flags.GetSendings),
   withValidation(
     {
-      params: z.object({
-        sendingId: z.string(),
-      }),
-      body: z.object({
-        gameIds: z.array(z.string()),
-      }),
+      params: z
+        .object({
+          sendingId: z.string(),
+        })
+        .strict(),
+      body: z
+        .object({
+          gameIds: z.array(z.string()),
+        })
+        .strict(),
     },
     async (req, res) => {
       const { sendingId } = req.params;
@@ -134,9 +146,11 @@ router.post(
   auth(Flags.AddSendings),
   withValidation(
     {
-      body: z.object({
-        gameIds: z.array(z.string()),
-      }),
+      body: z
+        .object({
+          gameIds: z.array(z.string()),
+        })
+        .strict(),
     },
     async (req, res) => {
       const { gameIds } = req.body;
@@ -172,9 +186,11 @@ router.post(
   auth(Flags.Send),
   withValidation(
     {
-      params: z.object({
-        sendingId: z.string(),
-      }),
+      params: z
+        .object({
+          sendingId: z.string(),
+        })
+        .strict(),
     },
     async (req, res) => {
       const { sendingId } = req.params;
@@ -215,18 +231,23 @@ router.post(
   auth(Flags.AddSendingLogs),
   withValidation(
     {
-      body: z.object({
-        serverId: discordIdSchema,
-        sendingId: z.string(),
-        type: z.enum(["MESSAGE", "WEBHOOK"]),
-        result: z.string(),
-        success: z.boolean(),
-      }),
+      body: z
+        .object({
+          serverId: bigintSchema,
+          sendingId: z.string(),
+          type: z.enum(["MESSAGE", "WEBHOOK"]),
+          result: z.string(),
+          success: z.boolean(),
+        })
+        .strict(),
     },
     async (req, res) => {
       const addedLog = await prisma.sendingLog.create({
         data: req.body,
       });
+
+      const { success, sendingId } = req.body;
+      await redis.incrby(`sending:${sendingId}:${success ? "successes" : "failures"}`, 1);
 
       res.send(addedLog);
     }

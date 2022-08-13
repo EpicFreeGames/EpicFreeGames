@@ -1,8 +1,10 @@
 import prisma from "../prisma";
 import { auth } from "../utils/auth";
 import { Flags } from "../utils/flags";
-import { discordIdSchema } from "../utils/jsonfix";
+import { bigintSchema } from "../utils/jsonfix";
 import { withValidation } from "../utils/withValidation";
+import { WsMsgType } from "../websocket/types";
+import { broadcastWss } from "../websocket/utils";
 import { Router } from "express";
 import { z } from "zod";
 
@@ -15,7 +17,7 @@ router.get(
     {
       params: z
         .object({
-          serverId: discordIdSchema,
+          serverId: bigintSchema,
         })
         .strict(),
     },
@@ -45,7 +47,7 @@ router.put(
     {
       params: z
         .object({
-          serverId: discordIdSchema,
+          serverId: bigintSchema,
         })
         .strict(),
       body: z
@@ -59,8 +61,6 @@ router.put(
     async (req, res) => {
       const { serverId } = req.params;
       const { channelId, webhookId, webhookToken } = req.body;
-
-      const start = Date.now();
 
       const updatedServer = await prisma.server.upsert({
         where: { id: serverId },
@@ -89,9 +89,7 @@ router.put(
         },
       });
 
-      const end = Date.now();
-
-      console.info(`Updated server ${serverId} in ${end - start}ms`);
+      broadcastWss(req.wss, WsMsgType.ChannelModify);
 
       res.json(updatedServer);
     }
@@ -105,7 +103,7 @@ router.delete(
     {
       params: z
         .object({
-          serverId: discordIdSchema,
+          serverId: bigintSchema,
         })
         .strict(),
     },
@@ -128,6 +126,8 @@ router.delete(
           message: "Server not found",
         });
 
+      broadcastWss(req.wss, WsMsgType.ChannelDelete);
+
       res.json(updatedServer);
     }
   )
@@ -140,7 +140,7 @@ router.put(
     {
       params: z
         .object({
-          serverId: discordIdSchema,
+          serverId: bigintSchema,
         })
         .strict(),
       body: z
@@ -176,6 +176,8 @@ router.put(
         },
       });
 
+      broadcastWss(req.wss, WsMsgType.RoleModify);
+
       res.json(updatedServer);
     }
   )
@@ -188,7 +190,7 @@ router.delete(
     {
       params: z
         .object({
-          serverId: discordIdSchema,
+          serverId: bigintSchema,
         })
         .strict(),
     },
@@ -209,6 +211,8 @@ router.delete(
           message: "Server not found",
         });
 
+      broadcastWss(req.wss, WsMsgType.RoleDelete);
+
       res.json(updatedServer);
     }
   )
@@ -221,7 +225,7 @@ router.put(
     {
       params: z
         .object({
-          serverId: discordIdSchema,
+          serverId: bigintSchema,
         })
         .strict(),
       body: z
@@ -267,6 +271,8 @@ router.put(
         },
       });
 
+      broadcastWss(req.wss, WsMsgType.ThreadModify);
+
       res.json(updatedServer);
     }
   )
@@ -279,7 +285,7 @@ router.delete(
     {
       params: z
         .object({
-          serverId: discordIdSchema,
+          serverId: bigintSchema,
         })
         .strict(),
     },
@@ -303,6 +309,8 @@ router.delete(
           message: "Server not found",
         });
 
+      broadcastWss(req.wss, WsMsgType.ThreadDelete);
+
       res.json(updatedServer);
     }
   )
@@ -313,9 +321,16 @@ router.put(
   auth(Flags.EditServers),
   withValidation(
     {
-      body: z.object({
-        languageCode: z.string(),
-      }),
+      params: z
+        .object({
+          serverId: bigintSchema,
+        })
+        .strict(),
+      body: z
+        .object({
+          languageCode: z.string(),
+        })
+        .strict(),
     },
     async (req, res) => {
       const { serverId } = req.params;
@@ -343,6 +358,8 @@ router.put(
         },
       });
 
+      broadcastWss(req.wss, WsMsgType.LanguageModify);
+
       res.json(updatedServer);
     }
   )
@@ -353,9 +370,16 @@ router.put(
   auth(Flags.EditServers),
   withValidation(
     {
-      body: z.object({
-        currencyCode: z.string(),
-      }),
+      params: z
+        .object({
+          serverId: bigintSchema,
+        })
+        .strict(),
+      body: z
+        .object({
+          currencyCode: z.string(),
+        })
+        .strict(),
     },
     async (req, res) => {
       const { serverId } = req.params;
@@ -390,6 +414,8 @@ router.put(
           currency: true,
         },
       });
+
+      broadcastWss(req.wss, WsMsgType.CurrencyModify);
 
       res.json(updatedServer);
     }

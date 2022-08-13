@@ -1,8 +1,10 @@
 import prisma from "../prisma";
 import { auth } from "../utils/auth";
 import { Flags } from "../utils/flags";
-import { discordIdSchema } from "../utils/jsonfix";
+import { bigintSchema } from "../utils/jsonfix";
 import { withValidation } from "../utils/withValidation";
+import { WsMsgType } from "../websocket/types";
+import { broadcastWss } from "../websocket/utils";
 import { Router } from "express";
 import { z } from "zod";
 
@@ -17,7 +19,7 @@ router.post(
         .object({
           command: z.string(),
           senderId: z.string(),
-          serverId: discordIdSchema,
+          serverId: bigintSchema,
           error: z.string().nullable(),
         })
         .strict(),
@@ -26,6 +28,8 @@ router.post(
       const addedLog = await prisma.commandLog.create({
         data: req.body,
       });
+
+      broadcastWss(req.wss, WsMsgType.Command, req.body.command);
 
       return res.send(addedLog);
     }

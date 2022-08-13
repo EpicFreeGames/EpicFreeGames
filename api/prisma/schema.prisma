@@ -75,15 +75,18 @@ model SendingLog {
   success   Boolean
   serverId  BigInt
   server    Server         @relation(fields: [serverId], references: [id], onDelete: Cascade)
-  sending   Sending        @relation(fields: [sendingId], references: [id], onDelete: Cascade)
+  sending   Sending        @relation(fields: [sendingId], references: [id])
   sendingId String
 }
 
 model Sending {
-  id     String        @id @default(cuid())
-  logs   SendingLog[]
-  games  Game[]
-  status SendingStatus
+  id        String        @id @default(cuid())
+  successes Int           @default(0)
+  failures  Int           @default(0)
+  target    Int           @default(0)
+  status    SendingStatus
+  games     Game[]
+  logs      SendingLog[]
 }
 
 model User {

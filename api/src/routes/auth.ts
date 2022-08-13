@@ -9,7 +9,7 @@ import { z } from "zod";
 export const authRouter = Router();
 
 authRouter.get(
-  "/discord",
+  "/discord-callback",
   withValidation(
     {
       query: z
@@ -77,7 +77,7 @@ authRouter.get(
 
         req.session.user = user;
 
-        res.status(204).end();
+        res.redirect(303, "http://localhost:3001/");
       } catch (err) {
         console.log(
           `Error logging user in: ${err?.message}\nResponse data:`,

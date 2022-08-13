@@ -5,6 +5,8 @@ const envSchema = z.object({
 
   ALLOWED_USER_IDS: z.string().transform((value) => value.split(", ")),
 
+  DASH_URL: z.string(),
+
   REDISHOST: z.string(),
   REDISPORT: z.string().transform(Number),
   REDISUSER: z.string().optional(),

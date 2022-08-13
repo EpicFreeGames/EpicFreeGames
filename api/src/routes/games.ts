@@ -152,12 +152,23 @@ router.post(
           end: z.string(),
           path: z.string(),
           usdPrice: z.string(),
-          priceValue: z.string(),
+          priceValue: z.number(),
         })
         .strict(),
     },
     async (req, res) => {
       const { usdPrice, priceValue, start, end, ...rest } = req.body;
+
+      const existingGame = await prisma.game.findUnique({
+        where: { name: rest.name },
+      });
+
+      if (existingGame)
+        return res.status(409).json({
+          statusCode: 409,
+          error: "Conflict",
+          message: "A game with the same name already exists",
+        });
 
       const createdGame = await prisma.game.create({
         data: {
