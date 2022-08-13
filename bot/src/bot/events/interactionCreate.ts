@@ -3,6 +3,7 @@ import {
   EventHandlers,
   Interaction,
   InteractionResponseTypes,
+  InteractionTypes,
   PermissionStrings,
 } from "discordeno";
 import { api } from "~shared/api.ts";
@@ -57,34 +58,40 @@ export const interactionCreateHandler: EventHandlers["interactionCreate"] = asyn
       curr: currency,
     });
 
-    const { error } = await api({
-      method: "POST",
-      path: "/logs/commands",
-      body: {
-        command: commandName,
-        senderId: String(i.user.id),
-        serverId: String(i.guildId),
-        error: null,
-      },
-    });
-    !!error && logger.error("Error logging command:", error);
+    // only log commands that aren't autocomplete completions
+    if (i.type !== InteractionTypes.ApplicationCommandAutocomplete) {
+      const { error } = await api({
+        method: "POST",
+        path: "/logs/commands",
+        body: {
+          command: commandName,
+          senderId: String(i.user.id),
+          serverId: String(i.guildId),
+          error: null,
+        },
+      });
+      !!error && logger.error("Error logging command:", error);
+    }
 
     logger.debug(`Command executed: ${command.name}`);
     // deno-lint-ignore no-explicit-any
   } catch (err: any) {
     logger.error(`Command failed: ${command.name}, error: \n${err?.stack ?? err}`);
 
-    const { error } = await api({
-      method: "POST",
-      path: "/logs/commands",
-      body: {
-        command: commandName,
-        senderId: String(i.user.id),
-        serverId: String(i.guildId),
-        error: err?.message ?? "some error",
-      },
-    });
-    !!error && logger.error("Error logging command:", error);
+    // only log commands that aren't autocomplete completions
+    if (i.type !== InteractionTypes.ApplicationCommandAutocomplete) {
+      const { error } = await api({
+        method: "POST",
+        path: "/logs/commands",
+        body: {
+          command: commandName,
+          senderId: String(i.user.id),
+          serverId: String(i.guildId),
+          error: err?.message ?? "some error",
+        },
+      });
+      !!error && logger.error("Error logging command:", error);
+    }
   }
 };
 
