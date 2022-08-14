@@ -16,12 +16,14 @@ services:
       context: ./api
       dockerfile: Dockerfile.dev
     env_file:
-      - .env-api
+      - .env-dev
+    environment:
+      PORT: "3000"
     restart: unless-stopped
     volumes:
       - ./api/src:/app/src:r
     ports:
-      - "3001:3000"
+      - "3010:3000"
     command: yarn dev
 
   dash:
@@ -29,18 +31,18 @@ services:
       - redis
       - api
     build:
-      context: ./dash
-      dockerfile: Dockerfile
-    image: dash/dash
+      context: ./next-dash
+      dockerfile: Dockerfile.dev
+    image: dash/next-dash
     env_file:
-      - .env-dash
+      - .env-dev
+    environment:
+      PORT: "3000"
     restart: unless-stopped
     volumes:
-      - ./dash/src:/app/src:r
-      - ./dash/twind.config.ts:/app/twind.config.ts:r
+      - ./next-dash/src:/app/src:r
     ports:
-      - "3000:3000"
-    command: deno run -A --watch= src/dev.ts twind.config.ts
+      - "3001:3000"
 
   bot_rest-proxy:
     depends_on:
@@ -52,7 +54,9 @@ services:
         - SCOPE=rest-proxy
     image: bot/rest-proxy
     env_file:
-      - .env-bot
+      - .env-dev
+    environment:
+      PORT: "3000"
     restart: unless-stopped
 
   bot_gateway-proxy:
@@ -66,7 +70,9 @@ services:
         - SCOPE=gateway-proxy
     image: bot/gateway-proxy
     env_file:
-      - .env-bot
+      - .env-dev
+    environment:
+      PORT: "3000"
     restart: unless-stopped
 
   bot_sender:
@@ -81,7 +87,9 @@ services:
         - SCOPE=sender
     image: bot/sender
     env_file:
-      - .env-bot
+      - .env-dev
+    environment:
+      PORT: "3000"
     restart: unless-stopped
 
   bot_bot:
@@ -97,7 +105,9 @@ services:
         - SCOPE=bot
     image: bot/bot
     env_file:
-      - .env-bot
+      - .env-dev
+    environment:
+      PORT: "3000"
     restart: unless-stopped
     volumes:
       - ./bot/src:/app/src:r
