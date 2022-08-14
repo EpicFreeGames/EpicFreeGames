@@ -2,7 +2,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { Trash } from "tabler-icons-react";
 import { AlertDialog } from "~components/AlertDialog";
-import { IGame } from "~types";
+import { IGame } from "~utils/api/types";
 import { useDeleteGameMutation } from "~utils/api/games/deleteGame";
 
 type Props = {

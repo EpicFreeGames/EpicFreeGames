@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { useEditGameMutation } from "~utils/api/games/editGame";
-import { IGame } from "../../types";
+import { IGame } from "~utils/api/types";
 import { DeleteGame } from "./DeleteGame";
 import { EditGame } from "./EditGame";
 

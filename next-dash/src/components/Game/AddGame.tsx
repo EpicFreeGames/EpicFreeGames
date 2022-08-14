@@ -56,7 +56,7 @@ export const AddGame = () => {
             type="submit"
             className="btnBase border-[1px] border-blue-500 bg-blue-800/60 hover:bg-blue-700/80 active:bg-blue-600/80"
           >
-            Save
+            Add
           </button>
         </div>
       </form>

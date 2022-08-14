@@ -2,11 +2,11 @@ import { Edit } from "tabler-icons-react";
 import { Dialog, DialogCloseButton } from "~components/Dialog";
 import { Input } from "~components/Input";
 import { useForm } from "react-hook-form";
-import { IGame } from "~types";
 import { getHtmlDate } from "~utils/getHtmlDate";
-import { UpdateGameProps, useEditGameMutation } from "~utils/api/games/editGame";
+import { EditGameProps, useEditGameMutation } from "~utils/api/games/editGame";
 import toast from "react-hot-toast";
 import { useState } from "react";
+import { IGame } from "~utils/api/types";
 
 type Props = {
   game: IGame;
@@ -27,7 +27,7 @@ export const EditGame = ({ game }: Props) => {
     },
   });
 
-  const onSubmit = async (values: UpdateGameProps["updateData"]) => {
+  const onSubmit = async (values: EditGameProps["updateData"]) => {
     await toast.promise(mutateAsync({ gameId: game.id, updateData: values }), {
       success: "Changes saved",
       error: "Error saving changes",
