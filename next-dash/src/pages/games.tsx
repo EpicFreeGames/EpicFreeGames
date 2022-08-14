@@ -1,6 +1,7 @@
 import { AddGame } from "~components/Game/AddGame";
 import { Game } from "~components/Game/Game";
 import { Layout } from "~components/Layout/Layout";
+import { StatusCard } from "~components/StatusCard";
 import { useGames } from "~utils/api/games/getGames";
 
 export default function GameIndexPage() {
@@ -14,14 +15,16 @@ export default function GameIndexPage() {
 const Games = () => {
   const { data: games, isLoading, error } = useGames();
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error</div>;
+  if (isLoading) return <StatusCard>Loading...</StatusCard>;
+  if (error) return <StatusCard error>Error loading games</StatusCard>;
 
   return (
     <div className="flex flex-col gap-3">
-      {games?.map((game) => (
-        <Game game={game} key={game.id} />
-      ))}
+      {games && games?.length ? (
+        games?.map((game) => <Game game={game} key={game.id} />)
+      ) : (
+        <StatusCard>No games</StatusCard>
+      )}
     </div>
   );
 };
