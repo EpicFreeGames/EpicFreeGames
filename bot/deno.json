@@ -9,7 +9,9 @@
     "typecheck-sender": "deno check src/sender/mod.ts",
     "typecheck-rest-proxy": "deno check src/rest-proxy/mod.ts",
     "typecheck-gateway-proxy": "deno check src/gateway-proxy/mod.ts",
-    "typecheck-all": "deno task typecheck-bot && deno task typecheck-sender && deno task typecheck-rest-proxy && deno task typecheck-gateway-proxy"
+    "typecheck-all": "deno task typecheck-bot && deno task typecheck-sender && deno task typecheck-rest-proxy && deno task typecheck-gateway-proxy",
+
+    "cache-all": "deno cache src/bot/mod.ts && deno cache src/sender/mod.ts && deno cache src/rest-proxy/mod.ts && deno cache src/gateway-proxy/mod.ts"
   },
   "compilerOptions": {
     "lib": ["deno.worker"],
