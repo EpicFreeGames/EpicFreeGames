@@ -3,7 +3,7 @@ import { Middleware } from "../types";
 import { safeEqual } from "../utils/crypto";
 import { Flags } from "./flags";
 import { verifyAccessJwt } from "./jwt";
-import { hasPermission } from "./authUtils";
+import { hasPermission } from "./perms";
 
 export const endpointAuth =
   (...requiredFlags: Flags[]): Middleware =>

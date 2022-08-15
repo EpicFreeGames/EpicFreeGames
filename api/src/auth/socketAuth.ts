@@ -1,7 +1,7 @@
 import { IncomingMessage } from "http";
 import { Flags } from "./flags";
 import { verifyAccessJwt } from "./jwt";
-import { hasPermission } from "./authUtils";
+import { hasPermission } from "./perms";
 
 export const socketAuth = async (req: IncomingMessage) => {
   const accessTokenCookie = req.headers.cookie?.split("access-token=")?.at(1);
