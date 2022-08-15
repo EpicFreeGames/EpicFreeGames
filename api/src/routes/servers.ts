@@ -1,6 +1,6 @@
 import prisma from "../data/prisma";
-import { auth } from "../utils/auth";
-import { Flags } from "../utils/flags";
+import { endpointAuth } from "../auth/endpointAuth";
+import { Flags } from "../auth/flags";
 import { bigintSchema } from "../utils/jsonfix";
 import { withValidation } from "../utils/withValidation";
 import { WsMsgType } from "../websocket/types";
@@ -12,7 +12,7 @@ const router = Router();
 
 router.get(
   "/:serverId",
-  auth(Flags.EditServers),
+  endpointAuth(Flags.EditServers),
   withValidation(
     {
       params: z
@@ -42,7 +42,7 @@ router.get(
 
 router.put(
   "/:serverId/channel",
-  auth(Flags.EditServers),
+  endpointAuth(Flags.EditServers),
   withValidation(
     {
       params: z
@@ -98,7 +98,7 @@ router.put(
 
 router.delete(
   "/:serverId/channel",
-  auth(Flags.EditServers),
+  endpointAuth(Flags.EditServers),
   withValidation(
     {
       params: z
@@ -135,7 +135,7 @@ router.delete(
 
 router.put(
   "/:serverId/role",
-  auth(Flags.EditServers),
+  endpointAuth(Flags.EditServers),
   withValidation(
     {
       params: z
@@ -185,7 +185,7 @@ router.put(
 
 router.delete(
   "/:serverId/role",
-  auth(Flags.EditServers),
+  endpointAuth(Flags.EditServers),
   withValidation(
     {
       params: z
@@ -220,7 +220,7 @@ router.delete(
 
 router.put(
   "/:serverId/thread",
-  auth(Flags.EditServers),
+  endpointAuth(Flags.EditServers),
   withValidation(
     {
       params: z
@@ -280,7 +280,7 @@ router.put(
 
 router.delete(
   "/:serverId/thread",
-  auth(Flags.EditServers),
+  endpointAuth(Flags.EditServers),
   withValidation(
     {
       params: z
@@ -318,7 +318,7 @@ router.delete(
 
 router.put(
   "/:serverId/language",
-  auth(Flags.EditServers),
+  endpointAuth(Flags.EditServers),
   withValidation(
     {
       params: z
@@ -367,7 +367,7 @@ router.put(
 
 router.put(
   "/:serverId/currency",
-  auth(Flags.EditServers),
+  endpointAuth(Flags.EditServers),
   withValidation(
     {
       params: z

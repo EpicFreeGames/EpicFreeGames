@@ -29,4 +29,6 @@ export enum Flags {
   GetSendings = 1 << 20,
   AddSendings = 1 << 21,
   EditSendings = 1 << 22,
+
+  ReceiveEvents = 1 << 23,
 }

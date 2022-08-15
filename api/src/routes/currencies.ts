@@ -1,13 +1,13 @@
 import prisma from "../data/prisma";
-import { auth } from "../utils/auth";
-import { Flags } from "../utils/flags";
+import { endpointAuth } from "../auth/endpointAuth";
+import { Flags } from "../auth/flags";
 import { withValidation } from "../utils/withValidation";
 import { Router } from "express";
 import { z } from "zod";
 
 const router = Router();
 
-router.get("/", auth(Flags.GetCurrencies), async (req, res) => {
+router.get("/", endpointAuth(Flags.GetCurrencies), async (req, res) => {
   const currencies = await prisma.currency.findMany();
 
   res.json(currencies);
@@ -15,7 +15,7 @@ router.get("/", auth(Flags.GetCurrencies), async (req, res) => {
 
 router.get(
   "/:currencyId",
-  auth(Flags.GetCurrencies),
+  endpointAuth(Flags.GetCurrencies),
   withValidation(
     {
       params: z.object({
@@ -43,7 +43,7 @@ router.get(
 
 router.post(
   "/",
-  auth(Flags.AddCurrencies),
+  endpointAuth(Flags.AddCurrencies),
   withValidation(
     {
       body: z.object({
@@ -66,7 +66,7 @@ router.post(
 
 router.patch(
   "/:currencyId",
-  auth(Flags.GetCurrencies),
+  endpointAuth(Flags.GetCurrencies),
   withValidation(
     {
       params: z.object({
@@ -102,7 +102,7 @@ router.patch(
 
 router.delete(
   "/:currencyId",
-  auth(Flags.GetCurrencies),
+  endpointAuth(Flags.GetCurrencies),
   withValidation(
     {
       params: z.object({

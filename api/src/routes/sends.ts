@@ -1,8 +1,8 @@
 import { config } from "../config";
 import prisma from "../data/prisma";
 import redis from "../data/redis";
-import { auth } from "../utils/auth";
-import { Flags } from "../utils/flags";
+import { endpointAuth } from "../auth/endpointAuth";
+import { Flags } from "../auth/flags";
 import { bigintSchema } from "../utils/jsonfix";
 import { withValidation } from "../utils/withValidation";
 import axios from "axios";
@@ -11,7 +11,7 @@ import { z } from "zod";
 
 const router = Router();
 
-router.get("/", auth(Flags.GetSendings), async (req, res) => {
+router.get("/", endpointAuth(Flags.GetSendings), async (req, res) => {
   const sends = await prisma.sending.findMany({
     include: { games: true },
   });
@@ -21,7 +21,7 @@ router.get("/", auth(Flags.GetSendings), async (req, res) => {
 
 router.get(
   "/servers-to-send",
-  auth(Flags.GetServers),
+  endpointAuth(Flags.GetServers),
   withValidation(
     {
       query: z
@@ -71,7 +71,7 @@ router.get(
 
 router.get(
   "/:sendingId",
-  auth(Flags.GetSendings),
+  endpointAuth(Flags.GetSendings),
   withValidation(
     {
       params: z
@@ -103,7 +103,7 @@ router.get(
 
 router.patch(
   "/:sendingId",
-  auth(Flags.GetSendings),
+  endpointAuth(Flags.GetSendings),
   withValidation(
     {
       params: z
@@ -143,7 +143,7 @@ router.patch(
 
 router.post(
   "/",
-  auth(Flags.AddSendings),
+  endpointAuth(Flags.AddSendings),
   withValidation(
     {
       body: z
@@ -183,7 +183,7 @@ router.post(
 
 router.post(
   "/:sendingId/send",
-  auth(Flags.Send),
+  endpointAuth(Flags.Send),
   withValidation(
     {
       params: z
@@ -228,7 +228,7 @@ router.post(
 
 router.post(
   "/logs",
-  auth(Flags.AddSendingLogs),
+  endpointAuth(Flags.AddSendingLogs),
   withValidation(
     {
       body: z

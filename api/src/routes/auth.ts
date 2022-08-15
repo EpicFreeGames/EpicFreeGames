@@ -1,6 +1,7 @@
 import { config } from "../config";
 import prisma from "../data/prisma";
-import { auth } from "../utils/auth";
+import { endpointAuth } from "../auth/endpointAuth";
+import { createAccessToken } from "../auth/jwt";
 import { withValidation } from "../utils/withValidation";
 import axios from "axios";
 import { Router } from "express";
@@ -75,7 +76,17 @@ authRouter.get(
           },
         });
 
-        req.session.user = user;
+        const accessToken = await createAccessToken({
+          userId: user.id,
+          flags: user.flags,
+        });
+
+        res.setHeader(
+          "Set-Cookie",
+          `access-token=${accessToken}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${60 * 15};${
+            config.ENV !== "Development" ? "Secure;" : ""
+          }`
+        );
 
         res.redirect(303, "http://localhost:3001/");
       } catch (err) {
@@ -94,7 +105,7 @@ authRouter.get(
   )
 );
 
-authRouter.post("/logout", auth(), async (req, res) => {
+authRouter.post("/logout", endpointAuth(), async (req, res) => {
   req.session.destroy(() => res.redirect(303, "/"));
 });
 
@@ -114,9 +125,19 @@ if (config.ENV === "Development") {
         },
       });
 
-      req.session.user = user;
+      const accessToken = await createAccessToken({
+        userId: user.id,
+        flags: user.flags,
+      });
 
-      res.status(204).end();
+      res.setHeader(
+        "Set-Cookie",
+        `access-token=${accessToken}; Path=/api; HttpOnly; SameSite=Lax; Max-Age=${60 * 15};${
+          config.ENV !== "Development" ? "Secure;" : ""
+        }`
+      );
+
+      res.redirect(303, "http://localhost:3001/");
     } catch (err) {
       console.log(
         `DEV Error logging user in: ${err?.message}\nResponse data:`,

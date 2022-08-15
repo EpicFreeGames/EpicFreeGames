@@ -1,6 +1,6 @@
 import prisma from "../data/prisma";
-import { auth } from "../utils/auth";
-import { Flags } from "../utils/flags";
+import { endpointAuth } from "../auth/endpointAuth";
+import { Flags } from "../auth/flags";
 import { withValidation } from "../utils/withValidation";
 import { GamePrice } from "@prisma/client";
 import { Router } from "express";
@@ -8,13 +8,13 @@ import { z } from "zod";
 
 const router = Router();
 
-router.get("/", auth(Flags.GetGames), async (req, res) => {
+router.get("/", endpointAuth(Flags.GetGames), async (req, res) => {
   const games = await prisma.game.findMany({ include: { prices: true } });
 
   res.send(games);
 });
 
-router.get("/free", auth(Flags.GetGames), async (req, res) => {
+router.get("/free", endpointAuth(Flags.GetGames), async (req, res) => {
   const games = await prisma.game.findMany({
     where: {
       start: {
@@ -32,7 +32,7 @@ router.get("/free", auth(Flags.GetGames), async (req, res) => {
   res.send(games);
 });
 
-router.get("/up", auth(Flags.GetGames), async (req, res) => {
+router.get("/up", endpointAuth(Flags.GetGames), async (req, res) => {
   const games = await prisma.game.findMany({
     where: {
       confirmed: true,
@@ -51,7 +51,7 @@ router.get("/up", auth(Flags.GetGames), async (req, res) => {
   res.send(games);
 });
 
-router.get("/not-confirmed", auth(Flags.GetGames), async (req, res) => {
+router.get("/not-confirmed", endpointAuth(Flags.GetGames), async (req, res) => {
   const games = await prisma.game.findMany({
     where: {
       confirmed: false,
@@ -66,7 +66,7 @@ router.get("/not-confirmed", auth(Flags.GetGames), async (req, res) => {
 
 router.get(
   "/:gameId",
-  auth(Flags.GetGames),
+  endpointAuth(Flags.GetGames),
   withValidation(
     {
       params: z.object({
@@ -90,7 +90,7 @@ router.get(
 
 router.patch(
   "/:gameId",
-  auth(Flags.EditGames),
+  endpointAuth(Flags.EditGames),
   withValidation(
     {
       body: z
@@ -140,7 +140,7 @@ router.patch(
 
 router.post(
   "/",
-  auth(Flags.AddGames),
+  endpointAuth(Flags.AddGames),
   withValidation(
     {
       body: z
@@ -194,7 +194,7 @@ router.post(
 
 router.put(
   "/",
-  auth(Flags.PutGames),
+  endpointAuth(Flags.PutGames),
   withValidation(
     {
       body: z.array(
@@ -281,7 +281,7 @@ router.put(
 
 router.delete(
   "/:gameId",
-  auth(Flags.DeleteGames),
+  endpointAuth(Flags.DeleteGames),
   withValidation(
     {
       params: z.object({

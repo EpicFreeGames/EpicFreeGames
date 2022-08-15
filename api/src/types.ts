@@ -1,16 +1,10 @@
-import { User } from "@prisma/client";
+import { ITokenPayload } from "./auth/jwt";
 import { NextFunction, Request, Response } from "express";
 import type { Server } from "ws";
 
 export type Middleware = {
   (req: Request, res: Response, next: NextFunction): any;
 };
-
-declare module "express-session" {
-  interface SessionData {
-    user: User;
-  }
-}
 
 declare global {
   interface BigInt {
@@ -21,5 +15,6 @@ declare global {
 declare module "express-serve-static-core" {
   interface Request {
     wss: Server;
+    tokenPayload: ITokenPayload;
   }
 }

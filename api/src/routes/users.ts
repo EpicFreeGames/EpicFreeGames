@@ -1,6 +1,6 @@
 import prisma from "../data/prisma";
-import { auth } from "../utils/auth";
-import { Flags } from "../utils/flags";
+import { endpointAuth } from "../auth/endpointAuth";
+import { Flags } from "../auth/flags";
 import { withValidation } from "../utils/withValidation";
 import { Router } from "express";
 import { z } from "zod";
@@ -9,7 +9,7 @@ const router = Router();
 
 router.post(
   "/:userId/flags",
-  auth(Flags.EditUsers),
+  endpointAuth(Flags.EditUsers),
   withValidation(
     {
       params: z
@@ -44,8 +44,8 @@ router.post(
   )
 );
 
-router.get("/@me", auth(), async (req, res) => {
-  const userId = req.session.user!.id;
+router.get("/@me", endpointAuth(), async (req, res) => {
+  const userId = req.tokenPayload.userId;
 
   const user = await prisma.user.findUnique({
     where: { id: userId },

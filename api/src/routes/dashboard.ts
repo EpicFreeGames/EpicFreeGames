@@ -1,11 +1,11 @@
 import prisma from "../data/prisma";
-import { auth } from "../utils/auth";
-import { Flags } from "../utils/flags";
+import { endpointAuth } from "../auth/endpointAuth";
+import { Flags } from "../auth/flags";
 import { Router } from "express";
 
 const router = Router();
 
-router.get("/counts", auth(Flags.GetDashboard), async (req, res) => {
+router.get("/counts", endpointAuth(Flags.GetDashboard), async (req, res) => {
   const [
     total,
     sendable,

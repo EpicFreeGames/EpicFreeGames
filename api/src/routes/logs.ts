@@ -1,6 +1,6 @@
 import prisma from "../data/prisma";
-import { auth } from "../utils/auth";
-import { Flags } from "../utils/flags";
+import { endpointAuth } from "../auth/endpointAuth";
+import { Flags } from "../auth/flags";
 import { bigintSchema } from "../utils/jsonfix";
 import { withValidation } from "../utils/withValidation";
 import { WsMsgType } from "../websocket/types";
@@ -12,7 +12,7 @@ const router = Router();
 
 router.post(
   "/commands",
-  auth(Flags.AddCommandLogs),
+  endpointAuth(Flags.AddCommandLogs),
   withValidation(
     {
       body: z

@@ -11,6 +11,7 @@ export enum WsMsgType {
   RoleDelete = "RoleDelete",
   LanguageModify = "LanguageModify",
   CurrencyModify = "CurrencyModify",
+  Hi = "Hi",
 }
 
 export enum WsMsgTypeBit {
@@ -26,6 +27,7 @@ export enum WsMsgTypeBit {
   RoleDelete = 1 << 9,
   LanguageModify = 1 << 10,
   CurrencyModify = 1 << 11,
+  Hi = 1 << 12,
 }
 
 export enum WsMsgTypeDesc {
@@ -41,4 +43,11 @@ export enum WsMsgTypeDesc {
   RoleDelete = "Role deleted",
   LanguageModify = "Language modified",
   CurrencyModify = "Currency modified",
+  Hi = "Hi",
 }
+
+export type IWsMsg = {
+  bit: WsMsgTypeBit;
+  desc: WsMsgTypeDesc;
+  msg?: string;
+};
