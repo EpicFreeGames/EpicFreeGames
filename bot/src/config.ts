@@ -31,7 +31,7 @@ const envSchema = z.object({
   DEV_GUILD_ID: z.string().optional(),
 
   EFG_API_BOT_SECRET: z.string(),
-  EFG_API_BASEURL: z.string(),
+  EFG_API_INTERNAL_BASEURL: z.string(),
   DISCORD_API_BASEURL: z.string(),
 
   ENV: z.enum(["Development", "Staging", "Production"]),

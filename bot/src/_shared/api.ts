@@ -28,7 +28,7 @@ type Args =
     };
 
 export async function api<TData>({ method, path, body, query }: Args): Promise<ApiResponse<TData>> {
-  return fetch(`${config.EFG_API_BASEURL}${path}${query ? `?${query.toString()}` : ""}`, {
+  return fetch(`${config.EFG_API_INTERNAL_BASEURL}${path}${query ? `?${query.toString()}` : ""}`, {
     method,
     headers: {
       "Content-Type": "application/json",
@@ -50,7 +50,7 @@ export async function api<TData>({ method, path, body, query }: Args): Promise<A
     .catch(async (err) => {
       logger.error(
         `API request failed\nRequest url: ${
-          config.EFG_API_BASEURL
+          config.EFG_API_INTERNAL_BASEURL
         }${path}\nError: ${await serialize(err)}`
       );
 
