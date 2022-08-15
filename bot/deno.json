@@ -8,7 +8,8 @@
     "typecheck-bot": "deno check src/bot/mod.ts",
     "typecheck-sender": "deno check src/sender/mod.ts",
     "typecheck-rest-proxy": "deno check src/rest-proxy/mod.ts",
-    "typecheck-gateway-proxy": "deno check src/gateway-proxy/mod.ts"
+    "typecheck-gateway-proxy": "deno check src/gateway-proxy/mod.ts",
+    "typecheck-all": "deno task typecheck-bot && deno task typecheck-sender && deno task typecheck-rest-proxy && deno task typecheck-gateway-proxy"
   },
   "compilerOptions": {
     "lib": ["deno.worker"],
