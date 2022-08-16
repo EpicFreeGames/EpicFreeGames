@@ -141,6 +141,34 @@ router.patch(
   )
 );
 
+router.delete(
+  "/:sendingId",
+  endpointAuth(Flags.DeleteSendings),
+  withValidation(
+    {
+      params: z
+        .object({
+          sendingId: z.string(),
+        })
+        .strict(),
+    },
+    async (req, res) => {
+      const { sendingId } = req.params;
+
+      const deletedSending = await prisma.sending.delete({
+        where: { id: sendingId },
+      });
+
+      if (!deletedSending)
+        return res
+          .status(404)
+          .json({ statusCode: 404, error: "Not found", message: "Sending not found" });
+
+      res.status(204).send();
+    }
+  )
+);
+
 router.post(
   "/",
   endpointAuth(Flags.AddSendings),

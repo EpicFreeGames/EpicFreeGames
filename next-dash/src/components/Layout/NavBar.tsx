@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ReactNode } from "react";
-import { Flags } from "~utils/api/types";
+import { Flags } from "~utils/api/flags";
 import { useHasPerms } from "../../hooks/useHasPerms";
 import { Logout } from "./Logout";
 

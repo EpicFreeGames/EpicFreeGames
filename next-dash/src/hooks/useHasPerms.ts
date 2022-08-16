@@ -1,4 +1,4 @@
-import { Flags } from "~utils/api/types";
+import { Flags } from "~utils/api/flags";
 import { useUser } from "./useUser";
 
 export const useHasPerms = (...flags: Flags[]) => {
