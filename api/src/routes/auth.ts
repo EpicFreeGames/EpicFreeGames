@@ -85,7 +85,7 @@ authRouter.get(
 
         res.setHeader("Set-Cookie", createAccessTokenCookie(accessToken));
 
-        res.redirect(303, "http://localhost:3001/");
+        res.redirect(303, config.DASH_URL);
       } catch (err) {
         console.log(
           `Error logging user in: ${err?.message}\nResponse data:`,
