@@ -1,11 +1,24 @@
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useRouter } from "next/router";
 import { apiRequest } from "~utils/api/api";
-import { dev, discordClientId, discordRedirectUrl } from "~utils/envs";
+import { envs } from "~utils/envs";
 
-export default function LoginPage() {
+export const getServerSideProps: GetServerSideProps = async () => ({
+  props: {
+    clientId: envs.discordClientId,
+    redirectUrl: envs.discordRedirectUrl,
+    dev: envs.dev,
+  },
+});
+
+export default function LoginPage({
+  clientId,
+  redirectUrl,
+  dev,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const queryParams = new URLSearchParams({
-    client_id: discordClientId,
-    redirect_uri: discordRedirectUrl,
+    client_id: clientId,
+    redirect_uri: redirectUrl,
     response_type: "code",
     scope: "identify",
   });
