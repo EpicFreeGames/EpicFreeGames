@@ -1,3 +1,5 @@
+import { useRouter } from "next/router";
+import { apiRequest } from "~utils/api/api";
 import { dev, discordClientId, discordRedirectUrl } from "~utils/envs";
 
 export default function LoginPage() {
@@ -7,6 +9,8 @@ export default function LoginPage() {
     response_type: "code",
     scope: "identify",
   });
+
+  const router = useRouter();
 
   return (
     <div className="flex flex-col justify-center items-center gap-14 max-w-screen-lg mx-auto h-screen">
@@ -20,14 +24,15 @@ export default function LoginPage() {
       </a>
 
       {dev && (
-        <form method="post">
-          <button
-            type="submit"
-            className="btnBase py-2 px-2 border-[1px] border-green-500 bg-green-800/60 hover:bg-green-700/80 active:bg-green-600/80"
-          >
-            Dev login
-          </button>
-        </form>
+        <button
+          onClick={async () => {
+            await apiRequest("/auth/dev-login", "POST");
+            router.push("/");
+          }}
+          className="btnBase py-2 px-2 border-[1px] border-green-500 bg-green-800/60 hover:bg-green-700/80 active:bg-green-600/80"
+        >
+          Dev login
+        </button>
       )}
     </div>
   );

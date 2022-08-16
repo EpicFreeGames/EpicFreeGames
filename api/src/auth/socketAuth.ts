@@ -1,6 +1,7 @@
 import { IncomingMessage } from "http";
+import redis from "../data/redis";
 import { Flags } from "./flags";
-import { verifyAccessJwt } from "./jwt";
+import { verifyAccessJwt } from "./jwt/jwt";
 import { hasPermission } from "./perms";
 
 export const socketAuth = async (req: IncomingMessage) => {
@@ -12,5 +13,10 @@ export const socketAuth = async (req: IncomingMessage) => {
 
   if (!hasPermission(accessTokenPayload.flags, [Flags.ReceiveEvents])) return { hasAccess: false };
 
-  return { hasAccess: true, accessTokenPayload };
+  const tokenExists = await redis.sismember(
+    `${accessTokenPayload.userId}:tokens`,
+    accessTokenPayload.jti
+  );
+
+  return { hasAccess: !!tokenExists, accessTokenPayload };
 };

@@ -1,8 +1,9 @@
 import { config } from "../config";
 import { Middleware } from "../types";
 import { safeEqual } from "../utils/crypto";
+import { createAccessTokenCookie } from "./cookie";
 import { Flags } from "./flags";
-import { verifyAccessJwt } from "./jwt";
+import { createAccessToken, verifyAccessJwt } from "./jwt/jwt";
 import { hasPermission } from "./perms";
 
 export const endpointAuth =
@@ -27,7 +28,7 @@ export const endpointAuth =
       return res.status(401).send({
         statusCode: 401,
         error: "Unauthorized",
-        message: "Token is invalid or has expired",
+        message: "Invalid token",
       });
 
     if (!hasPermission(accessTokenPayload.flags, requiredFlags))
@@ -38,6 +39,12 @@ export const endpointAuth =
       });
 
     req.tokenPayload = accessTokenPayload;
+
+    const { jti, ...rest } = accessTokenPayload;
+
+    // refresh expiry
+    const newAccessToken = await createAccessToken(rest, jti);
+    res.setHeader("Set-Cookie", createAccessTokenCookie(newAccessToken));
 
     next();
   };

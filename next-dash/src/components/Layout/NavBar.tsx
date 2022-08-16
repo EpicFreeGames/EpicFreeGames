@@ -1,15 +1,24 @@
 import Link from "next/link";
 import { ReactNode } from "react";
+import { Flags } from "~utils/api/types";
+import { useHasPerms } from "../../hooks/useHasPerms";
+import { Logout } from "./Logout";
 
 export const NavBar = () => {
+  const showGames = useHasPerms(Flags.GetGames);
+  const showCurrencies = useHasPerms(Flags.GetCurrencies);
+  const showSends = useHasPerms(Flags.GetSendings);
+
   return (
     <nav className="bg-gray-800">
       <div className="max-w-screen-lg mx-auto flex justify-between p-3 halfMax:p-4">
         <div className="flex gap-3 halfMax:gap-4">
-          <NavLink href="/games">Games</NavLink>
-          <NavLink href="/currencies">Currencies</NavLink>
-          <NavLink href="/sends">Sends</NavLink>
+          {showGames && <NavLink href="/games">Games</NavLink>}
+          {showCurrencies && <NavLink href="/currencies">Currencies</NavLink>}
+          {showSends && <NavLink href="/sends">Sends</NavLink>}
         </div>
+
+        <Logout />
       </div>
     </nav>
   );

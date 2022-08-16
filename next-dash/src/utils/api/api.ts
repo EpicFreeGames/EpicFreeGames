@@ -1,7 +1,8 @@
 import toast from "react-hot-toast";
+import { isBrowser } from "~hooks/useIsBrowser";
 import { efgApiBaseUrl } from "~utils/envs";
 
-export const apiRequest = <TData>(path: string, method: string, body?: any) =>
+export const apiRequest = <TData = any>(path: string, method: string, body?: any) =>
   fetch(`${efgApiBaseUrl}${path}`, {
     method,
     credentials: "include",
@@ -24,6 +25,11 @@ export const apiRequest = <TData>(path: string, method: string, body?: any) =>
         error: r.statusText ?? "Unknown error",
         message: r.statusText ?? "Unknown error",
       };
+
+      if (isBrowser) {
+        if (error.statusCode === 401) window.location.href = "/login";
+        if (error.statusCode === 403) history.back();
+      }
 
       toast.error(error.message);
 

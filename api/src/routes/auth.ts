@@ -1,11 +1,13 @@
 import { config } from "../config";
 import prisma from "../data/prisma";
 import { endpointAuth } from "../auth/endpointAuth";
-import { createAccessToken } from "../auth/jwt";
 import { withValidation } from "../utils/withValidation";
 import axios from "axios";
 import { Router } from "express";
 import { z } from "zod";
+import { createAccessToken } from "../auth/jwt/jwt";
+import { createAccessTokenCookie, createEmptyAccessTokenCookie } from "../auth/cookie";
+import { removeJti } from "../auth/jwt/jwtWhitelist";
 
 export const authRouter = Router();
 
@@ -81,12 +83,7 @@ authRouter.get(
           flags: user.flags,
         });
 
-        res.setHeader(
-          "Set-Cookie",
-          `access-token=${accessToken}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${60 * 15};${
-            config.ENV !== "Development" ? "Secure;" : ""
-          }`
-        );
+        res.setHeader("Set-Cookie", createAccessTokenCookie(accessToken));
 
         res.redirect(303, "http://localhost:3001/");
       } catch (err) {
@@ -106,11 +103,16 @@ authRouter.get(
 );
 
 authRouter.post("/logout", endpointAuth(), async (req, res) => {
-  req.session.destroy(() => res.redirect(303, "/"));
+  const { userId, jti } = req.tokenPayload;
+
+  await removeJti({ userId, jti });
+
+  res.setHeader("Set-Cookie", createEmptyAccessTokenCookie());
+  res.status(200).send();
 });
 
 if (config.ENV === "Development") {
-  authRouter.get("/dev", async (req, res) => {
+  authRouter.post("/dev-login", async (req, res) => {
     try {
       const userId = config.ALLOWED_USER_IDS[0]!;
 
@@ -130,14 +132,9 @@ if (config.ENV === "Development") {
         flags: user.flags,
       });
 
-      res.setHeader(
-        "Set-Cookie",
-        `access-token=${accessToken}; Path=/api; HttpOnly; SameSite=Lax; Max-Age=${60 * 15};${
-          config.ENV !== "Development" ? "Secure;" : ""
-        }`
-      );
+      res.setHeader("Set-Cookie", createAccessTokenCookie(accessToken));
 
-      res.redirect(303, "http://localhost:3001/");
+      res.status(204).send();
     } catch (err) {
       console.log(
         `DEV Error logging user in: ${err?.message}\nResponse data:`,
