@@ -6,6 +6,10 @@
   .btnBase {
     @apply px-2 py-[0.3rem] flex items-center justify-center outline-none select-none cursor-default rounded-md transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500;
   }
+
+  .focus {
+    @apply outline-none transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500;
+  }
 }
 
 body {

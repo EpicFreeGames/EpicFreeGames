@@ -1,4 +1,5 @@
 import { ComponentProps, forwardRef, ReactNode } from "react";
+import { Label } from "./Label";
 
 type Props = ComponentProps<"input"> & {
   label?: string;
@@ -14,7 +15,7 @@ const Input = forwardRef<HTMLInputElement, Props>(
           id={id}
           autoComplete="off"
           required={required}
-          className="bg-gray-600 rounded-md p-2 duration-200 outline-none focus:outline-none focus:ring-2 focus-within:ring-2 focus:ring-blue-500 focus-within:ring-blue-500"
+          className="bg-gray-600 rounded-md p-2 duration-200 focus"
           {...rest}
           ref={ref}
         />
@@ -22,16 +23,15 @@ const Input = forwardRef<HTMLInputElement, Props>(
 
     return (
       <div className="flex flex-col gap-1">
-        <label className="text-sm" htmlFor={label}>
+        <Label required={required} htmlFor={label}>
           {label}
-          {!!required && <b className="text-red-500"> *</b>}
-        </label>
+        </Label>
 
         <input
           id={label}
           autoComplete="off"
           required={required}
-          className="bg-gray-600 rounded-md p-2 duration-200 outline-none focus:outline-none focus:ring-2 focus-within:ring-2 focus:ring-blue-500 focus-within:ring-blue-500"
+          className="bg-gray-600 rounded-md p-2 duration-200 focus"
           {...rest}
           ref={ref}
         />
