@@ -230,7 +230,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: ./next-dash
-          file: Dockerfile.staging
+          file: ./next-dash/Dockerfile.staging
           platforms: linux/amd64
           push: true
           tags: ${{ steps.meta.outputs.tags }}
