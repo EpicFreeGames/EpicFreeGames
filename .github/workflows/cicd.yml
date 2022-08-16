@@ -234,6 +234,9 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: ${{ steps.meta.outputs.tags }}
+          secrets: 
+            NEXT_PUBLIC_EFG_API_BASE_URL=${{ secrets.NEXT_PUBLIC_EFG_API_BASE_URL }}
+            NEXT_PUBLIC_EFG_API_WS_URL=${{ secrets.NEXT_PUBLIC_EFG_API_WS_URL }}
           build-args: |
             NEXT_PUBLIC_EFG_API_BASE_URL=${{ secrets.NEXT_PUBLIC_EFG_API_BASE_URL }}
             NEXT_PUBLIC_EFG_API_WS_URL=${{ secrets.NEXT_PUBLIC_EFG_API_WS_URL }}
