@@ -60,7 +60,7 @@ jobs:
       - name: Recreate containers
         run: |
           ssh server -q \
-            "cd ~/efg-${{ inputs.env }} && \
+            "cd ~/efg-staging && \
             echo "${{ secrets.ENV_BASE64 }}" | base64 --decode > .env && \
             REGISTRY=${{ secrets.REGISTRY }} \
             REGISTRY_USER=${{ secrets.REGISTRY_USER }} \
