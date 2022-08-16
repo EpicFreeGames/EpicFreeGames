@@ -1,8 +1,5 @@
-function defineNextConfig(config) {
-  return config;
-}
-
-export default defineNextConfig({
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   output: "standalone",
@@ -20,4 +17,6 @@ export default defineNextConfig({
       },
     ];
   },
-});
+};
+
+module.exports = nextConfig;
