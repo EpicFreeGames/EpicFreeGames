@@ -44,6 +44,21 @@ services:
     ports:
       - "3001:3000"
 
+  front:
+    build:
+      context: ./front
+      dockerfile: Dockerfile.dev
+    image: front/front
+    env_file:
+      - .env-dev
+    environment:
+      PORT: "3000"
+    restart: unless-stopped
+    volumes:
+      - ./front/src:/app/src:r
+    ports:
+      - "3000:3000"
+
   bot_rest-proxy:
     depends_on:
       - redis

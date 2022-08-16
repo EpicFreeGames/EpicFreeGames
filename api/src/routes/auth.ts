@@ -102,6 +102,17 @@ authRouter.get(
   )
 );
 
+authRouter.get("/discord-init", async (req, res) => {
+  const queryParams = new URLSearchParams({
+    client_id: config.DISCORD_CLIENT_ID,
+    redirect_uri: config.DISCORD_REDIRECT_URL,
+    response_type: "code",
+    scope: "identify",
+  });
+
+  res.redirect(303, `https://discord.com/api/oauth2/authorize?${queryParams.toString()}`);
+});
+
 authRouter.post("/logout", endpointAuth(), async (req, res) => {
   const { userId, jti } = req.tokenPayload;
 

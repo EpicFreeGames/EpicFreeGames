@@ -1,9 +1,8 @@
 import toast from "react-hot-toast";
 import { isBrowser } from "~hooks/useIsBrowser";
-import { envs } from "~utils/envs";
 
 export const apiRequest = <TData = any>(path: string, method: string, body?: any) =>
-  fetch(`${envs.efgApiBaseUrl}${path}`, {
+  fetch(`/api${path}`, {
     method,
     credentials: "include",
     ...(body

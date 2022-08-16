@@ -2,7 +2,7 @@
   "name": "epicfreegames-monorepo",
   "scripts": {
     "dev": "docker compose -f docker-compose-dev.yml up --force-recreate -V -d",
-    "deva": "docker compose -f docker-compose-dev.yml up --force-recreate -V --attach api --attach bot_rest-proxy --attach bot_gateway-proxy --attach bot_bot --attach dash",
+    "deva": "docker compose -f docker-compose-dev.yml up --force-recreate --build -V --attach api --attach bot_rest-proxy --attach bot_gateway-proxy --attach bot_bot --attach dash",
     "db": "cd ./api/ && yarn dotenv -e ../.env-dev yarn prisma studio",
     "dbpush": "cd ./api/ && yarn dotenv -e ../.env-dev yarn prisma db push",
     "dbreset": "cd ./api/ && yarn dotenv -e ../.env-dev yarn prisma migrate reset"
