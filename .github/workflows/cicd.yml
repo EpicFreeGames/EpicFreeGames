@@ -188,8 +188,8 @@ jobs:
       - name: Type check
         run: cd ./next-dash && yarn typecheck
 
-  dash-docker-build-push:
-    name: "Dash: Build and push Docker image"
+  staging-dash-docker-build-push:
+    name: "Dash Staging: Build and push Docker image"
     needs: dash-ci
     runs-on: ubuntu-latest
     steps:
@@ -233,6 +233,9 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: ${{ steps.meta.outputs.tags }}
+          build-args: |
+            NEXT_PUBLIC_EFG_API_BASE_URL=${{ secrets.NEXT_PUBLIC_EFG_API_BASE_URL }}
+            NEXT_PUBLIC_EFG_API_WS_URL=${{ secrets.NEXT_PUBLIC_EFG_API_WS_URL }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
 
@@ -334,19 +337,17 @@ jobs:
     needs:
       - api-docker-build-push
       - bot-docker-build-push
-      - dash-docker-build-push
-    uses: ./.github/workflows/ssh-deploy.yml
+      - staging-dash-docker-build-push
+    uses: ./.github/workflows/ssh-deploy-staging.yml
     secrets: inherit
     with:
       service: api dash bot_bot bot_sender bot_rest-proxy bot_gateway-proxy
-      env: Staging
 
   front-deploy-staging:
     name: "Front: Deploy to Staging"
     needs:
       - front-docker-build-push
-    uses: ./.github/workflows/ssh-deploy.yml
+    uses: ./.github/workflows/ssh-deploy-staging.yml
     secrets: inherit
     with:
       service: front
-      env: Staging

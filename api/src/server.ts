@@ -12,7 +12,6 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import express, { Router, Express } from "express";
 import http from "http";
-import { wsRouter } from "./routes/ws";
 
 export const createServer = async () => {
   const app = express();
@@ -47,7 +46,6 @@ const registerRoutes = (app: Express) => {
   router.use("/currencies", currencyRouter);
   router.use("/sends", sendsRouter);
   router.use("/dashboard", dashboardRouter);
-  router.use("/ws", wsRouter);
 
   app.use("/api", router);
 };

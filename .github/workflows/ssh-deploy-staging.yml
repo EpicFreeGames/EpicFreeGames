@@ -6,9 +6,6 @@ on:
       service:
         required: true
         type: string
-      env:
-        required: true
-        type: string
     secrets:
       REGISTRY:
         required: true
@@ -28,7 +25,7 @@ on:
 jobs:
   main:
     name: Restart Docker compose deployment via SSH
-    environment: ${{ inputs.env }}
+    environment: Staging
     runs-on: ubuntu-latest
     steps:
       - name: Cancel previous workflows
@@ -49,15 +46,15 @@ jobs:
           chmod 600 ~/.ssh/known_hosts
 
       - name: Create folder
-        run: ssh server -q "mkdir -p ~/efg-${{ inputs.env }}"
+        run: ssh server -q "mkdir -p ~/efg-staging"
 
       - name: Update Docker compose file
-        run: rsync ./docker-compose.yml user@server:/home/user/efg-${{ inputs.env }}/docker-compose.yml
+        run: rsync ./docker-compose-staging.yml user@server:/home/user/efg-staging/docker-compose.yml
 
       - name: Update .env
         run: |
           ssh server -q \
-          "cd ~/efg-${{ inputs.env }} && \
+          "cd ~/efg-staging && \
           echo "${{ secrets.ENV_BASE64 }}" | base64 --decode > .env"
 
       - name: Recreate containers

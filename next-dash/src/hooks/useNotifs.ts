@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { IWsMsg, WsMsgTypeBit } from "~utils/api/types";
-import { useWsAddress } from "~utils/api/websocket";
+import { wsUrl } from "~utils/envs";
 import { useIsBrowser } from "./useIsBrowser";
 
 type Props = {
@@ -10,12 +10,11 @@ type Props = {
 
 export const useNotifs = ({ isAuthenticated }: Props) => {
   const isBrowser = useIsBrowser();
-  const { data: wsAddress } = useWsAddress();
 
   useEffect(() => {
-    if (!isBrowser || !wsAddress || !isAuthenticated) return;
+    if (!useIsBrowser || !isAuthenticated) return;
 
-    const ws = new WebSocket(wsAddress);
+    const ws = new WebSocket(wsUrl);
 
     ws.onopen = () => console.log("WebSocket connected");
 
@@ -35,5 +34,5 @@ export const useNotifs = ({ isAuthenticated }: Props) => {
     return () => {
       ws?.close();
     };
-  }, [wsAddress, isBrowser, isAuthenticated]);
+  }, [isBrowser, isAuthenticated]);
 };

@@ -1,5 +1,6 @@
 import toast from "react-hot-toast";
 import { isBrowser } from "~hooks/useIsBrowser";
+import { apiBaseUrl } from "~utils/envs";
 
 type Props = {
   path: string;
@@ -9,7 +10,7 @@ type Props = {
 };
 
 export const apiRequest = <TData = any>({ method, path, body, redirect40X = true }: Props) =>
-  fetch(`/api${path}`, {
+  fetch(`${apiBaseUrl}${path}`, {
     method,
     credentials: "include",
     ...(body
