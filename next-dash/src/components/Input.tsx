@@ -6,7 +6,7 @@ type Props = ComponentProps<"input"> & {
   required?: boolean;
 };
 
-export const Input = forwardRef<HTMLInputElement, Props>(
+const Input = forwardRef<HTMLInputElement, Props>(
   ({ label, required, id, error, ...rest }, ref) => {
     if (!label)
       return (
@@ -39,3 +39,7 @@ export const Input = forwardRef<HTMLInputElement, Props>(
     );
   }
 );
+
+Input.displayName = "Input";
+
+export { Input };
