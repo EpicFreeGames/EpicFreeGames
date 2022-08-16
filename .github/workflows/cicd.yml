@@ -334,6 +334,7 @@ jobs:
     needs:
       - api-docker-build-push
       - bot-docker-build-push
+      - dash-docker-build-push
     uses: ./.github/workflows/ssh-deploy.yml
     secrets: inherit
     with:
