@@ -3,7 +3,7 @@ import { ElementType, ReactNode } from "react";
 import { Toaster } from "react-hot-toast";
 import { useIsMounted } from "~hooks/useIsMounted";
 import { useUser } from "~hooks/useUser";
-import { useWebsocket } from "~hooks/useWebsocket";
+import { useNotifs } from "~hooks/useNotifs";
 import { NavBar } from "./NavBar";
 import { Path } from "./Path";
 
@@ -17,7 +17,8 @@ type Props = {
 export const Layout = ({ children, title, titleButtons, segments }: Props) => {
   const user = useUser();
   const isMounted = useIsMounted();
-  useWebsocket(!!user);
+
+  useNotifs({ isAuthenticated: !!user });
 
   if (!isMounted) return null;
 

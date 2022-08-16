@@ -25,5 +25,6 @@ export const createWs = (server: http.Server) => {
       wss.emit("connection", ws, req, accessTokenPayload);
     });
   });
+
   return wss;
 };

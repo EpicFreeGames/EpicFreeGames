@@ -13,6 +13,7 @@ const envSchema = z.object({
   REDISUSER: z.string().optional(),
   REDISPASS: z.string().optional(),
 
+  EFG_API_WS_URL: z.string(),
   EFG_API_SECRET: z.string(),
   EFG_API_BOT_SECRET: z.string(),
 
