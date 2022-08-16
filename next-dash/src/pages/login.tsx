@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useUser } from "~hooks/useUser";
+import { apiBaseUrl } from "~utils/envs";
 
 export default function LoginPage() {
   const user = useUser(false);
@@ -16,7 +17,7 @@ export default function LoginPage() {
 
       <a
         className="btnBase py-2 px-2 border-[1px] border-blue-500 bg-blue-800/60 hover:bg-blue-700/80 active:bg-blue-600/80"
-        href="/api/auth/discord-init"
+        href={`${apiBaseUrl}/auth/discord-init`}
       >
         Login with Discord
       </a>
