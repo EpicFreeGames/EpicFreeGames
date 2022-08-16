@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { IWsMsg, WsMsgTypeBit } from "~utils/api/types";
 import { useWsAddress } from "~utils/api/websocket";
