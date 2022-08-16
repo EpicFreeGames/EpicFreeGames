@@ -8,7 +8,12 @@ export type AddGameProps = Omit<IGame, "id" | "sendingId" | "prices"> & {
   priceValue: number;
 };
 
-const addGameRequest = (props: AddGameProps) => apiRequest<IGame>("/games", "POST", props);
+const addGameRequest = (props: AddGameProps) =>
+  apiRequest<IGame>({
+    path: "/games",
+    method: "POST",
+    body: props,
+  });
 
 export const useAddGameMutation = () => {
   const qc = useQueryClient();

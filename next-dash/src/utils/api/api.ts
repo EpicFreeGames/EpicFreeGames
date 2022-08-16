@@ -1,7 +1,14 @@
 import toast from "react-hot-toast";
 import { isBrowser } from "~hooks/useIsBrowser";
 
-export const apiRequest = <TData = any>(path: string, method: string, body?: any) =>
+type Props = {
+  path: string;
+  method: string;
+  body?: any;
+  redirect40X?: boolean;
+};
+
+export const apiRequest = <TData = any>({ method, path, body, redirect40X = true }: Props) =>
   fetch(`/api${path}`, {
     method,
     credentials: "include",
@@ -26,8 +33,10 @@ export const apiRequest = <TData = any>(path: string, method: string, body?: any
       };
 
       if (isBrowser) {
-        if (error.statusCode === 401) window.location.href = "/login";
-        if (error.statusCode === 403) history.back();
+        if (redirect40X) {
+          if (error.statusCode === 401) window.location.href = "/login";
+          if (error.statusCode === 403) history.back();
+        }
       }
 
       toast.error(error.message);

@@ -7,7 +7,10 @@ type DeleteGameProps = {
 };
 
 const deleteGameRequest = ({ gameId }: DeleteGameProps) =>
-  apiRequest<void>(`/games/${gameId}`, "DELETE");
+  apiRequest<void>({
+    path: `/games/${gameId}`,
+    method: "DELETE",
+  });
 
 export const useDeleteGameMutation = () => {
   const qc = useQueryClient();

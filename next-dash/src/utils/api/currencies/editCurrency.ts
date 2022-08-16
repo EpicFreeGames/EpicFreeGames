@@ -8,7 +8,11 @@ export type EditCurrencyProps = {
 };
 
 const editCurrencyRequest = ({ currencyId, updateData }: EditCurrencyProps) =>
-  apiRequest<ICurrency>(`/currencies/${currencyId}`, "PATCH", updateData);
+  apiRequest<ICurrency>({
+    path: `/currencies/${currencyId}`,
+    method: "PATCH",
+    body: updateData,
+  });
 
 export const useEditCurrencyMutation = () => {
   const qc = useQueryClient();

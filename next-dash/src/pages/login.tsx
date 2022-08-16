@@ -1,4 +1,15 @@
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { useUser } from "~hooks/useUser";
+
 export default function LoginPage() {
+  const user = useUser(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (user) router.push("/");
+  }, [user]);
+
   return (
     <div className="flex flex-col justify-center items-center gap-14 max-w-screen-lg mx-auto h-screen">
       <h1 className="font-bold text-5xl">Login</h1>

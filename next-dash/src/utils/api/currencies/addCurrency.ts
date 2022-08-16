@@ -5,7 +5,11 @@ import { ICurrency } from "../types";
 export type AddCurrencyProps = Omit<ICurrency, "id">;
 
 const addCurrencyRequest = (props: AddCurrencyProps) =>
-  apiRequest<ICurrency>("/currencies", "POST", props);
+  apiRequest<ICurrency>({
+    path: "/currencies",
+    method: "POST",
+    body: props,
+  });
 
 export const useAddCurrencyMutation = () => {
   const qc = useQueryClient();

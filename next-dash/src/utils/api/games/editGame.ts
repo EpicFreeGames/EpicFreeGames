@@ -9,7 +9,11 @@ export type EditGameProps = {
 };
 
 const editGameRequest = ({ gameId, updateData }: EditGameProps) =>
-  apiRequest<IGame>(`/games/${gameId}`, "PATCH", updateData);
+  apiRequest<IGame>({
+    path: `/games/${gameId}`,
+    method: "PATCH",
+    body: updateData,
+  });
 
 export const useEditGameMutation = () => {
   const qc = useQueryClient();
