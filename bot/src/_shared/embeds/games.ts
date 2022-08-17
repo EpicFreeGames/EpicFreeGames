@@ -3,7 +3,7 @@ import { botConstants } from "../constants.ts";
 import { t } from "../i18n/translate.ts";
 import { Currency, Game, Language } from "../types.ts";
 import { getGamePrice } from "../utils/getGamePrice.ts";
-import { colors, utils } from "./embedUtils.ts";
+import { colors, utils, chars } from "./embedUtils.ts";
 
 export const gameEmbed = (game: Game, language: Language, currency: Currency): Embed => {
   const now = Date.now() / 1000;
@@ -18,7 +18,7 @@ export const gameEmbed = (game: Game, language: Language, currency: Currency): E
     },
     // prettier-ignore
     description:
-      t({language, key: "open_in"}) +
+      utils.bold(t({language, key: "open_in"})) +
 
       "\n" +
       
@@ -26,7 +26,7 @@ export const gameEmbed = (game: Game, language: Language, currency: Currency): E
         "Epicgames.com",
         botConstants.browserRedirect(game.path)
       ) +
-      " • " +
+      chars.separator +
       utils.link(
         "Epic Launcher",
         botConstants.launcherRedirect(game.path)
@@ -39,9 +39,8 @@ export const gameEmbed = (game: Game, language: Language, currency: Currency): E
 
       "\n\n" +
 
-      `💰 ${utils.bold(`${utils.strike(getGamePrice(game, currency))} -> ${t({language,key: "free"})}`)}!` +
+      `💰 ${utils.bold(`${utils.strike(getGamePrice(game, currency))} ${chars.arrow} ${t({language,key: "free"})}`)}!` +
 
-      "\n\n" +
 
       utils.footer(language),
   };

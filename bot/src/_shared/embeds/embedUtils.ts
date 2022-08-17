@@ -23,6 +23,11 @@ export const colors = {
   gray: 0x2f3136,
 };
 
+export const chars = {
+  separator: "    •    ",
+  arrow: " ➜  ",
+};
+
 const createFooter = (language: Language) => {
   const invite = t({ language, key: "invite" });
   const support = t({ language, key: "support" });
@@ -35,9 +40,8 @@ const createFooter = (language: Language) => {
     `[${website}](${botConstants.website})`,
   ];
 
-  const separator = " • ";
-  const concatted = list.join(separator);
-  const threeConcatted = list.slice(0, 3).join(separator);
+  const concatted = list.join(chars.separator);
+  const threeConcatted = list.slice(0, 3).join(chars.separator);
 
   // if the footer is too long, try to break it,
   // otherwise, just use the full footer
@@ -45,7 +49,9 @@ const createFooter = (language: Language) => {
   if (concatted.length >= 39)
     if (threeConcatted.length >= 39)
       // 2 lines, with one on the second line
-      return withVars.slice(0, 2).join(separator) + "\n" + withVars.slice(2).join(separator);
+      return (
+        withVars.slice(0, 2).join(chars.separator) + "\n" + withVars.slice(2).join(chars.separator)
+      );
 
-  return withVars.join(separator);
+  return withVars.join(chars.separator);
 };
