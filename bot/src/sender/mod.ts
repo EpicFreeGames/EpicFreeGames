@@ -72,7 +72,7 @@ for await (const conn of httpServer) {
         return requestEvent.respondWith(
           new Response(
             JSON.stringify({
-              message: "sending was not started, all servers got filtered out",
+              message: "Sending was not started, all servers got filtered out",
               success: false,
             }),
             {
