@@ -5,18 +5,25 @@ import { endpointAuth } from "../auth/endpointAuth";
 import { Flags } from "../auth/flags";
 import { bigintSchema } from "../utils/jsonfix";
 import { withValidation } from "../utils/withValidation";
-import axios from "axios";
 import { Router } from "express";
 import { z } from "zod";
 
 const router = Router();
 
 router.get("/", endpointAuth(Flags.GetSendings), async (req, res) => {
-  const sends = await prisma.sending.findMany({
+  let sends = await prisma.sending.findMany({
     include: { games: true },
   });
 
-  res.json(sends);
+  const withSuccessesFailures = await Promise.all(
+    sends.map(async (sending) => ({
+      ...sending,
+      successes: Number(await redis.get(`sending:${sending.id}:successes`)),
+      failures: Number(await redis.get(`sending:${sending.id}:failures`)),
+    }))
+  );
+
+  res.json(withSuccessesFailures);
 });
 
 router.get(
@@ -35,12 +42,13 @@ router.get(
       const { after, sendingId } = req.query;
 
       const servers = await prisma.server.findMany({
-        include: { currency: true },
+        include: { currency: true, sendingLogs: true },
         orderBy: {
           id: "asc",
         },
         where: {
           channelId: { not: null },
+          ...(sendingId ? { sendingLogs: { none: { sendingId } } } : {}),
         },
         take: 10,
         ...(after
@@ -51,18 +59,9 @@ router.get(
               skip: 1,
             }
           : {}),
-        ...(sendingId
-          ? {
-              where: {
-                sendingLogs: {
-                  none: {
-                    id: sendingId,
-                  },
-                },
-              },
-            }
-          : {}),
       });
+
+      await redis.set(`sending:${sendingId}:target`, servers.length);
 
       res.json(servers);
     }
@@ -235,21 +234,37 @@ router.post(
           message: "Sending not found",
         });
 
-      const senderResponse = await axios({
+      const senderResponse = await fetch(config.SENDER_URL, {
         method: "POST",
-        url: config.SENDER_URL,
         headers: {
           Authorization: config.SENDER_AUTH,
         },
-        data: {
+        body: JSON.stringify({
           sendingId,
           games: sending.games,
-        },
+        }),
       });
 
-      console.log(JSON.stringify(senderResponse.data, null, 2));
+      const senderResponseData = await senderResponse.json();
+      const status = senderResponse.status || 500;
 
-      res.status(senderResponse.data.success ? 204 : 500).send();
+      if (!senderResponse.ok)
+        return res.status(status).send(
+          senderResponseData ?? {
+            stautsCode: status,
+            error: "Sender responded with an error",
+            message: "Sender responded with an error",
+          }
+        );
+
+      await prisma.sending.update({
+        where: { id: sendingId },
+        data: { status: "SENDING" },
+      });
+
+      console.log(JSON.stringify(senderResponseData, null, 2));
+
+      res.status(204).send();
     }
   )
 );
@@ -278,8 +293,31 @@ router.post(
       await redis.incrby(`sending:${sendingId}:${success ? "successes" : "failures"}`, 1);
 
       res.send(addedLog);
+
+      await updateSendingStatus(sendingId);
     }
   )
 );
+
+const updateSendingStatus = async (sendingId: string) => {
+  const [successes, failures, target] = await Promise.all([
+    Number(await redis.get(`sending:${sendingId}:successes`)),
+    Number(await redis.get(`sending:${sendingId}:failures`)),
+    Number(await redis.get(`sending:${sendingId}:target`)),
+  ]);
+
+  const total = successes + failures;
+
+  console.log({ successes, failures, target, total });
+
+  const targetReached = total >= target;
+
+  if (targetReached) {
+    await prisma.sending.update({
+      where: { id: sendingId },
+      data: { status: "SENT" },
+    });
+  }
+};
 
 export const sendsRouter = router;

@@ -3,7 +3,7 @@
     "outDir": "dist",
     "rootDir": "src",
 
-    "lib": ["esnext"],
+    "lib": ["esnext", "DOM"],
 
     "composite": false,
     "esModuleInterop": true,

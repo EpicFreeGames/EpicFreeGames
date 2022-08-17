@@ -75,7 +75,7 @@ model SendingLog {
   success   Boolean
   serverId  BigInt
   server    Server         @relation(fields: [serverId], references: [id], onDelete: Cascade)
-  sending   Sending        @relation(fields: [sendingId], references: [id])
+  sending   Sending        @relation(fields: [sendingId], references: [id], onDelete: Cascade)
   sendingId String
 }
 
