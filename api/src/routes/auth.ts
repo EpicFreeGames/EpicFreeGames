@@ -2,7 +2,6 @@ import { config } from "../config";
 import prisma from "../data/prisma";
 import { endpointAuth } from "../auth/endpointAuth";
 import { withValidation } from "../utils/withValidation";
-import axios from "axios";
 import { Router } from "express";
 import { z } from "zod";
 import { createAccessToken } from "../auth/jwt/jwt";
@@ -33,26 +32,39 @@ authRouter.get(
       });
 
       try {
-        const tokenResponse = await axios.post(
-          `${config.DISCORD_API_BASEURL}/oauth2/token`,
-          params.toString(),
-          {
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-            },
-          }
-        );
+        const tokenResponse = await fetch(`${config.DISCORD_API_BASEURL}/oauth2/token`, {
+          method: "POST",
+          body: params,
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        });
 
-        const { access_token } = tokenResponse.data;
-        if (!access_token) throw new Error("No access token");
+        if (!tokenResponse.ok)
+          return res.status(tokenResponse.status ?? 500).json({
+            statusCode: tokenResponse.status ?? 500,
+            error: `Failed to get token response Discord: ${tokenResponse.statusText}`,
+            message: `Failed to get token response Discord: ${tokenResponse.statusText}`,
+          });
 
-        const userResponse = await axios.get(`${config.DISCORD_API_BASEURL}/oauth2/@me`, {
+        const { access_token } = await tokenResponse.json();
+        if (!access_token)
+          return res.status(500).json({ error: "No access token in Discord's response" });
+
+        const userResponse = await fetch(`${config.DISCORD_API_BASEURL}/oauth2/@me`, {
           headers: {
             Authorization: `Bearer ${access_token}`,
           },
         });
 
-        const userId = userResponse?.data?.user?.id;
+        if (!userResponse?.ok)
+          return res.status(userResponse?.status ?? 500).json({
+            statusCode: userResponse?.status ?? 500,
+            error: `Failed to get user response Discord: ${userResponse?.statusText}`,
+            message: `Failed to get user response Discord: ${userResponse?.statusText}`,
+          });
+
+        const userId = (await userResponse.json())?.data?.user?.id;
         if (!userId)
           return res.status(400).json({
             statusCode: 400,
