@@ -36,7 +36,7 @@ export const apiRequest = <TData = any>({ method, path, body, redirect40X = true
       if (isBrowser) {
         if (redirect40X) {
           if (error.statusCode === 401) window.location.href = "/login";
-          if (error.statusCode === 403) history.back();
+          if (error.statusCode === 403) window.location.href = "/";
         }
       }
 

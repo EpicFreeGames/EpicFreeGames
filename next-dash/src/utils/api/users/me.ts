@@ -10,4 +10,6 @@ const fetchMe = (required = true) =>
   });
 
 export const useMe = (required = true) =>
-  useQuery<IUser, ApiError>(["me"], () => fetchMe(required));
+  useQuery<IUser, ApiError>(["me"], () => fetchMe(required), {
+    retry: false,
+  });

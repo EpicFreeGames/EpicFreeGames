@@ -1,11 +1,7 @@
 import { Flags } from "~utils/api/flags";
-import { useUser } from "./useUser";
 
-export const useHasPerms = (...flags: Flags[]) => {
-  const user = useUser();
-
-  return hasPermission(user?.flags ?? 0, flags);
-};
+export const useHasPerms = (flags: number, ...requiredFlags: Flags[]) =>
+  hasPermission(flags, requiredFlags);
 
 const hasPermission = (flags: number, requiredFlags: Flags[]) => {
   if (hasFlag(flags, Flags.ADMIN)) return true;

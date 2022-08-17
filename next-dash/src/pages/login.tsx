@@ -2,14 +2,17 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useUser } from "~hooks/useUser";
 import { apiBaseUrl } from "~utils/envs";
+import { Page } from "~utils/types";
 
-export default function LoginPage() {
-  const user = useUser(false);
+const LoginPage: Page = () => {
+  const { user, isLoading } = useUser(false);
   const router = useRouter();
 
   useEffect(() => {
+    if (isLoading) return;
+
     if (user) router.push("/");
-  }, [user]);
+  }, [user, isLoading]);
 
   return (
     <div className="flex flex-col justify-center items-center gap-14 max-w-screen-lg mx-auto h-screen">
@@ -23,4 +26,9 @@ export default function LoginPage() {
       </a>
     </div>
   );
-}
+};
+
+LoginPage.requireAuth = false;
+LoginPage.requiredFlags = [];
+
+export default LoginPage;

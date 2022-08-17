@@ -1,7 +1,6 @@
 import Head from "next/head";
 import { ElementType, ReactNode } from "react";
 import { Toaster } from "react-hot-toast";
-import { useIsMounted } from "~hooks/useIsMounted";
 import { useUser } from "~hooks/useUser";
 import { useNotifs } from "~hooks/useNotifs";
 import { NavBar } from "./NavBar";
@@ -15,12 +14,9 @@ type Props = {
 };
 
 export const Layout = ({ children, title, titleButtons, segments }: Props) => {
-  const user = useUser();
-  const isMounted = useIsMounted();
+  const { user } = useUser();
 
   useNotifs({ isAuthenticated: !!user });
-
-  if (!isMounted) return null;
 
   const hasPath = segments?.length;
   const hasButtons = titleButtons?.length;
