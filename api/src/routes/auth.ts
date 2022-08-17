@@ -64,7 +64,7 @@ authRouter.get(
             message: `Failed to get user response Discord: ${userResponse?.statusText}`,
           });
 
-        const userId = (await userResponse.json())?.data?.user?.id;
+        const userId = (await userResponse.json())?.user?.id;
         if (!userId)
           return res.status(400).json({
             statusCode: 400,
