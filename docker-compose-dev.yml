@@ -106,6 +106,7 @@ services:
     environment:
       PORT: "3000"
     restart: unless-stopped
+    command: "deno run --watch -A ./src/sender/mod.ts"
 
   bot_bot:
     depends_on:
