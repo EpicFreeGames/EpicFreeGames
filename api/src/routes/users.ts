@@ -61,4 +61,35 @@ router.get("/@me", endpointAuth(), async (req, res) => {
   return res.json(user);
 });
 
+router.get("/", endpointAuth(Flags.GetUsers), async (req, res) => {
+  const users = await prisma.user.findMany();
+
+  return res.json(users);
+});
+
+router.post(
+  "/",
+  endpointAuth(Flags.AddUsers),
+  withValidation(
+    {
+      body: z.object({
+        discordId: z.string(),
+        flags: z.number(),
+      }),
+    },
+    async (req, res) => {
+      const { discordId, flags } = req.body;
+
+      const user = await prisma.user.create({
+        data: {
+          discordId,
+          flags,
+        },
+      });
+
+      return res.json(user);
+    }
+  )
+);
+
 export const userRouter = router;

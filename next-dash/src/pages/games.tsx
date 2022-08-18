@@ -6,7 +6,7 @@ import { useGames } from "~utils/api/games/getGames";
 
 export default function GamesPage() {
   return (
-    <Layout title="Games" segments={["Games"]} titleButtons={[AddGame]}>
+    <Layout title="Games" titleButtons={[AddGame]}>
       <Games />
     </Layout>
   );

@@ -8,7 +8,7 @@ import { Page } from "~utils/types";
 
 const SendsPage: Page = () => {
   return (
-    <Layout title="Sends" titleButtons={[AddSending]} segments={["Sends"]}>
+    <Layout title="Sends" titleButtons={[AddSending]}>
       <Sends />
     </Layout>
   );

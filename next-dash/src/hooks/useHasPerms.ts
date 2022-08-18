@@ -11,4 +11,5 @@ const hasPermission = (flags: number, requiredFlags: Flags[]) => {
   return hasFlag(flags, totalRequired);
 };
 
-const hasFlag = (flags: number, requiredFlag: Flags) => (flags & requiredFlag) === requiredFlag;
+export const hasFlag = (flags: number, requiredFlag: Flags) =>
+  (flags & requiredFlag) === requiredFlag;

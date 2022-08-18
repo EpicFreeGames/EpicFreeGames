@@ -4,21 +4,18 @@ import { Toaster } from "react-hot-toast";
 import { useUser } from "~hooks/useUser";
 import { useNotifs } from "~hooks/useNotifs";
 import { NavBar } from "./NavBar";
-import { Path } from "./Path";
 
 type Props = {
   children: ReactNode;
   title: string;
   titleButtons?: ElementType[];
-  segments?: string[];
 };
 
-export const Layout = ({ children, title, titleButtons, segments }: Props) => {
+export const Layout = ({ children, title, titleButtons }: Props) => {
   const { user } = useUser();
 
   useNotifs({ isAuthenticated: !!user });
 
-  const hasPath = segments?.length;
   const hasButtons = titleButtons?.length;
 
   return (
@@ -42,14 +39,8 @@ export const Layout = ({ children, title, titleButtons, segments }: Props) => {
 
           <main className="max-w-screen-lg mx-auto halfMax:px-4">
             <div className="flex flex-col">
-              {hasPath && <Path segments={segments} />}
-
               <div className="flex justify-between pb-3 px-3 halfMax:px-0">
-                <h1
-                  className={`flex items-center text-2xl halfMax:text-4xl ${hasPath ? "" : "pt-3"}`}
-                >
-                  {title}
-                </h1>
+                <h1 className="flex items-center text-2xl halfMax:text-4xl pt-3">{title}</h1>
 
                 {hasButtons && (
                   <div className="flex gap-3">

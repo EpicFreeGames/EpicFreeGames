@@ -6,7 +6,7 @@ import { useCurrencies } from "~utils/api/currencies/getCurrencies";
 
 export default function CurrenciesPage() {
   return (
-    <Layout title="Currencies" segments={["Currencies"]} titleButtons={[AddCurrency]}>
+    <Layout title="Currencies" titleButtons={[AddCurrency]}>
       <Currencies />
     </Layout>
   );

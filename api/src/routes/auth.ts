@@ -64,35 +64,32 @@ authRouter.get(
             message: `Failed to get user response Discord: ${userResponse?.statusText}`,
           });
 
-        const userId = (await userResponse.json())?.user?.id;
-        if (!userId)
-          return res.status(400).json({
-            statusCode: 400,
-            error: "Bad request",
-            message: "Invalid token",
+        const user = (await userResponse.json())?.user;
+        const userId = user?.id;
+        const username = `${user?.username}#${user?.discriminator}`;
+
+        if (!userId || !username)
+          return res.status(500).json({
+            statusCode: 500,
+            error: "Invalid user response from Discord",
+            message: "Invalid user response from Discord",
           });
 
-        if (!config.ALLOWED_USER_IDS.includes(userId))
-          return res.status(403).json({
-            statusCode: 403,
-            error: "Forbidden",
-            message: "You're not allowed to login",
-          });
-
-        const user = await prisma.user.upsert({
+        const dbUser = await prisma.user.update({
           where: { discordId: userId },
-          create: {
-            discordId: userId,
-            flags: 0,
-          },
-          update: {
-            discordId: userId,
-          },
+          data: { name: username },
         });
 
+        if (!dbUser)
+          return res.status(404).json({
+            statusCode: 404,
+            error: "Not found",
+            message: "User not found",
+          });
+
         const accessToken = await createAccessToken({
-          userId: user.id,
-          flags: user.flags,
+          userId: dbUser.id,
+          flags: dbUser.flags,
         });
 
         res.setHeader("Set-Cookie", createAccessTokenCookie(accessToken));
@@ -133,42 +130,3 @@ authRouter.post("/logout", endpointAuth(), async (req, res) => {
   res.setHeader("Set-Cookie", createEmptyAccessTokenCookie());
   res.status(200).send();
 });
-
-if (config.ENV === "Development") {
-  authRouter.post("/dev-login", async (req, res) => {
-    try {
-      const userId = config.ALLOWED_USER_IDS[0]!;
-
-      const user = await prisma.user.upsert({
-        where: { discordId: userId },
-        create: {
-          discordId: userId,
-          flags: 0,
-        },
-        update: {
-          discordId: userId,
-        },
-      });
-
-      const accessToken = await createAccessToken({
-        userId: user.id,
-        flags: user.flags,
-      });
-
-      res.setHeader("Set-Cookie", createAccessTokenCookie(accessToken));
-
-      res.status(204).send();
-    } catch (err) {
-      console.log(
-        `DEV Error logging user in: ${err?.message}\nResponse data:`,
-        JSON.stringify(err?.response?.data)
-      );
-
-      const status = err?.response?.status ?? 500;
-      res.status(status).json({
-        status,
-        message: "Authentication failed",
-      });
-    }
-  });
-}

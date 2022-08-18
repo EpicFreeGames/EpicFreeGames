@@ -15,7 +15,7 @@ const Input = forwardRef<HTMLInputElement, Props>(
           id={id}
           autoComplete="off"
           required={required}
-          className="bg-gray-600 rounded-md p-2 duration-200 focus"
+          className="border-[1px] border-transparent bg-gray-600 rounded-md p-2 duration-200 focus"
           {...rest}
           ref={ref}
         />
@@ -31,7 +31,7 @@ const Input = forwardRef<HTMLInputElement, Props>(
           id={label}
           autoComplete="off"
           required={required}
-          className="bg-gray-600 rounded-md p-2 duration-200 focus"
+          className="border-[1px] border-transparent bg-gray-600 rounded-md p-2 duration-200 focus"
           {...rest}
           ref={ref}
         />
