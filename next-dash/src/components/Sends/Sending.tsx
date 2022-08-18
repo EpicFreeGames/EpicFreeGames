@@ -20,7 +20,7 @@ export const Sending = ({ sending }: Props) => {
 
   return (
     <div className="bg-gray-700 p-3 rounded-md flex flex-col gap-3">
-      <div className="flex gap-2 justify-between w-full h-full flex-col halfMax:flex-row">
+      <div className="flex gap-2 justify-between w-full h-full flex-col halfMax:flex-row items-start">
         <h2 className="bg-gray-800 py-2 px-3 rounded-md text-lg halfMax:text-2xl">{sending.id}</h2>
 
         {showButtons && (

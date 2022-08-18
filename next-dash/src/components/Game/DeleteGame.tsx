@@ -31,7 +31,7 @@ export const DeleteGame = ({ game }: Props) => {
       title="Delete game"
       description={`Are you sure you want to delete ${game.displayName}?`}
       trigger={
-        <button className="btnBase px-2 bg-gray-800 hover:bg-gray-900/80 active:bg-gray-900">
+        <button className="btnBase px-2 hover:bg-gray-700/80 active:bg-gray-700/60">
           <Trash strokeWidth={1.3} size={21} className="text-red-500" />
         </button>
       }

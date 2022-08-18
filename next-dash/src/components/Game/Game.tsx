@@ -1,10 +1,15 @@
 import { ReactNode } from "react";
+import { useHasPerms } from "~hooks/useHasPerms";
+import { Flags } from "~utils/api/flags";
 import { useEditGameMutation } from "~utils/api/games/editGame";
 import { IGame } from "~utils/api/types";
 import { DeleteGame } from "./DeleteGame";
 import { EditGame } from "./EditGame";
 
 export const Game = ({ game }: { game: IGame }) => {
+  const canEdit = useHasPerms(Flags.EditGames);
+  const canDelete = useHasPerms(Flags.DeleteGames);
+
   return (
     <div className="bg-gray-700 p-3 rounded-md flex flex-col gap-3">
       <div className="flex gap-2 justify-between w-full flex-col halfMax:flex-row items-start">
@@ -12,14 +17,10 @@ export const Game = ({ game }: { game: IGame }) => {
           {game.displayName}
         </h2>
 
-        <div className="flex gap-2 justify-between">
+        <div className="flex gap-1 p-2 bg-gray-800 rounded-lg">
           <Confirmed game={game} />
-
-          <div className="flex gap-2 justify-end">
-            <EditGame game={game} />
-
-            <DeleteGame game={game} />
-          </div>
+          {canEdit && <EditGame game={game} />}
+          {canDelete && <DeleteGame game={game} />}
         </div>
       </div>
 
@@ -59,13 +60,16 @@ export const Game = ({ game }: { game: IGame }) => {
 
 const Confirmed = ({ game }: { game: IGame }) => {
   const { mutateAsync } = useEditGameMutation();
+  const canEdit = useHasPerms(Flags.EditGames);
 
   return (
     <button
-      className={`btnBase px-2 py-[0.4rem] bg-gray-800 hover:bg-gray-900/80 active:bg-gray-900 ${
+      className={`h-full btnBase px-2 hover:bg-gray-700/80 active:bg-gray-700/60 ${
         game.confirmed ? "text-green-500" : "text-red-500"
-      } h-full`}
-      onClick={() => mutateAsync({ gameId: game.id, updateData: { confirmed: !game.confirmed } })}
+      }`}
+      onClick={() =>
+        canEdit && mutateAsync({ gameId: game.id, updateData: { confirmed: !game.confirmed } })
+      }
     >
       {game.confirmed ? "Confirmed" : "Not confirmed"}
     </button>
