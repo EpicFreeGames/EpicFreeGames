@@ -4,6 +4,7 @@ import { Flags } from "../auth/flags";
 import { withValidation } from "../utils/withValidation";
 import { Router } from "express";
 import { z } from "zod";
+import { prismaUpdateCatcher } from "../data/prismaUpdateCatcher";
 
 const router = Router();
 
@@ -27,10 +28,12 @@ router.post(
       const { userId } = req.params;
       const { newFlags } = req.body;
 
-      const user = await prisma.user.update({
-        where: { id: userId },
-        data: { flags: newFlags },
-      });
+      const user = await prisma.user
+        .update({
+          where: { id: userId },
+          data: { flags: newFlags },
+        })
+        .catch(prismaUpdateCatcher);
 
       if (!user)
         return res.status(404).send({
@@ -88,6 +91,75 @@ router.post(
       });
 
       return res.json(user);
+    }
+  )
+);
+
+router.patch(
+  "/:userId",
+  endpointAuth(Flags.EditUsers),
+  withValidation(
+    {
+      params: z
+        .object({
+          userId: z.string(),
+        })
+        .strict(),
+      body: z
+        .object({
+          flags: z.number(),
+        })
+        .strict(),
+    },
+    async (req, res) => {
+      const { userId } = req.params;
+      const { flags } = req.body;
+
+      const updatedUser = await prisma.user
+        .update({
+          where: { id: userId },
+          data: { flags },
+        })
+        .catch(prismaUpdateCatcher);
+
+      if (!updatedUser)
+        return res.status(404).send({
+          statusCode: 404,
+          error: "Not found",
+          message: "User not found",
+        });
+
+      return res.send(updatedUser);
+    }
+  )
+);
+
+router.delete(
+  "/:userId",
+  endpointAuth(Flags.DeleteUsers),
+  withValidation(
+    {
+      params: z
+        .object({
+          userId: z.string(),
+        })
+        .strict(),
+    },
+    async (req, res) => {
+      const { userId } = req.params;
+
+      const deletedUser = await prisma.user.delete({
+        where: { id: userId },
+      });
+
+      if (!deletedUser)
+        return res.status(404).send({
+          statusCode: 404,
+          error: "Not found",
+          message: "User not found",
+        });
+
+      return res.send(deletedUser);
     }
   )
 );

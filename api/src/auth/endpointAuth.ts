@@ -4,7 +4,7 @@ import { safeEqual } from "../utils/crypto";
 import { createAccessTokenCookie } from "./cookie";
 import { Flags } from "./flags";
 import { createAccessToken, verifyAccessJwt } from "./jwt/jwt";
-import { hasPermission } from "./perms";
+import { hasPermission } from "./authUtils";
 
 export const endpointAuth =
   (...requiredFlags: Flags[]): Middleware =>

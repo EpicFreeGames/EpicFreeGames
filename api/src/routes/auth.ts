@@ -7,6 +7,7 @@ import { z } from "zod";
 import { createAccessToken } from "../auth/jwt/jwt";
 import { createAccessTokenCookie, createEmptyAccessTokenCookie } from "../auth/cookie";
 import { removeJti } from "../auth/jwt/jwtWhitelist";
+import { prismaUpdateCatcher } from "../data/prismaUpdateCatcher";
 
 export const authRouter = Router();
 
@@ -31,82 +32,71 @@ authRouter.get(
         redirect_uri: config.DISCORD_REDIRECT_URL,
       });
 
-      try {
-        const tokenResponse = await fetch(`${config.DISCORD_API_BASEURL}/oauth2/token`, {
-          method: "POST",
-          body: params,
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
+      const tokenResponse = await fetch(`${config.DISCORD_API_BASEURL}/oauth2/token`, {
+        method: "POST",
+        body: params,
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      });
+
+      if (!tokenResponse.ok)
+        return res.status(tokenResponse.status ?? 500).json({
+          statusCode: tokenResponse.status ?? 500,
+          error: `Failed to get token response Discord: ${tokenResponse.statusText}`,
+          message: `Failed to get token response Discord: ${tokenResponse.statusText}`,
         });
 
-        if (!tokenResponse.ok)
-          return res.status(tokenResponse.status ?? 500).json({
-            statusCode: tokenResponse.status ?? 500,
-            error: `Failed to get token response Discord: ${tokenResponse.statusText}`,
-            message: `Failed to get token response Discord: ${tokenResponse.statusText}`,
-          });
+      const { access_token } = await tokenResponse.json();
+      if (!access_token)
+        return res.status(500).json({ error: "No access token in Discord's response" });
 
-        const { access_token } = await tokenResponse.json();
-        if (!access_token)
-          return res.status(500).json({ error: "No access token in Discord's response" });
+      const userResponse = await fetch(`${config.DISCORD_API_BASEURL}/oauth2/@me`, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
 
-        const userResponse = await fetch(`${config.DISCORD_API_BASEURL}/oauth2/@me`, {
-          headers: {
-            Authorization: `Bearer ${access_token}`,
-          },
+      if (!userResponse?.ok)
+        return res.status(userResponse?.status ?? 500).json({
+          statusCode: userResponse?.status ?? 500,
+          error: `Failed to get user response Discord: ${userResponse?.statusText}`,
+          message: `Failed to get user response Discord: ${userResponse?.statusText}`,
         });
 
-        if (!userResponse?.ok)
-          return res.status(userResponse?.status ?? 500).json({
-            statusCode: userResponse?.status ?? 500,
-            error: `Failed to get user response Discord: ${userResponse?.statusText}`,
-            message: `Failed to get user response Discord: ${userResponse?.statusText}`,
-          });
+      const user = (await userResponse.json())?.user;
+      const userId = user?.id;
+      const username = `${user?.username}#${user?.discriminator}`;
 
-        const user = (await userResponse.json())?.user;
-        const userId = user?.id;
-        const username = `${user?.username}#${user?.discriminator}`;
+      if (!userId || username.length === 1)
+        return res.status(500).json({
+          statusCode: 500,
+          error: "Invalid user response from Discord",
+          message: "Invalid user response from Discord",
+        });
 
-        if (!userId || !username)
-          return res.status(500).json({
-            statusCode: 500,
-            error: "Invalid user response from Discord",
-            message: "Invalid user response from Discord",
-          });
-
-        const dbUser = await prisma.user.update({
+      const dbUser = await prisma.user
+        .update({
           where: { discordId: userId },
           data: { name: username },
+        })
+        .catch(prismaUpdateCatcher);
+
+      if (!dbUser)
+        return res.status(404).json({
+          statusCode: 404,
+          error: "Not found",
+          message: "User not found",
         });
 
-        if (!dbUser)
-          return res.status(404).json({
-            statusCode: 404,
-            error: "Not found",
-            message: "User not found",
-          });
+      const accessToken = await createAccessToken({
+        userId: dbUser.id,
+        flags: dbUser.flags,
+      });
 
-        const accessToken = await createAccessToken({
-          userId: dbUser.id,
-          flags: dbUser.flags,
-        });
+      res.setHeader("Set-Cookie", createAccessTokenCookie(accessToken));
 
-        res.setHeader("Set-Cookie", createAccessTokenCookie(accessToken));
-
-        res.redirect(303, config.DASH_URL);
-      } catch (err) {
-        console.log(
-          `Error logging user in: ${err?.message}\nResponse data:`,
-          JSON.stringify(err?.response?.data)
-        );
-
-        const status = err?.response?.status ?? 500;
-        res.status(status).json({
-          status,
-          message: "Authentication failed",
-        });
-      }
+      res.redirect(303, config.DASH_URL);
     }
   )
 );

@@ -7,6 +7,7 @@ import { bigintSchema } from "../utils/jsonfix";
 import { withValidation } from "../utils/withValidation";
 import { Router } from "express";
 import { z } from "zod";
+import { prismaUpdateCatcher } from "../data/prismaUpdateCatcher";
 
 const router = Router();
 
@@ -120,15 +121,17 @@ router.patch(
       const { sendingId } = req.params;
       const { gameIds } = req.body;
 
-      const updatedSending = await prisma.sending.update({
-        where: { id: sendingId },
-        data: {
-          games: {
-            set: gameIds.map((gameId) => ({ id: gameId })),
+      const updatedSending = await prisma.sending
+        .update({
+          where: { id: sendingId },
+          data: {
+            games: {
+              set: gameIds.map((gameId) => ({ id: gameId })),
+            },
           },
-        },
-        include: { games: true },
-      });
+          include: { games: true },
+        })
+        .catch(prismaUpdateCatcher);
 
       if (!updatedSending)
         return res
@@ -313,10 +316,12 @@ const updateSendingStatus = async (sendingId: string) => {
   const targetReached = total >= target;
 
   if (targetReached) {
-    await prisma.sending.update({
-      where: { id: sendingId },
-      data: { status: "SENT" },
-    });
+    await prisma.sending
+      .update({
+        where: { id: sendingId },
+        data: { status: "SENT" },
+      })
+      .catch(prismaUpdateCatcher);
   }
 };
 

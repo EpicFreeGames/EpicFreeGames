@@ -39,8 +39,10 @@ export const Layout = ({ children, title, titleButtons }: Props) => {
 
           <main className="max-w-screen-lg mx-auto halfMax:px-4">
             <div className="flex flex-col">
-              <div className="flex justify-between pb-3 px-3 halfMax:px-0">
-                <h1 className="flex items-center text-2xl halfMax:text-4xl pt-3">{title}</h1>
+              <div className="flex justify-between px-3 py-3 halfMax:px-0 halfMax:py-4 items-center">
+                <h1 className="flex items-center text-[1.5rem] leading-[1.25rem] halfMax:text-[2.25rem] halfMax:leading-[2rem]">
+                  {title}
+                </h1>
 
                 {hasButtons && (
                   <div className="flex gap-3">

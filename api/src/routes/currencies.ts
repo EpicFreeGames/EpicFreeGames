@@ -4,6 +4,7 @@ import { Flags } from "../auth/flags";
 import { withValidation } from "../utils/withValidation";
 import { Router } from "express";
 import { z } from "zod";
+import { prismaUpdateCatcher } from "../data/prismaUpdateCatcher";
 
 const router = Router();
 
@@ -83,10 +84,12 @@ router.patch(
     async (req, res) => {
       const id = req.params.currencyId;
 
-      const updatedCurrency = await prisma.currency.update({
-        where: { id },
-        data: req.body,
-      });
+      const updatedCurrency = await prisma.currency
+        .update({
+          where: { id },
+          data: req.body,
+        })
+        .catch(prismaUpdateCatcher);
 
       if (!updatedCurrency)
         return res.status(404).json({

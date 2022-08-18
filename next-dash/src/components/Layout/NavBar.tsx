@@ -1,13 +1,18 @@
 import Link from "next/link";
 import { ReactNode } from "react";
+import { useUser } from "~hooks/useUser";
 import { Flags } from "~utils/api/flags";
-import { useHasPerms } from "../../hooks/useHasPerms";
+import { useHasFlags } from "../../hooks/useHasFlags";
 import { Logout } from "./Logout";
 
 export const NavBar = () => {
-  const showGames = useHasPerms(Flags.GetGames);
-  const showCurrencies = useHasPerms(Flags.GetCurrencies);
-  const showSends = useHasPerms(Flags.GetSendings);
+  const { user } = useUser();
+  const userFlags = user?.flags ?? 0;
+
+  const showGames = useHasFlags(userFlags, Flags.GetGames);
+  const showCurrencies = useHasFlags(userFlags, Flags.GetCurrencies);
+  const showSends = useHasFlags(userFlags, Flags.GetSendings);
+  const showUsers = useHasFlags(userFlags, Flags.GetUsers);
 
   return (
     <nav className="bg-gray-800">
@@ -16,6 +21,7 @@ export const NavBar = () => {
           {showGames && <NavLink href="/games">Games</NavLink>}
           {showCurrencies && <NavLink href="/currencies">Currencies</NavLink>}
           {showSends && <NavLink href="/sends">Sends</NavLink>}
+          {showUsers && <NavLink href="/users">Users</NavLink>}
         </div>
 
         <Logout />

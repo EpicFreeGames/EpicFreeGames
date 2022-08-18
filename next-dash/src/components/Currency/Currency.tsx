@@ -1,4 +1,4 @@
-import { useHasPerms } from "~hooks/useHasPerms";
+import { useHasFlags } from "~hooks/useHasFlags";
 import { Flags } from "~utils/api/flags";
 import { ICurrency } from "~utils/api/types";
 import { EditCurrency } from "./EditCurrency";
@@ -8,7 +8,7 @@ type Props = {
 };
 
 export const Currency = ({ currency }: Props) => {
-  const canEdit = useHasPerms(Flags.EditCurrencies);
+  const canEdit = useHasFlags(Flags.EditCurrencies);
 
   return (
     <div className="bg-gray-700 p-3 rounded-md flex flex-col gap-3">

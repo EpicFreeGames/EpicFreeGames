@@ -1,7 +1,7 @@
 import "../styles/globals.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { MyAppProps } from "~utils/types";
-import { useHasPerms } from "~hooks/useHasPerms";
+import { useHasFlags } from "~hooks/useHasFlags";
 import { useUser } from "~hooks/useUser";
 import { Flags } from "~utils/api/flags";
 import { ReactNode } from "react";
@@ -11,7 +11,7 @@ const queryClient = new QueryClient();
 const Auth = ({ requiredFlags, children }: { requiredFlags: Flags[]; children: ReactNode }) => {
   const { user, isLoading } = useUser(false);
 
-  const canViewPage = useHasPerms(user?.flags ?? 0, ...requiredFlags);
+  const canViewPage = useHasFlags(user?.flags ?? 0, ...requiredFlags);
 
   if (isLoading) return <></>;
 

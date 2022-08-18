@@ -2,7 +2,7 @@ import { ISending } from "~utils/api/types";
 import { DeleteSending } from "./DeleteSending";
 import { EditSending } from "./EditSending";
 import { StartSending } from "./StartSending";
-import { useHasPerms } from "~hooks/useHasPerms";
+import { useHasFlags } from "~hooks/useHasFlags";
 import { Flags } from "~utils/api/flags";
 
 type Props = {
@@ -10,9 +10,9 @@ type Props = {
 };
 
 export const Sending = ({ sending }: Props) => {
-  const showSend = useHasPerms(Flags.Send) && sending.status !== "SENT";
-  const showEdit = useHasPerms(Flags.EditSendings);
-  const showDelete = useHasPerms(Flags.DeleteSendings);
+  const showSend = useHasFlags(Flags.Send) && sending.status !== "SENT";
+  const showEdit = useHasFlags(Flags.EditSendings);
+  const showDelete = useHasFlags(Flags.DeleteSendings);
 
   const showButtons = showSend || showEdit || showDelete;
 

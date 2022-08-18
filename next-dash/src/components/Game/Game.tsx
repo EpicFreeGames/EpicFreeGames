@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { useHasPerms } from "~hooks/useHasPerms";
+import { useHasFlags } from "~hooks/useHasFlags";
 import { Flags } from "~utils/api/flags";
 import { useEditGameMutation } from "~utils/api/games/editGame";
 import { IGame } from "~utils/api/types";
@@ -7,8 +7,8 @@ import { DeleteGame } from "./DeleteGame";
 import { EditGame } from "./EditGame";
 
 export const Game = ({ game }: { game: IGame }) => {
-  const canEdit = useHasPerms(Flags.EditGames);
-  const canDelete = useHasPerms(Flags.DeleteGames);
+  const canEdit = useHasFlags(Flags.EditGames);
+  const canDelete = useHasFlags(Flags.DeleteGames);
 
   return (
     <div className="bg-gray-700 p-3 rounded-md flex flex-col gap-3">
@@ -60,7 +60,7 @@ export const Game = ({ game }: { game: IGame }) => {
 
 const Confirmed = ({ game }: { game: IGame }) => {
   const { mutateAsync } = useEditGameMutation();
-  const canEdit = useHasPerms(Flags.EditGames);
+  const canEdit = useHasFlags(Flags.EditGames);
 
   return (
     <button

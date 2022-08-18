@@ -2,7 +2,7 @@ import { IncomingMessage } from "http";
 import redis from "../data/redis";
 import { Flags } from "./flags";
 import { verifyAccessJwt } from "./jwt/jwt";
-import { hasPermission } from "./perms";
+import { hasPermission } from "./authUtils";
 
 export const socketAuth = async (req: IncomingMessage) => {
   const accessTokenCookie = req.headers.cookie?.split("access-token=")?.at(1);

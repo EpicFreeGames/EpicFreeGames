@@ -7,6 +7,7 @@ import { WsMsgType } from "../websocket/types";
 import { broadcastWss } from "../websocket/utils";
 import { Router } from "express";
 import { z } from "zod";
+import { prismaUpdateCatcher } from "../data/prismaUpdateCatcher";
 
 const router = Router();
 
@@ -110,14 +111,16 @@ router.delete(
     async (req, res) => {
       const { serverId } = req.params;
 
-      const updatedServer = await prisma.server.update({
-        where: { id: serverId },
-        data: {
-          channelId: null,
-          webhookId: null,
-          webhookToken: null,
-        },
-      });
+      const updatedServer = await prisma.server
+        .update({
+          where: { id: serverId },
+          data: {
+            channelId: null,
+            webhookId: null,
+            webhookToken: null,
+          },
+        })
+        .catch(prismaUpdateCatcher);
 
       if (!updatedServer)
         return res.status(404).send({
@@ -197,12 +200,14 @@ router.delete(
     async (req, res) => {
       const { serverId } = req.params;
 
-      const updatedServer = await prisma.server.update({
-        where: { id: serverId },
-        data: {
-          roleId: null,
-        },
-      });
+      const updatedServer = await prisma.server
+        .update({
+          where: { id: serverId },
+          data: {
+            roleId: null,
+          },
+        })
+        .catch(prismaUpdateCatcher);
 
       if (!updatedServer)
         return res.status(404).send({
@@ -292,15 +297,17 @@ router.delete(
     async (req, res) => {
       const { serverId } = req.params;
 
-      const updatedServer = await prisma.server.update({
-        where: { id: serverId },
-        data: {
-          threadId: null,
-          channelId: null,
-          webhookId: null,
-          webhookToken: null,
-        },
-      });
+      const updatedServer = await prisma.server
+        .update({
+          where: { id: serverId },
+          data: {
+            threadId: null,
+            channelId: null,
+            webhookId: null,
+            webhookToken: null,
+          },
+        })
+        .catch(prismaUpdateCatcher);
 
       if (!updatedServer)
         return res.status(404).send({

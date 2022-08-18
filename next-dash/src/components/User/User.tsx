@@ -1,12 +1,25 @@
-import { useCalcFlags } from "~hooks/useCalcPerms";
+import { useCalcFlags } from "~hooks/useCalcFlags";
+import { useHasFlags } from "~hooks/useHasFlags";
+import { useUser } from "~hooks/useUser";
+import { Flags } from "~utils/api/flags";
 import { IUser } from "~utils/api/types";
+import { DeleteUser } from "./DeleteUser";
+import { EditUser } from "./EditUser";
 
 type Props = {
   user: IUser;
 };
 
 export const User = ({ user }: Props) => {
-  const perms = useCalcFlags(user.flags);
+  const { user: currentUser } = useUser();
+  const currentUserFlags = currentUser?.flags ?? 0;
+
+  const flags = useCalcFlags(user.flags);
+
+  const canEdit = useHasFlags(currentUserFlags, Flags.EditUsers);
+  const canDelete = useHasFlags(currentUserFlags, Flags.DeleteUsers);
+
+  const showButtons = canEdit || canDelete;
 
   return (
     <div className="bg-gray-700 p-3 rounded-md flex flex-col gap-3">
@@ -15,26 +28,23 @@ export const User = ({ user }: Props) => {
           {user.name ?? user.discordId}
         </h2>
 
-        <div className="flex gap-1 p-2 bg-gray-800 rounded-lg"></div>
+        {showButtons && (
+          <div className="flex gap-1 p-2 bg-gray-800 rounded-lg">
+            {canEdit && <EditUser user={user} />}
+            {canDelete && <DeleteUser user={user} />}
+          </div>
+        )}
       </div>
 
       <div className="flex flex-col gap-2">
-        <Spec title="Permissions" value={perms.join(", ")} />
+        <Spec title="Flags" value={flags.length ? flags.join(", ") : "None"} />
       </div>
     </div>
   );
 };
 
-const Spec = ({
-  title,
-  value,
-  wordWrap,
-}: {
-  title: string;
-  value: string | number;
-  wordWrap?: boolean;
-}) => (
-  <p className={`bg-gray-800 p-3 rounded-md ${wordWrap ? "" : "whitespace-nowrap"}`}>
+const Spec = ({ title, value }: { title: string; value: string | number }) => (
+  <p className={`bg-gray-800 p-3 rounded-md`}>
     <b className="text-[17px]">{title}</b> <br /> {value}
   </p>
 );

@@ -5,6 +5,7 @@ import { withValidation } from "../utils/withValidation";
 import { GamePrice } from "@prisma/client";
 import { Router } from "express";
 import { z } from "zod";
+import { prismaUpdateCatcher } from "../data/prismaUpdateCatcher";
 
 const router = Router();
 
@@ -117,13 +118,15 @@ router.patch(
         .strict(),
     },
     async (req, res) => {
-      const game = await prisma.game.update({
-        where: {
-          id: req.params.gameId,
-        },
-        data: req.body,
-        include: { prices: true },
-      });
+      const game = await prisma.game
+        .update({
+          where: {
+            id: req.params.gameId,
+          },
+          data: req.body,
+          include: { prices: true },
+        })
+        .catch(prismaUpdateCatcher);
 
       if (!game) {
         return res.status(404).json({
