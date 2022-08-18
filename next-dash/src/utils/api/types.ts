@@ -1,7 +1,7 @@
 export type IUser = {
   id: string;
   discordId: string;
-  name: string;
+  name?: string;
   flags: number;
 };
 
