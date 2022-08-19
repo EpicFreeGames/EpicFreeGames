@@ -10,9 +10,16 @@ import { withValidation } from "../utils/withValidation";
 const router = Router();
 
 router.get("/", endpointAuth(Flags.GetCurrencies), async (req, res) => {
-  const currencies = await prisma.currency.findMany();
+  const currencies = await prisma.currency.findMany({
+    include: { _count: { select: { servers: true } } },
+  });
 
-  res.json(currencies);
+  res.json(
+    currencies.map((c) => ({
+      ...c,
+      serverCount: c._count?.servers ?? 0,
+    }))
+  );
 });
 
 router.get(

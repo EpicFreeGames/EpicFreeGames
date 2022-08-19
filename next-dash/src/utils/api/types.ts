@@ -43,6 +43,7 @@ export type ICurrency = {
   apiValue: string;
   inFrontOfPrice: string;
   afterPrice: string;
+  serverCount?: number;
 };
 
 export type IServer = {
