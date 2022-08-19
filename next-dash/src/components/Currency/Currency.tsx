@@ -1,6 +1,7 @@
 import { useHasFlags } from "~hooks/useHasFlags";
 import { Flags } from "~utils/api/flags";
 import { ICurrency } from "~utils/api/types";
+import { pluralize } from "~utils/pluralize";
 
 import { EditCurrency } from "./EditCurrency";
 
@@ -27,6 +28,7 @@ export const Currency = ({ currency }: Props) => {
         <Spec title="Preview:" value={`${currency.inFrontOfPrice}49.99${currency.afterPrice}`} />
         <Spec title="Code:" value={currency.code} />
         <Spec title="Api value:" value={currency.apiValue} />
+        <Spec title="Used by:" value={pluralize(currency.serverCount!, "server", "servers")} />
       </div>
     </div>
   );
