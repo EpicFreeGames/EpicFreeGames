@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Menu2 } from "tabler-icons-react";
 
 import { DropdownMenu, DropdownMenuItem } from "~components/DropdownMenu";
