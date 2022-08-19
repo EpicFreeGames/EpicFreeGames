@@ -5,26 +5,16 @@
     }
   ],
   "settings": {
-    "deno.codeLens.test": true,
-    "deno.codeLens.references": false,
-    "deno.codeLens.implementations": false,
     "deno.enable": true,
     "deno.lint": true,
     "deno.suggest.imports.autoDiscover": true,
-    "deno.suggest.imports.hosts": {
-      "https://deno.land": true
-    },
+    "deno.suggest.imports.hosts": { "https://deno.land": true },
     "deno.importMap": "./bot/importMap.json",
     "deno.suggest.autoImports": true,
-    "editor.formatOnSave": true,
+    "deno.suggest.completeFunctionCalls": true,
+    "editor.codeActionsOnSave": { "source.organizeImports": true },
     "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.codeActionsOnSave": {
-      "source.organizeImports": true
-    },
-    "deno.internalDebug": true,
-    "deno.suggest.completeFunctionCalls": true
-  },
-  "extensions": {
-    "recommendations": ["denoland.vscode-deno", "esbenp.prettier-vscode"]
+    "prettier.enable": true,
+    "editor.formatOnSave": true
   }
 }

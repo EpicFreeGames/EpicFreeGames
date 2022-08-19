@@ -18,7 +18,11 @@
         "esbenp.prettier-vscode",
         "Prisma.prisma",
         "bradlc.vscode-tailwindcss",
-        "meganrogge.template-string-converter"
+        "meganrogge.template-string-converter",
+        "ms-azuretools.vscode-docker",
+        "ms-vscode-remote.remote-containers",
+        "rangav.vscode-thunder-client",
+        "redhat.vscode-yaml"
       ]
     }
   }

@@ -5,9 +5,8 @@
     }
   ],
   "settings": {
-    "deno.enable": false
-  },
-  "extensions": {
-    "recommendations": ["esbenp.prettier-vscode", "prisma.prisma", "rangav.vscode-thunder-client"]
+    "deno.enable": false,
+    "prettier.enable": true,
+    "editor.formatOnSave": true
   }
 }
