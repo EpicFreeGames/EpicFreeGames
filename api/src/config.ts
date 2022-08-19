@@ -4,8 +4,6 @@ import { z } from "zod";
 const envSchema = z.object({
   DATABASE_URL: z.string(),
 
-  ALLOWED_USER_IDS: z.string().transform((value) => value.split(", ")),
-
   DASH_URL: z.string(),
 
   REDISHOST: z.string(),
