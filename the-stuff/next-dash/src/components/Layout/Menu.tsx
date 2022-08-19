@@ -30,6 +30,8 @@ export const Menu = () => {
       <DropdownMenuItem href="/games">Games</DropdownMenuItem>
       <DropdownMenuItem href="/currencies">Currencies</DropdownMenuItem>
       <DropdownMenuItem href="/users">Users</DropdownMenuItem>
+      <DropdownMenuItem href="/sends">Sends</DropdownMenuItem>
+      <DropdownMenuItem href="/dash">Dashboard</DropdownMenuItem>
     </DropdownMenu>
   );
 };
