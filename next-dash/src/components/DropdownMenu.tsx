@@ -1,4 +1,5 @@
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
+import { useRouter } from "next/router";
 import { ComponentProps, ReactNode } from "react";
 
 type Props = ComponentProps<typeof DropdownMenuPrimitive.Root> & {
@@ -12,7 +13,7 @@ export const DropdownMenu = ({ children, trigger, ...rest }: Props) => {
       <DropdownMenuPrimitive.Trigger asChild>{trigger}</DropdownMenuPrimitive.Trigger>
 
       <DropdownMenuPrimitive.Content
-        className="border-1 min-w-[220px] overflow-hidden rounded-md border-gray-500 bg-gray-700 p-2 text-sm shadow-sm"
+        className="min-w-[220px] overflow-hidden rounded-md border-[1px] border-gray-700 bg-gray-800 p-2 text-sm shadow-sm"
         sideOffset={5}
       >
         {children}
@@ -23,15 +24,21 @@ export const DropdownMenu = ({ children, trigger, ...rest }: Props) => {
 
 export const DropdownMenuItem = ({
   children,
+  href,
   ...rest
-}: { children: ReactNode } & Omit<
+}: { children: ReactNode; href: string } & Omit<
   ComponentProps<typeof DropdownMenuPrimitive.Item>,
   "className"
->) => (
-  <DropdownMenuPrimitive.Item
-    {...rest}
-    className="relative flex select-none items-center rounded-md bg-gray-500/80 p-3 pl-7 outline-none duration-200 focus:bg-gray-600"
-  >
-    {children}
-  </DropdownMenuPrimitive.Item>
-);
+>) => {
+  const router = useRouter();
+
+  return (
+    <DropdownMenuPrimitive.Item
+      {...rest}
+      className="relative flex select-none items-center rounded-md bg-gray-800 p-3 pl-7 outline-none duration-200 focus:bg-gray-700"
+      onClick={() => router.push(href)}
+    >
+      {children}
+    </DropdownMenuPrimitive.Item>
+  );
+};

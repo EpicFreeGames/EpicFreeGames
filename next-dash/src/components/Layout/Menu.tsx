@@ -1,3 +1,6 @@
+import Link from "next/link";
+import { Menu2 } from "tabler-icons-react";
+
 import { DropdownMenu, DropdownMenuItem } from "~components/DropdownMenu";
 import { useHasFlags } from "~hooks/useHasFlags";
 import { useUser } from "~hooks/useUser";
@@ -20,11 +23,14 @@ export const Menu = () => {
     <DropdownMenu
       trigger={
         <button className="btnBase bg-gray-600 hover:bg-gray-500/90 active:bg-gray-400/90">
-          Menu
+          <Menu2 />
         </button>
       }
     >
-      <DropdownMenuItem>test</DropdownMenuItem>
+      <DropdownMenuItem href="/">Home</DropdownMenuItem>
+      <DropdownMenuItem href="/games">Games</DropdownMenuItem>
+      <DropdownMenuItem href="/currencies">Currencies</DropdownMenuItem>
+      <DropdownMenuItem href="/users">Users</DropdownMenuItem>
     </DropdownMenu>
   );
 };
