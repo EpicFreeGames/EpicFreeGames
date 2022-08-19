@@ -27,10 +27,10 @@ jobs:
           cache-dependency-path: ./the-stuff/api/yarn.lock
 
       - name: Install deps
-        run: cd api && yarn --frozen-lockfile
+        run: cd ./the-stuff/api && yarn --frozen-lockfile
 
       - name: Type check
-        run: cd api && yarn prisma generate && yarn typecheck
+        run: cd ./the-stuff/api && yarn prisma generate && yarn typecheck
 
   api-docker-build-push:
     name: "Api: Build and push Docker image"
@@ -105,10 +105,10 @@ jobs:
           cache-dependency-path: ./the-stuff/front/yarn.lock
 
       - name: Install deps
-        run: cd front && yarn --frozen-lockfile
+        run: cd ./the-stuff/front && yarn --frozen-lockfile
 
       - name: Type check
-        run: cd front && yarn typecheck
+        run: cd ./the-stuff/front && yarn typecheck
 
   front-docker-build-push:
     name: "Front: Build and push Docker image"
