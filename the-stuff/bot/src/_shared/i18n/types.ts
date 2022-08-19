@@ -77,6 +77,15 @@ export type translationsType = {
   too_many_webhooks: "Too many webhooks";
   ten_webhooks_only: "A channel can have 10 webhooks at most. Please remove one, and try again.";
 
+  would_you_like_to_translate: "Would you like to help translating <botName>?";
+  if_would_like_to_translate: "If so, please let us know on our [support server](<serverInvite>)!";
+
+  having_problems: "Having problems? Let us know on our [support server](<serverInvite>) and we'll help you out!";
+  how_to_tutorial: "How to get automatically notified of free games? [Click here](<serverInvite>) for a tutorial!";
+
+  looking_for_commands: "Looking for commands? [Click here](<serverInvite>) for my command list!";
+  help_desc: "I'm a customizable bot focused around notifying servers about free games. Thank you for choosing me!";
+
   open_in: "Open in:";
   free: "Free";
 
