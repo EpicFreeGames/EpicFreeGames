@@ -109,12 +109,12 @@ services:
     networks:
       - proxy
 
-  bot_bot:
+  bot_event-handler:
     depends_on:
       - api
       - redis
       - bot_rest-proxy
-    image: ${REGISTRY}/${REGISTRY_USER}/efg-bot_bot:master
+    image: ${REGISTRY}/${REGISTRY_USER}/efg-bot_event-handler:master
     restart: unless-stopped
     env_file:
       - .env

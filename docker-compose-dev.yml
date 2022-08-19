@@ -108,7 +108,7 @@ services:
     restart: unless-stopped
     command: "deno run --watch -A ./src/sender/mod.ts"
 
-  bot_bot:
+  bot_event-handler:
     depends_on:
       - api
       - redis
@@ -127,7 +127,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./bot/src:/app/src:r
-    command: "deno run --watch -A ./src/bot/mod.ts"
+    command: "deno run --watch -A ./src/event-handler/mod.ts"
 
 volumes:
   redis:
