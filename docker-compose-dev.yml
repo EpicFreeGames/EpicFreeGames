@@ -28,8 +28,8 @@ services:
 
   dash:
     depends_on:
-      - redis
       - api
+      - redis
     build:
       context: ./next-dash
       dockerfile: Dockerfile.dev
@@ -74,10 +74,10 @@ services:
       PORT: "3000"
     restart: unless-stopped
 
-  bot_gateway-proxy:
+  bot_gateway:
     depends_on:
-      - redis
       - api
+      - redis
       - bot_rest-proxy
     build:
       context: ./bot
@@ -92,10 +92,10 @@ services:
 
   bot_sender:
     depends_on:
-      - redis
       - api
+      - redis
+      - bot_gateway
       - bot_rest-proxy
-      - bot_gateway-proxy
     build:
       context: ./bot
       args:
@@ -110,11 +110,11 @@ services:
 
   bot_bot:
     depends_on:
-      - redis
       - api
-      - bot_rest-proxy
-      - bot_gateway-proxy
+      - redis
       - bot_sender
+      - bot_gateway
+      - bot_rest-proxy
     build:
       context: ./bot
       args:

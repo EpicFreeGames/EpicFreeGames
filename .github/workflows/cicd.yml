@@ -254,8 +254,8 @@ jobs:
         part:
           - bot
           - sender
+          - gateway
           - rest-proxy
-          - gateway-proxy
     steps:
       - name: Cancel previous workflows
         uses: styfle/cancel-workflow-action@0.10.0
@@ -283,7 +283,7 @@ jobs:
           - bot
           - sender
           - rest-proxy
-          - gateway-proxy
+          - gateway
     steps:
       - name: Cancel previous workflows
         uses: styfle/cancel-workflow-action@0.10.0
@@ -343,7 +343,7 @@ jobs:
     uses: ./.github/workflows/ssh-deploy-staging.yml
     secrets: inherit
     with:
-      service: api dash bot_bot bot_sender bot_rest-proxy bot_gateway-proxy
+      service: api dash bot_bot bot_sender bot_gateway bot_rest-proxy
 
   front-deploy-staging:
     name: "Front: Deploy to Staging"

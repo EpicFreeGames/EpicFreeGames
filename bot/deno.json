@@ -1,17 +1,17 @@
 {
   "importMap": "./importMap.json",
   "tasks": {
-    "start-rest-proxy": "deno run -A --watch src/rest-proxy/mod.ts",
-    "start-gateway-proxy": "deno run -A --watch src/gateway-proxy/mod.ts",
     "start-bot": "deno run -A --watch src/bot/mod.ts",
+    "start-gateway": "deno run -A --watch src/gateway/mod.ts",
+    "start-rest-proxy": "deno run -A --watch src/rest-proxy/mod.ts",
 
     "typecheck-bot": "deno check src/bot/mod.ts",
     "typecheck-sender": "deno check src/sender/mod.ts",
+    "typecheck-gateway": "deno check src/gateway/mod.ts",
     "typecheck-rest-proxy": "deno check src/rest-proxy/mod.ts",
-    "typecheck-gateway-proxy": "deno check src/gateway-proxy/mod.ts",
-    "typecheck-all": "deno task typecheck-bot && deno task typecheck-sender && deno task typecheck-rest-proxy && deno task typecheck-gateway-proxy",
+    "typecheck-all": "deno task typecheck-bot && deno task typecheck-sender && deno task typecheck-rest-proxy && deno task typecheck-gateway",
 
-    "cache-all": "deno cache src/bot/mod.ts && deno cache src/sender/mod.ts && deno cache src/rest-proxy/mod.ts && deno cache src/gateway-proxy/mod.ts"
+    "cache-all": "deno cache src/bot/mod.ts && deno cache src/sender/mod.ts && deno cache src/rest-proxy/mod.ts && deno cache src/gateway/mod.ts"
   },
   "compilerOptions": {
     "lib": ["deno.worker"],

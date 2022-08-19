@@ -95,10 +95,10 @@ services:
     networks:
       - proxy
 
-  bot_gateway-proxy:
+  bot_gateway:
     depends_on:
       - bot_rest-proxy
-    image: ${REGISTRY}/${REGISTRY_USER}/efg-bot_gateway-proxy:master
+    image: ${REGISTRY}/${REGISTRY_USER}/efg-bot_gateway:master
     restart: unless-stopped
     env_file:
       - .env
