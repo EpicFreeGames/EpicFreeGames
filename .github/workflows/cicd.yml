@@ -73,7 +73,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
         with:
-          context: ./api
+          context: ./the-stuff/api
           platforms: linux/amd64
           push: true
           tags: ${{ steps.meta.outputs.tags }}
@@ -151,7 +151,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
         with:
-          context: ./front
+          context: ./the-stuff/front
           platforms: linux/amd64
           push: true
           tags: ${{ steps.meta.outputs.tags }}
@@ -180,13 +180,13 @@ jobs:
         with:
           node-version: 16
           cache: yarn
-          cache-dependency-path: ./next-dash/yarn.lock
+          cache-dependency-path: ./the-stuff/next-dash/yarn.lock
 
       - name: Install deps
-        run: cd ./next-dash && yarn --frozen-lockfile
+        run: cd ./the-stuff/next-dash && yarn --frozen-lockfile
 
       - name: Type check
-        run: cd ./next-dash && yarn typecheck
+        run: cd ./the-stuff/next-dash && yarn typecheck
 
   staging-dash-docker-build-push:
     name: "Dash Staging: Build and push Docker image"
@@ -230,8 +230,8 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
         with:
-          context: ./next-dash
-          file: ./next-dash/Dockerfile.staging
+          context: ./the-stuff/next-dash
+          file: ./the-stuff/next-dash/Dockerfile.staging
           platforms: linux/amd64
           push: true
           tags: ${{ steps.meta.outputs.tags }}
@@ -321,7 +321,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
         with:
-          context: ./bot
+          context: ./the-stuff/bot
           platforms: linux/amd64
           push: true
           build-args: SCOPE=${{ matrix.part }}

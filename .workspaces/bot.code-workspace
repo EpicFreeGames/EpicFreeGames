@@ -9,7 +9,7 @@
     "deno.lint": true,
     "deno.suggest.imports.autoDiscover": true,
     "deno.suggest.imports.hosts": { "https://deno.land": true },
-    "deno.importMap": "./bot/importMap.json",
+    "deno.importMap": "./the-stuff/bot/importMap.json",
     "deno.suggest.autoImports": true,
     "deno.suggest.completeFunctionCalls": true,
     "editor.codeActionsOnSave": { "source.organizeImports": true },

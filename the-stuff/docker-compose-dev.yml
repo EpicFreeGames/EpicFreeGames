@@ -67,7 +67,7 @@ services:
       context: ./bot
       args:
         - SCOPE=rest-proxy
-    image: bot/rest-proxy
+    image: bot_rest-proxy
     env_file:
       - .env-dev
     environment:
@@ -82,8 +82,8 @@ services:
     build:
       context: ./bot
       args:
-        - SCOPE=gateway-proxy
-    image: bot/gateway-proxy
+        - SCOPE=gateway
+    image: bot_gateway
     env_file:
       - .env-dev
     environment:
@@ -100,7 +100,7 @@ services:
       context: ./bot
       args:
         - SCOPE=sender
-    image: bot/sender
+    image: bot_sender
     env_file:
       - .env-dev
     environment:
@@ -118,8 +118,8 @@ services:
     build:
       context: ./bot
       args:
-        - SCOPE=bot
-    image: bot/bot
+        - SCOPE=event-handler
+    image: bot_event-handler
     env_file:
       - .env-dev
     environment:
