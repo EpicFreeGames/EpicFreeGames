@@ -312,8 +312,6 @@ const updateSendingStatus = async (sendingId: string) => {
 
   const total = successes + failures;
 
-  console.log({ successes, failures, target, total });
-
   const targetReached = total >= target;
 
   if (targetReached) {
