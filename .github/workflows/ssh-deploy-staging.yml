@@ -49,7 +49,7 @@ jobs:
         run: ssh server -q "mkdir -p ~/efg-staging"
 
       - name: Update Docker compose file
-        run: rsync ./docker-compose-staging.yml user@server:/home/user/efg-staging/docker-compose.yml
+        run: rsync ./the-stuff/docker-compose-staging.yml user@server:/home/user/efg-staging/docker-compose.yml
 
       - name: Update .env
         run: |
