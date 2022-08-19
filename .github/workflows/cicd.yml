@@ -24,7 +24,7 @@ jobs:
         with:
           node-version: 16
           cache: yarn
-          cache-dependency-path: api/yarn.lock
+          cache-dependency-path: ./the-stuff/api/yarn.lock
 
       - name: Install deps
         run: cd api && yarn --frozen-lockfile
@@ -102,7 +102,7 @@ jobs:
         with:
           node-version: 16
           cache: yarn
-          cache-dependency-path: front/yarn.lock
+          cache-dependency-path: ./the-stuff/front/yarn.lock
 
       - name: Install deps
         run: cd front && yarn --frozen-lockfile
@@ -271,7 +271,7 @@ jobs:
           deno-version: v1.x
 
       - name: Type check
-        run: cd bot && deno task typecheck-${{ matrix.part }}
+        run: cd ./the-stuff/bot && deno task typecheck-${{ matrix.part }}
 
   bot-docker-build-push:
     name: "Bot: Build and push Docker images"
