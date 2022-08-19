@@ -1,6 +1,7 @@
-import { Middleware } from "../types";
 import { Request, Response } from "express";
 import { z } from "zod";
+
+import { Middleware } from "../types";
 
 interface Handler<TBody, TParams, TQueryString> {
   (req: Request<TParams, {}, TBody, TQueryString>, res: Response): any;

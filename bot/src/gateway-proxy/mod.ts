@@ -1,11 +1,12 @@
 import {
+  DiscordGatewayPayload,
   createGatewayManager,
   createRestManager,
-  DiscordGatewayPayload,
   routes,
   transformGatewayBot,
 } from "discordeno";
 import { config } from "~config";
+
 import { logger } from "~shared/utils/logger.ts";
 
 const queue: GatewayQueue = {

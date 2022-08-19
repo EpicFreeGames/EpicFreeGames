@@ -1,13 +1,14 @@
-import { config } from "../config";
-import prisma from "../data/prisma";
-import redis from "../data/redis";
-import { endpointAuth } from "../auth/endpointAuth";
-import { Flags } from "../auth/flags";
-import { bigintSchema } from "../utils/jsonfix";
-import { withValidation } from "../utils/withValidation";
 import { Router } from "express";
 import { z } from "zod";
+
+import { endpointAuth } from "../auth/endpointAuth";
+import { Flags } from "../auth/flags";
+import { config } from "../config";
+import prisma from "../data/prisma";
 import { prismaUpdateCatcher } from "../data/prismaUpdateCatcher";
+import redis from "../data/redis";
+import { bigintSchema } from "../utils/jsonfix";
+import { withValidation } from "../utils/withValidation";
 
 const router = Router();
 

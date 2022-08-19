@@ -1,4 +1,5 @@
 import { PermissionStrings } from "discordeno";
+
 import { embeds } from "~shared/embeds/mod.ts";
 import { languages } from "~shared/i18n/languages.ts";
 import { Game } from "~shared/types.ts";
@@ -7,8 +8,9 @@ import { getChannel } from "~shared/utils/getChannel.ts";
 import { getGuild } from "~shared/utils/getGuild.ts";
 import { hasPermsOnChannel } from "~shared/utils/hasPerms.ts";
 import { logger } from "~shared/utils/logger.ts";
+
 import { sender } from "./mod.ts";
-import { logLog, MessageServer, wait } from "./utils.ts";
+import { MessageServer, logLog, wait } from "./utils.ts";
 
 export const messageSender = async (games: Game[], servers: MessageServer[], sendingId: string) => {
   for (const server of servers) {

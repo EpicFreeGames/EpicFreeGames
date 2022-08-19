@@ -1,4 +1,5 @@
 import { Bot, DiscordChannel, DiscordGuildRoleDelete, DiscordUnavailableGuild } from "discordeno";
+
 import { getCachedGuild, redisDelete, redisGuildId, redisSet, setGuildToCache } from "./redis.ts";
 
 export const handleCache = (bot: Bot): Bot => {

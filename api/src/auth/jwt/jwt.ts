@@ -1,8 +1,9 @@
 import * as jose from "jose";
-import { config } from "../../config";
-import { ITokenPayload, tokenPayloadSchema } from "./types";
 import { v4 as uuidv4 } from "uuid";
+
+import { config } from "../../config";
 import { isWhitelisted, saveJti } from "./jwtWhitelist";
+import { ITokenPayload, tokenPayloadSchema } from "./types";
 
 const getEpochSeconds = () => Math.floor(new Date().getTime() / 1000);
 

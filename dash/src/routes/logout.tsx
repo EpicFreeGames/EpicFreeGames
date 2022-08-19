@@ -1,7 +1,7 @@
-import { Handlers } from "../utils/freshTypes.ts";
-
 import { getCookies } from "$std/http/cookie.ts";
+
 import { api } from "../utils/api.ts";
+import { Handlers } from "../utils/freshTypes.ts";
 
 export const handler: Handlers = {
   GET: async (req, res) => {

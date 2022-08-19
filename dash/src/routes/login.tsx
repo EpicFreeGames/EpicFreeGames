@@ -3,8 +3,9 @@ import { Handlers, PageProps } from "$fresh/server.ts";
 import { getCookies } from "$std/http/cookie.ts";
 import { h } from "preact";
 import { tw } from "twind";
-import { Base } from "~components/Layout/base.tsx";
 import { config } from "~config";
+
+import { Base } from "~components/Layout/base.tsx";
 import { api } from "~utils/api.ts";
 
 type Data = {
@@ -62,9 +63,9 @@ export default function Login({ data }: PageProps<Data>) {
   return (
     <Base title="Login">
       <div
-        className={tw`flex flex-col justify-center items-center gap-14 max-w-screen-lg mx-auto h-screen`}
+        className={tw`mx-auto flex h-screen max-w-screen-lg flex-col items-center justify-center gap-14`}
       >
-        <h1 className={tw`font-bold text-5xl`}>Login</h1>
+        <h1 className={tw`text-5xl font-bold`}>Login</h1>
 
         <a
           className={tw`btn-blue-border`}

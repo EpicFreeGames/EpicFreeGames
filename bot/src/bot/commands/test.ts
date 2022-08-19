@@ -3,10 +3,13 @@ import {
   InteractionResponseTypes,
   sendInteractionResponse,
 } from "https://deno.land/x/discordeno@13.0.0-rc45/mod.ts";
-import { displayRole } from "~shared/utils/displayRole.ts";
+
 import { embeds } from "~shared/embeds/mod.ts";
+import { displayRole } from "~shared/utils/displayRole.ts";
 import { executeWebhook } from "~shared/utils/webhook.ts";
+
 import { Command, EphemeralFlag } from "./mod.ts";
+
 export const testCommand: Command = {
   name: "test",
   description: "Send a test notification",

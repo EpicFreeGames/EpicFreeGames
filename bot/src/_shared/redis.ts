@@ -1,6 +1,7 @@
 import { DiscordGuild } from "discordeno";
-import { connect, Redis } from "redis";
+import { Redis, connect } from "redis";
 import { config } from "~config";
+
 import { deserialize, serialize } from "./utils/jsonWorker/initiator.ts";
 import { logger } from "./utils/logger.ts";
 

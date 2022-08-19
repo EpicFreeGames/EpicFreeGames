@@ -1,6 +1,7 @@
 /** @jsx h */
 import { api } from "~utils/api.ts";
 import { Handlers } from "~utils/freshTypes.ts";
+
 import { IUser } from "../types.ts";
 
 export const handler: Handlers = {

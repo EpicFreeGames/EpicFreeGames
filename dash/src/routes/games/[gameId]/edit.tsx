@@ -2,6 +2,7 @@
 import { PageProps } from "$fresh/server.ts";
 import { h } from "preact";
 import { tw } from "twind";
+
 import { Input } from "~components/Input.tsx";
 import { BackButton } from "~components/Layout/BackButton.tsx";
 import { Layout } from "~components/Layout/Layout.tsx";
@@ -9,6 +10,7 @@ import { api } from "~utils/api.ts";
 import { stringifyFormData } from "~utils/formData.ts";
 import { Handlers } from "~utils/freshTypes.ts";
 import { getHtmlDate } from "~utils/string.tsx";
+
 import { IGame } from "../../../types.ts";
 
 export const handler: Handlers<IGame> = {
@@ -56,8 +58,8 @@ export default function EditGamePage({ data: game, url }: PageProps<IGame>) {
       url={url}
       segments={["Games", game.displayName, "Edit"]}
     >
-      <div className={tw`bg-gray-700 rounded-md mx-auto max-w-[400px] p-3`}>
-        <h2 className={tw`text-2xl mb-2`}>
+      <div className={tw`mx-auto max-w-[400px] rounded-md bg-gray-700 p-3`}>
+        <h2 className={tw`mb-2 text-2xl`}>
           Edit <b>{game.displayName}</b>
         </h2>
 
@@ -86,7 +88,7 @@ export default function EditGamePage({ data: game, url }: PageProps<IGame>) {
             required
           />
 
-          <div className={tw`flex gap-2 justify-between items-center`}>
+          <div className={tw`flex items-center justify-between gap-2`}>
             <a className={tw`btn-light-gray`} href="/games">
               Cancel
             </a>

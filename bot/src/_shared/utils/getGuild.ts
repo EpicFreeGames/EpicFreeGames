@@ -1,4 +1,5 @@
 import { Bot, DiscordGuild, Guild } from "discordeno";
+
 import { getCachedGuild } from "../redis.ts";
 
 export const getGuild = async (

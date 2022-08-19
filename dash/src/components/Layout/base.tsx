@@ -1,4 +1,5 @@
 /** @jsx h */
+
 /** @jsxFrag Fragment */
 import { Head } from "$fresh/runtime.ts";
 import { ComponentChildren, Fragment, h } from "preact";

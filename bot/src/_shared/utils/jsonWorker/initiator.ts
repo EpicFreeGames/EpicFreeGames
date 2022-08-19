@@ -3,10 +3,7 @@ import { SerializerReturnMessage } from "./serializer.ts";
 
 export const serialize = (data: Record<string, unknown | string>) =>
   new Promise<string>((resolve, reject) => {
-    const worker = new Worker(
-      new URL("./serializer.ts", import.meta.url).href,
-      { type: "module" }
-    );
+    const worker = new Worker(new URL("./serializer.ts", import.meta.url).href, { type: "module" });
 
     worker.onmessage = (event: SerializerReturnMessage) => resolve(event.data);
 
@@ -17,10 +14,9 @@ export const serialize = (data: Record<string, unknown | string>) =>
 
 export const deserialize = <TData>(data: string) =>
   new Promise<TData>((resolve, reject) => {
-    const worker = new Worker(
-      new URL("./deserializer.ts", import.meta.url).href,
-      { type: "module" }
-    );
+    const worker = new Worker(new URL("./deserializer.ts", import.meta.url).href, {
+      type: "module",
+    });
 
     worker.onmessage = (event: DeserializerReturnMessage<TData>) => {
       const { data } = event;

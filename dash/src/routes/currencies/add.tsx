@@ -2,12 +2,14 @@
 import { PageProps } from "$fresh/server.ts";
 import { h } from "preact";
 import { tw } from "twind";
+
 import { Input } from "~components/Input.tsx";
 import { BackButton } from "~components/Layout/BackButton.tsx";
 import { Layout } from "~components/Layout/Layout.tsx";
 import { api } from "~utils/api.ts";
 import { stringifyFormData } from "~utils/formData.ts";
 import { Handlers } from "~utils/freshTypes.ts";
+
 import { ICurrency } from "../../types.ts";
 
 export const handler: Handlers = {
@@ -40,7 +42,7 @@ export default function AddCurrencyPage({ url }: PageProps) {
       url={url}
       segments={["Currencies", "Add a currency"]}
     >
-      <div className={tw`bg-gray-700 rounded-md mx-auto max-w-[400px] p-3`}>
+      <div className={tw`mx-auto max-w-[400px] rounded-md bg-gray-700 p-3`}>
         <form className={tw`flex flex-col gap-3`} method="POST">
           <Input name="code" label="Code" required />
           <Input name="name" label="Name" required />
@@ -48,7 +50,7 @@ export default function AddCurrencyPage({ url }: PageProps) {
           <Input name="inFrontOfPrice" label="In front of price" />
           <Input name="afterPrice" label="After price" />
 
-          <div className={tw`flex gap-2 justify-between items-center`}>
+          <div className={tw`flex items-center justify-between gap-2`}>
             <a className={tw`btn-light-gray`} href="/currencies">
               Cancel
             </a>

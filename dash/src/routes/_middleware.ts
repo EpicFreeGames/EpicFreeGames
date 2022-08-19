@@ -1,4 +1,5 @@
 import { getCookies } from "$std/http/cookie.ts";
+
 import { MiddlewareHandlerContext } from "../utils/freshTypes.ts";
 
 export const handler = (req: Request, ctx: MiddlewareHandlerContext) => {

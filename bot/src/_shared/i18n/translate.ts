@@ -4,9 +4,9 @@ import { translations } from "./languages.ts";
 import {
   Join,
   PathKeys,
+  Variables,
   translationsType,
   variableEnd,
-  Variables,
   variableStart,
 } from "./types.ts";
 

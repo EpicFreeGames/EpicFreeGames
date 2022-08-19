@@ -1,4 +1,5 @@
 import { Bot, DiscordRole, Role } from "discordeno";
+
 import { getCachedGuild } from "../redis.ts";
 
 export const getRole = async (
@@ -16,9 +17,7 @@ export const getRole = async (
     bot.constants.routes.GUILD_ROLES(guildId)
   );
 
-  const roles = result.map((role) =>
-    bot.transformers.role(bot, { role, guildId })
-  );
+  const roles = result.map((role) => bot.transformers.role(bot, { role, guildId }));
 
   return roles.find((role) => role.id === roleId);
 };

@@ -1,4 +1,5 @@
 import { Bot, Channel, DiscordChannel } from "discordeno";
+
 import { getCachedGuild } from "../redis.ts";
 
 export const getChannel = async (
@@ -20,9 +21,7 @@ export const getChannel = async (
   return result?.id
     ? bot.transformers.channel(bot, {
         channel: result,
-        guildId: result.guild_id
-          ? bot.transformers.snowflake(result.guild_id)
-          : undefined,
+        guildId: result.guild_id ? bot.transformers.snowflake(result.guild_id) : undefined,
       })
     : undefined;
 };

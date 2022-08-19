@@ -1,4 +1,5 @@
 import { Embed } from "discordeno";
+
 import { botConstants } from "../constants.ts";
 import { t } from "../i18n/translate.ts";
 import { Language } from "../types.ts";

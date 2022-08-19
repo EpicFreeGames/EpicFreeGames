@@ -1,10 +1,11 @@
-import prisma from "../data/prisma";
-import { endpointAuth } from "../auth/endpointAuth";
-import { Flags } from "../auth/flags";
-import { withValidation } from "../utils/withValidation";
 import { Router } from "express";
 import { z } from "zod";
+
+import { endpointAuth } from "../auth/endpointAuth";
+import { Flags } from "../auth/flags";
+import prisma from "../data/prisma";
 import { prismaUpdateCatcher } from "../data/prismaUpdateCatcher";
+import { withValidation } from "../utils/withValidation";
 
 const router = Router();
 

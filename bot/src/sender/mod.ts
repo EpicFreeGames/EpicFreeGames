@@ -1,9 +1,11 @@
 import { createBot } from "discordeno";
 import { config } from "~config";
+
 import { handleCache } from "~shared/cache.ts";
 import { connectRedis } from "~shared/redis.ts";
 import { botRest } from "~shared/utils/botRest.ts";
 import { logger } from "~shared/utils/logger.ts";
+
 import { api } from "../_shared/api.ts";
 import { Server } from "../_shared/types.ts";
 import { send } from "./send.ts";

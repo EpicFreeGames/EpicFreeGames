@@ -1,5 +1,6 @@
+import { createHmac, timingSafeEqual } from "crypto";
+
 import { config } from "../config";
-import { timingSafeEqual, createHmac } from "crypto";
 
 export const safeEqual = (a: string, b: string) => {
   const aBuff = Buffer.from(a);

@@ -2,12 +2,14 @@
 import { PageProps } from "$fresh/server.ts";
 import { h } from "preact";
 import { tw } from "twind";
+
 import { Input } from "~components/Input.tsx";
 import { BackButton } from "~components/Layout/BackButton.tsx";
 import { Layout } from "~components/Layout/Layout.tsx";
 import { api } from "~utils/api.ts";
 import { stringifyFormData } from "~utils/formData.ts";
 import { Handlers } from "~utils/freshTypes.ts";
+
 import { ICurrency } from "../../../types.ts";
 
 export const handler: Handlers<ICurrency> = {
@@ -55,8 +57,8 @@ export default function EditCurrencyPage({ data: currency, url }: PageProps<ICur
       url={url}
       segments={["Currencies", currency.name, "Edit"]}
     >
-      <div className={tw`bg-gray-700 rounded-md mx-auto max-w-[400px] p-3`}>
-        <h2 className={tw`text-2xl mb-2`}>
+      <div className={tw`mx-auto max-w-[400px] rounded-md bg-gray-700 p-3`}>
+        <h2 className={tw`mb-2 text-2xl`}>
           Edit <b>{currency.name}</b>
         </h2>
 
@@ -77,7 +79,7 @@ export default function EditCurrencyPage({ data: currency, url }: PageProps<ICur
             required
           />
 
-          <div className={tw`flex gap-2 justify-between items-center`}>
+          <div className={tw`flex items-center justify-between gap-2`}>
             <a className={tw`btn-light-gray`} href="/currencies">
               Cancel
             </a>

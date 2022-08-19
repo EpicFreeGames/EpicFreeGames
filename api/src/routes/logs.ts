@@ -1,12 +1,13 @@
-import prisma from "../data/prisma";
+import { Router } from "express";
+import { z } from "zod";
+
 import { endpointAuth } from "../auth/endpointAuth";
 import { Flags } from "../auth/flags";
+import prisma from "../data/prisma";
 import { bigintSchema } from "../utils/jsonfix";
 import { withValidation } from "../utils/withValidation";
 import { WsMsgType } from "../websocket/types";
 import { broadcastWss } from "../websocket/utils";
-import { Router } from "express";
-import { z } from "zod";
 
 const router = Router();
 

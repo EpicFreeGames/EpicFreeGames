@@ -3,9 +3,11 @@ import {
   ApplicationCommandTypes,
   InteractionResponseTypes,
 } from "discordeno";
+
 import { api } from "~shared/api.ts";
 import { embeds } from "~shared/embeds/mod.ts";
 import { Server } from "~shared/types.ts";
+
 import { Command, CommandExecuteProps, EphemeralFlag } from "./mod.ts";
 
 export const removeCommand: Command = {

@@ -1,9 +1,11 @@
-import { createBot, DiscordGatewayPayload } from "discordeno";
+import { DiscordGatewayPayload, createBot } from "discordeno";
 import { config } from "~config";
+
 import { handleCache } from "~shared/cache.ts";
 import { connectRedis } from "~shared/redis.ts";
 import { botRest } from "~shared/utils/botRest.ts";
 import { logger } from "~shared/utils/logger.ts";
+
 import { commands, initCommands } from "./commands/mod.ts";
 import { initEvents } from "./events/mod.ts";
 

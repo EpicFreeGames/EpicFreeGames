@@ -1,5 +1,7 @@
 import { ApplicationCommandTypes, InteractionResponseTypes } from "discordeno";
+
 import { embeds } from "~shared/embeds/mod.ts";
+
 import { Command, EphemeralFlag } from "./mod.ts";
 
 export const settingsCommand: Command = {

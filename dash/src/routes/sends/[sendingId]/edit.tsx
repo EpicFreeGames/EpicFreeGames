@@ -2,10 +2,12 @@
 import { PageProps } from "$fresh/server.ts";
 import { h } from "preact";
 import { tw } from "twind";
+
 import { BackButton } from "~components/Layout/BackButton.tsx";
 import { Layout } from "~components/Layout/Layout.tsx";
 import { api } from "~utils/api.ts";
 import { Handlers } from "~utils/freshTypes.ts";
+
 import { IGame, ISending } from "../../../types.ts";
 
 type PagePropsData = {
@@ -67,14 +69,14 @@ export default function EditGamePage({ data: { sending, games }, url }: PageProp
       url={url}
       segments={["Sends", sending.id, "Edit"]}
     >
-      <div className={tw`bg-gray-700 rounded-md mx-auto max-w-[400px] p-3`}>
-        <h2 className={tw`text-2xl mb-2`}>Edit sending</h2>
+      <div className={tw`mx-auto max-w-[400px] rounded-md bg-gray-700 p-3`}>
+        <h2 className={tw`mb-2 text-2xl`}>Edit sending</h2>
 
         <form className={tw`flex flex-col gap-3`} method="POST">
           <p>Select games</p>
 
           <select
-            className={tw`appearance-none bg-gray-600 rounded-md p-2 focusStyles duration-200`}
+            className={tw`focusStyles appearance-none rounded-md bg-gray-600 p-2 duration-200`}
             name="gameIds"
             label="Games"
             required
@@ -91,7 +93,7 @@ export default function EditGamePage({ data: { sending, games }, url }: PageProp
             ))}
           </select>
 
-          <div className={tw`flex gap-2 justify-between items-center`}>
+          <div className={tw`flex items-center justify-between gap-2`}>
             <a className={tw`btn-light-gray`} href="/sends">
               Cancel
             </a>

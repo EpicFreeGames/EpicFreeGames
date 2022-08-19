@@ -1,6 +1,8 @@
 import { GatewayIntents } from "discordeno";
 import { z } from "zod";
+
 import { getBase64Image } from "~shared/utils/getBase64Image.ts";
+
 import { botConstants } from "./_shared/constants.ts";
 
 const Intents: GatewayIntents = GatewayIntents.DirectMessages | GatewayIntents.Guilds;

@@ -1,4 +1,5 @@
 import { ApplicationCommandOptionTypes, ApplicationCommandTypes, ChannelTypes } from "discordeno";
+
 import { Command } from "../mod.ts";
 import { setChannelCommand } from "./channel.ts";
 import { setCurrencyCommand } from "./currency.ts";

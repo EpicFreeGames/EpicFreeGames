@@ -1,5 +1,6 @@
 import { InteractionResponseTypes, PermissionStrings } from "discordeno";
 import { config } from "~config";
+
 import { api } from "~shared/api.ts";
 import { embeds } from "~shared/embeds/mod.ts";
 import { Game, Server } from "~shared/types.ts";
@@ -8,6 +9,7 @@ import { getGuild } from "~shared/utils/getGuild.ts";
 import { hasPermsOnChannel } from "~shared/utils/hasPerms.ts";
 import { logger } from "~shared/utils/logger.ts";
 import { createWebhook, executeWebhook, removeWebhook } from "~shared/utils/webhook.ts";
+
 import { botConstants } from "../../../_shared/constants.ts";
 import { getChannelId } from "../../utils/interactionOptions.ts";
 import { CommandExecuteProps, EphemeralFlag } from "../mod.ts";

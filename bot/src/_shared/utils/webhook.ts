@@ -1,5 +1,6 @@
 import { Bot, ExecuteWebhook, Webhook } from "discordeno";
 import { config } from "~config";
+
 import { logger } from "~shared/utils/logger.ts";
 
 type ExecuteWebhookProps = {

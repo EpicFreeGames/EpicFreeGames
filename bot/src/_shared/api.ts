@@ -1,4 +1,5 @@
 import { config } from "~config";
+
 import { Method } from "./types.ts";
 import { serialize } from "./utils/jsonWorker/initiator.ts";
 import { logger } from "./utils/logger.ts";

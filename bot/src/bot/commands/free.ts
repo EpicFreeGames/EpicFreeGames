@@ -1,7 +1,9 @@
 import { ApplicationCommandTypes, InteractionResponseTypes } from "discordeno";
+
 import { api } from "~shared/api.ts";
 import { embeds } from "~shared/embeds/mod.ts";
 import { Game } from "~shared/types.ts";
+
 import { Command, EphemeralFlag } from "./mod.ts";
 
 export const freeCommand: Command = {

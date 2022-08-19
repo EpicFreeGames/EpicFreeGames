@@ -1,5 +1,6 @@
 /** @jsx h */
 import { h } from "preact";
+
 import { ErrorPageLayout } from "~components/ErrorPageLayout.tsx";
 
 export default function NotFoundPage() {

@@ -2,12 +2,14 @@
 import { PageProps } from "$fresh/server.ts";
 import { h } from "preact";
 import { tw } from "twind";
+
 import { Input } from "~components/Input.tsx";
 import { BackButton } from "~components/Layout/BackButton.tsx";
 import { Layout } from "~components/Layout/Layout.tsx";
 import { api } from "~utils/api.ts";
 import { stringifyFormData } from "~utils/formData.ts";
 import { Handlers } from "~utils/freshTypes.ts";
+
 import { IGame } from "../../types.ts";
 
 export const handler: Handlers = {
@@ -40,7 +42,7 @@ export default function AddGamePage({ url }: PageProps) {
       url={url}
       segments={["Games", "Add a game"]}
     >
-      <div className={tw`bg-gray-700 rounded-md mx-auto max-w-[400px] p-3`}>
+      <div className={tw`mx-auto max-w-[400px] rounded-md bg-gray-700 p-3`}>
         <form className={tw`flex flex-col gap-3`} method="POST">
           <Input name="name" label="Name" required />
           <Input name="displayName" label="Display name" required />
@@ -51,7 +53,7 @@ export default function AddGamePage({ url }: PageProps) {
           <Input name="usdPrice" label="Formatted USD price ($49.99)" required />
           <Input name="priceValue" type="number" label="USD price (49.99)" step={0.01} required />
 
-          <div className={tw`flex gap-2 justify-between items-center`}>
+          <div className={tw`flex items-center justify-between gap-2`}>
             <a className={tw`btn-light-gray`} href="/games">
               Cancel
             </a>

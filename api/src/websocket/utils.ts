@@ -1,5 +1,6 @@
-import { WsMsgType, WsMsgTypeBit, WsMsgTypeDesc } from "./types";
 import { Server } from "ws";
+
+import { WsMsgType, WsMsgTypeBit, WsMsgTypeDesc } from "./types";
 
 export const broadcastWss = (wss: Server, type: WsMsgType, msg?: string) => {
   const data = { bit: WsMsgTypeBit[type], desc: WsMsgTypeDesc[type], msg };

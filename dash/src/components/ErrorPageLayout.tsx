@@ -1,6 +1,7 @@
 /** @jsx h */
 import { h } from "preact";
 import { tw } from "twind";
+
 import { Base } from "./Layout/base.tsx";
 
 type Props = {
@@ -14,9 +15,9 @@ export const ErrorPageLayout = ({ statusCode, error, message }: Props) => {
 
   return (
     <Base title={statusMessage}>
-      <main className={tw`w-screen h-screen flex flex-col justify-center items-center gap-4`}>
+      <main className={tw`flex h-screen w-screen flex-col items-center justify-center gap-4`}>
         <h1
-          className={tw`font-bold text-3xl p-3 bg-red-500 bg-opacity-50 rounded-md border-1 border-red-500`}
+          className={tw`border-1 rounded-md border-red-500 bg-red-500 bg-opacity-50 p-3 text-3xl font-bold`}
         >
           {message}
         </h1>

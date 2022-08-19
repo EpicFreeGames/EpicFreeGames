@@ -1,7 +1,8 @@
-import prisma from "../data/prisma";
+import { Router } from "express";
+
 import { endpointAuth } from "../auth/endpointAuth";
 import { Flags } from "../auth/flags";
-import { Router } from "express";
+import prisma from "../data/prisma";
 
 const router = Router();
 

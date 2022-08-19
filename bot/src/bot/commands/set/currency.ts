@@ -3,9 +3,11 @@ import {
   InteractionResponseTypes,
   InteractionTypes,
 } from "discordeno";
+
 import { api } from "~shared/api.ts";
 import { embeds } from "~shared/embeds/mod.ts";
 import { Currency, Server } from "~shared/types.ts";
+
 import { getString } from "../../utils/interactionOptions.ts";
 import { CommandExecuteProps, EphemeralFlag } from "../mod.ts";
 import { autoCompleteSorter } from "./mod.ts";

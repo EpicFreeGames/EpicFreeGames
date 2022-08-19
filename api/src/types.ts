@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import type { Server } from "ws";
+
 import { ITokenPayload } from "./auth/jwt/types";
 
 export type Middleware = {

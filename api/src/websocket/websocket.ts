@@ -1,8 +1,9 @@
-import { WsMsgTypeBit, WsMsgTypeDesc } from "./types";
-import { Server, WebSocket } from "ws";
 import http from "http";
-import { socketAuth } from "../auth/socketAuth";
+import { Server, WebSocket } from "ws";
+
 import { ITokenPayload } from "../auth/jwt/types";
+import { socketAuth } from "../auth/socketAuth";
+import { WsMsgTypeBit, WsMsgTypeDesc } from "./types";
 
 export const handleWebsocketConnection =
   (wss: Server) => (ws: WebSocket, accessTokenPayload: ITokenPayload) => {

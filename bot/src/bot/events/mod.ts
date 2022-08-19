@@ -1,4 +1,5 @@
 import { logger } from "~shared/utils/logger.ts";
+
 import { bot } from "../mod.ts";
 import { interactionCreateHandler } from "./interactionCreate.ts";
 import { readyEventHandler } from "./ready.ts";

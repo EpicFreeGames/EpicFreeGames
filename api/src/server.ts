@@ -1,3 +1,8 @@
+import cookieParser from "cookie-parser";
+import cors from "cors";
+import express, { Express, Router } from "express";
+import http from "http";
+
 import { config } from "./config";
 import { authRouter } from "./routes/auth";
 import { currencyRouter } from "./routes/currencies";
@@ -8,10 +13,6 @@ import { sendsRouter } from "./routes/sends";
 import { serverRouter } from "./routes/servers";
 import { userRouter } from "./routes/users";
 import { createWs } from "./websocket/websocket";
-import cookieParser from "cookie-parser";
-import cors from "cors";
-import express, { Router, Express } from "express";
-import http from "http";
 
 export const createServer = async () => {
   const app = express();

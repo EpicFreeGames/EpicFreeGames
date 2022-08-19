@@ -1,9 +1,10 @@
 import { Embed } from "discordeno";
+
 import { botConstants } from "../constants.ts";
 import { t } from "../i18n/translate.ts";
 import { Currency, Game, Language } from "../types.ts";
 import { getGamePrice } from "../utils/getGamePrice.ts";
-import { colors, utils, chars } from "./embedUtils.ts";
+import { chars, colors, utils } from "./embedUtils.ts";
 
 export const gameEmbed = (game: Game, language: Language, currency: Currency): Embed => {
   const now = Date.now() / 1000;

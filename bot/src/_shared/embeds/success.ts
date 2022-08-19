@@ -1,4 +1,5 @@
 import { Embed } from "discordeno";
+
 import { t } from "../i18n/translate.ts";
 import { Language } from "../types.ts";
 import { colors, utils } from "./embedUtils.ts";

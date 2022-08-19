@@ -1,4 +1,5 @@
 import { Embed } from "discordeno";
+
 import { IFinishedSendingStats, ISendingStats } from "../types.ts";
 import { colors, utils } from "./embedUtils.ts";
 
