@@ -1,6 +1,7 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { Trash } from "tabler-icons-react";
+
 import { AlertDialog } from "~components/AlertDialog";
 import { IUser } from "~utils/api/types";
 import { useDeleteUserMutation } from "~utils/api/users/deleteUser";
@@ -38,7 +39,7 @@ export const DeleteUser = ({ user }: Props) => {
       action={
         <button
           onClick={() => onSubmit()}
-          className="btnBase py-[0.3rem] text-[0.95rem] border-[1px] border-red-500 bg-red-800/60 hover:bg-red-700/80 active:bg-red-600/80"
+          className="btnBase border-[1px] border-red-500 bg-red-800/60 py-[0.3rem] text-[0.95rem] hover:bg-red-700/80 active:bg-red-600/80"
         >
           Yes, delete
         </button>

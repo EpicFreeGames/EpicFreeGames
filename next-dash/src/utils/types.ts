@@ -1,5 +1,6 @@
 import { NextPage } from "next";
 import { AppProps } from "next/app";
+
 import { Flags } from "./api/flags";
 
 export type Page = NextPage & {

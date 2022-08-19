@@ -2,12 +2,14 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Edit } from "tabler-icons-react";
+
 import { Dialog, DialogCloseButton } from "~components/Dialog";
 import { Label } from "~components/Label";
 import { useCalcFlags } from "~hooks/useCalcFlags";
 import { Flag, Flags } from "~utils/api/flags";
 import { IUser } from "~utils/api/types";
 import { EditUserProps, useEditUserMutation } from "~utils/api/users/editUser";
+
 import { SelectFlags } from "./SelectFlags";
 
 type Props = {
@@ -61,7 +63,7 @@ export const EditUser = ({ user }: Props) => {
           />
         </div>
 
-        <div className="flex gap-2 justify-between items-center">
+        <div className="flex items-center justify-between gap-2">
           <DialogCloseButton className="btnBase bg-gray-600 hover:bg-gray-500/80 active:bg-gray-400/60">
             Cancel
           </DialogCloseButton>

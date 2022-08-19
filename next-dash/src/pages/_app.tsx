@@ -1,10 +1,12 @@
-import "../styles/globals.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { MyAppProps } from "~utils/types";
+import { ReactNode } from "react";
+
 import { useHasFlags } from "~hooks/useHasFlags";
 import { useUser } from "~hooks/useUser";
 import { Flags } from "~utils/api/flags";
-import { ReactNode } from "react";
+import { MyAppProps } from "~utils/types";
+
+import "../styles/globals.css";
 
 const queryClient = new QueryClient();
 

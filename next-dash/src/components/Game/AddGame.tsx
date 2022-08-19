@@ -1,9 +1,10 @@
-import { Dialog, DialogCloseButton } from "~components/Dialog";
-import { Input } from "~components/Input";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+
+import { Dialog, DialogCloseButton } from "~components/Dialog";
+import { Input } from "~components/Input";
 import { AddGameProps, useAddGameMutation } from "~utils/api/games/addGame";
-import { useState } from "react";
 
 export const AddGame = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -47,7 +48,7 @@ export const AddGame = () => {
           {...form.register("priceValue", { valueAsNumber: true })}
         />
 
-        <div className="flex gap-2 justify-between items-center">
+        <div className="flex items-center justify-between gap-2">
           <DialogCloseButton className="btnBase bg-gray-600 hover:bg-gray-500/80 active:bg-gray-400/60">
             Cancel
           </DialogCloseButton>

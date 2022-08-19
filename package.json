@@ -5,6 +5,13 @@
     "deva": "docker compose -f docker-compose-dev.yml up --force-recreate --build -V --attach api --attach bot_rest-proxy --attach bot_gateway-proxy --attach bot_bot --attach bot_sender --attach dash",
     "db": "cd ./api/ && yarn dotenv -e ../.env-dev yarn prisma studio",
     "dbpush": "cd ./api/ && yarn dotenv -e ../.env-dev yarn prisma db push",
-    "dbreset": "cd ./api/ && yarn dotenv -e ../.env-dev yarn prisma migrate reset && cd ../ && yarn dbpush"
-  }
+    "dbreset": "cd ./api/ && yarn dotenv -e ../.env-dev yarn prisma migrate reset && cd ../ && yarn dbpush",
+    "format": "yarn prettier --write \"./**/*.{ts,tsx,json}\""
+  },
+  "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^3.3.0",
+    "prettier": "^2.7.1",
+    "prettier-plugin-tailwindcss": "^0.1.13"
+  },
+  "dependencies": {}
 }

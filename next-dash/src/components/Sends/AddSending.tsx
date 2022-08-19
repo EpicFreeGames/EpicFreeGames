@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+
 import { Dialog, DialogCloseButton } from "~components/Dialog";
 import { Label } from "~components/Label";
 import { useGames } from "~utils/api/games/getGames";
@@ -44,7 +45,7 @@ export const AddSending = () => {
 
           <select
             id="games"
-            className="appearance-none bg-gray-600 rounded-md p-2 focus"
+            className="focus appearance-none rounded-md bg-gray-600 p-2"
             defaultValue={[]}
             multiple
             required
@@ -64,7 +65,7 @@ export const AddSending = () => {
           </select>
         </div>
 
-        <div className="flex gap-2 justify-between items-center">
+        <div className="flex items-center justify-between gap-2">
           <DialogCloseButton className="btnBase bg-gray-600 hover:bg-gray-500/80 active:bg-gray-400/60">
             Cancel
           </DialogCloseButton>

@@ -2,9 +2,10 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Edit } from "tabler-icons-react";
+
 import { Dialog, DialogCloseButton } from "~components/Dialog";
 import { Label } from "~components/Label";
-import { useEditSendingMutation, EditSendingProps } from "~utils/api/sends/editSending";
+import { EditSendingProps, useEditSendingMutation } from "~utils/api/sends/editSending";
 import { ISending } from "~utils/api/types";
 
 type Props = {
@@ -53,7 +54,7 @@ export const EditSending = ({ sending }: Props) => {
 
           <select
             id="games"
-            className="appearance-none bg-gray-600 rounded-md p-2 focus"
+            className="focus appearance-none rounded-md bg-gray-600 p-2"
             defaultValue={[]}
             multiple
             required
@@ -67,7 +68,7 @@ export const EditSending = ({ sending }: Props) => {
           </select>
         </div>
 
-        <div className="flex gap-2 justify-between items-center">
+        <div className="flex items-center justify-between gap-2">
           <DialogCloseButton className="btnBase bg-gray-600 hover:bg-gray-500/80 active:bg-gray-400/60">
             Cancel
           </DialogCloseButton>

@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+
 import { Dialog, DialogCloseButton } from "~components/Dialog";
 import { Input } from "~components/Input";
 import { Label } from "~components/Label";
-import { useAddUserMutation, AddUserProps } from "~utils/api/users/addUser";
+import { AddUserProps, useAddUserMutation } from "~utils/api/users/addUser";
+
 import { SelectFlags } from "./SelectFlags";
 
 export const AddUser = () => {
@@ -49,7 +51,7 @@ export const AddUser = () => {
             <SelectFlags onChange={(newValue, newFlags) => form.setValue("flags", newFlags)} />
           </div>
 
-          <div className="flex gap-2 justify-between items-center">
+          <div className="flex items-center justify-between gap-2">
             <DialogCloseButton className="btnBase bg-gray-600 hover:bg-gray-500/80 active:bg-gray-400/60">
               Cancel
             </DialogCloseButton>

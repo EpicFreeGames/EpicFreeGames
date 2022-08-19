@@ -1,4 +1,5 @@
 import toast from "react-hot-toast";
+
 import { isBrowser } from "~hooks/useIsBrowser";
 import { apiBaseUrl } from "~utils/envs";
 

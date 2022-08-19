@@ -1,5 +1,4 @@
 /** @jsx h */
-
 import { Configuration } from "twind";
 
 /** @type {import('twind').Configuration} */
@@ -9,7 +8,7 @@ const config: Configuration = {
   variants: {
     focus: "[@media(any-hover:hover){&:hover}]",
     max: "@media(min-width: 1024px)",
-    halfMax: "@media(min-width: 512px)",
+    md: "@media(min-width: 512px)",
   },
   plugins: {
     focusVisibleStyles: `!outline-none focus:outline-none focus-visible:ring focus-visible:ring-2 focus-visible:ring-blue-500`,
@@ -34,7 +33,7 @@ const config: Configuration = {
     `,
 
     baseBtnPadding: `py-2 px-3`,
-    baseBtnText: `text-[0.95rem] halfMax:text-[1rem]`,
+    baseBtnText: `text-[0.95rem] md:text-[1rem]`,
 
     allBaseBtn: `baseBtn baseBtnPadding baseBtnText`,
 

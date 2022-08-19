@@ -16,8 +16,8 @@ export const AlertDialog = ({ title, description, trigger, action, open, setOpen
       <AlertDialogPrimitive.Trigger asChild>{trigger}</AlertDialogPrimitive.Trigger>
 
       <AlertDialogPrimitive.Portal>
-        <AlertDialogPrimitive.Overlay className="animate-fadeIn bg-gray-900/60 backdrop-blur-sm fixed inset-0" />
-        <AlertDialogPrimitive.Content className="animate-fadeUp bg-gray-900/95 border-[1px] border-gray-700/70 rounded-md fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[90vw] max-w-[450px] p-3">
+        <AlertDialogPrimitive.Overlay className="animate-fadeIn fixed inset-0 bg-gray-900/60 backdrop-blur-sm" />
+        <AlertDialogPrimitive.Content className="animate-fadeUp fixed top-[50%] left-[50%] w-[90vw] max-w-[450px] translate-x-[-50%] translate-y-[-50%] rounded-md border-[1px] border-gray-700/70 bg-gray-900/95 p-3">
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-1">
               <AlertDialogPrimitive.Title className="text-2xl">{title}</AlertDialogPrimitive.Title>

@@ -1,8 +1,10 @@
 import { ReactNode } from "react";
+
 import { useHasFlags } from "~hooks/useHasFlags";
 import { Flags } from "~utils/api/flags";
 import { useEditGameMutation } from "~utils/api/games/editGame";
 import { IGame } from "~utils/api/types";
+
 import { DeleteGame } from "./DeleteGame";
 import { EditGame } from "./EditGame";
 
@@ -11,13 +13,11 @@ export const Game = ({ game }: { game: IGame }) => {
   const canDelete = useHasFlags(Flags.DeleteGames);
 
   return (
-    <div className="bg-gray-700 p-3 rounded-md flex flex-col gap-3">
-      <div className="flex gap-2 justify-between w-full flex-col halfMax:flex-row items-start">
-        <h2 className="bg-gray-800 py-2 px-3 rounded-md text-lg halfMax:text-2xl">
-          {game.displayName}
-        </h2>
+    <div className="flex flex-col gap-3 rounded-md bg-gray-700 p-3">
+      <div className="flex w-full flex-col items-start justify-between gap-2 md:flex-row">
+        <h2 className="rounded-md bg-gray-800 py-2 px-3 text-lg md:text-2xl">{game.displayName}</h2>
 
-        <div className="flex gap-1 p-2 bg-gray-800 rounded-lg">
+        <div className="flex gap-1 rounded-lg bg-gray-800 p-2">
           <Confirmed game={game} />
           {canEdit && <EditGame game={game} />}
           {canDelete && <DeleteGame game={game} />}
@@ -31,7 +31,7 @@ export const Game = ({ game }: { game: IGame }) => {
           alt={game.displayName}
         />
 
-        <div className="flex flex-col gap-2 w-full halfMax:flex-row">
+        <div className="flex w-full flex-col gap-2 md:flex-row">
           <div className="flex flex-col gap-2">
             <Spec title="Name:" value={game.name} wordWrap />
             <Spec title="Path:" value={game.path} />
@@ -43,7 +43,7 @@ export const Game = ({ game }: { game: IGame }) => {
             <Details summary="Prices">
               <div className="grid grid-cols-3 gap-2">
                 {game.prices.map((price) => (
-                  <div className="bg-gray-700 p-2 rounded-md" key={price.currencyCode}>
+                  <div className="rounded-md bg-gray-700 p-2" key={price.currencyCode}>
                     <p>
                       <b>{price.currencyCode}:</b> {price.formattedValue}
                     </p>
@@ -64,7 +64,7 @@ const Confirmed = ({ game }: { game: IGame }) => {
 
   return (
     <button
-      className={`h-full btnBase px-2 hover:bg-gray-700/80 active:bg-gray-700/60 ${
+      className={`btnBase h-full px-2 hover:bg-gray-700/80 active:bg-gray-700/60 ${
         game.confirmed ? "text-green-500" : "text-red-500"
       }`}
       onClick={() =>
@@ -77,14 +77,14 @@ const Confirmed = ({ game }: { game: IGame }) => {
 };
 
 const Spec = ({ title, value, wordWrap }: { title: string; value: string; wordWrap?: boolean }) => (
-  <p className={`bg-gray-800 p-3 rounded-md ${wordWrap ? "" : "whitespace-nowrap"}`}>
+  <p className={`rounded-md bg-gray-800 p-3 ${wordWrap ? "" : "whitespace-nowrap"}`}>
     <b className="text-[17px]">{title}</b> <br /> {value}
   </p>
 );
 
 const Details = ({ children, summary }: { children: ReactNode; summary: string }) => (
-  <details className="bg-gray-800 p-3 rounded-md focusVisibleStyles">
-    <summary className="p-1 rounded-md focusVisibleStyles">
+  <details className="focusVisibleStyles rounded-md bg-gray-800 p-3">
+    <summary className="focusVisibleStyles rounded-md p-1">
       <b className="text-[17px]">{summary}</b>
     </summary>
 

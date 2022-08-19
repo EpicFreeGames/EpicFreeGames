@@ -1,8 +1,10 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
+
 import { useStartSendingMutation } from "~/utils/api/sends/startSending";
 import { AlertDialog } from "~components/AlertDialog";
 import { ISending } from "~utils/api/types";
+
 import { arrayToCoolString } from "./DeleteSending";
 
 type Props = {
@@ -39,7 +41,7 @@ export const StartSending = ({ sending }: Props) => {
       action={
         <button
           onClick={() => onSubmit()}
-          className="btnBase py-[0.3rem] text-[0.95rem] border-[1px] border-blue-500 bg-blue-800/60 hover:bg-blue-700/80 active:bg-blue-600/80"
+          className="btnBase border-[1px] border-blue-500 bg-blue-800/60 py-[0.3rem] text-[0.95rem] hover:bg-blue-700/80 active:bg-blue-600/80"
         >
           Yes, start sending
         </button>

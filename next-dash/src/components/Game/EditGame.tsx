@@ -1,12 +1,13 @@
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { Edit } from "tabler-icons-react";
+
 import { Dialog, DialogCloseButton } from "~components/Dialog";
 import { Input } from "~components/Input";
-import { useForm } from "react-hook-form";
-import { getHtmlDate } from "~utils/getHtmlDate";
 import { EditGameProps, useEditGameMutation } from "~utils/api/games/editGame";
-import toast from "react-hot-toast";
-import { useState } from "react";
 import { IGame } from "~utils/api/types";
+import { getHtmlDate } from "~utils/getHtmlDate";
 
 type Props = {
   game: IGame;
@@ -66,7 +67,7 @@ export const EditGame = ({ game }: Props) => {
         <Input label="Sale starts" type="datetime-local" required {...form.register("start")} />
         <Input label="Sale ends" type="datetime-local" required {...form.register("end")} />
 
-        <div className="flex gap-2 justify-between items-center">
+        <div className="flex items-center justify-between gap-2">
           <DialogCloseButton className="btnBase bg-gray-600 hover:bg-gray-500/80 active:bg-gray-400/60">
             Cancel
           </DialogCloseButton>

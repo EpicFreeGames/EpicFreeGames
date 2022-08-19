@@ -19,7 +19,7 @@ const Currencies = () => {
   if (error) return <StatusCard error>Error loading games</StatusCard>;
 
   return (
-    <div className="grid grid-cols-1 max:grid-cols-2 gap-3">
+    <div className="max:grid-cols-2 grid grid-cols-1 gap-3">
       {currencies && currencies?.length ? (
         currencies?.map((currency) => <Currency currency={currency} key={currency.id} />)
       ) : (

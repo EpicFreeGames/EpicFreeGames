@@ -1,4 +1,5 @@
 /** @jsx h */
+
 /** @jsxFrag Fragment */
 import { Logout } from "icons";
 import { ComponentChildren, h } from "preact";
@@ -7,8 +8,8 @@ import { tw } from "twind";
 export const NavBar = () => {
   return (
     <nav className={tw`bg-gray-800`}>
-      <div className={tw`max-w-screen-lg mx-auto flex justify-between p-3 halfMax:p-4`}>
-        <div className={tw`flex gap-3 halfMax:gap-4`}>
+      <div className={tw`mx-auto flex max-w-screen-lg justify-between p-3 md:p-4`}>
+        <div className={tw`flex gap-3 md:gap-4`}>
           <NavLink href="/games">Games</NavLink>
           <NavLink href="/currencies">Currencies</NavLink>
           <NavLink href="/sends">Sends</NavLink>

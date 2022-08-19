@@ -1,4 +1,5 @@
 import { Flag, Flags } from "~utils/api/flags";
+
 import { hasFlag } from "./useHasFlags";
 
 export const useCalcFlags = (userFlags: number) => {

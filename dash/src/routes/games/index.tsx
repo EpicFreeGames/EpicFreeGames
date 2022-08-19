@@ -3,9 +3,11 @@ import { PageProps } from "$fresh/server.ts";
 import { Edit, Trash } from "icons";
 import { ComponentChildren, h } from "preact";
 import { tw } from "twind";
+
 import { Layout } from "~components/Layout/Layout.tsx";
 import { api } from "~utils/api.ts";
 import { Handlers } from "~utils/freshTypes.ts";
+
 import { IGame } from "../../types.ts";
 
 export const handler: Handlers<IGame[]> = {
@@ -66,16 +68,16 @@ export default function GamesPage({ data, url }: PageProps<IGame[] | null>) {
 
 const Game = ({ game }: { game: IGame }) => {
   return (
-    <div className={tw`bg-gray-700 p-3 rounded-md flex flex-col gap-3`}>
-      <div className={tw`flex gap-2 justify-between w-full flex-col halfMax:flex-row`}>
-        <h2 className={tw`bg-gray-800 py-2 px-3 rounded-md text-lg halfMax:text-2xl`}>
+    <div className={tw`flex flex-col gap-3 rounded-md bg-gray-700 p-3`}>
+      <div className={tw`flex w-full flex-col justify-between gap-2 md:flex-row`}>
+        <h2 className={tw`rounded-md bg-gray-800 py-2 px-3 text-lg md:text-2xl`}>
           {game.displayName}
         </h2>
 
-        <div className={tw`flex gap-2 justify-between`}>
+        <div className={tw`flex justify-between gap-2`}>
           <Confirmed game={game} />
 
-          <div className={tw`flex gap-2 justify-end`}>
+          <div className={tw`flex justify-end gap-2`}>
             <a className={tw`btn-dark-gray`} href={`/games/${game.id}/edit`}>
               <Edit size={25} />
             </a>
@@ -93,7 +95,7 @@ const Game = ({ game }: { game: IGame }) => {
           alt={game.displayName}
         />
 
-        <div className={tw`flex flex-col gap-2 w-full halfMax:flex-row`}>
+        <div className={tw`flex w-full flex-col gap-2 md:flex-row`}>
           <div className={tw`flex flex-col gap-2`}>
             <Spec title="Name:" value={game.name} wordWrap />
             <Spec title="Path:" value={game.path} />
@@ -105,7 +107,7 @@ const Game = ({ game }: { game: IGame }) => {
             <Details summary="Prices">
               <div className={tw`grid grid-cols-3 gap-2`}>
                 {game.prices.map((price) => (
-                  <div className={tw`bg-gray-700 p-2 rounded-md`}>
+                  <div className={tw`rounded-md bg-gray-700 p-2`}>
                     <p>
                       <b>{price.currencyCode}:</b> {price.formattedValue}
                     </p>
@@ -132,14 +134,14 @@ const Confirmed = ({ game }: { game: IGame }) => (
 );
 
 const Spec = ({ title, value, wordWrap }: { title: string; value: string; wordWrap?: boolean }) => (
-  <p className={tw`bg-gray-800 p-3 rounded-md ${wordWrap ? "" : "whitespace-nowrap"}`}>
+  <p className={tw`rounded-md bg-gray-800 p-3 ${wordWrap ? "" : "whitespace-nowrap"}`}>
     <b className={tw`text-[17px]`}>{title}</b> <br /> {value}
   </p>
 );
 
 const Details = ({ children, summary }: { children: ComponentChildren; summary: string }) => (
-  <details className={tw`bg-gray-800 p-3 rounded-md focusVisibleStyles`}>
-    <summary className={tw`p-1 rounded-md focusVisibleStyles`}>
+  <details className={tw`focusVisibleStyles rounded-md bg-gray-800 p-3`}>
+    <summary className={tw`focusVisibleStyles rounded-md p-1`}>
       <b className={tw`text-[17px]`}>{summary}</b>
     </summary>
 

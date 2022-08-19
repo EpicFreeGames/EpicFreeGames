@@ -3,10 +3,12 @@ import { PageProps } from "$fresh/server.ts";
 import { Edit, Trash } from "icons";
 import { h } from "preact";
 import { tw } from "twind";
+
 import { Layout } from "~components/Layout/Layout.tsx";
 import { api } from "~utils/api.ts";
 import { Handlers } from "~utils/freshTypes.ts";
 import { arrayToCoolString } from "~utils/string.tsx";
+
 import { ISending } from "../../types.ts";
 
 export const handler: Handlers<ISending[]> = {
@@ -60,14 +62,14 @@ const Sending = ({ sending }: SendingProps) => {
   const showButtons = showDelete || showEdit || showSend;
 
   return (
-    <div className={tw`bg-gray-700 p-3 rounded-md flex flex-col gap-3`}>
-      <div className={tw`flex gap-2 justify-between w-full flex-wrap`}>
-        <h2 className={tw`bg-gray-800 py-2 px-3 rounded-md text-lg halfMax:text-2xl w-max`}>
+    <div className={tw`flex flex-col gap-3 rounded-md bg-gray-700 p-3`}>
+      <div className={tw`flex w-full flex-wrap justify-between gap-2`}>
+        <h2 className={tw`w-max rounded-md bg-gray-800 py-2 px-3 text-lg md:text-2xl`}>
           {sending.id}
         </h2>
 
         {showButtons && (
-          <div className={tw`flex gap-2 w-max`}>
+          <div className={tw`flex w-max gap-2`}>
             {showEdit && (
               <a
                 title="Edit sending"
@@ -96,12 +98,12 @@ const Sending = ({ sending }: SendingProps) => {
       </div>
 
       <div className={tw`flex flex-col gap-2`}>
-        <p className={tw`bg-gray-800 p-3 rounded-md`}>
+        <p className={tw`rounded-md bg-gray-800 p-3`}>
           <b className={tw`text-[17px]`}>Games:</b> <br />
           {coolString ?? "No games"}
         </p>
 
-        <p className={tw`bg-gray-800 p-3 rounded-md`}>
+        <p className={tw`rounded-md bg-gray-800 p-3`}>
           <b className={tw`text-[17px]`}>Status:</b> <br /> {sending.status}
         </p>
       </div>

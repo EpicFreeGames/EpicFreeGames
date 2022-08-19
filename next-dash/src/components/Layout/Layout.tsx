@@ -1,8 +1,10 @@
 import Head from "next/head";
 import { ElementType, ReactNode } from "react";
 import { Toaster } from "react-hot-toast";
-import { useUser } from "~hooks/useUser";
+
 import { useNotifs } from "~hooks/useNotifs";
+import { useUser } from "~hooks/useUser";
+
 import { NavBar } from "./NavBar";
 
 type Props = {
@@ -37,10 +39,10 @@ export const Layout = ({ children, title, titleButtons }: Props) => {
 
           <NavBar />
 
-          <main className="max-w-screen-lg mx-auto halfMax:px-4">
+          <main className="mx-auto max-w-screen-lg md:px-4">
             <div className="flex flex-col">
-              <div className="flex justify-between px-3 py-3 halfMax:px-0 halfMax:py-4 items-center">
-                <h1 className="flex items-center text-[1.5rem] leading-[1.25rem] halfMax:text-[2.25rem] halfMax:leading-[2rem]">
+              <div className="flex items-center justify-between px-3 py-3 md:px-0 md:py-4">
+                <h1 className="flex items-center text-[1.5rem] leading-[1.25rem] md:text-[2.25rem] md:leading-[2rem]">
                   {title}
                 </h1>
 

@@ -1,4 +1,5 @@
-import { ComponentProps, forwardRef, ReactNode } from "react";
+import { ComponentProps, ReactNode, forwardRef } from "react";
+
 import { Label } from "./Label";
 
 type Props = ComponentProps<"input"> & {
@@ -15,7 +16,7 @@ const Input = forwardRef<HTMLInputElement, Props>(
           id={id}
           autoComplete="off"
           required={required}
-          className="border-[1px] border-transparent bg-gray-600 rounded-md p-2 duration-200 focus"
+          className="focus rounded-md border-[1px] border-transparent bg-gray-600 p-2 duration-200"
           {...rest}
           ref={ref}
         />
@@ -31,7 +32,7 @@ const Input = forwardRef<HTMLInputElement, Props>(
           id={label}
           autoComplete="off"
           required={required}
-          className="border-[1px] border-transparent bg-gray-600 rounded-md p-2 duration-200 focus"
+          className="focus rounded-md border-[1px] border-transparent bg-gray-600 p-2 duration-200"
           {...rest}
           ref={ref}
         />

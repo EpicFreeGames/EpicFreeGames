@@ -3,6 +3,7 @@ import { useHasFlags } from "~hooks/useHasFlags";
 import { useUser } from "~hooks/useUser";
 import { Flags } from "~utils/api/flags";
 import { IUser } from "~utils/api/types";
+
 import { DeleteUser } from "./DeleteUser";
 import { EditUser } from "./EditUser";
 
@@ -22,14 +23,14 @@ export const User = ({ user }: Props) => {
   const showButtons = canEdit || canDelete;
 
   return (
-    <div className="bg-gray-700 p-3 rounded-md flex flex-col gap-3">
-      <div className="flex gap-2 justify-between w-full h-full flex-col halfMax:flex-row items-start">
-        <h2 className="bg-gray-800 py-2 px-3 rounded-md text-lg halfMax:text-2xl">
+    <div className="flex flex-col gap-3 rounded-md bg-gray-700 p-3">
+      <div className="flex h-full w-full flex-col items-start justify-between gap-2 md:flex-row">
+        <h2 className="rounded-md bg-gray-800 py-2 px-3 text-lg md:text-2xl">
           {user.name ?? user.discordId}
         </h2>
 
         {showButtons && (
-          <div className="flex gap-1 p-2 bg-gray-800 rounded-lg">
+          <div className="flex gap-1 rounded-lg bg-gray-800 p-2">
             {canEdit && <EditUser user={user} />}
             {canDelete && <DeleteUser user={user} />}
           </div>
@@ -44,7 +45,7 @@ export const User = ({ user }: Props) => {
 };
 
 const Spec = ({ title, value }: { title: string; value: string | number }) => (
-  <p className={`bg-gray-800 p-3 rounded-md`}>
+  <p className={`rounded-md bg-gray-800 p-3`}>
     <b className="text-[17px]">{title}</b> <br /> {value}
   </p>
 );

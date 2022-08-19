@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { MultiSelect } from "react-multi-select-component";
+
 import { Flag, Flags } from "~utils/api/flags";
 
 type Option = { label: string; value: Flags };

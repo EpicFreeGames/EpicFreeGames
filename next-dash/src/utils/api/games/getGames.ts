@@ -1,5 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
+
 import { IGame } from "~utils/api/types";
+
 import { ApiError, apiRequest } from "../api";
 
 const fetchGames = () =>
