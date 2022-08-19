@@ -17,6 +17,12 @@ export const botConstants = {
   },
 
   botLogoUrl: (env: string) => `https://staging.epicfreegames.net/assets/images/logos/${env}.png`,
+  emojis: {
+    questionMark: "https://staging.epicfreegames.net/assets/images/emojis/question-mark.png",
+  },
 
-  webhookName: (sending = false) => `${config.ENV}-EpicFreeGames${sending ? "" : " Notifications"}`,
+  webhookName: (sending = false) =>
+    `${config.ENV !== "Production" ? `${config.ENV}-` : ""}EpicFreeGames${
+      sending ? "" : " Notifications"
+    }`,
 };

@@ -7,12 +7,41 @@ import { Currency, Language, Server } from "../types.ts";
 import { colors, utils } from "./embedUtils.ts";
 
 export const help = (language: Language): Embed => ({
-  title: "Help",
-  color: colors.green,
+  color: colors.gray,
+  author: {
+    name: "Help",
+    iconUrl: botConstants.emojis.questionMark,
+  },
   description:
-    `[${t({ language, key: "commands_listed" })}](${botConstants.websiteCommands})` +
+    `👋 ${t({ language, key: "help_desc" })}` +
     "\n\n" +
-    `[${t({ language, key: "support_click_here" })}](${botConstants.serverInvite})` +
+    `📋 ${t({
+      language,
+      key: "looking_for_commands",
+      vars: { serverInvite: botConstants.serverInvite },
+    })}` +
+    "\n\n" +
+    `🎮 ${t({
+      language,
+      key: "how_to_tutorial",
+      vars: { serverInvite: botConstants.serverInvite },
+    })}` +
+    "\n\n" +
+    `⁉️ ${t({
+      language,
+      key: "having_problems",
+      vars: { serverInvite: botConstants.serverInvite },
+    })}` +
+    "\n\n" +
+    `🚩 ${utils.bold(
+      t({ language, key: "would_you_like_to_translate", vars: { botName: "EpicFreeGames" } })
+    )}` +
+    "\n" +
+    `- ${t({
+      language,
+      key: "if_would_like_to_translate",
+      vars: { serverInvite: botConstants.serverInvite },
+    })}` +
     utils.footer(language),
   thumbnail: {
     url: botConstants.botLogoUrl(config.ENV),
@@ -21,7 +50,7 @@ export const help = (language: Language): Embed => ({
 
 export const vote = (language: Language): Embed => ({
   title: t({ language, key: "vote" }),
-  color: colors.blue,
+  color: colors.gray,
   description:
     Object.entries(botConstants.voteLinks)
       .map(([name, link]) => `${utils.bold(name)}\n${link}`)
@@ -30,7 +59,7 @@ export const vote = (language: Language): Embed => ({
 
 export const invite = (language: Language): Embed => ({
   title: t({ language, key: "invite" }),
-  color: colors.blue,
+  color: colors.gray,
   image: {
     url: botConstants.inviteGif,
   },
@@ -39,7 +68,7 @@ export const invite = (language: Language): Embed => ({
 
 export const debug = (guildId: string): Embed => ({
   title: "Debug info",
-  color: colors.blue,
+  color: colors.gray,
   description: utils.bold(`Guild ID: ${guildId}`),
 });
 
