@@ -1,11 +1,28 @@
 version: "3.9"
 
+x-shared-envs: &sharedEnvs
+  REDISHOST: redis
+  REDISPORT: "6379"
+  EFG_API_INTERNAL_BASEURL: http://api:3000/api
+  EFG_API_BOT_SECRET: efg-bot-auth
+  DISCORD_API_BASEURL: https://discord.com/api/v10
+  DISCORD_REDIRECT_URL: http://localhost:3010/api/auth/discord-callback
+  ENV: Development
+
+x-shared-bot-envs: &sharedBotEnvs
+  <<: *sharedEnvs
+  EFG_FRONT_BASEURL: https://staging.epicfreegames.net
+  LOGO_URL: https://staging.epicfreegames.net/assets/images/logos/Development.png
+  REST_PROXY_URL: http://bot_rest-proxy:3000
+  REST_PROXY_AUTH: efg-rest-proxy-auth
+  BOT_TOKEN: ${BOT_TOKEN}
+
 services:
   redis:
     image: redis/redis-stack
     volumes:
       - redis:/data
-    restart: unless-stopped
+    restart: always
     ports:
       - "3002:8001"
 
@@ -15,11 +32,20 @@ services:
     build:
       context: ./api
       dockerfile: Dockerfile.dev
-    env_file:
-      - .env-dev
     environment:
-      PORT: "3000"
-    restart: unless-stopped
+      <<: *sharedEnvs
+      EFG_API_SECRET: efg-api-secret
+      DISCORD_CLIENT_ID: ${DISCORD_CLIENT_ID}
+      DISCORD_CLIENT_SECRET: ${DISCORD_CLIENT_SECRET}
+      SENDER_AUTH: efg-sender-auth
+      SENDER_URL: http://sender:3000
+      JWT_ISS: efg-api
+      JWT_AUD: efg-api
+      JWT_EXP: "900"
+      JWT_SECRET: efg-api-jwt-secret
+      DASH_URL: http://localhost:3001
+      DATABASE_URL: ${DATABASE_URL}
+    restart: always
     volumes:
       - ./api/src:/app/src:r
     ports:
@@ -34,11 +60,11 @@ services:
       context: ./next-dash
       dockerfile: Dockerfile.dev
     image: dash/next-dash
-    env_file:
-      - .env-dev
     environment:
-      PORT: "3000"
-    restart: unless-stopped
+      <<: *sharedEnvs
+      NEXT_PUBLIC_EFG_API_BASE_URL: http://localhost:3010/api
+      NEXT_PUBLIC_EFG_API_WS_URL: ws://localhost:3010/api
+    env_file: .env-dev
     volumes:
       - ./next-dash/src:/app/src:r
     ports:
@@ -49,11 +75,6 @@ services:
       context: ./front
       dockerfile: Dockerfile.dev
     image: front/front
-    env_file:
-      - .env-dev
-    environment:
-      PORT: "3000"
-    restart: unless-stopped
     volumes:
       - ./front/src:/app/src:r
     ports:
@@ -68,32 +89,25 @@ services:
       args:
         - SCOPE=rest-proxy
     image: bot_rest-proxy
-    env_file:
-      - .env-dev
     environment:
-      PORT: "3000"
-    restart: unless-stopped
+      <<: *sharedBotEnvs
 
   bot_gateway:
     depends_on:
-      - api
-      - redis
       - bot_rest-proxy
     build:
       context: ./bot
       args:
         - SCOPE=gateway
     image: bot_gateway
-    env_file:
-      - .env-dev
     environment:
-      PORT: "3000"
-    restart: unless-stopped
+      <<: *sharedBotEnvs
+      EVENT_HANDLER_URL: http://bot_event-handler:3000
+      EVENT_HANDLER_AUTH: efg-event-handler-auth
+    restart: always
 
   bot_sender:
     depends_on:
-      - api
-      - redis
       - front
       - bot_gateway
       - bot_rest-proxy
@@ -102,17 +116,15 @@ services:
       args:
         - SCOPE=sender
     image: bot_sender
-    env_file:
-      - .env-dev
     environment:
-      PORT: "3000"
-    restart: unless-stopped
+      <<: *sharedBotEnvs
+      WEBHOOK_NAME: Dev-EpicFreeGames
+      SENDER_AUTH: efg-sender-auth
+    restart: always
     command: "deno run --watch -A ./src/sender/mod.ts"
 
   bot_event-handler:
     depends_on:
-      - api
-      - redis
       - front
       - bot_sender
       - bot_gateway
@@ -122,11 +134,11 @@ services:
       args:
         - SCOPE=event-handler
     image: bot_event-handler
-    env_file:
-      - .env-dev
     environment:
-      PORT: "3000"
-    restart: unless-stopped
+      <<: *sharedBotEnvs
+      WEBHOOK_INTEGRATION_NAME: Dev-EpicFreeGames Notifications
+      EVENT_HANDLER_AUTH: efg-event-handler-auth
+    restart: always
     volumes:
       - ./bot/src:/app/src:r
     command: "deno run --watch -A ./src/event-handler/mod.ts"

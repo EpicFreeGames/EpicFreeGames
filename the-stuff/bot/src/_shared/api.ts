@@ -1,5 +1,4 @@
-import { config } from "~config";
-
+import { sharedConfig } from "./sharedConfig.ts";
 import { Method } from "./types.ts";
 import { serialize } from "./utils/jsonWorker/initiator.ts";
 import { logger } from "./utils/logger.ts";
@@ -29,14 +28,17 @@ type Args =
     };
 
 export async function api<TData>({ method, path, body, query }: Args): Promise<ApiResponse<TData>> {
-  return fetch(`${config.EFG_API_INTERNAL_BASEURL}${path}${query ? `?${query.toString()}` : ""}`, {
-    method,
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bot ${config.EFG_API_BOT_SECRET}`,
-    },
-    ...(!!body && { body: await serialize(body) }),
-  })
+  return fetch(
+    `${sharedConfig.EFG_API_INTERNAL_BASEURL}${path}${query ? `?${query.toString()}` : ""}`,
+    {
+      method,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bot ${sharedConfig.EFG_API_BOT_SECRET}`,
+      },
+      ...(!!body && { body: await serialize(body) }),
+    }
+  )
     .then(async (res) => {
       const json = await res.json();
 
@@ -51,7 +53,7 @@ export async function api<TData>({ method, path, body, query }: Args): Promise<A
     .catch(async (err) => {
       logger.error(
         `API request failed\nRequest url: ${
-          config.EFG_API_INTERNAL_BASEURL
+          sharedConfig.EFG_API_INTERNAL_BASEURL
         }${path}\nError: ${await serialize(err)}`
       );
 

@@ -1,7 +1,8 @@
 import { Bot, ExecuteWebhook, Webhook } from "discordeno";
-import { config } from "~config";
 
 import { logger } from "~shared/utils/logger.ts";
+
+import { sharedConfig } from "../sharedConfig.ts";
 
 type ExecuteWebhookProps = {
   id: string;
@@ -18,7 +19,7 @@ export const executeWebhook = (bot: Bot, props: ExecuteWebhookProps) => {
   if (props.wait) params.append("wait", props.wait.toString());
 
   return fetch(
-    `${config.DISCORD_API_BASEURL}/webhooks/${props.id}/${props.token}?${params.toString()}`,
+    `${sharedConfig.DISCORD_API_BASEURL}/webhooks/${props.id}/${props.token}?${params.toString()}`,
     {
       method: "POST",
       headers: {
@@ -62,11 +63,11 @@ export const createWebhook = (
   channelId: bigint,
   options: CreateWebhookOptions
 ): Promise<CreateWebhookResponse> =>
-  fetch(`${config.DISCORD_API_BASEURL}/channels/${channelId}/webhooks`, {
+  fetch(`${sharedConfig.DISCORD_API_BASEURL}/channels/${channelId}/webhooks`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bot ${config.BOT_TOKEN}`,
+      Authorization: `Bot ${sharedConfig.BOT_TOKEN}`,
     },
     body: JSON.stringify({
       name: options.name,
@@ -106,6 +107,6 @@ export const createWebhook = (
     });
 
 export const removeWebhook = (webhookId: string, webhookToken: string) =>
-  fetch(`${config.DISCORD_API_BASEURL}/webhooks/${webhookId}/${webhookToken}`, {
+  fetch(`${sharedConfig.DISCORD_API_BASEURL}/webhooks/${webhookId}/${webhookToken}`, {
     method: "DELETE",
   });

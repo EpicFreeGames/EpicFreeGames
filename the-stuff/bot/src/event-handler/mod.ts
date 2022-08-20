@@ -1,19 +1,20 @@
 import { DiscordGatewayPayload, createBot } from "discordeno";
-import { config } from "~config";
 
 import { handleCache } from "~shared/cache.ts";
 import { connectRedis } from "~shared/redis.ts";
+import { sharedConfig } from "~shared/sharedConfig.ts";
 import { botRest } from "~shared/utils/botRest.ts";
 import { logger } from "~shared/utils/logger.ts";
 
-import { commands, initCommands } from "./commands/mod.ts";
+import { initCommands } from "./commands/mod.ts";
+import { eventHandlerConfig } from "./config.ts";
 import { initEvents } from "./events/mod.ts";
 
 export const bot = handleCache(
   createBot({
-    token: config.BOT_TOKEN,
-    botId: config.BOT_ID,
-    intents: config.Intents,
+    token: sharedConfig.BOT_TOKEN,
+    botId: sharedConfig.BOT_ID,
+    intents: sharedConfig.INTENTS,
   })
 );
 
@@ -23,20 +24,6 @@ initEvents();
 initCommands();
 
 await connectRedis();
-
-if (config.SLASH_COMMANDS) {
-  const commandList = commands.map((c) => ({
-    name: c.name,
-    description: c.description,
-    options: c.options,
-    type: c.type,
-  }));
-
-  await bot.helpers
-    .upsertApplicationCommands(commandList)
-    .then(() => logger.info("Commands updated."))
-    .catch((err) => logger.error("Error updating slash commands:", err));
-}
 
 const port = Number(Deno.env.get("PORT")) || 3000;
 
@@ -49,8 +36,7 @@ for await (const conn of httpServer) {
 
     for await (const requestEvent of httpConn) {
       if (
-        !config.BOT_AUTH ||
-        config.BOT_AUTH !== requestEvent.request.headers.get("AUTHORIZATION")
+        eventHandlerConfig.EVENT_HANDLER_AUTH !== requestEvent.request.headers.get("AUTHORIZATION")
       ) {
         return requestEvent.respondWith(
           new Response(JSON.stringify({ error: "Invalid secret key." }), {
@@ -72,7 +58,7 @@ for await (const conn of httpServer) {
         shardId: number;
       };
 
-      logger.debug("GATEWAY EVENT", json.data.t);
+      logger.info("Received an event", json.data.t);
 
       bot.events.raw(bot, json.data, json.shardId);
 

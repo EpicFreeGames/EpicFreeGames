@@ -1,8 +1,8 @@
 import { Embed } from "discordeno";
 
-import { config } from "../../config.ts";
 import { botConstants } from "../constants.ts";
 import { t } from "../i18n/translate.ts";
+import { sharedConfig } from "../sharedConfig.ts";
 import { Currency, Language, Server } from "../types.ts";
 import { colors, utils } from "./embedUtils.ts";
 
@@ -44,7 +44,7 @@ export const help = (language: Language): Embed => ({
     })}` +
     utils.footer(language),
   thumbnail: {
-    url: botConstants.botLogoUrl(config.ENV),
+    url: sharedConfig.LOGO_URL,
   },
 });
 

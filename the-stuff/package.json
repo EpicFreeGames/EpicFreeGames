@@ -1,12 +1,13 @@
 {
   "name": "epicfreegames-monorepo",
   "scripts": {
-    "dev": "docker compose -p efg-dev -f docker-compose-dev.yml up --force-recreate -V -d",
-    "deva": "docker compose -p efg-dev -f docker-compose-dev.yml up --force-recreate --build -V --attach api --attach bot_rest-proxy --attach bot_gateway --attach bot_event-handler --attach bot_sender --attach dash",
+    "dev": "docker compose -p efg-dev -f docker-compose-dev.yml up --force-recreate -V -d --build",
+    "deva": "docker compose -p efg-dev -f docker-compose-dev.yml up --force-recreate --build -V --attach api --attach dash --attach front --attach bot_rest-proxy --attach bot_gateway --attach bot_event-handler --attach bot_sender",
     "format": "yarn prettier --write \"./**/*.{ts,tsx,json}\""
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^3.3.0",
+    "dotenv-cli": "^6.0.0",
     "prettier": "^2.7.1",
     "prettier-plugin-tailwindcss": "^0.1.13"
   },

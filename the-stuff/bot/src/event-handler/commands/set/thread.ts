@@ -1,5 +1,4 @@
 import { InteractionResponseTypes, PermissionStrings } from "discordeno";
-import { config } from "~config";
 
 import { api } from "~shared/api.ts";
 import { embeds } from "~shared/embeds/mod.ts";
@@ -10,7 +9,7 @@ import { hasPermsOnChannel } from "~shared/utils/hasPerms.ts";
 import { logger } from "~shared/utils/logger.ts";
 import { createWebhook, executeWebhook, removeWebhook } from "~shared/utils/webhook.ts";
 
-import { botConstants } from "../../../_shared/constants.ts";
+import { sharedConfig } from "../../../_shared/sharedConfig.ts";
 import { getChannelId } from "../../utils/interactionOptions.ts";
 import { CommandExecuteProps, EphemeralFlag } from "../mod.ts";
 
@@ -85,8 +84,8 @@ export const setThreadCommand = async ({ bot, i, lang, curr, server }: CommandEx
       });
 
     const { error, data } = await createWebhook(bot, parentId, {
-      name: botConstants.webhookName(false),
-      avatar: config.BASE64_LOGO,
+      name: sharedConfig.WEBHOOK_INTEGRATION_NAME,
+      avatar: sharedConfig.BASE64_LOGO,
       reason: "The free game notifications will be delivered via this webhook",
     });
 

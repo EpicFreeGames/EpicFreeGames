@@ -1,4 +1,4 @@
-import { config } from "../config.ts";
+import { sharedConfig } from "./sharedConfig.ts";
 
 export const botConstants = {
   inviteGif:
@@ -16,13 +16,7 @@ export const botConstants = {
     "Discordlist.gg": "https://discordlist.gg/bot/719806770133991434/vote",
   },
 
-  botLogoUrl: (env: string) => `https://staging.epicfreegames.net/assets/images/logos/${env}.png`,
   emojis: {
-    questionMark: "https://staging.epicfreegames.net/assets/images/emojis/question-mark.png",
+    questionMark: `${sharedConfig.EFG_FRONT_BASEURL}/assets/images/emojis/question-mark.png`,
   },
-
-  webhookName: (sending = false) =>
-    `${config.ENV !== "Production" ? `${config.ENV}-` : ""}EpicFreeGames${
-      sending ? "" : " Notifications"
-    }`,
 };

@@ -1,4 +1,3 @@
-import { config } from "./config";
 // @ts-ignore
 import prisma from "./data/prisma";
 // @ts-ignore
@@ -8,5 +7,7 @@ import { createServer } from "./server";
 (async () => {
   const server = await createServer();
 
-  server.listen(config.PORT, () => console.log(`API listening on port ${config.PORT}`));
+  const port = Number(process.env.PORT) || 3000;
+
+  server.listen(port, () => console.log(`API listening on port ${port}`));
 })();

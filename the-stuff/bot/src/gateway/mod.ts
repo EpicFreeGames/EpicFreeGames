@@ -5,9 +5,11 @@ import {
   routes,
   transformGatewayBot,
 } from "discordeno";
-import { config } from "~config";
 
+import { sharedConfig } from "~shared/sharedConfig.ts";
 import { logger } from "~shared/utils/logger.ts";
+
+import { gatewayConfig } from "./config.ts";
 
 const queue: GatewayQueue = {
   processing: false,
@@ -33,9 +35,9 @@ async function handleQueue() {
     return;
   }
 
-  await fetch(`${config.BOT_URL}`, {
+  await fetch(`${gatewayConfig.EVENT_HANDLER_URL}`, {
     headers: {
-      Authorization: config.BOT_AUTH,
+      Authorization: gatewayConfig.EVENT_HANDLER_AUTH,
       "Content-Type": "application/json",
     },
     method: "POST",
@@ -55,28 +57,38 @@ async function handleQueue() {
 }
 
 const rest = createRestManager({
-  token: config.BOT_TOKEN,
-  secretKey: config.REST_PROXY_AUTH,
-  customUrl: config.REST_PROXY_URL,
+  token: sharedConfig.BOT_TOKEN,
+  secretKey: sharedConfig.REST_PROXY_AUTH,
+  customUrl: sharedConfig.REST_PROXY_URL,
 });
 
-const gatewayData = await rest.runMethod(rest, "GET", routes.GATEWAY_BOT());
+logger.info("Getting gateway data...");
+
+const gatewayData = await rest.runMethod(rest, "GET", routes.GATEWAY_BOT()).catch((err) => {
+  logger.error("error getting gateway data", err);
+
+  Deno.exit(0);
+});
+
+logger.info("Got gateway data", gatewayData);
 
 const gateway = createGatewayManager({
   gatewayBot: transformGatewayBot(gatewayData),
   gatewayConfig: {
-    token: config.BOT_TOKEN,
-    intents: config.Intents,
+    token: sharedConfig.BOT_TOKEN,
+    intents: sharedConfig.INTENTS,
   },
   handleDiscordPayload: async ({ id: shardId }, data) => {
-    logger.debug("GATEWAY EVENT", data.t);
+    logger.info("GATEWAY EVENT", data.t);
 
     if (queue.processing && data.t !== "INTERACTION_CREATE")
       return queue.events.push({ shardId, data });
 
-    await fetch(`${config.BOT_URL}`, {
+    logger.info(`Sending gateway event to event handler @ ${gatewayConfig.EVENT_HANDLER_URL}`);
+
+    await fetch(`${gatewayConfig.EVENT_HANDLER_URL}`, {
       headers: {
-        Authorization: config.BOT_AUTH,
+        Authorization: gatewayConfig.EVENT_HANDLER_AUTH,
       },
       method: "POST",
       body: JSON.stringify({ shardId, data }),
@@ -88,5 +100,7 @@ const gateway = createGatewayManager({
       });
   },
 });
+
+logger.info("Spawning shards...");
 
 gateway.spawnShards();

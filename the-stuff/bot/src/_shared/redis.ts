@@ -1,7 +1,7 @@
 import { DiscordGuild } from "discordeno";
 import { Redis, connect } from "redis";
-import { config } from "~config";
 
+import { sharedConfig } from "./sharedConfig.ts";
 import { deserialize, serialize } from "./utils/jsonWorker/initiator.ts";
 import { logger } from "./utils/logger.ts";
 
@@ -13,10 +13,10 @@ export const connectRedis = async () => {
   }
 
   redis = await connect({
-    hostname: config.REDISHOST,
-    port: config.REDISPORT,
-    password: config.REDISPASS,
-    username: config.REDISUSER,
+    hostname: sharedConfig.REDISHOST,
+    port: sharedConfig.REDISPORT,
+    password: sharedConfig.REDISPASS,
+    username: sharedConfig.REDISUSER,
   });
 
   logger.info("Connected to Redis");

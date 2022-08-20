@@ -1,8 +1,9 @@
 import { createRestManager } from "discordeno";
-import { config } from "~config";
+
+import { sharedConfig } from "../sharedConfig.ts";
 
 export const botRest = createRestManager({
-  token: config.BOT_TOKEN,
-  secretKey: config.REST_PROXY_AUTH,
-  customUrl: config.REST_PROXY_URL,
+  token: sharedConfig.BOT_TOKEN,
+  secretKey: sharedConfig.REST_PROXY_AUTH,
+  customUrl: sharedConfig.REST_PROXY_URL,
 });

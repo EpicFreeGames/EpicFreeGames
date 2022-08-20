@@ -1,11 +1,10 @@
 import { BASE_URL } from "discordeno";
-import { config } from "~config";
 
+import { sharedConfig } from "~shared/sharedConfig.ts";
 import { RestMethod } from "~shared/types.ts";
+import { botRest } from "~shared/utils/botRest.ts";
 import { serialize } from "~shared/utils/jsonWorker/initiator.ts";
 import { logger } from "~shared/utils/logger.ts";
-
-import { botRest } from "../_shared/utils/botRest.ts";
 
 const rest = botRest;
 
@@ -19,8 +18,8 @@ const handleConnection = async (connection: Deno.Conn) => {
 
   for await (const requestEvent of httpConnection) {
     if (
-      !config.REST_PROXY_AUTH ||
-      config.REST_PROXY_AUTH !== requestEvent.request.headers.get("AUTHORIZATION")
+      !sharedConfig.REST_PROXY_AUTH ||
+      sharedConfig.REST_PROXY_AUTH !== requestEvent.request.headers.get("AUTHORIZATION")
     ) {
       return requestEvent.respondWith(
         new Response(JSON.stringify({ error: "Invalid authorization key." }), {
@@ -29,9 +28,12 @@ const handleConnection = async (connection: Deno.Conn) => {
       );
     }
 
-    const json = await requestEvent.request.json().catch(() => null);
-
+    const path = new URL(requestEvent.request.url).pathname;
     const proxyTo = `${BASE_URL}${new URL(requestEvent.request.url).pathname}`;
+
+    logger.info(`Request received to: ${path} - proxying to: ${proxyTo}`);
+
+    const json = await requestEvent.request.json().catch(() => null);
 
     try {
       const result = await rest.runMethod(
@@ -40,6 +42,8 @@ const handleConnection = async (connection: Deno.Conn) => {
         proxyTo,
         json
       );
+
+      logger.info("result", result);
 
       if (result) {
         requestEvent.respondWith(

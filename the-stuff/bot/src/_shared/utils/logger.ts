@@ -1,5 +1,6 @@
 import { blue, bold, magenta, red } from "colors";
-import { config } from "~config";
+
+import { sharedConfig } from "../sharedConfig.ts";
 
 const timestamp = () => {
   const today = new Date();
@@ -23,7 +24,7 @@ const timestamp = () => {
 export const logger = {
   // deno-lint-ignore no-explicit-any
   debug: (...args: any[]) =>
-    config.DEBUG && console.debug(...[magenta(`${bold(`${timestamp()} [DEBUG]`)}`), ...args]),
+    sharedConfig.DEBUG && console.debug(...[magenta(`${bold(`${timestamp()} [DEBUG]`)}`), ...args]),
 
   // deno-lint-ignore no-explicit-any
   error: (...args: any[]) => console.error(...[red(`${bold(`${timestamp()} [ERROR]`)}`), ...args]),

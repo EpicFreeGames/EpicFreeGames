@@ -1,21 +1,22 @@
 import { createBot } from "discordeno";
-import { config } from "~config";
 
+import { api } from "~shared/api.ts";
 import { handleCache } from "~shared/cache.ts";
 import { connectRedis } from "~shared/redis.ts";
+import { sharedConfig } from "~shared/sharedConfig.ts";
+import { Server } from "~shared/types.ts";
 import { botRest } from "~shared/utils/botRest.ts";
 import { logger } from "~shared/utils/logger.ts";
 
-import { api } from "../_shared/api.ts";
-import { Server } from "../_shared/types.ts";
+import { senderConfig } from "./config.ts";
 import { send } from "./send.ts";
 import { filterServers } from "./utils.ts";
 
 export const sender = handleCache(
   createBot({
-    token: config.BOT_TOKEN,
-    botId: config.BOT_ID,
-    intents: config.Intents,
+    token: sharedConfig.BOT_TOKEN,
+    botId: sharedConfig.BOT_ID,
+    intents: sharedConfig.INTENTS,
   })
 );
 
@@ -33,7 +34,7 @@ for await (const conn of httpServer) {
     const httpConn = Deno.serveHttp(conn);
 
     for await (const requestEvent of httpConn) {
-      if (config.SENDER_AUTH !== requestEvent.request.headers.get("AUTHORIZATION"))
+      if (senderConfig.SENDER_AUTH !== requestEvent.request.headers.get("AUTHORIZATION"))
         return requestEvent.respondWith(
           new Response(JSON.stringify({ error: "Invalid secret key." }), {
             status: 401,

@@ -12,6 +12,7 @@ COPY ./*.js ./
 RUN yarn
 
 COPY ./src ./src
+COPY ./public ./public
 
 ENV NODE_ENV development
 ENV NEXT_TELEMETRY_DISABLED 1

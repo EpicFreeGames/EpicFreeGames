@@ -1,5 +1,4 @@
 import { InteractionResponseTypes, PermissionStrings } from "discordeno";
-import { config } from "~config";
 
 import { api } from "~shared/api.ts";
 import { embeds } from "~shared/embeds/mod.ts";
@@ -10,7 +9,7 @@ import { hasPermsOnChannel } from "~shared/utils/hasPerms.ts";
 import { logger } from "~shared/utils/logger.ts";
 import { createWebhook, executeWebhook, removeWebhook } from "~shared/utils/webhook.ts";
 
-import { botConstants } from "../../../_shared/constants.ts";
+import { sharedConfig } from "../../../_shared/sharedConfig.ts";
 import { getChannelId } from "../../utils/interactionOptions.ts";
 import { CommandExecuteProps, EphemeralFlag } from "../mod.ts";
 
@@ -28,10 +27,6 @@ export const setChannelCommand = async ({ bot, i, server, lang, curr }: CommandE
   const channel = await getChannel(bot, i.guildId!, channelId);
   const guild = await getGuild(bot, i.guildId!);
   if (!channel || !guild) return; // won't happen, but just in case
-
-  // remove the previous webhook if new channel !== old channel
-  if (server?.webhookId && server?.webhookToken && server?.channelId !== String(channelId))
-    removeWebhook(server.webhookId, server.webhookToken);
 
   const { details, hasPerms } = await hasPermsOnChannel(bot, channel, guild, [
     "VIEW_CHANNEL",
@@ -63,6 +58,10 @@ export const setChannelCommand = async ({ bot, i, server, lang, curr }: CommandE
       },
     });
 
+  // remove the previous webhook if new channel !== old channel
+  if (server?.webhookId && server?.webhookToken && server?.channelId !== String(channelId))
+    removeWebhook(server.webhookId, server.webhookToken);
+
   let webhook = channelsWebhooks.find((webhook) => webhook.user?.id === bot.id);
 
   if (!webhook) {
@@ -76,8 +75,8 @@ export const setChannelCommand = async ({ bot, i, server, lang, curr }: CommandE
       });
 
     const { error, data } = await createWebhook(bot, channelId, {
-      name: botConstants.webhookName(false),
-      avatar: config.BASE64_LOGO,
+      name: sharedConfig.WEBHOOK_INTEGRATION_NAME,
+      avatar: sharedConfig.BASE64_LOGO,
       reason: "The free game notifications will be delivered via this webhook",
     });
 

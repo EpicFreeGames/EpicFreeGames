@@ -27,7 +27,6 @@ const envSchema = z.object({
   JWT_EXP: z.string().transform(Number),
   JWT_SECRET: z.string(),
 
-  PORT: z.string().transform(Number),
   ENV: z.enum(["Development", "Staging", "Production"]),
 });
 
