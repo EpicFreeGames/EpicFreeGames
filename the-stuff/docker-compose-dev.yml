@@ -61,8 +61,8 @@ services:
 
   bot_rest-proxy:
     depends_on:
-      - redis
       - api
+      - redis
     build:
       context: ./bot
       args:
@@ -94,6 +94,7 @@ services:
     depends_on:
       - api
       - redis
+      - front
       - bot_gateway
       - bot_rest-proxy
     build:
@@ -112,6 +113,7 @@ services:
     depends_on:
       - api
       - redis
+      - front
       - bot_sender
       - bot_gateway
       - bot_rest-proxy
