@@ -10,6 +10,7 @@ import { logger } from "~shared/utils/logger.ts";
 import { createWebhook, executeWebhook, removeWebhook } from "~shared/utils/webhook.ts";
 
 import { sharedConfig } from "../../../_shared/sharedConfig.ts";
+import { eventHandlerConfig } from "../../config.ts";
 import { getChannelId } from "../../utils/interactionOptions.ts";
 import { CommandExecuteProps, EphemeralFlag } from "../mod.ts";
 
@@ -75,7 +76,7 @@ export const setChannelCommand = async ({ bot, i, server, lang, curr }: CommandE
       });
 
     const { error, data } = await createWebhook(bot, channelId, {
-      name: sharedConfig.WEBHOOK_INTEGRATION_NAME,
+      name: eventHandlerConfig.WEBHOOK_INTEGRATION_NAME,
       avatar: sharedConfig.BASE64_LOGO,
       reason: "The free game notifications will be delivered via this webhook",
     });
