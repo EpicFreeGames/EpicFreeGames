@@ -209,7 +209,7 @@ jobs:
           target: home/${{ secrets.SXX_USERNAME }}/efg-staging/docker-compose.yml
 
       - name: Recreate containers
-        uses: appleboy/scp-action@v0.1.3
+        uses: appleboy/ssh-action@v0.1.5
         env:
           REGISTRY: ${{ secrets.REGISTRY }}
           REGISTRY_USER: ${{ secrets.REGISTRY_USER }}
