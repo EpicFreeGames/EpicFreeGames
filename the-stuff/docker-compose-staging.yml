@@ -56,39 +56,6 @@ services:
     networks:
       - proxy
 
-  dash:
-    depends_on:
-      - api
-    image: ${REGISTRY}/${REGISTRY_USER}/efg-dash:master
-    restart: unless-stopped
-    environment:
-      NEXT_PUBLIC_EFG_API_BASE_URL: https://staging-api.epicfreegames.net/api
-      NEXT_PUBLIC_EFG_API_WS_URL: ws://staging-api.epicfreegames.net/api
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.efg-dash.entrypoints=https"
-      - "traefik.http.routers.efg-dash.tls=true"
-      - "traefik.http.routers.efg-dash.service=efg-dash"
-      - "traefik.http.routers.efg-dash.rule=Host(`staging-dash.epicfreegames.net`)"
-      - "traefik.http.services.efg-dash.loadbalancer.server.port=3000"
-      - "traefik.docker.network=proxy"
-    networks:
-      - proxy
-
-  front:
-    image: ${REGISTRY}/${REGISTRY_USER}/efg-front:master
-    restart: unless-stopped
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.efg-front.entrypoints=https"
-      - "traefik.http.routers.efg-front.tls=true"
-      - "traefik.http.routers.efg-front.service=efg-front"
-      - "traefik.http.routers.efg-front.rule=Host(`staging.epicfreegames.net`)"
-      - "traefik.http.services.efg-front.loadbalancer.server.port=3000"
-      - "traefik.docker.network=proxy"
-    networks:
-      - proxy
-
   bot_rest-proxy:
     image: ${REGISTRY}/${REGISTRY_USER}/efg-bot_rest-proxy:master
     restart: unless-stopped
