@@ -228,6 +228,7 @@ jobs:
           username: ${{ secrets.SXX_USERNAME }}
           port: ${{ secrets.SXX_PORT }}
           key: ${{ secrets.SXX_KEY }}
+          envs: REGISTRY,REGISTRY_USER,BOT_TOKEN,SENDER_AUTH,DATABASE_URL,REST_PROXY_AUTH,DISCORD_CLIENT_ID,EFG_API_BOT_SECRET,EVENT_HANDLER_AUTH,DISCORD_CLIENT_SECRET
           script: |
             cd ~/efg-staging \
             && docker compose -f docker-compose-staging.yml pull \
