@@ -230,5 +230,5 @@ jobs:
           key: ${{ secrets.SXX_KEY }}
           script: |
             cd ~/efg-staging \
-            && docker compose pull \
+            && docker compose -f docker-compose-staging.yml pull \
             && docker compose -f docker-compose-staging.yml -p efg-staging up -d --force-recreate api bot_sender bot_gateway bot_rest-proxy bot_event-handler
