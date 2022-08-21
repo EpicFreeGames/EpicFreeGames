@@ -272,7 +272,6 @@ jobs:
         with:
           host: ${{ secrets.SXX_HOST }}
           username: ${{ secrets.SXX_USERNAME }}
-          password: ${{ secrets.SXX_PASSWORD }}
           port: ${{ secrets.SXX_PORT }}
           key: ${{ secrets.SXX_KEY }}
           script: mkdir -p ~/efg-staging
@@ -282,7 +281,6 @@ jobs:
         with:
           host: ${{ secrets.SXX_HOST }}
           username: ${{ secrets.SXX_USERNAME }}
-          password: ${{ secrets.SXX_PASSWORD }}
           port: ${{ secrets.SXX_PORT }}
           key: ${{ secrets.SXX_KEY }}
           source: the-stuff/docker-compose-staging.yml
