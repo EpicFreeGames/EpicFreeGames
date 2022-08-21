@@ -230,5 +230,5 @@ jobs:
           envs: REGISTRY,REGISTRY_USER,BOT_TOKEN,SENDER_AUTH,DATABASE_URL,REST_PROXY_AUTH,DISCORD_CLIENT_ID,EFG_API_BOT_SECRET,EVENT_HANDLER_AUTH,DISCORD_CLIENT_SECRET
           script: |
             cd ~/efg-staging \
-            && docker compose -f docker-compose-staging.yml pull \
+            && REGISRTY=$REGISTRY REGISTRY_USER=$REGISTRY_USER docker compose -f docker-compose-staging.yml pull \
             && docker compose -f docker-compose-staging.yml -p efg-staging up -d --force-recreate api bot_sender bot_gateway bot_rest-proxy bot_event-handler
