@@ -39,8 +39,8 @@ services:
       DISCORD_CLIENT_SECRET: ${DISCORD_CLIENT_SECRET}
       SENDER_AUTH: efg-sender-auth
       SENDER_URL: http://sender:3000
-      JWT_ISS: efg-api
-      JWT_AUD: efg-api
+      JWT_ISS: efg-dev-api
+      JWT_AUD: efg-dev-api
       JWT_EXP: "900"
       JWT_SECRET: efg-api-jwt-secret
       DASH_URL: http://localhost:3001
@@ -92,20 +92,6 @@ services:
     environment:
       <<: *sharedBotEnvs
 
-  bot_gateway:
-    depends_on:
-      - bot_rest-proxy
-    build:
-      context: ./bot
-      args:
-        - SCOPE=gateway
-    image: bot_gateway
-    environment:
-      <<: *sharedBotEnvs
-      EVENT_HANDLER_URL: http://bot_event-handler:3000
-      EVENT_HANDLER_AUTH: efg-event-handler-auth
-    restart: always
-
   bot_sender:
     depends_on:
       - front
@@ -122,6 +108,20 @@ services:
       SENDER_AUTH: efg-sender-auth
     restart: always
     command: "deno run --watch -A ./src/sender/mod.ts"
+
+  bot_gateway:
+    depends_on:
+      - bot_rest-proxy
+    build:
+      context: ./bot
+      args:
+        - SCOPE=gateway
+    image: bot_gateway
+    environment:
+      <<: *sharedBotEnvs
+      EVENT_HANDLER_URL: http://bot_event-handler:3000
+      EVENT_HANDLER_AUTH: efg-event-handler-auth
+    restart: always
 
   bot_event-handler:
     depends_on:

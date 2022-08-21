@@ -163,89 +163,6 @@ jobs:
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
 
-  dash-ci:
-    name: "Dash: Typecheck"
-    runs-on: ubuntu-latest
-    steps:
-      - name: Cancel previous workflows
-        uses: styfle/cancel-workflow-action@0.10.0
-        with:
-          access_token: ${{ github.token }}
-
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Setup Node with Yarn cache
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          cache: yarn
-          cache-dependency-path: ./the-stuff/next-dash/yarn.lock
-
-      - name: Install deps
-        run: cd ./the-stuff/next-dash && yarn --frozen-lockfile
-
-      - name: Type check
-        run: cd ./the-stuff/next-dash && yarn typecheck
-
-  staging-dash-docker-build-push:
-    name: "Dash Staging: Build and push Docker image"
-    needs: dash-ci
-    runs-on: ubuntu-latest
-    environment: Staging
-    steps:
-      - name: Cancel previous workflows
-        uses: styfle/cancel-workflow-action@0.10.0
-        with:
-          access_token: ${{ github.token }}
-
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Login to the container registry
-        uses: docker/login-action@v2
-        with:
-          registry: ${{ secrets.REGISTRY }}
-          username: ${{ secrets.REGISTRY_USER }}
-          password: ${{ secrets.REGISTRY_PASS }}
-
-      - name: Docker meta
-        id: meta
-        uses: docker/metadata-action@v4
-        with:
-          images: ${{ secrets.REGISTRY }}/${{ secrets.REGISTRY_USER }}/efg-dash
-          tags: |
-            type=ref,event=branch
-            type=sha
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: Cache Docker layers
-        uses: actions/cache@v3
-        with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}
-          restore-keys: ${{ runner.os }}-buildx-
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v3
-        with:
-          context: ./the-stuff/next-dash
-          file: ./the-stuff/next-dash/Dockerfile.staging
-          platforms: linux/amd64
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          build-args: |
-            NEXT_PUBLIC_EFG_API_BASE_URL=${{ secrets.NEXT_PUBLIC_EFG_API_BASE_URL }}
-            NEXT_PUBLIC_EFG_API_WS_URL=${{ secrets.NEXT_PUBLIC_EFG_API_WS_URL }}
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
-
-      - name: Move cache
-        run: |
-          rm -rf /tmp/.buildx-cache
-          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
-
   bot-ci:
     name: "Bot: Typecheck"
     runs-on: ubuntu-latest
@@ -334,22 +251,64 @@ jobs:
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
 
-  api-dash-bot-deploy-staging:
+  api-dash-bot-deploy-staging2:
     name: "Api, Dash, Bot: Deploy to Staging"
+    environment: Staging
+    runs-on: ubuntu-latest
     needs:
       - api-docker-build-push
       - bot-docker-build-push
-      - staging-dash-docker-build-push
-    uses: ./.github/workflows/ssh-deploy-staging.yml
-    secrets: inherit
-    with:
-      service: api dash bot_sender bot_gateway bot_rest-proxy bot_event-handler
+    steps:
+      - name: Cancel previous workflows
+        uses: styfle/cancel-workflow-action@0.10.0
+        with:
+          access_token: ${{ github.token }}
 
-  front-deploy-staging:
-    name: "Front: Deploy to Staging"
-    needs:
-      - front-docker-build-push
-    uses: ./.github/workflows/ssh-deploy-staging.yml
-    secrets: inherit
-    with:
-      service: front
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Create folder
+        uses: appleboy/ssh-action@v0.1.5
+        with:
+          host: ${{ secrets.SXX_HOST }}
+          username: ${{ secrets.SXX_USERNAME }}
+          password: ${{ secrets.SXX_PASSWORD }}
+          port: ${{ secrets.SXX_PORT }}
+          key: ${{ secrets.SXX_KEY }}
+          script: mkdir -p ~/efg-staging
+
+      - name: Update Docker compose file
+        uses: appleboy/scp-action@v0.1.3
+        with:
+          host: ${{ secrets.SXX_HOST }}
+          username: ${{ secrets.SXX_USERNAME }}
+          password: ${{ secrets.SXX_PASSWORD }}
+          port: ${{ secrets.SXX_PORT }}
+          key: ${{ secrets.SXX_KEY }}
+          source: the-stuff/docker-compose-staging.yml
+          target: home/${{ secrets.SXX_USERNAME }}/efg-staging/docker-compose.yml
+
+      - name: Recreate containers
+        uses: appleboy/scp-action@v0.1.3
+        env:
+          REGISTRY: ${{ secrets.REGISTRY }}
+          REGISTRY_USER: ${{ secrets.REGISTRY_USER }}
+
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          SENDER_AUTH: ${{ secrets.SENDER_AUTH }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          REST_PROXY_AUTH: ${{ secrets.REST_PROXY_AUTH }}
+          DISCORD_CLIENT_ID: ${{ secrets.DISCORD_CLIENT_ID }}
+          EFG_API_BOT_SECRET: ${{ secrets.EFG_API_BOT_SECRET }}
+          EVENT_HANDLER_AUTH: ${{ secrets.EVENT_HANDLER_AUTH }}
+          DISCORD_CLIENT_SECRET: ${{ secrets.DISCORD_CLIENT_SECRET }}
+        with:
+          host: ${{ secrets.SXX_HOST }}
+          username: ${{ secrets.SXX_USERNAME }}
+          password: ${{ secrets.SXX_PASSWORD }}
+          port: ${{ secrets.SXX_PORT }}
+          key: ${{ secrets.SXX_KEY }}
+          script: |
+            cd ~/efg-staging \
+            && docker compose pull \
+            && docker compose up -d --force-recreate api bot_sender bot_gateway bot_rest-proxy bot_event-handler
