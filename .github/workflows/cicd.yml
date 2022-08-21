@@ -214,7 +214,6 @@ jobs:
         env:
           REGISTRY: ${{ secrets.REGISTRY }}
           REGISTRY_USER: ${{ secrets.REGISTRY_USER }}
-
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
           SENDER_AUTH: ${{ secrets.SENDER_AUTH }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}

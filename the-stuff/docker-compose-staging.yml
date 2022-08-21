@@ -57,6 +57,9 @@ services:
       - proxy
 
   bot_rest-proxy:
+    depends_on:
+      - api
+      - redis
     image: ${REGISTRY}/${REGISTRY_USER}/efg-bot_rest-proxy:master
     restart: unless-stopped
     environment:
@@ -66,8 +69,7 @@ services:
 
   bot_sender:
     depends_on:
-      - redis
-      - front
+      - bot_gateway
       - bot_rest-proxy
     image: ${REGISTRY}/${REGISTRY_USER}/efg-bot_sender:master
     restart: unless-stopped
@@ -92,9 +94,8 @@ services:
 
   bot_event-handler:
     depends_on:
-      - api
-      - redis
-      - front
+      - bot_sender
+      - bot_gateway
       - bot_rest-proxy
     image: ${REGISTRY}/${REGISTRY_USER}/efg-bot_event-handler:master
     restart: unless-stopped
