@@ -207,6 +207,7 @@ jobs:
           key: ${{ secrets.SXX_KEY }}
           source: the-stuff/docker-compose-staging.yml
           target: /home/${{ secrets.SXX_USERNAME }}/efg-staging
+          strip_components: 1
 
       - name: Recreate containers
         uses: appleboy/ssh-action@v0.1.5
