@@ -59,8 +59,6 @@ services:
   bot_rest-proxy:
     image: ${REGISTRY}/${REGISTRY_USER}/efg-bot_rest-proxy:master
     restart: unless-stopped
-    env_file:
-      - .env
     environment:
       <<: *sharedBotEnvs
     networks:
@@ -73,8 +71,6 @@ services:
       - bot_rest-proxy
     image: ${REGISTRY}/${REGISTRY_USER}/efg-bot_sender:master
     restart: unless-stopped
-    env_file:
-      - .env
     environment:
       <<: *sharedBotEnvs
       WEBHOOK_NAME: Staging-EpicFreeGames
@@ -87,8 +83,6 @@ services:
       - bot_rest-proxy
     image: ${REGISTRY}/${REGISTRY_USER}/efg-bot_gateway:master
     restart: unless-stopped
-    env_file:
-      - .env
     environment:
       <<: *sharedBotEnvs
       EVENT_HANDLER_URL: http://bot_event-handler:3000
@@ -104,8 +98,6 @@ services:
       - bot_rest-proxy
     image: ${REGISTRY}/${REGISTRY_USER}/efg-bot_event-handler:master
     restart: unless-stopped
-    env_file:
-      - .env
     environment:
       <<: *sharedBotEnvs
       WEBHOOK_INTEGRATION_NAME: Staging-EpicFreeGames Notifications
