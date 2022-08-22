@@ -63,7 +63,7 @@ export const invite = (language: Language): Embed => ({
   image: {
     url: botConstants.inviteGif,
   },
-  description: botConstants.website.botInvite,
+  description: botConstants.website.botInvite + "\n\n" + t({ language, key: "thank_you" }),
 });
 
 export const debug = (guildId: string): Embed => ({
