@@ -35,9 +35,9 @@ const createFooter = (language: Language) => {
 
   const list = [invite, support, website];
   const withVars = [
-    `[${invite}](${botConstants.botInvite})`,
-    `[${support}](${botConstants.serverInvite})`,
-    `[${website}](${botConstants.website})`,
+    utils.link(invite, botConstants.website.botInvite),
+    utils.link(support, botConstants.website.serverInvite),
+    utils.link(website, botConstants.website.home),
   ];
 
   const concatted = list.join(chars.separator);

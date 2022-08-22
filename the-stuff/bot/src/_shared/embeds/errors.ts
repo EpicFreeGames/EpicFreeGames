@@ -35,7 +35,7 @@ export const missingPermissions = (
       .join("\n") +
     "```" +
     "\n" +
-    utils.link(t({ language, key: "support_click_here" }), botConstants.serverInvite),
+    utils.link(t({ language, key: "support_click_here" }), botConstants.website.serverInvite),
 });
 
 export const unauthorized = {
@@ -51,7 +51,7 @@ export const unauthorized = {
     description:
       t({ language, key: "manage_guild_needed" }) +
       "\n\n" +
-      utils.link(t({ language, key: "support_click_here" }), botConstants.serverInvite) +
+      utils.link(t({ language, key: "support_click_here" }), botConstants.website.serverInvite) +
       utils.footer(language),
   }),
 };
@@ -62,7 +62,7 @@ export const maxNumberOfWebhooks = (language: Language): Embed => ({
   description:
     t({ language, key: "ten_webhooks_only" }) +
     "\n\n" +
-    utils.link(t({ language, key: "support_click_here" }), botConstants.serverInvite) +
+    utils.link(t({ language, key: "support_click_here" }), botConstants.website.serverInvite) +
     utils.footer(language),
 });
 

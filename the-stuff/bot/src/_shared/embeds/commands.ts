@@ -18,19 +18,19 @@ export const help = (language: Language): Embed => ({
     `📋 ${t({
       language,
       key: "looking_for_commands",
-      vars: { serverInvite: botConstants.serverInvite },
+      vars: { commandsLink: botConstants.website.commands },
     })}` +
     "\n\n" +
     `🎮 ${t({
       language,
       key: "how_to_tutorial",
-      vars: { serverInvite: botConstants.serverInvite },
+      vars: { tutorialLink: botConstants.website.tutorial },
     })}` +
     "\n\n" +
     `⁉️ ${t({
       language,
       key: "having_problems",
-      vars: { serverInvite: botConstants.serverInvite },
+      vars: { serverInvite: botConstants.website.serverInvite },
     })}` +
     "\n\n" +
     `🚩 ${utils.bold(
@@ -40,7 +40,7 @@ export const help = (language: Language): Embed => ({
     `- ${t({
       language,
       key: "if_would_like_to_translate",
-      vars: { serverInvite: botConstants.serverInvite },
+      vars: { serverInvite: botConstants.website.serverInvite },
     })}` +
     utils.footer(language),
   thumbnail: {
@@ -63,7 +63,7 @@ export const invite = (language: Language): Embed => ({
   image: {
     url: botConstants.inviteGif,
   },
-  description: botConstants.botInvite,
+  description: botConstants.website.botInvite,
 });
 
 export const debug = (guildId: string): Embed => ({
