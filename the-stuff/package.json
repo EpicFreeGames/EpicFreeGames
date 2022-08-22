@@ -1,8 +1,8 @@
 {
   "name": "epicfreegames-monorepo",
   "scripts": {
-    "dev": "docker compose -p efg-dev -f docker-compose-dev.yml up --force-recreate -V -d --build",
-    "deva": "docker compose -p efg-dev -f docker-compose-dev.yml up --force-recreate --build -V --attach api --attach dash --attach front --attach bot_rest-proxy --attach bot_gateway --attach bot_event-handler --attach bot_sender",
+    "dev": "./node_modules/.bin/dotenv -e .env-dev docker compose -p efg-dev -f docker-compose-dev.yml up --force-recreate -V -d --build",
+    "deva": "./node_modules/.bin/dotenv -e ./.env-dev -- docker compose -p efg-dev -f docker-compose-dev.yml up --force-recreate --build --attach api --attach dash --attach front --attach bot_rest-proxy --attach bot_gateway --attach bot_event-handler --attach bot_sender",
     "format": "yarn prettier --write \"./**/*.{ts,tsx,json}\""
   },
   "devDependencies": {
