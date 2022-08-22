@@ -3,7 +3,7 @@ name: CI/CD
 on:
   push:
     branches:
-      - master
+      - workflow
   workflow_dispatch:
 
 jobs:
@@ -173,8 +173,8 @@ jobs:
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
 
-  api-dash-bot-deploy-staging:
-    name: "Api, Dash, Bot: Deploy to Staging"
+  api-bot-deploy-staging:
+    name: "Api and Bot: Deploy to Staging"
     environment: Staging
     runs-on: ubuntu-latest
     needs:
@@ -214,11 +214,13 @@ jobs:
         env:
           REGISTRY: ${{ secrets.REGISTRY }}
           REGISTRY_USER: ${{ secrets.REGISTRY_USER }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
           SENDER_AUTH: ${{ secrets.SENDER_AUTH }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           REST_PROXY_AUTH: ${{ secrets.REST_PROXY_AUTH }}
           DISCORD_CLIENT_ID: ${{ secrets.DISCORD_CLIENT_ID }}
+          EFG_API_SECRET: ${{ secrets.EFG_API_SECRET }}
           EFG_API_BOT_SECRET: ${{ secrets.EFG_API_BOT_SECRET }}
           EVENT_HANDLER_AUTH: ${{ secrets.EVENT_HANDLER_AUTH }}
           DISCORD_CLIENT_SECRET: ${{ secrets.DISCORD_CLIENT_SECRET }}
@@ -227,8 +229,94 @@ jobs:
           username: ${{ secrets.SXX_USERNAME }}
           port: ${{ secrets.SXX_PORT }}
           key: ${{ secrets.SXX_KEY }}
-          envs: REGISTRY,REGISTRY_USER,BOT_TOKEN,SENDER_AUTH,DATABASE_URL,REST_PROXY_AUTH,DISCORD_CLIENT_ID,EFG_API_BOT_SECRET,EVENT_HANDLER_AUTH,DISCORD_CLIENT_SECRET
           script: |
             cd ~/efg-staging \
-            && REGISRTY=$REGISTRY REGISTRY_USER=$REGISTRY_USER docker compose -f docker-compose-staging.yml pull \
-            && docker compose -f docker-compose-staging.yml -p efg-staging up -d --force-recreate api bot_sender bot_gateway bot_rest-proxy bot_event-handler
+            && REGISTRY=${{ env.REGISTRY }} \
+              REGISTRY_USER=${{ env.REGISTRY_USER }} \
+              BOT_TOKEN=${{ env.BOT_TOKEN }} \
+              SENDER_AUTH=${{ env.SENDER_AUTH }} \
+              DATABASE_URL=${{ env.DATABASE_URL }} \
+              REST_PROXY_AUTH=${{ env.REST_PROXY_AUTH }} \
+              DISCORD_CLIENT_ID=${{ env.DISCORD_CLIENT_ID }} \
+              JWT_SECRET=${{ env.JWT_SECRET }} \
+              EFG_API_SECRET=${{ env.EFG_API_SECRET }} \
+              EFG_API_BOT_SECRET=${{ env.EFG_API_BOT_SECRET }} \
+              EVENT_HANDLER_AUTH=${{ env.EVENT_HANDLER_AUTH }} \
+              DISCORD_CLIENT_SECRET=${{ env.DISCORD_CLIENT_SECRET }} \
+                docker compose -f docker-compose-staging.yml pull \
+            && REGISTRY=${{ env.REGISTRY }} \
+              REGISTRY_USER=${{ env.REGISTRY_USER }} \
+              BOT_TOKEN=${{ env.BOT_TOKEN }} \
+              SENDER_AUTH=${{ env.SENDER_AUTH }} \
+              DATABASE_URL=${{ env.DATABASE_URL }} \
+              REST_PROXY_AUTH=${{ env.REST_PROXY_AUTH }} \
+              DISCORD_CLIENT_ID=${{ env.DISCORD_CLIENT_ID }} \
+              JWT_SECRET=${{ env.JWT_SECRET }} \
+              EFG_API_SECRET=${{ env.EFG_API_SECRET }} \
+              EFG_API_BOT_SECRET=${{ env.EFG_API_BOT_SECRET }} \
+              EVENT_HANDLER_AUTH=${{ env.EVENT_HANDLER_AUTH }} \
+              DISCORD_CLIENT_SECRET=${{ env.DISCORD_CLIENT_SECRET }} \
+                docker compose -f docker-compose-staging.yml -p efg-staging up -d --force-recreate api bot_sender bot_gateway bot_rest-proxy bot_event-handler
+
+  dash-deploy-staging:
+    name: "Dash: Deploy to Staging"
+    environment: Staging
+    runs-on: ubuntu-latest
+    needs:
+      - api-docker-build-push
+      - bot-docker-build-push
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Pull Vercel Environment Information
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_DASH }}
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+
+      # this method is currently not working
+      # - name: Build Project Artifacts
+      #   run: vercel build --token=${{ secrets.VERCEL_TOKEN }} -e NEXT_PUBLIC_EFG_API_BASE_URL=${{ secrets.NEXT_PUBLIC_EFG_API_BASE_URL }} -e NEXT_PUBLIC_EFG_API_WS_URL=${{ secrets.NEXT_PUBLIC_EFG_API_WS_URL }} -b NEXT_PUBLIC_EFG_API_BASE_URL=${{ secrets.NEXT_PUBLIC_EFG_API_BASE_URL }} -b NEXT_PUBLIC_EFG_API_WS_URL=${{ secrets.NEXT_PUBLIC_EFG_API_WS_URL }}
+
+      # - name: Deploy Project Artifacts to Vercel
+      #   run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }} -e NEXT_PUBLIC_EFG_API_BASE_URL=${{ secrets.NEXT_PUBLIC_EFG_API_BASE_URL }} -e NEXT_PUBLIC_EFG_API_WS_URL=${{ secrets.NEXT_PUBLIC_EFG_API_WS_URL }} -b NEXT_PUBLIC_EFG_API_BASE_URL=${{ secrets.NEXT_PUBLIC_EFG_API_BASE_URL }} -b NEXT_PUBLIC_EFG_API_WS_URL=${{ secrets.NEXT_PUBLIC_EFG_API_WS_URL }}
+
+      - name: Deploy Project to Vercel
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_DASH }}
+        run: vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }} -e NEXT_PUBLIC_EFG_API_BASE_URL=${{ secrets.NEXT_PUBLIC_EFG_API_BASE_URL }} -e NEXT_PUBLIC_EFG_API_WS_URL=${{ secrets.NEXT_PUBLIC_EFG_API_WS_URL }} -b NEXT_PUBLIC_EFG_API_BASE_URL=${{ secrets.NEXT_PUBLIC_EFG_API_BASE_URL }} -b NEXT_PUBLIC_EFG_API_WS_URL=${{ secrets.NEXT_PUBLIC_EFG_API_WS_URL }}
+
+  front-deploy-staging:
+    name: "Front: Deploy to Staging"
+    environment: Staging
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Pull Vercel Environment Information
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_FRONT }}
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+
+      # this method is currently not working
+      # - name: Build Project Artifacts
+      #   run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+
+      # - name: Deploy Project Artifacts to Vercel
+      #   run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Deploy Project to Vercel
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_FRONT }}
+        run: vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }}

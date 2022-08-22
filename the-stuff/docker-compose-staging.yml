@@ -6,7 +6,7 @@ x-shared-envs: &sharedEnvs
   EFG_API_INTERNAL_BASEURL: http://api:3000/api
   EFG_API_BOT_SECRET: ${EFG_API_BOT_SECRET}
   DISCORD_API_BASEURL: https://discord.com/api/v10
-  DISCORD_REDIRECT_URL: http://localhost:3010/api/auth/discord-callback
+  DISCORD_REDIRECT_URL: https://staging-api.epicfreegames.net/api/auth/discord-callback
   ENV: Staging
 
 x-shared-bot-envs: &sharedBotEnvs
@@ -29,7 +29,6 @@ services:
   api:
     depends_on:
       - redis
-      - bot_sender
     image: ${REGISTRY}/${REGISTRY_USER}/efg-api:master
     restart: unless-stopped
     environment:
