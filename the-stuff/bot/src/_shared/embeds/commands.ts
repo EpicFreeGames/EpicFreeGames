@@ -8,10 +8,7 @@ import { colors, utils } from "./embedUtils.ts";
 
 export const help = (language: Language): Embed => ({
   color: colors.gray,
-  author: {
-    name: "Help",
-    iconUrl: botConstants.emojis.questionMark,
-  },
+  title: t({ language, key: "help" }),
   description:
     `👋 ${t({ language, key: "help_desc" })}` +
     "\n\n" +
