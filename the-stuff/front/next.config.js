@@ -18,7 +18,7 @@ const nextConfig = {
       {
         source: "/invite",
         destination:
-          "https://discord.com/api/oauth2/authorize?client_id=719806770133991434&permissions=275414927360&scope=bot%20applications.commands",
+          "https://discord.com/api/oauth2/authorize?client_id=723239582191190096&permissions=275414927360&scope=bot%20applications.commands",
         permanent: false,
       },
     ];
