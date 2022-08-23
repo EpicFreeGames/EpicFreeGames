@@ -21,6 +21,11 @@ const nextConfig = {
           "https://discord.com/api/oauth2/authorize?client_id=723239582191190096&permissions=275414927360&scope=bot%20applications.commands",
         permanent: false,
       },
+      {
+        source: "/support",
+        destination: "https://discord.gg/49UQcJe",
+        permanent: false,
+      },
     ];
   },
 };
