@@ -15,6 +15,12 @@ const nextConfig = {
         destination: "com.epicgames.launcher://store/:path*",
         permanent: false,
       },
+      {
+        source: "/invite",
+        destination:
+          "https://discord.com/api/oauth2/authorize?client_id=719806770133991434&permissions=275414927360&scope=bot%20applications.commands",
+        permanent: false,
+      },
     ];
   },
 };
