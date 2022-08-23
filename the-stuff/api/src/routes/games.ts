@@ -1,4 +1,3 @@
-import { GamePrice } from "@prisma/client";
 import { Router } from "express";
 import { z } from "zod";
 
@@ -211,6 +210,7 @@ router.put(
           prices: z.array(
             z.object({
               value: z.number(),
+              formattedValue: z.string(),
               currencyCode: z.string(),
             })
           ),
@@ -218,31 +218,35 @@ router.put(
       ),
     },
     async (req, res) => {
+      /**
+       * Map<GameName, CurrencyCodes>
+       */
       const excludedPriceCodes: Map<string, string[]> = new Map();
 
+      const existingGames = await prisma.game.findMany({ include: { prices: true } });
+
       for (const game of req.body) {
-        const { prices, ...rest } = game;
+        const { prices, start, end, ...rest } = game;
 
-        const availableCurrencies = await prisma.currency.findMany();
+        const gamePrices = prices
+          .map((p) => ({
+            ...p,
+            id: existingGames
+              .find((g) => g.name === rest.name)
+              ?.prices.find((gp) => gp.currencyCode === p.currencyCode)?.id,
+          }))
+          .filter((p) => {
+            if (!p.id) {
+              excludedPriceCodes.set(game.name, [
+                ...(excludedPriceCodes.get(game.name) || []),
+                p.currencyCode,
+              ]);
 
-        const formattedPrices = prices.reduce((acc, p) => {
-          const currency = availableCurrencies.find((c) => c.code === p.currencyCode);
+              return false;
+            }
 
-          if (currency) {
-            acc.push({
-              ...p,
-              formattedValue: `${currency.inFrontOfPrice}${p.value}${currency.afterPrice}`,
-            });
-          } else {
-            // if no currency, dont push to result arr and add to excluded
-            excludedPriceCodes.set(game.name, [
-              ...(excludedPriceCodes.get(game.name) || []),
-              p.currencyCode,
-            ]);
-          }
-
-          return acc;
-        }, [] as Omit<GamePrice, "id" | "gameId">[]);
+            return true;
+          });
 
         await prisma.game.upsert({
           where: {
@@ -250,21 +254,25 @@ router.put(
           },
           update: {
             ...rest,
+            start: new Date(start),
+            end: new Date(end),
             prices: {
-              upsert: formattedPrices.map((price) => ({
-                where: {},
-                create: price,
-                update: price,
+              upsert: gamePrices.map(({ id, ...rest }) => ({
+                where: { id },
+                create: rest,
+                update: rest,
               })),
             },
           },
           create: {
             ...rest,
             displayName: game.name,
+            start: new Date(start),
+            end: new Date(end),
             prices: {
-              connectOrCreate: formattedPrices.map((price) => ({
-                where: {},
-                create: price,
+              connectOrCreate: gamePrices.map(({ id, ...rest }) => ({
+                where: { id },
+                create: rest,
               })),
             },
           },
