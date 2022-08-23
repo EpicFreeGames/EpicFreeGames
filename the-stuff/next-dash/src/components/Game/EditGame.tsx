@@ -36,6 +36,7 @@ export const EditGame = ({ game }: Props) => {
     });
 
     setDialogOpen(false);
+    form.reset();
   };
 
   return (

@@ -21,6 +21,7 @@ export const AddCurrency = () => {
     });
 
     setDialogOpen(false);
+    form.reset();
   };
 
   return (

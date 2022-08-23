@@ -28,6 +28,7 @@ export const AddUser = () => {
     });
 
     setDialogOpen(false);
+    form.reset();
   };
 
   return (

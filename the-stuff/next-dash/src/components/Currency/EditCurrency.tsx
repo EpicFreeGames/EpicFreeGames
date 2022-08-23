@@ -29,6 +29,7 @@ export const EditCurrency = ({ currency }: Props) => {
     });
 
     setDialogOpen(false);
+    form.reset();
   };
 
   return (

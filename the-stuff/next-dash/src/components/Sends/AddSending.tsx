@@ -22,6 +22,7 @@ export const AddSending = () => {
     });
 
     setDialogOpen(false);
+    form.reset();
   };
 
   const { data: games, isLoading } = useGames();

@@ -21,6 +21,7 @@ export const AddGame = () => {
     });
 
     setDialogOpen(false);
+    form.reset();
   };
 
   return (

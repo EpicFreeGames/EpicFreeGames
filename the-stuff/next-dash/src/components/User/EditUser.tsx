@@ -35,6 +35,7 @@ export const EditUser = ({ user }: Props) => {
     });
 
     setDialogOpen(false);
+    form.reset();
   };
 
   const flags = useCalcFlags(user.flags);

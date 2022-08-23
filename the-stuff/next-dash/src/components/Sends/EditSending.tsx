@@ -33,6 +33,7 @@ export const EditSending = ({ sending }: Props) => {
     });
 
     setDialogOpen(false);
+    form.reset();
   };
 
   return (
