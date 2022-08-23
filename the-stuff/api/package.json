@@ -6,10 +6,7 @@
     "build": "rm -rf dist && ./node_modules/.bin/tsc -p ./tsconfig.json",
     "dev": "nodemon -q -e ts,json --watch ./src/ --watch ./prisma --exec 'yarn build && node ./dist/index.js'",
     "typecheck": "tsc --skipLibCheck --noEmit",
-    "format": "prettier --write \"**/*.{ts,tsx,json}\"",
-    "db": " yarn dotenv -e ../.env-dev yarn --cwd ./api prisma studio",
-    "dbpush": "cd ./api/ && yarn dotenv -e ../.env-dev yarn prisma db push",
-    "dbreset": "cd ./api/ && yarn dotenv -e ../.env-dev yarn prisma migrate reset && cd ../ && yarn dbpush"
+    "format": "prettier --write \"**/*.{ts,tsx,json}\""
   },
   "dependencies": {
     "@prisma/client": "^4.0.0",
