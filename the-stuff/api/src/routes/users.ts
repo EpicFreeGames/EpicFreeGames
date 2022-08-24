@@ -3,6 +3,7 @@ import { z } from "zod";
 
 import { endpointAuth } from "../auth/endpointAuth";
 import { Flags } from "../auth/flags";
+import { invalidateUserLogin } from "../auth/userReLogin";
 import prisma from "../data/prisma";
 import { prismaUpdateCatcher } from "../data/prismaUpdateCatcher";
 import { withValidation } from "../utils/withValidation";
@@ -129,6 +130,8 @@ router.patch(
           error: "Not found",
           message: "User not found",
         });
+
+      await invalidateUserLogin(userId);
 
       return res.send(updatedUser);
     }

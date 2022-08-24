@@ -2,6 +2,7 @@ import * as jose from "jose";
 import { v4 as uuidv4 } from "uuid";
 
 import { config } from "../../config";
+import { isLoginInvalidated, unInvalidateUserLogin } from "../userReLogin";
 import { isWhitelisted, saveJti } from "./jwtWhitelist";
 import { ITokenPayload, tokenPayloadSchema } from "./types";
 
@@ -28,6 +29,7 @@ export const createAccessToken = async (props: Omit<ITokenPayload, "jti">, jti?:
   });
 
   await saveJti({ userId: props.userId, jti: innerJti });
+  await unInvalidateUserLogin(props.userId);
 
   return token;
 };
@@ -57,8 +59,12 @@ export const verifyAccessJwt = async (token: string): Promise<ITokenPayload | nu
 
   const { userId, jti } = payloadRes.data;
 
-  const whitelisted = await isWhitelisted({ userId, jti });
-  if (!whitelisted) return null;
+  const [whitelisted, invalidated] = await Promise.all([
+    isWhitelisted({ userId, jti }),
+    isLoginInvalidated(userId),
+  ]);
+
+  if (!whitelisted || invalidated) return null;
 
   return payloadRes.data;
 };

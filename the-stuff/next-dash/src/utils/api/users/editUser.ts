@@ -21,7 +21,10 @@ const editUserRequest = ({ userId, data }: EditUserProps) =>
 export const useEditUserMutation = () => {
   const qc = useQueryClient();
   const mutation = useMutation<IUser, ApiError, EditUserProps, UserContext>(editUserRequest, {
-    onSuccess: () => qc.invalidateQueries(["users", "me"]),
+    onSuccess: () => {
+      qc.invalidateQueries(["users"]);
+      qc.invalidateQueries(["me"]);
+    },
   });
 
   return mutation;
