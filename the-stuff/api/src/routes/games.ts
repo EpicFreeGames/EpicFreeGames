@@ -263,10 +263,16 @@ router.put(
         });
 
         if (upsertedGame.prices.length) {
-          await prisma.gamePrice.updateMany({
-            where: { gameId: upsertedGame.id },
-            data: pricesToSave,
-          });
+          await prisma.$transaction(
+            pricesToSave.map((price) =>
+              prisma.gamePrice.update({
+                where: {
+                  id: upsertedGame.prices.find((p) => p.currencyCode === price.currencyCode)?.id,
+                },
+                data: price,
+              })
+            )
+          );
         } else {
           await prisma.gamePrice.createMany({
             data: pricesToSave.map((p) => ({ ...p, gameId: upsertedGame.id })),
