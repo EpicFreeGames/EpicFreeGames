@@ -223,32 +223,26 @@ router.put(
        */
       const excludedPriceCodes: Map<string, string[]> = new Map();
 
-      const existingGames = await prisma.game.findMany({ include: { prices: true } });
+      const currencies = await prisma.currency.findMany({ include: { prices: true } });
 
       for (const game of req.body) {
         const { prices, start, end, ...rest } = game;
 
-        const gamePrices = prices
-          .map((p) => ({
-            ...p,
-            id: existingGames
-              .find((g) => g.name === rest.name)
-              ?.prices.find((gp) => gp.currencyCode === p.currencyCode)?.id,
-          }))
-          .filter((p) => {
-            if (!p.id) {
-              excludedPriceCodes.set(game.name, [
-                ...(excludedPriceCodes.get(game.name) || []),
-                p.currencyCode,
-              ]);
+        const pricesToSave = prices.filter((price) => {
+          const currency = currencies.find((c) => c.code === price.currencyCode);
 
-              return false;
-            }
+          if (!currency) {
+            excludedPriceCodes.set(rest.name, [
+              ...(excludedPriceCodes.get(rest.name) || []),
+              price.currencyCode,
+            ]);
+            return false;
+          }
 
-            return true;
-          });
+          return true;
+        });
 
-        await prisma.game.upsert({
+        const upsertedGame = await prisma.game.upsert({
           where: {
             name: game.name,
           },
@@ -256,27 +250,28 @@ router.put(
             ...rest,
             start: new Date(start),
             end: new Date(end),
-            prices: {
-              upsert: gamePrices.map(({ id, ...rest }) => ({
-                where: { id },
-                create: rest,
-                update: rest,
-              })),
-            },
           },
           create: {
             ...rest,
             displayName: game.name,
             start: new Date(start),
             end: new Date(end),
-            prices: {
-              connectOrCreate: gamePrices.map(({ id, ...rest }) => ({
-                where: { id },
-                create: rest,
-              })),
-            },
+          },
+          include: {
+            prices: true,
           },
         });
+
+        if (upsertedGame.prices.length) {
+          await prisma.gamePrice.updateMany({
+            where: { gameId: upsertedGame.id },
+            data: pricesToSave,
+          });
+        } else {
+          await prisma.gamePrice.createMany({
+            data: pricesToSave.map((p) => ({ ...p, gameId: upsertedGame.id })),
+          });
+        }
       }
 
       if (excludedPriceCodes.size)
