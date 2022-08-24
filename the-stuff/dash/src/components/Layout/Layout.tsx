@@ -1,52 +1,67 @@
-/** @jsx h */
+import Head from "next/head";
+import { ElementType, ReactNode } from "react";
+import { Toaster } from "react-hot-toast";
 
-/** @jsxFrag Fragment */
-import { ComponentChildren, Fragment, h } from "preact";
-import { tw } from "twind";
+import { useNotifs } from "~hooks/useNotifs";
+import { useUser } from "~hooks/useUser";
 
-import { NavBar } from "./NavBar.tsx";
-import { Path } from "./Path.tsx";
-import { Base } from "./base.tsx";
+import { NavBar } from "./NavBar";
 
 type Props = {
-  children: ComponentChildren;
+  children: ReactNode;
   title: string;
-  titleButtons?: ComponentChildren[];
-} & (
-  | { url: URL; segments: string[] }
-  | {
-      url?: never;
-      segments?: never;
-    }
-);
+  titleButtons?: ElementType[];
+};
 
-export const Layout = ({ children, title, titleButtons, url, segments }: Props) => {
-  const hasPath = !!(url && segments);
-  const hasButtons = !!titleButtons?.length;
+export const Layout = ({ children, title, titleButtons }: Props) => {
+  const { user } = useUser();
+
+  useNotifs({ isAuthenticated: !!user });
+
+  const hasButtons = titleButtons?.length;
 
   return (
-    <Base title={title}>
-      <NavBar />
+    <>
+      <Head>
+        <title>{`${title} - Dash - EpicFreeGames`}</title>
+      </Head>
 
-      <main className={tw`mx-auto max-w-screen-lg md:px-4`}>
-        <div className={tw`flex flex-col`}>
-          {hasPath && <Path url={url} segments={segments} />}
+      {!!user && (
+        <>
+          <Toaster
+            toastOptions={{
+              style: {
+                backgroundColor: "rgb(17 24 39)",
+                color: "rgb(241 245 249)",
+              },
+            }}
+          />
 
-          <div className={tw`flex justify-between px-3 pb-3 md:px-0`}>
-            <h1 className={tw`flex items-center text-2xl md:text-4xl`}>{title}</h1>
+          <NavBar />
 
-            {hasButtons && (
-              <div className={tw`flex gap-3`}>
-                {titleButtons.map((button) => (
-                  <>{button}</>
-                ))}
+          <main className="mx-auto max-w-screen-lg md:px-4">
+            <div className="flex flex-col">
+              <div className="flex items-center justify-between px-3 py-3 md:px-0 md:py-4">
+                <h1 className="flex items-center text-[1.5rem] leading-[1.25rem] md:text-[2.25rem] md:leading-[2rem]">
+                  {title}
+                </h1>
+
+                {hasButtons && (
+                  <div className="flex gap-3">
+                    {titleButtons.map((TitleButton, i) => (
+                      <div key={i} className="flex items-center">
+                        <TitleButton />
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-        </div>
+            </div>
 
-        {children}
-      </main>
-    </Base>
+            {children}
+          </main>
+        </>
+      )}
+    </>
   );
 };

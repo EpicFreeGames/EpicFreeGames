@@ -1,40 +1,46 @@
-/** @jsx h */
-import { ComponentProps, h } from "preact";
-import { tw } from "twind";
+import { ComponentProps, ReactNode, forwardRef } from "react";
 
-type Props = Omit<ComponentProps<"input">, "class" | "id" | "name"> & {
+import { Label } from "./Label";
+
+type Props = ComponentProps<"input"> & {
   label?: string;
-  name: string;
+  error?: string | ReactNode;
   required?: boolean;
 };
 
-export const Input = ({ label, className, name, required, ...rest }: Props) => {
-  if (!label)
+const Input = forwardRef<HTMLInputElement, Props>(
+  ({ label, required, id, error, ...rest }, ref) => {
+    if (!label)
+      return (
+        <input
+          id={id}
+          autoComplete="off"
+          required={required}
+          className="focus rounded-md border-[1px] border-transparent bg-gray-600 p-2 duration-200"
+          {...rest}
+          ref={ref}
+        />
+      );
+
     return (
-      <input
-        name={name}
-        autocomplete="off"
-        required={required}
-        className={tw`focusStyles rounded-md bg-gray-600 p-2 duration-200`}
-        {...rest}
-      />
+      <div className="flex flex-col gap-1">
+        <Label required={required} htmlFor={label}>
+          {label}
+        </Label>
+
+        <input
+          id={label}
+          autoComplete="off"
+          required={required}
+          className="focus rounded-md border-[1px] border-transparent bg-gray-600 p-2 duration-200"
+          {...rest}
+          ref={ref}
+        />
+      </div>
     );
+  }
+);
 
-  return (
-    <div className={tw`flex flex-col gap-2`}>
-      <label className={tw`text-sm`} htmlFor={name}>
-        {label}
-        {!!required && <b className={tw`text-red-500`}> *</b>}
-      </label>
+Input.displayName = "Input";
 
-      <input
-        id={name}
-        name={name}
-        autocomplete="off"
-        required={required}
-        className={tw`focusStyles rounded-md bg-gray-600 p-2 duration-200`}
-        {...rest}
-      />
-    </div>
-  );
-};
+export { Input };
