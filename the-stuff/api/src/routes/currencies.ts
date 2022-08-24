@@ -52,7 +52,7 @@ router.get(
 
 router.post(
   "/",
-  endpointAuth(Flags.AddCurrencies),
+  endpointAuth(Flags.AddCurrencies, Flags.GetCurrencies),
   withValidation(
     {
       body: z.object({
@@ -75,7 +75,7 @@ router.post(
 
 router.patch(
   "/:currencyId",
-  endpointAuth(Flags.GetCurrencies),
+  endpointAuth(Flags.EditCurrencies, Flags.GetCurrencies),
   withValidation(
     {
       params: z.object({
@@ -113,7 +113,7 @@ router.patch(
 
 router.delete(
   "/:currencyId",
-  endpointAuth(Flags.GetCurrencies),
+  endpointAuth(Flags.DeleteCurrencies, Flags.GetCurrencies),
   withValidation(
     {
       params: z.object({
@@ -134,7 +134,7 @@ router.delete(
           message: "Currency not found",
         });
 
-      res.json(deletedCurrency);
+      res.status(204).send();
     }
   )
 );

@@ -11,7 +11,7 @@ const router = Router();
 
 router.post(
   "/:userId/flags",
-  endpointAuth(Flags.EditUsers),
+  endpointAuth(Flags.EditUsers, Flags.GetServers),
   withValidation(
     {
       params: z
@@ -73,7 +73,7 @@ router.get("/", endpointAuth(Flags.GetUsers), async (req, res) => {
 
 router.post(
   "/",
-  endpointAuth(Flags.AddUsers),
+  endpointAuth(Flags.AddUsers, Flags.GetUsers),
   withValidation(
     {
       body: z.object({
@@ -98,7 +98,7 @@ router.post(
 
 router.patch(
   "/:userId",
-  endpointAuth(Flags.EditUsers),
+  endpointAuth(Flags.EditUsers, Flags.GetUsers),
   withValidation(
     {
       params: z
@@ -137,7 +137,7 @@ router.patch(
 
 router.delete(
   "/:userId",
-  endpointAuth(Flags.DeleteUsers),
+  endpointAuth(Flags.DeleteUsers, Flags.GetUsers),
   withValidation(
     {
       params: z
@@ -160,7 +160,7 @@ router.delete(
           message: "User not found",
         });
 
-      return res.send(deletedUser);
+      res.status(204).send();
     }
   )
 );

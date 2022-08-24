@@ -30,7 +30,7 @@ router.get("/", endpointAuth(Flags.GetSendings), async (req, res) => {
 
 router.get(
   "/servers-to-send",
-  endpointAuth(Flags.GetServers),
+  endpointAuth(Flags.GetServers, Flags.GetSendings, Flags.GetSendingLogs),
   withValidation(
     {
       query: z
@@ -104,7 +104,7 @@ router.get(
 
 router.patch(
   "/:sendingId",
-  endpointAuth(Flags.GetSendings),
+  endpointAuth(Flags.EditSendings, Flags.GetSendings),
   withValidation(
     {
       params: z
@@ -146,7 +146,7 @@ router.patch(
 
 router.delete(
   "/:sendingId",
-  endpointAuth(Flags.DeleteSendings),
+  endpointAuth(Flags.DeleteSendings, Flags.GetSendings),
   withValidation(
     {
       params: z
@@ -174,7 +174,7 @@ router.delete(
 
 router.post(
   "/",
-  endpointAuth(Flags.AddSendings),
+  endpointAuth(Flags.AddSendings, Flags.GetSendings),
   withValidation(
     {
       body: z
@@ -214,7 +214,7 @@ router.post(
 
 router.post(
   "/:sendingId/send",
-  endpointAuth(Flags.Send),
+  endpointAuth(Flags.Send, Flags.GetSendings),
   withValidation(
     {
       params: z
@@ -275,7 +275,7 @@ router.post(
 
 router.post(
   "/logs",
-  endpointAuth(Flags.AddSendingLogs),
+  endpointAuth(Flags.AddSendingLogs, Flags.GetSendingLogs),
   withValidation(
     {
       body: z

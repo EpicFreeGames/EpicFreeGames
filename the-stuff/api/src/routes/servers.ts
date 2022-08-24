@@ -14,7 +14,7 @@ const router = Router();
 
 router.get(
   "/:serverId",
-  endpointAuth(Flags.EditServers),
+  endpointAuth(Flags.GetServers),
   withValidation(
     {
       params: z
@@ -44,7 +44,7 @@ router.get(
 
 router.put(
   "/:serverId/channel",
-  endpointAuth(Flags.EditServers),
+  endpointAuth(Flags.EditServers, Flags.GetServers),
   withValidation(
     {
       params: z
@@ -100,7 +100,7 @@ router.put(
 
 router.delete(
   "/:serverId/channel",
-  endpointAuth(Flags.EditServers),
+  endpointAuth(Flags.EditServers, Flags.GetServers),
   withValidation(
     {
       params: z
@@ -139,7 +139,7 @@ router.delete(
 
 router.put(
   "/:serverId/role",
-  endpointAuth(Flags.EditServers),
+  endpointAuth(Flags.EditServers, Flags.GetServers),
   withValidation(
     {
       params: z
@@ -189,7 +189,7 @@ router.put(
 
 router.delete(
   "/:serverId/role",
-  endpointAuth(Flags.EditServers),
+  endpointAuth(Flags.EditServers, Flags.GetServers),
   withValidation(
     {
       params: z
@@ -226,7 +226,7 @@ router.delete(
 
 router.put(
   "/:serverId/thread",
-  endpointAuth(Flags.EditServers),
+  endpointAuth(Flags.EditServers, Flags.GetServers),
   withValidation(
     {
       params: z
@@ -286,7 +286,7 @@ router.put(
 
 router.delete(
   "/:serverId/thread",
-  endpointAuth(Flags.EditServers),
+  endpointAuth(Flags.EditServers, Flags.GetServers),
   withValidation(
     {
       params: z
@@ -326,7 +326,7 @@ router.delete(
 
 router.put(
   "/:serverId/language",
-  endpointAuth(Flags.EditServers),
+  endpointAuth(Flags.EditServers, Flags.GetServers),
   withValidation(
     {
       params: z
@@ -375,7 +375,7 @@ router.put(
 
 router.put(
   "/:serverId/currency",
-  endpointAuth(Flags.EditServers),
+  endpointAuth(Flags.EditServers, Flags.GetServers),
   withValidation(
     {
       params: z

@@ -91,7 +91,7 @@ router.get(
 
 router.patch(
   "/:gameId",
-  endpointAuth(Flags.EditGames),
+  endpointAuth(Flags.EditGames, Flags.GetGames),
   withValidation(
     {
       body: z
@@ -143,7 +143,7 @@ router.patch(
 
 router.post(
   "/",
-  endpointAuth(Flags.AddGames),
+  endpointAuth(Flags.AddGames, Flags.GetGames),
   withValidation(
     {
       body: z
@@ -197,7 +197,7 @@ router.post(
 
 router.put(
   "/",
-  endpointAuth(Flags.PutGames),
+  endpointAuth(Flags.PutGames, Flags.GetGames),
   withValidation(
     {
       body: z.array(
@@ -294,7 +294,7 @@ router.put(
 
 router.delete(
   "/:gameId",
-  endpointAuth(Flags.DeleteGames),
+  endpointAuth(Flags.DeleteGames, Flags.GetGames),
   withValidation(
     {
       params: z.object({
