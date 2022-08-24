@@ -1,3 +1,4 @@
+// all flags = 134217726
 export enum Flags {
   AddGames = 1 << 1,
   PutGames = 1 << 2,
