@@ -2,8 +2,8 @@ export const botConstants = {
   inviteGif:
     "https://media1.tenor.com/images/8be041fe538a0f292bb85885768341a7/tenor.gif?itemid=5261112",
 
-  browserRedirect: (path: string) => `https://epicfreegames.net/r/browser/${path}`,
-  launcherRedirect: (path: string) => `https://epicfreegames.net/r/launcher/${path}`,
+  browserRedirect: (path: string) => `https://epicfreegames.net/r/browser${path}`,
+  launcherRedirect: (path: string) => `https://epicfreegames.net/r/launcher${path}`,
 
   website: {
     home: "https://epicfreegames.net",
