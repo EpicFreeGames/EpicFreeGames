@@ -1,6 +1,8 @@
 import Head from "next/head";
 import { ReactNode } from "react";
 
+import { NavBar } from "./NavBar";
+
 type Props = {
   title: string;
   children: ReactNode;
@@ -12,7 +14,7 @@ const desc =
 export const Layout = ({ title, children }: Props) => (
   <>
     <Head>
-      <title>{title} - EpicFreeGames</title>
+      <title>{`${title} - EpicFreeGames`}</title>
 
       <meta name="application-name" content="EpicFreeGames" id="app-name" />
 
@@ -47,6 +49,8 @@ export const Layout = ({ title, children }: Props) => (
       />
     </Head>
 
-    <main>{children}</main>
+    <NavBar />
+
+    <main className="mx-auto mt-16 max-w-screen-sm px-3">{children}</main>
   </>
 );
