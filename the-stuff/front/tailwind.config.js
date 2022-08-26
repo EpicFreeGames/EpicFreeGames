@@ -1,5 +1,8 @@
+const plugin = require("tailwindcss/plugin");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  future: { hoverOnlyWhenSupported: true },
   content: ["./src/pages/**/*.{js,ts,jsx,tsx}", "./src/components/**/*.{js,ts,jsx,tsx}"],
   theme: {
     fontFamily: {
@@ -39,5 +42,9 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(function ({ addVariant }) {
+      addVariant("safe-hover", ["@media (any-hover:hover)", "&:hover"]);
+    }),
+  ],
 };
