@@ -6,8 +6,6 @@ import { isLoginInvalidated, unInvalidateUserLogin } from "../userReLogin";
 import { isWhitelisted, saveJti } from "./jwtWhitelist";
 import { ITokenPayload, tokenPayloadSchema } from "./types";
 
-const getEpochSeconds = () => Math.floor(new Date().getTime() / 1000);
-
 const signAccessToken = (props: ITokenPayload) =>
   new jose.SignJWT({ ...props })
     .setProtectedHeader({
@@ -17,7 +15,6 @@ const signAccessToken = (props: ITokenPayload) =>
     .setJti(props.jti)
     .setIssuer(config.JWT_ISS)
     .setAudience(config.JWT_AUD)
-    .setExpirationTime(getEpochSeconds() + config.JWT_EXP)
     .sign(config.JWT_KEY);
 
 export const createAccessToken = async (props: Omit<ITokenPayload, "jti">, jti?: string) => {
@@ -39,7 +36,6 @@ export const verifyAccessJwt = async (token: string): Promise<ITokenPayload | nu
     .jwtVerify(token, config.JWT_KEY, {
       audience: config.JWT_AUD,
       issuer: config.JWT_ISS,
-      clockTolerance: 0,
     })
     .catch((err) => {
       console.log("access token verification failed", err);

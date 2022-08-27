@@ -1,7 +1,6 @@
 import { PermissionStrings } from "discordeno";
 
 import { embeds } from "~shared/embeds/mod.ts";
-import { languages } from "~shared/i18n/languages.ts";
 import { Game } from "~shared/types.ts";
 import { displayRole } from "~shared/utils/displayRole.ts";
 import { getChannel } from "~shared/utils/getChannel.ts";
@@ -16,11 +15,10 @@ export const messageSender = async (games: Game[], servers: MessageServer[], sen
   for (const server of servers) {
     await wait(30);
 
-    const { channelId: channelIdString, languageCode, id, roleId } = server;
+    const { channelId: channelIdString, language, id, roleId } = server;
     const guildId = sender.transformers.snowflake(id);
     const channelId = sender.transformers.snowflake(channelIdString);
 
-    const language = languages.get(languageCode) || languages.get("en")!;
     const gameEmbeds = games.map((game) => embeds.games.gameEmbed(game, language, server.currency));
 
     const channel = await getChannel(sender, guildId, channelId);

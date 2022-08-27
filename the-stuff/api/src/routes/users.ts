@@ -3,12 +3,50 @@ import { z } from "zod";
 
 import { endpointAuth } from "../auth/endpointAuth";
 import { Flags } from "../auth/flags";
+import { createAccessToken } from "../auth/jwt/jwt";
 import { invalidateUserLogin } from "../auth/userReLogin";
 import prisma from "../data/prisma";
 import { prismaUpdateCatcher } from "../data/prismaUpdateCatcher";
 import { withValidation } from "../utils/withValidation";
 
 const router = Router();
+
+router.post(
+  "/:identifier/token",
+  endpointAuth(Flags.GetTokens),
+  withValidation(
+    {
+      params: z.object({
+        identifier: z.string(),
+      }),
+    },
+    async (req, res) => {
+      const { identifier } = req.params;
+
+      const user = await prisma.user.findUnique({
+        where: { identifier: identifier },
+      });
+
+      if (!user)
+        return res.status(404).send({
+          statusCode: 404,
+          error: "Not found",
+          message: "User not found",
+        });
+
+      if (!user.bot)
+        return res.status(400).json({
+          statusCode: 400,
+          error: "Bad request",
+          message: "Cannot generate tokens for users",
+        });
+
+      const token = await createAccessToken({ flags: user.flags, userId: user.id });
+
+      return res.json({ token });
+    }
+  )
+);
 
 router.post(
   "/:userId/flags",
@@ -44,6 +82,8 @@ router.post(
           message: "User not found",
         });
 
+      await invalidateUserLogin(userId);
+
       return res.send(user);
     }
   )
@@ -78,16 +118,18 @@ router.post(
   withValidation(
     {
       body: z.object({
-        discordId: z.string(),
+        identifier: z.string(),
         flags: z.number(),
+        bot: z.boolean(),
       }),
     },
     async (req, res) => {
-      const { discordId, flags } = req.body;
+      const { identifier, flags, bot } = req.body;
 
       const user = await prisma.user.create({
         data: {
-          discordId,
+          identifier,
+          bot,
           flags,
         },
       });
@@ -162,6 +204,8 @@ router.delete(
           error: "Not found",
           message: "User not found",
         });
+
+      await invalidateUserLogin(userId);
 
       res.status(204).send();
     }

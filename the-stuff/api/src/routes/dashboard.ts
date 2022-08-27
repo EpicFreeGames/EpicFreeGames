@@ -3,6 +3,8 @@ import { Router } from "express";
 import { endpointAuth } from "../auth/endpointAuth";
 import { Flags } from "../auth/flags";
 import prisma from "../data/prisma";
+import { defaultCurrency } from "../i18n/currencies";
+import { defaultLanguage } from "../i18n/languages";
 
 const router = Router();
 
@@ -50,17 +52,15 @@ router.get("/counts", endpointAuth(Flags.GetDashboard), async (req, res) => {
     prisma.server.count({
       where: {
         languageCode: {
-          not: "en",
+          not: defaultLanguage.code,
         },
       },
     }),
     // has changed currency
     prisma.server.count({
       where: {
-        currency: {
-          code: {
-            not: "USD",
-          },
+        currencyCode: {
+          not: defaultCurrency.code,
         },
       },
     }),

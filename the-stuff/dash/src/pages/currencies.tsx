@@ -1,4 +1,3 @@
-import { AddCurrency } from "~components/Currency/AddCurrency";
 import { Currency } from "~components/Currency/Currency";
 import { Layout } from "~components/Layout/Layout";
 import { StatusCard } from "~components/StatusCard";
@@ -6,7 +5,7 @@ import { useCurrencies } from "~utils/api/currencies/getCurrencies";
 
 export default function CurrenciesPage() {
   return (
-    <Layout title="Currencies" titleButtons={[AddCurrency]}>
+    <Layout title="Currencies">
       <Currencies />
     </Layout>
   );
@@ -21,7 +20,7 @@ const Currencies = () => {
   return (
     <div className="max:grid-cols-2 grid grid-cols-1 gap-3">
       {currencies && currencies?.length ? (
-        currencies?.map((currency) => <Currency currency={currency} key={currency.id} />)
+        currencies?.map((currency) => <Currency currency={currency} key={currency.code} />)
       ) : (
         <StatusCard>No currencies</StatusCard>
       )}

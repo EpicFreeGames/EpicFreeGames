@@ -24,13 +24,12 @@ model Game {
 }
 
 model GamePrice {
-  id             String   @id @default(cuid())
+  id             String @id @default(cuid())
   value          Float
   formattedValue String
   gameId         String
-  game           Game     @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  game           Game   @relation(fields: [gameId], references: [id], onDelete: Cascade)
   currencyCode   String
-  currency       Currency @relation(fields: [currencyCode], references: [code], onDelete: Cascade)
 }
 
 model Server {
@@ -40,23 +39,11 @@ model Server {
   threadId     String?
   webhookId    String?
   webhookToken String?
-  languageCode String?
-  currencyId   String
-  currency     Currency     @relation(fields: [currencyId], references: [id])
+  languageCode String       @default("en")
+  currencyCode String       @default("USD")
   createdAt    DateTime     @default(now())
   commandLogs  CommandLog[]
   sendingLogs  SendingLog[]
-}
-
-model Currency {
-  id             String      @id @default(cuid())
-  code           String      @unique
-  name           String
-  apiValue       String
-  inFrontOfPrice String      @default("")
-  afterPrice     String      @default("")
-  servers        Server[]
-  prices         GamePrice[]
 }
 
 model CommandLog {
@@ -90,10 +77,11 @@ model Sending {
 }
 
 model User {
-  id        String  @id @default(cuid())
-  discordId String  @unique
-  flags     Int
-  name      String?
+  id         String  @id @default(cuid())
+  identifier String  @unique
+  bot        Boolean
+  flags      Int
+  name       String?
 }
 
 enum SendingLogType {

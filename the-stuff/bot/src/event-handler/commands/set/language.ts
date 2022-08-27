@@ -6,9 +6,9 @@ import {
 
 import { api } from "~shared/api.ts";
 import { embeds } from "~shared/embeds/mod.ts";
-import { languages } from "~shared/i18n/languages.ts";
 import { Server } from "~shared/types.ts";
 
+import { getLanguage, languages } from "../../../_shared/i18n/index.ts";
 import { getString } from "../../utils/interactionOptions.ts";
 import { CommandExecuteProps, EphemeralFlag } from "../mod.ts";
 import { autoCompleteSorter } from "./mod.ts";
@@ -18,7 +18,8 @@ export const setLanguageCommand = async ({ bot, i, lang, curr, ...rest }: Comman
     return autoCompleteHandler({ i, lang, curr, bot, ...rest });
 
   const languageCode = getString(i, "language");
-  if (!languageCode || !languages.has(languageCode)) return;
+  const newLanguage = getLanguage(languageCode ?? "")!;
+  if (!languageCode || !newLanguage) return;
 
   const { error, data: updatedServer } = await api<Server>({
     method: "PUT",
@@ -36,8 +37,6 @@ export const setLanguageCommand = async ({ bot, i, lang, curr, ...rest }: Comman
         embeds: [embeds.errors.genericError()],
       },
     });
-
-  const newLanguage = languages.get(languageCode)!;
 
   await bot.helpers.sendInteractionResponse(i.id, i.token, {
     type: InteractionResponseTypes.ChannelMessageWithSource,
@@ -58,8 +57,10 @@ const autoCompleteHandler = async ({ bot, i }: CommandExecuteProps) => {
 
   let results: ApplicationCommandOptionChoice[];
 
+  const languageList = [...languages];
+
   if (query) {
-    results = [...languages.entries()]
+    results = languageList
       .filter(([_k, v]) => v.nativeName.toLowerCase().includes(query))
       .sort(([_aKey, aValue], [_bKey, bValue]) =>
         autoCompleteSorter({ a: aValue.nativeName, b: bValue.nativeName, query })
@@ -70,7 +71,7 @@ const autoCompleteHandler = async ({ bot, i }: CommandExecuteProps) => {
         value: value.code,
       }));
   } else {
-    results = [...languages.entries()].slice(0, 20).map(([_key, value]) => ({
+    results = languageList.slice(0, 20).map(([_key, value]) => ({
       name: value.nativeName,
       value: value.code,
     }));

@@ -9,10 +9,10 @@ import {
 
 import { api } from "~shared/api.ts";
 import { embeds } from "~shared/embeds/mod.ts";
-import { defaultCurrency, defaultLanguage, languages } from "~shared/i18n/languages.ts";
 import { Server } from "~shared/types.ts";
 import { logger } from "~shared/utils/logger.ts";
 
+import { getDefaultCurrency, getDefaultLanguage } from "../../_shared/i18n/index.ts";
 import { commands } from "../commands/mod.ts";
 import { bot } from "../mod.ts";
 
@@ -24,22 +24,15 @@ export const interactionCreateHandler: EventHandlers["interactionCreate"] = asyn
 
   logger.debug(`Executing command: ${command.name}`);
 
-  let language = defaultLanguage;
-  let currency = defaultCurrency;
-
   const commandName = getCommandName(i);
 
-  const { error, data: server } = await api<Server | undefined>({
+  const { data: server } = await api<Server | undefined>({
     method: "GET",
     path: `/servers/${i.guildId}`,
   });
 
-  if (!error && server) {
-    if (server.languageCode !== defaultLanguage.code && languages.has(server.languageCode))
-      language = languages.get(server.languageCode)!;
-
-    server.currency && (currency = server.currency);
-  }
+  const language = server?.language ?? getDefaultLanguage();
+  const currency = server?.currency ?? getDefaultCurrency();
 
   if (command.needsManageGuild && !hasPerms(i, ["MANAGE_GUILD"]))
     return await bot.helpers.sendInteractionResponse(i.id, i.token, {

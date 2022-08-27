@@ -5,6 +5,8 @@ import { endpointAuth } from "../auth/endpointAuth";
 import { Flags } from "../auth/flags";
 import prisma from "../data/prisma";
 import { prismaUpdateCatcher } from "../data/prismaUpdateCatcher";
+import { currencies } from "../i18n/currencies";
+import { addLocaleInfoToServer } from "../utils/addLocaleInfoToServer";
 import { bigintSchema } from "../utils/jsonfix";
 import { withValidation } from "../utils/withValidation";
 import { WsMsgType } from "../websocket/types";
@@ -37,7 +39,7 @@ router.get(
           message: "Server not found",
         });
 
-      res.json(server);
+      res.json(addLocaleInfoToServer(server));
     }
   )
 );
@@ -76,24 +78,12 @@ router.put(
           channelId,
           webhookId,
           webhookToken,
-          languageCode: "en",
-          currency: {
-            connectOrCreate: {
-              create: {
-                code: "USD",
-                apiValue: "US",
-                name: "$ Dollar (USD)",
-                inFrontOfPrice: "$",
-              },
-              where: { code: "USD" },
-            },
-          },
         },
       });
 
       broadcastWss(req.wss, WsMsgType.ChannelModify);
 
-      res.json(updatedServer);
+      res.json(addLocaleInfoToServer(updatedServer));
     }
   )
 );
@@ -132,7 +122,7 @@ router.delete(
 
       broadcastWss(req.wss, WsMsgType.ChannelDelete);
 
-      res.json(updatedServer);
+      res.json(addLocaleInfoToServer(updatedServer));
     }
   )
 );
@@ -165,24 +155,12 @@ router.put(
         create: {
           id: serverId,
           roleId,
-          languageCode: "en",
-          currency: {
-            connectOrCreate: {
-              create: {
-                code: "USD",
-                apiValue: "US",
-                name: "$ Dollar (USD)",
-                inFrontOfPrice: "$",
-              },
-              where: { code: "USD" },
-            },
-          },
         },
       });
 
       broadcastWss(req.wss, WsMsgType.RoleModify);
 
-      res.json(updatedServer);
+      res.json(addLocaleInfoToServer(updatedServer));
     }
   )
 );
@@ -219,7 +197,7 @@ router.delete(
 
       broadcastWss(req.wss, WsMsgType.RoleDelete);
 
-      res.json(updatedServer);
+      res.json(addLocaleInfoToServer(updatedServer));
     }
   )
 );
@@ -262,24 +240,12 @@ router.put(
           channelId,
           webhookId,
           webhookToken,
-          languageCode: "en",
-          currency: {
-            connectOrCreate: {
-              create: {
-                code: "USD",
-                apiValue: "US",
-                name: "$ Dollar (USD)",
-                inFrontOfPrice: "$",
-              },
-              where: { code: "USD" },
-            },
-          },
         },
       });
 
       broadcastWss(req.wss, WsMsgType.ThreadModify);
 
-      res.json(updatedServer);
+      res.json(addLocaleInfoToServer(updatedServer));
     }
   )
 );
@@ -319,7 +285,7 @@ router.delete(
 
       broadcastWss(req.wss, WsMsgType.ThreadDelete);
 
-      res.json(updatedServer);
+      res.json(addLocaleInfoToServer(updatedServer));
     }
   )
 );
@@ -349,17 +315,6 @@ router.put(
         create: {
           id: serverId,
           languageCode,
-          currency: {
-            connectOrCreate: {
-              create: {
-                code: "USD",
-                apiValue: "US",
-                name: "$ Dollar (USD)",
-                inFrontOfPrice: "$",
-              },
-              where: { code: "USD" },
-            },
-          },
         },
         update: {
           languageCode,
@@ -368,7 +323,7 @@ router.put(
 
       broadcastWss(req.wss, WsMsgType.LanguageModify);
 
-      res.json(updatedServer);
+      res.json(addLocaleInfoToServer(updatedServer));
     }
   )
 );
@@ -393,9 +348,7 @@ router.put(
       const { serverId } = req.params;
       const { currencyCode } = req.body;
 
-      const currency = await prisma.currency.findUnique({
-        where: { code: currencyCode },
-      });
+      const currency = currencies.get(currencyCode);
 
       if (!currency)
         return res.status(400).json({
@@ -409,23 +362,14 @@ router.put(
         create: {
           id: serverId,
           languageCode: "en",
-          currency: {
-            connect: { id: currency.id },
-          },
+          currencyCode,
         },
-        update: {
-          currency: {
-            connect: { id: currency.id },
-          },
-        },
-        include: {
-          currency: true,
-        },
+        update: { currencyCode },
       });
 
       broadcastWss(req.wss, WsMsgType.CurrencyModify);
 
-      res.json(updatedServer);
+      res.json(addLocaleInfoToServer(updatedServer));
     }
   )
 );

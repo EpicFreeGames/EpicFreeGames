@@ -22,7 +22,15 @@ export const endpointAuth =
     const botToken = authHeader?.split("Bot ")?.at(1);
     if (botToken && safeEqual(botToken, config.EFG_API_BOT_SECRET)) return next();
 
-    const accessTokenPayload = await verifyAccessJwt(accessTokenCookie);
+    const authToken = authHeader?.split("Bearer ")?.at(1) ?? accessTokenCookie;
+    if (!authToken)
+      return res.status(401).json({
+        statusCode: 401,
+        error: "Unauthorized",
+        message: "Invalid auth",
+      });
+
+    const accessTokenPayload = await verifyAccessJwt(authToken);
 
     if (!accessTokenPayload)
       return res.status(401).send({

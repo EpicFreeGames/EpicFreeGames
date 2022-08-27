@@ -17,7 +17,8 @@ type Args =
   | {
       method: Exclude<Method, "GET" | "HEAD">;
       path: string;
-      body?: Record<string, string | number | boolean | null | undefined>;
+      // deno-lint-ignore no-explicit-any
+      body?: any;
       query?: URLSearchParams;
     }
   | {

@@ -45,6 +45,7 @@ export type Server = {
   threadId: string | null;
   webhookId: string | null;
   webhookToken: string | null;
+  language: Language;
   languageCode: Language["code"];
   currency: Currency;
   currencyCode: Currency["code"];

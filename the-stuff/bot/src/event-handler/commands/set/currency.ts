@@ -6,8 +6,9 @@ import {
 
 import { api } from "~shared/api.ts";
 import { embeds } from "~shared/embeds/mod.ts";
-import { Currency, Server } from "~shared/types.ts";
+import { Server } from "~shared/types.ts";
 
+import { currencies } from "../../../_shared/i18n/index.ts";
 import { getString } from "../../utils/interactionOptions.ts";
 import { CommandExecuteProps, EphemeralFlag } from "../mod.ts";
 import { autoCompleteSorter } from "./mod.ts";
@@ -54,26 +55,23 @@ const autoCompleteHandler = async ({ bot, i }: CommandExecuteProps) => {
 
   let results: ApplicationCommandOptionChoice[];
 
-  const { error, data: currencies } = await api<Currency[]>({
-    method: "GET",
-    path: "/currencies",
-  });
-
-  if (error) return;
+  const currencyList = [...currencies];
 
   if (query) {
-    results = currencies
-      .filter((currency) => currency.name.toLowerCase().includes(query))
-      .sort((a, b) => autoCompleteSorter({ a: a.name, b: b.name, query }))
+    results = currencyList
+      .filter(([_k, currency]) => currency.name.toLowerCase().includes(query))
+      .sort(([_aKey, aValue], [_bKey, bValue]) =>
+        autoCompleteSorter({ a: aValue.name, b: bValue.name, query })
+      )
       .slice(0, 20)
-      .map((currency) => ({
-        name: currency.name,
-        value: currency.code,
+      .map(([_key, value]) => ({
+        name: value.name,
+        value: value.code,
       }));
   } else {
-    results = currencies.slice(0, 20).map((currency) => ({
-      name: currency.name,
-      value: currency.code,
+    results = currencyList.slice(0, 20).map(([_key, value]) => ({
+      name: value.name,
+      value: value.code,
     }));
   }
 

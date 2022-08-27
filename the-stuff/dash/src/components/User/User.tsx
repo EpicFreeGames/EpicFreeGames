@@ -6,6 +6,7 @@ import { IUser } from "~utils/api/types";
 
 import { DeleteUser } from "./DeleteUser";
 import { EditUser } from "./EditUser";
+import { GetToken } from "./GetToken";
 
 type Props = {
   user: IUser;
@@ -20,25 +21,29 @@ export const User = ({ user }: Props) => {
   const canEdit = useHasFlags(currentUserFlags, Flags.EditUsers);
   const canDelete = useHasFlags(currentUserFlags, Flags.DeleteUsers);
 
-  const showButtons = canEdit || canDelete;
+  const canGetToken = useHasFlags(currentUserFlags, Flags.GetTokens);
+
+  const showButtons = canEdit || canDelete || canGetToken;
 
   return (
     <div className="flex flex-col gap-3 rounded-md bg-gray-700 p-3">
       <div className="flex h-full w-full flex-col items-start justify-between gap-2 md:flex-row">
         <h2 className="rounded-md bg-gray-800 py-2 px-3 text-lg md:text-2xl">
-          {user.name ?? user.discordId}
+          {user.name ?? user.identifier}
         </h2>
 
         {showButtons && (
           <div className="flex gap-1 rounded-lg bg-gray-800 p-2">
             {canEdit && <EditUser user={user} />}
             {canDelete && <DeleteUser user={user} />}
+            {canGetToken && <GetToken user={user} />}
           </div>
         )}
       </div>
 
       <div className="flex flex-col gap-2">
         <Spec title="Flags" value={flags.length ? flags.join(", ") : "None"} />
+        <Spec title="Bot" value={user.bot ? "Yes" : "Nope"} />
       </div>
     </div>
   );

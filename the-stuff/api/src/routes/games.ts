@@ -5,6 +5,7 @@ import { endpointAuth } from "../auth/endpointAuth";
 import { Flags } from "../auth/flags";
 import prisma from "../data/prisma";
 import { prismaUpdateCatcher } from "../data/prismaUpdateCatcher";
+import { currencies } from "../i18n/currencies";
 import { withValidation } from "../utils/withValidation";
 
 const router = Router();
@@ -223,13 +224,11 @@ router.put(
        */
       const excludedPriceCodes: Map<string, string[]> = new Map();
 
-      const currencies = await prisma.currency.findMany({ include: { prices: true } });
-
       for (const game of req.body) {
         const { prices, start, end, ...rest } = game;
 
         const pricesToSave = prices.filter((price) => {
-          const currency = currencies.find((c) => c.code === price.currencyCode);
+          const currency = currencies.get(price.currencyCode);
 
           if (!currency) {
             excludedPriceCodes.set(rest.name, [

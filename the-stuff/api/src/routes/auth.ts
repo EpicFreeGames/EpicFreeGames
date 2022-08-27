@@ -78,7 +78,7 @@ authRouter.get(
 
       const dbUser = await prisma.user
         .update({
-          where: { discordId: userId },
+          where: { identifier: userId },
           data: { name: username },
         })
         .catch(prismaUpdateCatcher);

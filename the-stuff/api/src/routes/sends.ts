@@ -44,7 +44,7 @@ router.get(
       const { after, sendingId } = req.query;
 
       const servers = await prisma.server.findMany({
-        include: { currency: true, sendingLogs: true },
+        include: { sendingLogs: true },
         orderBy: {
           id: "asc",
         },

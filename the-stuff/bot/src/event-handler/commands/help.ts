@@ -15,7 +15,7 @@ export const helpCommand: Command = {
     await bot.helpers.sendInteractionResponse(i.id, i.token, {
       type: InteractionResponseTypes.ChannelMessageWithSource,
       data: {
-        embeds: [embeds.commands.help(lang)],
+        embeds: [await embeds.commands.help(lang)],
       },
     }),
 };

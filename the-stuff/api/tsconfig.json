@@ -10,6 +10,7 @@
     "moduleResolution": "Node",
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
+    "downlevelIteration": true,
 
     "removeComments": true,
 

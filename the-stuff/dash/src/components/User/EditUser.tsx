@@ -45,7 +45,7 @@ export const EditUser = ({ user }: Props) => {
     <Dialog
       open={dialogOpen}
       setOpen={setDialogOpen}
-      title={`Edit ${user.name ?? user.discordId}`}
+      title={`Edit ${user.name ?? user.identifier}`}
       trigger={
         <button className="btnBase px-2 hover:bg-gray-700/80 active:bg-gray-700/60">
           <Edit strokeWidth={1.3} size={21} />

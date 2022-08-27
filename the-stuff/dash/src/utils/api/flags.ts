@@ -1,4 +1,4 @@
-// all flags = 134217726
+// all flags: 268435454
 export enum Flags {
   AddGames = 1 << 1,
   PutGames = 1 << 2,
@@ -22,19 +22,20 @@ export enum Flags {
   DeleteUsers = 1 << 16,
 
   GetCurrencies = 1 << 17,
-  EditCurrencies = 1 << 18,
-  AddCurrencies = 1 << 19,
-  DeleteCurrencies = 1 << 20,
+  GetLanguages = 1 << 18,
+  GetTranslations = 1 << 19,
 
-  GetDashboard = 1 << 21,
+  GetDashboard = 1 << 20,
 
-  Send = 1 << 22,
-  GetSendings = 1 << 23,
-  AddSendings = 1 << 24,
-  EditSendings = 1 << 25,
-  DeleteSendings = 1 << 26,
+  Send = 1 << 21,
+  GetSendings = 1 << 22,
+  AddSendings = 1 << 23,
+  EditSendings = 1 << 24,
+  DeleteSendings = 1 << 25,
 
-  ReceiveEvents = 1 << 27,
+  ReceiveEvents = 1 << 26,
+
+  GetTokens = 1 << 27,
 }
 
 export type Flag = keyof typeof Flags;

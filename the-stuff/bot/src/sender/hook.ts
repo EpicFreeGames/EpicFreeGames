@@ -1,5 +1,4 @@
 import { embeds } from "~shared/embeds/mod.ts";
-import { languages } from "~shared/i18n/languages.ts";
 import { Game } from "~shared/types.ts";
 import { displayRole } from "~shared/utils/displayRole.ts";
 import { logger } from "~shared/utils/logger.ts";
@@ -13,9 +12,8 @@ export const hookSender = async (games: Game[], servers: HookServer[], sendingId
   for (const server of servers) {
     await wait(4);
 
-    const { webhookId, webhookToken, threadId, languageCode, roleId } = server;
+    const { webhookId, webhookToken, threadId, language, roleId } = server;
 
-    const language = languages.get(languageCode) || languages.get("en")!;
     const gameEmbeds = games.map((game) => embeds.games.gameEmbed(game, language, server.currency));
 
     const role = displayRole(roleId);

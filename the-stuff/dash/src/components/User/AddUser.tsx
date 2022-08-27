@@ -44,12 +44,18 @@ export const AddUser = () => {
     >
       <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-3">
         <div className="flex flex-col gap-2">
-          <Input label="Discord ID" {...form.register("discordId")} required />
+          <Input label="Identifier" {...form.register("identifier")} required />
 
           <div className="flex flex-col gap-2">
             <Label htmlFor="flags">Flags</Label>
 
             <SelectFlags onChange={(newValue, newFlags) => form.setValue("flags", newFlags)} />
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="bot">Bot</Label>
+
+            <Input type="checkbox" {...form.register("bot")} />
           </div>
 
           <div className="flex items-center justify-between gap-2">

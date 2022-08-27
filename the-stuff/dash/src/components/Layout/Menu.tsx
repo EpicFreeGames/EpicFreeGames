@@ -29,6 +29,7 @@ export const Menu = () => {
       <DropdownMenuItem href="/">Home</DropdownMenuItem>
       <DropdownMenuItem href="/games">Games</DropdownMenuItem>
       <DropdownMenuItem href="/currencies">Currencies</DropdownMenuItem>
+      <DropdownMenuItem href="/languages">Languages</DropdownMenuItem>
       <DropdownMenuItem href="/users">Users</DropdownMenuItem>
       <DropdownMenuItem href="/sends">Sends</DropdownMenuItem>
       <DropdownMenuItem href="/dash">Dashboard</DropdownMenuItem>

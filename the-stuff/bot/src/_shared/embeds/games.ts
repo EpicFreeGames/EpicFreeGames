@@ -36,7 +36,7 @@ export const gameEmbed = (game: Game, language: Language, currency: Currency): E
       "\n\n" +
       
       (start > now ? `🟢 ${utils.relativeTimestamp(start)}` + "\n\n" : "") + // only show start if it's in the future
-      `🏁 ${utils.relativeTimestamp(end)}` +
+      `🔴 ${utils.relativeTimestamp(end)}` +
 
       "\n\n" +
 

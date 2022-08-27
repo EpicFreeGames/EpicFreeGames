@@ -1,6 +1,7 @@
 export type IUser = {
   id: string;
-  discordId: string;
+  identifier: string;
+  bot: boolean;
   name?: string;
   flags: number;
 };
@@ -34,10 +35,10 @@ export type ILanguage = {
   code: string;
   englishName: string;
   nativeName: string;
+  serverCount?: number;
 };
 
 export type ICurrency = {
-  id: string;
   code: string;
   name: string;
   apiValue: string;

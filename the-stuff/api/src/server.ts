@@ -8,6 +8,8 @@ import { authRouter } from "./routes/auth";
 import { currencyRouter } from "./routes/currencies";
 import { dashboardRouter } from "./routes/dashboard";
 import { gameRouter } from "./routes/games";
+import { i18nRouter } from "./routes/i18n";
+import { languageRouter } from "./routes/languages";
 import { logRouter } from "./routes/logs";
 import { sendsRouter } from "./routes/sends";
 import { serverRouter } from "./routes/servers";
@@ -45,8 +47,10 @@ const registerRoutes = (app: Express) => {
   router.use("/logs", logRouter);
   router.use("/auth", authRouter);
   router.use("/currencies", currencyRouter);
+  router.use("/languages", languageRouter);
   router.use("/sends", sendsRouter);
   router.use("/dashboard", dashboardRouter);
+  router.use("/i18n", i18nRouter);
 
   app.use("/api", router);
 };

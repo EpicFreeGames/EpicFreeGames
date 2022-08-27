@@ -1,57 +1,19 @@
-import { Language } from "../types.ts";
+export type ICurrency = {
+  code: string;
+  afterPrice: string;
+  inFrontOfPrice: string;
+  apiValue: string;
+  name: string;
+};
+
+export type ILanguage = {
+  code: string;
+  englishName: string;
+  nativeName: string;
+};
 
 export const variableStart = "<";
 export const variableEnd = ">";
-
-export type PathKeys<T> = T extends string
-  ? []
-  : {
-      [K in keyof T]: [K, ...PathKeys<T[K]>];
-    }[keyof T];
-
-export type Join<T extends string[], Delimiter extends string> = T extends []
-  ? never
-  : T extends [infer F]
-  ? F
-  : T extends [infer F, ...infer Other]
-  ? F extends string
-    ? `${F}${Delimiter}${Join<Extract<Other, string[]>, Delimiter>}`
-    : never
-  : string;
-
-export type Trim<A extends string> = A extends ` ${infer B}`
-  ? Trim<B>
-  : A extends `${infer C} `
-  ? Trim<C>
-  : A;
-
-export type SearchForVariable<A extends string> =
-  A extends `${infer A}${typeof variableStart}${infer B}${typeof variableEnd}${infer C}`
-    ? SearchForVariable<A> | Trim<B> | SearchForVariable<C>
-    : never;
-
-export type Variables<
-  // deno-lint-ignore ban-types
-  T extends string | object,
-  Path extends string,
-  Delimiter extends string
-> = Path extends `${infer A}${Delimiter}${infer O}`
-  ? A extends keyof T
-    ? // deno-lint-ignore ban-types
-      Variables<Extract<T[A], string | object>, O, Delimiter>
-    : never
-  : Path extends `${infer A}`
-  ? A extends keyof T
-    ? SearchForVariable<Extract<T[A], string>>
-    : never
-  : never;
-
-export type ApiTranslateResult = {
-  key: string;
-  language: Language;
-  translatedValue: string;
-  usedDefaultTranslations: boolean;
-};
 
 export type translationsType = {
   support_click_here: "Click here to get support";

@@ -5,8 +5,9 @@ import { IUser } from "../types";
 import { UserContext } from "./_sharedTypes";
 
 export type AddUserProps = {
-  discordId: string;
+  identifier: string;
   flags: number;
+  bot: boolean;
 };
 
 const addUserRequest = (props: AddUserProps) =>

@@ -1,6 +1,5 @@
-// deno-lint-ignore-file no-explicit-any
 import { Language } from "../types.ts";
-import { translations } from "./languages.ts";
+import { getDefaultTranslations, getTranslations } from "./index.ts";
 import {
   Join,
   PathKeys,
@@ -25,7 +24,7 @@ type Args<P extends Join<PathKeys<T>, ".">> = Variables<T, P, "."> extends never
     };
 
 export const t = <P extends Join<PathKeys<T>, ".">>({ language, key, vars }: Args<P>): string => {
-  const langTranslations = translations.get(language.code);
+  const langTranslations = getTranslations(language.code);
 
   const path = key.split(".");
   // @ts-ignore no point trying to make ts happy
@@ -36,7 +35,7 @@ export const t = <P extends Join<PathKeys<T>, ".">>({ language, key, vars }: Arg
   }
 
   if (!value) {
-    const english = translations.get("en");
+    const english = getDefaultTranslations();
 
     value = english;
     for (const p of path) {
@@ -48,10 +47,7 @@ export const t = <P extends Join<PathKeys<T>, ".">>({ language, key, vars }: Arg
   if (vars && Object.keys(vars).length) {
     Object.keys(vars).forEach((variable) => {
       // @ts-ignore no point trying to make ts happy
-      value = value.replace(
-        `${variableStart}${variable}${variableEnd}`,
-        (vars as any)[variable as any]
-      );
+      value = value.replace(`${variableStart}${variable}${variableEnd}`, vars[variable]);
     });
   }
 

@@ -6,6 +6,7 @@ import { sharedConfig } from "~shared/sharedConfig.ts";
 import { botRest } from "~shared/utils/botRest.ts";
 import { logger } from "~shared/utils/logger.ts";
 
+import { initI18n } from "../_shared/i18n/index.ts";
 import { initCommands } from "./commands/mod.ts";
 import { eventHandlerConfig } from "./config.ts";
 import { initEvents } from "./events/mod.ts";
@@ -22,6 +23,7 @@ bot.rest = botRest;
 
 initEvents();
 initCommands();
+await initI18n();
 
 await connectRedis();
 
