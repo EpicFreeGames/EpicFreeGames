@@ -2,7 +2,6 @@ import { Embed } from "discordeno";
 
 import { botConstants } from "../constants.ts";
 import { t } from "../i18n/translate.ts";
-import { sharedConfig } from "../sharedConfig.ts";
 import { Currency, Language, Server } from "../types.ts";
 import { colors, utils } from "./embedUtils.ts";
 
@@ -40,9 +39,6 @@ export const help = (language: Language): Embed => ({
       vars: { serverInvite: botConstants.website.serverInvite },
     })}` +
     utils.footer(language),
-  thumbnail: {
-    url: sharedConfig.LOGO_URL,
-  },
 });
 
 export const vote = (language: Language): Embed => ({
