@@ -19,7 +19,7 @@ model Game {
   confirmed   Boolean     @default(false)
   path        String
   prices      GamePrice[]
-  Sending     Sending?    @relation(fields: [sendingId], references: [id], onDelete: Cascade)
+  Sending     Sending?    @relation(fields: [sendingId], references: [id])
   sendingId   String?
 }
 
