@@ -65,7 +65,7 @@ const Confirmed = ({ game }: { game: IGameWithStatus }) => {
 
   return (
     <button
-      className={`btnBase h-full px-2 hover:bg-gray-700/80 active:bg-gray-700/60 ${
+      className={`btnBase h-full whitespace-nowrap px-2 hover:bg-gray-700/80 active:bg-gray-700/60 ${
         game.confirmed ? "text-green-500" : "text-red-500"
       }`}
       onClick={() =>
