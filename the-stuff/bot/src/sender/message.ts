@@ -65,6 +65,14 @@ export const messageSender = async (games: Game[], servers: MessageServer[], sen
         })
         .then((msg) => {
           logger.info(`(message) ${sendingId} sent ${games.length} games to ${server.id}`);
+
+          return logLog({
+            serverId: server.id,
+            sendingId,
+            type: "MESSAGE",
+            result: "ok",
+            success: true,
+          });
         });
     });
   }
