@@ -97,9 +97,9 @@ router.get("/@me", endpointAuth(), async (req, res) => {
   });
 
   if (!user)
-    return res.status(404).send({
-      statusCode: 404,
-      error: "Not found",
+    return res.status(401).json({
+      statusCode: 401,
+      error: "Unauthorized",
       message: "User not found",
     });
 
