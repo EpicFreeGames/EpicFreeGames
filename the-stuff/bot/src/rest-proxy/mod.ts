@@ -31,7 +31,7 @@ const handleConnection = async (connection: Deno.Conn) => {
     const path = new URL(requestEvent.request.url).pathname;
     const proxyTo = `${BASE_URL}${new URL(requestEvent.request.url).pathname}`;
 
-    logger.info(`Request received to: ${path} - proxying to: ${proxyTo}`);
+    logger.debug(`Request received to: ${path} - proxying to: ${proxyTo}`);
 
     const json = await requestEvent.request.json().catch(() => null);
 
@@ -43,7 +43,7 @@ const handleConnection = async (connection: Deno.Conn) => {
         json
       );
 
-      logger.info("result", result);
+      logger.debug("result", result);
 
       if (result) {
         requestEvent.respondWith(

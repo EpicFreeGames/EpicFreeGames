@@ -60,7 +60,7 @@ for await (const conn of httpServer) {
         shardId: number;
       };
 
-      logger.info("Received an event", json.data.t);
+      logger.debug("Received an event", json.data.t);
 
       bot.events.raw(bot, json.data, json.shardId);
 

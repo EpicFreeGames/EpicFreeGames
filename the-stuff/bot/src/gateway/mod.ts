@@ -79,12 +79,12 @@ const gateway = createGatewayManager({
     intents: sharedConfig.INTENTS,
   },
   handleDiscordPayload: async ({ id: shardId }, data) => {
-    logger.info("GATEWAY EVENT", data.t);
+    logger.debug("GATEWAY EVENT", data.t);
 
     if (queue.processing && data.t !== "INTERACTION_CREATE")
       return queue.events.push({ shardId, data });
 
-    logger.info(`Sending gateway event to event handler @ ${gatewayConfig.EVENT_HANDLER_URL}`);
+    logger.debug(`Sending gateway event to event handler @ ${gatewayConfig.EVENT_HANDLER_URL}`);
 
     await fetch(`${gatewayConfig.EVENT_HANDLER_URL}`, {
       headers: {
