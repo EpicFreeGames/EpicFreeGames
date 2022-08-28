@@ -51,6 +51,6 @@ export const Layout = ({ title, children }: Props) => (
 
     <NavBar />
 
-    <main className="mx-auto mt-16 max-w-screen-sm px-3">{children}</main>
+    <main className="mx-auto mt-8 max-w-screen-sm px-3 sm:mt-16">{children}</main>
   </>
 );

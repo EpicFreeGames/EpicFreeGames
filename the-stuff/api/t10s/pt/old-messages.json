@@ -1,0 +1,21 @@
+{
+  "invite": "Convite",
+  "vote": "Voto",
+  "support": "Suporte",
+  "website": "Website",
+  "support_click_here": "Clique aqui se você tiver quaisquer perguntas.",
+  "vote_needed_title": "Você precisa votar para poder usar este comando",
+  "vote_click_here": "Vote no EpicFreeGames Discord Bot",
+  "commands_listed": "Pode encontrar uma lista de todos os comandos aqui",
+  "role_set_success_desc": "De agora em diante sempre notificarei <role> quando um novo jogo é lançado.",
+  "channel_thread_set_success_desc": "Vou de agora em diante postar jogos grátis em <channel>.",
+  "manage_webhooks": "Gerenciar webhooks",
+  "make_sure_perms": "Certifique-se de que o bot tenha as seguintes permissões em **<channel>**",
+  "manage_guild_needed": "Você precisa `MANAGE_GUILD` permissões para usar este comando.",
+  "set_channel_first": "Você precisa definir um canal, para que eu saiba onde devo postar as notificações.\n\nBasta digitar `/set channel`",
+  "commands": "Comandos",
+  "open_in": "Abrir em:",
+  "free": "Jogo Grátis",
+  "no_free_games": "Não há jogos grátis.",
+  "no_upcoming_games": "Não há próximos jogos grátis agora."
+}

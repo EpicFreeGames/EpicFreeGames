@@ -70,14 +70,14 @@ export const GetToken = ({ user }: Props) => {
         <div className="flex flex-col gap-1">
           <Label htmlFor="token">Token</Label>
 
-          <div className="flex items-center justify-between rounded-md bg-gray-700 p-3">
-            <p>
+          <div className="flex items-center justify-between gap-2 rounded-md bg-gray-700 p-2">
+            <p className="overflow-hidden text-ellipsis whitespace-nowrap">
               {isLoading
                 ? "Loading..."
                 : isError
                 ? "Error generating token"
                 : token?.length
-                ? `Token: ${token}`
+                ? token
                 : "No token"}
             </p>
 

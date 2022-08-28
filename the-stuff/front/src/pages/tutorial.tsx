@@ -1,32 +1,37 @@
+import { InferGetStaticPropsType } from "next";
+
 import { Layout } from "~components/Layout";
 import { Markdown } from "~components/Markdown";
-import { Heading, Heading2 } from "~components/Text";
-import { english, t } from "~i18n/translate";
+import { t } from "~i18n/translate";
+import { Translations } from "~i18n/types";
+import { mainGetStaticProps } from "~utils/mainGetStaticProps";
 
-const TutorialPage = () => (
+export const getStaticProps = mainGetStaticProps;
+
+const TutorialPage = ({ translations }: InferGetStaticPropsType<typeof getStaticProps>) => (
   <Layout title="Tutorial">
-    <Heading>{t({ language: english, key: "tutorial" })}</Heading>
+    <h1 className="text-2xl font-bold">{t({ translations, key: "tutorial" })}</h1>
 
-    <div className="flex flex-col gap-[6rem] pt-6">
+    <div className="flex flex-col gap-[3rem] pt-6 text-sm sm:gap-[6rem] sm:text-base">
       <div className="flex flex-col gap-4">
         <Markdown>
-          {t({ language: english, key: "tutorial_q", vars: { botName: "EpicFreeGames" } })}
+          {t({ translations, key: "tutorial_q", vars: { botName: "EpicFreeGames" } })}
         </Markdown>
 
         <Markdown>
-          {t({ language: english, key: "tutorial_1", vars: { inviteLink: "/invite" } })}
+          {t({ translations, key: "tutorial_1", vars: { inviteLink: "/invite" } })}
         </Markdown>
 
-        <Markdown>{t({ language: english, key: "tutorial_2" })}</Markdown>
+        <Markdown>{t({ translations, key: "tutorial_2" })}</Markdown>
 
-        <Markdown>{t({ language: english, key: "tutorial_3" })}</Markdown>
+        <Markdown>{t({ translations, key: "tutorial_3" })}</Markdown>
 
         <div className="rounded-md border-[1px] border-gray-700 bg-gray-800 px-3 py-2">
-          <Markdown>{t({ language: english, key: "having_problems_title" })}</Markdown>
+          <h3 className="pb-2 font-bold">{t({ translations, key: "having_problems_title" })}</h3>
 
           <Markdown>
             {t({
-              language: english,
+              translations,
               key: "having_problems_desc",
               vars: { faqLink: "/faq", serverInvite: "/support" },
             })}
@@ -36,41 +41,47 @@ const TutorialPage = () => (
 
       <div className="flex flex-col">
         <div className="flex gap-1">
-          <Heading2>{t({ language: english, key: "tutorial_setting_role" })}</Heading2>
-          <Optional />
+          <h2 className="pb-2 text-xl font-bold">
+            {t({ translations, key: "tutorial_setting_role" })}
+          </h2>
+          <Optional translations={translations} />
         </div>
 
         <div className="flex flex-col gap-2">
-          <Markdown>{t({ language: english, key: "tutorial_setting_role_1" })}</Markdown>
+          <Markdown>{t({ translations, key: "tutorial_setting_role_1" })}</Markdown>
 
-          <Markdown>{t({ language: english, key: "tutorial_setting_role_2" })}</Markdown>
+          <Markdown>{t({ translations, key: "tutorial_setting_role_2" })}</Markdown>
         </div>
       </div>
 
       <div className="flex flex-col">
         <div className="flex gap-1">
-          <Heading2>{t({ language: english, key: "tutorial_changing_language" })}</Heading2>
-          <Optional />
+          <h2 className="pb-2 text-xl font-bold">
+            {t({ translations, key: "tutorial_changing_language" })}
+          </h2>
+          <Optional translations={translations} />
         </div>
 
-        <Markdown>{t({ language: english, key: "tutorial_changing_language_1" })}</Markdown>
+        <Markdown>{t({ translations, key: "tutorial_changing_language_1" })}</Markdown>
       </div>
 
       <div className="flex flex-col">
         <div className="flex gap-1">
-          <Heading2>{t({ language: english, key: "tutorial_changing_currency" })}</Heading2>
-          <Optional />
+          <h2 className="pb-2 text-xl font-bold">
+            {t({ translations, key: "tutorial_changing_currency" })}
+          </h2>
+          <Optional translations={translations} />
         </div>
 
-        <Markdown>{t({ language: english, key: "tutorial_changing_currency_1" })}</Markdown>
+        <Markdown>{t({ translations, key: "tutorial_changing_currency_1" })}</Markdown>
       </div>
     </div>
   </Layout>
 );
 
-const Optional = () => (
+const Optional = ({ translations }: { translations: Translations }) => (
   <span className="text-lg font-normal text-slate-600">
-    ({t({ language: english, key: "optional" })})
+    ({t({ translations, key: "optional" })})
   </span>
 );
 

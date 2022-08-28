@@ -3,7 +3,7 @@ import { z } from "zod";
 
 import { endpointAuth } from "../auth/endpointAuth";
 import { Flags } from "../auth/flags";
-import { defaultTransations, translations } from "../i18n";
+import { getDefaultTransations, translations } from "../i18n";
 import { currencies, defaultCurrency } from "../i18n/currencies";
 import { defaultLanguage, languages } from "../i18n/languages";
 import { withValidation } from "../utils/withValidation";
@@ -29,7 +29,18 @@ router.get(
           message: "Invalid language code",
         });
 
-      res.json(translations.get(languageCode) || defaultTransations);
+      let langTranslations = translations.get(languageCode);
+      let usedDefaultTranslations = false;
+
+      if (!langTranslations) {
+        usedDefaultTranslations = true;
+        langTranslations = getDefaultTransations();
+      }
+
+      res.json({
+        translations: langTranslations,
+        usedDefaultTranslations,
+      });
     }
   )
 );
@@ -47,7 +58,7 @@ router.get("/defaults/currency", endpointAuth(Flags.GetCurrencies), async (req, 
 });
 
 router.get("/defaults/translations", endpointAuth(Flags.GetTranslations), async (req, res) => {
-  res.json(defaultTransations);
+  res.json(getDefaultTransations());
 });
 
 router.get("/languages", endpointAuth(Flags.GetLanguages), async (req, res) => {

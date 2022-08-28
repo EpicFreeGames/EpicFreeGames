@@ -1,0 +1,21 @@
+{
+  "invite": "Invito",
+  "vote": "Voto",
+  "support": "Supporto",
+  "website": "Sito web",
+  "support_click_here": "Clicca qui se hai qualche domanda.",
+  "vote_needed_title": "Devi votare per poter usare questo comando",
+  "vote_click_here": "Vota per il bot discord EpicFreeGames:",
+  "commands_listed": "Puoi trovare una lista con tutti i comandi here",
+  "role_set_success_desc": "D'ora in poi avviserò sempre <role> quando un nuovo gioco viene rilasciato.",
+  "channel_thread_set_success_desc": "D'ora in poi invierò i giochi gratuiti in <channel>.",
+  "manage_webhooks": "Gestire i webhook",
+  "make_sure_perms": "Assicurati che il bot abbia i seguenti permessi in **<channel>**",
+  "manage_guild_needed": "Ti server il permesso `MANAGE_GUILD` per usare questo comando.",
+  "set_channel_first": "Devi impostare un canale, così so dove avvisarti.\n\nScrivi `/set channel`",
+  "commands": "Comandi",
+  "open_in": "Apri in:",
+  "free": "Gratis",
+  "no_free_games": "Non ci sono giochi gratuiti.",
+  "no_upcoming_games": "Non ci sono giochi gratuiti in arrivo al momento."
+}

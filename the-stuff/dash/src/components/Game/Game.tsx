@@ -3,18 +3,18 @@ import { ReactNode } from "react";
 import { useHasFlags } from "~hooks/useHasFlags";
 import { Flags } from "~utils/api/flags";
 import { useEditGameMutation } from "~utils/api/games/editGame";
-import { IGame } from "~utils/api/types";
+import { IGameWithStatus } from "~utils/api/types";
 
 import { DeleteGame } from "./DeleteGame";
 import { EditGame } from "./EditGame";
 
-export const Game = ({ game }: { game: IGame }) => {
+export const Game = ({ game }: { game: IGameWithStatus }) => {
   const canEdit = useHasFlags(Flags.EditGames);
   const canDelete = useHasFlags(Flags.DeleteGames);
 
   return (
     <div className="flex flex-col gap-3 rounded-md bg-gray-700 p-3">
-      <div className="flex w-full flex-col items-start justify-between gap-2 md:flex-row">
+      <div className="flex h-full w-full flex-col items-start justify-between gap-2 md:flex-row">
         <h2 className="rounded-md bg-gray-800 py-2 px-3 text-lg md:text-2xl">{game.displayName}</h2>
 
         <div className="flex gap-1 rounded-lg bg-gray-800 p-2">
@@ -37,6 +37,7 @@ export const Game = ({ game }: { game: IGame }) => {
             <Spec title="Path:" value={game.path} />
             <Spec title="Sale starts:" value={game.start} />
             <Spec title="Sale ends:" value={game.end} />
+            <Spec title="Status:" value={game.status} />
           </div>
 
           <div className="w-full">
@@ -58,7 +59,7 @@ export const Game = ({ game }: { game: IGame }) => {
   );
 };
 
-const Confirmed = ({ game }: { game: IGame }) => {
+const Confirmed = ({ game }: { game: IGameWithStatus }) => {
   const { mutateAsync } = useEditGameMutation();
   const canEdit = useHasFlags(Flags.EditGames);
 

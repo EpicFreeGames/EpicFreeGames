@@ -6,6 +6,7 @@ import { Flags } from "../auth/flags";
 import prisma from "../data/prisma";
 import { prismaUpdateCatcher } from "../data/prismaUpdateCatcher";
 import { currencies } from "../i18n/currencies";
+import { addStatusToGames } from "../utils/addStatusToGames";
 import { withValidation } from "../utils/withValidation";
 
 const router = Router();
@@ -13,7 +14,7 @@ const router = Router();
 router.get("/", endpointAuth(Flags.GetGames), async (req, res) => {
   const games = await prisma.game.findMany({ include: { prices: true } });
 
-  res.send(games);
+  res.json(addStatusToGames(...games));
 });
 
 router.get("/free", endpointAuth(Flags.GetGames), async (req, res) => {
@@ -31,7 +32,7 @@ router.get("/free", endpointAuth(Flags.GetGames), async (req, res) => {
     },
   });
 
-  res.send(games);
+  res.json(addStatusToGames(...games));
 });
 
 router.get("/up", endpointAuth(Flags.GetGames), async (req, res) => {
@@ -50,7 +51,7 @@ router.get("/up", endpointAuth(Flags.GetGames), async (req, res) => {
     },
   });
 
-  res.send(games);
+  res.json(addStatusToGames(...games));
 });
 
 router.get("/not-confirmed", endpointAuth(Flags.GetGames), async (req, res) => {
@@ -63,7 +64,7 @@ router.get("/not-confirmed", endpointAuth(Flags.GetGames), async (req, res) => {
     },
   });
 
-  res.send(games);
+  res.json(addStatusToGames(...games));
 });
 
 router.get(
@@ -85,7 +86,12 @@ router.get(
         include: { prices: true },
       });
 
-      res.send(game);
+      if (!game)
+        return res
+          .status(404)
+          .json({ statusCode: 404, error: "Not found", message: "Game not found" });
+
+      res.json(addStatusToGames(game));
     }
   )
 );
@@ -137,7 +143,7 @@ router.patch(
         });
       }
 
-      res.send(game);
+      res.json(addStatusToGames(game));
     }
   )
 );
@@ -191,7 +197,7 @@ router.post(
         include: { prices: true },
       });
 
-      res.send(createdGame);
+      res.json(addStatusToGames(createdGame));
     }
   )
 );
@@ -224,24 +230,32 @@ router.put(
        */
       const excludedPriceCodes: Map<string, string[]> = new Map();
 
+      const dbGames = await prisma.game.findMany({ include: { prices: true } });
+
       for (const game of req.body) {
         const { prices, start, end, ...rest } = game;
+        const dbGame = dbGames.find((g) => g.name === rest.name);
 
-        const pricesToSave = prices.filter((price) => {
-          const currency = currencies.get(price.currencyCode);
+        const pricesToSave = prices
+          .filter((price) => {
+            const currency = currencies.get(price.currencyCode);
 
-          if (!currency) {
-            excludedPriceCodes.set(rest.name, [
-              ...(excludedPriceCodes.get(rest.name) || []),
-              price.currencyCode,
-            ]);
-            return false;
-          }
+            if (!currency) {
+              excludedPriceCodes.set(rest.name, [
+                ...(excludedPriceCodes.get(rest.name) || []),
+                price.currencyCode,
+              ]);
+              return false;
+            }
 
-          return true;
-        });
+            return true;
+          })
+          .map((price) => ({
+            ...price,
+            id: dbGame?.prices.find((p) => p.currencyCode === price.currencyCode)?.id ?? "new",
+          }));
 
-        const upsertedGame = await prisma.game.upsert({
+        await prisma.game.upsert({
           where: {
             name: game.name,
           },
@@ -249,34 +263,44 @@ router.put(
             ...rest,
             start: new Date(start),
             end: new Date(end),
+            prices: {
+              upsert: pricesToSave.map(({ id, ...rest }) => ({
+                where: {
+                  id: id,
+                },
+                create: rest,
+                update: rest,
+              })),
+            },
           },
           create: {
             ...rest,
             displayName: game.name,
             start: new Date(start),
             end: new Date(end),
+            prices: { createMany: { data: pricesToSave } },
           },
           include: {
             prices: true,
           },
         });
 
-        if (upsertedGame.prices.length) {
-          await prisma.$transaction(
-            pricesToSave.map((price) =>
-              prisma.gamePrice.update({
-                where: {
-                  id: upsertedGame.prices.find((p) => p.currencyCode === price.currencyCode)?.id,
-                },
-                data: price,
-              })
-            )
-          );
-        } else {
-          await prisma.gamePrice.createMany({
-            data: pricesToSave.map((p) => ({ ...p, gameId: upsertedGame.id })),
-          });
-        }
+        //   if (upsertedGame.prices.length) {
+        //     await prisma.$transaction(
+        //       pricesToSave.map((price) =>
+        //         prisma.gamePrice.update({
+        //           where: {
+        //             id: upsertedGame.prices.find((p) => p.currencyCode === price.currencyCode)?.id,
+        //           },
+        //           data: price,
+        //         })
+        //       )
+        //     );
+        //   } else {
+        //     await prisma.gamePrice.createMany({
+        //       data: pricesToSave.map((p) => ({ ...p, gameId: upsertedGame.id })),
+        //     });
+        //   }
       }
 
       if (excludedPriceCodes.size)

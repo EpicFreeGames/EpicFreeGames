@@ -3,10 +3,11 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ReactNode, useState } from "react";
 import { ChevronDown } from "tabler-icons-react";
 
-import { english, t } from "~i18n/translate";
+import { t } from "~i18n/translate";
+import { Translations } from "~i18n/types";
 
 import { Markdown } from "./Markdown";
-import { Code, Link } from "./Text";
+import { Text } from "./Text";
 
 type AccordionItemProps = {
   title: ReactNode;
@@ -28,8 +29,9 @@ const AccordionItem = ({ title, children, value, currentValue, change }: Accordi
         isOpen ? "border-gray-500" : "border-gray-700"
       }`}
     >
-      <div className="flex items-center justify-between">
-        <Collapsible.Trigger className="cursor-default">{title}</Collapsible.Trigger>
+      <div className="flex items-center justify-between gap-2">
+        <Collapsible.Trigger className="cursor-default text-left">{title}</Collapsible.Trigger>
+
         <div className="rounded-md bg-gray-900/50 p-1">
           <motion.div
             key="chevron"
@@ -61,7 +63,7 @@ const AccordionItem = ({ title, children, value, currentValue, change }: Accordi
   );
 };
 
-export const FAQAccordion = () => {
+export const FAQAccordion = ({ translations }: { translations: Translations }) => {
   const [value, setValue] = useState("");
 
   const change = (open: boolean, value: string) => (open ? setValue(value) : setValue(""));
@@ -70,52 +72,71 @@ export const FAQAccordion = () => {
     <div className="flex flex-col gap-2">
       <AccordionItem
         title={
-          <b>
-            <Markdown>{t({ language: english, key: "faq_1_q" })}</Markdown>
-          </b>
+          <h2 className="text-sm font-bold sm:text-base">
+            <Markdown>{`${t({ translations, key: "faq_1_q" })}`}</Markdown>
+          </h2>
         }
         value="1"
         currentValue={value}
         change={change}
       >
         <Markdown>
-          {t({ language: english, key: "faq_1_a", vars: { serverInvite: "/invite" } })}
+          {`${t({ translations, key: "faq_1_a", vars: { serverInvite: "/invite" } })}`}
         </Markdown>
       </AccordionItem>
 
       <AccordionItem
         title={
-          <b>
-            <Markdown>{t({ language: english, key: "faq_2_q" })}</Markdown>
-          </b>
+          <h2 className="text-sm font-bold sm:text-base">
+            <Markdown>{`${t({ translations, key: "faq_2_q" })}`}</Markdown>
+          </h2>
         }
         value="2"
         currentValue={value}
         change={change}
       >
-        <Markdown>
-          {t({ language: english, key: "faq_2_a", vars: { serverInvite: "/invite" } })}
-        </Markdown>
+        <Text>
+          <Markdown>
+            {`${t({ translations, key: "faq_2_a", vars: { serverInvite: "/invite" } })}`}
+          </Markdown>
+        </Text>
       </AccordionItem>
 
       <AccordionItem
-        title={<h2 className="font-bold">Can everyone change the bot's settings?</h2>}
+        title={
+          <h2 className="text-sm font-bold sm:text-base">{`${t({
+            translations,
+            key: "faq_3_a",
+          })}`}</h2>
+        }
         value="3"
         currentValue={value}
         change={change}
       >
-        <Markdown>{t({ language: english, key: "faq_3_a" })}</Markdown>
+        <Text>
+          <Markdown>{t({ translations, key: "faq_3_a" })}</Markdown>
+        </Text>
       </AccordionItem>
 
       <AccordionItem
-        title={<h2 className="font-bold">My question is not here...</h2>}
+        title={
+          <h2 className="text-sm font-bold sm:text-base">{`${t({
+            translations,
+            key: "faq_4_q",
+          })}`}</h2>
+        }
         value="4"
         currentValue={value}
         change={change}
       >
-        <p>
-          Please <Link href="/support">join our support server</Link> and we'll help you out!
-        </p>
+        <Text>
+          <Markdown>
+            {`${t({
+              translations,
+              key: "faq_4_q",
+            })}`}
+          </Markdown>
+        </Text>
       </AccordionItem>
     </div>
   );

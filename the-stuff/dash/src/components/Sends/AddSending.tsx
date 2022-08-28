@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 
 import { Dialog, DialogCloseButton } from "~components/Dialog";
 import { Label } from "~components/Label";
-import { useGames } from "~utils/api/games/getGames";
+import { useConfirmedGames } from "~utils/api/games/getGames";
 import { AddSendingProps, useAddSendingMutation } from "~utils/api/sends/addSending";
 
 export const AddSending = () => {
@@ -25,7 +25,7 @@ export const AddSending = () => {
     form.reset();
   };
 
-  const { data: games, isLoading } = useGames();
+  const { data: games, isLoading } = useConfirmedGames();
 
   return (
     <Dialog
@@ -61,7 +61,7 @@ export const AddSending = () => {
                 </option>
               ))
             ) : (
-              <option>No games</option>
+              <option>No confirmed games</option>
             )}
           </select>
         </div>

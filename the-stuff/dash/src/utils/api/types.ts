@@ -31,6 +31,11 @@ export type IGame = {
   sendingId: string;
 };
 
+export type IGameStatus = "up" | "free" | "gone";
+export type IGameWithStatus = IGame & {
+  status: IGameStatus;
+};
+
 export type ILanguage = {
   code: string;
   englishName: string;

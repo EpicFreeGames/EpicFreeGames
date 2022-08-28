@@ -1,12 +1,17 @@
+import { InferGetStaticPropsType } from "next";
+
 import { FAQAccordion } from "~components/FAQAccordion";
 import { Layout } from "~components/Layout";
-import { english, t } from "~i18n/translate";
+import { t } from "~i18n/translate";
+import { mainGetStaticProps } from "~utils/mainGetStaticProps";
 
-const FAQPage = () => (
+export const getStaticProps = mainGetStaticProps;
+
+const FAQPage = ({ translations }: InferGetStaticPropsType<typeof getStaticProps>) => (
   <Layout title="FAQ">
-    <h1 className="pb-6 text-2xl font-bold">{t({ language: english, key: "faq_title" })}</h1>
+    <h1 className="pb-6 text-2xl font-bold">{t({ translations, key: "faq_title" })}</h1>
 
-    <FAQAccordion />
+    <FAQAccordion translations={translations} />
   </Layout>
 );
 

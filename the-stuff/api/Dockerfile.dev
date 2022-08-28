@@ -10,4 +10,4 @@ COPY ./prisma ./
 
 RUN yarn
 
-CMD [ "yarn", "dev" ]
+CMD yarn prisma db push && yarn dev

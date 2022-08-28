@@ -1,4 +1,3 @@
-import { createSecretKey } from "crypto";
 import { z } from "zod";
 
 const envSchema = z.object({
@@ -39,5 +38,7 @@ if (!env.success) {
 
 export const config = {
   ...env.data,
-  JWT_KEY: createSecretKey(env.data.JWT_SECRET, "utf-8"),
+  JWT_KEY: new TextEncoder().encode(env.data.JWT_SECRET),
 };
+
+console.log(config.JWT_KEY);

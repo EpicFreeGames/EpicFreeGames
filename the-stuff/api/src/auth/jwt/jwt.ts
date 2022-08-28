@@ -10,8 +10,8 @@ const signAccessToken = (props: ITokenPayload) =>
   new jose.SignJWT({ ...props })
     .setProtectedHeader({
       alg: "HS512",
+      typ: "JWT",
     })
-    .setIssuedAt()
     .setJti(props.jti)
     .setIssuer(config.JWT_ISS)
     .setAudience(config.JWT_AUD)
@@ -60,7 +60,12 @@ export const verifyAccessJwt = async (token: string): Promise<ITokenPayload | nu
     isLoginInvalidated(userId),
   ]);
 
-  if (!whitelisted || invalidated) return null;
+  if (!whitelisted || invalidated) {
+    if (invalidated) console.log("access token is invalidated");
+    if (!whitelisted) console.log("access token is not whitelisted");
+
+    return null;
+  }
 
   return payloadRes.data;
 };

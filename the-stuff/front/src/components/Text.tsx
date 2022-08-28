@@ -2,6 +2,15 @@ import NextLink from "next/link";
 import { ReactNode } from "react";
 import toast from "react-hot-toast";
 
+type TextProps = {
+  children: ReactNode;
+  className?: string;
+};
+
+export const Text = ({ children, className }: TextProps) => (
+  <p className={`${className} text-sm sm:text-base`}>{children}</p>
+);
+
 type BProps = {
   children: ReactNode;
 };
@@ -52,27 +61,14 @@ export const Code = ({ children, toCopy }: CodeProps) => {
   return (
     <code
       onClick={() => copy()}
-      className="whitespace-nowrap rounded-md border-[1px] border-gray-700 bg-gray-800 py-[0.1rem] px-1 font-mono outline-none transition-all duration-200 hover:cursor-pointer hover:bg-gray-800/50"
+      className={`whitespace-nowrap rounded-md border-[1px] border-gray-700 bg-gray-800 py-[0.1rem] px-1 font-mono text-xs outline-none transition-all duration-200 sm:text-base ${
+        toCopy ? "hover:cursor-pointer hover:bg-gray-800/50" : ""
+      }`}
     >
       {children}
     </code>
   );
 };
-
-type HeadingProps = {
-  children: ReactNode;
-};
-
-export const Heading = ({ children, className }: HeadingProps & { className?: string }) => (
-  <h1 className={`text-2xl font-bold ${className}`}>{children}</h1>
-);
-export const Heading2 = ({ children }: HeadingProps) => (
-  <h2 className="pb-2 text-xl font-bold">{children}</h2>
-);
-
-export const Heading3 = ({ children }: HeadingProps) => (
-  <h3 className="pb-2 text-lg font-bold">{children}</h3>
-);
 
 type LinkProps = {
   children: ReactNode;

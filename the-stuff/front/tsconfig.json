@@ -20,6 +20,8 @@
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
 
+    "downlevelIteration": true,
+
     "noUnusedLocals": true,
     "noImplicitAny": true,
     "noImplicitOverride": true,

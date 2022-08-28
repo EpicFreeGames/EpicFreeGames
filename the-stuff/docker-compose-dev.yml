@@ -19,12 +19,10 @@ x-shared-bot-envs: &sharedBotEnvs
 
 services:
   redis:
-    image: redis/redis-stack
+    image: redis
     volumes:
-      - redis:/data
+      - redis-data:/data
     restart: always
-    ports:
-      - "3002:8001"
 
   api:
     depends_on:
@@ -48,25 +46,25 @@ services:
     restart: always
     volumes:
       - ./api/src:/app/src:r
+      - ./api/t10s:/app/t10s:r
     ports:
       - "3010:3000"
-    command: yarn dev
 
   dash:
     depends_on:
       - api
       - redis
     build:
-      context: ./next-dash
+      context: ./dash
       dockerfile: Dockerfile.dev
-    image: dash/next-dash
+    image: dash/dash
     environment:
       <<: *sharedEnvs
       NEXT_PUBLIC_EFG_API_BASE_URL: http://localhost:3010/api
       NEXT_PUBLIC_EFG_API_WS_URL: ws://localhost:3010/api
     env_file: .env-dev
     volumes:
-      - ./next-dash/src:/app/src:r
+      - ./dash/src:/app/src:r
     ports:
       - "3001:3000"
 
@@ -77,8 +75,12 @@ services:
     image: front/front
     volumes:
       - ./front/src:/app/src:r
+      - ./front/tailwind.config.js:/app/tailwind.config.js:r
     ports:
       - "3000:3000"
+    environment:
+      EFG_API_BASEURL: http://api:3000/api
+      EFG_API_FRONT_TOKEN: ${EFG_API_FRONT_TOKEN}
 
   bot_rest-proxy:
     depends_on:
@@ -125,6 +127,7 @@ services:
 
   bot_event-handler:
     depends_on:
+      - api
       - front
       - bot_sender
       - bot_gateway
@@ -144,4 +147,4 @@ services:
     command: "deno run --watch -A ./src/event-handler/mod.ts"
 
 volumes:
-  redis:
+  redis-data:

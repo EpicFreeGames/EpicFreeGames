@@ -1,7 +1,7 @@
 import { config } from "../config";
 
 export const createAccessTokenCookie = (value: string) =>
-  `access-token=${value}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${config.JWT_EXP};${
+  `access-token=${value}; Path=/; HttpOnly; SameSite=Lax; ${
     config.ENV !== "Development" ? "Secure;" : ""
   }`;
 

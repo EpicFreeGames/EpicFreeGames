@@ -48,12 +48,6 @@ export const initI18n = async () => {
 
   if (error1 || error2 || error3 || error4 || error5 || error6) {
     logger.error("Failed to initialize i18n");
-    error1 && logger.error("error1", error1);
-    error2 && logger.error("error2", error2);
-    error3 && logger.error("error3", error3);
-    error4 && logger.error("error4", error4);
-    error5 && logger.error("error5", error5);
-    error6 && logger.error("error6", error6);
 
     Deno.exit(1);
   }
