@@ -255,6 +255,8 @@ router.put(
             id: dbGame?.prices.find((p) => p.currencyCode === price.currencyCode)?.id ?? "new",
           }));
 
+        const hasPrices = !!pricesToSave?.length;
+
         await prisma.game.upsert({
           where: {
             name: game.name,
@@ -263,44 +265,37 @@ router.put(
             ...rest,
             start: new Date(start),
             end: new Date(end),
-            prices: {
-              upsert: pricesToSave.map(({ id, ...rest }) => ({
-                where: {
-                  id: id,
-                },
-                create: rest,
-                update: rest,
-              })),
-            },
+            ...(hasPrices
+              ? {
+                  prices: {
+                    upsert: pricesToSave.map(({ id, ...rest }) => ({
+                      where: {
+                        id: id,
+                      },
+                      create: rest,
+                      update: rest,
+                    })),
+                  },
+                }
+              : {}),
           },
           create: {
             ...rest,
             displayName: game.name,
             start: new Date(start),
             end: new Date(end),
-            prices: { createMany: { data: pricesToSave } },
+            ...(hasPrices
+              ? {
+                  prices: {
+                    createMany: { data: pricesToSave.map(({ id, ...rest }) => ({ ...rest })) },
+                  },
+                }
+              : {}),
           },
           include: {
             prices: true,
           },
         });
-
-        //   if (upsertedGame.prices.length) {
-        //     await prisma.$transaction(
-        //       pricesToSave.map((price) =>
-        //         prisma.gamePrice.update({
-        //           where: {
-        //             id: upsertedGame.prices.find((p) => p.currencyCode === price.currencyCode)?.id,
-        //           },
-        //           data: price,
-        //         })
-        //       )
-        //     );
-        //   } else {
-        //     await prisma.gamePrice.createMany({
-        //       data: pricesToSave.map((p) => ({ ...p, gameId: upsertedGame.id })),
-        //     });
-        //   }
       }
 
       if (excludedPriceCodes.size)
