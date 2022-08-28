@@ -187,8 +187,8 @@ export const currencies: Map<string, ICurrency> = new Map<string, ICurrency>([
     {
       name: "Ft Hungarian Forint (HUF)",
       code: "HUF",
-      afterPrice: "",
-      inFrontOfPrice: " Ft",
+      afterPrice: " Ft",
+      inFrontOfPrice: "",
       apiValue: "HU",
     },
   ],
