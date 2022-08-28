@@ -2,6 +2,7 @@ import { createBot } from "discordeno";
 
 import { api } from "~shared/api.ts";
 import { handleCache } from "~shared/cache.ts";
+import { initI18n } from "~shared/i18n/index.ts";
 import { connectRedis } from "~shared/redis.ts";
 import { sharedConfig } from "~shared/sharedConfig.ts";
 import { Server } from "~shared/types.ts";
@@ -23,6 +24,7 @@ export const sender = handleCache(
 sender.rest = botRest;
 
 await connectRedis();
+await initI18n();
 
 const port = Number(Deno.env.get("PORT")) || 3000;
 
