@@ -30,7 +30,7 @@ export const DeleteUser = ({ user }: Props) => {
       open={dialogOpen}
       setOpen={setDialogOpen}
       title="Delete user"
-      description={`Are you sure you want to delete ${user.name ?? user.discordId}`}
+      description={`Are you sure you want to delete ${user.name ?? user.identifier}`}
       trigger={
         <button className="btnBase px-2 hover:bg-gray-700/80 active:bg-gray-700/60">
           <Trash strokeWidth={1.3} size={21} className="text-red-500" />
