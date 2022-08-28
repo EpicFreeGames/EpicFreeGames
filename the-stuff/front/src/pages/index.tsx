@@ -17,7 +17,7 @@ const Home = ({ translations }: InferGetStaticPropsType<typeof getStaticProps>) 
 
         <a
           href="/invite"
-          className="btnBase mt-3 transform-gpu rounded-md bg-gradient-to-r from-blue-500 to-blue-800 px-4 text-[1.1rem] transition-transform duration-200 hover:scale-[1.05] active:scale-[0.98]"
+          className="btnBase mt-3 transform-gpu rounded-md bg-blue-600 px-4 text-[1.1rem] transition-transform duration-200 hover:scale-[1.05] active:scale-[0.98]"
         >
           {t({ translations, key: "get_the_bot" })}
         </a>
@@ -53,14 +53,6 @@ const Home = ({ translations }: InferGetStaticPropsType<typeof getStaticProps>) 
             {t({
               translations,
               key: "customization_desc",
-            })}
-          </Markdown>
-
-          <Markdown>
-            {t({
-              translations,
-              key: "check_out_commands",
-              vars: { commandsLink: "/commands" },
             })}
           </Markdown>
         </div>

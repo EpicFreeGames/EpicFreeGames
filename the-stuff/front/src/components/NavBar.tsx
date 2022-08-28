@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { ReactNode } from "react";
 import { useMediaQuery } from "~useMatchMedia";
@@ -39,13 +40,14 @@ const Navlink = ({ href, children }: { href: string; children: ReactNode }) => {
   const active = pathname === href;
 
   return (
-    <a
-      href={href}
-      className={`items-center justify-center rounded-md px-2 py-1 text-sm font-bold transition-all duration-200 hover:bg-gray-800 sm:text-base ${
-        active ? "border-[1px] border-gray-600 bg-gray-800" : ""
-      }`}
-    >
-      {children}
-    </a>
+    <Link passHref href={href}>
+      <a
+        className={`items-center justify-center rounded-md px-2 py-1 text-sm font-bold transition-all duration-200 hover:bg-gray-800 sm:text-base ${
+          active ? "border-[1px] border-gray-600 bg-gray-800" : ""
+        }`}
+      >
+        {children}
+      </a>
+    </Link>
   );
 };

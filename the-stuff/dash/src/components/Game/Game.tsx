@@ -31,7 +31,7 @@ export const Game = ({ game }: { game: IGameWithStatus }) => {
           alt={game.displayName}
         />
 
-        <div className="flex w-full flex-col gap-2 md:flex-row">
+        <div className="flex w-full flex-col gap-2 md:grid md:grid-cols-2">
           <div className="flex flex-col gap-2">
             <Spec title="Name:" value={game.name} wordWrap />
             <Spec title="Path:" value={game.path} />
@@ -42,7 +42,7 @@ export const Game = ({ game }: { game: IGameWithStatus }) => {
 
           <div className="w-full">
             <Details summary="Prices">
-              <div className="grid grid-cols-3 gap-2">
+              <div className="flex flex-col gap-2">
                 {game.prices.map((price) => (
                   <div className="rounded-md bg-gray-700 p-2" key={price.currencyCode}>
                     <p>

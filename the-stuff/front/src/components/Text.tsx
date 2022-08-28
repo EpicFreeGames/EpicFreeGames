@@ -15,11 +15,7 @@ type BProps = {
   children: ReactNode;
 };
 
-export const B = ({ children }: BProps) => (
-  <b className="bg-gradient-to-r from-blue-300 to-blue-500 bg-clip-text font-bold text-transparent">
-    {children}
-  </b>
-);
+export const B = ({ children }: BProps) => <b className="font-bold text-blue-400">{children}</b>;
 
 type CodeProps = {
   children: ReactNode;
@@ -78,7 +74,7 @@ type LinkProps = {
 export const Link = ({ children, href }: LinkProps) => (
   <NextLink href={href} passHref>
     <a className="focus rounded-md outline-none">
-      <span className="border-b-2 border-b-blue-400 bg-gradient-to-r from-blue-300 to-blue-500 bg-clip-text font-bold text-transparent outline-none">
+      <span className="border-b-2 border-b-blue-400 border-opacity-40 font-bold text-blue-400 outline-none transition-all duration-200 hover:border-opacity-100">
         {children}
       </span>
     </a>
