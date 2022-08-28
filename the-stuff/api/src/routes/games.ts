@@ -204,7 +204,7 @@ router.post(
 
 router.put(
   "/",
-  endpointAuth(Flags.PutGames, Flags.GetGames),
+  endpointAuth(Flags.PutGames),
   withValidation(
     {
       body: z.array(
