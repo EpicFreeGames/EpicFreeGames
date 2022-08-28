@@ -37,6 +37,7 @@ export const t = <P extends Join<PathKeys<T>, ".">>({ language, key, vars }: Arg
   if (!value) {
     const english = getDefaultTranslations();
 
+    // @ts-ignore no point trying to make ts happy
     value = english;
     for (const p of path) {
       // @ts-ignore no point trying to make ts happy
