@@ -24,7 +24,7 @@ const Home = ({ translations }: InferGetStaticPropsType<typeof getStaticProps>) 
       </div>
 
       <div className="flex flex-col">
-        <h2 className="pb-2 font-bold">
+        <h2 className="pb-2 text-xl font-bold">
           {t({ translations, key: "what_is_bot", vars: { botName: "EpicFreeGames" } })}
         </h2>
 
@@ -47,7 +47,7 @@ const Home = ({ translations }: InferGetStaticPropsType<typeof getStaticProps>) 
       </div>
 
       <div className="flex flex-col">
-        <h2 className="pb-2 font-bold">{t({ translations, key: "customization" })}</h2>
+        <h2 className="pb-2 text-xl font-bold">{t({ translations, key: "customization" })}</h2>
         <div className="flex flex-col gap-2">
           <Markdown>
             {t({
