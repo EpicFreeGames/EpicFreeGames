@@ -20,10 +20,10 @@ RUN yarn prisma generate
 
 FROM base as runner
 
-COPY --from=builder /app/dist ./
+COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/t10s ./t10s
 COPY --from=builder /tmp/prod-node_modules ./node_modules
 COPY --from=builder /app/node_modules/@prisma/client ./node_modules/@prisma/client
 COPY --from=builder /app/node_modules/.prisma/client ./node_modules/.prisma/client
 
-CMD ["node", "index.js"]
+CMD node ./dist/index.js
