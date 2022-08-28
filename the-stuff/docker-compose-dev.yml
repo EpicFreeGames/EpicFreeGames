@@ -36,7 +36,7 @@ services:
       DISCORD_CLIENT_ID: ${DISCORD_CLIENT_ID}
       DISCORD_CLIENT_SECRET: ${DISCORD_CLIENT_SECRET}
       SENDER_AUTH: efg-sender-auth
-      SENDER_URL: http://sender:3000
+      SENDER_URL: http://bot_sender:3000
       JWT_ISS: efg-dev-api
       JWT_AUD: efg-dev-api
       JWT_EXP: "900"
