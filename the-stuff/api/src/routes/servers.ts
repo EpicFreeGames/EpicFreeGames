@@ -6,7 +6,7 @@ import { Flags } from "../auth/flags";
 import prisma from "../data/prisma";
 import { prismaUpdateCatcher } from "../data/prismaUpdateCatcher";
 import { currencies } from "../i18n/currencies";
-import { addLocaleInfoToServer } from "../utils/addLocaleInfoToServer";
+import { addLocaleInfoToServers } from "../utils/addLocaleInfoToServers";
 import { bigintSchema } from "../utils/jsonfix";
 import { withValidation } from "../utils/withValidation";
 import { WsMsgType } from "../websocket/types";
@@ -39,7 +39,7 @@ router.get(
           message: "Server not found",
         });
 
-      res.json(addLocaleInfoToServer(server));
+      res.json(addLocaleInfoToServers(server));
     }
   )
 );
@@ -87,7 +87,7 @@ router.put(
 
       broadcastWss(req.wss, WsMsgType.ChannelModify);
 
-      res.json(addLocaleInfoToServer(updatedServer));
+      res.json(addLocaleInfoToServers(updatedServer));
     }
   )
 );
@@ -126,7 +126,7 @@ router.delete(
 
       broadcastWss(req.wss, WsMsgType.ChannelDelete);
 
-      res.json(addLocaleInfoToServer(updatedServer));
+      res.json(addLocaleInfoToServers(updatedServer));
     }
   )
 );
@@ -164,7 +164,7 @@ router.put(
 
       broadcastWss(req.wss, WsMsgType.RoleModify);
 
-      res.json(addLocaleInfoToServer(updatedServer));
+      res.json(addLocaleInfoToServers(updatedServer));
     }
   )
 );
@@ -201,7 +201,7 @@ router.delete(
 
       broadcastWss(req.wss, WsMsgType.RoleDelete);
 
-      res.json(addLocaleInfoToServer(updatedServer));
+      res.json(addLocaleInfoToServers(updatedServer));
     }
   )
 );
@@ -249,7 +249,7 @@ router.put(
 
       broadcastWss(req.wss, WsMsgType.ThreadModify);
 
-      res.json(addLocaleInfoToServer(updatedServer));
+      res.json(addLocaleInfoToServers(updatedServer));
     }
   )
 );
@@ -289,7 +289,7 @@ router.delete(
 
       broadcastWss(req.wss, WsMsgType.ThreadDelete);
 
-      res.json(addLocaleInfoToServer(updatedServer));
+      res.json(addLocaleInfoToServers(updatedServer));
     }
   )
 );
@@ -327,7 +327,7 @@ router.put(
 
       broadcastWss(req.wss, WsMsgType.LanguageModify);
 
-      res.json(addLocaleInfoToServer(updatedServer));
+      res.json(addLocaleInfoToServers(updatedServer));
     }
   )
 );
@@ -373,7 +373,7 @@ router.put(
 
       broadcastWss(req.wss, WsMsgType.CurrencyModify);
 
-      res.json(addLocaleInfoToServer(updatedServer));
+      res.json(addLocaleInfoToServers(updatedServer));
     }
   )
 );

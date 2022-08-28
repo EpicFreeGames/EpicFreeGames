@@ -67,6 +67,19 @@ router.get("/not-confirmed", endpointAuth(Flags.GetGames), async (req, res) => {
   res.json(addStatusToGames(...games));
 });
 
+router.get("/confirmed", endpointAuth(Flags.GetGames), async (req, res) => {
+  const games = await prisma.game.findMany({
+    where: {
+      confirmed: true,
+    },
+    include: {
+      prices: true,
+    },
+  });
+
+  res.json(addStatusToGames(...games));
+});
+
 router.get(
   "/:gameId",
   endpointAuth(Flags.GetGames),

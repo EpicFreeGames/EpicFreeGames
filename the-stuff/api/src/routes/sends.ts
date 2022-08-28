@@ -7,6 +7,7 @@ import { config } from "../config";
 import prisma from "../data/prisma";
 import { prismaUpdateCatcher } from "../data/prismaUpdateCatcher";
 import redis from "../data/redis";
+import { addLocaleInfoToServers } from "../utils/addLocaleInfoToServers";
 import { bigintSchema } from "../utils/jsonfix";
 import { withValidation } from "../utils/withValidation";
 
@@ -65,7 +66,7 @@ router.get(
 
       await redis.set(`sending:${sendingId}:target`, servers.length);
 
-      res.json(servers);
+      res.json(addLocaleInfoToServers(...servers));
     }
   )
 );
