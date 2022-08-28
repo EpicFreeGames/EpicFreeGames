@@ -40,5 +40,3 @@ export const config = {
   ...env.data,
   JWT_KEY: new TextEncoder().encode(env.data.JWT_SECRET),
 };
-
-console.log(config.JWT_KEY);
