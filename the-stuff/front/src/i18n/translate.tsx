@@ -1,12 +1,4 @@
-import {
-  ILanguage,
-  Join,
-  PathKeys,
-  Variables,
-  translationsType,
-  variableEnd,
-  variableStart,
-} from "./types";
+import { Join, PathKeys, Variables, translationsType, variableEnd, variableStart } from "./types";
 
 type T = translationsType;
 
