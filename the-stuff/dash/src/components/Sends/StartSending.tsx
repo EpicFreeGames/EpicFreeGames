@@ -34,8 +34,9 @@ export const StartSending = ({ sending }: Props) => {
       setOpen={setDialogOpen}
       title="Start sending"
       description={`Are you sure you want to start sending ${names}?${
-        sending.status === "SENDING" &&
-        " Status is SENDING, only send if the sender has crashed etc"
+        sending.status === "SENDING"
+          ? " Status is SENDING, only send if the sender has crashed etc"
+          : ""
       }`}
       trigger={<button className="btnBase hover:bg-gray-700/80 active:bg-gray-700/60">Send</button>}
       action={
