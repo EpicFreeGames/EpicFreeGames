@@ -12,7 +12,7 @@ export const Logout = () => {
       className="btnBase bg-gray-600 hover:bg-gray-500/90 active:bg-gray-400/90"
       onClick={onClick}
     >
-      {user?.name ?? user?.discordId}
+      {user?.name ?? user?.identifier}
     </button>
   );
 };
