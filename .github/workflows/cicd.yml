@@ -319,4 +319,4 @@ jobs:
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_FRONT }}
-        run: vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }} -b EFG_API_BASE_URL=${{ secrets.EFG_API_BASE_URL }} -b EFG_API_FRONT_TOKEN=${{ secrets.EFG_API_FRONT_TOKEN }}
