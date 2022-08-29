@@ -13,7 +13,7 @@ const router = Router();
 
 router.post(
   "/commands",
-  endpointAuth(Flags.AddCommandLogs, Flags.GetCommandLogs),
+  endpointAuth(Flags.AddCommandLogs),
   withValidation(
     {
       body: z
