@@ -28,7 +28,7 @@ export const Layout = ({ title, children }: Props) => (
       <meta property="og:description" content={desc} key="og:description" />
       <meta
         property="og:image"
-        content="https://epicfreegames.com/assets/logo.png"
+        content="https://epicfreegames.net/assets/logo.png"
         key="og:image"
       />
       <meta property="og:image:type" content="image/png" key="og:image:type" />
@@ -37,7 +37,7 @@ export const Layout = ({ title, children }: Props) => (
       <meta property="og:image:alt" content="EpicFreeGames logo" key="og:image:alt" />
 
       <meta property="og:type" content="website" key="og:type" />
-      <meta property="og:url" content="https://epicfreegames.com" key="og:url" />
+      <meta property="og:url" content="https://epicfreegames.net" key="og:url" />
 
       <meta property="og:site_name" content="EpicFreeGames" key="og:site_name" />
 
