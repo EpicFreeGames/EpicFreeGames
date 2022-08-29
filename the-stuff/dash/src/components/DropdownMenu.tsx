@@ -1,44 +1,71 @@
-import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
-import { useRouter } from "next/router";
-import { ComponentProps, ReactNode } from "react";
+import { Menu, Transition } from "@headlessui/react";
+import Link, { LinkProps } from "next/link";
+import { Fragment, ReactNode, forwardRef } from "react";
+import { Menu2 } from "tabler-icons-react";
 
-type Props = ComponentProps<typeof DropdownMenuPrimitive.Root> & {
+type Props = {
   children: ReactNode;
-  trigger: ReactNode;
 };
 
-export const DropdownMenu = ({ children, trigger, ...rest }: Props) => {
+export const DropdownMenu = ({ children }: Props) => {
   return (
-    <DropdownMenuPrimitive.Root {...rest}>
-      <DropdownMenuPrimitive.Trigger asChild>{trigger}</DropdownMenuPrimitive.Trigger>
+    <Menu as="div" className="relative inline-block text-left">
+      <div>
+        <Menu.Button className="focus inline-flex w-full cursor-default justify-center rounded-md bg-gray-600 p-1">
+          <Menu2 />
+        </Menu.Button>
 
-      <DropdownMenuPrimitive.Content
-        className="min-w-[220px] overflow-hidden rounded-md border-[1px] border-gray-700 bg-gray-800 p-2 text-sm shadow-sm"
-        sideOffset={5}
+        <Transition
+          as={Fragment}
+          enter="transition ease-out duration-100"
+          enterFrom="transform opacity-0 scale-95"
+          enterTo="transform opacity-100 scale-100"
+          leave="transition ease-in duration-75"
+          leaveFrom="transform opacity-100 scale-100"
+          leaveTo="transform opacity-0 scale-95"
+        >
+          <Menu.Items className="absolute rounded-md border-[1px] border-gray-600 bg-gray-900 p-2 text-sm outline-none sm:text-base">
+            {children}
+          </Menu.Items>
+        </Transition>
+      </div>
+    </Menu>
+  );
+};
+
+const MyLink = forwardRef<
+  HTMLAnchorElement,
+  LinkProps & { children: ReactNode; className?: string }
+>((props, ref) => {
+  let { href, children, ...rest } = props;
+
+  return (
+    <Link href={href} passHref>
+      <a ref={ref} {...rest}>
+        {children}
+      </a>
+    </Link>
+  );
+});
+
+MyLink.displayName = "MyLink";
+
+type MenuLinkItemProps = {
+  children: ReactNode;
+  href: string;
+};
+
+export const DropdownMenuLinkItem = ({ children, href }: MenuLinkItemProps) => (
+  <Menu.Item>
+    {({ active }) => (
+      <MyLink
+        className={`block select-none rounded-md p-2 pl-8 pr-16 text-sm transition-all duration-100 ${
+          active ? "bg-gray-800" : "bg-gray-900"
+        }`}
+        href={href}
       >
         {children}
-      </DropdownMenuPrimitive.Content>
-    </DropdownMenuPrimitive.Root>
-  );
-};
-
-export const DropdownMenuItem = ({
-  children,
-  href,
-  ...rest
-}: { children: ReactNode; href: string } & Omit<
-  ComponentProps<typeof DropdownMenuPrimitive.Item>,
-  "className"
->) => {
-  const router = useRouter();
-
-  return (
-    <DropdownMenuPrimitive.Item
-      {...rest}
-      className="relative flex select-none items-center rounded-md bg-gray-800 p-3 pl-7 outline-none duration-200 focus:bg-gray-700"
-      onClick={() => router.push(href)}
-    >
-      {children}
-    </DropdownMenuPrimitive.Item>
-  );
-};
+      </MyLink>
+    )}
+  </Menu.Item>
+);

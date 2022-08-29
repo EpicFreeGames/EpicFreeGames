@@ -4,7 +4,7 @@
 
 @layer components {
   .btnBase {
-    @apply text-[0.95rem] px-2 py-[0.3rem] flex items-center justify-center outline-none select-none cursor-default rounded-md transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500;
+    @apply flex cursor-default select-none items-center justify-center rounded-md px-2 py-[0.3rem] text-[0.95rem] outline-none transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500;
   }
 
   .focus {
@@ -13,19 +13,19 @@
 
   .focus:focus {
     @apply outline-none;
-    box-shadow: var(--focus-color) 0 0 0 1px;
+    box-shadow: var(--focus-color) 0 0 0 2px;
     border-color: var(--focus-color);
   }
 
   .focus:focus-within {
     @apply outline-none;
-    box-shadow: var(--focus-color) 0 0 0 1px;
+    box-shadow: var(--focus-color) 0 0 0 2px;
     border-color: var(--focus-color);
   }
 
   .focus:focus-visible {
     @apply outline-none;
-    box-shadow: var(--focus-color) 0 0 0 1px;
+    box-shadow: var(--focus-color) 0 0 0 2px;
     border-color: var(--focus-color);
   }
 }
