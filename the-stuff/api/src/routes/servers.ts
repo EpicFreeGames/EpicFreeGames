@@ -57,31 +57,27 @@ router.put(
       body: z
         .object({
           channelId: z.string(),
-          // webhookId: z.string(),
-          // webhookToken: z.string(),
+          webhookId: z.string(),
+          webhookToken: z.string(),
         })
         .strict(),
     },
     async (req, res) => {
       const { serverId } = req.params;
-      const {
-        channelId,
-        //  webhookId,
-        //  webhookToken
-      } = req.body;
+      const { channelId, webhookId, webhookToken } = req.body;
 
       const updatedServer = await prisma.server.upsert({
         where: { id: serverId },
         update: {
           channelId,
-          // webhookId,
-          // webhookToken,
+          webhookId,
+          webhookToken,
         },
         create: {
           id: serverId,
           channelId,
-          // webhookId,
-          // webhookToken,
+          webhookId,
+          webhookToken,
         },
       });
 
