@@ -9,7 +9,7 @@ type Props = {
 };
 
 const desc =
-  "A customizable Discord bot notifies your server about new free games on the Epic Games store.";
+  "A customizable and easy-to-setup Discord bot focused around notifying about free games. Apart from notifying, it also provides your server some cool commands!";
 
 export const Layout = ({ title, children }: Props) => (
   <>
@@ -26,9 +26,10 @@ export const Layout = ({ title, children }: Props) => (
 
       <meta property="og:title" content="EpicFreeGames" key="og:title" />
       <meta property="og:description" content={desc} key="og:description" />
+
       <meta
         property="og:image"
-        content="https://epicfreegames.net/assets/logo.png"
+        content="https://epicfreegames.net/assets/images/logos/Production.png"
         key="og:image"
       />
       <meta property="og:image:type" content="image/png" key="og:image:type" />
