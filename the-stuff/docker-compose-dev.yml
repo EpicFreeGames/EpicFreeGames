@@ -4,7 +4,6 @@ x-shared-envs: &sharedEnvs
   REDISHOST: redis
   REDISPORT: "6379"
   EFG_API_INTERNAL_BASEURL: http://api:3000/api
-  EFG_API_BOT_SECRET: efg-bot-auth
   DISCORD_API_BASEURL: https://discord.com/api/v10
   DISCORD_REDIRECT_URL: http://localhost:3010/api/auth/discord-callback
   ENV: Development
@@ -16,6 +15,7 @@ x-shared-bot-envs: &sharedBotEnvs
   REST_PROXY_URL: http://bot_rest-proxy:3000
   REST_PROXY_AUTH: efg-rest-proxy-auth
   BOT_TOKEN: ${BOT_TOKEN}
+  EFG_API_TOKEN: ${EFG_API_TOKEN}
 
 services:
   redis:
@@ -39,7 +39,6 @@ services:
       SENDER_URL: http://bot_sender:3000
       JWT_ISS: efg-dev-api
       JWT_AUD: efg-dev-api
-      JWT_EXP: "900"
       JWT_SECRET: efg-api-jwt-secret
       DASH_URL: http://localhost:3001
       DATABASE_URL: ${DATABASE_URL}

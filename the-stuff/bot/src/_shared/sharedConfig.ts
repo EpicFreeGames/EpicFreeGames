@@ -5,7 +5,7 @@ import { getBase64Image } from "~shared/utils/getBase64Image.ts";
 
 const envSchema = z.object({
   EFG_API_INTERNAL_BASEURL: z.string(),
-  EFG_API_BOT_SECRET: z.string(),
+  EFG_API_TOKEN: z.string(),
 
   EFG_FRONT_BASEURL: z.string(),
 

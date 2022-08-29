@@ -11,7 +11,6 @@ const envSchema = z.object({
   REDISPASS: z.string().optional(),
 
   EFG_API_SECRET: z.string(),
-  EFG_API_BOT_SECRET: z.string(),
 
   DISCORD_CLIENT_ID: z.string(),
   DISCORD_CLIENT_SECRET: z.string(),
@@ -23,7 +22,6 @@ const envSchema = z.object({
 
   JWT_ISS: z.string(),
   JWT_AUD: z.string(),
-  JWT_EXP: z.string().transform(Number),
   JWT_SECRET: z.string(),
 
   ENV: z.enum(["Development", "Staging", "Production"]),

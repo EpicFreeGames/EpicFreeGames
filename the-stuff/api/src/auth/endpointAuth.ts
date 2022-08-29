@@ -1,6 +1,4 @@
-import { config } from "../config";
 import { Middleware } from "../types";
-import { safeEqual } from "../utils/crypto";
 import { hasPermission } from "./authUtils";
 import { createAccessTokenCookie } from "./cookie";
 import { Flags } from "./flags";
@@ -18,9 +16,6 @@ export const endpointAuth =
         error: "Unauthorized",
         message: "Invalid auth",
       });
-
-    const botToken = authHeader?.split("Bot ")?.at(1);
-    if (botToken && safeEqual(botToken, config.EFG_API_BOT_SECRET)) return next();
 
     const authToken = authHeader?.split("Bearer ")?.at(1) ?? accessTokenCookie;
     if (!authToken)
