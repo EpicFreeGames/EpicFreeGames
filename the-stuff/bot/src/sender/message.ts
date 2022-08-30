@@ -9,12 +9,10 @@ import { hasPermsOnChannel } from "~shared/utils/hasPerms.ts";
 import { logger } from "~shared/utils/logger.ts";
 
 import { sender } from "./mod.ts";
-import { MessageServer, logLog, wait } from "./utils.ts";
+import { MessageServer, logLog } from "./utils.ts";
 
 export const messageSender = async (games: Game[], servers: MessageServer[], sendingId: string) => {
   for (const server of servers) {
-    await wait(30);
-
     const { channelId: channelIdString, language, id, roleId } = server;
     const guildId = sender.transformers.snowflake(id);
     const channelId = sender.transformers.snowflake(channelIdString);
@@ -72,6 +70,20 @@ export const messageSender = async (games: Game[], servers: MessageServer[], sen
             type: "MESSAGE",
             result: "ok",
             success: true,
+          });
+        })
+        .catch((err) => {
+          logger.error(
+            `(message) ${sendingId} failed to send ${games.length} games to ${server.id}`
+          );
+          logger.error(err);
+
+          return logLog({
+            serverId: server.id,
+            sendingId,
+            type: "MESSAGE",
+            result: ".sendMessage().catch()",
+            success: false,
           });
         });
     });
