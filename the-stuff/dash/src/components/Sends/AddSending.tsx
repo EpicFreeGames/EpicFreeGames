@@ -55,7 +55,7 @@ export const AddSending = () => {
             {isLoading ? (
               <option>Loading...</option>
             ) : games ? (
-              games.map((game) => (
+              games?.map((game) => (
                 <option key={game.id} value={game.id}>
                   {game.name}
                 </option>
