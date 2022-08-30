@@ -4,7 +4,7 @@ x-shared-envs: &sharedEnvs
   REDISHOST: redis
   REDISPORT: "6379"
   EFG_API_INTERNAL_BASEURL: http://api:3000/api
-  EFG_API_BOT_SECRET: ${EFG_API_BOT_SECRET}
+  EFG_API_BOT_TOKEN: ${EFG_API_BOT_TOKEN}
   DISCORD_API_BASEURL: https://discord.com/api/v10
   DISCORD_REDIRECT_URL: https://staging-api.epicfreegames.net/api/auth/discord-callback
   ENV: Staging
