@@ -6,6 +6,7 @@ import { ChevronDown } from "tabler-icons-react";
 import { t } from "~i18n/translate";
 import { Translations } from "~i18n/types";
 
+import { AnimatedChevron } from "./AnimatedChevron";
 import { Markdown } from "./Markdown";
 import { Text } from "./Text";
 
@@ -33,14 +34,7 @@ const AccordionItem = ({ title, children, value, currentValue, change }: Accordi
         <Collapsible.Trigger className="cursor-default text-left">{title}</Collapsible.Trigger>
 
         <div className="rounded-md bg-gray-900/50 p-1">
-          <motion.div
-            key="chevron"
-            initial={{ transform: "rotate(0deg)" }}
-            animate={isOpen ? { transform: "rotate(180deg)" } : { transform: "rotate(0deg)" }}
-            transition={{ duration: 0.8, type: "spring", bounce: 0.5 }}
-          >
-            <ChevronDown size={20} />
-          </motion.div>
+          <AnimatedChevron open={isOpen} size={20} />
         </div>
       </div>
 
