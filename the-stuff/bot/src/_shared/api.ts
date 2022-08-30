@@ -41,25 +41,29 @@ export async function api<TData>({ method, path, body, query }: Args): Promise<A
     }
   )
     .then(async (res) => {
-      const json = await res.json();
+      const json = await res.json().catch((e) => null);
 
       if (res.ok) {
-        return {
-          data: json,
-        };
+        return { data: json };
       } else {
-        throw json;
+        const error = json ?? {
+          statusCode: res.status ?? 500,
+          error: res.statusText ?? "Unknown error",
+          message: res.statusText ?? "Unknown error",
+        };
+
+        logger.error(
+          `API request failed\nRequest url: ${sharedConfig.EFG_API_INTERNAL_BASEURL}${path}\nError: ${error}`
+        );
+
+        return { error };
       }
     })
-    .catch(async (err) => {
+    .catch((error) => {
       logger.error(
-        `API request failed\nRequest url: ${
-          sharedConfig.EFG_API_INTERNAL_BASEURL
-        }${path}\nError: ${await serialize(err)}`
+        `API request failed\nRequest url: ${sharedConfig.EFG_API_INTERNAL_BASEURL}${path}\nError: ${error}`
       );
 
-      return {
-        error: err,
-      };
+      return { error };
     });
 }
