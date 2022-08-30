@@ -18,5 +18,5 @@ export const send = (
   hookSender(games, hookServers, sendingId);
   messageSender(games, messageServers, sendingId);
 
-  logger.info("senders started");
+  logger.info(`${sendingId} - senders started`);
 };
