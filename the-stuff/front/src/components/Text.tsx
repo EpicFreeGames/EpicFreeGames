@@ -30,10 +30,10 @@ export const Code = ({ children, toCopy }: CodeProps) => {
       </p>
     );
 
-  const copyFail = () =>
+  const copyFail = (cause?: string) =>
     toast.error(
       <p>
-        Failed to copy <Code>{toCopy}</Code> to clipboard!
+        Failed to copy <Code>{toCopy}</Code> to clipboard! {cause ? `Cause: ${cause}` : ""}
       </p>
     );
 
@@ -42,14 +42,14 @@ export const Code = ({ children, toCopy }: CodeProps) => {
 
     if (!navigator.clipboard) {
       console.log("Failed to copy text to clipboard - cause:", "Clipboard API not supported");
-      copyFail();
+      copyFail("Clipboard API not supported");
     } else {
       try {
         navigator.clipboard.writeText(toCopy);
         copySuccess();
       } catch (err) {
         console.log("Failed to copy text to clipboard - cause:", err);
-        copyFail();
+        copyFail(err?.message);
       }
     }
   };
@@ -57,9 +57,10 @@ export const Code = ({ children, toCopy }: CodeProps) => {
   return (
     <code
       onClick={() => copy()}
-      className={`whitespace-nowrap rounded-md border-[1px] border-gray-700 bg-gray-800 py-[0.1rem] px-1 font-mono text-xs outline-none transition-all duration-200 sm:text-base ${
+      className={`focus whitespace-nowrap rounded-md border-[1px] border-gray-700 bg-gray-800 py-[0.1rem] px-1 font-mono text-xs outline-none transition-all duration-200 sm:text-base ${
         toCopy ? "hover:cursor-pointer hover:bg-gray-800/50" : ""
       }`}
+      tabIndex={toCopy ? 0 : -1}
     >
       {children}
     </code>
