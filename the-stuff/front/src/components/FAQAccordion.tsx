@@ -106,7 +106,7 @@ export const FAQAccordion = ({ translations }: { translations: Translations }) =
         title={
           <h2 className="text-sm font-bold sm:text-base">{`${t({
             translations,
-            key: "faq_3_a",
+            key: "faq_3_q",
           })}`}</h2>
         }
         value="3"
