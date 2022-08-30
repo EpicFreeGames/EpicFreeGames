@@ -221,7 +221,7 @@ jobs:
           REST_PROXY_AUTH: ${{ secrets.REST_PROXY_AUTH }}
           DISCORD_CLIENT_ID: ${{ secrets.DISCORD_CLIENT_ID }}
           EFG_API_SECRET: ${{ secrets.EFG_API_SECRET }}
-          EFG_API_BOT_SECRET: ${{ secrets.EFG_API_BOT_SECRET }}
+          EFG_API_BOT_TOKEN: ${{ secrets.EFG_API_BOT_TOKEN }}
           EVENT_HANDLER_AUTH: ${{ secrets.EVENT_HANDLER_AUTH }}
           DISCORD_CLIENT_SECRET: ${{ secrets.DISCORD_CLIENT_SECRET }}
         with:
@@ -240,7 +240,7 @@ jobs:
               DISCORD_CLIENT_ID=${{ env.DISCORD_CLIENT_ID }} \
               JWT_SECRET=${{ env.JWT_SECRET }} \
               EFG_API_SECRET=${{ env.EFG_API_SECRET }} \
-              EFG_API_BOT_SECRET=${{ env.EFG_API_BOT_SECRET }} \
+              EFG_API_BOT_TOKEN=${{ env.EFG_API_BOT_TOKEN }} \
               EVENT_HANDLER_AUTH=${{ env.EVENT_HANDLER_AUTH }} \
               DISCORD_CLIENT_SECRET=${{ env.DISCORD_CLIENT_SECRET }} \
                 docker compose -f docker-compose-staging.yml pull \
@@ -253,7 +253,7 @@ jobs:
               DISCORD_CLIENT_ID=${{ env.DISCORD_CLIENT_ID }} \
               JWT_SECRET=${{ env.JWT_SECRET }} \
               EFG_API_SECRET=${{ env.EFG_API_SECRET }} \
-              EFG_API_BOT_SECRET=${{ env.EFG_API_BOT_SECRET }} \
+              EFG_API_BOT_TOKEN=${{ env.EFG_API_BOT_TOKEN }} \
               EVENT_HANDLER_AUTH=${{ env.EVENT_HANDLER_AUTH }} \
               DISCORD_CLIENT_SECRET=${{ env.DISCORD_CLIENT_SECRET }} \
                 docker compose -f docker-compose-staging.yml -p efg-staging up -d --force-recreate api bot_sender bot_gateway bot_rest-proxy bot_event-handler

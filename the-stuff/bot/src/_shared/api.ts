@@ -35,7 +35,7 @@ export async function api<TData>({ method, path, body, query }: Args): Promise<A
       method,
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${sharedConfig.EFG_API_TOKEN}`,
+        Authorization: `Bearer ${sharedConfig.EFG_API_BOT_TOKEN}`,
       },
       ...(!!body && { body: await serialize(body) }),
     }

@@ -15,7 +15,7 @@ x-shared-bot-envs: &sharedBotEnvs
   REST_PROXY_URL: http://bot_rest-proxy:3000
   REST_PROXY_AUTH: efg-rest-proxy-auth
   BOT_TOKEN: ${BOT_TOKEN}
-  EFG_API_TOKEN: ${EFG_API_TOKEN}
+  EFG_API_BOT_TOKEN: ${EFG_API_BOT_TOKEN}
 
 services:
   mysql:
