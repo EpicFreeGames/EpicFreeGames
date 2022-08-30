@@ -89,6 +89,8 @@ export const settings = (
 
 const settingsUtils = {
   showChannelOrThread: (server: Server | undefined, language: Language) => {
+    console.log({ server, ch: server?.channelId });
+
     if (server?.threadId) {
       return `<#${server?.threadId}>`;
     } else if (server?.channelId) {

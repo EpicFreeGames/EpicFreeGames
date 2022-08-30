@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { ReactNode } from "react";
+
 import { useMediaQuery } from "~useMatchMedia";
 
 import { DropdownMenu, MenuLinkItem } from "./DropdownMenu";
+import { LanguageSelector } from "./LanguageSelector";
 
 export const NavBar = () => {
   const router = useRouter();
@@ -13,14 +15,14 @@ export const NavBar = () => {
 
   return (
     <nav className="sticky inset-0 z-10 bg-gray-900/50 backdrop-blur-sm">
-      <div className="mx-auto flex max-w-[680px] items-center gap-3 p-3 sm:p-5">
+      <div className="mx-auto flex max-w-[680px] items-center justify-between gap-3 p-3 sm:p-5">
         {!mobile ? (
-          <>
+          <div className="flex gap-3">
             {!isHome && <Navlink href="/">Home</Navlink>}
             <Navlink href="/commands">Commands</Navlink>
             <Navlink href="/tutorial">Tutorial</Navlink>
             <Navlink href="/faq">FAQ</Navlink>
-          </>
+          </div>
         ) : (
           <DropdownMenu>
             {!isHome && <MenuLinkItem href="/">Home</MenuLinkItem>}
@@ -29,6 +31,8 @@ export const NavBar = () => {
             <MenuLinkItem href="/faq">FAQ</MenuLinkItem>
           </DropdownMenu>
         )}
+
+        <LanguageSelector />
       </div>
     </nav>
   );
@@ -42,7 +46,7 @@ const Navlink = ({ href, children }: { href: string; children: ReactNode }) => {
   return (
     <Link passHref href={href}>
       <a
-        className={`items-center justify-center rounded-md px-2 py-1 text-sm font-bold transition-all duration-200 hover:bg-gray-800 sm:text-base ${
+        className={`focus items-center justify-center rounded-md px-2 py-1 text-sm font-bold transition-all duration-200 hover:bg-gray-800 sm:text-base ${
           active ? "border-[1px] border-gray-600 bg-gray-800" : ""
         }`}
       >
