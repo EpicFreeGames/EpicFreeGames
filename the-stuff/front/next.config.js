@@ -27,7 +27,7 @@ const nextConfig = {
       permanent: false,
     },
     {
-      source: "/support",
+      source: "/discord",
       destination: "https://discord.gg/49UQcJe",
       permanent: false,
     },

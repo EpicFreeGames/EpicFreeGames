@@ -2,6 +2,7 @@ import type { InferGetStaticPropsType } from "next";
 
 import { Layout } from "~components/Layout";
 import { Markdown } from "~components/Markdown";
+import { Link } from "~components/Text";
 import { t } from "~i18n/translate";
 import { mainGetStaticProps } from "~utils/mainGetStaticProps";
 
@@ -58,6 +59,20 @@ const Home = ({ translations }: InferGetStaticPropsType<typeof getStaticProps>) 
               },
             })}
           </Markdown>
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-3">
+        <h2 className="pb-2 text-xl font-bold">Links</h2>
+
+        <div className="flex flex-col">
+          <Link href="mailto:hi@epicfreegames.net">Contact us</Link>
+          <Link href="/discord">Discord server</Link>
+        </div>
+
+        <div className="flex flex-col">
+          <Link href="/privacy-policy">Privacy policy</Link>
+          <Link href="/terms-of-service">Terms of service</Link>
         </div>
       </div>
     </div>
