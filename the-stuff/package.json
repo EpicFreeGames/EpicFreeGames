@@ -4,9 +4,9 @@
     "dev": "./node_modules/.bin/dotenv -e .env-dev docker compose -p efg-dev -f docker-compose-dev.yml up --force-recreate -V -d --build",
     "deva": "./node_modules/.bin/dotenv -e ./.env-dev -- docker compose -p efg-dev -f docker-compose-dev.yml up --force-recreate --build --attach api --attach dash --attach front --attach bot_rest-proxy --attach bot_gateway --attach bot_event-handler --attach bot_sender",
     "format": "yarn prettier --write \"./**/*.{ts,tsx,json}\"",
-    "db": "cd ./api/ && ../node_modules/.bin/dotenv -e ../.env-dev yarn prisma studio",
-    "dbpush": "cd ./api/ && ../node_modules/.bin/dotenv -e ../.env-dev yarn prisma db push",
-    "dbreset": "cd ./api/ && ../node_modules/.bin/dotenv -e ../.env-dev yarn prisma migrate reset && cd ../ && yarn dbpush"
+    "db": "cd ./api/ && yarn dotenv -v DATABASE_URL=mysql://root:secret@localhost:3306/efg yarn prisma studio",
+    "dbpush": "cd ./api/ && yarn dotenv -v DATABASE_URL=mysql://root:secret@localhost:3306/efg yarn prisma db push",
+    "dbreset": "cd ./api/ && yarn dotenv -v DATABASE_URL=mysql://root:secret@localhost:3306/efg yarn prisma migrate reset && cd ../ && yarn dbpush"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^3.3.0",
