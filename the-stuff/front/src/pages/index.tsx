@@ -53,6 +53,9 @@ const Home = ({ translations }: InferGetStaticPropsType<typeof getStaticProps>) 
             {t({
               translations,
               key: "customization_desc",
+              vars: {
+                commandsLink: "/commands",
+              },
             })}
           </Markdown>
         </div>

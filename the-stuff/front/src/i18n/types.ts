@@ -74,6 +74,8 @@ export type ILanguage = {
   nativeName: string;
 };
 
+export type Translations = Record<string, translationsType>;
+
 export type translationsType = {
   support_click_here: "Click here to get support";
   vote_needed_title: "You need to vote to use this command";
@@ -139,6 +141,8 @@ export type translationsType = {
   webhooks_notification: "I support webhooks nowadays! They allow me to send the notifications a lot faster. Server admins, please do `/set channel` (or `/set thread`) to enable notifications through webhooks.";
   slash_notification: "Slash (/) commands not working? (Click here) to add the bot again to your server with the slash commands enabled. (Kicking is not required)";
 
+  // COMMANDS
+
   cmd_desc_set_currency: "Pick a currency you'd like the prices to be in";
   cmd_desc_set_thread: "Pick a thread I'll post new free games on";
   cmd_desc_set_channel: "Pick a channel I'll post new free games on";
@@ -154,6 +158,8 @@ export type translationsType = {
   cmd_desc_settings: "See the settings";
   cmd_desc_vote: "Vote for me";
   cmd_desc_test: "Test if your setup is working";
+
+  // WEBSITE
 
   tutorial: "Tutorial";
   tutorial_q: "How to setup <botName> to automatically notify about free games?";
@@ -192,13 +198,11 @@ export type translationsType = {
   the_sentence: "Never miss free games again!";
 
   what_is_bot: "What is <botName>?";
-  what_is_bot_desc: "EpicFreeGames is a **customizable** and **easy-to-setup** bot focused around notifying about **free games**. Apart from notifying, it also provides your server some cool [commands](<commandsLink>)!";
+  what_is_bot_desc: "EpicFreeGames is a **customizable** and **easy-to-setup** Discord bot focused around notifying about **free games**. Apart from notifying, it also provides your server some cool [commands](<commandsLink>)!";
   what_is_bot_desc_2: "To get started, set a channel using the `/set channel` command. The bot will use that channel when posting free games.";
 
   customization: "Customization";
-  customization_desc: "You can customize the bot to your liking. **Setup a role** to be pinged on the notifications, change the bot's **language** or even the **currency** of the original prices!";
-
-  check_out_commands: "Check out the [commands](<commandsLink>) to learn how!";
+  customization_desc: "You can customize the bot to your liking. **Setup a role** to be pinged on the notifications, change the bot's **language** or even the **currency** of the original prices! Check out the [commands](<commandsLink>) to learn how!";
 
   get_the_bot: "Get the bot";
 
@@ -209,5 +213,3 @@ export type translationsType = {
   commands_modify: "Modify the bot's settings with these commands:";
   commands_modify_desc: "Only for members with the *manage server* permission";
 };
-
-export type Translations = Record<string, translationsType>;
