@@ -1,7 +1,7 @@
 import { Listbox, Transition } from "@headlessui/react";
 import { useRouter } from "next/router";
 import { Fragment, useState } from "react";
-import { Check, ChevronDown } from "tabler-icons-react";
+import { Check } from "tabler-icons-react";
 
 import { languages } from "~languages";
 
