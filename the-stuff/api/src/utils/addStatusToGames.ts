@@ -1,27 +1,14 @@
 import { Game } from "@prisma/client";
 
-import { GameStatus } from "../types";
+import { GameWithStatus } from "../types";
 
-export const addStatusToGames = (...games: Game[]) => {
+export const addStatusToGame = (game: Game): GameWithStatus => {
   const now = new Date();
 
-  const updatedGames = games.map((game) => {
-    let status: GameStatus = "up";
-
-    if (game.start > now) {
-      status = "up";
-    } else if (game.end > now) {
-      status = "free";
-    } else {
-      status = "gone";
-    }
-
-    const newGame = { ...game, status };
-
-    return newGame;
-  });
-
-  if (updatedGames.length === 1 && updatedGames[0]) return updatedGames[0];
-
-  return updatedGames;
+  return {
+    ...game,
+    status: game.start > now ? "up" : game.start < now && game.end > now ? "free" : "gone",
+  };
 };
+
+export const addStatusToGames = (games: Game[]) => games.map(addStatusToGame);

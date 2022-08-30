@@ -6,7 +6,7 @@ import { Flags } from "../auth/flags";
 import prisma from "../data/prisma";
 import { prismaUpdateCatcher } from "../data/prismaUpdateCatcher";
 import { currencies } from "../i18n/currencies";
-import { addStatusToGames } from "../utils/addStatusToGames";
+import { addStatusToGame, addStatusToGames } from "../utils/addStatusToGames";
 import { withValidation } from "../utils/withValidation";
 
 const router = Router();
@@ -14,7 +14,7 @@ const router = Router();
 router.get("/", endpointAuth(Flags.GetGames), async (req, res) => {
   const games = await prisma.game.findMany({ include: { prices: true } });
 
-  res.json(addStatusToGames(...games));
+  res.json(addStatusToGames(games));
 });
 
 router.get("/free", endpointAuth(Flags.GetGames), async (req, res) => {
@@ -32,7 +32,7 @@ router.get("/free", endpointAuth(Flags.GetGames), async (req, res) => {
     },
   });
 
-  res.json(addStatusToGames(...games));
+  res.json(addStatusToGames(games));
 });
 
 router.get("/up", endpointAuth(Flags.GetGames), async (req, res) => {
@@ -51,7 +51,7 @@ router.get("/up", endpointAuth(Flags.GetGames), async (req, res) => {
     },
   });
 
-  res.json(addStatusToGames(...games));
+  res.json(addStatusToGames(games));
 });
 
 router.get("/not-confirmed", endpointAuth(Flags.GetGames), async (req, res) => {
@@ -64,7 +64,7 @@ router.get("/not-confirmed", endpointAuth(Flags.GetGames), async (req, res) => {
     },
   });
 
-  res.json(addStatusToGames(...games));
+  res.json(addStatusToGames(games));
 });
 
 router.get("/confirmed", endpointAuth(Flags.GetGames), async (req, res) => {
@@ -77,7 +77,7 @@ router.get("/confirmed", endpointAuth(Flags.GetGames), async (req, res) => {
     },
   });
 
-  res.json(addStatusToGames(...games));
+  res.json(addStatusToGames(games));
 });
 
 router.get(
@@ -104,7 +104,7 @@ router.get(
           .status(404)
           .json({ statusCode: 404, error: "Not found", message: "Game not found" });
 
-      res.json(addStatusToGames(game));
+      res.json(addStatusToGame(game));
     }
   )
 );
@@ -156,7 +156,7 @@ router.patch(
         });
       }
 
-      res.json(addStatusToGames(game));
+      res.json(addStatusToGame(game));
     }
   )
 );
@@ -210,7 +210,7 @@ router.post(
         include: { prices: true },
       });
 
-      res.json(addStatusToGames(createdGame));
+      res.json(addStatusToGame(createdGame));
     }
   )
 );

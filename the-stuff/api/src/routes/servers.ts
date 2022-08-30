@@ -6,7 +6,7 @@ import { Flags } from "../auth/flags";
 import prisma from "../data/prisma";
 import { prismaUpdateCatcher } from "../data/prismaUpdateCatcher";
 import { currencies } from "../i18n/currencies";
-import { addLocaleInfoToServers } from "../utils/addLocaleInfoToServers";
+import { addLocaleInfoToServer } from "../utils/addLocaleInfoToServers";
 import { bigintSchema } from "../utils/jsonfix";
 import { withValidation } from "../utils/withValidation";
 import { WsMsgType } from "../websocket/types";
@@ -39,7 +39,7 @@ router.get(
           message: "Server not found",
         });
 
-      res.json(addLocaleInfoToServers(server));
+      res.json(addLocaleInfoToServer(server));
     }
   )
 );
@@ -57,33 +57,33 @@ router.put(
       body: z
         .object({
           channelId: z.string(),
-          webhookId: z.string(),
-          webhookToken: z.string(),
+          // webhookId: z.string(),
+          // webhookToken: z.string(),
         })
         .strict(),
     },
     async (req, res) => {
       const { serverId } = req.params;
-      const { channelId, webhookId, webhookToken } = req.body;
+      const { channelId } = req.body;
 
       const updatedServer = await prisma.server.upsert({
         where: { id: serverId },
         update: {
           channelId,
-          webhookId,
-          webhookToken,
+          // webhookId,
+          // webhookToken,
         },
         create: {
           id: serverId,
           channelId,
-          webhookId,
-          webhookToken,
+          // webhookId,
+          // webhookToken,
         },
       });
 
       broadcastWss(req.wss, WsMsgType.ChannelModify);
 
-      res.json(addLocaleInfoToServers(updatedServer));
+      res.json(addLocaleInfoToServer(updatedServer));
     }
   )
 );
@@ -122,7 +122,7 @@ router.delete(
 
       broadcastWss(req.wss, WsMsgType.ChannelDelete);
 
-      res.json(addLocaleInfoToServers(updatedServer));
+      res.json(addLocaleInfoToServer(updatedServer));
     }
   )
 );
@@ -160,7 +160,7 @@ router.put(
 
       broadcastWss(req.wss, WsMsgType.RoleModify);
 
-      res.json(addLocaleInfoToServers(updatedServer));
+      res.json(addLocaleInfoToServer(updatedServer));
     }
   )
 );
@@ -197,7 +197,7 @@ router.delete(
 
       broadcastWss(req.wss, WsMsgType.RoleDelete);
 
-      res.json(addLocaleInfoToServers(updatedServer));
+      res.json(addLocaleInfoToServer(updatedServer));
     }
   )
 );
@@ -245,7 +245,7 @@ router.put(
 
       broadcastWss(req.wss, WsMsgType.ThreadModify);
 
-      res.json(addLocaleInfoToServers(updatedServer));
+      res.json(addLocaleInfoToServer(updatedServer));
     }
   )
 );
@@ -285,7 +285,7 @@ router.delete(
 
       broadcastWss(req.wss, WsMsgType.ThreadDelete);
 
-      res.json(addLocaleInfoToServers(updatedServer));
+      res.json(addLocaleInfoToServer(updatedServer));
     }
   )
 );
@@ -323,7 +323,7 @@ router.put(
 
       broadcastWss(req.wss, WsMsgType.LanguageModify);
 
-      res.json(addLocaleInfoToServers(updatedServer));
+      res.json(addLocaleInfoToServer(updatedServer));
     }
   )
 );
@@ -369,7 +369,7 @@ router.put(
 
       broadcastWss(req.wss, WsMsgType.CurrencyModify);
 
-      res.json(addLocaleInfoToServers(updatedServer));
+      res.json(addLocaleInfoToServer(updatedServer));
     }
   )
 );
