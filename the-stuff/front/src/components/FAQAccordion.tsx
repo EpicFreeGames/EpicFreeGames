@@ -1,7 +1,6 @@
 import * as Collapsible from "@radix-ui/react-collapsible";
 import { AnimatePresence, motion } from "framer-motion";
 import { ReactNode, useState } from "react";
-import { ChevronDown } from "tabler-icons-react";
 
 import { t } from "~i18n/translate";
 import { Translations } from "~i18n/types";
