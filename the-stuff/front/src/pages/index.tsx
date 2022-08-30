@@ -9,7 +9,7 @@ import { mainGetStaticProps } from "~utils/mainGetStaticProps";
 export const getStaticProps = mainGetStaticProps;
 
 const Home = ({ translations }: InferGetStaticPropsType<typeof getStaticProps>) => (
-  <Layout title="Home">
+  <Layout>
     <div className="flex flex-col items-start justify-start gap-[3rem] sm:gap-[6rem]">
       <div className="flex w-full flex-col items-start">
         <h1 className="pb-2 text-2xl font-bold">EpicFreeGames</h1>

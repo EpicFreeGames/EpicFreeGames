@@ -7,21 +7,22 @@ import { languages } from "~languages";
 import { NavBar } from "./NavBar";
 
 type Props = {
-  title: string;
+  title?: string;
   children: ReactNode;
+  noTranslations?: boolean;
 };
 
 const desc =
   "A customizable and easy-to-setup Discord bot focused around notifying about free games. Apart from notifying, it also provides your server some cool commands!";
 
-export const Layout = ({ title, children }: Props) => {
+export const Layout = ({ title, children, noTranslations }: Props) => {
   const { pathname } = useRouter();
   const isHome = pathname === "/";
 
   return (
     <>
       <Head>
-        <title>{`${title} - EpicFreeGames`}</title>
+        <title>{`${title ? `${title} - ` : ""}EpicFreeGames`}</title>
 
         <meta name="application-name" content="EpicFreeGames" id="app-name" />
 
@@ -76,7 +77,7 @@ export const Layout = ({ title, children }: Props) => {
         />
       </Head>
 
-      <NavBar />
+      <NavBar noTranslations={noTranslations} />
 
       <main className="mx-auto mt-8 max-w-screen-sm px-3 sm:mt-16">{children}</main>
     </>

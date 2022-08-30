@@ -10,7 +10,7 @@ import { mainGetStaticProps } from "~utils/mainGetStaticProps";
 export const getStaticProps = mainGetStaticProps;
 
 const CommandsPage = ({ translations }: InferGetStaticPropsType<typeof getStaticProps>) => (
-  <Layout title="Commands">
+  <Layout title={t({ translations, key: "commands" })}>
     <div className="flex flex-col gap-2">
       <h1 className="pb-4 text-2xl font-bold">{t({ translations, key: "commands" })}</h1>
 

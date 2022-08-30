@@ -2,7 +2,7 @@ import { Layout } from "~components/Layout";
 import { TermsMarkdown } from "~components/Markdown";
 
 const PrivacyPolicyPage = () => (
-  <Layout title="Privacy policy">
+  <Layout title="Privacy policy" noTranslations>
     <TermsMarkdown>{`
 # Privacy Policy
 Last updated: August 30, 2022  

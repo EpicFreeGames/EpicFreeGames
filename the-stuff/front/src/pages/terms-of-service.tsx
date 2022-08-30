@@ -2,7 +2,7 @@ import { Layout } from "~components/Layout";
 import { TermsMarkdown } from "~components/Markdown";
 
 const TermsOfServicePage = () => (
-  <Layout title="Terms of service">
+  <Layout title="Terms of service" noTranslations>
     <TermsMarkdown>
       {`
 # Terms of service

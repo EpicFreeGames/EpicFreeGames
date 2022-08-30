@@ -7,7 +7,11 @@ import { useMediaQuery } from "~useMatchMedia";
 import { DropdownMenu, MenuLinkItem } from "./DropdownMenu";
 import { LanguageSelector } from "./LanguageSelector";
 
-export const NavBar = () => {
+type Props = {
+  noTranslations?: boolean;
+};
+
+export const NavBar = ({ noTranslations }: Props) => {
   const router = useRouter();
   const isHome = router.pathname === "/";
 
@@ -32,7 +36,7 @@ export const NavBar = () => {
           </DropdownMenu>
         )}
 
-        <LanguageSelector />
+        {!noTranslations && <LanguageSelector />}
       </div>
     </nav>
   );
