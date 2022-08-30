@@ -5,6 +5,8 @@ const envSchema = z.object({
 
   DASH_URL: z.string(),
 
+  INITDB: z.any().optional(),
+
   REDISHOST: z.string(),
   REDISPORT: z.string().transform(Number),
   REDISUSER: z.string().optional(),

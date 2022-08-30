@@ -67,13 +67,11 @@ model SendingLog {
 }
 
 model Sending {
-  id        String        @id @default(cuid())
-  successes Int           @default(0)
-  failures  Int           @default(0)
-  target    Int           @default(0)
-  status    SendingStatus
-  games     Game[]
-  logs      SendingLog[]
+  id     String        @id @default(cuid())
+  target Int           @default(0)
+  status SendingStatus
+  games  Game[]
+  logs   SendingLog[]
 }
 
 model User {
