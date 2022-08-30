@@ -58,7 +58,7 @@ const CommandsPage = ({ translations }: InferGetStaticPropsType<typeof getStatic
 
         <div className="flex flex-col gap-3">
           <div className="text-sm text-gray-400 sm:text-base">
-            <Markdown>{t({ translations, key: "commands_modify_desc" })}</Markdown>
+            <Markdown>{t({ translations, key: "commands_only_manage_server" })}</Markdown>
           </div>
 
           <table>

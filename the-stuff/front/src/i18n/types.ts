@@ -210,6 +210,5 @@ export type translationsType = {
   command: "Command";
   description: "Description";
 
-  commands_modify: "Modify the bot's settings with these commands:";
-  commands_modify_desc: "Only for members with the *manage server* permission";
+  commands_only_manage_server: "Only members with the *manage server* permission can use these commands:";
 };
