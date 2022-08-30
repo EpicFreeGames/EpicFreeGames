@@ -2,6 +2,9 @@ FROM node:18-alpine as base
 
 WORKDIR /app
 
+RUN apk update && apk add wget
+RUN wget -q -O ./wait-for.sh https://raw.githubusercontent.com/eficode/wait-for/4df3f9262d84cab0039c07bf861045fbb3c20ab7/wait-for && chmod +x ./wait-for.sh
+
 FROM base as builder
 
 COPY ./*.json ./

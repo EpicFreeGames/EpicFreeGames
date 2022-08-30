@@ -18,6 +18,21 @@ x-shared-bot-envs: &sharedBotEnvs
   EFG_API_TOKEN: ${EFG_API_TOKEN}
 
 services:
+  mysql:
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+    volumes:
+      - mysql:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    restart: always
+    healthcheck:
+      test: mysql -u root -p secret -e SHOW DATABASES
+      interval: 3s
+      timeout: 15s
+      retries: 5
+
   redis:
     image: redis
     volumes:
@@ -42,17 +57,24 @@ services:
       JWT_SECRET: efg-api-jwt-secret
       DASH_URL: http://localhost:3001
       DATABASE_URL: ${DATABASE_URL}
+    healthcheck:
+      test: curl --fail http://api:3000/api/ || exit 1
+      interval: 3s
+      timeout: 15s
+      retries: 5
     restart: always
     volumes:
       - ./api/src:/app/src:r
       - ./api/t10s:/app/t10s:r
     ports:
       - "3010:3000"
+    command: "sh -c './wait-for.sh mysql:3306 -- ./wait-for.sh redis:6379 -- yarn prisma db push && yarn dev'"
 
   dash:
     depends_on:
       - api
       - redis
+      - mysql
     build:
       context: ./dash
       dockerfile: Dockerfile.dev
@@ -66,6 +88,7 @@ services:
       - ./dash/src:/app/src:r
     ports:
       - "3001:3000"
+    command: "sh -c './wait-for.sh api:3000 -- yarn dev'"
 
   front:
     build:
@@ -80,11 +103,11 @@ services:
     environment:
       EFG_API_BASEURL: http://api:3000/api
       EFG_API_FRONT_TOKEN: ${EFG_API_FRONT_TOKEN}
+    command: "sh -c './wait-for.sh api:3000 -- yarn dev'"
 
   bot_rest-proxy:
     depends_on:
       - api
-      - redis
     build:
       context: ./bot
       args:
@@ -92,11 +115,11 @@ services:
     image: bot_rest-proxy
     environment:
       <<: *sharedBotEnvs
+    command: "sh -c './wait-for.sh api:3000 -- deno run --watch -A ./src/rest-proxy/mod.ts'"
 
   bot_sender:
     depends_on:
-      - front
-      - bot_gateway
+      - api
       - bot_rest-proxy
     build:
       context: ./bot
@@ -108,10 +131,11 @@ services:
       WEBHOOK_NAME: Dev-EpicFreeGames
       SENDER_AUTH: efg-sender-auth
     restart: always
-    command: "deno run --watch -A ./src/sender/mod.ts"
+    command: "sh -c './wait-for.sh api:3000 -- ./wait-for.sh bot_rest-proxy:3000 -- deno run --watch -A ./src/sender/mod.ts'"
 
   bot_gateway:
     depends_on:
+      - api
       - bot_rest-proxy
     build:
       context: ./bot
@@ -123,12 +147,11 @@ services:
       EVENT_HANDLER_URL: http://bot_event-handler:3000
       EVENT_HANDLER_AUTH: efg-event-handler-auth
     restart: always
+    command: "sh -c './wait-for.sh api:3000 -- ./wait-for.sh bot_rest-proxy:3000 -- deno run --watch -A ./src/gateway/mod.ts'"
 
   bot_event-handler:
     depends_on:
       - api
-      - front
-      - bot_sender
       - bot_gateway
       - bot_rest-proxy
     build:
@@ -143,7 +166,8 @@ services:
     restart: always
     volumes:
       - ./bot/src:/app/src:r
-    command: "deno run --watch -A ./src/event-handler/mod.ts"
+    command: "sh -c './wait-for.sh api:3000 -- ./wait-for.sh bot_rest-proxy:3000 -- deno run --watch -A ./src/event-handler/mod.ts'"
 
 volumes:
   redis-data:
+  mysql:
