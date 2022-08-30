@@ -59,7 +59,6 @@ for await (const conn of httpServer) {
 
       while (resServers.data?.length) {
         servers = [...servers, ...resServers.data];
-        console.log(servers.length, "servers");
 
         resServers = await api<Server[]>({
           method: "GET",
@@ -71,9 +70,21 @@ for await (const conn of httpServer) {
         });
       }
 
+      console.log(`${sendingId} - got ${servers.length} servers\nSetting new target...`);
+
+      await api<void>({
+        method: "PATCH",
+        path: `/sends/${sendingId}/target`,
+        body: { newTarget: servers.length },
+      });
+
+      console.log(`${sendingId} - New target set, filtering servers...`);
+
       const filterResult = filterServers(servers);
 
-      if (filterResult.noServers)
+      if (filterResult.noServers) {
+        console.log(`${sendingId} - No servers left to send to, aborting...`);
+
         return requestEvent.respondWith(
           new Response(
             JSON.stringify({
@@ -85,6 +96,13 @@ for await (const conn of httpServer) {
             }
           )
         );
+      }
+
+      console.log(
+        `${sendingId} - Filtering done, starting sending to ${
+          filterResult.hookServers.length + filterResult.messageServers.length
+        } servers...`
+      );
 
       send(sendingId, games, filterResult);
 

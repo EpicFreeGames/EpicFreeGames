@@ -66,7 +66,7 @@ router.get(
 
       await redis.set(`sending:${sendingId}:target`, servers.length);
 
-      res.json(addLocaleInfoToServers(...servers));
+      res.json(addLocaleInfoToServers(servers));
     }
   )
 );
@@ -147,7 +147,7 @@ router.patch(
 
 router.delete(
   "/:sendingId",
-  endpointAuth(Flags.DeleteSendings, Flags.GetSendings),
+  endpointAuth(Flags.DeleteSendings),
   withValidation(
     {
       params: z
@@ -274,6 +274,45 @@ router.post(
   )
 );
 
+router.patch(
+  "/:sendingId/target",
+  endpointAuth(Flags.EditSendings, Flags.GetSendings),
+  withValidation(
+    {
+      params: z
+        .object({
+          sendingId: z.string(),
+        })
+        .strict(),
+      body: z
+        .object({
+          newTarget: z.number(),
+        })
+        .strict(),
+    },
+    async (req, res) => {
+      const { sendingId } = req.params;
+      const { newTarget } = req.body;
+
+      const sending = await prisma.sending.update({
+        where: { id: sendingId },
+        data: { target: newTarget },
+      });
+
+      if (!sending)
+        return res.status(404).send({
+          statusCode: 404,
+          error: "Not found",
+          message: "Sending not found",
+        });
+
+      await redis.set(`sending:${sendingId}:target`, newTarget);
+
+      res.status(204).send();
+    }
+  )
+);
+
 router.post(
   "/logs",
   endpointAuth(Flags.AddSendingLogs, Flags.GetSendingLogs),
@@ -312,6 +351,8 @@ const updateSendingStatus = async (sendingId: string) => {
   ]);
 
   const total = successes + failures;
+
+  console.log({ successes, failures, target, total });
 
   const targetReached = total >= target;
 
