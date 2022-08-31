@@ -9,10 +9,12 @@ import { hasPermsOnChannel } from "~shared/utils/hasPerms.ts";
 import { logger } from "~shared/utils/logger.ts";
 
 import { sender } from "./mod.ts";
-import { MessageServer, logLog } from "./utils.ts";
+import { MessageServer, logLog, wait } from "./utils.ts";
 
 export const messageSender = async (games: Game[], servers: MessageServer[], sendingId: string) => {
   for (const server of servers) {
+    await wait(30);
+
     const { channelId: channelIdString, language, id, roleId } = server;
     const guildId = sender.transformers.snowflake(id);
     const channelId = sender.transformers.snowflake(channelIdString);
