@@ -33,10 +33,14 @@ router.get("/counts", endpointAuth(Flags.GetDashboard), async (req, res) => {
     // has webhook
     prisma.server.count({
       where: {
-        NOT: {
-          channelId: null,
-          webhookId: null,
-          webhookToken: null,
+        channelId: {
+          not: null,
+        },
+        webhookId: {
+          not: null,
+        },
+        webhookToken: {
+          not: null,
         },
       },
     }),
