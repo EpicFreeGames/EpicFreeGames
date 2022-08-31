@@ -284,9 +284,9 @@ jobs:
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_DASH }}
         run: |
           vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }} \
-          -e NEXT_PUBLIC_EFG_API_BASE_URL=${{ secrets.EFG_API_BASE_URL }} \
+          -e NEXT_PUBLIC_EFG_API_BASEURL=${{ secrets.EFG_API_BASEURL }} \
           -e NEXT_PUBLIC_EFG_API_WS_URL=${{ secrets.EFG_API_WS_URL }} \
-          -b NEXT_PUBLIC_EFG_API_BASE_URL=${{ secrets.EFG_API_BASE_URL }} \
+          -b NEXT_PUBLIC_EFG_API_BASEURL=${{ secrets.EFG_API_BASEURL }} \
           -b NEXT_PUBLIC_EFG_API_WS_URL=${{ secrets.EFG_API_WS_URL }}
 
   front-deploy-staging:
