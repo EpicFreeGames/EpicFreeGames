@@ -259,7 +259,7 @@ jobs:
                 docker compose -f docker-compose-staging.yml -p efg-staging up -d --force-recreate api bot_sender bot_gateway bot_rest-proxy bot_event-handler
 
       - name: Check health
-        run: wget -qO- https://raw.githubusercontent.com/eficode/wait-for/$WAIT_FOR_VERSION/wait-for | sh -s -- staging-api.epicfreegames.net:443 -t 15 -- echo "Api is healty"
+        run: wget -qO- https://raw.githubusercontent.com/eficode/wait-for/$WAIT_FOR_VERSION/wait-for | sh -s -- staging-api.epicfreegames.net/api:443 -t 15 -- echo "Api is healty"
         env:
           WAIT_FOR_VERSION: 4df3f9262d84cab0039c07bf861045fbb3c20ab7
 
