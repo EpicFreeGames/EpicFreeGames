@@ -1,7 +1,6 @@
 import { z } from "zod";
 
 const envSchema = z.object({
-  EVENT_HANDLER_AUTH: z.string(),
   WEBHOOK_INTEGRATION_NAME: z.string(),
 });
 

@@ -241,9 +241,6 @@ router.post(
 
       const senderResponse = await fetch(config.SENDER_URL, {
         method: "POST",
-        headers: {
-          Authorization: config.SENDER_AUTH,
-        },
         body: JSON.stringify({
           sendingId,
           games: sending.games,

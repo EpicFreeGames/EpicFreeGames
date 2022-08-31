@@ -13,7 +13,6 @@ x-shared-bot-envs: &sharedBotEnvs
   EFG_FRONT_BASEURL: https://staging.epicfreegames.net
   LOGO_URL: https://staging.epicfreegames.net/assets/images/logos/Development.png
   REST_PROXY_URL: http://bot_rest-proxy:3000
-  REST_PROXY_AUTH: efg-rest-proxy-auth
   BOT_TOKEN: ${BOT_TOKEN}
   EFG_API_BOT_TOKEN: ${EFG_API_BOT_TOKEN}
 
@@ -21,7 +20,7 @@ services:
   mysql:
     image: mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=secret
+      MYSQL_ROOT_PASSWORD: secret
     volumes:
       - mysql:/var/lib/mysql
     ports:
@@ -47,16 +46,14 @@ services:
       dockerfile: Dockerfile.dev
     environment:
       <<: *sharedEnvs
-      EFG_API_SECRET: efg-api-secret
       DISCORD_CLIENT_ID: ${DISCORD_CLIENT_ID}
       DISCORD_CLIENT_SECRET: ${DISCORD_CLIENT_SECRET}
-      SENDER_AUTH: efg-sender-auth
+      DATABASE_URL: mysql://root:secret@mysql:3306/efg
       SENDER_URL: http://bot_sender:3000
       JWT_ISS: efg-dev-api
       JWT_AUD: efg-dev-api
       JWT_SECRET: efg-api-jwt-secret
       DASH_URL: http://localhost:3001
-      DATABASE_URL: ${DATABASE_URL}
     healthcheck:
       test: curl --fail http://api:3000/api/ || exit 1
       interval: 3s
@@ -83,7 +80,6 @@ services:
       <<: *sharedEnvs
       NEXT_PUBLIC_EFG_API_BASE_URL: http://localhost:3010/api
       NEXT_PUBLIC_EFG_API_WS_URL: ws://localhost:3010/api
-    env_file: .env-dev
     volumes:
       - ./dash/src:/app/src:r
     ports:
@@ -101,8 +97,8 @@ services:
     ports:
       - "3000:3000"
     environment:
-      EFG_API_BASEURL: http://api:3000/api
       EFG_API_FRONT_TOKEN: ${EFG_API_FRONT_TOKEN}
+      EFG_API_BASEURL: http://api:3000/api
     command: "sh -c './wait-for.sh api:3000 -- yarn dev'"
 
   bot_rest-proxy:
@@ -129,7 +125,6 @@ services:
     environment:
       <<: *sharedBotEnvs
       WEBHOOK_NAME: Dev-EpicFreeGames
-      SENDER_AUTH: efg-sender-auth
     restart: always
     command: "sh -c './wait-for.sh api:3000 -- ./wait-for.sh bot_rest-proxy:3000 -- deno run --watch -A ./src/sender/mod.ts'"
 
@@ -145,7 +140,6 @@ services:
     environment:
       <<: *sharedBotEnvs
       EVENT_HANDLER_URL: http://bot_event-handler:3000
-      EVENT_HANDLER_AUTH: efg-event-handler-auth
     restart: always
     command: "sh -c './wait-for.sh api:3000 -- ./wait-for.sh bot_rest-proxy:3000 -- deno run --watch -A ./src/gateway/mod.ts'"
 
@@ -162,7 +156,6 @@ services:
     environment:
       <<: *sharedBotEnvs
       WEBHOOK_INTEGRATION_NAME: Dev-EpicFreeGames Notifications
-      EVENT_HANDLER_AUTH: efg-event-handler-auth
     restart: always
     volumes:
       - ./bot/src:/app/src:r

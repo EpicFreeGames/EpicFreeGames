@@ -1,6 +1,5 @@
 import { BASE_URL } from "discordeno";
 
-import { sharedConfig } from "~shared/sharedConfig.ts";
 import { RestMethod } from "~shared/types.ts";
 import { botRest } from "~shared/utils/botRest.ts";
 import { serialize } from "~shared/utils/jsonWorker/initiator.ts";
@@ -17,17 +16,6 @@ const handleConnection = async (connection: Deno.Conn) => {
   const httpConnection = Deno.serveHttp(connection);
 
   for await (const requestEvent of httpConnection) {
-    if (
-      !sharedConfig.REST_PROXY_AUTH ||
-      sharedConfig.REST_PROXY_AUTH !== requestEvent.request.headers.get("AUTHORIZATION")
-    ) {
-      return requestEvent.respondWith(
-        new Response(JSON.stringify({ error: "Invalid authorization key." }), {
-          status: 401,
-        })
-      );
-    }
-
     const path = new URL(requestEvent.request.url).pathname;
     const proxyTo = `${BASE_URL}${new URL(requestEvent.request.url).pathname}`;
 

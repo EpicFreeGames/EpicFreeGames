@@ -9,7 +9,6 @@ import { Server } from "~shared/types.ts";
 import { botRest } from "~shared/utils/botRest.ts";
 import { logger } from "~shared/utils/logger.ts";
 
-import { senderConfig } from "./config.ts";
 import { send } from "./send.ts";
 import { filterServers } from "./utils.ts";
 
@@ -36,13 +35,6 @@ for await (const conn of httpServer) {
     const httpConn = Deno.serveHttp(conn);
 
     for await (const requestEvent of httpConn) {
-      if (senderConfig.SENDER_AUTH !== requestEvent.request.headers.get("AUTHORIZATION"))
-        return requestEvent.respondWith(
-          new Response(JSON.stringify({ error: "Invalid secret key." }), {
-            status: 401,
-          })
-        );
-
       const { sendingId, games } = await requestEvent.request.json();
 
       let servers: Server[] = [];

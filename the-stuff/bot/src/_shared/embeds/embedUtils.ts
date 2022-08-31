@@ -24,8 +24,8 @@ export const colors = {
 };
 
 export const chars = {
-  separator: "    •    ",
-  arrow: " ➜  ",
+  separator: "   •   ",
+  arrow: "  ➜  ",
 };
 
 const createFooter = (language: Language) => {

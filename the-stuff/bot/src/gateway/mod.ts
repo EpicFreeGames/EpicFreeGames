@@ -36,10 +36,6 @@ async function handleQueue() {
   }
 
   await fetch(`${gatewayConfig.EVENT_HANDLER_URL}`, {
-    headers: {
-      Authorization: gatewayConfig.EVENT_HANDLER_AUTH,
-      "Content-Type": "application/json",
-    },
     method: "POST",
     body: JSON.stringify({
       shardId: event.shardId,
@@ -58,7 +54,6 @@ async function handleQueue() {
 
 const rest = createRestManager({
   token: sharedConfig.BOT_TOKEN,
-  secretKey: sharedConfig.REST_PROXY_AUTH,
   customUrl: sharedConfig.REST_PROXY_URL,
 });
 
@@ -87,9 +82,6 @@ const gateway = createGatewayManager({
     logger.debug(`Sending gateway event to event handler @ ${gatewayConfig.EVENT_HANDLER_URL}`);
 
     await fetch(`${gatewayConfig.EVENT_HANDLER_URL}`, {
-      headers: {
-        Authorization: gatewayConfig.EVENT_HANDLER_AUTH,
-      },
       method: "POST",
       body: JSON.stringify({ shardId, data }),
     })

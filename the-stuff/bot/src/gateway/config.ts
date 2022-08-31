@@ -2,7 +2,6 @@ import { z } from "zod";
 
 const envSchema = z.object({
   EVENT_HANDLER_URL: z.string(),
-  EVENT_HANDLER_AUTH: z.string(),
 });
 
 const result = envSchema.safeParse(Deno.env.toObject());

@@ -15,7 +15,6 @@ const envSchema = z.object({
   REDISPASS: z.string().optional(),
 
   BOT_TOKEN: z.string().refine((v) => !!BigInt(atob(v.split(".")?.at(0) ?? ""))),
-  REST_PROXY_AUTH: z.string(),
   REST_PROXY_URL: z.string().transform((v) => (v.endsWith("/") ? v.slice(0, -1) : v)),
 
   DEBUG: z.any().optional(),

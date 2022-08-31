@@ -4,7 +4,6 @@ x-shared-envs: &sharedEnvs
   REDISHOST: redis
   REDISPORT: "6379"
   EFG_API_INTERNAL_BASEURL: http://api:3000/api
-  EFG_API_BOT_TOKEN: ${EFG_API_BOT_TOKEN}
   DISCORD_API_BASEURL: https://discord.com/api/v10
   DISCORD_REDIRECT_URL: https://staging-api.epicfreegames.net/api/auth/discord-callback
   ENV: Staging
@@ -14,12 +13,13 @@ x-shared-bot-envs: &sharedBotEnvs
   EFG_FRONT_BASEURL: https://staging.epicfreegames.net
   LOGO_URL: https://staging.epicfreegames.net/assets/images/logos/Staging.png
   REST_PROXY_URL: http://bot_rest-proxy:3000
-  REST_PROXY_AUTH: ${REST_PROXY_AUTH}
+  EVENT_HANDLER_URL: http://bot_event-handler:3000
   BOT_TOKEN: ${BOT_TOKEN}
+  EFG_API_BOT_TOKEN: ${EFG_API_BOT_TOKEN}
 
 services:
   redis:
-    image: redis/redis-stack
+    image: redis
     volumes:
       - ./redis:/data
     restart: unless-stopped
@@ -33,17 +33,14 @@ services:
     restart: unless-stopped
     environment:
       <<: *sharedEnvs
-      EFG_API_SECRET: ${EFG_API_SECRET}
+      JWT_SECRET: ${JWT_SECRET}
+      DATABASE_URL: ${DATABASE_URL}
       DISCORD_CLIENT_ID: ${DISCORD_CLIENT_ID}
       DISCORD_CLIENT_SECRET: ${DISCORD_CLIENT_SECRET}
-      SENDER_AUTH: ${SENDER_AUTH}
       SENDER_URL: http://sender:3000
       JWT_ISS: efg-staging-api
       JWT_AUD: efg-staging-api
-      JWT_EXP: "900"
-      JWT_SECRET: ${JWT_SECRET}
       DASH_URL: https://staging-dash.epicfreegames.net
-      DATABASE_URL: ${DATABASE_URL}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.efg-api.entrypoints=https"
@@ -58,7 +55,6 @@ services:
   bot_rest-proxy:
     depends_on:
       - api
-      - redis
     image: ${REGISTRY}/${REGISTRY_USER}/efg-bot_rest-proxy:master
     restart: unless-stopped
     environment:
@@ -75,7 +71,6 @@ services:
     environment:
       <<: *sharedBotEnvs
       WEBHOOK_NAME: Staging-EpicFreeGames
-      SENDER_AUTH: ${SENDER_AUTH}
     networks:
       - proxy
 
@@ -86,8 +81,6 @@ services:
     restart: unless-stopped
     environment:
       <<: *sharedBotEnvs
-      EVENT_HANDLER_URL: http://bot_event-handler:3000
-      EVENT_HANDLER_AUTH: ${EVENT_HANDLER_AUTH}
     networks:
       - proxy
 
@@ -101,7 +94,6 @@ services:
     environment:
       <<: *sharedBotEnvs
       WEBHOOK_INTEGRATION_NAME: Staging-EpicFreeGames Notifications
-      EVENT_HANDLER_AUTH: ${EVENT_HANDLER_AUTH}
     networks:
       - proxy
 

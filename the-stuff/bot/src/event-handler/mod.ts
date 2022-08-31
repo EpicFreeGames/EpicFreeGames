@@ -8,7 +8,6 @@ import { logger } from "~shared/utils/logger.ts";
 
 import { initI18n } from "../_shared/i18n/index.ts";
 import { initCommands } from "./commands/mod.ts";
-import { eventHandlerConfig } from "./config.ts";
 import { initEvents } from "./events/mod.ts";
 
 export const bot = handleCache(
@@ -37,23 +36,12 @@ for await (const conn of httpServer) {
     const httpConn = Deno.serveHttp(conn);
 
     for await (const requestEvent of httpConn) {
-      if (
-        eventHandlerConfig.EVENT_HANDLER_AUTH !== requestEvent.request.headers.get("AUTHORIZATION")
-      ) {
-        return requestEvent.respondWith(
-          new Response(JSON.stringify({ error: "Invalid secret key." }), {
-            status: 401,
-          })
-        );
-      }
-
-      if (requestEvent.request.method !== "POST") {
+      if (requestEvent.request.method !== "POST")
         return requestEvent.respondWith(
           new Response(JSON.stringify({ error: "Method not allowed." }), {
             status: 405,
           })
         );
-      }
 
       const json = (await requestEvent.request.json()) as {
         data: DiscordGatewayPayload;
