@@ -9,7 +9,7 @@ export const Logout = () => {
 
   return (
     <button
-      className="btnBase bg-gray-600 hover:bg-gray-500/90 active:bg-gray-400/90"
+      className="focus flex items-center justify-center rounded-md border-[1px] border-gray-700 bg-gray-800 px-1 text-sm"
       onClick={onClick}
     >
       {user?.name ?? user?.identifier}
