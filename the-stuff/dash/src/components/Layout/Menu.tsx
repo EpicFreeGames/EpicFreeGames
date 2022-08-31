@@ -24,7 +24,6 @@ export const Menu = () => {
       <DropdownMenuLinkItem href="/languages">Languages</DropdownMenuLinkItem>
       <DropdownMenuLinkItem href="/users">Users</DropdownMenuLinkItem>
       <DropdownMenuLinkItem href="/sends">Sends</DropdownMenuLinkItem>
-      <DropdownMenuLinkItem href="/dash">Dashboard</DropdownMenuLinkItem>
     </DropdownMenu>
   );
 };
