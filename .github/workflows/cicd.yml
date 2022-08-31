@@ -283,18 +283,16 @@ jobs:
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_DASH }}
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
 
-      # this method is currently not working
-      # - name: Build Project Artifacts
-      #   run: vercel build --token=${{ secrets.VERCEL_TOKEN }} -e NEXT_PUBLIC_EFG_API_BASE_URL=${{ secrets.NEXT_PUBLIC_EFG_API_BASE_URL }} -e NEXT_PUBLIC_EFG_API_WS_URL=${{ secrets.NEXT_PUBLIC_EFG_API_WS_URL }} -b NEXT_PUBLIC_EFG_API_BASE_URL=${{ secrets.NEXT_PUBLIC_EFG_API_BASE_URL }} -b NEXT_PUBLIC_EFG_API_WS_URL=${{ secrets.NEXT_PUBLIC_EFG_API_WS_URL }}
-
-      # - name: Deploy Project Artifacts to Vercel
-      #   run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }} -e NEXT_PUBLIC_EFG_API_BASE_URL=${{ secrets.NEXT_PUBLIC_EFG_API_BASE_URL }} -e NEXT_PUBLIC_EFG_API_WS_URL=${{ secrets.NEXT_PUBLIC_EFG_API_WS_URL }} -b NEXT_PUBLIC_EFG_API_BASE_URL=${{ secrets.NEXT_PUBLIC_EFG_API_BASE_URL }} -b NEXT_PUBLIC_EFG_API_WS_URL=${{ secrets.NEXT_PUBLIC_EFG_API_WS_URL }}
-
       - name: Deploy Project to Vercel
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_DASH }}
-        run: vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }} -e NEXT_PUBLIC_EFG_API_BASE_URL=${{ secrets.NEXT_PUBLIC_EFG_API_BASE_URL }} -e NEXT_PUBLIC_EFG_API_WS_URL=${{ secrets.NEXT_PUBLIC_EFG_API_WS_URL }} -b NEXT_PUBLIC_EFG_API_BASE_URL=${{ secrets.NEXT_PUBLIC_EFG_API_BASE_URL }} -b NEXT_PUBLIC_EFG_API_WS_URL=${{ secrets.NEXT_PUBLIC_EFG_API_WS_URL }}
+        run: |
+          vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }} \
+          -e NEXT_PUBLIC_EFG_API_BASE_URL=${{ secrets.EFG_API_BASE_URL }} \
+          -e NEXT_PUBLIC_EFG_API_WS_URL=${{ secrets.EFG_API_WS_URL }} \
+          -b NEXT_PUBLIC_EFG_API_BASE_URL=${{ secrets.EFG_API_BASE_URL }} \
+          -b NEXT_PUBLIC_EFG_API_WS_URL=${{ secrets.EFG_API_WS_URL }}
 
   front-deploy-staging:
     name: "Front: Deploy to Staging"
@@ -315,15 +313,11 @@ jobs:
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_FRONT }}
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
 
-      # this method is currently not working
-      # - name: Build Project Artifacts
-      #   run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
-
-      # - name: Deploy Project Artifacts to Vercel
-      #   run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
-
       - name: Deploy Project to Vercel
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_FRONT }}
-        run: vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }} -b EFG_API_BASEURL=${{ secrets.EFG_API_BASEURL }} -b EFG_API_FRONT_TOKEN=${{ secrets.EFG_API_FRONT_TOKEN }}
+        run: | 
+          vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }} \
+            -b EFG_API_BASEURL=${{ secrets.EFG_API_BASEURL }} \
+            -b EFG_API_FRONT_TOKEN=${{ secrets.EFG_API_FRONT_TOKEN }}
