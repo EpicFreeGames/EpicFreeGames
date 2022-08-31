@@ -24,7 +24,7 @@ export const DropdownMenu = ({ children }: Props) => {
           leaveFrom="transform opacity-100"
           leaveTo="transform opacity-0"
         >
-          <Menu.Items className="absolute mt-1 rounded-md border-[1px] border-gray-600 bg-gray-800 p-[0.4rem] text-sm sm:text-base">
+          <Menu.Items className="absolute mt-1 rounded-md border-[1px] border-gray-600 bg-gray-800 p-[0.4rem] text-sm">
             {children}
           </Menu.Items>
         </Transition>
