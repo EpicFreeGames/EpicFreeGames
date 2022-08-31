@@ -20,6 +20,7 @@ router.get("/", endpointAuth(Flags.GetGames), async (req, res) => {
 router.get("/free", endpointAuth(Flags.GetGames), async (req, res) => {
   const games = await prisma.game.findMany({
     where: {
+      confirmed: true,
       start: {
         lt: new Date(),
       },
