@@ -46,9 +46,9 @@ services:
       - "traefik.http.routers.efg-api.service=efg-api"
       - "traefik.http.routers.efg-api.rule=Host(`staging-api.epicfreegames.net`)"
       - "traefik.http.services.efg-api.loadbalancer.server.port=3000"
-      - "traefik.docker.network=efg-proxy"
+      - "traefik.docker.network=proxy"
     networks:
-      - efg-staging-proxy
+      - proxy
 
   bot_rest-proxy:
     depends_on:
@@ -58,7 +58,7 @@ services:
     environment:
       <<: *sharedBotEnvs
     networks:
-      - efg-staging-proxy
+      - proxy
 
   bot_sender:
     depends_on:
@@ -70,7 +70,7 @@ services:
       <<: *sharedBotEnvs
       WEBHOOK_NAME: Staging-EpicFreeGames
     networks:
-      - efg-staging-proxy
+      - proxy
 
   bot_gateway:
     depends_on:
@@ -80,7 +80,7 @@ services:
     environment:
       <<: *sharedBotEnvs
     networks:
-      - efg-staging-proxy
+      - proxy
 
   bot_event-handler:
     depends_on:
@@ -93,32 +93,7 @@ services:
       <<: *sharedBotEnvs
       WEBHOOK_INTEGRATION_NAME: Staging-EpicFreeGames Notifications
     networks:
-      - efg-staging-proxy
-
-  traefik:
-    image: traefik:latest
-    restart: unless-stopped
-    security_opt:
-      - no-new-privileges:true
-    ports:
-      - "80:80"
-      - "443:443"
-    environment:
-      CF_API_EMAIL: ${CF_API_EMAIL}
-      CF_DNS_API_TOKEN: ${CF_DNS_API_TOKEN}
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./DATA/traefik/traefik.yml:/traefik.yml:ro
-      - ./DATA/traefik/acme.json:/acme.json
-      - ./DATA/traefik/credentials.txt:/credentials.txt:ro
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.traefik-secure.tls=true"
-      - "traefik.http.routers.traefik-secure.tls.certresolver=cloudflare"
-      - "traefik.http.routers.traefik-secure.tls.domains[0].sans=*.epicfreegames.net"
-    networks:
-      - efg-staging-proxy
+      - proxy
 
   mysql:
     image: mysql
@@ -150,9 +125,9 @@ services:
       - "traefik.http.routers.efg-uptime-kuma.service=efg-uptime-kuma"
       - "traefik.http.routers.efg-uptime-kuma.rule=Host(`staging-status.epicfreegames.net`)"
       - "traefik.http.services.efg-uptime-kuma.loadbalancer.server.port=3001"
-      - "traefik.docker.network=efg-proxy"
+      - "traefik.docker.network=proxy"
     networks:
-      - efg-staging-proxy
+      - proxy
 
   umami:
     depends_on:
@@ -170,10 +145,10 @@ services:
       - "traefik.http.routers.efg-umami.service=efg-umami"
       - "traefik.http.routers.efg-umami.rule=Host(`staging-a7s.epicfreegames.net`)"
       - "traefik.http.services.efg-umami.loadbalancer.server.port=3000"
-      - "traefik.docker.network=efg-proxy"
+      - "traefik.docker.network=proxy"
     networks:
-      - efg-staging-proxy
+      - proxy
 
 networks:
-  efg-staging-proxy:
+  proxy:
     external: true
