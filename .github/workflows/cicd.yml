@@ -189,16 +189,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Create folder
+      - name: Init
         uses: appleboy/ssh-action@v0.1.5
         with:
           host: ${{ secrets.SXX_HOST }}
           username: ${{ secrets.SXX_USERNAME }}
           port: ${{ secrets.SXX_PORT }}
           key: ${{ secrets.SXX_KEY }}
-          script: mkdir -p ~/efg-staging
+          script: |
+            mkdir -p ~/efg-staging/DATA \
+            && docker network create efg-staging-proxy
 
-      - name: Update Docker compose file
+      - name: Update Staging Docker compose file
         uses: appleboy/scp-action@v0.1.3
         with:
           host: ${{ secrets.SXX_HOST }}
@@ -209,12 +211,22 @@ jobs:
           target: /home/${{ secrets.SXX_USERNAME }}/efg-staging
           strip_components: 1
 
+      - name: Update Data Docker compose file
+        uses: appleboy/scp-action@v0.1.3
+        with:
+          host: ${{ secrets.SXX_HOST }}
+          username: ${{ secrets.SXX_USERNAME }}
+          port: ${{ secrets.SXX_PORT }}
+          key: ${{ secrets.SXX_KEY }}
+          source: the-stuff/docker-compose-data.yml
+          target: /home/${{ secrets.SXX_USERNAME }}/efg-staging
+          strip_components: 1
+
       - name: Recreate containers
         uses: appleboy/ssh-action@v0.1.5
         env:
           REGISTRY: ${{ secrets.REGISTRY }}
           REGISTRY_USER: ${{ secrets.REGISTRY_USER }}
-          UMAMI_SALT: ${{ secrets.UMAMI_SALT }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
           SENDER_AUTH: ${{ secrets.SENDER_AUTH }}
@@ -225,6 +237,9 @@ jobs:
           EFG_API_BOT_TOKEN: ${{ secrets.EFG_API_BOT_TOKEN }}
           EVENT_HANDLER_AUTH: ${{ secrets.EVENT_HANDLER_AUTH }}
           DISCORD_CLIENT_SECRET: ${{ secrets.DISCORD_CLIENT_SECRET }}
+          UMAMI_SALT: ${{ secrets.UMAMI_SALT }}
+          CF_API_EMAIL: ${{ secrets.CF_API_EMAIL }}
+          CF_DNS_API_TOKEN: ${{ secrets.CF_DNS_API_TOKEN }}
         with:
           host: ${{ secrets.SXX_HOST }}
           username: ${{ secrets.SXX_USERNAME }}
@@ -234,7 +249,6 @@ jobs:
             cd ~/efg-staging \
             && REGISTRY=${{ env.REGISTRY }} \
               REGISTRY_USER=${{ env.REGISTRY_USER }} \
-              UMAMI_SALT=${{ env.UMAMI_SALT }} \
               BOT_TOKEN=${{ env.BOT_TOKEN }} \
               SENDER_AUTH=${{ env.SENDER_AUTH }} \
               DATABASE_URL=${{ env.DATABASE_URL }} \
@@ -245,10 +259,12 @@ jobs:
               EFG_API_BOT_TOKEN=${{ env.EFG_API_BOT_TOKEN }} \
               EVENT_HANDLER_AUTH=${{ env.EVENT_HANDLER_AUTH }} \
               DISCORD_CLIENT_SECRET=${{ env.DISCORD_CLIENT_SECRET }} \
+              UMAMI_SALT=${{ env.UMAMI_SALT }} \
+              CF_API_EMAIL=${{ env.CF_API_EMAIL }} \
+              CF_DNS_API_TOKEN=${{ env.CF_DNS_API_TOKEN }} \
                 docker compose -f docker-compose-staging.yml pull \
             && REGISTRY=${{ env.REGISTRY }} \
               REGISTRY_USER=${{ env.REGISTRY_USER }} \
-              UMAMI_SALT=${{ env.UMAMI_SALT }} \
               BOT_TOKEN=${{ env.BOT_TOKEN }} \
               SENDER_AUTH=${{ env.SENDER_AUTH }} \
               DATABASE_URL=${{ env.DATABASE_URL }} \
@@ -259,6 +275,9 @@ jobs:
               EFG_API_BOT_TOKEN=${{ env.EFG_API_BOT_TOKEN }} \
               EVENT_HANDLER_AUTH=${{ env.EVENT_HANDLER_AUTH }} \
               DISCORD_CLIENT_SECRET=${{ env.DISCORD_CLIENT_SECRET }} \
+              UMAMI_SALT=${{ env.UMAMI_SALT }} \
+              CF_API_EMAIL=${{ env.CF_API_EMAIL }} \
+              CF_DNS_API_TOKEN=${{ env.CF_DNS_API_TOKEN }} \
                 docker compose -f docker-compose-staging.yml -p efg-staging up -d --force-recreate
 
   dash-deploy-staging:
