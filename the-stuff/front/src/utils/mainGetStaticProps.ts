@@ -1,9 +1,9 @@
 import { GetStaticProps } from "next";
-import { getDefaultLanguage, getLangauge } from "~languages";
 
 import { ILanguage, Translations } from "~i18n/types";
+import { getDefaultLanguage, getLangauge } from "~languages";
 
-import { apiBaseUrl, token } from "./envs";
+import { IEnvironment, apiBaseUrl, environment, token } from "./envs";
 
 type ApiResponse = {
   translations: Translations;
@@ -13,6 +13,7 @@ type ApiResponse = {
 export const mainGetStaticProps: GetStaticProps<{
   language: ILanguage;
   translations: Translations;
+  env: IEnvironment;
 }> = async ({ locale }) => {
   const language = getLangauge(locale) ?? getDefaultLanguage();
   const response = await fetch(`${apiBaseUrl}/i18n/translations/${language.code}`, {
@@ -31,6 +32,7 @@ export const mainGetStaticProps: GetStaticProps<{
     props: {
       language,
       translations,
+      env: environment,
     },
   };
 };

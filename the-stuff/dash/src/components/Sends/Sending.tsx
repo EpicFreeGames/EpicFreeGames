@@ -7,7 +7,11 @@ import { EditSending } from "./EditSending";
 import { StartSending } from "./StartSending";
 
 type Props = {
-  sending: ISending & { successes: number; failures: number };
+  sending: ISending & {
+    _count: {
+      logs: number;
+    };
+  };
 };
 
 export const Sending = ({ sending }: Props) => {
@@ -38,8 +42,8 @@ export const Sending = ({ sending }: Props) => {
         <Spec title="Status" value={sending.status} />
         {showNumbers && (
           <>
-            <Spec title="Successes" value={sending.successes} />
-            <Spec title="Failures" value={sending.failures} />
+            <Spec title="Target" value={sending.target} />
+            <Spec title="Sent" value={sending._count.logs} />
           </>
         )}
       </div>

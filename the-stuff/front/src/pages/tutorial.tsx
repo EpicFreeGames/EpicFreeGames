@@ -8,8 +8,8 @@ import { mainGetStaticProps } from "~utils/mainGetStaticProps";
 
 export const getStaticProps = mainGetStaticProps;
 
-const TutorialPage = ({ translations }: InferGetStaticPropsType<typeof getStaticProps>) => (
-  <Layout title={t({ translations, key: "tutorial" })}>
+const TutorialPage = ({ translations, env }: InferGetStaticPropsType<typeof getStaticProps>) => (
+  <Layout title={t({ translations, key: "tutorial" })} env={env}>
     <h1 className="text-2xl font-bold">{t({ translations, key: "tutorial" })}</h1>
 
     <div className="flex flex-col gap-[3rem] pt-6 text-sm sm:gap-[6rem] sm:text-base">

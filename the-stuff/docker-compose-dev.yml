@@ -78,7 +78,7 @@ services:
     image: dash/dash
     environment:
       <<: *sharedEnvs
-      NEXT_PUBLIC_EFG_API_BASE_URL: http://localhost:3010/api
+      NEXT_PUBLIC_EFG_API_BASEURL: http://localhost:3010/api
       NEXT_PUBLIC_EFG_API_WS_URL: ws://localhost:3010/api
     volumes:
       - ./dash/src:/app/src:r
@@ -99,6 +99,7 @@ services:
     environment:
       EFG_API_FRONT_TOKEN: ${EFG_API_FRONT_TOKEN}
       EFG_API_BASEURL: http://api:3000/api
+      ENVIRONMENT: Staging
     command: "sh -c './wait-for.sh api:3000 -- yarn dev'"
 
   bot_rest-proxy:

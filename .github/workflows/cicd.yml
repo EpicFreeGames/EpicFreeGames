@@ -312,4 +312,5 @@ jobs:
         run: | 
           vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }} \
             -b EFG_API_BASEURL=${{ secrets.EFG_API_BASEURL }} \
-            -b EFG_API_FRONT_TOKEN=${{ secrets.EFG_API_FRONT_TOKEN }}
+            -b EFG_API_FRONT_TOKEN=${{ secrets.EFG_API_FRONT_TOKEN }} \
+            -b ENVIRONMENT=Staging

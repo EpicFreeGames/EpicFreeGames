@@ -14,19 +14,11 @@ import { withValidation } from "../utils/withValidation";
 const router = Router();
 
 router.get("/", endpointAuth(Flags.GetSendings), async (req, res) => {
-  let sends = await prisma.sending.findMany({
-    include: { games: true },
+  const sends = await prisma.sending.findMany({
+    include: { games: true, _count: { select: { logs: true } } },
   });
 
-  const withSuccessesFailures = await Promise.all(
-    sends.map(async (sending) => ({
-      ...sending,
-      successes: Number(await redis.get(`sending:${sending.id}:successes`)),
-      failures: Number(await redis.get(`sending:${sending.id}:failures`)),
-    }))
-  );
-
-  res.json(withSuccessesFailures);
+  res.json(sends);
 });
 
 router.get(
@@ -37,7 +29,7 @@ router.get(
       query: z
         .object({
           after: bigintSchema.optional(),
-          sendingId: z.string().optional(),
+          sendingId: z.string(),
         })
         .strict(),
     },
@@ -51,7 +43,7 @@ router.get(
         },
         where: {
           channelId: { not: null },
-          ...(sendingId ? { sendingLogs: { none: { sendingId } } } : {}),
+          sendingLogs: { none: { sendingId } },
         },
         take: 10,
         ...(after
@@ -63,8 +55,6 @@ router.get(
             }
           : {}),
       });
-
-      await redis.set(`sending:${sendingId}:target`, servers.length);
 
       res.json(addLocaleInfoToServers(servers));
     }
@@ -303,8 +293,6 @@ router.patch(
           message: "Sending not found",
         });
 
-      await redis.set(`sending:${sendingId}:target`, newTarget);
-
       res.status(204).send();
     }
   )
@@ -330,35 +318,9 @@ router.post(
         data: req.body,
       });
 
-      const { success, sendingId } = req.body;
-      await redis.incrby(`sending:${sendingId}:${success ? "successes" : "failures"}`, 1);
-
       res.send(addedLog);
-
-      await updateSendingStatus(sendingId);
     }
   )
 );
-
-const updateSendingStatus = async (sendingId: string) => {
-  const [successes, failures, target] = await Promise.all([
-    Number(await redis.get(`sending:${sendingId}:successes`)),
-    Number(await redis.get(`sending:${sendingId}:failures`)),
-    Number(await redis.get(`sending:${sendingId}:target`)),
-  ]);
-
-  const total = successes + failures;
-
-  const targetReached = total >= target;
-
-  if (targetReached) {
-    await prisma.sending
-      .update({
-        where: { id: sendingId },
-        data: { status: "SENT" },
-      })
-      .catch(prismaUpdateCatcher);
-  }
-};
 
 export const sendsRouter = router;

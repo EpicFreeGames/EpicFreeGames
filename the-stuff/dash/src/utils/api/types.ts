@@ -86,6 +86,7 @@ export type ISending = {
   logs: never;
   games: IGame[] | null;
   status: "IDLE" | "SENDING" | "SENT";
+  target: number;
 };
 
 export enum WsMsgType {
