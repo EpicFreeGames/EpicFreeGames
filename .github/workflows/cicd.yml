@@ -225,8 +225,6 @@ jobs:
           EVENT_HANDLER_AUTH: ${{ secrets.EVENT_HANDLER_AUTH }}
           DISCORD_CLIENT_SECRET: ${{ secrets.DISCORD_CLIENT_SECRET }}
           UMAMI_SALT: ${{ secrets.UMAMI_SALT }}
-          CF_API_EMAIL: ${{ secrets.CF_API_EMAIL }}
-          CF_DNS_API_TOKEN: ${{ secrets.CF_DNS_API_TOKEN }}
         with:
           host: ${{ secrets.SXX_HOST }}
           username: ${{ secrets.SXX_USERNAME }}
@@ -247,8 +245,6 @@ jobs:
               EVENT_HANDLER_AUTH=${{ env.EVENT_HANDLER_AUTH }} \
               DISCORD_CLIENT_SECRET=${{ env.DISCORD_CLIENT_SECRET }} \
               UMAMI_SALT=${{ env.UMAMI_SALT }} \
-              CF_API_EMAIL=${{ env.CF_API_EMAIL }} \
-              CF_DNS_API_TOKEN=${{ env.CF_DNS_API_TOKEN }} \
                 docker compose -f docker-compose-staging.yml pull \
             && REGISTRY=${{ env.REGISTRY }} \
               REGISTRY_USER=${{ env.REGISTRY_USER }} \
@@ -263,8 +259,6 @@ jobs:
               EVENT_HANDLER_AUTH=${{ env.EVENT_HANDLER_AUTH }} \
               DISCORD_CLIENT_SECRET=${{ env.DISCORD_CLIENT_SECRET }} \
               UMAMI_SALT=${{ env.UMAMI_SALT }} \
-              CF_API_EMAIL=${{ env.CF_API_EMAIL }} \
-              CF_DNS_API_TOKEN=${{ env.CF_DNS_API_TOKEN }} \
                 docker compose -f docker-compose-staging.yml -p efg-staging up -d --force-recreate
 
   dash-deploy-staging:
