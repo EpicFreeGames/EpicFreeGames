@@ -163,6 +163,48 @@ router.delete(
   )
 );
 
+router.patch(
+  "/:sendingId/target",
+  endpointAuth(Flags.EditSendings, Flags.GetSendings),
+  withValidation(
+    {
+      params: z
+        .object({
+          sendingId: z.string(),
+        })
+        .strict(),
+      body: z
+        .object({
+          newTarget: z.number(),
+        })
+        .strict(),
+    },
+    async (req, res) => {
+      const { sendingId } = req.params;
+      const { newTarget } = req.body;
+
+      const sending = await prisma.sending.findUnique({
+        where: { id: sendingId },
+      });
+
+      if (!sending)
+        return res.status(404).send({
+          statusCode: 404,
+          error: "Not found",
+          message: "Sending not found",
+        });
+
+      if (sending.target === 0)
+        await prisma.sending.update({
+          where: { id: sendingId },
+          data: { target: newTarget },
+        });
+
+      res.status(204).send();
+    }
+  )
+);
+
 router.post(
   "/",
   endpointAuth(Flags.AddSendings, Flags.GetSendings),
@@ -191,7 +233,6 @@ router.post(
 
       const sending = await prisma.sending.create({
         data: {
-          status: "IDLE",
           games: {
             connect: games.map((g) => ({ id: g.id })),
           },
@@ -249,49 +290,7 @@ router.post(
           }
         );
 
-      await prisma.sending.update({
-        where: { id: sendingId },
-        data: { status: "SENDING" },
-      });
-
       console.log(JSON.stringify(senderResponseData, null, 2));
-
-      res.status(204).send();
-    }
-  )
-);
-
-router.patch(
-  "/:sendingId/target",
-  endpointAuth(Flags.EditSendings, Flags.GetSendings),
-  withValidation(
-    {
-      params: z
-        .object({
-          sendingId: z.string(),
-        })
-        .strict(),
-      body: z
-        .object({
-          newTarget: z.number(),
-        })
-        .strict(),
-    },
-    async (req, res) => {
-      const { sendingId } = req.params;
-      const { newTarget } = req.body;
-
-      const sending = await prisma.sending.update({
-        where: { id: sendingId },
-        data: { target: newTarget },
-      });
-
-      if (!sending)
-        return res.status(404).send({
-          statusCode: 404,
-          error: "Not found",
-          message: "Sending not found",
-        });
 
       res.status(204).send();
     }

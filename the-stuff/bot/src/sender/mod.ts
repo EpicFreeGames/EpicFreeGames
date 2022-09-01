@@ -70,7 +70,7 @@ for await (const conn of httpServer) {
         body: { newTarget: servers.length },
       });
 
-      console.log(`${sendingId} - New target set, filtering servers...`);
+      console.log(`${sendingId} - Target set, filtering servers...`);
 
       const filterResult = filterServers(servers);
 
