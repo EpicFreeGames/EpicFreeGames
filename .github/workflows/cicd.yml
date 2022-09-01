@@ -189,7 +189,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Init
+      - name: Create folder and Docker network
         uses: appleboy/ssh-action@v0.1.5
         with:
           host: ${{ secrets.SXX_HOST }}
@@ -200,6 +200,17 @@ jobs:
             mkdir -p ~/efg-staging/DATA \
             && docker network inspect efg-staging-proxy >/dev/null 2>&1 || \
               docker network create --driver bridge efg-staging-proxy
+
+      - name: Update Traefik files
+        uses: appleboy/scp-action@v0.1.3
+        with:
+          host: ${{ secrets.SXX_HOST }}
+          username: ${{ secrets.SXX_USERNAME }}
+          port: ${{ secrets.SXX_PORT }}
+          key: ${{ secrets.SXX_KEY }}
+          source: the-stuff/traefik
+          target: /home/${{ secrets.SXX_USERNAME }}/efg-staging/DATA
+          strip_components: 1
 
       - name: Update Docker compose file
         uses: appleboy/scp-action@v0.1.3
