@@ -67,9 +67,8 @@ model SendingLog {
 }
 
 model Sending {
-  id     String        @id @default(cuid())
-  target Int           @default(0)
-  status SendingStatus
+  id     String       @id @default(cuid())
+  target Int          @default(0)
   games  Game[]
   logs   SendingLog[]
 }
@@ -85,10 +84,4 @@ model User {
 enum SendingLogType {
   MESSAGE
   WEBHOOK
-}
-
-enum SendingStatus {
-  IDLE
-  SENDING
-  SENT
 }

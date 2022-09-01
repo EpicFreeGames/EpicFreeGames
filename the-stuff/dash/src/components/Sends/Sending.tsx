@@ -15,13 +15,13 @@ type Props = {
 };
 
 export const Sending = ({ sending }: Props) => {
-  const showSend = useHasFlags(Flags.Send) && sending.status !== "SENT";
+  const sendingDone = sending._count.logs >= sending.target;
+
+  const showSend = useHasFlags(Flags.Send) && !sendingDone;
   const showEdit = useHasFlags(Flags.EditSendings);
   const showDelete = useHasFlags(Flags.DeleteSendings);
 
   const showButtons = showSend || showEdit || showDelete;
-
-  const showNumbers = sending.status === "SENDING" || sending.status === "SENT";
 
   return (
     <div className="flex flex-col gap-3 rounded-md bg-gray-700 p-3">
@@ -39,13 +39,8 @@ export const Sending = ({ sending }: Props) => {
 
       <div className="flex flex-col gap-2">
         <Spec title="Games" value={sending.games?.map((g) => g.name).join(", ") ?? ""} />
-        <Spec title="Status" value={sending.status} />
-        {showNumbers && (
-          <>
-            <Spec title="Target" value={sending.target} />
-            <Spec title="Sent" value={sending._count.logs} />
-          </>
-        )}
+        <Spec title="Target" value={sending.target} />
+        <Spec title="Sent" value={sending._count.logs} />
       </div>
     </div>
   );

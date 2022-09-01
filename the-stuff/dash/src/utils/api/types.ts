@@ -85,7 +85,6 @@ export type ISending = {
   id: string;
   logs: never;
   games: IGame[] | null;
-  status: "IDLE" | "SENDING" | "SENT";
   target: number;
 };
 
