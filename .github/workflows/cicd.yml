@@ -214,6 +214,7 @@ jobs:
         env:
           REGISTRY: ${{ secrets.REGISTRY }}
           REGISTRY_USER: ${{ secrets.REGISTRY_USER }}
+          UMAMI_SALT: ${{ secrets.UMAMI_SALT }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
           SENDER_AUTH: ${{ secrets.SENDER_AUTH }}
@@ -233,6 +234,7 @@ jobs:
             cd ~/efg-staging \
             && REGISTRY=${{ env.REGISTRY }} \
               REGISTRY_USER=${{ env.REGISTRY_USER }} \
+              UMAMI_SALT=${{ env.UMAMI_SALT }} \
               BOT_TOKEN=${{ env.BOT_TOKEN }} \
               SENDER_AUTH=${{ env.SENDER_AUTH }} \
               DATABASE_URL=${{ env.DATABASE_URL }} \
@@ -246,6 +248,7 @@ jobs:
                 docker compose -f docker-compose-staging.yml pull \
             && REGISTRY=${{ env.REGISTRY }} \
               REGISTRY_USER=${{ env.REGISTRY_USER }} \
+              UMAMI_SALT=${{ env.UMAMI_SALT }} \
               BOT_TOKEN=${{ env.BOT_TOKEN }} \
               SENDER_AUTH=${{ env.SENDER_AUTH }} \
               DATABASE_URL=${{ env.DATABASE_URL }} \
@@ -256,7 +259,7 @@ jobs:
               EFG_API_BOT_TOKEN=${{ env.EFG_API_BOT_TOKEN }} \
               EVENT_HANDLER_AUTH=${{ env.EVENT_HANDLER_AUTH }} \
               DISCORD_CLIENT_SECRET=${{ env.DISCORD_CLIENT_SECRET }} \
-                docker compose -f docker-compose-staging.yml -p efg-staging up -d --force-recreate api bot_sender bot_gateway bot_rest-proxy bot_event-handler
+                docker compose -f docker-compose-staging.yml -p efg-staging up -d --force-recreate
 
   dash-deploy-staging:
     name: "Dash: Deploy to Staging"
