@@ -123,6 +123,9 @@ services:
   mysql:
     image: mysql
     environment:
+      MYSQL_USER: umami
+      MYSQL_PASSWORD: umami
+      MYSQL_DATABASE: umami
       MYSQL_ROOT_PASSWORD: secret
     volumes:
       - ./DATA/mysql:/var/lib/mysql
@@ -157,7 +160,7 @@ services:
     image: docker.umami.dev/umami-software/umami:mysql-latest
     restart: always
     environment:
-      DATABASE_URL: mysql://root:secret@mysql:3306/umami
+      DATABASE_URL: mysql://umami:umami@mysql:3306/umami
       DATABASE_TYPE: mysql
       HASH_SALT: ${UMAMI_SALT}
     labels:
