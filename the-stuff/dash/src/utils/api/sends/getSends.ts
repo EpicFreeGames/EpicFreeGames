@@ -4,7 +4,13 @@ import { apiRequest } from "../api";
 import { ISending } from "../types";
 
 const fetchSends = () =>
-  apiRequest<(ISending & { successes: number; failures: number })[]>({
+  apiRequest<
+    (ISending & {
+      _count: {
+        logs: number;
+      };
+    })[]
+  >({
     path: "/sends",
     method: "GET",
   });
