@@ -198,7 +198,8 @@ jobs:
           key: ${{ secrets.SXX_KEY }}
           script: |
             mkdir -p ~/efg-staging/DATA \
-            && docker network create efg-staging-proxy
+            && docker network inspect efg-staging-proxy >/dev/null 2>&1 || \
+              docker network create --driver bridge efg-staging-proxy
 
       - name: Update Docker compose file
         uses: appleboy/scp-action@v0.1.3
