@@ -31,6 +31,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: secret
     restart: unless-stopped
+    networks:
+      - proxy
 
   api:
     depends_on:
@@ -55,6 +57,8 @@ services:
       - "traefik.http.routers.efg-api.rule=Host(`staging-api.epicfreegames.net`)"
       - "traefik.http.services.efg-api.loadbalancer.server.port=3000"
       - "traefik.docker.network=proxy"
+    networks:
+      - proxy
 
   bot_rest-proxy:
     depends_on:
@@ -63,6 +67,8 @@ services:
     restart: unless-stopped
     environment:
       <<: *sharedBotEnvs
+    networks:
+      - proxy
 
   bot_sender:
     depends_on:
@@ -73,6 +79,8 @@ services:
     environment:
       <<: *sharedBotEnvs
       WEBHOOK_NAME: Staging-EpicFreeGames
+    networks:
+      - proxy
 
   bot_gateway:
     depends_on:
@@ -81,6 +89,8 @@ services:
     restart: unless-stopped
     environment:
       <<: *sharedBotEnvs
+    networks:
+      - proxy
 
   bot_event-handler:
     depends_on:
@@ -92,6 +102,8 @@ services:
     environment:
       <<: *sharedBotEnvs
       WEBHOOK_INTEGRATION_NAME: Staging-EpicFreeGames Notifications
+    networks:
+      - proxy
 
   uptime-kuma:
     image: louislam/uptime-kuma
@@ -106,6 +118,8 @@ services:
       - "traefik.http.routers.efg-uptime-kuma.rule=Host(`staging-status.epicfreegames.net`)"
       - "traefik.http.services.efg-uptime-kuma.loadbalancer.server.port=3001"
       - "traefik.docker.network=proxy"
+    networks:
+      - proxy
 
   umami:
     depends_on:
@@ -124,8 +138,9 @@ services:
       - "traefik.http.routers.efg-umami.rule=Host(`staging-a7s.epicfreegames.net`)"
       - "traefik.http.services.efg-umami.loadbalancer.server.port=3000"
       - "traefik.docker.network=proxy"
+    networks:
+      - proxy
 
 networks:
-  default:
-    name: proxy
+  proxy:
     external: true
