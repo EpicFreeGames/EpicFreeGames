@@ -136,7 +136,6 @@ services:
     restart: always
     environment:
       DATABASE_URL: mysql://umami:umami@mysql:3306/umami
-      DATABASE_TYPE: mysql
       HASH_SALT: ${UMAMI_SALT}
     labels:
       - "traefik.enable=true"
