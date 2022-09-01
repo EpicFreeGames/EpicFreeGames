@@ -108,7 +108,7 @@ services:
       - "3306:3306"
     restart: always
     healthcheck:
-      test: mysql -u root -p secret -e SHOW DATABASES
+      test: mysql -u umami -p umami -e SHOW DATABASES
       interval: 3s
       timeout: 15s
       retries: 5
