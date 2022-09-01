@@ -200,7 +200,7 @@ jobs:
             mkdir -p ~/efg-staging/DATA \
             && docker network create efg-staging-proxy
 
-      - name: Update Staging Docker compose file
+      - name: Update Docker compose file
         uses: appleboy/scp-action@v0.1.3
         with:
           host: ${{ secrets.SXX_HOST }}
@@ -208,17 +208,6 @@ jobs:
           port: ${{ secrets.SXX_PORT }}
           key: ${{ secrets.SXX_KEY }}
           source: the-stuff/docker-compose-staging.yml
-          target: /home/${{ secrets.SXX_USERNAME }}/efg-staging
-          strip_components: 1
-
-      - name: Update Data Docker compose file
-        uses: appleboy/scp-action@v0.1.3
-        with:
-          host: ${{ secrets.SXX_HOST }}
-          username: ${{ secrets.SXX_USERNAME }}
-          port: ${{ secrets.SXX_PORT }}
-          key: ${{ secrets.SXX_KEY }}
-          source: the-stuff/docker-compose-data.yml
           target: /home/${{ secrets.SXX_USERNAME }}/efg-staging
           strip_components: 1
 
