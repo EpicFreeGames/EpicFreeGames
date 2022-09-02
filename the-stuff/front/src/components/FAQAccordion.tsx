@@ -7,7 +7,6 @@ import { Translations } from "~i18n/types";
 
 import { AnimatedChevron } from "./AnimatedChevron";
 import { Markdown } from "./Markdown";
-import { Text } from "./Text";
 
 type AccordionItemProps = {
   title: ReactNode;
@@ -88,11 +87,9 @@ export const FAQAccordion = ({ translations }: { translations: Translations }) =
         currentValue={value}
         change={change}
       >
-        <Text>
-          <Markdown>
-            {`${t({ translations, key: "faq_2_a", vars: { serverInvite: "/invite" } })}`}
-          </Markdown>
-        </Text>
+        <Markdown>
+          {`${t({ translations, key: "faq_2_a", vars: { serverInvite: "/invite" } })}`}
+        </Markdown>
       </AccordionItem>
 
       <AccordionItem
@@ -106,9 +103,7 @@ export const FAQAccordion = ({ translations }: { translations: Translations }) =
         currentValue={value}
         change={change}
       >
-        <Text>
-          <Markdown>{t({ translations, key: "faq_3_a" })}</Markdown>
-        </Text>
+        <Markdown>{t({ translations, key: "faq_3_a" })}</Markdown>
       </AccordionItem>
 
       <AccordionItem
@@ -122,15 +117,13 @@ export const FAQAccordion = ({ translations }: { translations: Translations }) =
         currentValue={value}
         change={change}
       >
-        <Text>
-          <Markdown>
-            {`${t({
-              translations,
-              key: "faq_4_a",
-              vars: { serverInvite: "/discord" },
-            })}`}
-          </Markdown>
-        </Text>
+        <Markdown>
+          {`${t({
+            translations,
+            key: "faq_4_a",
+            vars: { serverInvite: "/discord" },
+          })}`}
+        </Markdown>
       </AccordionItem>
     </div>
   );

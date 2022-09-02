@@ -8,6 +8,7 @@ export const Markdown = ({ children }: { children: string }) => (
       a: ({ children, href }) => <Link href={href!}>{children}</Link>,
       strong: ({ children }) => <B>{children}</B>,
       code: ({ children }) => <Code toCopy={children as string}>{children}</Code>,
+      p: ({ children }) => <p className="text-sm sm:text-base">{children}</p>,
     }}
   >
     {children}
