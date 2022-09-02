@@ -2,15 +2,6 @@ import NextLink from "next/link";
 import { ReactNode } from "react";
 import toast from "react-hot-toast";
 
-type TextProps = {
-  children: ReactNode;
-  className?: string;
-};
-
-export const Text = ({ children, className }: TextProps) => (
-  <p className={`${className} text-sm sm:text-base`}>{children}</p>
-);
-
 type BProps = {
   children: ReactNode;
 };
@@ -75,7 +66,7 @@ type LinkProps = {
 export const Link = ({ children, href }: LinkProps) => (
   <NextLink href={href} passHref>
     <a className="focus rounded-md outline-none">
-      <span className="border-b-2 border-b-blue-400 border-opacity-40 font-bold text-blue-400 outline-none transition-all duration-200 hover:border-opacity-100">
+      <span className="border-b-2 border-b-blue-400 border-opacity-40 text-sm font-bold text-blue-400 outline-none transition-all duration-200 hover:border-opacity-100 sm:text-base">
         {children}
       </span>
     </a>
