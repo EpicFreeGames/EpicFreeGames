@@ -126,7 +126,8 @@ export const FAQAccordion = ({ translations }: { translations: Translations }) =
           <Markdown>
             {`${t({
               translations,
-              key: "faq_4_q",
+              key: "faq_4_a",
+              vars: { serverInvite: "/discord" },
             })}`}
           </Markdown>
         </Text>
