@@ -21,7 +21,10 @@ const Auth = ({ requiredFlags, children }: { requiredFlags: Flags[]; children: R
 
   if (!canViewPage) return <div>forbidden</div>;
 
-  if (!isLoading && !canViewPage) return router.push("/");
+  if (!isLoading && !canViewPage) {
+    router.push("/");
+    return null;
+  }
 
   return <>{children}</>;
 };
