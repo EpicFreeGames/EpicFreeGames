@@ -1,4 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useRouter } from "next/router";
 import { ReactNode } from "react";
 
 import { useHasFlags } from "~hooks/useHasFlags";
@@ -12,12 +13,15 @@ const queryClient = new QueryClient();
 
 const Auth = ({ requiredFlags, children }: { requiredFlags: Flags[]; children: ReactNode }) => {
   const { user, isLoading } = useUser(false);
+  const router = useRouter();
 
   const canViewPage = useHasFlags(user?.flags ?? 0, ...requiredFlags);
 
   if (isLoading) return <></>;
 
   if (!canViewPage) return <div>forbidden</div>;
+
+  if (!isLoading && !canViewPage) return router.push("/");
 
   return <>{children}</>;
 };
