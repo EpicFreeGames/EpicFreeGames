@@ -84,19 +84,14 @@ export const Layout = ({ title, children, noTranslations, env }: Props) => {
         <link rel="alternate" hrefLang="x-default" href={`${baseUrl}${!isHome ? pathname : ""}`} />
 
         {prod ? (
-          <script
-            async
-            defer
-            data-website-id="b0e0d055-8b7b-4a4e-a182-34f26fb6dccb"
-            src="https://a7s.epicfreegames.net/umami.js"
-          />
+          <script async defer data-website-id="b0e0d055-8b7b-4a4e-a182-34f26fb6dccb" src="/thing" />
         ) : (
           !dev && (
             <script
               async
               defer
               data-website-id="351689c3-d25d-4b03-843a-da005b73246b"
-              src="https://a7s.epicfreegames.net/umami.js"
+              src="/thing"
             />
           )
         )}

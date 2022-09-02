@@ -216,9 +216,7 @@ jobs:
           REGISTRY_USER: ${{ secrets.REGISTRY_USER }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
-          SENDER_AUTH: ${{ secrets.SENDER_AUTH }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          REST_PROXY_AUTH: ${{ secrets.REST_PROXY_AUTH }}
           DISCORD_CLIENT_ID: ${{ secrets.DISCORD_CLIENT_ID }}
           EFG_API_SECRET: ${{ secrets.EFG_API_SECRET }}
           EFG_API_BOT_TOKEN: ${{ secrets.EFG_API_BOT_TOKEN }}
@@ -235,9 +233,7 @@ jobs:
             && REGISTRY=${{ env.REGISTRY }} \
               REGISTRY_USER=${{ env.REGISTRY_USER }} \
               BOT_TOKEN=${{ env.BOT_TOKEN }} \
-              SENDER_AUTH=${{ env.SENDER_AUTH }} \
               DATABASE_URL=${{ env.DATABASE_URL }} \
-              REST_PROXY_AUTH=${{ env.REST_PROXY_AUTH }} \
               DISCORD_CLIENT_ID=${{ env.DISCORD_CLIENT_ID }} \
               JWT_SECRET=${{ env.JWT_SECRET }} \
               EFG_API_SECRET=${{ env.EFG_API_SECRET }} \
@@ -249,9 +245,7 @@ jobs:
             && REGISTRY=${{ env.REGISTRY }} \
               REGISTRY_USER=${{ env.REGISTRY_USER }} \
               BOT_TOKEN=${{ env.BOT_TOKEN }} \
-              SENDER_AUTH=${{ env.SENDER_AUTH }} \
               DATABASE_URL=${{ env.DATABASE_URL }} \
-              REST_PROXY_AUTH=${{ env.REST_PROXY_AUTH }} \
               DISCORD_CLIENT_ID=${{ env.DISCORD_CLIENT_ID }} \
               JWT_SECRET=${{ env.JWT_SECRET }} \
               EFG_API_SECRET=${{ env.EFG_API_SECRET }} \
