@@ -99,7 +99,7 @@ services:
     environment:
       EFG_API_FRONT_TOKEN: ${EFG_API_FRONT_TOKEN}
       EFG_API_BASEURL: http://api:3000/api
-      ENVIRONMENT: Staging
+      ENVIRONMENT: Development
     command: "sh -c './wait-for.sh api:3000 -- yarn dev'"
 
   bot_rest-proxy:

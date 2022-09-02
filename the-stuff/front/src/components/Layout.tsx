@@ -10,7 +10,7 @@ type Props = {
   title?: string;
   children: ReactNode;
   noTranslations?: boolean;
-  env: "Staging" | "Production";
+  env: "Staging" | "Production" | "Development";
 };
 
 const desc =
@@ -21,6 +21,7 @@ export const Layout = ({ title, children, noTranslations, env }: Props) => {
   const isHome = pathname === "/";
 
   const prod = env === "Production";
+  const dev = env === "Development";
 
   const baseUrl = `${`https://${prod ? "" : "staging."}epicfreegames.net`}`;
   const botName = prod ? "EpicFreeGames" : "Staging-EpicFreeGames";
@@ -81,6 +82,24 @@ export const Layout = ({ title, children, noTranslations, env }: Props) => {
         ))}
 
         <link rel="alternate" hrefLang="x-default" href={`${baseUrl}${!isHome ? pathname : ""}`} />
+
+        {prod ? (
+          <script
+            async
+            defer
+            data-website-id="b0e0d055-8b7b-4a4e-a182-34f26fb6dccb"
+            src="https://a7s.epicfreegames.net/umami.js"
+          />
+        ) : (
+          !dev && (
+            <script
+              async
+              defer
+              data-website-id="351689c3-d25d-4b03-843a-da005b73246b"
+              src="https://a7s.epicfreegames.net/umami.js"
+            />
+          )
+        )}
       </Head>
 
       <NavBar noTranslations={noTranslations} />

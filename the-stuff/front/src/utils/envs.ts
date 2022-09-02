@@ -4,5 +4,5 @@ export const apiBaseUrl = process.env.EFG_API_BASEURL;
 export type IEnvironment = "Production" | "Staging";
 export const environment: IEnvironment = process.env.ENVIRONMENT as any;
 
-if (environment !== "Production" && environment !== "Staging")
+if (environment !== "Production" && environment !== "Staging" && environment !== "Development")
   throw new Error("Invalid environment variable ENVIRONMENT");

@@ -1,0 +1,54 @@
+version: "3.9"
+
+services:
+  mysql:
+    image: mysql
+    environment:
+      MYSQL_USER: umami
+      MYSQL_PASSWORD: umami
+      MYSQL_DATABASE: umami
+      MYSQL_ROOT_PASSWORD: secret
+    volumes:
+      - ./DATA/mysql:/var/lib/mysql
+    restart: always
+    networks:
+      - proxy
+
+  uptime-kuma:
+    image: louislam/uptime-kuma
+    restart: always
+    volumes:
+      - ./DATA/uptime-kuma:/data
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.efg-uptime-kuma.entrypoints=https"
+      - "traefik.http.routers.efg-uptime-kuma.tls=true"
+      - "traefik.http.routers.efg-uptime-kuma.service=efg-uptime-kuma"
+      - "traefik.http.routers.efg-uptime-kuma.rule=Host(`status.epicfreegames.net`)"
+      - "traefik.http.services.efg-uptime-kuma.loadbalancer.server.port=3001"
+      - "traefik.docker.network=proxy"
+    networks:
+      - proxy
+
+  umami:
+    depends_on:
+      - mysql
+    image: docker.umami.dev/umami-software/umami:mysql-latest
+    restart: always
+    environment:
+      DATABASE_URL: mysql://umami:umami@mysql:3306/umami
+      HASH_SALT: ${UMAMI_SALT}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.efg-umami.entrypoints=https"
+      - "traefik.http.routers.efg-umami.tls=true"
+      - "traefik.http.routers.efg-umami.service=efg-umami"
+      - "traefik.http.routers.efg-umami.rule=Host(`a7s.epicfreegames.net`)"
+      - "traefik.http.services.efg-umami.loadbalancer.server.port=3000"
+      - "traefik.docker.network=proxy"
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true
