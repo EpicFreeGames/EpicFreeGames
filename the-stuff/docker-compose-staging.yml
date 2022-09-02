@@ -23,6 +23,8 @@ services:
     volumes:
       - ./redis:/data
     restart: unless-stopped
+    networks:
+      - proxy
 
   api:
     depends_on:
@@ -104,14 +106,9 @@ services:
       MYSQL_ROOT_PASSWORD: secret
     volumes:
       - ./DATA/mysql:/var/lib/mysql
-    ports:
-      - "3306:3306"
     restart: always
-    healthcheck:
-      test: mysql -u umami -p umami -e SHOW DATABASES
-      interval: 3s
-      timeout: 15s
-      retries: 5
+    networks:
+      - proxy
 
   uptime-kuma:
     image: louislam/uptime-kuma
