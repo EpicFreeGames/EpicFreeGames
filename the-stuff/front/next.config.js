@@ -1,5 +1,10 @@
+const { withPlausibleProxy } = require("next-plausible");
+
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig = withPlausibleProxy({
+  scriptName: "stuff",
+  customDomain: "https://a7s.epicfreegames.net",
+})({
   reactStrictMode: true,
   swcMinify: true,
   output: "standalone",
@@ -30,12 +35,6 @@ const nextConfig = {
       source: "/discord",
       destination: "https://discord.gg/49UQcJe",
       permanent: false,
-    },
-  ],
-  rewrites: async () => [
-    {
-      source: "/thing",
-      destination: "https://a7s.epicfreegames.net/umami.js",
     },
   ],
   i18n: {
@@ -74,6 +73,6 @@ const nextConfig = {
     defaultLocale: "en",
     localeDetection: true,
   },
-};
+});
 
 module.exports = nextConfig;
