@@ -1,14 +1,9 @@
-const { withPlausibleProxy } = require("next-plausible");
-
 /** @type {import('next').NextConfig} */
-const nextConfig = withPlausibleProxy({
-  scriptName: "stuff",
-  customDomain: "https://a7s.epicfreegames.net",
-})({
+const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   output: "standalone",
-  redirects: async () => [
+  redirects: [
     {
       source: "/r/browser/:path*",
       destination: "https://epicgames.com/:path*",
@@ -35,6 +30,16 @@ const nextConfig = withPlausibleProxy({
       source: "/discord",
       destination: "https://discord.gg/49UQcJe",
       permanent: false,
+    },
+  ],
+  rewrites: [
+    {
+      source: "/stats/js/script.js",
+      destination: "https://a7s.epicfreegames.net/js/script.js",
+    },
+    {
+      source: "/stats/api/event",
+      destination: "https://a7s.epicfreegames.net/api/event",
     },
   ],
   i18n: {
@@ -73,6 +78,6 @@ const nextConfig = withPlausibleProxy({
     defaultLocale: "en",
     localeDetection: true,
   },
-});
+};
 
 module.exports = nextConfig;

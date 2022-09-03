@@ -1,4 +1,3 @@
-import PlausibleProvider from "next-plausible";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { ReactNode } from "react";
@@ -27,7 +26,7 @@ export const Layout = ({ title, children, noTranslations, env }: Props) => {
   const botName = prod ? "EpicFreeGames" : "Staging-EpicFreeGames";
 
   return (
-    <PlausibleProvider domain={baseUrl} customDomain={"https://a7s.epicfreegames.net"}>
+    <>
       <Head>
         <title>{`${title ? `${title} - ` : ""}${botName}`}</title>
 
@@ -82,11 +81,13 @@ export const Layout = ({ title, children, noTranslations, env }: Props) => {
         ))}
 
         <link rel="alternate" hrefLang="x-default" href={`${baseUrl}${!isHome ? pathname : ""}`} />
+
+        <script src="/stuff/script.js" data-api="/stuff/event" data-domain={baseUrl} />
       </Head>
 
       <NavBar noTranslations={noTranslations} />
 
       <main className="mx-auto mt-8 max-w-screen-sm px-3 sm:mt-16">{children}</main>
-    </PlausibleProvider>
+    </>
   );
 };
