@@ -1,19 +1,6 @@
 version: "3.9"
 
 services:
-  mysql:
-    image: mysql
-    environment:
-      MYSQL_USER: umami
-      MYSQL_PASSWORD: umami
-      MYSQL_DATABASE: umami
-      MYSQL_ROOT_PASSWORD: secret
-    volumes:
-      - ./DATA/mysql:/var/lib/mysql
-    restart: always
-    networks:
-      - proxy
-
   uptime-kuma:
     image: louislam/uptime-kuma
     restart: always
@@ -30,13 +17,26 @@ services:
     networks:
       - proxy
 
+  mysql-umami:
+    image: mysql
+    environment:
+      MYSQL_USER: umami
+      MYSQL_PASSWORD: umami
+      MYSQL_DATABASE: umami
+      MYSQL_ROOT_PASSWORD: secret
+    volumes:
+      - ./DATA/mysql:/var/lib/mysql
+    restart: always
+    networks:
+      - proxy
+
   umami:
     depends_on:
-      - mysql
+      - mysql-umami
     image: docker.umami.dev/umami-software/umami:mysql-latest
     restart: always
     environment:
-      DATABASE_URL: mysql://umami:umami@mysql:3306/umami
+      DATABASE_URL: mysql://umami:umami@mysql-umami:3306/umami
       HASH_SALT: ${UMAMI_SALT}
     labels:
       - "traefik.enable=true"
@@ -52,3 +52,70 @@ services:
 networks:
   proxy:
     external: true
+
+  # weblate-postgres:
+  #   image: postgres:14-alpine
+  #   volumes:
+  #     - ./DATA/weblate-postgres:/var/lib/postgresql/data
+  #   environment:
+  #     POSTGRES_PASSWORD: weblate
+  #     POSTGRES_USER: weblate
+  #     POSTGRES_DATABASE: weblate
+  #   restart: always
+  #   networks:
+  #     - proxy
+
+  # weblate-redis:
+  #   image: redis:6-alpine
+  #   restart: always
+  #   command: [redis-server, --save, "60", "1"]
+  #   volumes:
+  #     - ./DATA/weblate-redis:/data
+  #   networks:
+  #     - proxy
+
+  # weblate:
+  #   depends_on:
+  #     - weblate-postgres
+  #     - weblate-redis
+  #   image: weblate/weblate
+  #   tmpfs:
+  #     - /app/cache
+  #   volumes:
+  #     - weblate:/app/data
+  #   environment:
+  #     POSTGRES_PASSWORD: weblate
+  #     POSTGRES_USER: weblate
+  #     POSTGRES_DATABASE: weblate
+  #     POSTGRES_HOST: weblate-postgres
+  #     POSTGRES_PORT: 5432
+  #     REDIS_HOST: weblate-redis
+  #     REDIS_PORT: 6379
+  #     WEBLATE_OFFLOAD_INDEXING: 1
+  #     WEBLATE_REQUIRE_LOGIN: 1
+  #     WEBLATE_DEBUG: 1
+  #     WEBLATE_LOGLEVEL: DEBUG
+  #     WEBLATE_ALLOWED_HOSTS: "*"
+  #     WEBLATE_REGISTRATION_OPEN: 1
+  #     WEBLATE_SITE_DOMAIN: t.epicfreegames.net
+  #     WEBLATE_EMAIL_HOST: ${WEBLATE_EMAIL_HOST}
+  #     WEBLATE_EMAIL_PORT: ${WEBLATE_EMAIL_PORT}
+  #     WEBLATE_EMAIL_HOST_USER: ${WEBLATE_EMAIL_HOST_USER}
+  #     WEBLATE_EMAIL_HOST_PASSWORD: ${WEBLATE_EMAIL_HOST_PASSWORD}
+  #     WEBLATE_ADMIN_EMAIL: ${WEBLATE_ADMIN_EMAIL}
+  #     WEBLATE_ADMIN_PASSWORD: ${WEBLATE_ADMIN_PASSWORD}
+  #     WEBLATE_SERVER_EMAIL: ${WEBLATE_SERVER_EMAIL}
+  #     WEBLATE_DEFAULT_FROM_EMAIL: ${WEBLATE_DEFAULT_FROM_EMAIL}
+  #   restart: always
+  #   networks:
+  #     - proxy
+  #   labels:
+  #     - "traefik.enable=true"
+  #     - "traefik.http.routers.efg-t.entrypoints=https"
+  #     - "traefik.http.routers.efg-t.tls=true"
+  #     - "traefik.http.routers.efg-t.service=efg-t"
+  #     - "traefik.http.routers.efg-t.rule=Host(`t.epicfreegames.net`)"
+  #     - "traefik.http.services.efg-t.loadbalancer.server.port=8080"
+  #     - "traefik.docker.network=proxy"
+# volumes:
+#   weblate:
