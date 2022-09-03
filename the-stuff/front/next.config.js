@@ -31,10 +31,11 @@ const nextConfig = {
       destination: "https://discord.gg/49UQcJe",
       permanent: false,
     },
+  ],
+  rewrites: async () => [
     {
       source: "/thing",
       destination: "https://a7s.epicfreegames.net/umami.js",
-      permanent: true,
     },
   ],
   i18n: {
