@@ -82,7 +82,12 @@ export const Layout = ({ title, children, noTranslations, env }: Props) => {
 
         <link rel="alternate" hrefLang="x-default" href={`${baseUrl}${!isHome ? pathname : ""}`} />
 
-        <script src="/stuff/script.js" data-api="/stuff/event" data-domain={baseUrl} />
+        <script
+          defer
+          src="/stuff/script.js"
+          data-api="/stuff/event"
+          data-domain={baseUrl.replace("https://", "")}
+        />
       </Head>
 
       <NavBar noTranslations={noTranslations} />
