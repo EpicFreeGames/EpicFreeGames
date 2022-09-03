@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   output: "standalone",
-  redirects: [
+  redirects: async () => [
     {
       source: "/r/browser/:path*",
       destination: "https://epicgames.com/:path*",
@@ -32,13 +32,13 @@ const nextConfig = {
       permanent: false,
     },
   ],
-  rewrites: [
+  rewrites: async () => [
     {
-      source: "/stats/js/script.js",
+      source: "/stuff/script.js",
       destination: "https://a7s.epicfreegames.net/js/script.js",
     },
     {
-      source: "/stats/api/event",
+      source: "/stuff/event",
       destination: "https://a7s.epicfreegames.net/api/event",
     },
   ],
