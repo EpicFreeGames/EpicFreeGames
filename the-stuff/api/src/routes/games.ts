@@ -223,16 +223,16 @@ router.put(
     {
       body: z.array(
         z.object({
-          name: z.string(),
-          imageUrl: z.string(),
-          start: z.string(),
-          end: z.string(),
-          path: z.string(),
+          name: z.string().min(1),
+          imageUrl: z.string().min(1),
+          start: z.string().min(1),
+          end: z.string().min(1),
+          path: z.string().min(1),
           prices: z.array(
             z.object({
               value: z.number(),
-              formattedValue: z.string(),
-              currencyCode: z.string(),
+              formattedValue: z.string().min(1),
+              currencyCode: z.string().min(1),
             })
           ),
         })
