@@ -222,6 +222,9 @@ jobs:
           EFG_API_BOT_TOKEN: ${{ secrets.EFG_API_BOT_TOKEN }}
           EVENT_HANDLER_AUTH: ${{ secrets.EVENT_HANDLER_AUTH }}
           DISCORD_CLIENT_SECRET: ${{ secrets.DISCORD_CLIENT_SECRET }}
+          VALID_BOT_TOKEN: ${{ secrets.VALID_BOT_TOKEN }}
+          VALID_FRONT_TOKEN: ${{ secrets.VALID_FRONT_TOKEN }}
+          VALID_SCRAPER_TOKEN: ${{ secrets.VALID_SCRAPER_TOKEN }}
           UMAMI_SALT: ${{ secrets.UMAMI_SALT }}
         with:
           host: ${{ secrets.SXX_HOST }}
@@ -240,6 +243,9 @@ jobs:
               EFG_API_BOT_TOKEN=${{ env.EFG_API_BOT_TOKEN }} \
               EVENT_HANDLER_AUTH=${{ env.EVENT_HANDLER_AUTH }} \
               DISCORD_CLIENT_SECRET=${{ env.DISCORD_CLIENT_SECRET }} \
+              VALID_BOT_TOKEN=${{ env.VALID_BOT_TOKEN }} \
+              VALID_FRONT_TOKEN=${{ env.VALID_FRONT_TOKEN }} \
+              VALID_SCRAPER_TOKEN=${{ env.VALID_SCRAPER_TOKEN }} \
               UMAMI_SALT=${{ env.UMAMI_SALT }} \
                 docker compose -f docker-compose-staging.yml pull \
             && REGISTRY=${{ env.REGISTRY }} \
@@ -252,6 +258,9 @@ jobs:
               EFG_API_BOT_TOKEN=${{ env.EFG_API_BOT_TOKEN }} \
               EVENT_HANDLER_AUTH=${{ env.EVENT_HANDLER_AUTH }} \
               DISCORD_CLIENT_SECRET=${{ env.DISCORD_CLIENT_SECRET }} \
+              VALID_BOT_TOKEN=${{ env.VALID_BOT_TOKEN }} \
+              VALID_FRONT_TOKEN=${{ env.VALID_FRONT_TOKEN }} \
+              VALID_SCRAPER_TOKEN=${{ env.VALID_SCRAPER_TOKEN }} \
               UMAMI_SALT=${{ env.UMAMI_SALT }} \
                 docker compose -f docker-compose-staging.yml -p efg-staging up -d --force-recreate
 
@@ -309,5 +318,5 @@ jobs:
         run: | 
           vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }} \
             -b EFG_API_BASEURL=${{ secrets.EFG_API_BASEURL }} \
-            -b EFG_API_FRONT_TOKEN=${{ secrets.EFG_API_FRONT_TOKEN }} \
+            -b EFG_API_FRONT_TOKEN=${{ secrets.VALID_FRONT_TOKEN }} \
             -b ENVIRONMENT=Staging

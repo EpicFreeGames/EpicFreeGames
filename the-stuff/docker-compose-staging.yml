@@ -15,7 +15,7 @@ x-shared-bot-envs: &sharedBotEnvs
   REST_PROXY_URL: http://bot_rest-proxy:3000
   EVENT_HANDLER_URL: http://bot_event-handler:3000
   BOT_TOKEN: ${BOT_TOKEN}
-  EFG_API_BOT_TOKEN: ${EFG_API_BOT_TOKEN}
+  EFG_API_BOT_TOKEN: ${VALID_BOT_TOKEN}
 
 services:
   redis:
@@ -37,6 +37,9 @@ services:
       DATABASE_URL: ${DATABASE_URL}
       DISCORD_CLIENT_ID: ${DISCORD_CLIENT_ID}
       DISCORD_CLIENT_SECRET: ${DISCORD_CLIENT_SECRET}
+      VALID_BOT_TOKEN: ${VALID_BOT_TOKEN}
+      VALID_FRONT_TOKEN: ${VALID_FRONT_TOKEN}
+      VALID_SCRAPER_TOKEN: ${VALID_SCRAPER_TOKEN}
       SENDER_URL: http://sender:3000
       JWT_ISS: efg-staging-api
       JWT_AUD: efg-staging-api
