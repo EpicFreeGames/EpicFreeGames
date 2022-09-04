@@ -54,7 +54,7 @@ const registerRoutes = (app: Express) => {
   router.use("/sends", sendsRouter);
   router.use("/dashboard", dashboardRouter);
   router.use("/i18n", i18nRouter);
-  router.use("/heathz", healthRouter);
+  router.use("/healthz", healthRouter);
 
   app.use("/api", router);
 };
