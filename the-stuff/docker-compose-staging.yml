@@ -40,6 +40,7 @@ services:
       VALID_BOT_TOKEN: ${VALID_BOT_TOKEN}
       VALID_FRONT_TOKEN: ${VALID_FRONT_TOKEN}
       VALID_SCRAPER_TOKEN: ${VALID_SCRAPER_TOKEN}
+      VALID_HEALTHCHECK_TOKEN: ${VALID_HEALTHCHECK_TOKEN}
       SENDER_URL: http://sender:3000
       JWT_ISS: efg-staging-api
       JWT_AUD: efg-staging-api
