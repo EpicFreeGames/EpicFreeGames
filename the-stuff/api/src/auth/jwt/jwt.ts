@@ -2,8 +2,7 @@ import * as jose from "jose";
 import { v4 as uuidv4 } from "uuid";
 
 import { config } from "../../config";
-import { isLoginInvalidated, unInvalidateUserLogin } from "../userReLogin";
-import { isWhitelisted, saveJti } from "./jwtWhitelist";
+import { getTokenId, isCorrectTokenId, setTokenId } from "./tokenId";
 import { ITokenPayload, tokenPayloadSchema } from "./types";
 
 const signAccessToken = (props: ITokenPayload) =>
@@ -15,18 +14,26 @@ const signAccessToken = (props: ITokenPayload) =>
     .setJti(props.jti)
     .setIssuer(config.JWT_ISS)
     .setAudience(config.JWT_AUD)
+    .setExpirationTime("7d")
     .sign(config.JWT_KEY);
 
 export const createAccessToken = async (props: Omit<ITokenPayload, "jti">, jti?: string) => {
-  const innerJti = jti || uuidv4();
+  let createdNewId = false;
+
+  const tokenVersion =
+    jti ||
+    (await getTokenId(props.userId)) ||
+    (() => {
+      createdNewId = true;
+      return uuidv4();
+    })();
 
   const token = await signAccessToken({
     ...props,
-    jti: innerJti,
+    jti: tokenVersion,
   });
 
-  await saveJti({ userId: props.userId, jti: innerJti });
-  await unInvalidateUserLogin(props.userId);
+  if (createdNewId) await setTokenId(props.userId, tokenVersion);
 
   return token;
 };
@@ -48,21 +55,15 @@ export const verifyAccessJwt = async (token: string): Promise<ITokenPayload | nu
 
   const payloadRes = await tokenPayloadSchema.safeParseAsync(tokenPayload);
   if (!payloadRes.success) {
-    console.log("access token payload verification failed", payloadRes.error.format());
+    console.log("Access token error: Payload verification failed", payloadRes.error.format());
 
     return null;
   }
 
   const { userId, jti } = payloadRes.data;
 
-  const [whitelisted, invalidated] = await Promise.all([
-    isWhitelisted({ userId, jti }),
-    isLoginInvalidated(userId),
-  ]);
-
-  if (!whitelisted || invalidated) {
-    if (invalidated) console.log("access token is invalidated");
-    if (!whitelisted) console.log("access token is not whitelisted");
+  if (!(await isCorrectTokenId(userId, jti))) {
+    console.log("Access token error: Wrong token version");
 
     return null;
   }

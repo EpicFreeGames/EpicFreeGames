@@ -14,7 +14,7 @@ x-shared-bot-envs: &sharedBotEnvs
   LOGO_URL: https://staging.epicfreegames.net/assets/images/logos/Development.png
   REST_PROXY_URL: http://bot_rest-proxy:3000
   BOT_TOKEN: ${BOT_TOKEN}
-  EFG_API_BOT_TOKEN: ${EFG_API_BOT_TOKEN}
+  EFG_API_BOT_TOKEN: efg-valid-bot-token
 
 services:
   mysql:
@@ -46,32 +46,29 @@ services:
       dockerfile: Dockerfile.dev
     environment:
       <<: *sharedEnvs
+      ADMIN_DISCORD_ID: ${ADMIN_DISCORD_ID}
       DISCORD_CLIENT_ID: ${DISCORD_CLIENT_ID}
       DISCORD_CLIENT_SECRET: ${DISCORD_CLIENT_SECRET}
       DATABASE_URL: mysql://root:secret@mysql:3306/efg
       SENDER_URL: http://bot_sender:3000
       JWT_ISS: efg-dev-api
       JWT_AUD: efg-dev-api
-      JWT_SECRET: efg-api-jwt-secret
+      SECRET: efg-api-secret
       DASH_URL: http://localhost:3001
-    healthcheck:
-      test: curl --fail http://api:3000/api/ || exit 1
-      interval: 3s
-      timeout: 15s
-      retries: 5
+      VALID_BOT_TOKEN: efg-valid-bot-token
+      VALID_FRONT_TOKEN: efg-valid-front-token
+      VALID_SCRAPER_TOKEN: efg-valid-scraper-token
     restart: always
     volumes:
       - ./api/src:/app/src:r
       - ./api/t10s:/app/t10s:r
     ports:
       - "3010:3000"
-    command: "sh -c './wait-for.sh mysql:3306 -- ./wait-for.sh redis:6379 -- yarn prisma db push && yarn dev'"
+    command: sh -c './wait-for.sh mysql:3306 -t 20 -- ./wait-for.sh redis:6379 -t 20 -- yarn prisma db push && yarn dev'
 
   dash:
     depends_on:
       - api
-      - redis
-      - mysql
     build:
       context: ./dash
       dockerfile: Dockerfile.dev
@@ -84,7 +81,8 @@ services:
       - ./dash/src:/app/src:r
     ports:
       - "3001:3000"
-    command: "sh -c './wait-for.sh api:3000 -- yarn dev'"
+    restart: always
+    command: sh -c './wait-for.sh api:3000 -t 20 -- yarn dev'
 
   front:
     build:
@@ -97,10 +95,11 @@ services:
     ports:
       - "3000:3000"
     environment:
-      EFG_API_FRONT_TOKEN: ${EFG_API_FRONT_TOKEN}
+      EFG_API_FRONT_TOKEN: efg-valid-front-token
       EFG_API_BASEURL: http://api:3000/api
       ENVIRONMENT: Development
-    command: "sh -c './wait-for.sh api:3000 -- yarn dev'"
+    restart: always
+    command: sh -c './wait-for.sh api:3000 -t 20 -- yarn dev'
 
   bot_rest-proxy:
     depends_on:
@@ -112,11 +111,11 @@ services:
     image: bot_rest-proxy
     environment:
       <<: *sharedBotEnvs
-    command: "sh -c './wait-for.sh api:3000 -- deno run --watch -A ./src/rest-proxy/mod.ts'"
+    restart: always
+    command: sh -c './wait-for.sh api:3000 -t 20 -- deno run --watch -A ./src/rest-proxy/mod.ts'
 
   bot_sender:
     depends_on:
-      - api
       - bot_rest-proxy
     build:
       context: ./bot
@@ -127,11 +126,10 @@ services:
       <<: *sharedBotEnvs
       WEBHOOK_NAME: Dev-EpicFreeGames
     restart: always
-    command: "sh -c './wait-for.sh api:3000 -- ./wait-for.sh bot_rest-proxy:3000 -- deno run --watch -A ./src/sender/mod.ts'"
+    command: sh -c './wait-for.sh api:3000 -t 20 -- ./wait-for.sh bot_rest-proxy:3000 -t 20 -- deno run --watch -A ./src/sender/mod.ts'
 
   bot_gateway:
     depends_on:
-      - api
       - bot_rest-proxy
     build:
       context: ./bot
@@ -142,11 +140,10 @@ services:
       <<: *sharedBotEnvs
       EVENT_HANDLER_URL: http://bot_event-handler:3000
     restart: always
-    command: "sh -c './wait-for.sh api:3000 -- ./wait-for.sh bot_rest-proxy:3000 -- deno run --watch -A ./src/gateway/mod.ts'"
+    command: sh -c './wait-for.sh api:3000 -t 20 -- ./wait-for.sh bot_rest-proxy:3000 -t 20 -- deno run --watch -A ./src/gateway/mod.ts'
 
   bot_event-handler:
     depends_on:
-      - api
       - bot_gateway
       - bot_rest-proxy
     build:
@@ -157,10 +154,10 @@ services:
     environment:
       <<: *sharedBotEnvs
       WEBHOOK_INTEGRATION_NAME: Dev-EpicFreeGames Notifications
-    restart: always
     volumes:
       - ./bot/src:/app/src:r
-    command: "sh -c './wait-for.sh api:3000 -- ./wait-for.sh bot_rest-proxy:3000 -- deno run --watch -A ./src/event-handler/mod.ts'"
+    restart: always
+    command: sh -c './wait-for.sh api:3000 -t 20 -- ./wait-for.sh bot_rest-proxy:3000 -t 20 -- deno run --watch -A ./src/event-handler/mod.ts'
 
 volumes:
   redis-data:

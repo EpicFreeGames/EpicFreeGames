@@ -19,10 +19,8 @@ const Auth = ({ requiredFlags, children }: { requiredFlags: Flags[]; children: R
 
   if (isLoading) return <></>;
 
-  if (!canViewPage) return <div>forbidden</div>;
-
-  if (!isLoading && !canViewPage) {
-    router.push("/");
+  if (!canViewPage) {
+    router.push("/login");
     return null;
   }
 

@@ -35,7 +35,7 @@ export async function api<TData>({ method, path, body, query }: Args): Promise<A
       method,
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${sharedConfig.EFG_API_BOT_TOKEN}`,
+        Authorization: `Bot ${sharedConfig.EFG_API_BOT_TOKEN}`,
       },
       ...(!!body && { body: await serialize(body) }),
     }
@@ -53,7 +53,9 @@ export async function api<TData>({ method, path, body, query }: Args): Promise<A
         };
 
         logger.error(
-          `API request failed\nRequest url: ${sharedConfig.EFG_API_INTERNAL_BASEURL}${path}\nError: ${error}`
+          `API request failed\nRequest url: ${
+            sharedConfig.EFG_API_INTERNAL_BASEURL
+          }${path}\nError: ${JSON.stringify(error, null, 2)}`
         );
 
         return { error };
@@ -61,7 +63,9 @@ export async function api<TData>({ method, path, body, query }: Args): Promise<A
     })
     .catch((error) => {
       logger.error(
-        `API request failed\nRequest url: ${sharedConfig.EFG_API_INTERNAL_BASEURL}${path}\nError: ${error}`
+        `API request failed\nRequest url: ${
+          sharedConfig.EFG_API_INTERNAL_BASEURL
+        }${path}\nError: ${JSON.stringify(error, null, 2)}`
       );
 
       return { error };

@@ -9,7 +9,7 @@ import { createServer } from "./server";
 (async () => {
   const server = await createServer();
 
-  if (config.ENV === "Development" && config.INITDB) await initDatabaseDev();
+  if (config.ENV === "Development") await initDatabaseDev();
 
   const port = Number(process.env.PORT) || 3000;
 

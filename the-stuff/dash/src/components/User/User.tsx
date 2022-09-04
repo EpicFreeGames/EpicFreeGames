@@ -6,7 +6,6 @@ import { IUser } from "~utils/api/types";
 
 import { DeleteUser } from "./DeleteUser";
 import { EditUser } from "./EditUser";
-import { GetToken } from "./GetToken";
 
 type Props = {
   user: IUser;
@@ -36,7 +35,6 @@ export const User = ({ user }: Props) => {
           <div className="flex gap-1 rounded-lg bg-gray-800 p-2">
             {canEdit && <EditUser user={user} />}
             {canDelete && <DeleteUser user={user} />}
-            {canGetToken && <GetToken user={user} />}
           </div>
         )}
       </div>

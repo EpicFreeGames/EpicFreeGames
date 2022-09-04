@@ -20,7 +20,7 @@ export const mainGetStaticProps: GetStaticProps<{
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bot ${token}`,
     },
   });
 

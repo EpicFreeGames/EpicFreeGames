@@ -18,6 +18,7 @@ declare module "express-serve-static-core" {
   interface Request {
     wss: Server;
     tokenPayload: ITokenPayload;
+    user: { identifier: string; flags: number };
   }
 }
 

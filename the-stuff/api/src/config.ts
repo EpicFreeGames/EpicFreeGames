@@ -2,7 +2,7 @@ import { z } from "zod";
 
 const envSchema = z.object({
   DATABASE_URL: z.string(),
-  INITDB: z.any().optional(),
+  ADMIN_DISCORD_ID: z.string().optional(),
 
   REDISHOST: z.string(),
   REDISPORT: z.string().transform(Number),
@@ -19,7 +19,12 @@ const envSchema = z.object({
 
   JWT_ISS: z.string(),
   JWT_AUD: z.string(),
-  JWT_SECRET: z.string(),
+
+  SECRET: z.string(),
+
+  VALID_BOT_TOKEN: z.string(),
+  VALID_FRONT_TOKEN: z.string(),
+  VALID_SCRAPER_TOKEN: z.string(),
 
   ENV: z.enum(["Development", "Staging", "Production"]),
 });
@@ -33,5 +38,5 @@ if (!env.success) {
 
 export const config = {
   ...env.data,
-  JWT_KEY: new TextEncoder().encode(env.data.JWT_SECRET),
+  JWT_KEY: new TextEncoder().encode(env.data.SECRET),
 };

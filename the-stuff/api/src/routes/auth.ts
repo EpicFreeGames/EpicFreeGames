@@ -4,7 +4,6 @@ import { z } from "zod";
 import { createAccessTokenCookie, createEmptyAccessTokenCookie } from "../auth/cookie";
 import { endpointAuth } from "../auth/endpointAuth";
 import { createAccessToken } from "../auth/jwt/jwt";
-import { removeJti } from "../auth/jwt/jwtWhitelist";
 import { config } from "../config";
 import prisma from "../data/prisma";
 import { prismaUpdateCatcher } from "../data/prismaUpdateCatcher";
@@ -114,10 +113,6 @@ authRouter.get("/discord-init", async (req, res) => {
 });
 
 authRouter.post("/logout", endpointAuth(), async (req, res) => {
-  const { userId, jti } = req.tokenPayload;
-
-  await removeJti({ userId, jti });
-
   res.setHeader("Set-Cookie", createEmptyAccessTokenCookie());
   res.status(200).send();
 });
