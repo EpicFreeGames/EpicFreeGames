@@ -36,6 +36,8 @@ export enum Flags {
   ReceiveEvents = 1 << 26,
 
   GetTokens = 1 << 27,
+
+  GetHealth = 1 << 28,
 }
 
 export type Flag = keyof typeof Flags;

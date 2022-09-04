@@ -225,6 +225,7 @@ jobs:
           VALID_BOT_TOKEN: ${{ secrets.VALID_BOT_TOKEN }}
           VALID_FRONT_TOKEN: ${{ secrets.VALID_FRONT_TOKEN }}
           VALID_SCRAPER_TOKEN: ${{ secrets.VALID_SCRAPER_TOKEN }}
+          VALID_HEALTHCHECK_TOKEN: ${{ secrets.VALID_HEALTHCHECK_TOKEN }}
           SECRET: ${{ secrets.SECRET }}
           UMAMI_SALT: ${{ secrets.UMAMI_SALT }}
         with:
@@ -247,6 +248,7 @@ jobs:
               VALID_BOT_TOKEN=${{ env.VALID_BOT_TOKEN }} \
               VALID_FRONT_TOKEN=${{ env.VALID_FRONT_TOKEN }} \
               VALID_SCRAPER_TOKEN=${{ env.VALID_SCRAPER_TOKEN }} \
+              VALID_HEALTHCHECK_TOKEN=${{ env.VALID_HEALTHCHECK_TOKEN }} \
               SECRET=${{ env.SECRET }} \
               UMAMI_SALT=${{ env.UMAMI_SALT }} \
                 docker compose -f docker-compose-staging.yml pull \
@@ -263,6 +265,7 @@ jobs:
               VALID_BOT_TOKEN=${{ env.VALID_BOT_TOKEN }} \
               VALID_FRONT_TOKEN=${{ env.VALID_FRONT_TOKEN }} \
               VALID_SCRAPER_TOKEN=${{ env.VALID_SCRAPER_TOKEN }} \
+              VALID_HEALTHCHECK_TOKEN=${{ env.VALID_HEALTHCHECK_TOKEN }} \
               SECRET=${{ env.SECRET }} \
               UMAMI_SALT=${{ env.UMAMI_SALT }} \
                 docker compose -f docker-compose-staging.yml -p efg-staging up -d --force-recreate

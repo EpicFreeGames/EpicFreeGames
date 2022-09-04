@@ -25,6 +25,7 @@ const envSchema = z.object({
   VALID_BOT_TOKEN: z.string(),
   VALID_FRONT_TOKEN: z.string(),
   VALID_SCRAPER_TOKEN: z.string(),
+  VALID_HEALTHCHECK_TOKEN: z.string(),
 
   ENV: z.enum(["Development", "Staging", "Production"]),
 });

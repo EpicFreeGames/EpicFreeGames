@@ -28,4 +28,9 @@ export const bots = [
     token: config.VALID_SCRAPER_TOKEN,
     flags: Flags.PutGames | Flags.GetCurrencies,
   },
+  {
+    identifier: "healtcheck",
+    token: config.VALID_HEALTHCHECK_TOKEN,
+    flags: Flags.GetHealth,
+  },
 ];
