@@ -2,7 +2,6 @@ import { BASE_URL } from "discordeno";
 
 import { RestMethod } from "~shared/types.ts";
 import { botRest } from "~shared/utils/botRest.ts";
-import { serialize } from "~shared/utils/jsonWorker/initiator.ts";
 import { logger } from "~shared/utils/logger.ts";
 
 const rest = botRest;
@@ -52,8 +51,10 @@ const handleConnection = async (connection: Deno.Conn) => {
           requestEvent.request.method
         } ${
           requestEvent.request.url
-        }\nTried to proxy connection to: ${proxyTo}\nRequest body: ${await serialize(
-          json
+        }\nTried to proxy connection to: ${proxyTo}\nRequest body: ${JSON.stringify(
+          json,
+          null,
+          2
         )}\nError: ${err.stack}`
       );
 

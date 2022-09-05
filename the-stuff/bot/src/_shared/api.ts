@@ -1,6 +1,5 @@
 import { sharedConfig } from "./sharedConfig.ts";
 import { Method } from "./types.ts";
-import { serialize } from "./utils/jsonWorker/initiator.ts";
 import { logger } from "./utils/logger.ts";
 
 type ApiResponse<TData> =
@@ -28,18 +27,15 @@ type Args =
       query?: URLSearchParams;
     };
 
-export async function api<TData>({ method, path, body, query }: Args): Promise<ApiResponse<TData>> {
-  return fetch(
-    `${sharedConfig.EFG_API_INTERNAL_BASEURL}${path}${query ? `?${query.toString()}` : ""}`,
-    {
-      method,
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bot ${sharedConfig.EFG_API_BOT_TOKEN}`,
-      },
-      ...(!!body && { body: await serialize(body) }),
-    }
-  )
+export const api = <TData>({ method, path, body, query }: Args): Promise<ApiResponse<TData>> =>
+  fetch(`${sharedConfig.EFG_API_INTERNAL_BASEURL}${path}${query ? `?${query.toString()}` : ""}`, {
+    method,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bot ${sharedConfig.EFG_API_BOT_TOKEN}`,
+    },
+    ...(!!body && { body: JSON.stringify(body) }),
+  })
     .then(async (res) => {
       const json = await res.json().catch((e) => null);
 
@@ -70,4 +66,3 @@ export async function api<TData>({ method, path, body, query }: Args): Promise<A
 
       return { error };
     });
-}

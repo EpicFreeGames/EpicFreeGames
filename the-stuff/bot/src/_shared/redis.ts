@@ -2,7 +2,6 @@ import { DiscordGuild } from "discordeno";
 import { Redis, connect } from "redis";
 
 import { sharedConfig } from "./sharedConfig.ts";
-import { deserialize, serialize } from "./utils/jsonWorker/initiator.ts";
 import { logger } from "./utils/logger.ts";
 
 export let redis: Redis | null = null;
@@ -30,7 +29,7 @@ export const redisGet = async <TData>(key: string): Promise<TData | undefined> =
 
     if (!serializedData) return undefined;
 
-    const data = await deserialize<TData>(serializedData);
+    const data = JSON.parse(serializedData);
 
     return data;
   } catch (err) {
@@ -48,7 +47,7 @@ export const redisSet = async (
   if (!redis) throw new Error("Not connected to Redis");
 
   try {
-    const serializedData = await serialize(data);
+    const serializedData = JSON.stringify(data);
 
     await redis.set(key, serializedData);
 
