@@ -2,7 +2,7 @@ import {
   ApplicationCommandTypes,
   InteractionResponseTypes,
   sendInteractionResponse,
-} from "https://deno.land/x/discordeno@13.0.0-rc45/mod.ts";
+} from "discordeno";
 
 import { embeds } from "~shared/embeds/mod.ts";
 import { displayRole } from "~shared/utils/displayRole.ts";
