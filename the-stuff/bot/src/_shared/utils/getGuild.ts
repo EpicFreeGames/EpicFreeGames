@@ -1,4 +1,4 @@
-import { Bot, DiscordGuild, Guild } from "discordeno";
+import { Bot, DiscordGuild, Guild, calculateShardId } from "discordeno";
 
 import { getCachedGuild } from "../redis.ts";
 
@@ -13,7 +13,7 @@ export const getGuild = async (
   if (fromCache)
     return bot.transformers.guild(bot, {
       guild: fromCache,
-      shardId: 123,
+      shardId: calculateShardId(bot.gateway, guildId),
     });
 
   const result = await bot.rest.runMethod<DiscordGuild>(
@@ -26,6 +26,6 @@ export const getGuild = async (
 
   return bot.transformers.guild(bot, {
     guild: result,
-    shardId: 123,
+    shardId: calculateShardId(bot.gateway, guildId),
   });
 };
