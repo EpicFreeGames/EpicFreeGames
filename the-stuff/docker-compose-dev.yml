@@ -58,6 +58,7 @@ services:
       VALID_BOT_TOKEN: efg-valid-bot-token
       VALID_FRONT_TOKEN: efg-valid-front-token
       VALID_SCRAPER_TOKEN: efg-valid-scraper-token
+      VALID_HEALTHCHECK_TOKEN: efg-valid-healthz-token
     restart: always
     volumes:
       - ./api/src:/app/src:r
