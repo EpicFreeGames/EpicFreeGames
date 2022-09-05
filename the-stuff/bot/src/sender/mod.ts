@@ -1,4 +1,4 @@
-import { createBot } from "discordeno";
+import { createBot, createRestManager } from "discordeno";
 
 import { api } from "~shared/api.ts";
 import { handleCache } from "~shared/cache.ts";
@@ -6,7 +6,6 @@ import { initI18n } from "~shared/i18n/index.ts";
 import { connectRedis } from "~shared/redis.ts";
 import { sharedConfig } from "~shared/sharedConfig.ts";
 import { Server } from "~shared/types.ts";
-import { botRest } from "~shared/utils/botRest.ts";
 import { logger } from "~shared/utils/logger.ts";
 
 import { send } from "./send.ts";
@@ -20,7 +19,10 @@ export const sender = handleCache(
   })
 );
 
-sender.rest = botRest;
+sender.rest = createRestManager({
+  token: sharedConfig.BOT_TOKEN,
+  customUrl: sharedConfig.REST_PROXY_URL,
+});
 
 await connectRedis();
 await initI18n();

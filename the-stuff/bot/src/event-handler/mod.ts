@@ -1,12 +1,11 @@
-import { DiscordGatewayPayload, createBot } from "discordeno";
+import { DiscordGatewayPayload, createBot, createRestManager } from "discordeno";
 
 import { handleCache } from "~shared/cache.ts";
+import { initI18n } from "~shared/i18n/index.ts";
 import { connectRedis } from "~shared/redis.ts";
 import { sharedConfig } from "~shared/sharedConfig.ts";
-import { botRest } from "~shared/utils/botRest.ts";
 import { logger } from "~shared/utils/logger.ts";
 
-import { initI18n } from "../_shared/i18n/index.ts";
 import { initCommands } from "./commands/mod.ts";
 import { initEvents } from "./events/mod.ts";
 
@@ -18,7 +17,10 @@ export const bot = handleCache(
   })
 );
 
-bot.rest = botRest;
+bot.rest = createRestManager({
+  token: sharedConfig.BOT_TOKEN,
+  customUrl: sharedConfig.REST_PROXY_URL,
+});
 
 initEvents();
 initCommands();

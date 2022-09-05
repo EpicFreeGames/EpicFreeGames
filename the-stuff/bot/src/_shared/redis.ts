@@ -4,7 +4,7 @@ import { Redis, connect } from "redis";
 import { sharedConfig } from "./sharedConfig.ts";
 import { logger } from "./utils/logger.ts";
 
-export let redis: Redis | null = null;
+let redis: Redis | null = null;
 
 export const connectRedis = async () => {
   if (redis) {
