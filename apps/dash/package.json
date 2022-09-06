@@ -1,0 +1,36 @@
+{
+  "name": "@efg/dash",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit --skipLibCheck"
+  },
+  "dependencies": {
+    "@headlessui/react": "^1.6.6",
+    "@radix-ui/react-alert-dialog": "^1.0.0",
+    "@radix-ui/react-dialog": "^1.0.0",
+    "@tanstack/react-query": "^4.0.10",
+    "next": "12.2.4",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-hook-form": "^7.34.0",
+    "react-hot-toast": "^2.3.0",
+    "react-multi-select-component": "^4.3.3",
+    "tabler-icons-react": "^1.54.0"
+  },
+  "devDependencies": {
+    "@types/node": "18.7.0",
+    "@types/react": "18.0.17",
+    "@types/react-dom": "18.0.6",
+    "autoprefixer": "^10.4.8",
+    "cssnano": "^5.1.13",
+    "eslint": "8.21.0",
+    "eslint-config-next": "12.2.4",
+    "postcss": "^8.4.16",
+    "tailwindcss": "^3.1.8",
+    "typescript": "^4.8.2"
+  }
+}

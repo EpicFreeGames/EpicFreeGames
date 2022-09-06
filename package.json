@@ -1,0 +1,33 @@
+{
+  "name": "efg-mono",
+  "version": "0.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "devr": "yarn clean && yarn && yarn build && yarn dev",
+    "postclean": "rm -rf node_modules",
+    "clean": "turbo run clean",
+    "reg": "turbo run reg",
+    "reg-g": "turbo run reg-g",
+    "up": "docker-compose up -d --build",
+    "down": "docker-compose down"
+  },
+  "devDependencies": {
+    "turbo": "^1.4.5",
+    "@trivago/prettier-plugin-sort-imports": "^3.3.0",
+    "dotenv-cli": "^6.0.0",
+    "prettier": "^2.7.1",
+    "prettier-plugin-tailwindcss": "^0.1.13"
+  },
+  "dependencies": {},
+  "engines": {
+    "npm": ">=8.18.0",
+    "node": ">=18.8.0"
+  },
+  "packageManager": "yarn@1.22.19"
+}

@@ -1,0 +1,24 @@
+{
+  "name": "@efg/embeds",
+  "version": "0.0.0",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "private": true,
+  "scripts": {
+    "dev": "tsc --watch --preserveWatchOutput -p ./tsconfig.json",
+    "build": "rm -rf dist && ./node_modules/.bin/tsc -p ./tsconfig.json",
+    "clean": "rm -rf node_modules && rm -rf .turbo && rm -rf dist"
+  },
+  "files": [
+    "dist/**"
+  ],
+  "dependencies": {
+    "@efg/configuration": "*",
+    "@efg/types": "*",
+    "@efg/i18n": "*"
+  },
+  "devDependencies": {
+    "@efg/tsconfig": "*",
+    "typescript": "^4.8.2"
+  }
+}

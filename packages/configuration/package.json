@@ -1,0 +1,19 @@
+{
+  "name": "@efg/configuration",
+  "version": "0.0.0",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "private": true,
+  "scripts": {
+    "dev": "tsc --watch --preserveWatchOutput -p ./tsconfig.json",
+    "build": "rm -rf dist && ./node_modules/.bin/tsc -p ./tsconfig.json",
+    "clean": "rm -rf node_modules && rm -rf .turbo && rm -rf dist"
+  },
+  "dependencies": {
+    "zod": "^3.18.0"
+  },
+  "devDependencies": {
+    "@efg/tsconfig": "*",
+    "typescript": "^4.8.2"
+  }
+}
