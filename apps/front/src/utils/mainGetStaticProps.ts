@@ -1,37 +1,23 @@
 import { GetStaticProps } from "next";
 
-import { ILanguage, Translations } from "~i18n/types";
-import { getDefaultLanguage, getLangauge } from "~languages";
+import { defaultLanguage, initTranslations, languages, translations } from "@efg/i18n";
+import type { ILanguage } from "@efg/types";
 
-import { IEnvironment, apiBaseUrl, environment, token } from "./envs";
-
-type ApiResponse = {
-  translations: Translations;
-  usedDefaultTranslations: boolean;
-};
+import { IEnvironment, environment } from "./envs";
 
 export const mainGetStaticProps: GetStaticProps<{
   language: ILanguage;
-  translations: Translations;
+  translations: Record<string, string>;
   env: IEnvironment;
 }> = async ({ locale }) => {
-  const language = getLangauge(locale) ?? getDefaultLanguage();
-  const response = await fetch(`${apiBaseUrl}/i18n/translations/${language.code}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bot ${token}`,
-    },
-  });
+  if (!translations.size) await initTranslations();
 
-  const json = await response.json();
-
-  const translations = (json as ApiResponse).translations;
+  const language = languages.get(locale || defaultLanguage.code)!;
 
   return {
     props: {
       language,
-      translations,
+      translations: translations.get(language.code)!,
       env: environment,
     },
   };

@@ -1,6 +1,6 @@
-import { Join, PathKeys, Variables, translationsType, variableEnd, variableStart } from "./types";
+import type { ITranslations, Join, PathKeys, Variables } from "@efg/i18n";
 
-type T = translationsType;
+type T = ITranslations;
 
 type BaseArgs<P extends Join<PathKeys<T>, ".">> = {
   translations: Record<string, T>;
