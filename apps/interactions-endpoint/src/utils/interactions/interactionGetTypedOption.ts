@@ -15,7 +15,11 @@ export const interactionGetTypedOption = <
   if (!i.data.options) return null;
 
   for (const option of i.data.options) {
-    if (option.type === ApplicationCommandOptionType.Subcommand) {
+    if (option.type === type) {
+      if (name && option.name !== name) continue;
+
+      return option as TReturnValue;
+    } else if (option.type === ApplicationCommandOptionType.Subcommand) {
       if (!option.options) continue;
 
       for (const subOption of option.options) {
@@ -37,10 +41,6 @@ export const interactionGetTypedOption = <
           return subCommandOption as TReturnValue;
         }
       }
-    } else if (option.type === type) {
-      if (name && option.name !== name) continue;
-
-      return option as TReturnValue;
     } else return null;
   }
 
