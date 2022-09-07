@@ -1,8 +1,4 @@
-import {
-  isApplicationCommandGuildInteraction,
-  isChatInputApplicationCommandInteraction,
-} from "discord-api-types/utils/v10";
-import { MessageFlags } from "discord-api-types/v10";
+import { InteractionType, MessageFlags } from "discord-api-types/v10";
 import { Request, Response } from "express";
 
 import { embeds } from "@efg/embeds";
@@ -36,8 +32,19 @@ export const handleRequests = async (req: Request, res: Response) => {
 
 const needsGuildHandler = async (command: SlashCommand, i: any, res: Response) => {
   if (!command.needsGuild) return;
-  if (!isApplicationCommandGuildInteraction(i) || !isChatInputApplicationCommandInteraction(i))
+
+  if (i.type === InteractionType.ApplicationCommandAutocomplete) {
+    try {
+      await command.execute(
+        { i, server: undefined, language: defaultLanguage, currency: defaultCurrency },
+        res
+      );
+    } catch (err) {
+      console.error(err);
+    }
+
     return;
+  }
 
   const { data: server } = await efgApi<IServer | undefined>({
     method: "GET",

@@ -9,7 +9,7 @@ import { Response } from "express";
 import { languages } from "@efg/i18n";
 
 import { interactionGetTypedOption } from "../../../utils/interactions/interactionGetTypedOption";
-import { interactionReply } from "../../../utils/interactions/responding/interactionReply";
+import { interactionAutocompleteReply } from "../../../utils/interactions/responding/interactionAutocompleteReply";
 import { autoCompleteSorter } from "../_utils";
 
 export const setLanguageAutoCompleteHandler = (
@@ -48,5 +48,5 @@ export const setLanguageAutoCompleteHandler = (
     }));
   }
 
-  interactionReply({ choices: results }, res);
+  interactionAutocompleteReply({ choices: results }, res);
 };
