@@ -1,5 +1,7 @@
 import { configuration } from "@efg/configuration";
 
+import { objToStr } from "../jsonStringify";
+
 export type Method = "GET" | "HEAD" | "POST" | "PUT" | "DELETE" | "PATCH";
 
 type ApiResponse<TData> =
@@ -33,6 +35,7 @@ export const efgApi = async <TData>({ method, path, body }: Args): Promise<ApiRe
       "Content-Type": "application/json",
       Authorization: `Bot ${configuration.VALID_BOT_TOKEN}`,
     },
+    body: JSON.stringify(body),
   })
     .then(async (res) => {
       const json = await res.json().catch((e) => null);
@@ -47,7 +50,12 @@ export const efgApi = async <TData>({ method, path, body }: Args): Promise<ApiRe
         };
 
         console.error(
-          `API request failed\nRequest url: ${url}\nError: ${JSON.stringify(error, null, 2)}`
+          [
+            "Efg API request failed",
+            `Request url: ${url}`,
+            `Error: ${objToStr(error)}`,
+            `Body used: ${objToStr(body)}`,
+          ].join("\n")
         );
 
         return { error };
@@ -55,7 +63,12 @@ export const efgApi = async <TData>({ method, path, body }: Args): Promise<ApiRe
     })
     .catch((error) => {
       console.error(
-        `API request failed\nRequest url: ${path}}\nError: ${JSON.stringify(error, null, 2)}`
+        [
+          "Efg API request failed",
+          `Request url: ${url}`,
+          `Error: ${objToStr(error)}`,
+          `Body used: ${objToStr(body)}`,
+        ].join("\n")
       );
 
       return { error };

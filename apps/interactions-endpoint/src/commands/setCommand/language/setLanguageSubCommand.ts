@@ -15,6 +15,7 @@ import { interactionGetTypedOption } from "../../../utils/interactions/interacti
 import { interactionDeferReply } from "../../../utils/interactions/responding/interactionDeferReply";
 import { interactionEditReply } from "../../../utils/interactions/responding/interactionEditReply";
 import { interactionReply } from "../../../utils/interactions/responding/interactionReply";
+import { objToStr } from "../../../utils/jsonStringify";
 
 export const setLanguageSubCommand = async (
   {
@@ -30,21 +31,29 @@ export const setLanguageSubCommand = async (
   },
   res: Response
 ) => {
-  interactionDeferReply(res);
+  interactionDeferReply(res, { ephemeral: true });
 
   const stringOption = interactionGetTypedOption<APIApplicationCommandInteractionDataStringOption>(
     i,
     ApplicationCommandOptionType.String,
     "language"
   );
-
   if (!stringOption) return;
+
+  console.log(stringOption);
+
   const newLanguageCode = stringOption.value;
   const newLanguage = languages.get(newLanguageCode);
 
+  console.log({ newLanguageCode, newLanguage });
+
   if (!newLanguage) {
     console.error(
-      `Failed set language - Cause: Language not found\nLanguage tried: ${newLanguageCode}`
+      [
+        "Failed set language",
+        "Cause: Language not found",
+        `Language tried: ${newLanguageCode}`,
+      ].join("\n")
     );
 
     return interactionReply(
@@ -61,7 +70,11 @@ export const setLanguageSubCommand = async (
 
   if (serverUpdateError) {
     console.error(
-      `Failed set language - Cause: Failed to update server to efgApi - Cause: ${serverUpdateError}`
+      [
+        "Failed set language",
+        "Cause: Failed to update server to efgApi",
+        `Cause: ${objToStr(serverUpdateError)}`,
+      ].join("\n")
     );
 
     return interactionReply(

@@ -1,5 +1,7 @@
 import { configuration } from "@efg/configuration";
 
+import { objToStr } from "../jsonStringify";
+
 export type Method = "GET" | "HEAD" | "POST" | "PUT" | "DELETE" | "PATCH";
 
 type ApiResponse<TData> =
@@ -35,9 +37,10 @@ export const discordApi = async <TData>({
   return fetch(url, {
     method,
     headers: {
-      "Content-Type": "application/json",
       Authorization: `Bot ${configuration.DISCORD_BOT_TOKEN}`,
+      ...(body && { "Content-Type": "application/json" }),
     },
+    body: JSON.stringify(body),
   })
     .then(async (res) => {
       const json = await res.json().catch((e) => null);
@@ -52,7 +55,12 @@ export const discordApi = async <TData>({
         };
 
         console.error(
-          `API request failed\nRequest url: ${url}\nError: ${JSON.stringify(error, null, 2)}`
+          [
+            "Discord API request failed",
+            `Request url: ${url}`,
+            `Error: ${objToStr(error)}`,
+            `Body used: ${objToStr(body)}`,
+          ].join("\n")
         );
 
         return { error };
@@ -60,7 +68,12 @@ export const discordApi = async <TData>({
     })
     .catch((error) => {
       console.error(
-        `API request failed\nRequest url: ${path}}\nError: ${JSON.stringify(error, null, 2)}`
+        [
+          "Discord API request failed",
+          `Request url: ${url}`,
+          `Error: ${objToStr(error)}`,
+          `Body used: ${objToStr(body)}`,
+        ].join("\n")
       );
 
       return { error };

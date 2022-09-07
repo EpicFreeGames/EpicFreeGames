@@ -42,7 +42,6 @@ const needsGuildHandler = async (command: SlashCommand, i: any, res: Response) =
     } catch (err) {
       console.error(err);
     }
-
     return;
   }
 

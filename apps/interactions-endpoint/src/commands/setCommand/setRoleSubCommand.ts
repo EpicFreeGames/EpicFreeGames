@@ -16,6 +16,7 @@ import { efgApi } from "../../utils/efgApi/efgApi";
 import { interactionGetTypedOption } from "../../utils/interactions/interactionGetTypedOption";
 import { interactionDeferReply } from "../../utils/interactions/responding/interactionDeferReply";
 import { interactionEditReply } from "../../utils/interactions/responding/interactionEditReply";
+import { objToStr } from "../../utils/jsonStringify";
 import { makeSenseOfRole } from "./_utils";
 
 export const setRoleSubCommand = async (
@@ -60,7 +61,13 @@ export const setRoleSubCommand = async (
 
   if (roleFetchError) {
     console.error(
-      `Failed to set role - Cause: Failed to fetch guild roles - Cause: ${roleFetchError}\nSelected role ID: ${selectedRoleId}\nGuild ID: ${i.guild_id}`
+      [
+        "Failed to set role",
+        "Cause: Failed to fetch guild roles",
+        `Cause: ${objToStr(roleFetchError)}`,
+        `Selected role ID: ${selectedRoleId}`,
+        `Guild ID: ${i.guild_id}`,
+      ].join("\n")
     );
 
     return await interactionEditReply(i.token, {
@@ -72,7 +79,13 @@ export const setRoleSubCommand = async (
   const guildRole = guildRoles.find((r) => r.id === String(selectedRoleId));
   if (!guildRole) {
     console.error(
-      `Failed to set role - Cause: Selected role not found in guildRoles\nSelected role ID: ${selectedRoleId}\nGuild ID: ${i.guild_id}`
+      [
+        "Failed to set role",
+        "Cause: Selected role not found in guildRoles",
+        `Cause: ${objToStr(roleFetchError)}`,
+        `Selected role ID: ${selectedRoleId}`,
+        `Guild ID: ${i.guild_id}`,
+      ].join("\n")
     );
 
     return await interactionEditReply(i.token, {
@@ -91,7 +104,13 @@ export const setRoleSubCommand = async (
 
   if (serverUpdateError) {
     console.error(
-      `Failed to set role - Cause: Failed to update server in efgApi\nSelected role ID: ${selectedRoleId}\nGuild ID: ${i.guild_id}`
+      [
+        "Failed to set role",
+        "Cause: Failed to update server in efgApi",
+        `Cause: ${objToStr(roleFetchError)}`,
+        `Selected role ID: ${selectedRoleId}`,
+        `Guild ID: ${i.guild_id}`,
+      ].join("\n")
     );
 
     return await interactionEditReply(i.token, {

@@ -19,6 +19,7 @@ import { efgApi } from "../../utils/efgApi/efgApi";
 import { interactionGetTypedOption } from "../../utils/interactions/interactionGetTypedOption";
 import { interactionDeferReply } from "../../utils/interactions/responding/interactionDeferReply";
 import { interactionEditReply } from "../../utils/interactions/responding/interactionEditReply";
+import { objToStr } from "../../utils/jsonStringify";
 import { hasPermsOnChannel } from "../../utils/perms/hasPermsOnChannel";
 import { getRole } from "./_utils";
 
@@ -48,14 +49,30 @@ export const setChannelSubCommand = async (
 
   const selectedChannelId = BigInt(channelOption.value);
 
-  const { details, error, hasPerms } = await hasPermsOnChannel(i.guild_id, selectedChannelId, [
-    "VIEW_CHANNEL",
-    "MANAGE_WEBHOOKS",
-    "EMBED_LINKS",
-    ...(server?.roleId ? ["MENTION_EVERYONE" as PermissionString] : []),
-  ]);
+  const { details, error, cause, hasPerms } = await hasPermsOnChannel(
+    i.guild_id,
+    selectedChannelId,
+    [
+      "VIEW_CHANNEL",
+      "MANAGE_WEBHOOKS",
+      "EMBED_LINKS",
+      ...(server?.roleId ? ["MENTION_EVERYONE" as PermissionString] : []),
+    ]
+  );
 
-  if (error) return await interactionEditReply(i.token, { embeds: [embeds.errors.genericError()] });
+  if (error) {
+    console.error(
+      [
+        "Failed to set channel",
+        "Cause: Failed to check bot's permissions on channel",
+        `Cause: ${cause}`,
+        `Channel ID: ${selectedChannelId}`,
+        `Guild ID: ${i.guild_id}`,
+      ].join("\n")
+    );
+
+    return await interactionEditReply(i.token, { embeds: [embeds.errors.genericError()] });
+  }
 
   if (hasPerms === false)
     return await interactionEditReply(i.token, {
@@ -71,8 +88,15 @@ export const setChannelSubCommand = async (
 
   if (channelsWebhooksError) {
     console.error(
-      `Failed to set channel - Cause: Failed to get webhooks for channel - Cause:\n${channelsWebhooksError}\nChannel ID: ${selectedChannelId}\nGuild ID: ${i.guild_id}`
+      [
+        "Failed to set channel",
+        "Cause: Failed to get webhooks for channel",
+        `Cause: ${objToStr(channelsWebhooksError)}`,
+        `Channel ID: ${selectedChannelId}`,
+        `Guild ID: ${i.guild_id}`,
+      ].join("\n")
     );
+
     return await interactionEditReply(i.token, {
       embeds: [embeds.errors.genericError()],
       flags: MessageFlags.Ephemeral,
@@ -93,7 +117,12 @@ export const setChannelSubCommand = async (
   if (!webhook) {
     if (channelsWebhooks.length >= 10) {
       console.error(
-        `Failed to set channel - Cause: Max number of webhooks\nChannel ID: ${selectedChannelId}\nGuild ID: ${i.guild_id}`
+        [
+          "Failed to set channel",
+          "Cause: Max number of webhooks",
+          `Channel ID: ${selectedChannelId}`,
+          `Guild ID: ${i.guild_id}`,
+        ].join("\n")
       );
 
       return await interactionEditReply(i.token, {
@@ -114,8 +143,15 @@ export const setChannelSubCommand = async (
 
     if (newWebhookError) {
       console.error(
-        `Failed to set channel - Cause:\n${channelsWebhooksError}\nChannel ID: ${selectedChannelId}\nGuild ID: ${i.guild_id}`
+        [
+          "Failed to set channel",
+          "Cause: Failed to create webhook",
+          `Cause: ${objToStr(newWebhookError)}`,
+          `Channel ID: ${selectedChannelId}`,
+          `Guild ID: ${i.guild_id}`,
+        ].join("\n")
       );
+
       return await interactionEditReply(i.token, {
         embeds: [embeds.errors.genericError()],
         flags: MessageFlags.Ephemeral,
@@ -137,7 +173,13 @@ export const setChannelSubCommand = async (
 
   if (updatedServerError) {
     console.error(
-      `Failed to save updated webhook to efgApi - Cause:\n${updatedServerError}\nChannel ID: ${selectedChannelId}\nGuild ID: ${i.guild_id}`
+      [
+        "Failed to set channel",
+        "Cause: Failed to save updated webhook to efgApi",
+        `Cause: ${objToStr(updatedServerError)}`,
+        `Channel ID: ${selectedChannelId}`,
+        `Guild ID: ${i.guild_id}`,
+      ].join("\n")
     );
 
     return await interactionEditReply(i.token, {

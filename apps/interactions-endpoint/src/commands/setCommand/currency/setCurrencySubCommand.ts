@@ -16,6 +16,7 @@ import { interactionGetTypedOption } from "../../../utils/interactions/interacti
 import { interactionDeferReply } from "../../../utils/interactions/responding/interactionDeferReply";
 import { interactionEditReply } from "../../../utils/interactions/responding/interactionEditReply";
 import { interactionReply } from "../../../utils/interactions/responding/interactionReply";
+import { objToStr } from "../../../utils/jsonStringify";
 
 export const setCurrencySubCommand = async (
   {
@@ -50,6 +51,14 @@ export const setCurrencySubCommand = async (
       `Failed set currency - Cause: Currency not found\nCurrency tried: ${newCurrencyCode}`
     );
 
+    console.error(
+      [
+        "Failed set currency",
+        "Cause: Currency not found",
+        `Currency tried: ${newCurrencyCode}`,
+      ].join("\n")
+    );
+
     return interactionReply(
       { embeds: [embeds.errors.genericError()], flags: MessageFlags.Ephemeral },
       res
@@ -64,7 +73,11 @@ export const setCurrencySubCommand = async (
 
   if (serverUpdateError) {
     console.error(
-      `Failed set currency - Cause: Failed to update server to efgApi - Cause: ${serverUpdateError}`
+      [
+        "Failed set currency",
+        "Cause: Failed to update server to efgApi",
+        `Cause: ${objToStr(serverUpdateError)}`,
+      ].join("\n")
     );
 
     return interactionReply(

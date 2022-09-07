@@ -22,6 +22,7 @@ import { efgApi } from "../../utils/efgApi/efgApi";
 import { interactionGetTypedOption } from "../../utils/interactions/interactionGetTypedOption";
 import { interactionDeferReply } from "../../utils/interactions/responding/interactionDeferReply";
 import { interactionEditReply } from "../../utils/interactions/responding/interactionEditReply";
+import { objToStr } from "../../utils/jsonStringify";
 import { hasPermsOnChannel } from "../../utils/perms/hasPermsOnChannel";
 import { getRole } from "./_utils";
 
@@ -62,7 +63,12 @@ export const setThreadSubCommand = async (
 
   if (!thread) {
     console.error(
-      `Failed to set thread - Cause: Thread not found\nThread ID: ${selectedThreadId}\nGuild ID: ${i.guild_id}`
+      [
+        "Failed to set thread",
+        "Cause: Thread not found",
+        `Selected thread ID: ${selectedThreadId}`,
+        `Guild ID: ${i.guild_id}`,
+      ].join("\n")
     );
 
     return await interactionEditReply(i.token, { embeds: [embeds.errors.genericError()] });
@@ -70,7 +76,12 @@ export const setThreadSubCommand = async (
 
   if (thread.type !== ChannelType.PublicThread) {
     console.error(
-      `Failed to set thread - Cause: ChannelType is not PublicThread\nThread ID: ${selectedThreadId}\nGuild ID: ${i.guild_id}`
+      [
+        "Failed to set thread",
+        "Cause: ChannelType is not PublicThread",
+        `Selected thread ID: ${selectedThreadId}`,
+        `Guild ID: ${i.guild_id}`,
+      ].join("\n")
     );
 
     return await interactionEditReply(i.token, { embeds: [embeds.errors.genericError()] });
@@ -78,7 +89,12 @@ export const setThreadSubCommand = async (
 
   if (!thread.parent_id) {
     console.error(
-      `Failed to set thread - Cause: thread_id is not defined\nThread ID: ${selectedThreadId}\nGuild ID: ${i.guild_id}`
+      [
+        "Failed to set thread",
+        "Cause: thread.parent_id is not defined",
+        `Selected thread ID: ${selectedThreadId}`,
+        `Guild ID: ${i.guild_id}`,
+      ].join("\n")
     );
 
     return await interactionEditReply(i.token, { embeds: [embeds.errors.genericError()] });
@@ -86,7 +102,7 @@ export const setThreadSubCommand = async (
 
   const threadParentId = BigInt(thread.parent_id);
 
-  const { details, hasPerms, error } = await hasPermsOnChannel(i.guild_id, threadParentId, [
+  const { details, hasPerms, error, cause } = await hasPermsOnChannel(i.guild_id, threadParentId, [
     "VIEW_CHANNEL",
     "MANAGE_WEBHOOKS",
     "SEND_MESSAGES_IN_THREADS",
@@ -96,7 +112,14 @@ export const setThreadSubCommand = async (
 
   if (error) {
     console.error(
-      `Failed to set thread - Cause: hasPermsOnChannel failed\nThread ID: ${selectedThreadId}\nThread parent ID: ${threadParentId}\nGuild ID: ${i.guild_id}`
+      [
+        "Failed to set thread",
+        "Cause: Failed to check bot's permissions on parent channel",
+        `Cause: ${cause}`,
+        `Selected thread ID: ${selectedThreadId}`,
+        `Selected thread's parent ID: ${threadParentId}`,
+        `Guild ID: ${i.guild_id}`,
+      ].join("\n")
     );
 
     return await interactionEditReply(i.token, { embeds: [embeds.errors.genericError()] });
@@ -116,8 +139,16 @@ export const setThreadSubCommand = async (
 
   if (parentChannelsWebhooksError) {
     console.error(
-      `Failed to set thread - Cause: Failed to get webhooks for channel - Cause:\n${parentChannelsWebhooksError}\nThread ID: ${selectedThreadId}\nThread parent ID: ${threadParentId}\nGuild ID: ${i.guild_id}`
+      [
+        "Failed to set thread",
+        "Cause: Failed to get webhooks for parent channel",
+        `Cause: ${objToStr(parentChannelsWebhooksError)}`,
+        `Selected thread ID: ${selectedThreadId}`,
+        `Selected thread's parent ID: ${threadParentId}`,
+        `Guild ID: ${i.guild_id}`,
+      ].join("\n")
     );
+
     return await interactionEditReply(i.token, {
       embeds: [embeds.errors.genericError()],
       flags: MessageFlags.Ephemeral,
@@ -138,7 +169,13 @@ export const setThreadSubCommand = async (
   if (!webhook) {
     if (parentChannelsWebhooks.length >= 10) {
       console.error(
-        `Failed to set thread - Cause: Max number of webhooks\nThread ID: ${selectedThreadId}\nThread parent ID: ${threadParentId}\nGuild ID: ${i.guild_id}`
+        [
+          "Failed to set thread",
+          "Cause: Max number of webhooks",
+          `Selected thread ID: ${selectedThreadId}`,
+          `Selected thread's parent ID: ${threadParentId}`,
+          `Guild ID: ${i.guild_id}`,
+        ].join("\n")
       );
 
       return await interactionEditReply(i.token, {
@@ -159,8 +196,16 @@ export const setThreadSubCommand = async (
 
     if (newWebhookError) {
       console.error(
-        `Failed to set thread - Cause: Couldn't create a new webhook - Cause:\n${newWebhookError}\nThread ID: ${selectedThreadId}\nThread parent ID: ${threadParentId}\nGuild ID: ${i.guild_id}`
+        [
+          "Failed to set thread",
+          "Cause: Couldn't create a new webhook on parent channel",
+          `Cause: ${objToStr(newWebhookError)}`,
+          `Selected thread ID: ${selectedThreadId}`,
+          `Selected thread's parent ID: ${threadParentId}`,
+          `Guild ID: ${i.guild_id}`,
+        ].join("\n")
       );
+
       return await interactionEditReply(i.token, {
         embeds: [embeds.errors.genericError()],
         flags: MessageFlags.Ephemeral,
@@ -183,7 +228,14 @@ export const setThreadSubCommand = async (
 
   if (updatedServerError) {
     console.error(
-      `Failed to set thread - Cause: Failed to save updated webhook to efgApi - Cause:\n${updatedServerError}\nThread ID: ${selectedThreadId}\nThread parent ID: ${threadParentId}\nGuild ID: ${i.guild_id}`
+      [
+        "Failed to set thread",
+        "Cause: Failed to save updated webhook to efgApi",
+        `Cause: ${objToStr(updatedServerError)}`,
+        `Selected thread ID: ${selectedThreadId}`,
+        `Selected thread's parent ID: ${threadParentId}`,
+        `Guild ID: ${i.guild_id}`,
+      ].join("\n")
     );
 
     return await interactionEditReply(i.token, {

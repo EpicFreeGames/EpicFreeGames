@@ -4,17 +4,20 @@ import { configuration } from "@efg/configuration";
 import { PermissionString } from "@efg/types";
 
 import { discordApi } from "../discordApi/discordApi";
+import { objToStr } from "../jsonStringify";
 import { hasPerms } from "./hasPerms";
 
 export type ResultMap = Map<PermissionString, boolean>;
 type Result =
   | {
       error: boolean;
+      cause: string;
       details?: never;
       hasPerms?: never;
     }
   | {
       error?: never;
+      cause?: never;
       details: ResultMap;
       hasPerms: boolean;
     };
@@ -43,14 +46,47 @@ export const hasPermsOnChannel = async (
     }),
   ]);
 
-  if (channelError || guildError || memberError) return { error: true };
-  if (!channel || !guild || !member) return { error: true };
+  if (channelError)
+    return {
+      error: true,
+      cause: `Failed to get channel - Cause: ${objToStr(channelError)}`,
+    };
+
+  if (guildError)
+    return {
+      error: true,
+      cause: `Failed to get guild - Cause: ${objToStr(guildError)}`,
+    };
+
+  if (memberError)
+    return {
+      error: true,
+      cause: `Failed to get member - Cause: ${objToStr(memberError)}`,
+    };
+
+  if (!channel)
+    return {
+      error: true,
+      cause: `Channel is null with no errors`,
+    };
+
+  if (!guild)
+    return {
+      error: true,
+      cause: `Guild is null with no errors`,
+    };
+
+  if (!member)
+    return {
+      error: true,
+      cause: `Member is null with no errors`,
+    };
 
   if (channel.type !== ChannelType.GuildText && channel.type !== ChannelType.PublicThread)
-    return { error: true };
+    return { error: true, cause: `Channel is not a text channel or a public thread` };
 
   const everyoneRole = guild.roles.find((role) => role.id === guildId);
-  if (!everyoneRole) return { error: true };
+  if (!everyoneRole) return { error: true, cause: `Failed to find @everyone role` };
 
   const result: ResultMap = new Map();
 
