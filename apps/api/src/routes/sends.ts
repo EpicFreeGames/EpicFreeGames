@@ -1,12 +1,12 @@
 import { Router } from "express";
 import { z } from "zod";
 
+import { configuration } from "@efg/configuration";
+
 import { endpointAuth } from "../auth/endpointAuth";
 import { Flags } from "../auth/flags";
-import { config } from "../config";
 import prisma from "../data/prisma";
 import { prismaUpdateCatcher } from "../data/prismaUpdateCatcher";
-import redis from "../data/redis";
 import { addLocaleInfoToServers } from "../utils/addLocaleInfoToServers";
 import { bigintSchema } from "../utils/jsonfix";
 import { withValidation } from "../utils/withValidation";
@@ -77,7 +77,7 @@ router.get(
 
       const sending = await prisma.sending.findUnique({
         where: { id: sendingId },
-        include: { games: true },
+        include: { games: true, logs: true },
       });
 
       if (!sending)
@@ -85,10 +85,7 @@ router.get(
           .status(404)
           .json({ statusCode: 404, error: "Not found", message: "Sending not found" });
 
-      const successes = await redis.get(`sending:${sendingId}:successes`);
-      const failures = await redis.get(`sending:${sendingId}:failures`);
-
-      res.json({ ...sending, successes, failures });
+      res.json(sending);
     }
   )
 );
@@ -270,7 +267,7 @@ router.post(
           message: "Sending not found",
         });
 
-      const senderResponse = await fetch(config.SENDER_URL, {
+      const senderResponse = await fetch(configuration.SENDER_URL, {
         method: "POST",
         body: JSON.stringify({
           sendingId,

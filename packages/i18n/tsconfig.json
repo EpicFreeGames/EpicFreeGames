@@ -1,8 +1,40 @@
 {
-  "extends": "@efg/tsconfig/base.json",
   "compilerOptions": {
     "outDir": "dist",
-    "rootDir": "src"
+    "rootDir": "src",
+
+    "lib": ["esnext", "DOM"],
+
+    "declaration": true,
+    "declarationMap": true,
+    "composite": false,
+    "esModuleInterop": true,
+    "moduleResolution": "Node",
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "downlevelIteration": true,
+
+    "removeComments": true,
+
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+
+    "noUnusedLocals": true,
+    "noImplicitAny": true,
+    "noImplicitOverride": true,
+    "noImplicitThis": true,
+    "noPropertyAccessFromIndexSignature": false,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "resolveJsonModule": true,
+
+    "useUnknownInCatchVariables": false,
+
+    "strict": true,
+    "strictFunctionTypes": true,
+    "strictNullChecks": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true
   },
   "include": ["src/**/*.ts"]
 }

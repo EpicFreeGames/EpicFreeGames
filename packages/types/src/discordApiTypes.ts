@@ -1,116 +1,3 @@
-export enum InteractionResponseTypes {
-  /** ACK a `Ping` */
-  Pong = 1,
-  /** respond to an interaction with a message */
-  ChannelMessageWithSource = 4,
-  /** ACK an interaction and edit a response later, the user sees a loading state */
-  DeferredChannelMessageWithSource = 5,
-  /** for components, ACK an interaction and edit the original message later; the user does not see a loading state */
-  DeferredUpdateMessage = 6,
-  /** for components, edit the message the component was attached to */
-  UpdateMessage = 7,
-  /** respond to an autocomplete interaction with suggested choices */
-  ApplicationCommandAutocompleteResult = 8,
-  /** respond to an interaction with a popup modal */
-  Modal = 9,
-}
-
-export enum ApplicationCommandTypes {
-  /** A text-based command that shows up when a user types `/` */
-  ChatInput = 1,
-  /** A UI-based command that shows up when you right click or tap on a user */
-  User,
-  /** A UI-based command that shows up when you right click or tap on a message */
-  Message,
-}
-
-export enum InteractionTypes {
-  Ping = 1,
-  ApplicationCommand = 2,
-  MessageComponent = 3,
-  ApplicationCommandAutocomplete = 4,
-  ModalSubmit = 5,
-}
-
-export enum ApplicationCommandFlags {
-  /** Do not include any embeds when serialising this message */
-  SuppressEmbeds = 1 << 2,
-  /** Only visible to the user who invoked the interaction */
-  Ephemeral = 1 << 6,
-}
-
-export enum ApplicationCommandOptionTypes {
-  SubCommand = 1,
-  SubCommandGroup,
-  String,
-  Integer,
-  Boolean,
-  User,
-  Channel,
-  Role,
-  Mentionable,
-  Number,
-  Attachment,
-}
-
-export enum ChannelTypes {
-  /** A text channel within a server */
-  GuildText,
-  /** A direct message between users */
-  DM,
-  /** A voice channel within a server */
-  GuildVoice,
-  /** A direct message between multiple users */
-  GroupDm,
-  /** An organizational category that contains up to 50 channels */
-  GuildCategory,
-  /** A channel that users can follow and crosspost into their own server */
-  GuildAnnouncement,
-  /** A temporary sub-channel within a GUILD_ANNOUNCEMENT channel */
-  AnnouncementThread = 10,
-  /** A temporary sub-channel within a GUILD_TEXT channel */
-  PublicThread,
-  /** A temporary sub-channel within a GUILD_TEXT channel that is only viewable by those invited and those with the MANAGE_THREADS permission */
-  PrivateThread,
-  /** A voice channel for hosting events with an audience */
-  GuildStageVoice,
-  /** A channel in a hub containing the listed servers */
-  GuildDirectory,
-  /** A channel which can only contains threads */
-  GuildForum,
-}
-
-export type IEmbed = {
-  title: string;
-  color?: number;
-  image?: {
-    url: string;
-  };
-  description: string;
-};
-
-export type InteractionResponse = {
-  /** The type of response */
-  type: InteractionResponseTypes;
-  /** An optional response message */
-  data?: InteractionApplicationCommandCallbackData;
-};
-
-export type InteractionApplicationCommandCallbackData = {
-  content?: string;
-  embeds?: IEmbed[];
-  title?: string;
-  flags?: number;
-  choices?: ApplicationCommandOptionChoice[];
-};
-
-export type ApplicationCommandOptionChoice = {
-  /** 1-100 character choice name */
-  name: string;
-  /** Value of the choice, up to 100 characters if string */
-  value: string | number;
-};
-
 export enum BitwisePermissionFlags {
   /** Allows creation of instant invites */
   CREATE_INSTANT_INVITE = 0x0000000000000001,
@@ -197,3 +84,12 @@ export enum BitwisePermissionFlags {
 }
 
 export type PermissionString = keyof typeof BitwisePermissionFlags;
+
+export type IEmbed = {
+  title?: string;
+  description?: string;
+  color?: number;
+  image?: {
+    url: string;
+  };
+};

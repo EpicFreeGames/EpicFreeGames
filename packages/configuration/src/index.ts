@@ -1,15 +1,12 @@
+import * as dotenv from "dotenv";
+import { join } from "path";
 import { z } from "zod";
 
-import { getBase64Image } from "./getBase64Image";
+dotenv.config({ debug: true, path: join(__dirname, "..", "./.env") });
 
 const envSchema = z.object({
   DATABASE_URL: z.string(),
   ADMIN_DISCORD_ID: z.string().optional(),
-
-  REDISHOST: z.string(),
-  REDISPORT: z.string().transform(Number),
-  REDISUSER: z.string().optional(),
-  REDISPASS: z.string().optional(),
 
   DISCORD_BOT_TOKEN: z.string(),
   DISCORD_CLIENT_ID: z.string(),
@@ -48,19 +45,16 @@ if (!env.success) {
 }
 
 const botId = BigInt(
-  Buffer.from(env.data.DISCORD_BOT_TOKEN.split(".")?.at(0) ?? "").toString("base64")
+  Buffer.from(env.data.DISCORD_BOT_TOKEN.split(".")?.at(0) ?? "", "base64").toString("utf-8")
 );
-const base64Logo = `data:image/png;base64,${await getBase64Image(env.data.LOGO_URL)}`;
 
-const env2Schema = z.object({
-  DISCORD_BOT_ID: z.string().transform(BigInt),
-  BASE64_LOGO: z.string(),
-});
-
-const env2 = env2Schema.safeParse({
-  DISCORD_BOT_ID: botId,
-  BASE64_LOGO: base64Logo,
-});
+const env2 = z
+  .object({
+    DISCORD_BOT_ID: z.bigint(),
+  })
+  .safeParse({
+    DISCORD_BOT_ID: botId,
+  });
 
 if (!env2.success) {
   console.error("❌ Invalid environment variables:", JSON.stringify(env2.error.format(), null, 4));

@@ -1,9 +1,9 @@
 import { Router } from "express";
+import { v4 as uuidv4 } from "uuid";
 import { z } from "zod";
 
 import { endpointAuth } from "../auth/endpointAuth";
 import { Flags } from "../auth/flags";
-import { randomizeTokenId, removeTokenId } from "../auth/jwt/tokenId";
 import prisma from "../data/prisma";
 import { prismaUpdateCatcher } from "../data/prismaUpdateCatcher";
 import { withValidation } from "../utils/withValidation";
@@ -33,7 +33,7 @@ router.post(
       const user = await prisma.user
         .update({
           where: { id: userId },
-          data: { flags: newFlags },
+          data: { flags: newFlags, tokenVersion: uuidv4() },
         })
         .catch(prismaUpdateCatcher);
 
@@ -43,9 +43,6 @@ router.post(
           error: "Not found",
           message: "User not found",
         });
-
-      // invalidate all tokens
-      await randomizeTokenId(userId);
 
       return res.send(user);
     }
@@ -94,6 +91,7 @@ router.post(
           identifier,
           bot,
           flags,
+          tokenVersion: uuidv4(),
         },
       });
 
@@ -125,7 +123,7 @@ router.patch(
       const updatedUser = await prisma.user
         .update({
           where: { id: userId },
-          data: { flags },
+          data: { flags, tokenVersion: uuidv4() },
         })
         .catch(prismaUpdateCatcher);
 
@@ -135,8 +133,6 @@ router.patch(
           error: "Not found",
           message: "User not found",
         });
-
-      await randomizeTokenId(userId);
 
       return res.send(updatedUser);
     }
@@ -167,8 +163,6 @@ router.delete(
           error: "Not found",
           message: "User not found",
         });
-
-      await removeTokenId(userId);
 
       res.status(204).send();
     }

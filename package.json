@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "build": "turbo run build",
-    "dev": "turbo run dev",
+    "dev": "turbo run development",
     "devr": "yarn clean && yarn && yarn build && yarn dev",
     "postclean": "rm -rf node_modules",
     "clean": "turbo run clean",
@@ -18,7 +18,7 @@
     "down": "docker-compose down"
   },
   "devDependencies": {
-    "turbo": "^1.4.5",
+    "turbo": "1.4.4",
     "@trivago/prettier-plugin-sort-imports": "^3.3.0",
     "dotenv-cli": "^6.0.0",
     "prettier": "^2.7.1",
@@ -26,8 +26,8 @@
   },
   "dependencies": {},
   "engines": {
-    "npm": ">=8.18.0",
-    "node": ">=18.8.0"
+    "npm": ">=8.6.0",
+    "node": ">=18.0.0"
   },
   "packageManager": "yarn@1.22.19"
 }

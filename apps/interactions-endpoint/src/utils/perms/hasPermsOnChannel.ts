@@ -71,8 +71,8 @@ export const hasPermsOnChannel = async (
     permissions |= BigInt(everyoneOverwrite.allow);
   }
 
-  let rolesAllow = 0n;
-  let rolesDeny = 0n;
+  let rolesAllow = BigInt(0);
+  let rolesDeny = BigInt(0);
 
   for (const role of memberRoles) {
     const roleOverwrite = channelOverwrites.find((overwrite) => overwrite.id === role.id);

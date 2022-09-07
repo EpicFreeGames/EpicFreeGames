@@ -3,9 +3,9 @@ import cors from "cors";
 import express, { Express, Router } from "express";
 import http from "http";
 
+import { configuration } from "@efg/configuration";
 import { initTranslations } from "@efg/i18n";
 
-import { config } from "./config";
 import { authRouter } from "./routes/auth";
 import { currencyRouter } from "./routes/currencies";
 import { dashboardRouter } from "./routes/dashboard";
@@ -25,7 +25,7 @@ export const createServer = async () => {
   app.use(express.json());
   app.use(cookieParser());
   app.set("trust proxy", 2);
-  app.use(cors({ credentials: true, origin: config.DASH_URL }));
+  app.use(cors({ credentials: true, origin: configuration.DASH_URL }));
 
   const server = http.createServer(app);
   const wss = createWs(server);

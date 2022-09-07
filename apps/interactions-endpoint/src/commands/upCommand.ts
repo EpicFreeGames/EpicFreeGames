@@ -5,13 +5,13 @@ import { efgApi } from "../utils/efgApi/efgApi";
 import { interactionReply } from "../utils/interactions/responding/interactionReply";
 import { SlashCommand } from "../utils/interactions/types";
 
-export const command: SlashCommand = {
+export const upCommand: SlashCommand = {
   needsGuild: false,
   needsManageGuild: false,
   execute: async ({ i, server, language, currency }, res) => {
     const { error, data: games } = await efgApi<IGame[]>({
       method: "GET",
-      path: "/games/free",
+      path: "/games/up",
     });
 
     return interactionReply(

@@ -2,7 +2,7 @@ import {
   isApplicationCommandGuildInteraction,
   isChatInputApplicationCommandInteraction,
 } from "discord-api-types/utils/v10";
-import { APIApplicationCommandAutocompleteInteraction, MessageFlags } from "discord-api-types/v10";
+import { MessageFlags } from "discord-api-types/v10";
 import { Request, Response } from "express";
 
 import { embeds } from "@efg/embeds";
@@ -16,7 +16,7 @@ import { SlashCommand } from "./utils/interactions/types";
 import { hasPerms } from "./utils/perms/hasPerms";
 
 export const handleRequests = async (req: Request, res: Response) => {
-  const i = req.body as APIApplicationCommandAutocompleteInteraction;
+  const i = req.body as any;
   if (!i) return;
 
   const command = commands.get(i.data.name);
@@ -25,7 +25,10 @@ export const handleRequests = async (req: Request, res: Response) => {
   if (command.needsGuild) return await needsGuildHandler(command, i, res);
 
   try {
-    await command.execute(i, undefined, defaultLanguage, defaultCurrency);
+    await command.execute(
+      { i, server: undefined, language: defaultLanguage, currency: defaultCurrency },
+      res
+    );
   } catch (err: any) {
     console.error(err);
   }

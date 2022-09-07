@@ -1,10 +1,11 @@
 import { Router } from "express";
 import { z } from "zod";
 
+import { configuration } from "@efg/configuration";
+
 import { createAccessTokenCookie, createEmptyAccessTokenCookie } from "../auth/cookie";
 import { endpointAuth } from "../auth/endpointAuth";
 import { createAccessToken } from "../auth/jwt/jwt";
-import { config } from "../config";
 import prisma from "../data/prisma";
 import { prismaUpdateCatcher } from "../data/prismaUpdateCatcher";
 import { withValidation } from "../utils/withValidation";
@@ -25,14 +26,14 @@ authRouter.get(
       const { code } = req.query;
 
       const params = new URLSearchParams({
-        client_id: config.DISCORD_CLIENT_ID,
-        client_secret: config.DISCORD_CLIENT_SECRET,
+        client_id: configuration.DISCORD_CLIENT_ID,
+        client_secret: configuration.DISCORD_CLIENT_SECRET,
         grant_type: "authorization_code",
         code,
-        redirect_uri: config.DISCORD_REDIRECT_URL,
+        redirect_uri: configuration.DISCORD_REDIRECT_URL,
       });
 
-      const tokenResponse = await fetch(`${config.DISCORD_API_BASEURL}/oauth2/token`, {
+      const tokenResponse = await fetch(`${configuration.DISCORD_API_BASEURL}/oauth2/token`, {
         method: "POST",
         body: params,
         headers: {
@@ -51,7 +52,7 @@ authRouter.get(
       if (!access_token)
         return res.status(500).json({ error: "No access token in Discord's response" });
 
-      const userResponse = await fetch(`${config.DISCORD_API_BASEURL}/oauth2/@me`, {
+      const userResponse = await fetch(`${configuration.DISCORD_API_BASEURL}/oauth2/@me`, {
         headers: {
           Authorization: `Bearer ${access_token}`,
         },
@@ -92,19 +93,20 @@ authRouter.get(
       const accessToken = await createAccessToken({
         userId: dbUser.id,
         flags: dbUser.flags,
+        jti: dbUser.tokenVersion,
       });
 
       res.setHeader("Set-Cookie", createAccessTokenCookie(accessToken));
 
-      res.redirect(303, config.DASH_URL);
+      res.redirect(303, configuration.DASH_URL);
     }
   )
 );
 
 authRouter.get("/discord-init", async (req, res) => {
   const queryParams = new URLSearchParams({
-    client_id: config.DISCORD_CLIENT_ID,
-    redirect_uri: config.DISCORD_REDIRECT_URL,
+    client_id: configuration.DISCORD_CLIENT_ID,
+    redirect_uri: configuration.DISCORD_REDIRECT_URL,
     response_type: "code",
     scope: "identify",
   });

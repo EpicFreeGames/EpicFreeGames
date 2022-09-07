@@ -1,6 +1,6 @@
 import { IncomingMessage } from "http";
 
-import redis from "../data/redis";
+import prisma from "../data/prisma";
 import { hasPermission } from "./authUtils";
 import { Flags } from "./flags";
 import { verifyAccessJwt } from "./jwt/jwt";
@@ -12,12 +12,13 @@ export const socketAuth = async (req: IncomingMessage) => {
   const accessTokenPayload = await verifyAccessJwt(accessTokenCookie);
   if (!accessTokenPayload) return { hasAccess: false };
 
+  const user = await prisma.user.findUnique({ where: { id: accessTokenPayload.userId } });
+
+  if (!user) return { hasAccess: false };
+  if (accessTokenPayload.jti !== user.tokenVersion) return { hasAccess: false };
+  if (user.flags !== accessTokenPayload.flags) return { hasAccess: false };
+
   if (!hasPermission(accessTokenPayload.flags, [Flags.ReceiveEvents])) return { hasAccess: false };
 
-  const tokenExists = await redis.sismember(
-    `${accessTokenPayload.userId}:tokens`,
-    accessTokenPayload.jti
-  );
-
-  return { hasAccess: !!tokenExists, accessTokenPayload };
+  return { hasAccess: true, accessTokenPayload };
 };

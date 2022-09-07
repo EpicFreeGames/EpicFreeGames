@@ -1,10 +1,11 @@
+import { configuration } from "@efg/configuration";
+
 import { Flags } from "../auth/flags";
-import { config } from "../config";
 
 export const bots = [
   {
     identifier: "bot",
-    token: config.VALID_BOT_TOKEN,
+    token: configuration.VALID_BOT_TOKEN,
     flags:
       Flags.AddCommandLogs |
       Flags.EditServers |
@@ -20,17 +21,17 @@ export const bots = [
   },
   {
     identifier: "frontend",
-    token: config.VALID_FRONT_TOKEN,
+    token: configuration.VALID_FRONT_TOKEN,
     flags: Flags.GetLanguages | Flags.GetTranslations,
   },
   {
     identifier: "scraper",
-    token: config.VALID_SCRAPER_TOKEN,
+    token: configuration.VALID_SCRAPER_TOKEN,
     flags: Flags.PutGames | Flags.GetCurrencies,
   },
   {
     identifier: "healtcheck",
-    token: config.VALID_HEALTHCHECK_TOKEN,
+    token: configuration.VALID_HEALTHCHECK_TOKEN,
     flags: Flags.GetHealth,
   },
 ];

@@ -1,6 +1,6 @@
 import { createHmac, timingSafeEqual } from "crypto";
 
-import { config } from "../config";
+import { configuration } from "@efg/configuration";
 
 export const safeEqual = (a: string, b: string) => {
   const aBuff = Buffer.from(a);
@@ -10,4 +10,4 @@ export const safeEqual = (a: string, b: string) => {
 };
 
 export const hmacSha256 = (plaintext: string) =>
-  createHmac("sha256", config.SECRET).update(plaintext).digest("hex");
+  createHmac("sha256", configuration.SECRET).update(plaintext).digest("hex");

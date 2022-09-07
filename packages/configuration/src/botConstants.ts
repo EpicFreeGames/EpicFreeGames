@@ -1,4 +1,5 @@
 import { configuration } from ".";
+import { getBase64Image } from "./getBase64Image";
 
 export const botConstants = {
   inviteGif:
@@ -22,4 +23,5 @@ export const botConstants = {
 
   botName: "EpicFreeGames",
   webhookName: "EpicFreeGames Notifications",
+  base64Logo: async () => `data:image/png;base64,${await getBase64Image(configuration.LOGO_URL)}`,
 };

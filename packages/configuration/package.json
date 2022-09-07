@@ -10,10 +10,11 @@
     "clean": "rm -rf node_modules && rm -rf .turbo && rm -rf dist"
   },
   "dependencies": {
+    "dotenv": "^16.0.2",
     "zod": "^3.18.0"
   },
   "devDependencies": {
     "@efg/tsconfig": "*",
-    "typescript": "^4.8.2"
+    "typescript": "4.7.4"
   }
 }

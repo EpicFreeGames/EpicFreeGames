@@ -1,4 +1,5 @@
 import { bots } from "../data/bots";
+import prisma from "../data/prisma";
 import { Middleware } from "../types";
 import { safeEqual } from "../utils/crypto";
 import { hasPermission } from "./authUtils";
@@ -54,6 +55,29 @@ export const endpointAuth =
           message: "Invalid token",
         });
 
+      const user = await prisma.user.findUnique({ where: { id: accessTokenPayload.userId } });
+
+      if (!user)
+        return res.status(401).send({
+          statusCode: 401,
+          error: "Unauthorized",
+          message: "User not found",
+        });
+
+      if (accessTokenPayload.jti !== user.tokenVersion)
+        return res.status(401).send({
+          statusCode: 401,
+          error: "Unauthorized",
+          message: "Invalid token",
+        });
+
+      if (user.flags !== accessTokenPayload.flags)
+        return res.status(401).send({
+          statusCode: 401,
+          error: "Unauthorized",
+          message: "Invalid token",
+        });
+
       if (!hasPermission(accessTokenPayload.flags, requiredFlags))
         return res.status(403).json({
           statusCode: 403,
@@ -62,11 +86,10 @@ export const endpointAuth =
         });
 
       req.tokenPayload = accessTokenPayload;
-
-      const { jti, ...rest } = accessTokenPayload;
+      req.user = user;
 
       // refresh expiry
-      const newAccessToken = await createAccessToken(rest, jti);
+      const newAccessToken = await createAccessToken(accessTokenPayload);
       res.setHeader("Set-Cookie", createAccessTokenCookie(newAccessToken));
 
       next();

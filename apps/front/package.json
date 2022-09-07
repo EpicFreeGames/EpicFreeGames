@@ -1,9 +1,10 @@
 {
   "name": "@efg/front",
   "version": "0.0.0",
+  "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "buildprod": "next build",
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit --skipLibCheck"
@@ -15,7 +16,7 @@
     "@radix-ui/react-dropdown-menu": "^1.0.0",
     "@radix-ui/react-tooltip": "^1.0.0",
     "framer-motion": "^7.2.1",
-    "next": "12.2.3",
+    "next": "12.2.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hot-toast": "^2.3.0",
@@ -27,10 +28,10 @@
     "@types/react": "18.0.14",
     "@types/react-dom": "18.0.5",
     "autoprefixer": "^10.4.8",
-    "eslint": "8.18.0",
-    "eslint-config-next": "12.2.3",
+    "eslint": "8.23.0",
+    "eslint-config-next": "12.2.5",
     "postcss": "^8.4.16",
     "tailwindcss": "^3.1.8",
-    "typescript": "^4.8.2"
+    "typescript": "4.7.4"
   }
 }

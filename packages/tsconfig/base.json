@@ -4,7 +4,7 @@
   "compilerOptions": {
     "lib": ["ESNext", "DOM"],
     "target": "ESNext",
-    "module": "ESNext",
+    "module": "CommonJS",
 
     "declaration": true,
     "declarationMap": true,
