@@ -12,10 +12,8 @@
     "devr": "yarn clean && yarn && yarn build && yarn dev",
     "postclean": "rm -rf node_modules",
     "clean": "turbo run clean",
-    "reg": "turbo run reg",
-    "reg-g": "turbo run reg-g",
-    "up": "docker-compose up -d --build",
-    "down": "docker-compose down"
+    "api::dev": "turbo run build --filter=api... && turbo run dev --filter=api...",
+    "ie::dev": "turbo run build --filter=interactions-endpoint... && turbo run dev --filter=interactions-endpoint..."
   },
   "devDependencies": {
     "turbo": "1.4.4",
