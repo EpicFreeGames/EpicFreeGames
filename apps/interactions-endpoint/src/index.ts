@@ -9,7 +9,9 @@ import { createApp } from "./app";
 
   const app = createApp();
 
-  app.listen(3002, () => {
-    console.log(`Listening for interactions on port ${3002}`);
+  const port = Number(process.env.PORT) || 3000;
+
+  app.listen(port, () => {
+    console.log(`Listening for interactions on port ${port}`);
   });
 })();
