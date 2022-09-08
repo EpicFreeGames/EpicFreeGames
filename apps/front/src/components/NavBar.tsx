@@ -2,6 +2,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { ReactNode } from "react";
 
+import type { ILanguage } from "@efg/types";
+
 import { useMediaQuery } from "~useMatchMedia";
 
 import { DropdownMenu, MenuLinkItem } from "./DropdownMenu";
@@ -9,9 +11,10 @@ import { LanguageSelector } from "./LanguageSelector";
 
 type Props = {
   noTranslations?: boolean;
+  languages: ILanguage[];
 };
 
-export const NavBar = ({ noTranslations }: Props) => {
+export const NavBar = ({ noTranslations, languages }: Props) => {
   const router = useRouter();
   const isHome = router.pathname === "/";
 
@@ -36,7 +39,7 @@ export const NavBar = ({ noTranslations }: Props) => {
           </DropdownMenu>
         )}
 
-        {!noTranslations && <LanguageSelector />}
+        {!noTranslations && <LanguageSelector languages={languages} />}
       </div>
     </nav>
   );

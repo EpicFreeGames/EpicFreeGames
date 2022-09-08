@@ -13,7 +13,8 @@
     "postclean": "rm -rf node_modules",
     "clean": "turbo run clean",
     "api::dev": "turbo run build --filter=api... && turbo run dev --filter=api...",
-    "ie::dev": "turbo run build --filter=interactions-endpoint... && turbo run dev --filter=interactions-endpoint..."
+    "ie::dev": "turbo run build --filter=interactions-endpoint... && turbo run dev --filter=interactions-endpoint...",
+    "front::dev": "turbo run build --filter=front... && turbo run dev --filter=front..."
   },
   "devDependencies": {
     "turbo": "1.4.4",

@@ -3,13 +3,16 @@ import { InferGetStaticPropsType } from "next";
 import { Layout } from "~components/Layout";
 import { Markdown } from "~components/Markdown";
 import { t } from "~i18n/translate";
-import { Translations } from "~i18n/types";
 import { mainGetStaticProps } from "~utils/mainGetStaticProps";
 
 export const getStaticProps = mainGetStaticProps;
 
-const TutorialPage = ({ translations, env }: InferGetStaticPropsType<typeof getStaticProps>) => (
-  <Layout title={t({ translations, key: "tutorial" })} env={env}>
+const TutorialPage = ({
+  translations,
+  languages,
+  env,
+}: InferGetStaticPropsType<typeof getStaticProps>) => (
+  <Layout languages={languages} title={t({ translations, key: "tutorial" })} env={env}>
     <h1 className="text-2xl font-bold">{t({ translations, key: "tutorial" })}</h1>
 
     <div className="flex flex-col gap-[3rem] pt-6 text-sm sm:gap-[6rem] sm:text-base">
@@ -79,7 +82,7 @@ const TutorialPage = ({ translations, env }: InferGetStaticPropsType<typeof getS
   </Layout>
 );
 
-const Optional = ({ translations }: { translations: Translations }) => (
+const Optional = ({ translations }: { translations: Record<string, string> }) => (
   <span className="text-lg font-normal text-slate-600">
     ({t({ translations, key: "optional" })})
   </span>

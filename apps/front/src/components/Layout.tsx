@@ -2,7 +2,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { ReactNode } from "react";
 
-import { languages } from "~languages";
+import type { ILanguage } from "@efg/types";
 
 import { NavBar } from "./NavBar";
 
@@ -10,13 +10,14 @@ type Props = {
   title?: string;
   children: ReactNode;
   noTranslations?: boolean;
+  languages: ILanguage[];
   env: "Staging" | "Production" | "Development";
 };
 
 const desc =
   "A customizable and easy-to-setup Discord bot focused around notifying about free games. Apart from notifying, it also provides your server some cool commands!";
 
-export const Layout = ({ title, children, noTranslations, env }: Props) => {
+export const Layout = ({ title, children, noTranslations, languages, env }: Props) => {
   const { pathname } = useRouter();
   const isHome = pathname === "/";
 
@@ -67,15 +68,15 @@ export const Layout = ({ title, children, noTranslations, env }: Props) => {
           id="keywords"
         />
 
-        {[...languages].map(([code]) => (
+        {languages.map((language) => (
           <link
-            key={code}
+            key={language.code}
             rel="alternate"
-            hrefLang={code}
+            hrefLang={language.code}
             href={
-              code === "en"
+              language.code === "en"
                 ? `${baseUrl}${!isHome ? pathname : ""}`
-                : `${baseUrl}/${code}${!isHome ? pathname : ""}`
+                : `${baseUrl}/${language.code}${!isHome ? pathname : ""}`
             }
           />
         ))}
@@ -90,7 +91,7 @@ export const Layout = ({ title, children, noTranslations, env }: Props) => {
         />
       </Head>
 
-      <NavBar noTranslations={noTranslations} />
+      <NavBar noTranslations={noTranslations} languages={languages} />
 
       <main className="mx-auto mt-8 max-w-screen-sm px-3 sm:mt-16">{children}</main>
     </>

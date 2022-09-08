@@ -1,9 +1,10 @@
 import type { ITranslations, Join, PathKeys, Variables } from "@efg/i18n";
+import { variableEnd, variableStart } from "@efg/i18n";
 
 type T = ITranslations;
 
 type BaseArgs<P extends Join<PathKeys<T>, ".">> = {
-  translations: Record<string, T>;
+  translations: Record<string, string>;
   key: P;
 };
 

@@ -6,8 +6,8 @@ import { mainGetStaticProps } from "~utils/mainGetStaticProps";
 
 export const getStaticProps = mainGetStaticProps;
 
-const TermsOfServicePage = ({ env }: InferGetStaticPropsType<typeof getStaticProps>) => (
-  <Layout title="Terms of service" noTranslations env={env}>
+const TermsOfServicePage = ({ env, languages }: InferGetStaticPropsType<typeof getStaticProps>) => (
+  <Layout languages={languages} title="Terms of service" noTranslations env={env}>
     <TermsMarkdown>
       {`
 # Terms of service
