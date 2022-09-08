@@ -1,12 +1,16 @@
 {
   "extends": "@efg/tsconfig/base.json",
   "compilerOptions": {
+    "lib": ["ESNext", "DOM"],
+    "target": "ESNext",
+    "module": "CommonJS",
+
     "outDir": "dist",
     "rootDir": "src",
-    "baseUrl": ".",
-    "paths": {
-      "~*": ["src/*"]
-    }
+
+    "declaration": true,
+    "declarationMap": true,
+    "composite": false
   },
   "include": ["src/**/*.ts"]
 }

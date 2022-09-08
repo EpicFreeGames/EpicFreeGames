@@ -2,23 +2,19 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Default",
   "compilerOptions": {
-    "lib": ["ESNext", "DOM"],
-    "target": "ESNext",
-    "module": "CommonJS",
-
-    "declaration": true,
-    "declarationMap": true,
-    "composite": false,
+    "downlevelIteration": true,
     "esModuleInterop": true,
     "moduleResolution": "Node",
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "downlevelIteration": true,
     "removeComments": true,
-
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
-
+    "strict": true,
+    "strictFunctionTypes": true,
+    "strictNullChecks": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
     "noUnusedLocals": true,
     "noImplicitAny": true,
     "noImplicitOverride": true,
@@ -27,14 +23,8 @@
     "noPropertyAccessFromIndexSignature": false,
     "noFallthroughCasesInSwitch": true,
     "resolveJsonModule": true,
-
-    "useUnknownInCatchVariables": false,
-
-    "strict": true,
-    "strictFunctionTypes": true,
-    "strictNullChecks": true,
-    "strictBindCallApply": true,
-    "strictPropertyInitialization": true
+    "noUncheckedIndexedAccess": true,
+    "useUnknownInCatchVariables": false
   },
   "exclude": ["node_modules", "dist"]
 }
