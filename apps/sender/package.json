@@ -4,9 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "typecheck": "tsc --skipLibCheck --noEmit",
     "build": "rm -rf dist && ./node_modules/.bin/tsc -p ./tsconfig.json",
-    "dev": "nodemon -q -e ts,json --ignore ./dist --watch ./ --exec 'yarn build && node --experimental-specifier-resolution=node ./dist/index.js'",
-    "start": "node ./dist/index.js",
+    "start": "node --experimental-specifier-resolution=node ./dist/index.js",
+    "dev": "nodemon -q -e ts,json --ignore ./dist --watch ./ --exec 'yarn build && yarn start'",
     "clean": "rm -rf node_modules && rm -rf .turbo && rm -rf dist"
   },
   "dependencies": {

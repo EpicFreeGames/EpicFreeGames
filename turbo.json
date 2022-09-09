@@ -12,18 +12,10 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**"]
     },
-    "reg": {
-      "dependsOn": ["build"]
-    },
-    "reg-g": {
-      "dependsOn": ["build"]
-    },
-    "clean": {
-      "cache": false
-    },
+    "clean": { "cache": false },
     "start": {
-      "dependsOn": ["^start"],
-      "cache": false
+      "dependsOn": ["^build", "^buildprod", "^start"],
+      "outputs": ["dist/**", ".next/**"]
     }
   }
 }

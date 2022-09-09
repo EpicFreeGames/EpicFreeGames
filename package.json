@@ -10,12 +10,19 @@
     "build": "turbo run build",
     "clean": "turbo run clean",
     "postclean": "rm -rf node_modules",
+    "format": "prettier --write \"**/*.{ts,tsx,json}\"",
     "api::dev": "turbo run dev --filter=api...",
     "ie::dev": "turbo run dev --filter=interactions-endpoint...",
     "drp::dev": "turbo run dev --filter=discord-rest-proxy...",
     "front::dev": "turbo run dev --filter=front...",
     "sender::dev": "turbo run dev --filter=sender...",
-    "dash::dev": "turbo run dev --filter=dash..."
+    "dash::dev": "turbo run dev --filter=dash...",
+    "api::start": "turbo run start --filter=api...",
+    "ie::start": "turbo run start --filter=interactions-endpoint...",
+    "drp::start": "turbo run start --filter=discord-rest-proxy...",
+    "front::start": "turbo run start --filter=front...",
+    "sender::start": "turbo run start --filter=sender...",
+    "dash::start": "turbo run start --filter=dash..."
   },
   "devDependencies": {
     "turbo": "1.4.4",
