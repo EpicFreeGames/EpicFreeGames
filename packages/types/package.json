@@ -5,7 +5,6 @@
   "types": "./dist/index.d.ts",
   "private": true,
   "scripts": {
-    "dev": "tsc --watch --preserveWatchOutput -p ./tsconfig.json",
     "build": "rm -rf dist && ./node_modules/.bin/tsc -p ./tsconfig.json",
     "clean": "rm -rf node_modules && rm -rf .turbo && rm -rf dist"
   },

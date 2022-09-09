@@ -1,5 +1,5 @@
 {
-  "name": "efg-mono",
+  "name": "efg-monorepo",
   "version": "0.0.0",
   "private": true,
   "workspaces": [
@@ -8,13 +8,14 @@
   ],
   "scripts": {
     "build": "turbo run build",
-    "dev": "turbo run development",
-    "devr": "yarn clean && yarn && yarn build && yarn dev",
-    "postclean": "rm -rf node_modules",
     "clean": "turbo run clean",
-    "api::dev": "turbo run build --filter=api... && turbo run dev --filter=api...",
-    "ie::dev": "turbo run build --filter=interactions-endpoint... && turbo run dev --filter=interactions-endpoint...",
-    "front::dev": "turbo run build --filter=front... && turbo run dev --filter=front..."
+    "postclean": "rm -rf node_modules",
+    "api::dev": "turbo run dev --filter=api...",
+    "ie::dev": "turbo run dev --filter=interactions-endpoint...",
+    "drp::dev": "turbo run dev --filter=discord-rest-proxy...",
+    "front::dev": "turbo run dev --filter=front...",
+    "sender::dev": "turbo run dev --filter=sender...",
+    "dash::dev": "turbo run dev --filter=dash..."
   },
   "devDependencies": {
     "turbo": "1.4.4",

@@ -1,92 +1,92 @@
 import { defaultLanguage } from "./languages";
-import af_commands from "./t10s/af/commands.json";
-import af_messages from "./t10s/af/messages.json";
-import af_website from "./t10s/af/website.json";
-import ar_commands from "./t10s/ar/commands.json";
-import ar_messages from "./t10s/ar/messages.json";
-import ar_website from "./t10s/ar/website.json";
-import az_commands from "./t10s/az/commands.json";
-import az_messages from "./t10s/az/messages.json";
-import az_website from "./t10s/az/website.json";
-import bg_commands from "./t10s/bg/commands.json";
-import bg_messages from "./t10s/bg/messages.json";
-import bg_website from "./t10s/bg/website.json";
-import cs_commands from "./t10s/cs/commands.json";
-import cs_messages from "./t10s/cs/messages.json";
-import cs_website from "./t10s/cs/website.json";
-import de_commands from "./t10s/de/commands.json";
-import de_messages from "./t10s/de/messages.json";
-import de_website from "./t10s/de/website.json";
-import en_commands from "./t10s/en/commands.json";
-import en_messages from "./t10s/en/messages.json";
-import en_website from "./t10s/en/website.json";
-import es_ES_commands from "./t10s/es-ES/commands.json";
-import es_ES_messages from "./t10s/es-ES/messages.json";
-import es_ES_website from "./t10s/es-ES/website.json";
-import fa_commands from "./t10s/fa/commands.json";
-import fa_messages from "./t10s/fa/messages.json";
-import fa_website from "./t10s/fa/website.json";
-import fr_commands from "./t10s/fr/commands.json";
-import fr_messages from "./t10s/fr/messages.json";
-import fr_website from "./t10s/fr/website.json";
-import he_commands from "./t10s/he/commands.json";
-import he_messages from "./t10s/he/messages.json";
-import he_website from "./t10s/he/website.json";
-import hi_commands from "./t10s/hi/commands.json";
-import hi_messages from "./t10s/hi/messages.json";
-import hi_website from "./t10s/hi/website.json";
-import hu_commands from "./t10s/hu/commands.json";
-import hu_messages from "./t10s/hu/messages.json";
-import hu_website from "./t10s/hu/website.json";
-import id_commands from "./t10s/id/commands.json";
-import id_messages from "./t10s/id/messages.json";
-import id_website from "./t10s/id/website.json";
-import it_commands from "./t10s/it/commands.json";
-import it_messages from "./t10s/it/messages.json";
-import it_website from "./t10s/it/website.json";
-import ja_commands from "./t10s/ja/commands.json";
-import ja_messages from "./t10s/ja/messages.json";
-import ja_website from "./t10s/ja/website.json";
-import ka_commands from "./t10s/ka/commands.json";
-import ka_messages from "./t10s/ka/messages.json";
-import ka_website from "./t10s/ka/website.json";
-import ko_commands from "./t10s/ko/commands.json";
-import ko_messages from "./t10s/ko/messages.json";
-import ko_website from "./t10s/ko/website.json";
-import mk_commands from "./t10s/mk/commands.json";
-import mk_messages from "./t10s/mk/messages.json";
-import mk_website from "./t10s/mk/website.json";
-import nl_commands from "./t10s/nl/commands.json";
-import nl_messages from "./t10s/nl/messages.json";
-import nl_website from "./t10s/nl/website.json";
-import pl_commands from "./t10s/pl/commands.json";
-import pl_messages from "./t10s/pl/messages.json";
-import pl_website from "./t10s/pl/website.json";
-import pt_BR_commands from "./t10s/pt-BR/commands.json";
-import pt_BR_messages from "./t10s/pt-BR/messages.json";
-import pt_BR_website from "./t10s/pt-BR/website.json";
-import pt_PT_commands from "./t10s/pt-PT/commands.json";
-import pt_PT_messages from "./t10s/pt-PT/messages.json";
-import pt_PT_website from "./t10s/pt-PT/website.json";
-import ro_commands from "./t10s/ro/commands.json";
-import ro_messages from "./t10s/ro/messages.json";
-import ro_website from "./t10s/ro/website.json";
-import ru_commands from "./t10s/ru/commands.json";
-import ru_messages from "./t10s/ru/messages.json";
-import ru_website from "./t10s/ru/website.json";
-import sr_CS_commands from "./t10s/sr-CS/commands.json";
-import sr_CS_messages from "./t10s/sr-CS/messages.json";
-import sr_CS_website from "./t10s/sr-CS/website.json";
-import sr_commands from "./t10s/sr/commands.json";
-import sr_messages from "./t10s/sr/messages.json";
-import sr_website from "./t10s/sr/website.json";
-import tr_commands from "./t10s/tr/commands.json";
-import tr_messages from "./t10s/tr/messages.json";
-import tr_website from "./t10s/tr/website.json";
-import uk_commands from "./t10s/uk/commands.json";
-import uk_messages from "./t10s/uk/messages.json";
-import uk_website from "./t10s/uk/website.json";
-import vi_messages from "./t10s/vi/messages.json";
+import af_commands from "./t10s/af/commands.json" assert { type: "json" }
+import af_messages from "./t10s/af/messages.json" assert { type: "json" }
+import af_website from "./t10s/af/website.json" assert { type: "json" }
+import ar_commands from "./t10s/ar/commands.json" assert { type: "json" }
+import ar_messages from "./t10s/ar/messages.json" assert { type: "json" }
+import ar_website from "./t10s/ar/website.json" assert { type: "json" }
+import az_commands from "./t10s/az/commands.json" assert { type: "json" }
+import az_messages from "./t10s/az/messages.json" assert { type: "json" }
+import az_website from "./t10s/az/website.json" assert { type: "json" }
+import bg_commands from "./t10s/bg/commands.json" assert { type: "json" }
+import bg_messages from "./t10s/bg/messages.json" assert { type: "json" }
+import bg_website from "./t10s/bg/website.json" assert { type: "json" }
+import cs_commands from "./t10s/cs/commands.json" assert { type: "json" }
+import cs_messages from "./t10s/cs/messages.json" assert { type: "json" }
+import cs_website from "./t10s/cs/website.json" assert { type: "json" }
+import de_commands from "./t10s/de/commands.json" assert { type: "json" }
+import de_messages from "./t10s/de/messages.json" assert { type: "json" }
+import de_website from "./t10s/de/website.json" assert { type: "json" }
+import en_commands from "./t10s/en/commands.json" assert { type: "json" }
+import en_messages from "./t10s/en/messages.json" assert { type: "json" }
+import en_website from "./t10s/en/website.json" assert { type: "json" }
+import es_ES_commands from "./t10s/es-ES/commands.json" assert { type: "json" }
+import es_ES_messages from "./t10s/es-ES/messages.json" assert { type: "json" }
+import es_ES_website from "./t10s/es-ES/website.json" assert { type: "json" }
+import fa_commands from "./t10s/fa/commands.json" assert { type: "json" }
+import fa_messages from "./t10s/fa/messages.json" assert { type: "json" }
+import fa_website from "./t10s/fa/website.json" assert { type: "json" }
+import fr_commands from "./t10s/fr/commands.json" assert { type: "json" }
+import fr_messages from "./t10s/fr/messages.json" assert { type: "json" }
+import fr_website from "./t10s/fr/website.json" assert { type: "json" }
+import he_commands from "./t10s/he/commands.json" assert { type: "json" }
+import he_messages from "./t10s/he/messages.json" assert { type: "json" }
+import he_website from "./t10s/he/website.json" assert { type: "json" }
+import hi_commands from "./t10s/hi/commands.json" assert { type: "json" }
+import hi_messages from "./t10s/hi/messages.json" assert { type: "json" }
+import hi_website from "./t10s/hi/website.json" assert { type: "json" }
+import hu_commands from "./t10s/hu/commands.json" assert { type: "json" }
+import hu_messages from "./t10s/hu/messages.json" assert { type: "json" }
+import hu_website from "./t10s/hu/website.json" assert { type: "json" }
+import id_commands from "./t10s/id/commands.json" assert { type: "json" }
+import id_messages from "./t10s/id/messages.json" assert { type: "json" }
+import id_website from "./t10s/id/website.json" assert { type: "json" }
+import it_commands from "./t10s/it/commands.json" assert { type: "json" }
+import it_messages from "./t10s/it/messages.json" assert { type: "json" }
+import it_website from "./t10s/it/website.json" assert { type: "json" }
+import ja_commands from "./t10s/ja/commands.json" assert { type: "json" }
+import ja_messages from "./t10s/ja/messages.json" assert { type: "json" }
+import ja_website from "./t10s/ja/website.json" assert { type: "json" }
+import ka_commands from "./t10s/ka/commands.json" assert { type: "json" }
+import ka_messages from "./t10s/ka/messages.json" assert { type: "json" }
+import ka_website from "./t10s/ka/website.json" assert { type: "json" }
+import ko_commands from "./t10s/ko/commands.json" assert { type: "json" }
+import ko_messages from "./t10s/ko/messages.json" assert { type: "json" }
+import ko_website from "./t10s/ko/website.json" assert { type: "json" }
+import mk_commands from "./t10s/mk/commands.json" assert { type: "json" }
+import mk_messages from "./t10s/mk/messages.json" assert { type: "json" }
+import mk_website from "./t10s/mk/website.json" assert { type: "json" }
+import nl_commands from "./t10s/nl/commands.json" assert { type: "json" }
+import nl_messages from "./t10s/nl/messages.json" assert { type: "json" }
+import nl_website from "./t10s/nl/website.json" assert { type: "json" }
+import pl_commands from "./t10s/pl/commands.json" assert { type: "json" }
+import pl_messages from "./t10s/pl/messages.json" assert { type: "json" }
+import pl_website from "./t10s/pl/website.json" assert { type: "json" }
+import pt_BR_commands from "./t10s/pt-BR/commands.json" assert { type: "json" }
+import pt_BR_messages from "./t10s/pt-BR/messages.json" assert { type: "json" }
+import pt_BR_website from "./t10s/pt-BR/website.json" assert { type: "json" }
+import pt_PT_commands from "./t10s/pt-PT/commands.json" assert { type: "json" }
+import pt_PT_messages from "./t10s/pt-PT/messages.json" assert { type: "json" }
+import pt_PT_website from "./t10s/pt-PT/website.json" assert { type: "json" }
+import ro_commands from "./t10s/ro/commands.json" assert { type: "json" }
+import ro_messages from "./t10s/ro/messages.json" assert { type: "json" }
+import ro_website from "./t10s/ro/website.json" assert { type: "json" }
+import ru_commands from "./t10s/ru/commands.json" assert { type: "json" }
+import ru_messages from "./t10s/ru/messages.json" assert { type: "json" }
+import ru_website from "./t10s/ru/website.json" assert { type: "json" }
+import sr_CS_commands from "./t10s/sr-CS/commands.json" assert { type: "json" }
+import sr_CS_messages from "./t10s/sr-CS/messages.json" assert { type: "json" }
+import sr_CS_website from "./t10s/sr-CS/website.json" assert { type: "json" }
+import sr_commands from "./t10s/sr/commands.json" assert { type: "json" }
+import sr_messages from "./t10s/sr/messages.json" assert { type: "json" }
+import sr_website from "./t10s/sr/website.json" assert { type: "json" }
+import tr_commands from "./t10s/tr/commands.json" assert { type: "json" }
+import tr_messages from "./t10s/tr/messages.json" assert { type: "json" }
+import tr_website from "./t10s/tr/website.json" assert { type: "json" }
+import uk_commands from "./t10s/uk/commands.json" assert { type: "json" }
+import uk_messages from "./t10s/uk/messages.json" assert { type: "json" }
+import uk_website from "./t10s/uk/website.json" assert { type: "json" }
+import vi_messages from "./t10s/vi/messages.json" assert { type: "json" }
 
 export const translations: Map<string, Record<string, string>> = new Map([
   ["af", { ...af_commands, ...af_website, ...af_messages }],

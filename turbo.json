@@ -9,11 +9,8 @@
       "outputs": ["dist/**", ".next/**"]
     },
     "dev": {
+      "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**"]
-    },
-    "development": {
-      "dependsOn": ["^build", "^dev"],
-      "cache": false
     },
     "reg": {
       "dependsOn": ["build"]
