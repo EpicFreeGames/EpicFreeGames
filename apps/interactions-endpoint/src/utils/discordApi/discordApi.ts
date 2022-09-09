@@ -1,4 +1,5 @@
 import { configuration } from "@efg/configuration";
+import { logger } from "@efg/logger";
 
 import { objToStr } from "../jsonStringify";
 
@@ -18,7 +19,6 @@ type Args =
   | {
       method: Exclude<Method, "GET" | "HEAD">;
       path: string;
-      // deno-lint-ignore no-explicit-any
       body?: any;
     }
   | {
@@ -32,20 +32,20 @@ export const discordApi = async <TData>({
   path,
   body,
 }: Args): Promise<ApiResponse<TData>> => {
-  const url = `${configuration.DISCORD_API_BASEURL}${path}`;
+  const url = `${configuration.EFG_DISCORD_REST_PROXY_BASEURL}${path}`;
+
+  logger.debug(`Discord API request: ${method} ${url} ${objToStr(body)}`);
 
   return fetch(url, {
     method,
-    headers: {
-      Authorization: `Bot ${configuration.DISCORD_BOT_TOKEN}`,
-      ...(body && { "Content-Type": "application/json" }),
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
   })
     .then(async (res) => {
       const json = await res.json().catch((e) => null);
 
       if (res.ok) {
+        logger.debug(`Discord API response: ${method} ${url} ${res.status}`);
         return { data: json };
       } else {
         const error = json ?? {

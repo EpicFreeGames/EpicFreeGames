@@ -9,6 +9,7 @@ import { Response } from "express";
 
 import { embeds } from "@efg/embeds";
 import { currencies } from "@efg/i18n";
+import { logger } from "@efg/logger";
 import { ICurrency, ILanguage, IServer } from "@efg/types";
 
 import { efgApi } from "../../../utils/efgApi/efgApi";
@@ -47,11 +48,11 @@ export const setCurrencySubCommand = async (
   const newCurrency = currencies.get(newCurrencyCode);
 
   if (!newCurrency) {
-    console.error(
+    logger.error(
       `Failed set currency - Cause: Currency not found\nCurrency tried: ${newCurrencyCode}`
     );
 
-    console.error(
+    logger.error(
       [
         "Failed set currency",
         "Cause: Currency not found",
@@ -72,7 +73,7 @@ export const setCurrencySubCommand = async (
   });
 
   if (serverUpdateError) {
-    console.error(
+    logger.error(
       [
         "Failed set currency",
         "Cause: Failed to update server to efgApi",

@@ -9,6 +9,7 @@ import {
 import { Response } from "express";
 
 import { embeds } from "@efg/embeds";
+import { logger } from "@efg/logger";
 import { ICurrency, ILanguage, IServer } from "@efg/types";
 
 import { discordApi } from "../../utils/discordApi/discordApi";
@@ -60,7 +61,7 @@ export const setRoleSubCommand = async (
   });
 
   if (roleFetchError) {
-    console.error(
+    logger.error(
       [
         "Failed to set role",
         "Cause: Failed to fetch guild roles",
@@ -78,7 +79,7 @@ export const setRoleSubCommand = async (
 
   const guildRole = guildRoles.find((r) => r.id === String(selectedRoleId));
   if (!guildRole) {
-    console.error(
+    logger.error(
       [
         "Failed to set role",
         "Cause: Selected role not found in guildRoles",
@@ -103,7 +104,7 @@ export const setRoleSubCommand = async (
   });
 
   if (serverUpdateError) {
-    console.error(
+    logger.error(
       [
         "Failed to set role",
         "Cause: Failed to update server in efgApi",

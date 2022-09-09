@@ -4,7 +4,6 @@ import express, { Express, Router } from "express";
 import http from "http";
 
 import { configuration } from "@efg/configuration";
-import { initTranslations } from "@efg/i18n";
 
 import { authRouter } from "./routes/auth";
 import { currencyRouter } from "./routes/currencies";
@@ -37,7 +36,6 @@ export const createServer = async () => {
   });
 
   registerRoutes(app);
-  await initTranslations();
 
   return server;
 };

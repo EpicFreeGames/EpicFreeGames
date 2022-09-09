@@ -78,8 +78,11 @@ export type ICounts = {
 };
 
 export type ISendingLog = {
-  id: string;
+  serverId: string;
+  sendingId: string;
   type: "MESSAGE" | "WEBHOOK";
+  result: string;
+  success: boolean;
 };
 
 export type ISending = {

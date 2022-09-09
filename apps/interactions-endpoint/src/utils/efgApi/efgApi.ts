@@ -1,4 +1,5 @@
 import { configuration } from "@efg/configuration";
+import { logger } from "@efg/logger";
 
 import { objToStr } from "../jsonStringify";
 
@@ -29,6 +30,8 @@ type Args =
 export const efgApi = async <TData>({ method, path, body }: Args): Promise<ApiResponse<TData>> => {
   const url = `${configuration.EFG_API_BASEURL}${path}`;
 
+  logger.debug(`EFG API request: ${method} ${url}`);
+
   return fetch(url, {
     method,
     headers: {
@@ -41,6 +44,7 @@ export const efgApi = async <TData>({ method, path, body }: Args): Promise<ApiRe
       const json = await res.json().catch((e) => null);
 
       if (res.ok) {
+        logger.debug(`EFG API response: ${method} ${url} ${res.status}`);
         return { data: json };
       } else {
         const error = json ?? {
@@ -49,7 +53,7 @@ export const efgApi = async <TData>({ method, path, body }: Args): Promise<ApiRe
           message: res.statusText ?? "Unknown error",
         };
 
-        console.error(
+        logger.debug(
           [
             "Efg API request failed",
             `Request url: ${url}`,
@@ -62,7 +66,7 @@ export const efgApi = async <TData>({ method, path, body }: Args): Promise<ApiRe
       }
     })
     .catch((error) => {
-      console.error(
+      logger.debug(
         [
           "Efg API request failed",
           `Request url: ${url}`,

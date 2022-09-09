@@ -8,6 +8,7 @@ import { Response } from "express";
 
 import { embeds } from "@efg/embeds";
 import { languages } from "@efg/i18n";
+import { logger } from "@efg/logger";
 import { ICurrency, ILanguage, IServer } from "@efg/types";
 
 import { efgApi } from "../../../utils/efgApi/efgApi";
@@ -40,15 +41,11 @@ export const setLanguageSubCommand = async (
   );
   if (!stringOption) return;
 
-  console.log(stringOption);
-
   const newLanguageCode = stringOption.value;
   const newLanguage = languages.get(newLanguageCode);
 
-  console.log({ newLanguageCode, newLanguage });
-
   if (!newLanguage) {
-    console.error(
+    logger.error(
       [
         "Failed set language",
         "Cause: Language not found",
@@ -69,7 +66,7 @@ export const setLanguageSubCommand = async (
   });
 
   if (serverUpdateError) {
-    console.error(
+    logger.error(
       [
         "Failed set language",
         "Cause: Failed to update server to efgApi",

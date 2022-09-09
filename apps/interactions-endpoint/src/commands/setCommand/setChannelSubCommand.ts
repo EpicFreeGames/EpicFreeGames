@@ -12,6 +12,8 @@ import { Response } from "express";
 
 import { botConstants, configuration } from "@efg/configuration";
 import { embeds } from "@efg/embeds";
+import { logger } from "@efg/logger";
+import { displayRole } from "@efg/shared-utils";
 import { ICurrency, IGame, ILanguage, IServer, PermissionString } from "@efg/types";
 
 import { discordApi } from "../../utils/discordApi/discordApi";
@@ -21,7 +23,6 @@ import { interactionDeferReply } from "../../utils/interactions/responding/inter
 import { interactionEditReply } from "../../utils/interactions/responding/interactionEditReply";
 import { objToStr } from "../../utils/jsonStringify";
 import { hasPermsOnChannel } from "../../utils/perms/hasPermsOnChannel";
-import { getRole } from "./_utils";
 
 export const setChannelSubCommand = async (
   {
@@ -61,7 +62,7 @@ export const setChannelSubCommand = async (
   );
 
   if (error) {
-    console.error(
+    logger.error(
       [
         "Failed to set channel",
         "Cause: Failed to check bot's permissions on channel",
@@ -87,7 +88,7 @@ export const setChannelSubCommand = async (
     });
 
   if (channelsWebhooksError) {
-    console.error(
+    logger.error(
       [
         "Failed to set channel",
         "Cause: Failed to get webhooks for channel",
@@ -116,7 +117,7 @@ export const setChannelSubCommand = async (
 
   if (!webhook) {
     if (channelsWebhooks.length >= 10) {
-      console.error(
+      logger.error(
         [
           "Failed to set channel",
           "Cause: Max number of webhooks",
@@ -142,7 +143,7 @@ export const setChannelSubCommand = async (
       });
 
     if (newWebhookError) {
-      console.error(
+      logger.error(
         [
           "Failed to set channel",
           "Cause: Failed to create webhook",
@@ -172,7 +173,7 @@ export const setChannelSubCommand = async (
   });
 
   if (updatedServerError) {
-    console.error(
+    logger.error(
       [
         "Failed to set channel",
         "Cause: Failed to save updated webhook to efgApi",
@@ -208,7 +209,7 @@ export const setChannelSubCommand = async (
     method: "POST",
     path: `/webhooks/${webhook.id}/${webhook.token}`,
     body: {
-      ...(updatedServer.roleId ? { content: getRole(updatedServer.roleId) } : {}),
+      ...(updatedServer.roleId ? { content: displayRole(updatedServer.roleId) } : {}),
       embeds: [freeGames.map((g) => embeds.games.game(g, language, currency))],
     } as RESTPostAPIWebhookWithTokenJSONBody,
   });

@@ -15,9 +15,7 @@ type Props = {
 };
 
 export const Sending = ({ sending }: Props) => {
-  const sendingDone = sending._count.logs >= sending.target;
-
-  const showSend = useHasFlags(Flags.Send) && !sendingDone;
+  const showSend = useHasFlags(Flags.Send);
   const showEdit = useHasFlags(Flags.EditSendings);
   const showDelete = useHasFlags(Flags.DeleteSendings);
 

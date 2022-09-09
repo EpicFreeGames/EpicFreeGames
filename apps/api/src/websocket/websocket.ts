@@ -1,17 +1,18 @@
-import http from "http";
-import { Server, WebSocket } from "ws";
+import { Server } from "http";
+import { WebSocketServer } from "ws";
+import type { WebSocket } from "ws";
 
 import { ITokenPayload } from "../auth/jwt/types";
 import { socketAuth } from "../auth/socketAuth";
 import { WsMsgTypeBit, WsMsgTypeDesc } from "./types";
 
 export const handleWebsocketConnection =
-  (wss: Server) => (ws: WebSocket, accessTokenPayload: ITokenPayload) => {
+  (wss: WebSocketServer) => (ws: WebSocket, accessTokenPayload: ITokenPayload) => {
     ws.send(JSON.stringify({ bit: WsMsgTypeBit.Hi, desc: WsMsgTypeDesc.Hi }));
   };
 
-export const createWs = (server: http.Server) => {
-  const wss = new WebSocket.Server({ noServer: true });
+export const createWs = (server: Server) => {
+  const wss = new WebSocketServer({ noServer: true });
 
   wss.on("connection", handleWebsocketConnection(wss));
 

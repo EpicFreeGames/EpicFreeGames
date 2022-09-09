@@ -1,8 +1,9 @@
 import * as dotenv from "dotenv";
-import { join } from "path";
 import { z } from "zod";
 
-dotenv.config({ debug: true, path: join(__dirname, "..", "./.env") });
+import { getBase64Image } from "./getBase64Image";
+
+dotenv.config({ debug: true, path: "./.env" });
 
 const envSchema = z.object({
   DATABASE_URL: z.string(),
@@ -31,10 +32,12 @@ const envSchema = z.object({
   EFG_API_BASEURL: z.string(),
   EFG_API_WS_URL: z.string(),
   EFG_FRONT_BASEURL: z.string(),
+  EFG_DISCORD_REST_PROXY_BASEURL: z.string(),
 
   LOGO_URL: z.string(),
 
   ENV: z.enum(["Development", "Staging", "Production"]),
+  DEBUG: z.any().transform((v) => !!v),
 });
 
 const env = envSchema.safeParse(process.env);
@@ -67,4 +70,40 @@ export const configuration = {
   JWT_KEY: new TextEncoder().encode(env.data.SECRET),
 };
 
-export * from "./botConstants";
+let base64Logo: string | undefined;
+
+const getLogo = async () => {
+  if (!base64Logo) {
+    base64Logo = `data:image/png;base64,${await getBase64Image(configuration.LOGO_URL)}`;
+  }
+
+  return base64Logo;
+};
+
+export const botConstants = {
+  inviteGif:
+    "https://media1.tenor.com/images/8be041fe538a0f292bb85885768341a7/tenor.gif?itemid=5261112",
+
+  browserRedirect: (path: string) => `${configuration.EFG_FRONT_BASEURL}/r/browser${path}`,
+  launcherRedirect: (path: string) => `${configuration.EFG_FRONT_BASEURL}/r/launcher${path}`,
+
+  website: {
+    home: `${configuration.EFG_FRONT_BASEURL}`,
+    commands: `${configuration.EFG_FRONT_BASEURL}/commands`,
+    tutorial: `${configuration.EFG_FRONT_BASEURL}/tutorial`,
+    serverInvite: `https://discord.gg/49UQcJe`,
+    botInvite: `${configuration.EFG_FRONT_BASEURL}/invite`,
+  },
+
+  voteLinks: {
+    "Top.gg": "https://top.gg/bot/719806770133991434/vote",
+    "Discordlist.gg": "https://discordlist.gg/bot/719806770133991434/vote",
+  },
+
+  botName: "EpicFreeGames",
+  webhookName:
+    configuration.ENV === "Production"
+      ? "EpicFreeGames Notifications"
+      : `${configuration.ENV} EpicFreeGames Notifications`,
+  base64Logo: getLogo,
+};

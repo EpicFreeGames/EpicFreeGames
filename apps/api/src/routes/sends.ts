@@ -269,6 +269,7 @@ router.post(
 
       const senderResponse = await fetch(configuration.SENDER_URL, {
         method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           sendingId,
           games: sending.games,

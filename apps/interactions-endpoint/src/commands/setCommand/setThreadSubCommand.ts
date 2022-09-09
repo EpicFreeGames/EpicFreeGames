@@ -15,6 +15,8 @@ import { Response } from "express";
 
 import { botConstants, configuration } from "@efg/configuration";
 import { embeds } from "@efg/embeds";
+import { logger } from "@efg/logger";
+import { displayRole } from "@efg/shared-utils";
 import { ICurrency, IGame, ILanguage, IServer, PermissionString } from "@efg/types";
 
 import { discordApi } from "../../utils/discordApi/discordApi";
@@ -24,7 +26,6 @@ import { interactionDeferReply } from "../../utils/interactions/responding/inter
 import { interactionEditReply } from "../../utils/interactions/responding/interactionEditReply";
 import { objToStr } from "../../utils/jsonStringify";
 import { hasPermsOnChannel } from "../../utils/perms/hasPermsOnChannel";
-import { getRole } from "./_utils";
 
 export const setThreadSubCommand = async (
   {
@@ -62,7 +63,7 @@ export const setThreadSubCommand = async (
     return await interactionEditReply(i.token, { embeds: [embeds.errors.genericError()] });
 
   if (!thread) {
-    console.error(
+    logger.error(
       [
         "Failed to set thread",
         "Cause: Thread not found",
@@ -75,7 +76,7 @@ export const setThreadSubCommand = async (
   }
 
   if (thread.type !== ChannelType.PublicThread) {
-    console.error(
+    logger.error(
       [
         "Failed to set thread",
         "Cause: ChannelType is not PublicThread",
@@ -88,7 +89,7 @@ export const setThreadSubCommand = async (
   }
 
   if (!thread.parent_id) {
-    console.error(
+    logger.error(
       [
         "Failed to set thread",
         "Cause: thread.parent_id is not defined",
@@ -111,7 +112,7 @@ export const setThreadSubCommand = async (
   ]);
 
   if (error) {
-    console.error(
+    logger.error(
       [
         "Failed to set thread",
         "Cause: Failed to check bot's permissions on parent channel",
@@ -138,7 +139,7 @@ export const setThreadSubCommand = async (
     });
 
   if (parentChannelsWebhooksError) {
-    console.error(
+    logger.error(
       [
         "Failed to set thread",
         "Cause: Failed to get webhooks for parent channel",
@@ -168,7 +169,7 @@ export const setThreadSubCommand = async (
 
   if (!webhook) {
     if (parentChannelsWebhooks.length >= 10) {
-      console.error(
+      logger.error(
         [
           "Failed to set thread",
           "Cause: Max number of webhooks",
@@ -195,7 +196,7 @@ export const setThreadSubCommand = async (
       });
 
     if (newWebhookError) {
-      console.error(
+      logger.error(
         [
           "Failed to set thread",
           "Cause: Couldn't create a new webhook on parent channel",
@@ -227,7 +228,7 @@ export const setThreadSubCommand = async (
   });
 
   if (updatedServerError) {
-    console.error(
+    logger.error(
       [
         "Failed to set thread",
         "Cause: Failed to save updated webhook to efgApi",
@@ -264,7 +265,7 @@ export const setThreadSubCommand = async (
     method: "POST",
     path: `/webhooks/${webhook.id}/${webhook.token}?thread_id=${selectedThreadId}`,
     body: {
-      ...(updatedServer.roleId ? { content: getRole(updatedServer.roleId) } : {}),
+      ...(updatedServer.roleId ? { content: displayRole(updatedServer.roleId) } : {}),
       embeds: [freeGames.map((g) => embeds.games.game(g, language, currency))],
     } as RESTPostAPIWebhookWithTokenJSONBody,
   });
