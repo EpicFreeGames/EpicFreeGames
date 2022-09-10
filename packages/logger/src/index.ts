@@ -12,5 +12,3 @@ export const logger = {
     configuration.DEBUG && l("\n" + chalk.magenta(`[DEBUG] ${time()} ::`), ...message),
   info: (...message: any[]) => l("\n" + chalk.bold(`[INFO] ${time()} ::`), ...message),
 };
-
-export * from "./utils";

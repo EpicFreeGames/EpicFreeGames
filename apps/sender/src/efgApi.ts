@@ -1,5 +1,6 @@
 import { configuration } from "@efg/configuration";
-import { logger, objToStr } from "@efg/logger";
+import { logger } from "@efg/logger";
+import { objToStr } from "@efg/shared-utils";
 
 export type Method = "GET" | "HEAD" | "POST" | "PUT" | "DELETE" | "PATCH";
 
