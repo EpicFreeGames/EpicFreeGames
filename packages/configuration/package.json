@@ -10,7 +10,6 @@
     "clean": "rm -rf node_modules && rm -rf .turbo && rm -rf dist"
   },
   "dependencies": {
-    "dotenv": "^16.0.2",
     "zod": "^3.18.0"
   },
   "devDependencies": {
