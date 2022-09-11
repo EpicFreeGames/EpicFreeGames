@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { getBase64Image } from "./getBase64Image";
+import { botLogos } from "./botLogos";
 
 const envSchema = z.object({
   DATABASE_URL: z.string(),
@@ -68,16 +68,6 @@ export const configuration = {
   JWT_KEY: new TextEncoder().encode(env.data.SECRET),
 };
 
-let base64Logo: string | undefined;
-
-const getLogo = async () => {
-  if (!base64Logo) {
-    base64Logo = `data:image/png;base64,${await getBase64Image(configuration.LOGO_URL)}`;
-  }
-
-  return base64Logo;
-};
-
 export const botConstants = {
   inviteGif:
     "https://media1.tenor.com/images/8be041fe538a0f292bb85885768341a7/tenor.gif?itemid=5261112",
@@ -103,5 +93,5 @@ export const botConstants = {
     configuration.ENV === "Production"
       ? "EpicFreeGames Notifications"
       : `${configuration.ENV} EpicFreeGames Notifications`,
-  base64Logo: getLogo,
+  base64Logo: botLogos[configuration.ENV],
 };

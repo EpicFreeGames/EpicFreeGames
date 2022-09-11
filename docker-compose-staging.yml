@@ -17,11 +17,13 @@ x-envs: &envs
   LOGO_URL: "https://staging.epicfreegames.net/assets/images/logos/Staging.png"
   ENV: "Staging"
   VERSION: ${VERSION}
+  DISCORD_BOT_TOKEN: ${DISCORD_BOT_TOKEN}
   DISCORD_CLIENT_SECRET: ${DISCORD_CLIENT_SECRET}
   SECRET: ${SECRET}
   VALID_BOT_TOKEN: ${VALID_BOT_TOKEN}
   VALID_FRONT_TOKEN: ${VALID_FRONT_TOKEN}
   VALID_SCRAPER_TOKEN: ${VALID_SCRAPER_TOKEN}
+  DATABASE_URL: ${DATABASE_URL}
 
 services:
   staging-api:
