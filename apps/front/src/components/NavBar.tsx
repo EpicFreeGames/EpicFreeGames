@@ -53,8 +53,8 @@ const Navlink = ({ href, children }: { href: string; children: ReactNode }) => {
   return (
     <Link passHref href={href}>
       <a
-        className={`focus items-center justify-center rounded-md px-2 py-1 text-sm font-bold transition-all duration-200 hover:bg-gray-800 sm:text-base ${
-          active ? "border-[1px] border-gray-600 bg-gray-800" : ""
+        className={`focus items-center justify-center rounded-md border-[1px] border-transparent px-2 py-1 text-sm font-bold transition-all duration-200 hover:bg-gray-800 sm:text-base ${
+          active ? "border-[1px] !border-gray-600 bg-gray-800" : ""
         }`}
       >
         {children}
