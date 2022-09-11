@@ -28,7 +28,10 @@ export const discordApi = async <TData>(
 
   return fetch(url, {
     method,
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      ...(!useProxy && { Authorization: `Bot ${configuration.DISCORD_BOT_TOKEN}` }),
+    },
     body: JSON.stringify(body),
   })
     .then(async (res) => {
