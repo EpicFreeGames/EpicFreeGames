@@ -1,18 +1,8 @@
 import { configuration } from "@efg/configuration";
 import { logger } from "@efg/logger";
-import { objToStr } from "@efg/shared-utils";
 
-export type Method = "GET" | "HEAD" | "POST" | "PUT" | "DELETE" | "PATCH";
-
-type ApiResponse<TData> =
-  | {
-      error?: never;
-      data: TData;
-    }
-  | {
-      error: Record<string, unknown>;
-      data?: never;
-    };
+import { objToStr } from "../objToStr";
+import { ApiResponse, Method } from "./shared";
 
 type Args =
   | {

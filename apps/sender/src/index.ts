@@ -2,10 +2,9 @@ import express from "express";
 import { z } from "zod";
 
 import { logger } from "@efg/logger";
-import { objToStr } from "@efg/shared-utils";
+import { efgApi, objToStr } from "@efg/shared-utils";
 import { IServer } from "@efg/types";
 
-import { efgApi } from "./efgApi";
 import { executeHooks } from "./executeWebhooks";
 import { sendMessages } from "./sendMessages";
 import { filterServers } from "./utils";

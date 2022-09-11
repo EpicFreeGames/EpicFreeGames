@@ -5,10 +5,9 @@ import {
 
 import { embeds } from "@efg/embeds";
 import { logger } from "@efg/logger";
-import { displayRole, objToStr, wait } from "@efg/shared-utils";
+import { discordApi, displayRole, objToStr, wait } from "@efg/shared-utils";
 import { IGame } from "@efg/types";
 
-import { discordApi } from "./discordApi";
 import { MessageServer, logLog } from "./utils";
 
 export const sendMessages = async (games: IGame[], servers: MessageServer[], sendingId: string) => {

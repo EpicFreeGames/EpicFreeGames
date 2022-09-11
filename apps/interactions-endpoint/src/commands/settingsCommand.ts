@@ -7,10 +7,5 @@ export const settingsCommand: SlashCommand = {
   needsManageGuild: true,
   needsGuild: true,
   execute: async ({ i, server, language, currency }, res) =>
-    interactionReply(
-      {
-        embeds: [embeds.commands.settings(server, language, currency)],
-      },
-      res
-    ),
+    interactionReply({ embeds: [embeds.commands.settings(server, language, currency)] }, res),
 };

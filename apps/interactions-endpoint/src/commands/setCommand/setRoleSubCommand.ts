@@ -10,11 +10,9 @@ import { Response } from "express";
 
 import { embeds } from "@efg/embeds";
 import { logger } from "@efg/logger";
-import { objToStr } from "@efg/shared-utils";
+import { discordApi, efgApi, objToStr } from "@efg/shared-utils";
 import { ICurrency, ILanguage, IServer } from "@efg/types";
 
-import { discordApi } from "../../utils/discordApi/discordApi";
-import { efgApi } from "../../utils/efgApi/efgApi";
 import { interactionGetTypedOption } from "../../utils/interactions/interactionGetTypedOption";
 import { interactionDeferReply } from "../../utils/interactions/responding/interactionDeferReply";
 import { interactionEditReply } from "../../utils/interactions/responding/interactionEditReply";

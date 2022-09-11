@@ -5,9 +5,9 @@ import {
 import { Response } from "express";
 
 import { embeds } from "@efg/embeds";
+import { efgApi } from "@efg/shared-utils";
 import { ICurrency, ILanguage, IServer } from "@efg/types";
 
-import { efgApi } from "../../utils/efgApi/efgApi";
 import { interactionReply } from "../../utils/interactions/responding/interactionReply";
 
 export const removeRoleSubCommand = async (

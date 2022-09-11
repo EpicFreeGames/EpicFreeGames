@@ -1,8 +1,6 @@
 import { logger } from "@efg/logger";
+import { efgApi, objToStr } from "@efg/shared-utils";
 import { ISendingLog, IServer } from "@efg/types";
-import {objToStr} from '@efg/shared-utils'
-
-import { efgApi } from "./efgApi";
 
 export const logLog = (log: ISendingLog) => {
   efgApi({

@@ -1,9 +1,8 @@
 import { embeds } from "@efg/embeds";
 import { logger } from "@efg/logger";
-import { displayRole, objToStr, wait } from "@efg/shared-utils";
+import { discordApi, displayRole, objToStr, wait } from "@efg/shared-utils";
 import { IGame } from "@efg/types";
 
-import { discordApi } from "./discordApi";
 import { HookServer, logLog } from "./utils";
 
 export const executeHooks = async (games: IGame[], servers: HookServer[], sendingId: string) => {

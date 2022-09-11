@@ -1,8 +1,7 @@
 import { APIInteractionResponseCallbackData } from "discord-api-types/v10";
 
 import { configuration } from "@efg/configuration";
-
-import { discordApi } from "../../discordApi/discordApi";
+import { discordApi } from "@efg/shared-utils";
 
 export const interactionEditReply = (
   interactionToken: string,

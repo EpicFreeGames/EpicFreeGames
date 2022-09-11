@@ -1,7 +1,7 @@
 import { embeds } from "@efg/embeds";
+import { efgApi } from "@efg/shared-utils";
 import { IGame } from "@efg/types";
 
-import { efgApi } from "../utils/efgApi/efgApi";
 import { interactionReply } from "../utils/interactions/responding/interactionReply";
 import { SlashCommand } from "../utils/interactions/types";
 

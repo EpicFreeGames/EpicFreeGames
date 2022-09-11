@@ -10,10 +10,9 @@ import { Response } from "express";
 import { embeds } from "@efg/embeds";
 import { currencies } from "@efg/i18n";
 import { logger } from "@efg/logger";
-import { objToStr } from "@efg/shared-utils";
+import { efgApi, objToStr } from "@efg/shared-utils";
 import { ICurrency, ILanguage, IServer } from "@efg/types";
 
-import { efgApi } from "../../../utils/efgApi/efgApi";
 import { interactionGetTypedOption } from "../../../utils/interactions/interactionGetTypedOption";
 import { interactionDeferReply } from "../../../utils/interactions/responding/interactionDeferReply";
 import { interactionEditReply } from "../../../utils/interactions/responding/interactionEditReply";

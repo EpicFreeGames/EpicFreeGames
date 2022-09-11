@@ -7,10 +7,5 @@ export const voteCommand: SlashCommand = {
   needsGuild: false,
   needsManageGuild: false,
   execute: async ({ i, server, language, currency }, res) =>
-    interactionReply(
-      {
-        embeds: [embeds.commands.vote(language)],
-      },
-      res
-    ),
+    interactionReply({ embeds: [embeds.commands.vote(language)] }, res),
 };
