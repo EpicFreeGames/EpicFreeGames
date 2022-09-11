@@ -88,6 +88,6 @@ const needsGuildHandler = async (
 
     logger.success(`Executed ${commandName} in ${end - start}ms`);
   } catch (err) {
-    logger.error([`Failed to execute ${commandName}`, `Cause: ${objToStr(err)}`].join("\n"));
+    logger.error([`Failed to execute ${commandName}`, `Cause: ${err}`].join("\n"));
   }
 };

@@ -52,7 +52,7 @@ export const efgApi = async <TData>({
         logger.debug(
           [
             "Efg API request failed",
-            `Request url: ${url}`,
+            `${method} ${url}`,
             `Error: ${objToStr(error)}`,
             `Body used: ${objToStr(body)}`,
           ].join("\n")
@@ -65,7 +65,7 @@ export const efgApi = async <TData>({
       logger.debug(
         [
           "Efg API request failed",
-          `Request url: ${url}`,
+          `${method} ${url}`,
           `Error: ${objToStr(error)}`,
           `Body used: ${objToStr(body)}`,
         ].join("\n")
