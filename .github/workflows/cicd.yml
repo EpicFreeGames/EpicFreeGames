@@ -163,59 +163,84 @@ jobs:
               VERSION=${{ env.VERSION }} \
                 docker compose -f docker-compose-staging.yml -p efg-staging up -d --force-recreate
 
-  # dash-deploy-staging:
-  #   name: "Dash: Deploy to Staging"
-  #   environment: Staging
-  #   runs-on: ubuntu-latest
-  #   needs: [api-bot-deploy-staging]
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v3
+  frontends-typecheck:
+    name: "Frontends typecheck"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel previous workflows
+        uses: styfle/cancel-workflow-action@0.10.0
+        with:
+          access_token: ${{ github.token }}
 
-  #     - name: Install Vercel CLI
-  #       run: npm install --global vercel@latest
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-  #     - name: Pull Vercel Environment Information
-  #       env:
-  #         VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-  #         VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_DASH }}
-  #       run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Setup Node with Yarn cache
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: yarn
+          cache-dependency-path: ./yarn.lock
 
-  #     - name: Deploy Project to Vercel
-  #       env:
-  #         VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-  #         VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_DASH }}
-  #       run: |
-  #         vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }} \
-  #         -e NEXT_PUBLIC_EFG_API_BASEURL=${{ secrets.NEXT_PUBLIC_EFG_API_BASEURL }} \
-  #         -e NEXT_PUBLIC_EFG_API_WS_URL=${{ secrets.NEXT_PUBLIC_EFG_API_BASEURL }} \
-  #         -b NEXT_PUBLIC_EFG_API_BASEURL=${{ secrets.NEXT_PUBLIC_EFG_API_BASEURL }} \
-  #         -b NEXT_PUBLIC_EFG_API_WS_URL=${{ secrets.NEXT_PUBLIC_EFG_API_BASEURL }}
+      - name: Install deps
+        run: yarn --frozen-lockfile
 
-  # front-deploy-staging:
-  #   name: "Front: Deploy to Staging"
-  #   environment: Staging
-  #   runs-on: ubuntu-latest
-  #   needs: [api-bot-deploy-staging]
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v3
+      - name: Typecheck
+        run: yarn f::typecheck
 
-  #     - name: Install Vercel CLI
-  #       run: npm install --global vercel@latest
+  dash-deploy-staging:
+    name: "Dash: Deploy to Staging"
+    environment: Staging
+    runs-on: ubuntu-latest
+    needs: [api-bot-deploy-staging]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-  #     - name: Pull Vercel Environment Information
-  #       env:
-  #         VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-  #         VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_FRONT }}
-  #       run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
 
-  #     - name: Deploy Project to Vercel
-  #       env:
-  #         VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-  #         VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_FRONT }}
-  #       run: | 
-  #         vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }} \
-  #           -b EFG_API_BASEURL=${{ secrets.EFG_API_BASEURL }} \
-  #           -b EFG_API_FRONT_TOKEN=${{ secrets.VALID_FRONT_TOKEN }} \
-  #           -b ENVIRONMENT=Staging
+      - name: Pull Vercel Environment Information
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_DASH }}
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Deploy Project to Vercel
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_DASH }}
+        run: |
+          vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }} \
+          -e NEXT_PUBLIC_EFG_API_BASEURL=${{ secrets.NEXT_PUBLIC_EFG_API_BASEURL }} \
+          -e NEXT_PUBLIC_EFG_API_WS_URL=${{ secrets.NEXT_PUBLIC_EFG_API_BASEURL }} \
+          -b NEXT_PUBLIC_EFG_API_BASEURL=${{ secrets.NEXT_PUBLIC_EFG_API_BASEURL }} \
+          -b NEXT_PUBLIC_EFG_API_WS_URL=${{ secrets.NEXT_PUBLIC_EFG_API_BASEURL }}
+
+  front-deploy-staging:
+    name: "Front: Deploy to Staging"
+    environment: Staging
+    runs-on: ubuntu-latest
+    needs: [api-bot-deploy-staging]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Pull Vercel Environment Information
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_FRONT }}
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Deploy Project to Vercel
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_FRONT }}
+        run: | 
+          vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }} \
+            -b EFG_API_BASEURL=${{ secrets.NEXT_PUBLIC_EFG_API_BASEURL }} \
+            -b EFG_API_FRONT_TOKEN=${{ secrets.VALID_FRONT_TOKEN }} \
+            -b ENVIRONMENT=Staging
