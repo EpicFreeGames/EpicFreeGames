@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
+import Script from "next/script";
 import { ReactNode } from "react";
 
 import type { ILanguage } from "@efg/types";
@@ -82,14 +83,14 @@ export const Layout = ({ title, children, noTranslations, languages, env }: Prop
         ))}
 
         <link rel="alternate" hrefLang="x-default" href={`${baseUrl}${!isHome ? pathname : ""}`} />
-
-        <script
-          defer
-          src="/stuff/script.js"
-          data-api="/stuff/event"
-          data-domain={baseUrl.replace("https://", "")}
-        />
       </Head>
+
+      <Script
+        strategy="afterInteractive"
+        src="/stuff/script.js"
+        data-api="/stuff/event"
+        data-domain={baseUrl.replace("https://", "")}
+      ></Script>
 
       <NavBar noTranslations={noTranslations} languages={languages} />
 
