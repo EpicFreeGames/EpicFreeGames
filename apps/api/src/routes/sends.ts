@@ -160,7 +160,7 @@ router.delete(
   )
 );
 
-router.patch(
+router.post(
   "/:sendingId/target",
   endpointAuth(Flags.EditSendings, Flags.GetSendings),
   withValidation(
@@ -178,7 +178,10 @@ router.patch(
     },
     async (req, res) => {
       const { sendingId } = req.params;
-      const { newTarget } = req.body;
+
+      const sendableServerCount = await prisma.server.count({
+        where: { channelId: { not: null } },
+      });
 
       const sending = await prisma.sending.findUnique({
         where: { id: sendingId },
@@ -194,7 +197,7 @@ router.patch(
       if (sending.target === 0)
         await prisma.sending.update({
           where: { id: sendingId },
-          data: { target: newTarget },
+          data: { target: sendableServerCount },
         });
 
       res.status(204).send();

@@ -1,6 +1,6 @@
 import { embeds } from "@efg/embeds";
-import { logger, } from "@efg/logger";
-import { displayRole, wait, objToStr } from "@efg/shared-utils";
+import { logger } from "@efg/logger";
+import { displayRole, objToStr, wait } from "@efg/shared-utils";
 import { IGame } from "@efg/types";
 
 import { discordApi } from "./discordApi";
@@ -8,7 +8,7 @@ import { HookServer, logLog } from "./utils";
 
 export const executeHooks = async (games: IGame[], servers: HookServer[], sendingId: string) => {
   for (const server of servers) {
-    await wait(4);
+    await wait(5);
 
     const gameEmbeds = games.map((game) =>
       embeds.games.game(game, server.language, server.currency)
