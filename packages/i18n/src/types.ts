@@ -105,11 +105,11 @@ export type ITranslations = {
 
   // COMMANDS
 
-  cmd_desc_set_currency: "Pick a currency you'd like the prices to be in";
+  cmd_desc_set_currency: "Pick a currency for the games' prices on this server";
   cmd_desc_set_thread: "Pick a thread I'll post new free games on";
   cmd_desc_set_channel: "Pick a channel I'll post new free games on";
-  cmd_desc_set_role: "Pick a role I'll ping when a new game comes free!";
-  cmd_desc_set_language: "Pick a language you'd like my messages to be in";
+  cmd_desc_set_role: "Pick a role I'll ping when a new game comes free";
+  cmd_desc_set_language: "Pick a language for my messages on this server";
   cmd_desc_remove_channel: "Remove the set channel (or thread)";
   cmd_desc_remove_role: "Remove the set role";
   cmd_desc_invite: "Get my invite link";
@@ -119,7 +119,7 @@ export type ITranslations = {
   cmd_desc_free: "See the current free games";
   cmd_desc_settings: "See the settings";
   cmd_desc_vote: "Vote for me";
-  cmd_desc_test: "Test if your setup is working";
+  cmd_desc_test: "Sends a test message to the set channel and pings the set role";
 
   // WEBSITE
 
@@ -155,7 +155,7 @@ export type ITranslations = {
   faq_3_a: "Nope. Only members with the *manage server* permission can change the bot's settings.";
 
   faq_4_q: "My question is not here...";
-  faq_4_a: "Please [join our support server](<serverInvite>) we'll help you out!";
+  faq_4_a: "Please [join our support server](<serverInvite>) and we'll help you out!";
 
   the_sentence: "Never miss free games again!";
 
