@@ -27,7 +27,7 @@ x-envs: &envs
 
 services:
   staging-api:
-    image: ${REGISTRY}/${REGISTRY_USER}/efg-api:master
+    image: ${REGISTRY}/${REGISTRY_USER}/efg-api:${VERSION}
     restart: always
     environment:
       <<: *envs
@@ -43,7 +43,7 @@ services:
       - efg
 
   staging-discord-rest-proxy:
-    image: ${REGISTRY}/${REGISTRY_USER}/efg-discord-rest-proxy:master
+    image: ${REGISTRY}/${REGISTRY_USER}/efg-discord-rest-proxy:${VERSION}
     restart: always
     environment:
       <<: *envs
@@ -54,7 +54,7 @@ services:
     depends_on:
       - staging-api
       - staging-discord-rest-proxy
-    image: ${REGISTRY}/${REGISTRY_USER}/efg-sender:master
+    image: ${REGISTRY}/${REGISTRY_USER}/efg-sender:${VERSION}
     restart: always
     environment:
       <<: *envs
@@ -65,7 +65,7 @@ services:
     depends_on:
       - staging-api
       - staging-discord-rest-proxy
-    image: ${REGISTRY}/${REGISTRY_USER}/efg-interactions-endpoint:master
+    image: ${REGISTRY}/${REGISTRY_USER}/efg-interactions-endpoint:${VERSION}
     restart: always
     environment:
       <<: *envs

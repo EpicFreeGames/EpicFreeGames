@@ -3,7 +3,7 @@ name: CI/CD
 on:
   push:
     branches:
-      - master
+      - cicd
   workflow_dispatch:
 
 jobs:
@@ -67,7 +67,7 @@ jobs:
           images: ${{ secrets.REGISTRY }}/${{ secrets.REGISTRY_USER }}/efg-${{ matrix.service }}
           tags: |
             type=ref,event=branch
-            type=sha
+            type=sha,format=long
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -96,6 +96,72 @@ jobs:
         run: |
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+    
+  services-deploy-staging:
+    name: "Update staging deployment"
+    environment: Staging
+    runs-on: ubuntu-latest
+    needs: [services-docker-build-push]
+    steps:
+      - name: Cancel previous workflows
+        uses: styfle/cancel-workflow-action@0.10.0
+        with:
+          access_token: ${{ github.token }}
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Create folder
+        uses: appleboy/ssh-action@v0.1.5
+        with:
+          host: ${{ secrets.SXX_HOST }}
+          username: ${{ secrets.SXX_USERNAME }}
+          port: ${{ secrets.SXX_PORT }}
+          key: ${{ secrets.SXX_KEY }}
+          script: mkdir -p ~/efg-staging
+
+      - name: Update Docker compose file
+        uses: appleboy/scp-action@v0.1.3
+        with:
+          host: ${{ secrets.SXX_HOST }}
+          username: ${{ secrets.SXX_USERNAME }}
+          port: ${{ secrets.SXX_PORT }}
+          key: ${{ secrets.SXX_KEY }}
+          source: ./docker-compose-staging.yml
+          target: /home/${{ secrets.SXX_USERNAME }}/efg-staging
+          strip_components: 1
+
+      - name: Recreate containers
+        uses: appleboy/ssh-action@v0.1.5
+        env:
+          REGISTRY: ${{ secrets.REGISTRY }}
+          REGISTRY_USER: ${{ secrets.REGISTRY_USER }}
+          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+          DISCORD_CLIENT_SECRET: ${{ secrets.DISCORD_CLIENT_SECRET }}
+          SECRET: ${{ secrets.SECRET }}
+          VALID_BOT_TOKEN: ${{ secrets.VALID_BOT_TOKEN }}
+          VALID_FRONT_TOKEN: ${{ secrets.VALID_FRONT_TOKEN }}
+          VALID_SCRAPER_TOKEN: ${{ secrets.VALID_SCRAPER_TOKEN }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          VERSION: sha-${{ github.sha }}
+        with:
+          host: ${{ secrets.SXX_HOST }}
+          username: ${{ secrets.SXX_USERNAME }}
+          port: ${{ secrets.SXX_PORT }}
+          key: ${{ secrets.SXX_KEY }}
+          script: |
+            cd ~/efg-staging \
+            && REGISTRY=${{ env.REGISTRY }} \
+              REGISTRY_USER=${{ env.REGISTRY_USER }} \
+              DISCORD_BOT_TOKEN=${{ env.DISCORD_BOT_TOKEN }} \
+              DISCORD_CLIENT_SECRET=${{ env.DISCORD_CLIENT_SECRET }} \
+              SECRET=${{ env.SECRET }} \
+              VALID_BOT_TOKEN=${{ env.VALID_BOT_TOKEN }} \
+              VALID_FRONT_TOKEN=${{ env.VALID_FRONT_TOKEN }} \
+              VALID_SCRAPER_TOKEN=${{ env.VALID_SCRAPER_TOKEN }} \
+              DATABASE_URL=${{ env.DATABASE_URL }} \
+              VERSION=${{ env.VERSION }} \
+                docker compose -f docker-compose-staging.yml -p efg-staging up -d --force-recreate
 
   # dash-deploy-staging:
   #   name: "Dash: Deploy to Staging"
