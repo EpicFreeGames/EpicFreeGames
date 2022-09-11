@@ -253,46 +253,6 @@ router.put(
   )
 );
 
-router.delete(
-  "/:serverId/thread",
-  endpointAuth(Flags.EditServers, Flags.GetServers),
-  withValidation(
-    {
-      params: z
-        .object({
-          serverId: bigintSchema,
-        })
-        .strict(),
-    },
-    async (req, res) => {
-      const { serverId } = req.params;
-
-      const updatedServer = await prisma.server
-        .update({
-          where: { id: serverId },
-          data: {
-            threadId: null,
-            channelId: null,
-            webhookId: null,
-            webhookToken: null,
-          },
-        })
-        .catch(prismaUpdateCatcher);
-
-      if (!updatedServer)
-        return res.status(404).send({
-          statusCode: 404,
-          error: "Not found",
-          message: "Server not found",
-        });
-
-      broadcastWss(req.wss, WsMsgType.ThreadDelete);
-
-      res.json(addLocaleInfoToServer(updatedServer));
-    }
-  )
-);
-
 router.put(
   "/:serverId/language",
   endpointAuth(Flags.EditServers, Flags.GetServers),
