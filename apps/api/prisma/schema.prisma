@@ -58,7 +58,7 @@ model CommandLog {
 model SendingLog {
   id        String         @id @default(cuid())
   type      SendingLogType
-  result    String
+  result    String         @db.Text
   success   Boolean
   serverId  BigInt
   server    Server         @relation(fields: [serverId], references: [id], onDelete: Cascade)
