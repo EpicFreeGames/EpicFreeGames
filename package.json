@@ -23,7 +23,8 @@
     "front::start": "node_modules/.bin/dotenv -e .env.development -- turbo run start --filter=front...",
     "sender::start": "node_modules/.bin/dotenv -e .env.development -- turbo run start --filter=sender...",
     "dash::start": "node_modules/.bin/dotenv -e .env.development -- turbo run start --filter=dash...",
-    "um::start": "node_modules/.bin/dotenv -e .env.development -- turbo run start --filter=under-maintenance..."
+    "um::start": "node_modules/.bin/dotenv -e .env.development -- turbo run start --filter=under-maintenance...",
+    "cmds": "node_modules/.bin/dotenv -e .env.staging -- turbo run start --filter=slash-commands..."
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^3.3.0",
