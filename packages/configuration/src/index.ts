@@ -24,7 +24,6 @@ const envSchema = z.object({
   VALID_BOT_TOKEN: z.string(),
   VALID_FRONT_TOKEN: z.string(),
   VALID_SCRAPER_TOKEN: z.string(),
-  VALID_HEALTHCHECK_TOKEN: z.string(),
 
   EFG_API_BASEURL: z.string(),
   EFG_API_WS_URL: z.string(),
