@@ -6,6 +6,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "incremental": true,
+    "allowJs": true,
 
     "target": "ES5",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
