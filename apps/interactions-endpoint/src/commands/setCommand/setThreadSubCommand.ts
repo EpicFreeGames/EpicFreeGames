@@ -215,7 +215,7 @@ export const setThreadSubCommand = async (
 
   const { error: updatedServerError, data: updatedServer } = await efgApi<IServer>({
     method: "PUT",
-    path: `/servers/${i.guild_id}/channel`,
+    path: `/servers/${i.guild_id}/thread`,
     body: {
       channelId: String(threadParentId),
       threadId: String(selectedThreadId),
