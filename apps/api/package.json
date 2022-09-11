@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@efg/i18n": "*",
+    "@efg/logger": "*",
     "@efg/configuration": "*",
     "@prisma/client": "^4.2.1",
     "cookie-parser": "^1.4.6",

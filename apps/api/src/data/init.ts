@@ -7,12 +7,7 @@ import prisma from "./prisma";
 
 const allFlags = Object.values(Flags).reduce((a, b) => a | Number(b), 0);
 
-export const initDatabaseDev = async () => {
-  if (configuration.ENV !== "Development") {
-    console.log("Not in development, skipping database init");
-    return;
-  }
-
+export const initDatabase = async () => {
   console.log("Initializing database...");
 
   if (configuration.ADMIN_DISCORD_ID) {

@@ -1,6 +1,6 @@
-import { configuration } from "@efg/configuration";
+import { logger } from "@efg/logger";
 
-import { initDatabaseDev } from "./data/init";
+import { initDatabase } from "./data/init";
 // @ts-ignore
 import prisma from "./data/prisma";
 import { createServer } from "./server";
@@ -8,9 +8,9 @@ import { createServer } from "./server";
 (async () => {
   const server = await createServer();
 
-  if (configuration.ENV === "Development") await initDatabaseDev();
+  await initDatabase();
 
   const port = Number(process.env.PORT) || 3000;
 
-  server.listen(port, () => console.log(`API listening on port ${port}`));
+  server.listen(port, () => logger.info(`EFG Api listening on port ${port}`));
 })();
