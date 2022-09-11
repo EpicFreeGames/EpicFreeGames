@@ -27,6 +27,7 @@
   },
   "devDependencies": {
     "@efg/tsconfig": "*",
+    "@efg/types": "*",
     "@types/node": "18.0.0",
     "@types/react": "18.0.14",
     "@types/react-dom": "18.0.5",
