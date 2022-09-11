@@ -11,27 +11,27 @@
     "clean": "turbo run clean",
     "postclean": "rm -rf node_modules",
     "format": "prettier --write \"**/*.{ts,tsx,json}\"",
-    "api::dev": "turbo run dev --filter=api...",
-    "ie::dev": "turbo run dev --filter=interactions-endpoint...",
-    "drp::dev": "turbo run dev --filter=discord-rest-proxy...",
-    "front::dev": "turbo run dev --filter=front...",
-    "sender::dev": "turbo run dev --filter=sender...",
-    "dash::dev": "turbo run dev --filter=dash...",
-    "api::start": "turbo run start --filter=api...",
-    "ie::start": "turbo run start --filter=interactions-endpoint...",
-    "drp::start": "turbo run start --filter=discord-rest-proxy...",
-    "front::start": "turbo run start --filter=front...",
-    "sender::start": "turbo run start --filter=sender...",
-    "dash::start": "turbo run start --filter=dash..."
+    "api::dev": "node_modules/.bin/dotenv -e .env.development -- turbo run dev --filter=api...",
+    "ie::dev": "node_modules/.bin/dotenv -e .env.development -- turbo run dev --filter=interactions-endpoint...",
+    "drp::dev": "node_modules/.bin/dotenv -e .env.development -- turbo run dev --filter=discord-rest-proxy...",
+    "front::dev": "node_modules/.bin/dotenv -e .env.development -- turbo run dev --filter=front...",
+    "sender::dev": "node_modules/.bin/dotenv -e .env.development -- turbo run dev --filter=sender...",
+    "dash::dev": "node_modules/.bin/dotenv -e .env.development -- turbo run dev --filter=dash...",
+    "api::start": "node_modules/.bin/dotenv -e .env.development -- turbo run start --filter=api...",
+    "ie::start": "node_modules/.bin/dotenv -e .env.development -- turbo run start --filter=interactions-endpoint...",
+    "drp::start": "node_modules/.bin/dotenv -e .env.development -- turbo run start --filter=discord-rest-proxy...",
+    "front::start": "node_modules/.bin/dotenv -e .env.development -- turbo run start --filter=front...",
+    "sender::start": "node_modules/.bin/dotenv -e .env.development -- turbo run start --filter=sender...",
+    "dash::start": "node_modules/.bin/dotenv -e .env.development -- turbo run start --filter=dash...",
+    "um::start": "node_modules/.bin/dotenv -e .env.development -- turbo run start --filter=under-maintenance..."
   },
   "devDependencies": {
-    "turbo": "1.4.4",
     "@trivago/prettier-plugin-sort-imports": "^3.3.0",
     "dotenv-cli": "^6.0.0",
     "prettier": "^2.7.1",
-    "prettier-plugin-tailwindcss": "^0.1.13"
+    "prettier-plugin-tailwindcss": "^0.1.13",
+    "turbo": "1.4.4"
   },
-  "dependencies": {},
   "engines": {
     "npm": ">=8.6.0",
     "node": ">=18.0.0"
