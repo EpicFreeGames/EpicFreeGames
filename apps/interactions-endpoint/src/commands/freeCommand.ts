@@ -20,7 +20,7 @@ export const freeCommand: SlashCommand = {
           ? [embeds.errors.genericError()]
           : games.length
           ? games.map((g) => embeds.games.game(g, language, currency))
-          : [embeds.games.noUpcomingGames(language)],
+          : [embeds.games.noFreeGames(language)],
       },
       res
     );
