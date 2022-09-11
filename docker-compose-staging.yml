@@ -1,0 +1,83 @@
+version: "3.9"
+
+x-envs: &envs
+  ADMIN_DISCORD_ID: "178106686484119553"
+  DISCORD_CLIENT_ID: "723239582191190096"
+  DISCORD_PUBLIC_KEY: "1baf2608ad3893a4bc7762254fe6647c6710dbf492b5c0da40e4fcb894d2dd97"
+  DISCORD_API_BASEURL: "https://discord.com/api/v10"
+  DISCORD_REDIRECT_URL: "https://staging-api.epicfreegames.net/api/auth/discord-callback"
+  SENDER_URL: "http://sender:3000"
+  DASH_URL: "https://staging-dash.epicfreegames.net"
+  JWT_ISS: "https://staging-api.epicfreegames.net"
+  JWT_AUD: "https://staging-api.epicfreegames.net"
+  EFG_API_BASEURL: "http://staging-api:3000/api"
+  EFG_API_WS_URL: "ws://staging-api:3000/api"
+  EFG_FRONT_BASEURL: "https://staging.epicfreegames.net"
+  EFG_DISCORD_REST_PROXY_BASEURL: "http://staging-discord-rest-proxy:3000"
+  LOGO_URL: "https://staging.epicfreegames.net/assets/images/logos/Staging.png"
+  ENV: "Staging"
+  VERSION: ${VERSION}
+  DISCORD_CLIENT_SECRET: ${DISCORD_CLIENT_SECRET}
+  SECRET: ${SECRET}
+  VALID_BOT_TOKEN: ${VALID_BOT_TOKEN}
+  VALID_FRONT_TOKEN: ${VALID_FRONT_TOKEN}
+  VALID_SCRAPER_TOKEN: ${VALID_SCRAPER_TOKEN}
+
+services:
+  staging-api:
+    image: ${REGISTRY}/${REGISTRY_USER}/efg-api:master
+    restart: always
+    environment:
+      <<: *envs
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.efg-api-staging.entrypoints=https"
+      - "traefik.http.routers.efg-api-staging.tls=true"
+      - "traefik.http.routers.efg-api-staging.service=efg-api-staging"
+      - "traefik.http.routers.efg-api-staging.rule=Host(`staging-api.epicfreegames.net`)"
+      - "traefik.http.services.efg-api-staging.loadbalancer.server.port=3000"
+      - "traefik.docker.network=efg"
+    networks:
+      - efg
+
+  staging-discord-rest-proxy:
+    image: ${REGISTRY}/${REGISTRY_USER}/efg-discord-rest-proxy:master
+    restart: always
+    environment:
+      <<: *envs
+    networks:
+      - efg
+
+  staging-sender:
+    depends_on:
+      - staging-api
+      - staging-discord-rest-proxy
+    image: ${REGISTRY}/${REGISTRY_USER}/efg-sender:master
+    restart: always
+    environment:
+      <<: *envs
+    networks:
+      - efg
+
+  staging-interactions-endpoint:
+    depends_on:
+      - staging-api
+      - staging-discord-rest-proxy
+    image: ${REGISTRY}/${REGISTRY_USER}/efg-interactions-endpoint:master
+    restart: always
+    environment:
+      <<: *envs
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.efg-ie-staging.entrypoints=https"
+      - "traefik.http.routers.efg-ie-staging.tls=true"
+      - "traefik.http.routers.efg-ie-staging.service=efg-ie-staging"
+      - "traefik.http.routers.efg-ie-staging.rule=Host(`staging-ie.epicfreegames.net`)"
+      - "traefik.http.services.efg-ie-staging.loadbalancer.server.port=3000"
+      - "traefik.docker.network=efg"
+    networks:
+      - efg
+
+networks:
+  efg:
+    external: true

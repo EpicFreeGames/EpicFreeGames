@@ -1,6 +1,29 @@
 version: "3.9"
 
 services:
+  traefik:
+    image: traefik:latest
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    ports:
+      - "80:80"
+      - "443:443"
+    env_file:
+      - .env.services
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik/traefik.yml:/traefik.yml:ro
+      - ./traefik/acme.json:/acme.json
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik-secure.tls=true"
+      - "traefik.http.routers.traefik-secure.tls.certresolver=cloudflare"
+      - "traefik.http.routers.traefik-secure.tls.domains[0].sans=*.epicfreegames.net"
+    networks:
+      - efg
+
   uptime-kuma:
     image: louislam/uptime-kuma
     restart: always
@@ -13,9 +36,9 @@ services:
       - "traefik.http.routers.efg-uptime-kuma.service=efg-uptime-kuma"
       - "traefik.http.routers.efg-uptime-kuma.rule=Host(`status.epicfreegames.net`)"
       - "traefik.http.services.efg-uptime-kuma.loadbalancer.server.port=3001"
-      - "traefik.docker.network=proxy"
+      - "traefik.docker.network=efg"
     networks:
-      - proxy
+      - efg
 
   plausible_db:
     image: postgres:12
@@ -26,7 +49,7 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: plausible
     networks:
-      - proxy
+      - efg
 
   plausible_events_db:
     image: yandex/clickhouse-server:21.3.2.5
@@ -40,7 +63,7 @@ services:
         soft: 262144
         hard: 262144
     networks:
-      - proxy
+      - efg
 
   plausible:
     image: plausible/analytics:latest
@@ -55,15 +78,8 @@ services:
       BASE_URL: https://a7s.epicfreegames.net
       DATABASE_URL: postgres://postgres:postgres@plausible_db:5432/plausible
       CLICKHOUSE_DATABASE_URL: http://plausible_events_db:8123/plausible_events_db
-      ADMIN_USER_EMAIL: ${PLAUSIBLE_ADMIN_USER_EMAIL}
-      ADMIN_USER_NAME: ${PLAUSIBLE_ADMIN_USER_NAME}
-      ADMIN_USER_PWD: ${PLAUSIBLE_ADMIN_USER_PWD}
-      SECRET_KEY_BASE: ${PLAUSIBLE_SECRET_KEY_BASE}
-      MAILER_EMAIL: ${PLAUSIBLE_MAILER_EMAIL}
-      SMTP_HOST_ADDR: ${PLAUSIBLE_SMTP_HOST_ADDR}
-      SMTP_HOST_PORT: ${PLAUSIBLE_SMTP_HOST_PORT}
-      SMTP_USER_NAME: ${PLAUSIBLE_SMTP_USER_NAME}
-      SMTP_USER_PWD: ${PLAUSIBLE_SMTP_USER_PWD}
+    env_file:
+      - .env.services
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.efg-plausible.entrypoints=https"
@@ -71,12 +87,12 @@ services:
       - "traefik.http.routers.efg-plausible.service=efg-plausible"
       - "traefik.http.routers.efg-plausible.rule=Host(`a7s.epicfreegames.net`)"
       - "traefik.http.services.efg-plausible.loadbalancer.server.port=8000"
-      - "traefik.docker.network=proxy"
+      - "traefik.docker.network=efg"
     networks:
-      - proxy
+      - efg
 
 networks:
-  proxy:
+  efg:
     external: true
 
   # weblate-postgres:
@@ -89,7 +105,7 @@ networks:
   #     POSTGRES_DATABASE: weblate
   #   restart: always
   #   networks:
-  #     - proxy
+  #     - efg
 
   # weblate-redis:
   #   image: redis:6-alpine
@@ -98,7 +114,7 @@ networks:
   #   volumes:
   #     - ./DATA/weblate-redis:/data
   #   networks:
-  #     - proxy
+  #     - efg
 
   # weblate:
   #   depends_on:
@@ -134,7 +150,7 @@ networks:
   #     WEBLATE_DEFAULT_FROM_EMAIL: ${WEBLATE_DEFAULT_FROM_EMAIL}
   #   restart: always
   #   networks:
-  #     - proxy
+  #     - efg
   #   labels:
   #     - "traefik.enable=true"
   #     - "traefik.http.routers.efg-t.entrypoints=https"
@@ -142,6 +158,6 @@ networks:
   #     - "traefik.http.routers.efg-t.service=efg-t"
   #     - "traefik.http.routers.efg-t.rule=Host(`t.epicfreegames.net`)"
   #     - "traefik.http.services.efg-t.loadbalancer.server.port=8080"
-  #     - "traefik.docker.network=proxy"
+  #     - "traefik.docker.network=efg"
 # volumes:
 #   weblate:
