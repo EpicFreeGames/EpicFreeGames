@@ -18,7 +18,9 @@ export const executeHooks = async (games: IGame[], servers: HookServer[], sendin
     discordApi(
       {
         method: "POST",
-        path: `/webhooks/${server.webhookId}/${server.webhookToken}`,
+        path: `/webhooks/${server.webhookId}/${server.webhookToken}${
+          server.threadId ? `?thread_id=${server.threadId}` : ""
+        }`,
         body: {
           ...(role ? { content: role } : {}),
           embeds: gameEmbeds,
