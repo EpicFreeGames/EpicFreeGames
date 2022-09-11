@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "typecheck": "tsc --skipLibCheck --noEmit",
-    "build": "rm -rf dist && ./node_modules/.bin/tsc -p ./tsconfig.json",
+    "build": "yarn prisma generate && rm -rf dist && ./node_modules/.bin/tsc -p ./tsconfig.json",
     "start": "node --experimental-specifier-resolution=node ./dist/index.js",
     "dev": "nodemon -q -e ts,json --ignore ./dist --watch ./ --exec 'yarn build && yarn start'",
     "clean": "rm -rf node_modules && rm -rf .turbo && rm -rf dist"
