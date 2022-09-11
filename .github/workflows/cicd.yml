@@ -213,9 +213,9 @@ jobs:
         run: |
           vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }} \
           -e NEXT_PUBLIC_EFG_API_BASEURL=${{ secrets.NEXT_PUBLIC_EFG_API_BASEURL }} \
-          -e NEXT_PUBLIC_EFG_API_WS_URL=${{ secrets.NEXT_PUBLIC_EFG_API_BASEURL }} \
+          -e NEXT_PUBLIC_EFG_API_WS_URL=${{ secrets.NEXT_PUBLIC_EFG_API_WS_URL }} \
           -b NEXT_PUBLIC_EFG_API_BASEURL=${{ secrets.NEXT_PUBLIC_EFG_API_BASEURL }} \
-          -b NEXT_PUBLIC_EFG_API_WS_URL=${{ secrets.NEXT_PUBLIC_EFG_API_BASEURL }}
+          -b NEXT_PUBLIC_EFG_API_WS_URL=${{ secrets.NEXT_PUBLIC_EFG_API_WS_URL }}
 
   front-deploy-staging:
     name: "Front: Deploy to Staging"
