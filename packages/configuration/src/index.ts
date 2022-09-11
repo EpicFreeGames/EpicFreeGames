@@ -93,5 +93,5 @@ export const botConstants = {
     configuration.ENV === "Production"
       ? "EpicFreeGames Notifications"
       : `${configuration.ENV} EpicFreeGames Notifications`,
-  base64Logo: botLogos[configuration.ENV],
+  base64Logo: `data:image/png;base64,${botLogos[configuration.ENV]}`,
 };
