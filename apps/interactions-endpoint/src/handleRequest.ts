@@ -4,6 +4,7 @@ import { Request, Response } from "express";
 import { embeds } from "@efg/embeds";
 import { defaultCurrency, defaultLanguage } from "@efg/i18n";
 import { logger } from "@efg/logger";
+import { objToStr } from "@efg/shared-utils";
 import { IServer } from "@efg/types";
 
 import { commands } from "./commands";
@@ -11,7 +12,6 @@ import { efgApi } from "./utils/efgApi/efgApi";
 import { interactionGetCommandName } from "./utils/interactions/interactionGetCommandName";
 import { interactionReply } from "./utils/interactions/responding/interactionReply";
 import { SlashCommand } from "./utils/interactions/types";
-import { objToStr } from "./utils/jsonStringify";
 import { hasPerms } from "./utils/perms/hasPerms";
 
 export const handleRequests = async (req: Request, res: Response) => {

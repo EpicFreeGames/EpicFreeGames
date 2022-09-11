@@ -9,6 +9,7 @@ import { Response } from "express";
 import { embeds } from "@efg/embeds";
 import { languages } from "@efg/i18n";
 import { logger } from "@efg/logger";
+import { objToStr } from "@efg/shared-utils";
 import { ICurrency, ILanguage, IServer } from "@efg/types";
 
 import { efgApi } from "../../../utils/efgApi/efgApi";
@@ -16,7 +17,6 @@ import { interactionGetTypedOption } from "../../../utils/interactions/interacti
 import { interactionDeferReply } from "../../../utils/interactions/responding/interactionDeferReply";
 import { interactionEditReply } from "../../../utils/interactions/responding/interactionEditReply";
 import { interactionReply } from "../../../utils/interactions/responding/interactionReply";
-import { objToStr } from "../../../utils/jsonStringify";
 
 export const setLanguageSubCommand = async (
   {

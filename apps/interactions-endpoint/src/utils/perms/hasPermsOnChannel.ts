@@ -1,10 +1,10 @@
 import { APIChannel, APIGuild, APIGuildMember, ChannelType } from "discord-api-types/v10";
 
 import { configuration } from "@efg/configuration";
+import { objToStr } from "@efg/shared-utils";
 import { PermissionString } from "@efg/types";
 
 import { discordApi } from "../discordApi/discordApi";
-import { objToStr } from "../jsonStringify";
 import { hasPerms } from "./hasPerms";
 
 export type ResultMap = Map<PermissionString, boolean>;
