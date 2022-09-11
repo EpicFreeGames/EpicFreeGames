@@ -50,7 +50,7 @@ export const setRoleSubCommand = async (
   );
   if (!roleOption) return;
 
-  const selectedRoleId = BigInt(roleOption.value);
+  const selectedRoleId = roleOption.value;
   if (!selectedRoleId) return;
 
   const { error: roleFetchError, data: guildRoles } = await discordApi<RESTGetAPIGuildRolesResult>({
@@ -75,7 +75,7 @@ export const setRoleSubCommand = async (
     });
   }
 
-  const guildRole = guildRoles.find((r) => r.id === String(selectedRoleId));
+  const guildRole = guildRoles.find((r) => r.id === selectedRoleId);
   if (!guildRole) {
     logger.error(
       [
@@ -96,7 +96,7 @@ export const setRoleSubCommand = async (
   const useful = makeSenseOfRole(guildRole);
 
   const { data: updatedServer, error: serverUpdateError } = await efgApi<IServer>({
-    method: "PATCH",
+    method: "PUT",
     path: `/servers/${server.id}/role`,
     body: { roleId: selectedRoleId },
   });
