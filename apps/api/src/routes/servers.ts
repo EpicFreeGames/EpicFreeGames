@@ -73,6 +73,7 @@ router.put(
           channelId,
           webhookId,
           webhookToken,
+          threadId: null,
         },
         create: {
           id: serverId,
@@ -108,6 +109,7 @@ router.delete(
           where: { id: serverId },
           data: {
             channelId: null,
+            threadId: null,
             webhookId: null,
             webhookToken: null,
           },
