@@ -5,7 +5,7 @@
       "cache": false
     },
     "buildprod": {
-      "dependsOn": ["^buildprod"],
+      "dependsOn": ["^build", "^buildprod"],
       "outputs": ["dist/**", ".next/**"]
     },
     "dev": {
