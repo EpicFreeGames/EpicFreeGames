@@ -2,6 +2,10 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Default",
   "compilerOptions": {
+    "lib": ["ESNext", "DOM"],
+    "target": "ESNext",
+    "module": "ESNext",
+    
     "downlevelIteration": true,
     "esModuleInterop": true,
     "moduleResolution": "Node",
