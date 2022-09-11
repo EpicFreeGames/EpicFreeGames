@@ -5,7 +5,7 @@ import { configuration } from "@efg/configuration";
 
 import { handleRequests } from "./handleRequest";
 
-export const createApp = () => {
+export const createServer = () => {
   const app = express();
   app.set("trust proxy", "loopback");
 

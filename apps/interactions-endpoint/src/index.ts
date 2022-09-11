@@ -1,13 +1,9 @@
 import { logger } from "@efg/logger";
 
-import { createApp } from "./app";
+import { createServer } from "./server";
 
-(async () => {
-  const app = createApp();
+const server = createServer();
 
-  const port = Number(process.env.PORT) || 3000;
+const port = Number(process.env.PORT) || 3000;
 
-  app.listen(port, () => {
-    logger.info(`Listening for interactions on port ${port}`);
-  });
-})();
+server.listen(port, () => logger.info(`Interactions endpoint listening on port ${port}`));
