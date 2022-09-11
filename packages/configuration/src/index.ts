@@ -35,6 +35,8 @@ const envSchema = z.object({
 
   ENV: z.enum(["Development", "Staging", "Production"]),
   DEBUG: z.any().transform((v) => !!v),
+
+  VERSION: z.string(),
 });
 
 const env = envSchema.safeParse(process.env);
