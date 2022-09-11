@@ -3,7 +3,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ReactNode, useState } from "react";
 
 import { t } from "~i18n/translate";
-import { Translations } from "~i18n/types";
 
 import { AnimatedChevron } from "./AnimatedChevron";
 import { Markdown } from "./Markdown";
@@ -55,7 +54,7 @@ const AccordionItem = ({ title, children, value, currentValue, change }: Accordi
   );
 };
 
-export const FAQAccordion = ({ translations }: { translations: Translations }) => {
+export const FAQAccordion = ({ translations }: { translations: Record<string, string> }) => {
   const [value, setValue] = useState("");
 
   const change = (open: boolean, value: string) => (open ? setValue(value) : setValue(""));

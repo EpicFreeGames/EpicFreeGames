@@ -16,6 +16,10 @@
     "start": {
       "dependsOn": ["^build", "^buildprod", "build", "^start"],
       "cache": false
+    },
+    "typecheck": {
+      "dependsOn": ["^build", "build", "^typecheck"],
+      "cache": false
     }
   }
 }

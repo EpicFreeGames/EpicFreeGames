@@ -11,6 +11,7 @@
     "clean": "turbo run clean",
     "postclean": "rm -rf node_modules",
     "format": "prettier --write \"**/*.{ts,tsx,json}\"",
+    "f::typecheck": "turbo run typecheck --filter=front --filter=dash",
     "api::dev": "node_modules/.bin/dotenv -e .env.development -- turbo run dev --filter=api...",
     "ie::dev": "node_modules/.bin/dotenv -e .env.development -- turbo run dev --filter=interactions-endpoint...",
     "drp::dev": "node_modules/.bin/dotenv -e .env.development -- turbo run dev --filter=discord-rest-proxy...",

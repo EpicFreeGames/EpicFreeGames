@@ -7,7 +7,7 @@
     "buildprod": "next build",
     "start": "next start",
     "lint": "next lint",
-    "typecheck": "tsc --noEmit --skipLibCheck",
+    "typecheck": "tsc --noEmit -p ./tsconfig.json",
     "clean": "rm -rf ./.next"
   },
   "dependencies": {
