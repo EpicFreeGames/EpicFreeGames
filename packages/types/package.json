@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "type": "module",
   "private": true,
   "scripts": {
     "build": "rm -rf dist && ./node_modules/.bin/tsc -p ./tsconfig.json",
