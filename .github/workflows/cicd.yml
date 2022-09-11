@@ -243,4 +243,4 @@ jobs:
           vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }} \
             -b EFG_API_BASEURL=${{ secrets.NEXT_PUBLIC_EFG_API_BASEURL }} \
             -b EFG_API_FRONT_TOKEN=${{ secrets.VALID_FRONT_TOKEN }} \
-            -b ENVIRONMENT=Staging
+            -b ENV=Staging
