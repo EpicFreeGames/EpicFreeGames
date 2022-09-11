@@ -45,7 +45,7 @@ export const setThreadSubCommand = async (
   const threadOption = interactionGetTypedOption<APIApplicationCommandInteractionDataChannelOption>(
     i,
     ApplicationCommandOptionType.Channel,
-    "channel"
+    "thread"
   );
   if (!threadOption) return;
 
