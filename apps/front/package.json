@@ -26,6 +26,7 @@
     "tabler-icons-react": "^1.54.0"
   },
   "devDependencies": {
+    "@efg/tsconfig": "*",
     "@types/node": "18.0.0",
     "@types/react": "18.0.14",
     "@types/react-dom": "18.0.5",

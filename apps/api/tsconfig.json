@@ -1,6 +1,10 @@
 {
   "extends": "@efg/tsconfig/base.json",
   "compilerOptions": {
+    "lib": ["ESNext", "DOM"],
+    "target": "ESNext",
+    "module": "ESNext",
+
     "outDir": "dist",
     "rootDir": "src"
   },

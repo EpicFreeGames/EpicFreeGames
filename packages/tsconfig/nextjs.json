@@ -1,0 +1,14 @@
+{
+  "extends": "./base.json",
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "jsx": "preserve",
+    "isolatedModules": true,
+    "noEmit": true,
+    "incremental": true,
+
+    "target": "ES5",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "module": "ESNext"
+  }
+}
