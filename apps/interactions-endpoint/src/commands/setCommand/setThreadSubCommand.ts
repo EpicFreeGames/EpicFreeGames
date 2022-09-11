@@ -190,7 +190,7 @@ export const setThreadSubCommand = async (
         path: `/channels/${threadParentId}/webhooks`,
         body: {
           name: botConstants.webhookName,
-          avatar: await botConstants.base64Logo(),
+          avatar: botConstants.base64Logo,
         } as RESTPostAPIChannelWebhookJSONBody,
       });
 
