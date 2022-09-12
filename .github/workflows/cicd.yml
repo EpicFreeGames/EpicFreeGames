@@ -190,7 +190,9 @@ jobs:
     name: "Dash: Deploy to Staging"
     environment: Staging
     runs-on: ubuntu-latest
-    needs: [frontends-typecheck]
+    needs: 
+      - frontends-typecheck
+      - services-deploy-staging
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -219,7 +221,9 @@ jobs:
     name: "Front: Deploy to Staging"
     environment: Staging
     runs-on: ubuntu-latest
-    needs: [frontends-typecheck]
+    needs: 
+      - frontends-typecheck
+      - services-deploy-staging
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
