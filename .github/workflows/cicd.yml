@@ -248,7 +248,10 @@ jobs:
     name: "Services: Deploy to Production"
     environment: Production
     runs-on: ubuntu-latest
-    needs: [services-deploy-staging]
+    needs: 
+      - services-deploy-staging
+      - front-deploy-staging
+      - dash-deploy-staging
     steps:
       - name: Cancel previous workflows
         uses: styfle/cancel-workflow-action@0.10.0
@@ -296,7 +299,7 @@ jobs:
           port: ${{ secrets.SXX_PORT }}
           key: ${{ secrets.SXX_KEY }}
           script: |
-            cd ~/efg-staging \
+            cd ~/efg-prod \
             && REGISTRY=${{ env.REGISTRY }} \
               REGISTRY_USER=${{ env.REGISTRY_USER }} \
               DISCORD_BOT_TOKEN=${{ env.DISCORD_BOT_TOKEN }} \
@@ -312,9 +315,7 @@ jobs:
     name: "Dash: Deploy to Production"
     environment: Production
     runs-on: ubuntu-latest
-    needs:
-      - services-deploy-prod
-      - dash-deploy-staging
+    needs: [services-deploy-prod]
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -343,9 +344,7 @@ jobs:
     name: "Front: Deploy to Production"
     environment: Production
     runs-on: ubuntu-latest
-    needs:
-      - services-deploy-prod
-      - front-deploy-staging
+    needs: [services-deploy-prod]
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
