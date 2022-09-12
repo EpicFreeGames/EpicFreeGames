@@ -161,51 +161,6 @@ router.delete(
 );
 
 router.post(
-  "/:sendingId/target",
-  endpointAuth(Flags.EditSendings, Flags.GetSendings),
-  withValidation(
-    {
-      params: z
-        .object({
-          sendingId: z.string(),
-        })
-        .strict(),
-      body: z
-        .object({
-          newTarget: z.number(),
-        })
-        .strict(),
-    },
-    async (req, res) => {
-      const { sendingId } = req.params;
-
-      const sendableServerCount = await prisma.server.count({
-        where: { channelId: { not: null } },
-      });
-
-      const sending = await prisma.sending.findUnique({
-        where: { id: sendingId },
-      });
-
-      if (!sending)
-        return res.status(404).send({
-          statusCode: 404,
-          error: "Not found",
-          message: "Sending not found",
-        });
-
-      if (sending.target === 0)
-        await prisma.sending.update({
-          where: { id: sendingId },
-          data: { target: sendableServerCount },
-        });
-
-      res.status(204).send();
-    }
-  )
-);
-
-router.post(
   "/",
   endpointAuth(Flags.AddSendings, Flags.GetSendings),
   withValidation(
