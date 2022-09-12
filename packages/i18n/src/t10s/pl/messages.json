@@ -1,12 +1,9 @@
 {
-  "support_click_here": "Kliknij tutaj, aby uzyskać pomoc",
-  "vote_needed_title": "Musisz zagłosować, aby użyć tej komendy",
-  "vote_click_here": "Kliknij tutaj, aby zagłosować na mnie na top.gg",
-  "commands_listed": "Możesz znaleźć wszystkie moje polecenia na liście:",
+  "support_click_here": "Jeśli potrzebujesz pomocy, [kliknij tutaj](<serverInvite>), aby dołączyć do naszego serwera wsparcia",
   "set_channel_first": "Najpierw musisz ustawić kanał!",
   "no_free_games": "Brak darmowych gier w tej chwili",
   "no_upcoming_games": "Brak nadchodzących gier w tym momencie",
-  "make_sure_perms": "Upewnij się, że masz te uprawnienia na <channel>:",
+  "bot_missing_perms": "Brakuje mi uprawnień na kanale <channel>!",
   "user_missing_perms": "Nie masz wystarczających uprawnień aby użyć tej komendy",
   "manage_guild_needed": "Ta komenda wymaga uprawnienia **Zarządzaj serwerem**",
   "bot_admins_only": "Ta komenda wymaga bycia jednym z operatorów bota",
@@ -21,6 +18,12 @@
   "role_not_set": "Nie ustawiono, można ustawić za pomocą '/set role'",
   "too_many_webhooks": "Zbyt wiele webhooków",
   "ten_webhooks_only": "Kanał może mieć najwyżej 10 webhooków. Usuń jeden i spróbuj ponownie.",
+  "would_you_like_to_translate": "Czy chcesz pomóc w tłumaczeniu <botName>?",
+  "if_would_like_to_translate": "Jeśli tak, daj nam znać na naszym [serwerze wsparciaj](<serverInvite>)!",
+  "having_problems": "Masz problemy? Daj nam znać na naszym [serwerze wsparcia](<serverInvite>) a my Ci pomożemy!",
+  "how_to_tutorial": "Jak otrzymywać automatyczne powiadomienia o darmowych grach? [Kliknij tutaj](<tutorialLink>), aby zobaczyć poradnik!",
+  "looking_for_commands": "Szukasz poleceń? [Kliknij tutaj](<commandsLink>), aby wyświetlić listę poleceń!",
+  "help_desc": "Jestem konfigurowalnym botem skupiającym się na powiadamianiu serwerów o darmowych grach. Dziękuję za wybranie mnie!",
   "open_in": "Otwórz w:",
   "free": "Za darmo",
   "invite": "Zaproś",
@@ -34,7 +37,7 @@
   "currency": "Waluta",
   "settings": "Ustawienia",
   "help": "Pomoc",
-  "missing": "Missing!",
-  "webhooks_notification": "Wspieram webhooki od niedawna! Pozwalają one wysyłać powiadomienia znacznie szybciej. Administratorzy, użyjcie `/set channel` (lub `/set thread`) aby włączyć powiadomienia poprzez webhooki.",
-  "slash_notification": "Komendy po slashu (/) nie działają? (Kliknij tutaj) aby dodać bota ponownie do serwera z włączonymi komendami po slashu. (Wyrzucenie nie jest wymagane)"
+  "missing": "Brakujący!",
+  "thank_you": "Dziękuję!",
+  "webhooks_notification": "Wspieram webhooki od niedawna! Pozwalają one wysyłać powiadomienia znacznie szybciej. Administratorzy, użyjcie `/set channel` (lub `/set thread`) aby włączyć powiadomienia poprzez webhooki."
 }

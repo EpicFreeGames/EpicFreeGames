@@ -1,12 +1,9 @@
 {
-  "support_click_here": "Kattints ide a támogatás kéréséhez",
-  "vote_needed_title": "A parancs használatához szavaznod kell",
-  "vote_click_here": "Kattints ide, hogy szavazz rám a top.gg-en",
-  "commands_listed": "Az összes parancsot itt találod",
+  "support_click_here": "If you need help, [click here](<serverInvite>) to join our support server",
   "set_channel_first": "Először be kell állítanod egy csatornát!",
   "no_free_games": "Jelenleg nincsenek ingyenes játékok",
   "no_upcoming_games": "Jelenleg nincsenek közelgő játékok",
-  "make_sure_perms": "Győződj meg róla, hogy rendelkezem ezekkel a jogosultságokkal a(z) <channel> csatornán:",
+  "bot_missing_perms": "I'm missing some permissions on <channel>!",
   "user_missing_perms": "Nincs elég jogosultságod ennek a parancsnak a használatához",
   "manage_guild_needed": "A parancs használatához a **szerver kezelése** jogosultság szükséges",
   "bot_admins_only": "Ehhez a parancshoz a bot egyik adminjának kell lenned",
@@ -21,6 +18,12 @@
   "role_not_set": "Nincs beállítva, de beállítható a `/set role` paranccsal",
   "too_many_webhooks": "Túl sok webhook",
   "ten_webhooks_only": "Egy csatornának legfeljebb 10 webhookja lehet. Kérlek, távolíts el egyet, és próbáld meg újra.",
+  "would_you_like_to_translate": "Would you like to help translating <botName>?",
+  "if_would_like_to_translate": "If so, please let us know on our [support server](<serverInvite>)!",
+  "having_problems": "Having problems? Let us know on our [support server](<serverInvite>) and we'll help you out!",
+  "how_to_tutorial": "How to get automatically notified of free games? [Click here](<tutorialLink>) for a tutorial!",
+  "looking_for_commands": "Looking for commands? [Click here](<commandsLink>) for my command list!",
+  "help_desc": "I'm a customizable bot focused around notifying servers about free games. Thank you for choosing me!",
   "open_in": "Megnyitás itt:",
   "free": "Ingyenes",
   "invite": "Meghívás",
@@ -35,6 +38,6 @@
   "settings": "Beállítások",
   "help": "Segítség",
   "missing": "Missing!",
-  "webhooks_notification": "Mostanában támogatom a webhookokat! Segítségükkel sokkal gyorsabban tudom elküldeni az értesítéseket. Szerver adminok kérlek, a `/set channel` (vagy `/set thread`) paranccsal tudjátok engedélyezni a webhookokon keresztüli értesítéseket.",
-  "slash_notification": "A perjeles (/) parancsok nem működnek? (Kattints ide), hogy hozzáadd a botot a szerveredhez a slash parancsok engedélyezésével. (Kirúgás nem szükséges)"
+  "thank_you": "Thank you!",
+  "webhooks_notification": "Mostanában támogatom a webhookokat! Segítségükkel sokkal gyorsabban tudom elküldeni az értesítéseket. Szerver adminok kérlek, a `/set channel` (vagy `/set thread`) paranccsal tudjátok engedélyezni a webhookokon keresztüli értesítéseket."
 }

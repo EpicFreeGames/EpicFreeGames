@@ -1,12 +1,9 @@
 {
-  "support_click_here": "Support के लिए यहां क्लिक करें",
-  "vote_needed_title": "इस कमांड का उपयोग करने के लिए आपको वोट करना होगा",
-  "vote_click_here": "top.gg पर मुझे वोट करने के लिए यहां क्लिक करें",
-  "commands_listed": "आप यहां मेरे सभी कमांड्स पा सकते हैं:",
+  "support_click_here": "If you need help, [click here](<serverInvite>) to join our support server",
   "set_channel_first": "आपको पहले एक चैनल सेट करना होगा!",
   "no_free_games": "इस समय कोई मुफ्त गेम उपलब्ध नहीं है",
   "no_upcoming_games": "इस समय कोई भी आने वाली मुफ्त गेम्स नहीं है",
-  "make_sure_perms": "सुनिश्चित करें कि <channel> पर मुझे ये अनुमतियां दी गई हैं",
+  "bot_missing_perms": "I'm missing some permissions on <channel>!",
   "user_missing_perms": "आपके पास इस कमांड का उपयोग करने के लिए पर्याप्त अनुमति उपलब्ध नहीं है",
   "manage_guild_needed": "इस कमांड का उपयोग करने के लिए आपको **manage server** अनुमति की आवश्यकता है",
   "bot_admins_only": "इस कमांड का उपयोग करने के लिए आपका बॉट एडमिन होना अनिवार्य है",
@@ -21,6 +18,12 @@
   "role_not_set": "Not set, you can set one with `/set role`",
   "too_many_webhooks": "Too many webhooks",
   "ten_webhooks_only": "A channel can have 10 webhooks at most. Please remove one, and try again.",
+  "would_you_like_to_translate": "Would you like to help translating <botName>?",
+  "if_would_like_to_translate": "If so, please let us know on our [support server](<serverInvite>)!",
+  "having_problems": "Having problems? Let us know on our [support server](<serverInvite>) and we'll help you out!",
+  "how_to_tutorial": "How to get automatically notified of free games? [Click here](<tutorialLink>) for a tutorial!",
+  "looking_for_commands": "Looking for commands? [Click here](<commandsLink>) for my command list!",
+  "help_desc": "I'm a customizable bot focused around notifying servers about free games. Thank you for choosing me!",
   "open_in": "Open in:",
   "free": "मुफ्त़",
   "invite": "आमंत्रण दे",
@@ -35,6 +38,6 @@
   "settings": "Settings",
   "help": "सहायता",
   "missing": "Missing!",
-  "webhooks_notification": "I support webhooks nowadays! They allow me to send the notifications a lot faster. Server admins, please do `/set channel` (or `/set thread`) to enable notifications through webhooks.",
-  "slash_notification": "Slash (/) commands not working? (Click here) to add the bot again to your server with the slash commands enabled. (Kicking is not required)"
+  "thank_you": "Thank you!",
+  "webhooks_notification": "I support webhooks nowadays! They allow me to send the notifications a lot faster. Server admins, please do `/set channel` (or `/set thread`) to enable notifications through webhooks."
 }

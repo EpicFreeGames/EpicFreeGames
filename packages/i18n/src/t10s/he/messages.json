@@ -1,12 +1,9 @@
 {
-  "support_click_here": "לחץ כאן כדי לקבל תמיכה",
-  "vote_needed_title": "עליך להצביע כדי להשתמש בפקודה זו",
-  "vote_click_here": "לחץ כאן כדי להצביע עבורי ב-top.gg",
-  "commands_listed": "אתה יכול למצוא את כל הפקודות שלי ברשימה כאן:",
+  "support_click_here": "If you need help, [click here](<serverInvite>) to join our support server",
   "set_channel_first": "תחילה עליך להגדיר ערוץ!",
   "no_free_games": "אין משחקים חינמיים כרגע",
   "no_upcoming_games": "אין משחקים קרובים כרגע",
-  "make_sure_perms": "ודא שיש לי את ההרשאות האלה ב-<channel>:",
+  "bot_missing_perms": "I'm missing some permissions on <channel>!",
   "user_missing_perms": "אין לך מספיק הרשאות להשתמש בפקודה זו",
   "manage_guild_needed": "פקודה זו דורשת ממך הרשאת **ניהול שרת**",
   "bot_admins_only": "פקודה זו מחייבת אותך להיות אחד ממנהלי הבוט",
@@ -21,6 +18,12 @@
   "role_not_set": "לא מוגדר, אתה יכול להגדיר אחד עם `/set role`",
   "too_many_webhooks": "יותר מדי webhooks",
   "ten_webhooks_only": "לערוץ יכולים להיות 10 webhooks לכל היותר. אנא הסר אחד ונסה שוב.",
+  "would_you_like_to_translate": "Would you like to help translating <botName>?",
+  "if_would_like_to_translate": "If so, please let us know on our [support server](<serverInvite>)!",
+  "having_problems": "Having problems? Let us know on our [support server](<serverInvite>) and we'll help you out!",
+  "how_to_tutorial": "How to get automatically notified of free games? [Click here](<tutorialLink>) for a tutorial!",
+  "looking_for_commands": "Looking for commands? [Click here](<commandsLink>) for my command list!",
+  "help_desc": "I'm a customizable bot focused around notifying servers about free games. Thank you for choosing me!",
   "open_in": "להיפתח ב:",
   "free": "חינם",
   "invite": "להזמין",
@@ -35,6 +38,6 @@
   "settings": "הגדרות",
   "help": "עזרה",
   "missing": "Missing!",
-  "webhooks_notification": "אני תומך ב-webhooks בימינו! הם מאפשרים לי לשלוח את ההתראות הרבה יותר מהר. מנהלי שרת, נא לעשות `/set channel` (או `/set thread`) כדי לאפשר התראות דרך webhooks.",
-  "slash_notification": "פקודות סלאש (/) לא עובדות? (לחץ כאן) כדי להוסיף את הבוט שוב לשרת שלך עם הפקודות הלוכסניות מופעלות. (אין צורך בבעיטה)"
+  "thank_you": "Thank you!",
+  "webhooks_notification": "אני תומך ב-webhooks בימינו! הם מאפשרים לי לשלוח את ההתראות הרבה יותר מהר. מנהלי שרת, נא לעשות `/set channel` (או `/set thread`) כדי לאפשר התראות דרך webhooks."
 }

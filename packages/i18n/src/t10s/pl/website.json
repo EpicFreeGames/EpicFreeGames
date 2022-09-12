@@ -1,52 +1,37 @@
 {
-  "tutorial": "Tutorial",
-  "tutorial_q": "How to setup <botName> to automatically notify about free games?",
-  "tutorial_1": "Firstly, [get the bot to your server](<inviteLink>).",
-  "tutorial_2": "Then, set a channel using the `/set channel` command. The bot will use that channel when posting free games.",
-  "tutorial_3": "And that's it! The bot will send the current free games to the channel you set. You can always test your setup with the `/test` command.",
-
-  "having_problems_title": "Having problems?",
-  "having_problems_desc": "Check out the [frequently asked questions](<faqLink>) or [join our support server](<serverInvite>) and we'll help you out!",
-
-  "optional": "optional",
-
-  "tutorial_setting_role": "Setting a role",
-  "tutorial_setting_role_1": "You can set a role the bot will ping when sending the notification. Set it using the `/set role` command.",
-  "tutorial_setting_role_2": "The role will also get pinged when using the `/test` command, so you can test if everything is working.",
-
-  "tutorial_changing_language": "Changing the language",
-  "tutorial_changing_language_1": "You can change the language the bot uses by using the `/set language` command.",
-
-  "tutorial_changing_currency": "Changing the currency",
-  "tutorial_changing_currency_1": "You can change the currency the bot uses by using the `/set currency` command.",
-
-  "faq_title": "Frequently asked questions",
-  "faq_1_q": "Why is my language not supported?",
-  "faq_1_a": "Because we don't have a translator for your language. If you'd like to become one, please [join our support server](<serverInvite>) and let us know!",
-
-  "faq_2_q": "Why is my currency not supported?",
-  "faq_2_a": "Please [join our support server](<serverInvite>), let us know, and we'll add it!",
-
-  "faq_3_q": "Can everyone change the bot's settings?",
-  "faq_3_a": "Nope. Only members with the *manage server* permission can change the bot's settings.",
-
-  "faq_4_q": "My question is not here...",
-  "faq_4_a": "Please [join our support server](<serverInvite>) we'll help you out!",
-
-  "the_sentence": "Never miss free games again!",
-
-  "what_is_bot": "What is <botName>?",
-  "what_is_bot_desc": "EpicFreeGames is a **customizable** and **easy-to-setup** Discord bot focused around notifying about **free games**. Apart from notifying, it also provides your server some cool [commands](<commandsLink>)!",
-  "what_is_bot_desc_2": "To get started, set a channel using the `/set channel` command. The bot will use that channel when posting free games.",
-
-  "customization": "Customization",
-  "customization_desc": "You can customize the bot to your liking. **Setup a role** to be pinged on the notifications, change the bot's **language** or even the **currency** of the original prices! Check out the [commands](<commandsLink>) to learn how!",
-
-  "get_the_bot": "Get the bot",
-
-  "commands": "Commands",
-  "command": "Command",
-  "description": "Description",
-
-  "commands_only_manage_server": "Only members with the *manage server* permission can use these commands:"
+  "tutorial": "Poradnik",
+  "tutorial_q": "Jak skonfigurować <botName> aby automatycznie powiadamiać o darmowych grach?",
+  "tutorial_1": "Po pierwsze, [dodaj bota na swój serwer](<inviteLink>).",
+  "tutorial_2": "Następnie, ustaw kanał za pomocą komendy `/set channel`. Bot użyje tego kanału podczas publikowania darmowych gier.",
+  "tutorial_3": "I to wszystko! Bot wyśle bieżące darmowe gry na ustawiony kanał. Zawsze możesz przetestować konfigurację za pomocą komendy `/test`.",
+  "having_problems_title": "Masz problemy?",
+  "having_problems_desc": "Sprawdź [często zadawane pytania](<faqLink>) lub [dołącz do naszego serwera wsparcia](<serverInvite>), a my Ci pomożemy!",
+  "optional": "opcjonalne",
+  "tutorial_setting_role": "Ustawianie roli",
+  "tutorial_setting_role_1": "Możesz ustawić rolę, którą bot będzie pingował podczas wysyłania powiadomienia. Ustaw ją używając komendy `/set role`.",
+  "tutorial_setting_role_2": "Rola również zostanie spingowana podczas użycia komendy `/test`, więc możesz przetestować, czy wszystko działa.",
+  "tutorial_changing_language": "Zmiana języka",
+  "tutorial_changing_language_1": "Możesz zmienić język, którego używa bot, używając polecenia `/set language`.",
+  "tutorial_changing_currency": "Zmiana waluty",
+  "tutorial_changing_currency_1": "Możesz zmienić walutę używaną przez bota używając polecenia `/set currency`.",
+  "faq_title": "Najczęściej Zadawane Pytania",
+  "faq_1_q": "Dlaczego mój język nie jest obsługiwany?",
+  "faq_1_a": "Ponieważ nie mamy tłumacza dla Twojego języka. Jeśli chcesz być translatorem, proszę [dołącz do naszego serwera wsparcia](<serverInvite>) i daj nam znać!",
+  "faq_2_q": "Dlaczego moja waluta nie jest obsługiwana?",
+  "faq_2_a": "Proszę [dołączyć do naszego serwera wsparcia](<serverInvite>), daj nam znać, a my ją dodamy!",
+  "faq_3_q": "Czy każdy może zmienić ustawienia bota?",
+  "faq_3_a": "Nie. Tylko członkowie z uprawnieniem *zarządzanie serwerem* mogą zmienić ustawienia.",
+  "faq_4_q": "Nie ma tutaj mojego pytania...",
+  "faq_4_a": "Proszę [dołączyć do naszego serwera wsparcia](<serverInvite>) a my Ci pomożemy!",
+  "the_sentence": "Nigdy więcej nie przegap darmowych gier!",
+  "what_is_bot": "Czym jest <botName>?",
+  "what_is_bot_desc": "EpicFreeGames to **konfigurowalny** i **łatwy do skonfigurowania** bot Discorda który skupia się na powiadamianiu o **darmowych grach**. Oprócz powiadomień, zapewnia on również Twojemu serwererowi kilka fajnych [commands](<commandsLink>)!",
+  "what_is_bot_desc_2": "Aby rozpocząć, ustaw kanał używając komendy `/set channel`. Bot będzie używać tego kanału podczas publikowania darmowych gier.",
+  "customization": "Dostosowywanie",
+  "customization_desc": "Możesz dostosować bota do swoich potrzeb. **Ustaw rolę** do pingowania w powiadomieniach, zmień **język bota** lub nawet **walutę** oryginalnych cen! Sprawdź [commands](<commandsLink>), aby dowiedzieć się jak to zrobić!",
+  "get_the_bot": "Dodaj bota",
+  "commands": "Polecenia",
+  "command": "Polecenie",
+  "description": "Opis",
+  "commands_only_manage_server": "Tylko członkowie z uprawnieniem *zarządzanie serwerem* mogą używać tych komend:"
 }

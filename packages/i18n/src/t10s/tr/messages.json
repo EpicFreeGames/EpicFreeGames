@@ -1,12 +1,9 @@
 {
-  "support_click_here": "Destek almak için buraya tıklayın",
-  "vote_needed_title": "Bu komudu kullanmak için oy vermeniz gerekiyor",
-  "vote_click_here": "Bana top.gg'den oy vermek için buraya tıklayın",
-  "commands_listed": "Bütün komut'lar burada listelendi:",
+  "support_click_here": "If you need help, [click here](<serverInvite>) to join our support server",
   "set_channel_first": "Önce kanalı ayarlamalısın!",
   "no_free_games": "Şu an bedava bir oyun yok",
   "no_upcoming_games": "Şu an yaklaşan bir oyun yok",
-  "make_sure_perms": "<channel> kanalında bu izinlere sahip olduğumdan emin ol:",
+  "bot_missing_perms": "I'm missing some permissions on <channel>!",
   "user_missing_perms": "Bu komutu kullanmak için iznin yok",
   "manage_guild_needed": "Bu komudu kullanmak için **Sunucuyu Yönet** iznine sahip olmalısın",
   "bot_admins_only": "Bu komut için bot yönetici'lerinden birisi olmanız gerekiyor",
@@ -21,6 +18,12 @@
   "role_not_set": "Seçili rol yok, `/set role` ile rolü seçebilirsin",
   "too_many_webhooks": "Çok sayıda webhook var",
   "ten_webhooks_only": "Bir kanalın en fazla 10 tane webhook'u olabilir. Lütfen birini silip tekrar deneyiniz.",
+  "would_you_like_to_translate": "Would you like to help translating <botName>?",
+  "if_would_like_to_translate": "If so, please let us know on our [support server](<serverInvite>)!",
+  "having_problems": "Having problems? Let us know on our [support server](<serverInvite>) and we'll help you out!",
+  "how_to_tutorial": "How to get automatically notified of free games? [Click here](<tutorialLink>) for a tutorial!",
+  "looking_for_commands": "Looking for commands? [Click here](<commandsLink>) for my command list!",
+  "help_desc": "I'm a customizable bot focused around notifying servers about free games. Thank you for choosing me!",
   "open_in": "Buradan aç:",
   "free": "Ücretsiz",
   "invite": "Davet et",
@@ -35,6 +38,6 @@
   "settings": "Ayarlar",
   "help": "Yardım",
   "missing": "Eksik!",
-  "webhooks_notification": "Bugünlerde webhook'lar ile destek veriyorum! Bu bana daha hızlı bildiğim göndememe yardım ediyor. Sunucu yönetici'leri, lütfen ``/set channel` (ya da `/set thread`) komutlarını ile webhook bildirimlerini aktive edin.",
-  "slash_notification": "Eğik çizgi (/) komutları çalışmıyor mu? (Buraya tıkla) basın ve tekrar botu sunucunuza eğik çizgi komutları aktifken ekleyin. (Botu atmanız gerekmiyor)"
+  "thank_you": "Thank you!",
+  "webhooks_notification": "Bugünlerde webhook'lar ile destek veriyorum! Bu bana daha hızlı bildiğim göndememe yardım ediyor. Sunucu yönetici'leri, lütfen ``/set channel` (ya da `/set thread`) komutlarını ile webhook bildirimlerini aktive edin."
 }

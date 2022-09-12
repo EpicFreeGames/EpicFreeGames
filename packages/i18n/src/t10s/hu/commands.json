@@ -1,9 +1,9 @@
 {
-  "cmd_desc_set_currency": "Válaszd ki azt a pénznemet, amelyben az árakat szeretnéd megjeleníteni",
+  "cmd_desc_set_currency": "Pick a currency for the games' prices on this server",
   "cmd_desc_set_thread": "Válassz egy gondolatmenetet, ahová új ingyenes játékokat teszek közzé",
   "cmd_desc_set_channel": "Válassz egy csatornát, ahová új ingyenes játékokat teszek közzé",
-  "cmd_desc_set_role": "Pick a role I'll ping when a new game comes free!",
-  "cmd_desc_set_language": "Válassz ki egy nyelvet, amelyen szeretnéd, hogy az üzeneteim legyenek",
+  "cmd_desc_set_role": "Pick a role I'll ping when a new game comes free",
+  "cmd_desc_set_language": "Pick a language for my messages on this server",
   "cmd_desc_remove_channel": "A beállított csatorna eltávolítása (vagy gondolatmenet)",
   "cmd_desc_remove_role": "A beállított rang eltávolítása",
   "cmd_desc_invite": "Szerezd meg a meghívó linkemet",
@@ -12,5 +12,6 @@
   "cmd_desc_up": "Lásd a következő ingyenes játékokat",
   "cmd_desc_free": "Lásd a jelenlegi ingyenes játékokat",
   "cmd_desc_settings": "A beállítások megtekintése",
-  "cmd_desc_vote": "Szavazz rám"
+  "cmd_desc_vote": "Szavazz rám",
+  "cmd_desc_test": "Sends a test message to the set channel and pings the set role"
 }

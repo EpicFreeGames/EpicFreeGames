@@ -50,7 +50,6 @@ export type ITranslations = {
   no_free_games: "No free games at the moment";
   no_upcoming_games: "No upcoming free games at the moment";
 
-  make_sure_perms: "Make sure I have these permissions on <channel>:";
   bot_missing_perms: "I'm missing some permissions on <channel>!";
   user_missing_perms: "You don't have enough permissions to use this command";
   manage_guild_needed: "This command requires you to have the **manage server** permission";

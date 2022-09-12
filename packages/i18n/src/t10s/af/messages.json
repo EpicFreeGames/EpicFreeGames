@@ -1,12 +1,9 @@
 {
-  "support_click_here": "Klik hier om ondersteuning te kry",
-  "vote_needed_title": "Jy moet stem om hierdie opdrag te gebruik",
-  "vote_click_here": "Klik hier om vir my te stem op top.gg",
-  "commands_listed": "U kan al my opdragte hier vind",
+  "support_click_here": "If you need help, [click here](<serverInvite>) to join our support server",
   "set_channel_first": "Jy moet eers 'n kanaal stel!",
   "no_free_games": "Geen gratis speletjies op die oomblik nie",
   "no_upcoming_games": "Geen komende gratis speletjies op die oomblik nie",
-  "make_sure_perms": "Maak seker dat ek hierdie toestemmings het in <channel>:",
+  "bot_missing_perms": "I'm missing some permissions on <channel>!",
   "user_missing_perms": "Jy het nie genoeg toestemmings om hierdie opdrag te gebruik nie",
   "manage_guild_needed": "Hierdie opdrag vereis dat jy die **bestuur bediener** toestemming het",
   "bot_admins_only": "Hierdie opdrag vereis dat jy een van die bot admins moet wees",
@@ -21,6 +18,12 @@
   "role_not_set": "Nie ingestel nie, jy kan een stel met `/set role`",
   "too_many_webhooks": "Te veel webhooks",
   "ten_webhooks_only": "'n Kanaal kan hoogstens 10 webhooks hê. Verwyder asseblief een en probeer weer.",
+  "would_you_like_to_translate": "Would you like to help translating <botName>?",
+  "if_would_like_to_translate": "If so, please let us know on our [support server](<serverInvite>)!",
+  "having_problems": "Having problems? Let us know on our [support server](<serverInvite>) and we'll help you out!",
+  "how_to_tutorial": "How to get automatically notified of free games? [Click here](<tutorialLink>) for a tutorial!",
+  "looking_for_commands": "Looking for commands? [Click here](<commandsLink>) for my command list!",
+  "help_desc": "I'm a customizable bot focused around notifying servers about free games. Thank you for choosing me!",
   "open_in": "Maak oop in:",
   "free": "Gratis",
   "invite": "Nooi",
@@ -35,6 +38,6 @@
   "settings": "Instellings",
   "help": "Help",
   "missing": "Missing!",
-  "webhooks_notification": "Ek ondersteun deesdae webhooks! Hulle laat my toe om die kennisgewings baie vinniger te stuur. Bediener admins, doen asseblief `/set channel` (of `/set thread`) om kennisgewings deur webhooks te aktiveer.",
-  "slash_notification": "Slash (/) opdragte werk nie? (Klik hier) om die bot weer by jou bediener te voeg met die skuinsstreep-opdragte geaktiveer. (Skop is nie nodig nie)"
+  "thank_you": "Thank you!",
+  "webhooks_notification": "Ek ondersteun deesdae webhooks! Hulle laat my toe om die kennisgewings baie vinniger te stuur. Bediener admins, doen asseblief `/set channel` (of `/set thread`) om kennisgewings deur webhooks te aktiveer."
 }

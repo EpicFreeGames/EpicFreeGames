@@ -1,12 +1,9 @@
 {
-  "support_click_here": "Кликни за съпорт",
-  "vote_needed_title": "Трябва да вотнеш, за да използваш тази команда",
-  "vote_click_here": "Кликни тук, за да гласуваш за бота в top.gg",
-  "commands_listed": "Тук можеш да видиш всичките ми команди",
+  "support_click_here": "If you need help, [click here](<serverInvite>) to join our support server",
   "set_channel_first": "Първо си задай канал!",
   "no_free_games": "Няма безплатни игри в момента",
   "no_upcoming_games": "Няма предстоящо-излизащи игри в момента",
-  "make_sure_perms": "Увери се, че си ми дал права в <channel>:",
+  "bot_missing_perms": "I'm missing some permissions on <channel>!",
   "user_missing_perms": "Нямаш правата да изплозваш тази команда",
   "manage_guild_needed": "Тази команда изисква право на **менежиране на сървъра**",
   "bot_admins_only": "Тази команда изисква да си един от админите на бота",
@@ -21,6 +18,12 @@
   "role_not_set": "Няма зададена роля, задай с `/set role`",
   "too_many_webhooks": "Прекалено много уебхукове",
   "ten_webhooks_only": "Този канал има 10 уебхука, което е макс. Премахни една и пробвай пак.",
+  "would_you_like_to_translate": "Would you like to help translating <botName>?",
+  "if_would_like_to_translate": "If so, please let us know on our [support server](<serverInvite>)!",
+  "having_problems": "Having problems? Let us know on our [support server](<serverInvite>) and we'll help you out!",
+  "how_to_tutorial": "How to get automatically notified of free games? [Click here](<tutorialLink>) for a tutorial!",
+  "looking_for_commands": "Looking for commands? [Click here](<commandsLink>) for my command list!",
+  "help_desc": "I'm a customizable bot focused around notifying servers about free games. Thank you for choosing me!",
   "open_in": "Отвори в:",
   "free": "Безплатно",
   "invite": "Инвайт",
@@ -34,7 +37,7 @@
   "currency": "Парична единица",
   "settings": "Настройки",
   "help": "Помощ",
-  "missing": "Missing!",
-  "webhooks_notification": "I support webhooks nowadays! They allow me to send the notifications a lot faster. Server admins, please do `/set channel` (or `/set thread`) to enable notifications through webhooks.",
-  "slash_notification": "Slash (/) commands not working? (Click here) to add the bot again to your server with the slash commands enabled. (Kicking is not required)"
+  "missing": "Нещо липсва!",
+  "thank_you": "Thank you!",
+  "webhooks_notification": "Вече поддържам уебхукове! Те ми позволяват да изпращам нотификации по-бързо. Админи, моля напишете`/set channel` (или `/set thread`), за да включите нотификации чрез уебхукове."
 }

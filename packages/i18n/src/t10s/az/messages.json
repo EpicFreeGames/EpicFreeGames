@@ -1,12 +1,9 @@
 {
-  "support_click_here": "Dəstək almaq üçün buraya basın",
-  "vote_needed_title": "Bu əmrdən istifadə etmək üçün səs verməlisiniz",
-  "vote_click_here": "Mənə top.gg-də səs vermək üçün buraya basın",
-  "commands_listed": "Bütün sadalanan əmrlərimi burada tapa bilərsiniz",
+  "support_click_here": "If you need help, [click here](<serverInvite>) to join our support server",
   "set_channel_first": "Əvvəlcə bir kanal yaratmalısınız!",
   "no_free_games": "Hal hazırda pulsuz oyun yoxdur",
   "no_upcoming_games": "Hazırda qarşıdan gələn pulsuz oyunlar yoxdur",
-  "make_sure_perms": "<channel> kanalında bu icazələrə malik olduğuma əmin olun:",
+  "bot_missing_perms": "I'm missing some permissions on <channel>!",
   "user_missing_perms": "Bu əmri istifadə etmək üçün icazəniz yoxdur",
   "manage_guild_needed": "Bu əmrdən istifadə etmək üçün **serveri idarəetmə** icazəniz olmalıdır",
   "bot_admins_only": "Bu əmrdən istifadə etmək üçün siz bot adminlərindən biri olmalısınız",
@@ -21,6 +18,12 @@
   "role_not_set": "Müəyyən edilmir, birini `/set role` ilə təyin edə bilərsiniz",
   "too_many_webhooks": "Çoxlu webhook var",
   "ten_webhooks_only": "Bir kanalda 10-dan çox webhook ola bilməz. Zəhmət olmasa birini çıxarın və yenidən cəhd edin.",
+  "would_you_like_to_translate": "Would you like to help translating <botName>?",
+  "if_would_like_to_translate": "If so, please let us know on our [support server](<serverInvite>)!",
+  "having_problems": "Having problems? Let us know on our [support server](<serverInvite>) and we'll help you out!",
+  "how_to_tutorial": "How to get automatically notified of free games? [Click here](<tutorialLink>) for a tutorial!",
+  "looking_for_commands": "Looking for commands? [Click here](<commandsLink>) for my command list!",
+  "help_desc": "I'm a customizable bot focused around notifying servers about free games. Thank you for choosing me!",
   "open_in": "Aç:",
   "free": "Pulsuz",
   "invite": "Dəvət et",
@@ -35,6 +38,6 @@
   "settings": "Parametrlər",
   "help": "Kömək",
   "missing": "İtkin!",
-  "webhooks_notification": "İndiki vaxtda webhookları dəstəkləyirəm! Bildirişləri daha sürətli göndərməyə icazə verirlər. Server idarəçiləri, zəhmət olmasa webhook vasitəsilə bildirişləri aktivləşdirmək üçün `/set channel` (və ya `/set thread`) edin.",
-  "slash_notification": "Slaş (/) əmrləri işləmir? (Buraya basın) botu slaş əmrləri ilə serverinizə geri əlavə etmək üçün (Kik tələb olunmur)"
+  "thank_you": "Thank you!",
+  "webhooks_notification": "İndiki vaxtda webhookları dəstəkləyirəm! Bildirişləri daha sürətli göndərməyə icazə verirlər. Server idarəçiləri, zəhmət olmasa webhook vasitəsilə bildirişləri aktivləşdirmək üçün `/set channel` (və ya `/set thread`) edin."
 }

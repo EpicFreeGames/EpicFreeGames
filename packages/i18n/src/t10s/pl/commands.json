@@ -1,9 +1,9 @@
 {
-  "cmd_desc_set_currency": "Wybierz walutę w której chcesz widzieć ceny",
+  "cmd_desc_set_currency": "Wybierz walutę dla cen gier na tym serwerze",
   "cmd_desc_set_thread": "Wybierz wątek w którym mam wysyłać darmowe gry",
   "cmd_desc_set_channel": "Wybierz kanał w którym będę wysyłał nowe darmowe gry",
-  "cmd_desc_set_role": "Pick a role I'll ping when a new game comes free!",
-  "cmd_desc_set_language": "Wybierz język, w którym chcesz widzieć wiadomości",
+  "cmd_desc_set_role": "Wybierz rolę którą mam spingować gdy pojawi się nowa darmowa gra",
+  "cmd_desc_set_language": "Wybierz język dla moich wiadomości na tym serwerze",
   "cmd_desc_remove_channel": "Usuń ustawiony kanał (lub wątek)",
   "cmd_desc_remove_role": "Usuń ustawioną rolę",
   "cmd_desc_invite": "Uzyskaj link z zaproszeniem",
@@ -12,5 +12,6 @@
   "cmd_desc_up": "Zobacz nadchodzące darmowe gry",
   "cmd_desc_free": "Zobacz bieżące darmowe gry",
   "cmd_desc_settings": "Zobacz ustawienia",
-  "cmd_desc_vote": "Zagłosuj na mnie"
+  "cmd_desc_vote": "Zagłosuj na mnie",
+  "cmd_desc_test": "Wysyła wiadomość testową do ustawionego kanału i pinguje ustawioną rolę"
 }

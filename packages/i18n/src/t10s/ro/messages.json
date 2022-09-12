@@ -1,12 +1,9 @@
 {
-  "support_click_here": "Click aici pentru a obţine suport",
-  "vote_needed_title": "Trebuie să votezi pentru a utiliza această comandă",
-  "vote_click_here": "Apăsați aici pentru a mă vota pe top.gg",
-  "commands_listed": "Puteți să îmi găsiți toate comenzile afișate aici:",
+  "support_click_here": "If you need help, [click here](<serverInvite>) to join our support server",
   "set_channel_first": "Trebuie să setați mai întâi un canal!",
   "no_free_games": "Nu există jocuri gratuite în acest moment",
   "no_upcoming_games": "Nu există jocuri viitoare gratuite în acest moment",
-  "make_sure_perms": "Asigurați-vă că am aceste permisiuni pe <channel>:",
+  "bot_missing_perms": "I'm missing some permissions on <channel>!",
   "user_missing_perms": "Nu aveţi permisiunea de a executa această comandă.",
   "manage_guild_needed": "Pentru a folosi această comandă ai nevoie de permisiunea **Gestionează server-ul**",
   "bot_admins_only": "Această comandă necesită să fiți unul dintre administratorii botului",
@@ -21,6 +18,12 @@
   "role_not_set": "Nu este setat, poți seta unul cu `/set role`",
   "too_many_webhooks": "Prea multe webhook-uri",
   "ten_webhooks_only": "Un canal poate avea cel mult 10 webhook-uri. Te rog șterge unul și reîncearcă.",
+  "would_you_like_to_translate": "Would you like to help translating <botName>?",
+  "if_would_like_to_translate": "If so, please let us know on our [support server](<serverInvite>)!",
+  "having_problems": "Having problems? Let us know on our [support server](<serverInvite>) and we'll help you out!",
+  "how_to_tutorial": "How to get automatically notified of free games? [Click here](<tutorialLink>) for a tutorial!",
+  "looking_for_commands": "Looking for commands? [Click here](<commandsLink>) for my command list!",
+  "help_desc": "I'm a customizable bot focused around notifying servers about free games. Thank you for choosing me!",
   "open_in": "Deschideți în:",
   "free": "Gratuit",
   "invite": "Invită",
@@ -35,6 +38,6 @@
   "settings": "Setări",
   "help": "Ajutor",
   "missing": "Missing!",
-  "webhooks_notification": "De acum suport și webhook-uri! Acestea îmi dau acordul de a trimite notificări mult mai rapid! Administratorii server-ului, vă rog utilizați comanda `/set channel` (sau `/set thread`) pentru a activa notificările prin intermediul webhook-urilor.",
-  "slash_notification": "Comenzile slash(/) nu funcționează? (Apasă aici) pentru a adăuga bot-ul din nou pe server cu comenzile slash activate. (Nu e nevoie de înlăturarea bot-ului de pe server)"
+  "thank_you": "Thank you!",
+  "webhooks_notification": "De acum suport și webhook-uri! Acestea îmi dau acordul de a trimite notificări mult mai rapid! Administratorii server-ului, vă rog utilizați comanda `/set channel` (sau `/set thread`) pentru a activa notificările prin intermediul webhook-urilor."
 }

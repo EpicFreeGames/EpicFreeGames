@@ -1,0 +1,17 @@
+{
+  "cmd_desc_set_currency": "Pick a currency for the games' prices on this server",
+  "cmd_desc_set_thread": "設置您的討論串，我們有新的免費遊戲通知會發布到這頻道",
+  "cmd_desc_set_channel": "設置您的頻道，我們有新的免費遊戲通知會發布到這頻道",
+  "cmd_desc_set_role": "Pick a role I'll ping when a new game comes free",
+  "cmd_desc_set_language": "Pick a language for my messages on this server",
+  "cmd_desc_remove_channel": "移除設置的頻道或是討論串",
+  "cmd_desc_remove_role": "移除設置的身分組",
+  "cmd_desc_invite": "獲取我的邀請連結",
+  "cmd_desc_help": "如果你需要幫助就使用我吧",
+  "cmd_desc_debug": "用於測試",
+  "cmd_desc_up": "查看即將推出的免費遊戲",
+  "cmd_desc_free": "查看目前的免費遊戲",
+  "cmd_desc_settings": "查看設置",
+  "cmd_desc_vote": "用於投票",
+  "cmd_desc_test": "Sends a test message to the set channel and pings the set role"
+}

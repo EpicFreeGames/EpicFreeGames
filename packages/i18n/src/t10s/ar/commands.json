@@ -1,9 +1,9 @@
 {
-  "cmd_desc_set_currency": "اختر العملة التي تريد أن تكون الأسعار بها",
+  "cmd_desc_set_currency": "Pick a currency for the games' prices on this server",
   "cmd_desc_set_thread": "اختر ثريد سأقوم بنشر ألعاب مجانية جديدة عليه",
   "cmd_desc_set_channel": "اختر قناة سأقوم بنشر ألعاب مجانية جديدة عليها",
-  "cmd_desc_set_role": "Pick a role I'll ping when a new game comes free!",
-  "cmd_desc_set_language": "اختر اللغة التي تريد أن تكون رسائلي بها",
+  "cmd_desc_set_role": "Pick a role I'll ping when a new game comes free",
+  "cmd_desc_set_language": "Pick a language for my messages on this server",
   "cmd_desc_remove_channel": "إزالة القناة المحددة (أو الخيط)",
   "cmd_desc_remove_role": "إزالة دور المجموعة",
   "cmd_desc_invite": "احصل على رابط الدعوة الخاص بي",
@@ -12,5 +12,6 @@
   "cmd_desc_up": "مشاهدة الألعاب المجانية القادمة",
   "cmd_desc_free": "مشاهدة الألعاب المجانية الحالية",
   "cmd_desc_settings": "انظر الإعدادات",
-  "cmd_desc_vote": "صوت لي"
+  "cmd_desc_vote": "صوت لي",
+  "cmd_desc_test": "Sends a test message to the set channel and pings the set role"
 }

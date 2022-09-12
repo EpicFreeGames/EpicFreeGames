@@ -1,12 +1,9 @@
 {
-  "support_click_here": "انقر هنا للحصول على الدعم",
-  "vote_needed_title": "تحتاج إلى التصويت لإستخدام هذا الأمر",
-  "vote_click_here": "أنقر هنا للتصويت لي على top.gg",
-  "commands_listed": "يمكنك العثور على جميع الأوامر المذكورة هنا",
+  "support_click_here": "If you need help, [click here](<serverInvite>) to join our support server",
   "set_channel_first": "يجب عليك تعيين القناة أولًا!",
   "no_free_games": "لا يوجد ألعاب مجانية بالوقت الحالي",
   "no_upcoming_games": "لا يوجد ألعاب قادمة بالوقت الحالي",
-  "make_sure_perms": "تأكد أنني امتلك هذه الصلاحيات في <channel>:",
+  "bot_missing_perms": "I'm missing some permissions on <channel>!",
   "user_missing_perms": "ليس لديك صلاحيات كافية لإستخدام هذا الأمر",
   "manage_guild_needed": "هذا الأمر يتطلب منك صلاحية **manage server**",
   "bot_admins_only": "هذا الأمر يتطلب منك أن تكون أحد مشرفي البوت",
@@ -21,6 +18,12 @@
   "role_not_set": "لم يتم التعيين ، يمكنك تعيين واحد مع `/set role`",
   "too_many_webhooks": "عدد كبير جدًا من الويبهوك",
   "ten_webhooks_only": "يمكن أن تحتوي القناة على 10 ويبهوك على الأكثر. الرجاء إزالة واحدة ، وحاول مرة أخرى.",
+  "would_you_like_to_translate": "Would you like to help translating <botName>?",
+  "if_would_like_to_translate": "If so, please let us know on our [support server](<serverInvite>)!",
+  "having_problems": "Having problems? Let us know on our [support server](<serverInvite>) and we'll help you out!",
+  "how_to_tutorial": "How to get automatically notified of free games? [Click here](<tutorialLink>) for a tutorial!",
+  "looking_for_commands": "Looking for commands? [Click here](<commandsLink>) for my command list!",
+  "help_desc": "I'm a customizable bot focused around notifying servers about free games. Thank you for choosing me!",
   "open_in": "فتح في:",
   "free": "مجاناً",
   "invite": "الدعوة",
@@ -35,6 +38,6 @@
   "settings": "إعدادات",
   "help": "المساعدة",
   "missing": "مفقود!",
-  "webhooks_notification": "أنا أدعم webhooks هذه الأيام! إنها تسمح لي إرسال الإشعارات بسرعة أكبر. مشرفو الخوادم، رجاءًا القيام بـ`/set channel` (أو `/set thread`) لتفعيل الإشعارات خلال webhooks.",
-  "slash_notification": "أوامر Slash (/) لا تعمل؟ (إضغط هنا) لإضافة البوت مرة أخرى إلى خادمك مع تمكين أوامر Slash. (الطرد ليس مطلوب)"
+  "thank_you": "Thank you!",
+  "webhooks_notification": "أنا أدعم webhooks هذه الأيام! إنها تسمح لي إرسال الإشعارات بسرعة أكبر. مشرفو الخوادم، رجاءًا القيام بـ`/set channel` (أو `/set thread`) لتفعيل الإشعارات خلال webhooks."
 }

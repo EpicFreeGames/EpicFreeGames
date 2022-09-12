@@ -1,9 +1,9 @@
 {
-  "cmd_desc_set_currency": "Gözükmesini istediğiniz para birimini seçin",
+  "cmd_desc_set_currency": "Pick a currency for the games' prices on this server",
   "cmd_desc_set_thread": "Yeni ücretsiz olan oyunları hangi alt başlığa göndereceğimi seç",
   "cmd_desc_set_channel": "Yeni ücretsiz olan oyunları hangi kanala göndereceğimi seç",
-  "cmd_desc_set_role": "Yeni ücretsiz olan oyunları gönderdiğimde, haber vermek için etiketleyeceğim rolü seç!",
-  "cmd_desc_set_language": "Bot'un mesajlarının hangi dilde gönderileceğini seç",
+  "cmd_desc_set_role": "Pick a role I'll ping when a new game comes free",
+  "cmd_desc_set_language": "Pick a language for my messages on this server",
   "cmd_desc_remove_channel": "Ayarlanmış kanalı (yada konuyu) sil",
   "cmd_desc_remove_role": "Ayarlanmış rolü sil",
   "cmd_desc_invite": "Davet bağlantımı al",
@@ -12,5 +12,6 @@
   "cmd_desc_up": "Gelecek bedava oyunlara bak",
   "cmd_desc_free": "Şuanki bedava oyunlara bak",
   "cmd_desc_settings": "Ayarlara bak",
-  "cmd_desc_vote": "Benim için oy ver"
+  "cmd_desc_vote": "Benim için oy ver",
+  "cmd_desc_test": "Sends a test message to the set channel and pings the set role"
 }
