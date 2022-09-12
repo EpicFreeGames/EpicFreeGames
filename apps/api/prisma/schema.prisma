@@ -1,12 +1,11 @@
 datasource db {
-  url                  = env("DATABASE_URL")
-  provider             = "mysql"
-  referentialIntegrity = "prisma"
+  url      = env("DATABASE_URL")
+  provider = "postgresql"
 }
 
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["referentialIntegrity", "interactiveTransactions"]
+  previewFeatures = ["interactiveTransactions"]
 }
 
 model Game {
@@ -67,10 +66,9 @@ model SendingLog {
 }
 
 model Sending {
-  id     String       @id @default(cuid())
-  target Int          @default(0)
-  games  Game[]
-  logs   SendingLog[]
+  id    String       @id @default(cuid())
+  games Game[]
+  logs  SendingLog[]
 }
 
 model User {
