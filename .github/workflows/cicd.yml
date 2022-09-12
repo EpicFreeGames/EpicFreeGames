@@ -251,7 +251,10 @@ jobs:
     name: "Services: Deploy to Production"
     environment: Production
     runs-on: ubuntu-latest
-    needs: [services-deploy-staging]
+    needs: 
+      - services-deploy-staging
+      - front-deploy-staging
+      - dash-deploy-staging
     steps:
       - name: Cancel previous workflows
         uses: styfle/cancel-workflow-action@0.10.0
@@ -343,8 +346,8 @@ jobs:
           -b NEXT_PUBLIC_EFG_API_WS_URL=${{ secrets.NEXT_PUBLIC_EFG_API_WS_URL }}
 
   front-deploy-prod:
-    name: "Front: Deploy to Staging"
-    environment: Staging
+    name: "Front: Deploy to Production"
+    environment: Production
     runs-on: ubuntu-latest
     needs:
       - services-deploy-prod
