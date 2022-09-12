@@ -74,7 +74,6 @@ model Sending {
 model User {
   id           String  @id @default(cuid())
   identifier   String  @unique
-  bot          Boolean
   flags        Int
   name         String?
   tokenVersion String

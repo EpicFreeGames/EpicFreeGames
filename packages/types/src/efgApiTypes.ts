@@ -1,7 +1,6 @@
 export type IUser = {
   id: string;
   identifier: string;
-  bot: boolean;
   name?: string;
   flags: number;
 };

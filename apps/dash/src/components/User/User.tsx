@@ -41,7 +41,6 @@ export const User = ({ user }: Props) => {
 
       <div className="flex flex-col gap-2">
         <Spec title="Flags" value={flags.length ? flags.join(", ") : "None"} />
-        <Spec title="Bot" value={user.bot ? "Yes" : "Nope"} />
       </div>
     </div>
   );
