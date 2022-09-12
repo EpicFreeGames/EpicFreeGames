@@ -312,6 +312,7 @@ jobs:
               VALID_FRONT_TOKEN=${{ env.VALID_FRONT_TOKEN }} \
               VALID_SCRAPER_TOKEN=${{ env.VALID_SCRAPER_TOKEN }} \
               VERSION=${{ env.VERSION }} \
+              DEBUG=1 \
                 docker compose -f docker-compose-prod.yml -p efg-prod up -d --force-recreate
 
   dash-deploy-prod:
