@@ -80,16 +80,14 @@ router.post(
       body: z.object({
         identifier: z.string(),
         flags: z.number(),
-        bot: z.boolean(),
       }),
     },
     async (req, res) => {
-      const { identifier, flags, bot } = req.body;
+      const { identifier, flags } = req.body;
 
       const user = await prisma.user.create({
         data: {
           identifier,
-          bot,
           flags,
           tokenVersion: uuidv4(),
         },

@@ -16,12 +16,11 @@ export const initDatabase = async () => {
     await prisma.user.upsert({
       where: { identifier: configuration.ADMIN_DISCORD_ID },
       create: {
-        bot: false,
         flags: allFlags,
         identifier: configuration.ADMIN_DISCORD_ID,
         tokenVersion: uuidv4(),
       },
-      update: { bot: false, flags: allFlags, identifier: configuration.ADMIN_DISCORD_ID },
+      update: { flags: allFlags, identifier: configuration.ADMIN_DISCORD_ID },
     });
 
     console.log("Upserted admin user");

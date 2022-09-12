@@ -7,7 +7,6 @@ import { UserContext } from "./_sharedTypes";
 export type AddUserProps = {
   identifier: string;
   flags: number;
-  bot: boolean;
 };
 
 const addUserRequest = (props: AddUserProps) =>
