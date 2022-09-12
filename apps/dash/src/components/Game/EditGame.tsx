@@ -6,11 +6,11 @@ import { Edit } from "tabler-icons-react";
 import { Dialog, DialogCloseButton } from "~components/Dialog";
 import { Input } from "~components/Input";
 import { EditGameProps, useEditGameMutation } from "~utils/api/games/editGame";
-import { IGame } from "~utils/api/types";
+import { IGame, IGameWithStatus } from "~utils/api/types";
 import { getHtmlDate } from "~utils/getHtmlDate";
 
 type Props = {
-  game: IGame;
+  game: IGameWithStatus;
 };
 
 export const EditGame = ({ game }: Props) => {
@@ -18,7 +18,7 @@ export const EditGame = ({ game }: Props) => {
 
   const { mutateAsync } = useEditGameMutation();
 
-  const { prices, sendingId, id, ...rest } = game;
+  const { prices, sendingId, id, status, ...rest } = game;
 
   const form = useForm({
     defaultValues: {
