@@ -1,6 +1,7 @@
 import {
   ApplicationCommandOptionType,
   ChannelType,
+  PermissionFlagsBits,
   RESTPutAPIApplicationCommandsJSONBody,
 } from "discord-api-types/v10";
 
@@ -10,6 +11,8 @@ export const commands: RESTPutAPIApplicationCommandsJSONBody = [
   {
     name: "set",
     description: "Modify my settings on this server",
+    dm_permission: false,
+    default_member_permissions: String(PermissionFlagsBits.ManageGuild),
     options: [
       {
         name: "channel",
@@ -85,6 +88,8 @@ export const commands: RESTPutAPIApplicationCommandsJSONBody = [
   {
     name: "remove",
     description: "Modify my settings on this server",
+    default_member_permissions: String(PermissionFlagsBits.ManageGuild),
+    dm_permission: false,
     options: [
       {
         name: "channel",
@@ -108,6 +113,8 @@ export const commands: RESTPutAPIApplicationCommandsJSONBody = [
   },
   {
     name: "debug",
+    default_member_permissions: String(PermissionFlagsBits.ManageGuild),
+    dm_permission: false,
     description: t({ key: "cmd_desc_debug", language: defaultLanguage }),
   },
   {
@@ -120,6 +127,8 @@ export const commands: RESTPutAPIApplicationCommandsJSONBody = [
   },
   {
     name: "settings",
+    default_member_permissions: String(PermissionFlagsBits.ManageGuild),
+    dm_permission: false,
     description: t({ key: "cmd_desc_settings", language: defaultLanguage }),
   },
   {
@@ -128,6 +137,8 @@ export const commands: RESTPutAPIApplicationCommandsJSONBody = [
   },
   {
     name: "test",
+    default_member_permissions: String(PermissionFlagsBits.ManageGuild),
+    dm_permission: false,
     description: t({ key: "cmd_desc_test", language: defaultLanguage }),
   },
 ];
