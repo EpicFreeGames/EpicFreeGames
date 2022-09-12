@@ -1,0 +1,85 @@
+version: "3.9"
+
+x-envs: &envs
+  ADMIN_DISCORD_ID: "178106686484119553"
+  DISCORD_CLIENT_ID: "719806770133991434"
+  DISCORD_PUBLIC_KEY: "014fe96494fb870ad12f31b0e7eb4066418c681747f3c40063051c4f86d7df6f"
+  DISCORD_API_BASEURL: "https://discord.com/api/v10"
+  DISCORD_REDIRECT_URL: "https://api.epicfreegames.net/api/auth/discord-callback"
+  SENDER_URL: "http://prod-sender:3000"
+  DASH_URL: "https://dash.epicfreegames.net"
+  JWT_ISS: "https://api.epicfreegames.net"
+  JWT_AUD: "https://api.epicfreegames.net"
+  EFG_API_BASEURL: "http://prod-api:3000/api"
+  EFG_API_WS_URL: "ws://prod-api:3000/api"
+  EFG_FRONT_BASEURL: "https://epicfreegames.net"
+  EFG_DISCORD_REST_PROXY_BASEURL: "http://prod-discord-rest-proxy:3000"
+  LOGO_URL: "https://staging.epicfreegames.net/assets/images/logos/Production.png"
+  ENV: "Production"
+  DATABASE_URL: "postgres://postgres:postgres@postgres:5432/efg-production"
+  VERSION: ${VERSION}
+  DISCORD_BOT_TOKEN: ${DISCORD_BOT_TOKEN}
+  DISCORD_CLIENT_SECRET: ${DISCORD_CLIENT_SECRET}
+  SECRET: ${SECRET}
+  VALID_BOT_TOKEN: ${VALID_BOT_TOKEN}
+  VALID_FRONT_TOKEN: ${VALID_FRONT_TOKEN}
+  VALID_SCRAPER_TOKEN: ${VALID_SCRAPER_TOKEN}
+
+services:
+  prod-api:
+    image: ${REGISTRY}/${REGISTRY_USER}/efg-api:${VERSION}
+    restart: always
+    environment:
+      <<: *envs
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.efg-api-prod.entrypoints=https"
+      - "traefik.http.routers.efg-api-prod.tls=true"
+      - "traefik.http.routers.efg-api-prod.service=efg-api-prod"
+      - "traefik.http.routers.efg-api-prod.rule=Host(`api.epicfreegames.net`)"
+      - "traefik.http.services.efg-api-prod.loadbalancer.server.port=3000"
+      - "traefik.docker.network=efg"
+    networks:
+      - efg
+
+  prod-discord-rest-proxy:
+    image: ${REGISTRY}/${REGISTRY_USER}/efg-discord-rest-proxy:${VERSION}
+    restart: always
+    environment:
+      <<: *envs
+    networks:
+      - efg
+
+  prod-sender:
+    depends_on:
+      - prod-api
+      - prod-discord-rest-proxy
+    image: ${REGISTRY}/${REGISTRY_USER}/efg-sender:${VERSION}
+    restart: always
+    environment:
+      <<: *envs
+    networks:
+      - efg
+
+  prod-interactions-endpoint:
+    depends_on:
+      - prod-api
+      - prod-discord-rest-proxy
+    image: ${REGISTRY}/${REGISTRY_USER}/efg-interactions-endpoint:${VERSION}
+    restart: always
+    environment:
+      <<: *envs
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.efg-ie-prod.entrypoints=https"
+      - "traefik.http.routers.efg-ie-prod.tls=true"
+      - "traefik.http.routers.efg-ie-prod.service=efg-ie-prod"
+      - "traefik.http.routers.efg-ie-prod.rule=Host(`ie.epicfreegames.net`)"
+      - "traefik.http.services.efg-ie-prod.loadbalancer.server.port=3000"
+      - "traefik.docker.network=efg"
+    networks:
+      - efg
+
+networks:
+  efg:
+    external: true

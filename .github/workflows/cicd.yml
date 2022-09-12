@@ -190,7 +190,9 @@ jobs:
     name: "Dash: Deploy to Staging"
     environment: Staging
     runs-on: ubuntu-latest
-    needs: [frontends-typecheck]
+    needs:
+      - frontends-typecheck
+      - services-deploy-staging
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -219,7 +221,134 @@ jobs:
     name: "Front: Deploy to Staging"
     environment: Staging
     runs-on: ubuntu-latest
-    needs: [frontends-typecheck]
+    needs: 
+      - frontends-typecheck
+      - services-deploy-staging
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Pull Vercel Environment Information
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_FRONT }}
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Deploy Project to Vercel
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_FRONT }}
+        run: | 
+          vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }} \
+            -b EFG_API_BASEURL=${{ secrets.NEXT_PUBLIC_EFG_API_BASEURL }} \
+            -b EFG_API_FRONT_TOKEN=${{ secrets.VALID_FRONT_TOKEN }} \
+            -b ENV=Staging
+
+  services-deploy-prod:
+    name: "Services: Deploy to Production"
+    environment: Production
+    runs-on: ubuntu-latest
+    needs: [services-deploy-staging]
+    steps:
+      - name: Cancel previous workflows
+        uses: styfle/cancel-workflow-action@0.10.0
+        with:
+          access_token: ${{ github.token }}
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Create folder
+        uses: appleboy/ssh-action@v0.1.5
+        with:
+          host: ${{ secrets.SXX_HOST }}
+          username: ${{ secrets.SXX_USERNAME }}
+          port: ${{ secrets.SXX_PORT }}
+          key: ${{ secrets.SXX_KEY }}
+          script: mkdir -p ~/efg-prod
+
+      - name: Update Docker compose file
+        uses: appleboy/scp-action@v0.1.3
+        with:
+          host: ${{ secrets.SXX_HOST }}
+          username: ${{ secrets.SXX_USERNAME }}
+          port: ${{ secrets.SXX_PORT }}
+          key: ${{ secrets.SXX_KEY }}
+          source: ./docker-compose-prod.yml
+          target: /home/${{ secrets.SXX_USERNAME }}/efg-prod
+          strip_components: 1
+
+      - name: Recreate containers
+        uses: appleboy/ssh-action@v0.1.5
+        env:
+          REGISTRY: ${{ secrets.REGISTRY }}
+          REGISTRY_USER: ${{ secrets.REGISTRY_USER }}
+          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+          DISCORD_CLIENT_SECRET: ${{ secrets.DISCORD_CLIENT_SECRET }}
+          SECRET: ${{ secrets.SECRET }}
+          VALID_BOT_TOKEN: ${{ secrets.VALID_BOT_TOKEN }}
+          VALID_FRONT_TOKEN: ${{ secrets.VALID_FRONT_TOKEN }}
+          VALID_SCRAPER_TOKEN: ${{ secrets.VALID_SCRAPER_TOKEN }}
+          VERSION: sha-${{ github.sha }}
+        with:
+          host: ${{ secrets.SXX_HOST }}
+          username: ${{ secrets.SXX_USERNAME }}
+          port: ${{ secrets.SXX_PORT }}
+          key: ${{ secrets.SXX_KEY }}
+          script: |
+            cd ~/efg-staging \
+            && REGISTRY=${{ env.REGISTRY }} \
+              REGISTRY_USER=${{ env.REGISTRY_USER }} \
+              DISCORD_BOT_TOKEN=${{ env.DISCORD_BOT_TOKEN }} \
+              DISCORD_CLIENT_SECRET=${{ env.DISCORD_CLIENT_SECRET }} \
+              SECRET=${{ env.SECRET }} \
+              VALID_BOT_TOKEN=${{ env.VALID_BOT_TOKEN }} \
+              VALID_FRONT_TOKEN=${{ env.VALID_FRONT_TOKEN }} \
+              VALID_SCRAPER_TOKEN=${{ env.VALID_SCRAPER_TOKEN }} \
+              VERSION=${{ env.VERSION }} \
+                docker compose -f docker-compose-prod.yml -p efg-prod up -d --force-recreate
+
+  dash-deploy-prod:
+    name: "Dash: Deploy to Production"
+    environment: Production
+    runs-on: ubuntu-latest
+    needs:
+      - services-deploy-prod
+      - dash-deploy-staging
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Pull Vercel Environment Information
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_DASH }}
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Deploy Project to Vercel
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_DASH }}
+        run: |
+          vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }} \
+          -e NEXT_PUBLIC_EFG_API_BASEURL=${{ secrets.NEXT_PUBLIC_EFG_API_BASEURL }} \
+          -e NEXT_PUBLIC_EFG_API_WS_URL=${{ secrets.NEXT_PUBLIC_EFG_API_WS_URL }} \
+          -b NEXT_PUBLIC_EFG_API_BASEURL=${{ secrets.NEXT_PUBLIC_EFG_API_BASEURL }} \
+          -b NEXT_PUBLIC_EFG_API_WS_URL=${{ secrets.NEXT_PUBLIC_EFG_API_WS_URL }}
+
+  front-deploy-prod:
+    name: "Front: Deploy to Staging"
+    environment: Staging
+    runs-on: ubuntu-latest
+    needs:
+      - services-deploy-prod
+      - front-deploy-staging
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
