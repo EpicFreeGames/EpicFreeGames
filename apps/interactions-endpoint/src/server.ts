@@ -9,7 +9,7 @@ export const createServer = () => {
   const app = express();
   app.set("trust proxy", "loopback");
 
-  app.post("/interactions", verifyKeyMiddleware(configuration.DISCORD_PUBLIC_KEY), handleRequests);
+  app.post("/", verifyKeyMiddleware(configuration.DISCORD_PUBLIC_KEY), handleRequests);
 
   return app;
 };
