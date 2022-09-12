@@ -258,12 +258,15 @@ export const setThreadSubCommand = async (
 
   if (gameError || !freeGames.length) return;
 
-  await discordApi({
-    method: "POST",
-    path: `/webhooks/${webhook.id}/${webhook.token}?thread_id=${selectedThreadId}`,
-    body: {
-      ...(updatedServer.roleId ? { content: displayRole(updatedServer.roleId) } : {}),
-      embeds: [freeGames.map((g) => embeds.games.game(g, language, currency))],
-    } as RESTPostAPIWebhookWithTokenJSONBody,
-  });
+  await discordApi(
+    {
+      method: "POST",
+      path: `/webhooks/${webhook.id}/${webhook.token}?thread_id=${selectedThreadId}`,
+      body: {
+        ...(updatedServer.roleId ? { content: displayRole(updatedServer.roleId) } : {}),
+        embeds: [freeGames.map((g) => embeds.games.game(g, language, currency))],
+      } as RESTPostAPIWebhookWithTokenJSONBody,
+    },
+    { useProxy: false }
+  );
 };
