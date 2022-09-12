@@ -16,6 +16,7 @@ x-envs: &envs
   EFG_DISCORD_REST_PROXY_BASEURL: "http://staging-discord-rest-proxy:3000"
   LOGO_URL: "https://staging.epicfreegames.net/assets/images/logos/Staging.png"
   ENV: "Staging"
+  DATABASE_URL: "postgres://postgres:postgres@postgres:5432/efg-staging"
   VERSION: ${VERSION}
   DISCORD_BOT_TOKEN: ${DISCORD_BOT_TOKEN}
   DISCORD_CLIENT_SECRET: ${DISCORD_CLIENT_SECRET}
@@ -23,7 +24,6 @@ x-envs: &envs
   VALID_BOT_TOKEN: ${VALID_BOT_TOKEN}
   VALID_FRONT_TOKEN: ${VALID_FRONT_TOKEN}
   VALID_SCRAPER_TOKEN: ${VALID_SCRAPER_TOKEN}
-  DATABASE_URL: ${DATABASE_URL}
 
 services:
   staging-api:
