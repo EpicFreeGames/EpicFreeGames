@@ -32,6 +32,31 @@ jobs:
       - name: Build code
         run: yarn build
 
+  frontends-typecheck:
+    name: "Frontends typecheck"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel previous workflows
+        uses: styfle/cancel-workflow-action@0.10.0
+        with:
+          access_token: ${{ github.token }}
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node with Yarn cache
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: yarn
+          cache-dependency-path: ./yarn.lock
+
+      - name: Install deps
+        run: yarn --frozen-lockfile
+
+      - name: Typecheck
+        run: yarn f::typecheck
+
   services-docker-build-push:
     name: "Services build and push Docker images"
     needs: [build-code]
@@ -160,32 +185,6 @@ jobs:
               VALID_SCRAPER_TOKEN=${{ env.VALID_SCRAPER_TOKEN }} \
               VERSION=${{ env.VERSION }} \
                 docker compose -f docker-compose-staging.yml -p efg-staging up -d --force-recreate
-
-  frontends-typecheck:
-    name: "Frontends typecheck"
-    runs-on: ubuntu-latest
-    needs: [services-deploy-staging]
-    steps:
-      - name: Cancel previous workflows
-        uses: styfle/cancel-workflow-action@0.10.0
-        with:
-          access_token: ${{ github.token }}
-
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Setup Node with Yarn cache
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: yarn
-          cache-dependency-path: ./yarn.lock
-
-      - name: Install deps
-        run: yarn --frozen-lockfile
-
-      - name: Typecheck
-        run: yarn f::typecheck
 
   dash-deploy-staging:
     name: "Dash: Deploy to Staging"
