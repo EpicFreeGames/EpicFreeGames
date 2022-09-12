@@ -7,23 +7,33 @@ export default (
   server: IServer | undefined | null,
   language: ILanguage,
   currency: ICurrency
-): IEmbed => ({
-  title: t({ language, key: "settings" }),
-  color: embedUtils.colors.gray,
-  description:
-    embedUtils.bold(`${t({ language, key: "channel" })}/${t({ language, key: "thread" })}:\n`) +
-    showChannelOrThread(server, language) +
-    "\n\n" +
-    embedUtils.bold(`${t({ language, key: "role" })}:\n`) +
-    showRole(server, language) +
-    "\n\n" +
-    embedUtils.bold(`${t({ language, key: "language" })}:\n`) +
-    language.nativeName +
-    "\n\n" +
-    embedUtils.bold(`${t({ language, key: "currency" })}:\n`) +
-    currency.name +
-    embedUtils.footer(language),
-});
+): IEmbed => {
+  const embedLanguage = server?.language || language;
+  const embedCurrency = server?.currency || currency;
+
+  return {
+    title: t({ language: embedLanguage, key: "settings" }),
+    color: embedUtils.colors.gray,
+    description:
+      embedUtils.bold(
+        `${t({ language: embedLanguage, key: "channel" })}/${t({
+          language: embedLanguage,
+          key: "thread",
+        })}:\n`
+      ) +
+      showChannelOrThread(server, embedLanguage) +
+      "\n\n" +
+      embedUtils.bold(`${t({ language: embedLanguage, key: "role" })}:\n`) +
+      showRole(server, embedLanguage) +
+      "\n\n" +
+      embedUtils.bold(`${t({ language: embedLanguage, key: "language" })}:\n`) +
+      embedLanguage.nativeName +
+      "\n\n" +
+      embedUtils.bold(`${t({ language: embedLanguage, key: "currency" })}:\n`) +
+      embedCurrency.name +
+      embedUtils.footer(embedLanguage),
+  };
+};
 
 const showChannelOrThread = (server: IServer | undefined | null, language: ILanguage) => {
   if (server?.threadId) {

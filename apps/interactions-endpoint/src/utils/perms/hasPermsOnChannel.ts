@@ -45,11 +45,19 @@ export const hasPermsOnChannel = async (
     }),
   ]);
 
-  if (channelError)
+  if (channelError) {
+    // 50001 = Missing Access
+    if (channelError?.code === 50001)
+      return {
+        hasPerms: false,
+        details: setAllPerms(neededPerms, new Map(), false),
+      };
+
     return {
       error: true,
       cause: `Failed to get channel - Cause: ${objToStr(channelError)}`,
     };
+  }
 
   if (guildError)
     return {

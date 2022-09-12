@@ -81,7 +81,7 @@ export const setLanguageSubCommand = async (
 
   interactionEditReply(i.token, {
     embeds: [
-      embeds.successes.updatedSettings(language),
+      embeds.successes.updatedSettings(updatedServer.language),
       embeds.commands.settings(updatedServer, language, currency),
     ],
     flags: MessageFlags.Ephemeral,

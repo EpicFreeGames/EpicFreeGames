@@ -34,7 +34,7 @@ export const setCurrencySubCommand = async (
   },
   res: Response
 ) => {
-  interactionDeferReply(res);
+  interactionDeferReply(res, { ephemeral: true });
 
   const stringOption = interactionGetTypedOption<APIApplicationCommandInteractionDataStringOption>(
     i,
@@ -67,7 +67,7 @@ export const setCurrencySubCommand = async (
 
   const { error: serverUpdateError, data: updatedServer } = await efgApi<IServer>({
     method: "PUT",
-    path: `/servers/${i.guild_id}/language`,
+    path: `/servers/${i.guild_id}/currency`,
     body: { currencyCode: newCurrencyCode },
   });
 

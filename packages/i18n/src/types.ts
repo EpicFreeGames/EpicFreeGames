@@ -43,7 +43,7 @@ export type Variables<
   : never;
 
 export type ITranslations = {
-  support_click_here: "[Click here](<serverInvite>) to join our support server";
+  support_click_here: "If you need help, [click here](<serverInvite>) to join our support server";
 
   set_channel_first: "You have to set a channel first!";
 
@@ -51,6 +51,7 @@ export type ITranslations = {
   no_upcoming_games: "No upcoming free games at the moment";
 
   make_sure_perms: "Make sure I have these permissions on <channel>:";
+  bot_missing_perms: "I'm missing some permissions on <channel>!";
   user_missing_perms: "You don't have enough permissions to use this command";
   manage_guild_needed: "This command requires you to have the **manage server** permission";
   bot_admins_only: "This command requires you to be one of the bot admins";

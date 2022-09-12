@@ -19,7 +19,7 @@ export const setCurrencyAutoCompleteHandler = (
   const stringOption = interactionGetTypedOption<APIApplicationCommandInteractionDataStringOption>(
     i,
     ApplicationCommandOptionType.String,
-    "language"
+    "currency"
   );
   if (!stringOption) return;
 

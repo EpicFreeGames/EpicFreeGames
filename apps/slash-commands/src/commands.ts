@@ -62,6 +62,7 @@ export const commands: RESTPutAPIApplicationCommandsJSONBody = [
             description: "The language",
             type: ApplicationCommandOptionType.String,
             required: true,
+            autocomplete: true,
           },
         ],
       },
@@ -71,10 +72,11 @@ export const commands: RESTPutAPIApplicationCommandsJSONBody = [
         type: ApplicationCommandOptionType.Subcommand,
         options: [
           {
-            name: "language",
-            description: "The language",
+            name: "currency",
+            description: "The currency",
             type: ApplicationCommandOptionType.String,
             required: true,
+            autocomplete: true,
           },
         ],
       },

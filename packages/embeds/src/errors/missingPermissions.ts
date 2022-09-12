@@ -20,14 +20,14 @@ export default (channelId: bigint, language: ILanguage, details: Details): IEmbe
   title: "❌",
   color: embedUtils.colors.red,
   description:
-    t({ language, key: "make_sure_perms", vars: { channel: `<#${channelId}>` } }) +
+    t({ language, key: "bot_missing_perms", vars: { channel: `<#${channelId}>` } }) +
     "\n" +
     "```" +
     [...details]
       .map(
         ([permission, hasPermission]) =>
           `${permissionMap.get(permission)} ${
-            hasPermission ? "✅" : `❌ ${t({ language, key: "missing" })}`
+            hasPermission ? "✔️" : `❌ ${t({ language, key: "missing" })}`
           }`
       )
       .join("\n") +
