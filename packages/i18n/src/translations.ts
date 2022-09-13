@@ -23,9 +23,9 @@ import de_commands from "./t10s/de/commands.json" assert { type: "json" };
 import de_messages from "./t10s/de/messages.json" assert { type: "json" };
 import de_website from "./t10s/de/website.json" assert { type: "json" };
 
-import en_commands from "./t10s/en/commands.json" assert { type: "json" };
-import en_messages from "./t10s/en/messages.json" assert { type: "json" };
-import en_website from "./t10s/en/website.json" assert { type: "json" };
+import en_commands from "./en/commands.json" assert { type: "json" };
+import en_messages from "./en/messages.json" assert { type: "json" };
+import en_website from "./en/website.json" assert { type: "json" };
 
 import es_ES_commands from "./t10s/es-ES/commands.json" assert { type: "json" };
 import es_ES_messages from "./t10s/es-ES/messages.json" assert { type: "json" };

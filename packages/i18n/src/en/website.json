@@ -36,7 +36,7 @@
   "the_sentence": "Never miss free games again!",
 
   "what_is_bot": "What is <botName>?",
-  "what_is_bot_desc": "EpicFreeGames is a **customizable** and **easy-to-setup** Discord bot focused around notifying about **free games**. Apart from notifying, it also provides your server some cool [commands](<commandsLink>)!",
+  "what_is_bot_desc": "<botName> is a **customizable** and **easy-to-setup** Discord bot focused around notifying about **free games**. Apart from notifying, it also provides your server some cool [commands](<commandsLink>)!",
   "what_is_bot_desc_2": "To get started, set a channel using the `/set channel` command. The bot will use that channel when posting free games.",
 
   "customization": "Customization",
