@@ -11,13 +11,14 @@ import { ILanguage } from "@efg/types";
  *   },
  * }
  */
-export const languages = new Map<string, ILanguage>([
+export const languages = new Map<string, ILanguage & { websiteReady: boolean }>([
   [
     "af",
     {
       code: "af",
       englishName: "Afrikaans",
       nativeName: "Afrikaans",
+      websiteReady: false,
     },
   ],
   [
@@ -26,6 +27,7 @@ export const languages = new Map<string, ILanguage>([
       code: "ar",
       englishName: "Arabic",
       nativeName: "عربي",
+      websiteReady: false,
     },
   ],
   [
@@ -34,6 +36,7 @@ export const languages = new Map<string, ILanguage>([
       code: "az",
       englishName: "Azerbaijani",
       nativeName: "Azərbaycan",
+      websiteReady: false,
     },
   ],
   [
@@ -42,6 +45,7 @@ export const languages = new Map<string, ILanguage>([
       code: "bg",
       englishName: "Bulgarian",
       nativeName: "Български",
+      websiteReady: false,
     },
   ],
   [
@@ -50,6 +54,7 @@ export const languages = new Map<string, ILanguage>([
       code: "cs",
       englishName: "Czech",
       nativeName: "Čeština",
+      websiteReady: false,
     },
   ],
   [
@@ -58,6 +63,7 @@ export const languages = new Map<string, ILanguage>([
       code: "de",
       englishName: "German",
       nativeName: "Deutsch",
+      websiteReady: false,
     },
   ],
   [
@@ -66,6 +72,7 @@ export const languages = new Map<string, ILanguage>([
       code: "en",
       englishName: "English",
       nativeName: "English",
+      websiteReady: true,
     },
   ],
   [
@@ -74,6 +81,7 @@ export const languages = new Map<string, ILanguage>([
       code: "es-ES",
       englishName: "Spanish",
       nativeName: "Español",
+      websiteReady: true,
     },
   ],
   [
@@ -82,6 +90,7 @@ export const languages = new Map<string, ILanguage>([
       code: "fa",
       englishName: "Persian",
       nativeName: "فارسی",
+      websiteReady: false,
     },
   ],
   [
@@ -90,6 +99,7 @@ export const languages = new Map<string, ILanguage>([
       code: "fr",
       englishName: "French",
       nativeName: "Français",
+      websiteReady: false,
     },
   ],
   [
@@ -98,6 +108,7 @@ export const languages = new Map<string, ILanguage>([
       code: "he",
       englishName: "Hebrew",
       nativeName: "עברית",
+      websiteReady: false,
     },
   ],
   [
@@ -106,6 +117,7 @@ export const languages = new Map<string, ILanguage>([
       code: "hi",
       englishName: "Hindi",
       nativeName: "हिन्दी",
+      websiteReady: false,
     },
   ],
   [
@@ -114,6 +126,7 @@ export const languages = new Map<string, ILanguage>([
       code: "hu",
       englishName: "Hungarian",
       nativeName: "Magyar",
+      websiteReady: false,
     },
   ],
   [
@@ -122,6 +135,7 @@ export const languages = new Map<string, ILanguage>([
       code: "id",
       englishName: "Indonesian",
       nativeName: "Bahasa Indonesia",
+      websiteReady: false,
     },
   ],
   [
@@ -130,6 +144,7 @@ export const languages = new Map<string, ILanguage>([
       code: "it",
       englishName: "Italian",
       nativeName: "Italiano",
+      websiteReady: false,
     },
   ],
   [
@@ -138,6 +153,7 @@ export const languages = new Map<string, ILanguage>([
       code: "ja",
       englishName: "Japanese",
       nativeName: "日本語",
+      websiteReady: false,
     },
   ],
   [
@@ -146,6 +162,7 @@ export const languages = new Map<string, ILanguage>([
       code: "ka",
       englishName: "Georgian",
       nativeName: "ქართული",
+      websiteReady: false,
     },
   ],
   [
@@ -154,6 +171,7 @@ export const languages = new Map<string, ILanguage>([
       code: "ko",
       englishName: "Korean",
       nativeName: "한국어",
+      websiteReady: false,
     },
   ],
   [
@@ -162,6 +180,7 @@ export const languages = new Map<string, ILanguage>([
       code: "mk",
       englishName: "Macedonian",
       nativeName: "Македонски",
+      websiteReady: false,
     },
   ],
   [
@@ -170,6 +189,7 @@ export const languages = new Map<string, ILanguage>([
       code: "nl",
       englishName: "Dutch",
       nativeName: "Nederlands",
+      websiteReady: false,
     },
   ],
   [
@@ -178,15 +198,28 @@ export const languages = new Map<string, ILanguage>([
       code: "pl",
       englishName: "Polish",
       nativeName: "Polski",
+      websiteReady: true,
     },
   ],
   [
     "pt-BR",
-    { code: "pt-BR", englishName: "Portuguese (Brazil)", nativeName: "Português (Brasil)" },
+
+    {
+      code: "pt-BR",
+      englishName: "Portuguese (Brazil)",
+      nativeName: "Português (Brasil)",
+      websiteReady: false,
+    },
   ],
   [
     "pt-PT",
-    { code: "pt-PT", englishName: "Portuguese (Portugal)", nativeName: "Português (Portugal)" },
+
+    {
+      code: "pt-PT",
+      englishName: "Portuguese (Portugal)",
+      nativeName: "Português (Portugal)",
+      websiteReady: false,
+    },
   ],
   [
     "ro",
@@ -194,6 +227,7 @@ export const languages = new Map<string, ILanguage>([
       code: "ro",
       englishName: "Romanian",
       nativeName: "Română",
+      websiteReady: false,
     },
   ],
   [
@@ -202,6 +236,7 @@ export const languages = new Map<string, ILanguage>([
       code: "ru",
       englishName: "Russian",
       nativeName: "Русский",
+      websiteReady: false,
     },
   ],
   [
@@ -210,6 +245,7 @@ export const languages = new Map<string, ILanguage>([
       code: "sr",
       englishName: "Serbian",
       nativeName: "Српски",
+      websiteReady: false,
     },
   ],
   [
@@ -218,6 +254,7 @@ export const languages = new Map<string, ILanguage>([
       code: "sr-CS",
       englishName: "Serbian (Cyrillic)",
       nativeName: "Српски (Ћирилица)",
+      websiteReady: false,
     },
   ],
   [
@@ -226,6 +263,7 @@ export const languages = new Map<string, ILanguage>([
       code: "tr",
       englishName: "Turkish",
       nativeName: "Türkçe",
+      websiteReady: false,
     },
   ],
   [
@@ -234,6 +272,7 @@ export const languages = new Map<string, ILanguage>([
       code: "uk",
       englishName: "Ukrainian",
       nativeName: "Українська",
+      websiteReady: false,
     },
   ],
   [
@@ -242,6 +281,7 @@ export const languages = new Map<string, ILanguage>([
       code: "vi",
       englishName: "Vietnamese",
       nativeName: "Tiếng Việt",
+      websiteReady: true,
     },
   ],
   [
@@ -250,6 +290,7 @@ export const languages = new Map<string, ILanguage>([
       code: "zh-TW",
       englishName: "Chinese (Traditional)",
       nativeName: "繁體中文",
+      websiteReady: false,
     },
   ],
 ]);

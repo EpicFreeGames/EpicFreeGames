@@ -54,33 +54,35 @@ export const LanguageSelector = ({ languages }: Props) => {
               static
               className="absolute mt-1 max-h-80 w-full overflow-auto rounded-lg border-[1px] border-gray-600 bg-gray-800 p-[0.4rem] text-sm outline-none sm:text-base"
             >
-              {languages.map((language) => (
-                <Listbox.Option
-                  key={language.code}
-                  value={language.code}
-                  className={({ active }) =>
-                    `relative cursor-default select-none rounded-md py-2 pl-8 pr-4 ${
-                      active ? "bg-gray-700" : "bg-gray-800"
-                    }`
-                  }
-                >
-                  {({ selected }) => (
-                    <>
-                      <span
-                        className={`block truncate ${selected ? "font-medium" : "font-normal"}`}
-                      >
-                        {language.nativeName}
-                      </span>
-
-                      {selected ? (
-                        <span className="absolute inset-y-0 left-0 flex items-center pl-[0.55rem]">
-                          <Check size={13} aria-hidden="true" />
+              {languages
+                .filter((l) => l.websiteReady)
+                .map((language) => (
+                  <Listbox.Option
+                    key={language.code}
+                    value={language.code}
+                    className={({ active }) =>
+                      `relative cursor-default select-none rounded-md py-2 pl-8 pr-4 ${
+                        active ? "bg-gray-700" : "bg-gray-800"
+                      }`
+                    }
+                  >
+                    {({ selected }) => (
+                      <>
+                        <span
+                          className={`block truncate ${selected ? "font-medium" : "font-normal"}`}
+                        >
+                          {language.nativeName}
                         </span>
-                      ) : null}
-                    </>
-                  )}
-                </Listbox.Option>
-              ))}
+
+                        {selected ? (
+                          <span className="absolute inset-y-0 left-0 flex items-center pl-[0.55rem]">
+                            <Check size={13} aria-hidden="true" />
+                          </span>
+                        ) : null}
+                      </>
+                    )}
+                  </Listbox.Option>
+                ))}
             </Listbox.Options>
           </Transition>
         </div>

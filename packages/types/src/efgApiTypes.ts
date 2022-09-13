@@ -40,6 +40,7 @@ export type ILanguage = {
   englishName: string;
   nativeName: string;
   serverCount?: number;
+  websiteReady: boolean;
 };
 
 export type ICurrency = {
