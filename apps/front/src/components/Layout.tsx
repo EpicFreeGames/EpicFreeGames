@@ -100,10 +100,10 @@ const AltLanguages = ({ baseUrl, isHome, pathname }: AltLanguagesProps) => (
     <link key="en" rel="alternate" hrefLang="en" href={`${baseUrl}${isHome ? pathname : ""}`} />
 
     {/* pl */}
-    {/* <link key="pl" rel="alternate" hrefLang="pl" href={`${baseUrl}/pl${!isHome ? pathname : ""}`} /> */}
+    <link key="pl" rel="alternate" hrefLang="pl" href={`${baseUrl}/pl${!isHome ? pathname : ""}`} />
 
     {/* es and es-ES points to the same location */}
-    {/* <link
+    <link
       key="es"
       rel="alternate"
       hrefLang="es"
@@ -114,9 +114,9 @@ const AltLanguages = ({ baseUrl, isHome, pathname }: AltLanguagesProps) => (
       rel="alternate"
       hrefLang="es-ES"
       href={`${baseUrl}/es-ES${!isHome ? pathname : ""}`}
-    /> */}
+    />
 
     {/* vi */}
-    {/* <link key="vi" rel="alternate" hrefLang="vi" href={`${baseUrl}/vi${!isHome ? pathname : ""}`} /> */}
+    <link key="vi" rel="alternate" hrefLang="vi" href={`${baseUrl}/vi${!isHome ? pathname : ""}`} />
   </>
 );
