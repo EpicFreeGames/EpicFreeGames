@@ -1,10 +1,11 @@
+import { Flags } from "@efg/types";
+
 import { bots } from "../data/bots";
 import prisma from "../data/prisma";
 import { Middleware } from "../types";
 import { safeEqual } from "../utils/crypto";
 import { hasPermission } from "./authUtils";
 import { createAccessTokenCookie } from "./cookie";
-import { Flags } from "./flags";
 import { createAccessToken, verifyAccessJwt } from "./jwt/jwt";
 
 export const endpointAuth =

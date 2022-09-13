@@ -1,6 +1,5 @@
 import { configuration } from "@efg/configuration";
-
-import { Flags } from "../auth/flags";
+import { Flags } from "@efg/types";
 
 export const bots = [
   {

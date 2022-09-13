@@ -1,8 +1,9 @@
 import { IncomingMessage } from "http";
 
+import { Flags } from "@efg/types";
+
 import prisma from "../data/prisma";
 import { hasPermission } from "./authUtils";
-import { Flags } from "./flags";
 import { verifyAccessJwt } from "./jwt/jwt";
 
 export const socketAuth = async (req: IncomingMessage) => {

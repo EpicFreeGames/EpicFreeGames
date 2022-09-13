@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { MultiSelect } from "react-multi-select-component";
 
-import { Flag, Flags } from "~utils/api/flags";
+import { Flag, Flags } from "@efg/types";
 
 type Option = { label: string; value: Flags };
 

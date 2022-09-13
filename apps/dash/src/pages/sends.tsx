@@ -1,18 +1,17 @@
+import { Flags } from "@efg/types";
+
 import { Layout } from "~components/Layout/Layout";
 import { AddSending } from "~components/Sends/AddSending";
 import { Sending } from "~components/Sends/Sending";
 import { StatusCard } from "~components/StatusCard";
-import { Flags } from "~utils/api/flags";
 import { useSends } from "~utils/api/sends/getSends";
 import { Page } from "~utils/types";
 
-const SendsPage: Page = () => {
-  return (
-    <Layout title="Sends" titleButtons={[AddSending]}>
-      <Sends />
-    </Layout>
-  );
-};
+const SendsPage: Page = () => (
+  <Layout title="Sends" titleButtons={[AddSending]}>
+    <Sends />
+  </Layout>
+);
 
 const Sends = () => {
   const { data: sends, error, isLoading } = useSends();

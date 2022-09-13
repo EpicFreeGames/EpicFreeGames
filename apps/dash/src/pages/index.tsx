@@ -1,9 +1,10 @@
 import { ReactNode } from "react";
 
+import { Flags } from "@efg/types";
+
 import { Layout } from "~components/Layout/Layout";
 import { StatusCard } from "~components/StatusCard";
 import { useDashboardCounts } from "~utils/api/dashboard/counts";
-import { Flags } from "~utils/api/flags";
 import { Page } from "~utils/types";
 
 export const IndexPage: Page = () => (

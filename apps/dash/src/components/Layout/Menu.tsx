@@ -1,7 +1,8 @@
+import { Flags } from "@efg/types";
+
 import { DropdownMenu, DropdownMenuLinkItem } from "~components/DropdownMenu";
 import { useHasFlags } from "~hooks/useHasFlags";
 import { useUser } from "~hooks/useUser";
-import { Flags } from "~utils/api/flags";
 
 export const Menu = () => {
   const { user } = useUser();

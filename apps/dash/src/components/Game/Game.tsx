@@ -1,7 +1,8 @@
 import { ReactNode } from "react";
 
+import { Flags } from "@efg/types";
+
 import { useHasFlags } from "~hooks/useHasFlags";
-import { Flags } from "~utils/api/flags";
 import { useEditGameMutation } from "~utils/api/games/editGame";
 import { IGameWithStatus } from "~utils/api/types";
 

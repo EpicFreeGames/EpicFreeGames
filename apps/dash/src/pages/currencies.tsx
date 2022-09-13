@@ -1,15 +1,15 @@
+import { Flags } from "@efg/types";
+
 import { Currency } from "~components/Currency/Currency";
 import { Layout } from "~components/Layout/Layout";
 import { StatusCard } from "~components/StatusCard";
 import { useCurrencies } from "~utils/api/currencies/getCurrencies";
 
-export default function CurrenciesPage() {
-  return (
-    <Layout title="Currencies">
-      <Currencies />
-    </Layout>
-  );
-}
+const CurrenciesPage = () => (
+  <Layout title="Currencies">
+    <Currencies />
+  </Layout>
+);
 
 const Currencies = () => {
   const { data: currencies, isLoading, error } = useCurrencies();
@@ -27,3 +27,8 @@ const Currencies = () => {
     </div>
   );
 };
+
+CurrenciesPage.requireAuth = true;
+CurrenciesPage.requiredFlags = [Flags.GetCurrencies];
+
+export default CurrenciesPage;

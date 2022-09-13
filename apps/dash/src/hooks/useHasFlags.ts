@@ -1,4 +1,4 @@
-import { Flags } from "~utils/api/flags";
+import { Flags } from "@efg/types";
 
 export const useHasFlags = (flags: number, ...requiredFlags: Flags[]) =>
   hasPermission(flags, requiredFlags);

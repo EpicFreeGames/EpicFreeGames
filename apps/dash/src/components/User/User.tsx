@@ -1,7 +1,8 @@
+import { Flags } from "@efg/types";
+
 import { useCalcFlags } from "~hooks/useCalcFlags";
 import { useHasFlags } from "~hooks/useHasFlags";
 import { useUser } from "~hooks/useUser";
-import { Flags } from "~utils/api/flags";
 import { IUser } from "~utils/api/types";
 
 import { DeleteUser } from "./DeleteUser";
@@ -20,9 +21,7 @@ export const User = ({ user }: Props) => {
   const canEdit = useHasFlags(currentUserFlags, Flags.EditUsers);
   const canDelete = useHasFlags(currentUserFlags, Flags.DeleteUsers);
 
-  const canGetToken = useHasFlags(currentUserFlags, Flags.GetTokens);
-
-  const showButtons = canEdit || canDelete || canGetToken;
+  const showButtons = canEdit || canDelete;
 
   return (
     <div className="flex flex-col gap-3 rounded-md bg-gray-700 p-3">

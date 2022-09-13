@@ -1,4 +1,4 @@
-import { Flag, Flags } from "~utils/api/flags";
+import { Flag, Flags } from "@efg/types";
 
 import { hasFlag } from "./useHasFlags";
 

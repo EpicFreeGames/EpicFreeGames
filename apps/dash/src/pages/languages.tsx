@@ -1,15 +1,15 @@
+import { Flags } from "@efg/types";
+
 import { Language } from "~components/Language/Language";
 import { Layout } from "~components/Layout/Layout";
 import { StatusCard } from "~components/StatusCard";
 import { useLanguages } from "~utils/api/languages/getLanguages";
 
-export default function LanguagesPage() {
-  return (
-    <Layout title="Languages">
-      <Languages />
-    </Layout>
-  );
-}
+const LanguagesPage = () => (
+  <Layout title="Languages">
+    <Languages />
+  </Layout>
+);
 
 const Languages = () => {
   const { data: languages, isLoading, error } = useLanguages();
@@ -27,3 +27,8 @@ const Languages = () => {
     </div>
   );
 };
+
+LanguagesPage.requireAuth = true;
+LanguagesPage.requiredFlags = [Flags.GetLanguages];
+
+export default LanguagesPage;

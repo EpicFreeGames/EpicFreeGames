@@ -1,8 +1,8 @@
 import { v4 as uuidv4 } from "uuid";
 
 import { configuration } from "@efg/configuration";
+import { Flags } from "@efg/types";
 
-import { Flags } from "../auth/flags";
 import prisma from "./prisma";
 
 const allFlags = Object.values(Flags).reduce((a, b) => a | Number(b), 0);

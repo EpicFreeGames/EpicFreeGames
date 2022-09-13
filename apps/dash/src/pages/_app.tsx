@@ -2,9 +2,10 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { ReactNode } from "react";
 
+import { Flags } from "@efg/types";
+
 import { useHasFlags } from "~hooks/useHasFlags";
 import { useUser } from "~hooks/useUser";
-import { Flags } from "~utils/api/flags";
 import { MyAppProps } from "~utils/types";
 
 import "../styles/globals.css";

@@ -2,8 +2,9 @@ import { Router } from "express";
 import { v4 as uuidv4 } from "uuid";
 import { z } from "zod";
 
+import { Flags } from "@efg/types";
+
 import { endpointAuth } from "../auth/endpointAuth";
-import { Flags } from "../auth/flags";
 import prisma from "../data/prisma";
 import { prismaUpdateCatcher } from "../data/prismaUpdateCatcher";
 import { withValidation } from "../utils/withValidation";

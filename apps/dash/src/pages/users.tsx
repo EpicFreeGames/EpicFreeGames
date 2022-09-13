@@ -1,18 +1,17 @@
+import { Flags } from "@efg/types";
+
 import { Layout } from "~components/Layout/Layout";
 import { StatusCard } from "~components/StatusCard";
 import { AddUser } from "~components/User/AddUser";
 import { User } from "~components/User/User";
-import { Flags } from "~utils/api/flags";
 import { useUsers } from "~utils/api/users/getUsers";
 import { Page } from "~utils/types";
 
-const UsersPage: Page = () => {
-  return (
-    <Layout title="Users" titleButtons={[AddUser]}>
-      <Users />
-    </Layout>
-  );
-};
+const UsersPage: Page = () => (
+  <Layout title="Users" titleButtons={[AddUser]}>
+    <Users />
+  </Layout>
+);
 
 const Users = () => {
   const { data: users, error, isLoading } = useUsers();

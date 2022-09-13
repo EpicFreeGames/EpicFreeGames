@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import { AppProps } from "next/app";
 
-import { Flags } from "./api/flags";
+import { Flags } from "@efg/types";
 
 export type Page = NextPage & {
   requiredFlags?: Flags[];

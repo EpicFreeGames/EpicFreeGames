@@ -1,16 +1,17 @@
+import { Flags } from "@efg/types";
+
 import { AddGame } from "~components/Game/AddGame";
 import { Game } from "~components/Game/Game";
 import { Layout } from "~components/Layout/Layout";
 import { StatusCard } from "~components/StatusCard";
 import { useGames } from "~utils/api/games/getGames";
+import { Page } from "~utils/types";
 
-export default function GamesPage() {
-  return (
-    <Layout title="Games" titleButtons={[AddGame]}>
-      <Games />
-    </Layout>
-  );
-}
+const GamesPage: Page = () => (
+  <Layout title="Games" titleButtons={[AddGame]}>
+    <Games />
+  </Layout>
+);
 
 const Games = () => {
   const { data: games, isLoading, error } = useGames();
@@ -28,3 +29,8 @@ const Games = () => {
     </div>
   );
 };
+
+GamesPage.requireAuth = true;
+GamesPage.requiredFlags = [Flags.GetGames];
+
+export default GamesPage;

@@ -1,4 +1,4 @@
-import { Flags } from "./flags";
+import { Flags } from "@efg/types";
 
 export const hasPermission = (flags: number, requiredFlags: Flags[]) => {
   const totalRequired = requiredFlags?.reduce((acc, flag) => acc | flag, 0);

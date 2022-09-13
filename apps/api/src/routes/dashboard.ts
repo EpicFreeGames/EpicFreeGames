@@ -1,9 +1,9 @@
 import { Router } from "express";
 
 import { defaultCurrency, defaultLanguage } from "@efg/i18n";
+import { Flags } from "@efg/types";
 
 import { endpointAuth } from "../auth/endpointAuth";
-import { Flags } from "../auth/flags";
 import prisma from "../data/prisma";
 
 const router = Router();

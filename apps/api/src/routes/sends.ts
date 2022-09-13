@@ -2,9 +2,9 @@ import { Router } from "express";
 import { z } from "zod";
 
 import { configuration } from "@efg/configuration";
+import { Flags } from "@efg/types";
 
 import { endpointAuth } from "../auth/endpointAuth";
-import { Flags } from "../auth/flags";
 import prisma from "../data/prisma";
 import { prismaUpdateCatcher } from "../data/prismaUpdateCatcher";
 import { addLocaleInfoToServers } from "../utils/addLocaleInfoToServers";
