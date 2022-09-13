@@ -1,6 +1,6 @@
 # EpicFreeGames
 
-Check out the website for more information of the bot:  
+Check out the website for more information about the bot:  
 https://epicfreegames.net
 
 ## What is this?
