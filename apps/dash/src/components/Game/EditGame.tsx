@@ -18,7 +18,7 @@ export const EditGame = ({ game }: Props) => {
 
   const { mutateAsync } = useEditGameMutation();
 
-  const { prices, sendingId, id, status, ...rest } = game;
+  const { prices, sendingId, id, status, confirmed, ...rest } = game;
 
   const form = useForm({
     defaultValues: {
