@@ -144,6 +144,7 @@ export type ITranslations = {
   tutorial_changing_currency: "Changing the currency";
   tutorial_changing_currency_1: "You can change the currency the bot uses by using the `/set currency` command.";
 
+  faq: "FAQ";
   faq_title: "Frequently asked questions";
   faq_1_q: "Why is my language not supported?";
   faq_1_a: "Because we don't have a translator for your language. If you'd like to become one, please [join our support server](<serverInvite>) and let us know!";
@@ -171,6 +172,14 @@ export type ITranslations = {
   commands: "Commands";
   command: "Command";
   description: "Description";
+
+  home: "Home";
+
+  links: "Links";
+  contact_us: "Contact us";
+  privacy_policy: "Privacy policy";
+  terms_of_service: "Terms of service";
+  discord_server: "Discord server";
 
   commands_only_manage_server: "Only members with the *manage server* permission can use these commands:";
 };

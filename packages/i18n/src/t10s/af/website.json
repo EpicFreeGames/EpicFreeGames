@@ -14,6 +14,7 @@
   "tutorial_changing_language_1": "Jy kan die taal wat die bot gebruik verander deur die `/set language`-opdrag te gebruik.",
   "tutorial_changing_currency": "Verander die geldeenheid",
   "tutorial_changing_currency_1": "Jy kan die geldeenheid wat die bot gebruik verander deur die `/set currency`-opdrag te gebruik.",
+  "faq": "FAQ",
   "faq_title": "Gereelde vrae",
   "faq_1_q": "Hoekom word my taal nie ondersteun nie?",
   "faq_1_a": "Because we don't have a translator for your language. If you'd like to become one, please [join our support server](<serverInvite>) and let us know!",
@@ -33,5 +34,11 @@
   "commands": "Commands",
   "command": "Command",
   "description": "Description",
+  "home": "Home",
+  "links": "Links",
+  "contact_us": "Contact us",
+  "privacy_policy": "Privacy policy",
+  "terms_of_service": "Terms of service",
+  "discord_server": "Discord server",
   "commands_only_manage_server": "Only members with the *manage server* permission can use these commands:"
 }

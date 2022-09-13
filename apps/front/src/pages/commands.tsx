@@ -14,7 +14,12 @@ const CommandsPage = ({
   languages,
   env,
 }: InferGetStaticPropsType<typeof getStaticProps>) => (
-  <Layout languages={languages} title={t({ translations, key: "commands" })} env={env}>
+  <Layout
+    languages={languages}
+    title={t({ translations, key: "commands" })}
+    translations={translations}
+    env={env}
+  >
     <div className="flex flex-col gap-2">
       <h1 className="pb-4 text-2xl font-bold">{t({ translations, key: "commands" })}</h1>
 

@@ -9,7 +9,7 @@ import { mainGetStaticProps } from "~utils/mainGetStaticProps";
 export const getStaticProps = mainGetStaticProps;
 
 const Home = ({ translations, languages, env }: InferGetStaticPropsType<typeof getStaticProps>) => (
-  <Layout languages={languages} env={env}>
+  <Layout languages={languages} translations={translations} env={env}>
     <div className="flex flex-col items-start justify-start gap-[3rem] sm:gap-[6rem]">
       <div className="flex w-full flex-col items-start">
         <h1 className="pb-2 text-2xl font-bold">EpicFreeGames</h1>
@@ -63,16 +63,16 @@ const Home = ({ translations, languages, env }: InferGetStaticPropsType<typeof g
       </div>
 
       <div className="flex flex-col gap-3">
-        <h2 className="pb-2 text-xl font-bold">Links</h2>
+        <h2 className="pb-2 text-xl font-bold">{t({ key: "links", translations })}</h2>
 
         <div className="flex flex-col">
-          <Link href="mailto:hi@epicfreegames.net">Contact us</Link>
-          <Link href="/discord">Discord server</Link>
+          <Link href="mailto:hi@epicfreegames.net">{t({ key: "contact_us", translations })}</Link>
+          <Link href="/discord">{t({ key: "discord_server", translations })}</Link>
         </div>
 
         <div className="flex flex-col">
-          <Link href="/privacy-policy">Privacy policy</Link>
-          <Link href="/terms-of-service">Terms of service</Link>
+          <Link href="/privacy-policy">{t({ key: "privacy_policy", translations })}</Link>
+          <Link href="/terms-of-service">{t({ key: "terms_of_service", translations })}</Link>
         </div>
       </div>
     </div>

@@ -2,12 +2,22 @@ import { InferGetStaticPropsType } from "next";
 
 import { Layout } from "~components/Layout";
 import { TermsMarkdown } from "~components/Markdown";
+import { t } from "~i18n/translate";
 import { mainGetStaticProps } from "~utils/mainGetStaticProps";
 
 export const getStaticProps = mainGetStaticProps;
 
-const PrivacyPolicyPage = ({ env, languages }: InferGetStaticPropsType<typeof getStaticProps>) => (
-  <Layout languages={languages} title="Privacy policy" noTranslations env={env}>
+const PrivacyPolicyPage = ({
+  env,
+  languages,
+  translations,
+}: InferGetStaticPropsType<typeof getStaticProps>) => (
+  <Layout
+    languages={languages}
+    title={t({ key: "privacy_policy", translations })}
+    translations={translations}
+    env={env}
+  >
     <TermsMarkdown>{`
 # Privacy Policy
 Last updated: August 30, 2022  

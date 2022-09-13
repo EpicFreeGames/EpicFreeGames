@@ -10,7 +10,7 @@ import { NavBar } from "./NavBar";
 type Props = {
   title?: string;
   children: ReactNode;
-  noTranslations?: boolean;
+  translations: Record<string, string>;
   languages: ILanguage[];
   env: "Staging" | "Production" | "Development";
 };
@@ -18,7 +18,7 @@ type Props = {
 const desc =
   "A customizable and easy-to-setup Discord bot focused around notifying about free games. Apart from notifying, it also provides your server some cool commands!";
 
-export const Layout = ({ title, children, noTranslations, languages, env }: Props) => {
+export const Layout = ({ title, children, translations, languages, env }: Props) => {
   const { pathname } = useRouter();
   const isHome = pathname === "/";
 
@@ -81,7 +81,7 @@ export const Layout = ({ title, children, noTranslations, languages, env }: Prop
         data-domain={baseUrl.replace("https://", "")}
       ></Script>
 
-      <NavBar noTranslations={noTranslations} languages={languages} />
+      <NavBar translations={translations} languages={languages} />
 
       <main className="mx-auto mt-8 max-w-screen-sm px-3 sm:mt-16">{children}</main>
     </>
@@ -100,10 +100,10 @@ const AltLanguages = ({ baseUrl, isHome, pathname }: AltLanguagesProps) => (
     <link key="en" rel="alternate" hrefLang="en" href={`${baseUrl}${isHome ? pathname : ""}`} />
 
     {/* pl */}
-    <link key="pl" rel="alternate" hrefLang="pl" href={`${baseUrl}/pl${!isHome ? pathname : ""}`} />
+    {/* <link key="pl" rel="alternate" hrefLang="pl" href={`${baseUrl}/pl${!isHome ? pathname : ""}`} /> */}
 
     {/* es and es-ES points to the same location */}
-    <link
+    {/* <link
       key="es"
       rel="alternate"
       hrefLang="es"
@@ -114,9 +114,9 @@ const AltLanguages = ({ baseUrl, isHome, pathname }: AltLanguagesProps) => (
       rel="alternate"
       hrefLang="es-ES"
       href={`${baseUrl}/es-ES${!isHome ? pathname : ""}`}
-    />
+    /> */}
 
     {/* vi */}
-    <link key="vi" rel="alternate" hrefLang="vi" href={`${baseUrl}/vi${!isHome ? pathname : ""}`} />
+    {/* <link key="vi" rel="alternate" hrefLang="vi" href={`${baseUrl}/vi${!isHome ? pathname : ""}`} /> */}
   </>
 );

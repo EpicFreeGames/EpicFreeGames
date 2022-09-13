@@ -2,12 +2,22 @@ import { InferGetStaticPropsType } from "next";
 
 import { Layout } from "~components/Layout";
 import { TermsMarkdown } from "~components/Markdown";
+import { t } from "~i18n/translate";
 import { mainGetStaticProps } from "~utils/mainGetStaticProps";
 
 export const getStaticProps = mainGetStaticProps;
 
-const TermsOfServicePage = ({ env, languages }: InferGetStaticPropsType<typeof getStaticProps>) => (
-  <Layout languages={languages} title="Terms of service" noTranslations env={env}>
+const TermsOfServicePage = ({
+  env,
+  languages,
+  translations,
+}: InferGetStaticPropsType<typeof getStaticProps>) => (
+  <Layout
+    languages={languages}
+    title={t({ key: "terms_of_service", translations })}
+    translations={translations}
+    env={env}
+  >
     <TermsMarkdown>
       {`
 # Terms of service

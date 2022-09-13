@@ -14,6 +14,7 @@
   "tutorial_changing_language_1": "Bạn có thể thay đổi ngôn ngữ mà bot sử dụng bằng cách sử dụng lệnh `/set language`.",
   "tutorial_changing_currency": "Thay đổi tiền tệ",
   "tutorial_changing_currency_1": "Bạn có thể thay đổi đơn vị tiền tệ mà bot sử dụng bằng cách sử dụng lệnh `/set currency`.",
+  "faq": "FAQ",
   "faq_title": "Câu hỏi thường gặp",
   "faq_1_q": "Tại sao ngôn ngữ của tôi không được hỗ trợ?",
   "faq_1_a": "Bởi vì chúng tôi không có người dịch cho ngôn ngữ của bạn. Nếu bạn muốn, vui lòng [tham gia máy chủ hỗ trợ của chúng tôi](<serverInvite>) và cho chúng tôi biết!",
@@ -33,5 +34,11 @@
   "commands": "Danh sách lệnh",
   "command": "Lệnh",
   "description": "Miêu tả",
+  "home": "Home",
+  "links": "Links",
+  "contact_us": "Contact us",
+  "privacy_policy": "Privacy policy",
+  "terms_of_service": "Terms of service",
+  "discord_server": "Discord server",
   "commands_only_manage_server": "Chỉ các thành viên có quyền *quản lý máy chủ* mới có thể sử dụng các lệnh sau:"
 }

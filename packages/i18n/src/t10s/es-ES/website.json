@@ -14,6 +14,7 @@
   "tutorial_changing_language_1": "Puedes cambiar el idioma que el bot utiliza usando el comando `/set language`.",
   "tutorial_changing_currency": "Cambiar la moneda",
   "tutorial_changing_currency_1": "Puedes cambiar la moneda que el bot utiliza usando el comando `/set currency`.",
+  "faq": "FAQ",
   "faq_title": "Preguntas frecuentes",
   "faq_1_q": "¿Por qué mi idioma no está soportado?",
   "faq_1_a": "Porque no tenemos un traductor para tu idioma. Si quisieras convertirte en uno, ¡por favor [únete a nuestro servidor de soporte](<serverInvite>) y háznoslo saber!",
@@ -33,5 +34,11 @@
   "commands": "Comandos",
   "command": "Comando",
   "description": "Descripción",
+  "home": "Home",
+  "links": "Links",
+  "contact_us": "Contact us",
+  "privacy_policy": "Privacy policy",
+  "terms_of_service": "Terms of service",
+  "discord_server": "Discord server",
   "commands_only_manage_server": "Solo los miembros con el permiso *administrar servidor* pueden usar estos comandos:"
 }

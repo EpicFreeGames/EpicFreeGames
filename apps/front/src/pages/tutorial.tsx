@@ -12,7 +12,12 @@ const TutorialPage = ({
   languages,
   env,
 }: InferGetStaticPropsType<typeof getStaticProps>) => (
-  <Layout languages={languages} title={t({ translations, key: "tutorial" })} env={env}>
+  <Layout
+    languages={languages}
+    title={t({ translations, key: "tutorial" })}
+    translations={translations}
+    env={env}
+  >
     <h1 className="text-2xl font-bold">{t({ translations, key: "tutorial" })}</h1>
 
     <div className="flex flex-col gap-[3rem] pt-6 text-sm sm:gap-[6rem] sm:text-base">

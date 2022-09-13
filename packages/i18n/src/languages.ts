@@ -81,7 +81,7 @@ export const languages = new Map<string, ILanguage & { websiteReady: boolean }>(
       code: "es-ES",
       englishName: "Spanish",
       nativeName: "Español",
-      websiteReady: true,
+      websiteReady: false,
     },
   ],
   [
@@ -198,7 +198,7 @@ export const languages = new Map<string, ILanguage & { websiteReady: boolean }>(
       code: "pl",
       englishName: "Polish",
       nativeName: "Polski",
-      websiteReady: true,
+      websiteReady: false,
     },
   ],
   [
@@ -281,7 +281,7 @@ export const languages = new Map<string, ILanguage & { websiteReady: boolean }>(
       code: "vi",
       englishName: "Vietnamese",
       nativeName: "Tiếng Việt",
-      websiteReady: true,
+      websiteReady: false,
     },
   ],
   [
