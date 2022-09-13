@@ -1,9 +1,9 @@
 {
-  "cmd_desc_set_currency": "Pick a currency for the games' prices on this server",
+  "cmd_desc_set_currency": "このサーバで使用するゲームの通貨を選択してください",
   "cmd_desc_set_thread": "スレッドを選択してください。新しい無料ゲームを投稿します",
   "cmd_desc_set_channel": "チャンネルを選択してください。新しい無料ゲームを投稿します",
-  "cmd_desc_set_role": "Pick a role I'll ping when a new game comes free",
-  "cmd_desc_set_language": "Pick a language for my messages on this server",
+  "cmd_desc_set_role": "ロールを設定してください、新しい無料ゲームが公開されたらメンションします",
+  "cmd_desc_set_language": "メッセージの言語を選択してください。",
   "cmd_desc_remove_channel": "設定したチャネル(またはスレッド)を削除します",
   "cmd_desc_remove_role": "設定されたロールを削除します",
   "cmd_desc_invite": "招待リンクを取得する",
@@ -13,5 +13,5 @@
   "cmd_desc_free": "現在の無料ゲームを見る",
   "cmd_desc_settings": "設定を見る",
   "cmd_desc_vote": "私に投票してください",
-  "cmd_desc_test": "Sends a test message to the set channel and pings the set role"
+  "cmd_desc_test": "設定されたチャンネルにメッセージを送信し、設定されたロールをメンションします"
 }

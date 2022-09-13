@@ -25,7 +25,7 @@
   "faq_4_a": "Proszę [dołączyć do naszego serwera wsparcia](<serverInvite>) a my Ci pomożemy!",
   "the_sentence": "Nigdy więcej nie przegap darmowych gier!",
   "what_is_bot": "Czym jest <botName>?",
-  "what_is_bot_desc": "EpicFreeGames to **konfigurowalny** i **łatwy do skonfigurowania** bot Discorda który skupia się na powiadamianiu o **darmowych grach**. Oprócz powiadomień, zapewnia on również Twojemu serwererowi kilka fajnych [commands](<commandsLink>)!",
+  "what_is_bot_desc": "<botName> to **konfigurowalny** i **łatwy do skonfigurowania** bot Discorda który skupia się na powiadamianiu o **darmowych grach**. Oprócz powiadomień, zapewnia on również Twojemu serwererowi kilka fajnych [polecenia](<commandsLink>)!",
   "what_is_bot_desc_2": "Aby rozpocząć, ustaw kanał używając komendy `/set channel`. Bot będzie używać tego kanału podczas publikowania darmowych gier.",
   "customization": "Dostosowywanie",
   "customization_desc": "Możesz dostosować bota do swoich potrzeb. **Ustaw rolę** do pingowania w powiadomieniach, zmień **język bota** lub nawet **walutę** oryginalnych cen! Sprawdź [commands](<commandsLink>), aby dowiedzieć się jak to zrobić!",

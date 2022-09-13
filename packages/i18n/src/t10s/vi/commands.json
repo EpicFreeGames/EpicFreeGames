@@ -1,9 +1,9 @@
 {
-  "cmd_desc_set_currency": "Pick a currency for the games' prices on this server",
+  "cmd_desc_set_currency": "Chọn đơn vị tiền tệ cho giá trò chơi trên máy chủ này",
   "cmd_desc_set_thread": "Chọn một chủ đề, tôi sẽ đăng các trò chơi miễn phí mới trên đó",
   "cmd_desc_set_channel": "Chọn một kênh, tôi sẽ đăng các trò chơi miễn phí mới trên đó",
-  "cmd_desc_set_role": "Pick a role I'll ping when a new game comes free",
-  "cmd_desc_set_language": "Pick a language for my messages on this server",
+  "cmd_desc_set_role": "Chọn một vai trò mà tôi sẽ ping khi có trò chơi mới miễn phí",
+  "cmd_desc_set_language": "Chọn ngôn ngữ cho tin nhắn của tôi trên máy chủ này",
   "cmd_desc_remove_channel": "Xóa kênh đã đặt (hoặc chủ đề)",
   "cmd_desc_remove_role": "Xóa vai trò đã đặt",
   "cmd_desc_invite": "Nhận liên kết mời của tôi",
@@ -13,5 +13,5 @@
   "cmd_desc_free": "Xem các trò chơi miễn phí hiện tại",
   "cmd_desc_settings": "Xem cài đặt",
   "cmd_desc_vote": "Bỏ phiếu cho tôi",
-  "cmd_desc_test": "Sends a test message to the set channel and pings the set role"
+  "cmd_desc_test": "Gửi tin nhắn kiểm tra đến kênh đã đặt và ping vai trò đã đặt"
 }

@@ -34,7 +34,7 @@ const Home = ({ translations, languages, env }: InferGetStaticPropsType<typeof g
             {t({
               translations,
               key: "what_is_bot_desc",
-              vars: { commandsLink: "/commands" },
+              vars: { botName: "EpicFreeGames", commandsLink: "/commands" },
             })}
           </Markdown>
 

@@ -1,9 +1,9 @@
 {
-  "cmd_desc_set_currency": "Pick a currency for the games' prices on this server",
+  "cmd_desc_set_currency": "Kies 'n geldeenheid vir die speletjies se pryse op hierdie bediener",
   "cmd_desc_set_thread": "Kies 'n draad waarop ek nuwe gratis speletjies sal plaas",
   "cmd_desc_set_channel": "Kies 'n kanaal waarop ek nuwe gratis speletjies sal plaas",
-  "cmd_desc_set_role": "Pick a role I'll ping when a new game comes free",
-  "cmd_desc_set_language": "Pick a language for my messages on this server",
+  "cmd_desc_set_role": "Kies 'n rol wat ek sal ping wanneer 'n nuwe speletjie gratis kom",
+  "cmd_desc_set_language": "Kies 'n taal vir my boodskappe op hierdie bediener",
   "cmd_desc_remove_channel": "Verwyder die vasgestelde kanaal (of draad)",
   "cmd_desc_remove_role": "Verwyder die vasgestelde rol",
   "cmd_desc_invite": "Kry my uitnodiging skakel",
@@ -13,5 +13,5 @@
   "cmd_desc_free": "Sien die huidige gratis speletjies",
   "cmd_desc_settings": "Sien die instellings",
   "cmd_desc_vote": "Stem vir my",
-  "cmd_desc_test": "Sends a test message to the set channel and pings the set role"
+  "cmd_desc_test": "Stuur 'n toetsboodskap na die vasgestelde kanaal en ping die vasgestelde rol"
 }
