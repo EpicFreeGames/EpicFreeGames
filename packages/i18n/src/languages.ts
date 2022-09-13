@@ -244,6 +244,14 @@ export const languages = new Map<string, ILanguage>([
       nativeName: "Tiếng Việt",
     },
   ],
+  [
+    "zh-TW",
+    {
+      code: "zh-TW",
+      englishName: "Chinese (Traditional)",
+      nativeName: "繁體中文",
+    },
+  ],
 ]);
 
 export const defaultLanguage: ILanguage = languages.get("en")!;

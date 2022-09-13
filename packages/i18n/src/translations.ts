@@ -119,6 +119,10 @@ import vi_messages from "./t10s/vi/messages.json" assert { type: "json" };
 import vi_commands from "./t10s/vi/commands.json" assert { type: "json" };
 import vi_website from "./t10s/vi/website.json" assert { type: "json" };
 
+import zh_TW_messages from "./t10s/zh-TW/messages.json" assert { type: "json" };
+import zh_TW_commands from "./t10s/zh-TW/commands.json" assert { type: "json" };
+import zh_TW_website from "./t10s/zh-TW/website.json" assert { type: "json" };
+
 export const translations: Map<string, Record<string, string>> = new Map([
   ["af", { ...af_commands, ...af_website, ...af_messages }],
   ["ar", { ...ar_commands, ...ar_website, ...ar_messages }],
@@ -154,6 +158,7 @@ export const translations: Map<string, Record<string, string>> = new Map([
   ["tr", { ...tr_commands, ...tr_website, ...tr_messages }],
   ["uk", { ...uk_commands, ...uk_website, ...uk_messages }],
   ["vi", { ...vi_messages, ...vi_commands, ...vi_website }],
+  ["zh-TW", { ...zh_TW_messages, ...zh_TW_commands, ...zh_TW_website }],
 ]);
 
 export const getDefaultTransations = () => translations.get(defaultLanguage.code)!;
