@@ -244,7 +244,7 @@ export const setThreadSubCommand = async (
 
   await interactionEditReply(i.token, {
     embeds: [
-      embeds.successes.channelSet(threadParentId, language),
+      embeds.successes.channelSet(selectedThreadId, language),
       embeds.commands.settings(updatedServer, language, currency),
     ],
     flags: MessageFlags.Ephemeral,
