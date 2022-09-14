@@ -41,7 +41,7 @@ const TutorialPage = ({
             {t({
               translations,
               key: "having_problems_desc",
-              vars: { faqLink: "/faq", serverInvite: "/support" },
+              vars: { faqLink: "/faq", serverInvite: "/discord" },
             })}
           </Markdown>
         </div>

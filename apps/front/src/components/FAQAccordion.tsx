@@ -72,7 +72,7 @@ export const FAQAccordion = ({ translations }: { translations: Record<string, st
         change={change}
       >
         <Markdown>
-          {`${t({ translations, key: "faq_1_a", vars: { serverInvite: "/invite" } })}`}
+          {`${t({ translations, key: "faq_1_a", vars: { serverInvite: "/discord" } })}`}
         </Markdown>
       </AccordionItem>
 
@@ -87,7 +87,7 @@ export const FAQAccordion = ({ translations }: { translations: Record<string, st
         change={change}
       >
         <Markdown>
-          {`${t({ translations, key: "faq_2_a", vars: { serverInvite: "/invite" } })}`}
+          {`${t({ translations, key: "faq_2_a", vars: { serverInvite: "/discord" } })}`}
         </Markdown>
       </AccordionItem>
 
