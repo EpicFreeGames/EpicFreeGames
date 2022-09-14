@@ -16,7 +16,7 @@ export const testCommand: SlashCommand = {
         res
       );
 
-    await discordApi(
+    discordApi(
       {
         method: "POST",
         path: `/webhooks/${server.webhookId}/${server.webhookToken}`,
@@ -26,6 +26,8 @@ export const testCommand: SlashCommand = {
         } as RESTPostAPIWebhookWithTokenJSONBody,
       },
       { useProxy: false }
-    );
+    )
+      .then(() => interactionReply({ content: "✅", flags: MessageFlags.Ephemeral }, res))
+      .catch((err) => interactionReply({ content: "❌", flags: MessageFlags.Ephemeral }, res));
   },
 };
