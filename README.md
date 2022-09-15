@@ -25,3 +25,8 @@ If you have any problems, suggestions or questions about the bot, feel free to [
 
 Production bot: https://epicfreegames.net/invite  
 Staging bot: https://epicfreegames.net/invite-staging
+
+## Contributors
+
+- [@veeti-k](https://github.com/veeti-k) - Took over the project in late 2021
+- [@NoahEmmenegger](https://github.com/NoahEmmenegger) - Started the project in 2020
