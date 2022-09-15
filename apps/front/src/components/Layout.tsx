@@ -120,5 +120,19 @@ const AltLanguages = ({ baseUrl, isHome, pathname }: AltLanguagesProps) => (
 
     {/* vi */}
     <link key="vi" rel="alternate" hrefLang="vi" href={`${baseUrl}/vi${!isHome ? pathname : ""}`} />
+
+    {/* zh and zh-TW points to the same location */}
+    <link
+      key="zh"
+      rel="alternate"
+      hrefLang="zh"
+      href={`${baseUrl}/zh-TW${!isHome ? pathname : ""}`}
+    />
+    <link
+      key="zh-TW"
+      rel="alternate"
+      hrefLang="zh-TW"
+      href={`${baseUrl}/zh-TW${!isHome ? pathname : ""}`}
+    />
   </>
 );

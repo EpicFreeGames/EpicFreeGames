@@ -290,7 +290,7 @@ export const languages = new Map<string, ILanguage & { websiteReady: boolean }>(
       code: "zh-TW",
       englishName: "Chinese (Traditional)",
       nativeName: "繁體中文",
-      websiteReady: false,
+      websiteReady: true,
     },
   ],
 ]);
