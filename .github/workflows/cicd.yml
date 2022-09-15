@@ -57,8 +57,8 @@ jobs:
       - name: Typecheck
         run: yarn f::typecheck
 
-  services-docker-build-push:
-    name: "Services build and push Docker images"
+  bot-api-docker-build-push:
+    name: "Bot & Api: build and push Docker images"
     needs: [build-code]
     runs-on: ubuntu-latest
     strategy: 
@@ -122,11 +122,11 @@ jobs:
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
 
-  services-deploy-staging:
-    name: "Services: Deploy to Staging"
+  bot-api-deploy-staging:
+    name: "Bot & Api: Deploy to Staging"
     environment: Staging
     runs-on: ubuntu-latest
-    needs: [services-docker-build-push]
+    needs: [bot-api-docker-build-push]
     steps:
       - name: Cancel previous workflows
         uses: styfle/cancel-workflow-action@0.10.0
@@ -192,7 +192,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: 
       - frontends-typecheck
-      - services-deploy-staging
+      - bot-api-deploy-staging
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -223,7 +223,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: 
       - frontends-typecheck
-      - services-deploy-staging
+      - bot-api-deploy-staging
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -247,12 +247,12 @@ jobs:
             -b EFG_API_FRONT_TOKEN=${{ secrets.VALID_FRONT_TOKEN }} \
             -b ENV=Staging
 
-  services-deploy-prod:
-    name: "Services: Deploy to Production"
+  bot-api-deploy-prod:
+    name: "Bot & Api: Deploy to Production"
     environment: Production
     runs-on: ubuntu-latest
     needs: 
-      - services-deploy-staging
+      - bot-api-deploy-staging
       - front-deploy-staging
       - dash-deploy-staging
     steps:
@@ -319,7 +319,7 @@ jobs:
     name: "Dash: Deploy to Production"
     environment: Production
     runs-on: ubuntu-latest
-    needs: [services-deploy-prod]
+    needs: [bot-api-deploy-prod]
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -348,7 +348,7 @@ jobs:
     name: "Front: Deploy to Production"
     environment: Production
     runs-on: ubuntu-latest
-    needs: [services-deploy-prod]
+    needs: [bot-api-deploy-prod]
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
