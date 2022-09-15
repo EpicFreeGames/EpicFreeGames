@@ -4,8 +4,8 @@ import { ReactNode } from "react";
 
 import type { ILanguage } from "@efg/types";
 
+import { useMediaQuery } from "~hooks/useMediaQuery";
 import { t } from "~i18n/translate";
-import { useMediaQuery } from "~useMatchMedia";
 
 import { DropdownMenu, MenuLinkItem } from "./DropdownMenu";
 import { LanguageSelector } from "./LanguageSelector";
