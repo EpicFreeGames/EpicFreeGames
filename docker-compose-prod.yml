@@ -47,6 +47,7 @@ services:
     restart: always
     environment:
       <<: *envs
+      DEBUG: 1
     networks:
       - efg
 

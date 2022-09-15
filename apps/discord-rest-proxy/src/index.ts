@@ -1,4 +1,5 @@
-import Bottleneck from "bottleneck";
+import axios from "axios";
+import limitedAxios from "axios-rate-limit";
 import express from "express";
 
 import { configuration } from "@efg/configuration";
@@ -8,10 +9,7 @@ import { logger } from "@efg/logger";
   const app = express();
   app.use(express.json());
 
-  const limiter = new Bottleneck({
-    minTime: 30,
-    maxConcurrent: 2,
-  });
+  const thing = limitedAxios(axios.create(), { maxRequests: 15, perMilliseconds: 500 });
 
   app.all("/*", async (req, res) => {
     const { path, method, body } = req;
@@ -21,22 +19,23 @@ import { logger } from "@efg/logger";
 
     logger.debug(`Requesting ${method} ${proxyTo}`);
 
-    const discordResponse = await limiter.schedule(() =>
-      fetch(proxyTo, {
-        method,
-        headers: {
-          Authorization: `Bot ${configuration.DISCORD_BOT_TOKEN}`,
-          "Content-Type": "application/json",
-        },
-        ...(bodyHasProps && { body: JSON.stringify(body) }),
-      })
-    );
+    const discordResponse = await thing({
+      method,
+      url: proxyTo,
+      headers: {
+        Authorization: `Bot ${configuration.DISCORD_BOT_TOKEN}`,
+        "Content-Type": "application/json",
+      },
+      ...(bodyHasProps && { data: body }),
+    }).catch((err) => err.response);
 
-    const responseBody = await discordResponse.json().catch(() => undefined);
+    if (!discordResponse || discordResponse.status !== 200) console.log(discordResponse);
 
     logger.debug(`Sending response from ${proxyTo} with status ${discordResponse.status}`);
 
-    res.status(discordResponse.status || 500).json(responseBody);
+    discordResponse.data
+      ? res.status(discordResponse.status).json(discordResponse.data)
+      : res.status(discordResponse.status).end();
   });
 
   const port = process.env.PORT || 3000;
