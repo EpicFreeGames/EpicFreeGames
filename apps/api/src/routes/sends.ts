@@ -45,7 +45,7 @@ router.get(
           channelId: { not: null },
           sendingLogs: { none: { sendingId } },
         },
-        take: 10,
+        take: 10000,
         ...(after
           ? {
               cursor: {
