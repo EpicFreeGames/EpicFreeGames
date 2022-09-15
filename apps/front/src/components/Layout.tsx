@@ -34,11 +34,13 @@ export const Layout = ({ title, children, translations, languages, env }: Props)
 
         <meta name="application-name" content={botName} id="app-name" />
 
+        <meta name="description" content={desc} key="description" />
+
+        <link rel="icon" type="image/png" href={`/assets/images/logos/${env}.png`} />
+
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:title" content={botName} />
         <meta name="twitter:description" content={desc} />
-
-        <meta name="description" content={desc} key="description" />
 
         <meta property="og:title" content={botName} key="og:title" />
         <meta property="og:description" content={desc} key="og:description" />
