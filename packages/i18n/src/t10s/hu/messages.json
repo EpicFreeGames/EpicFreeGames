@@ -1,5 +1,5 @@
 {
-  "support_click_here": "If you need help, [click here](<serverInvite>) to join our support server",
+  "support_click_here": "Ha segítségre van szükséged, [kattints ide](<serverInvite>), hogy csatlakozz a támogatói szerverünkhöz",
   "set_channel_first": "Először be kell állítanod egy csatornát!",
   "no_free_games": "Jelenleg nincsenek ingyenes játékok",
   "no_upcoming_games": "Jelenleg nincsenek közelgő játékok",
@@ -18,8 +18,8 @@
   "role_not_set": "Nincs beállítva, de beállítható a `/set role` paranccsal",
   "too_many_webhooks": "Túl sok webhook",
   "ten_webhooks_only": "Egy csatornának legfeljebb 10 webhookja lehet. Kérlek, távolíts el egyet, és próbáld meg újra.",
-  "would_you_like_to_translate": "Would you like to help translating <botName>?",
-  "if_would_like_to_translate": "If so, please let us know on our [support server](<serverInvite>)!",
+  "would_you_like_to_translate": "Szeretnél segíteni az <botName> fordításában?",
+  "if_would_like_to_translate": "Ha igen, kérjük, jelezd nekünk a [támogatói szerverünkön](<serverInvite>)!",
   "having_problems": "Having problems? Let us know on our [support server](<serverInvite>) and we'll help you out!",
   "how_to_tutorial": "How to get automatically notified of free games? [Click here](<tutorialLink>) for a tutorial!",
   "looking_for_commands": "Looking for commands? [Click here](<commandsLink>) for my command list!",
@@ -37,7 +37,7 @@
   "currency": "Pénznem",
   "settings": "Beállítások",
   "help": "Segítség",
-  "missing": "Missing!",
+  "missing": "Hiányzik!",
   "thank_you": "Thank you!",
   "webhooks_notification": "Mostanában támogatom a webhookokat! Segítségükkel sokkal gyorsabban tudom elküldeni az értesítéseket. Szerver adminok kérlek, a `/set channel` (vagy `/set thread`) paranccsal tudjátok engedélyezni a webhookokon keresztüli értesítéseket."
 }

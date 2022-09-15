@@ -35,10 +35,10 @@
   "command": "Lệnh",
   "description": "Miêu tả",
   "home": "Home",
-  "links": "Links",
-  "contact_us": "Contact us",
-  "privacy_policy": "Privacy policy",
-  "terms_of_service": "Terms of service",
-  "discord_server": "Discord server",
+  "links": "Liên kết",
+  "contact_us": "Liên hệ với chúng tôi",
+  "privacy_policy": "Chính sách bảo mật",
+  "terms_of_service": "Điều khoản dịch vụ",
+  "discord_server": "Máy chủ Discord",
   "commands_only_manage_server": "Chỉ các thành viên có quyền *quản lý máy chủ* mới có thể sử dụng các lệnh sau:"
 }

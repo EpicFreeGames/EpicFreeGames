@@ -34,11 +34,11 @@
   "commands": "Polecenia",
   "command": "Polecenie",
   "description": "Opis",
-  "home": "Home",
-  "links": "Links",
-  "contact_us": "Contact us",
-  "privacy_policy": "Privacy policy",
-  "terms_of_service": "Terms of service",
-  "discord_server": "Discord server",
+  "home": "Strona główna",
+  "links": "Linki",
+  "contact_us": "Kontakt",
+  "privacy_policy": "Polityka prywatności",
+  "terms_of_service": "Warunki korzystania z usługi",
+  "discord_server": "Serwer Discord",
   "commands_only_manage_server": "Tylko członkowie z uprawnieniem *zarządzanie serwerem* mogą używać tych komend:"
 }
