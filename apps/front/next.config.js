@@ -5,6 +5,16 @@ const nextConfig = {
   output: "standalone",
   redirects: async () => [
     {
+      source: "/r/browser/p/c9e146fa85d74402a2989001508ecd16",
+      destination: "https://epicgames.com/p/spirit-of-the-north-f58a66",
+      permanent: false,
+    },
+    {
+      source: "/r/launcher/p/c9e146fa85d74402a2989001508ecd16",
+      destination: "com.epicgames.launcher://store/p/spirit-of-the-north-f58a66",
+      permanent: false,
+    },
+    {
       source: "/r/browser/:path*",
       destination: "https://epicgames.com/:path*",
       permanent: false,
