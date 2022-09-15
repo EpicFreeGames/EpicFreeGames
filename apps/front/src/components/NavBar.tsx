@@ -23,8 +23,8 @@ export const NavBar = ({ translations, languages }: Props) => {
   if (!isBrowser) return null;
 
   return (
-    <nav className="fixed inset-0 z-10 ">
-      <div className="mx-auto flex max-w-[680px] items-center justify-between gap-3 bg-gray-900/50 p-3 backdrop-blur-sm sm:p-5">
+    <nav className="sticky inset-0 z-10 bg-gray-900/50 backdrop-blur-sm">
+      <div className="mx-auto flex max-w-[680px] items-center justify-between gap-3 p-3 sm:p-5">
         {!mobile ? (
           <div className="flex gap-3">
             <Navlink href="/">{t({ key: "home", translations })}</Navlink>

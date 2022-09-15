@@ -85,7 +85,7 @@ export const Layout = ({ title, children, translations, languages, env }: Props)
 
       <NavBar translations={translations} languages={languages} />
 
-      <main className="mx-auto mt-[5rem] max-w-screen-sm px-3 sm:mt-[7rem]">{children}</main>
+      <main className="mx-auto mt-[3rem] max-w-screen-sm px-3 sm:mt-[5rem]">{children}</main>
     </>
   );
 };
