@@ -28,7 +28,9 @@ const AccordionItem = ({ title, children, value, currentValue, change }: Accordi
       }`}
     >
       <div className="flex items-center justify-between gap-2">
-        <Collapsible.Trigger className="cursor-default text-left">{title}</Collapsible.Trigger>
+        <Collapsible.Trigger className="focus cursor-default rounded-md text-left">
+          {title}
+        </Collapsible.Trigger>
 
         <div className="rounded-md bg-gray-900/50 p-1">
           <AnimatedChevron open={isOpen} size={20} />
