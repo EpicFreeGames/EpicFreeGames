@@ -90,7 +90,7 @@ router.get("/counts", endpointAuth(Flags.GetDashboard), async (req, res) => {
     prisma.commandLog.count(),
   ]);
 
-  const webhookAdoption = `${(hasWebhook / sendable) * 100 || 0} %`;
+  const webhookAdoption = `${((hasWebhook / sendable) * 100 || 0).toFixed(2)} %`;
 
   res.send({
     total,
