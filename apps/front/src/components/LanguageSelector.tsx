@@ -33,7 +33,7 @@ export const LanguageSelector = ({ languages }: Props) => {
     <Listbox value={selected} onChange={onChange}>
       {({ open }) => (
         <div className="relative">
-          <Listbox.Button className="focus relative flex w-[180px] cursor-default items-center rounded-lg border-[1px] border-gray-600 bg-gray-800 py-1 pl-3 text-left text-sm outline-none hover:border-gray-500 sm:text-base">
+          <Listbox.Button className="focus relative flex w-[180px] cursor-default items-center rounded-md border-[1px] border-gray-600 bg-gray-800 py-1 pl-3 text-left text-sm outline-none hover:border-gray-500 sm:text-base">
             <span>{nativeName}</span>
             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
               <AnimatedChevron open={open} size={19} />
