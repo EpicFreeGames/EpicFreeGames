@@ -190,9 +190,7 @@ jobs:
     name: "Dash: Deploy to Staging"
     environment: Staging
     runs-on: ubuntu-latest
-    needs: 
-      - frontends-typecheck
-      - bot-api-deploy-staging
+    needs: [frontends-typecheck]
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -221,9 +219,7 @@ jobs:
     name: "Front: Deploy to Staging"
     environment: Staging
     runs-on: ubuntu-latest
-    needs: 
-      - frontends-typecheck
-      - bot-api-deploy-staging
+    needs: [frontends-typecheck]
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -251,10 +247,7 @@ jobs:
     name: "Bot & Api: Deploy to Production"
     environment: Production
     runs-on: ubuntu-latest
-    needs: 
-      - bot-api-deploy-staging
-      - front-deploy-staging
-      - dash-deploy-staging
+    needs: [bot-api-deploy-staging]
     steps:
       - name: Cancel previous workflows
         uses: styfle/cancel-workflow-action@0.10.0
@@ -319,7 +312,7 @@ jobs:
     name: "Dash: Deploy to Production"
     environment: Production
     runs-on: ubuntu-latest
-    needs: [bot-api-deploy-prod]
+    needs: [dash-deploy-staging]
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -348,7 +341,7 @@ jobs:
     name: "Front: Deploy to Production"
     environment: Production
     runs-on: ubuntu-latest
-    needs: [bot-api-deploy-prod]
+    needs: [front-deploy-staging]
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
