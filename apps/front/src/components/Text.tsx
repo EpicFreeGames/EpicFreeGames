@@ -48,6 +48,7 @@ export const Code = ({ children, toCopy }: CodeProps) => {
   return (
     <code
       onClick={() => copy()}
+      onKeyDown={(e) => (e.code === "Enter" || e.code === "Space") && copy()}
       className={`focus whitespace-nowrap rounded-md border-[1px] border-gray-700 bg-gray-800 py-[0.1rem] px-1 font-mono text-xs outline-none transition-all duration-200 sm:text-base ${
         toCopy ? "hover:cursor-pointer hover:bg-gray-800/50" : ""
       }`}
