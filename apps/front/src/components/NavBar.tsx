@@ -23,7 +23,7 @@ export const NavBar = ({ translations, languages }: Props) => {
   if (!isBrowser) return null;
 
   return (
-    <nav className="fixed w-full bg-gray-900/50 backdrop-blur-sm">
+    <nav className="fixed z-10 w-full bg-gray-900/50 backdrop-blur-sm">
       <div className="mx-auto flex h-[3.5rem] max-w-[680px] items-center justify-between gap-3 px-3 sm:h-[4.5rem] sm:p-5">
         {!mobile ? (
           <div className="flex gap-3">
