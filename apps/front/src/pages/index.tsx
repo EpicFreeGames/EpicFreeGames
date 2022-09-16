@@ -18,7 +18,7 @@ const Home = ({ translations, languages, env }: InferGetStaticPropsType<typeof g
 
         <a
           href="/invite"
-          className="btnBase mt-3 transform-gpu rounded-md bg-blue-600 px-4 text-[1.1rem] transition-transform duration-200 hover:scale-[1.05] active:scale-[0.98]"
+          className="btnBase focus mt-3 transform-gpu rounded-md bg-blue-600 px-4 text-[1.1rem] hover:scale-[1.05] active:scale-[0.98]"
         >
           {t({ translations, key: "get_the_bot" })}
         </a>
@@ -67,12 +67,18 @@ const Home = ({ translations, languages, env }: InferGetStaticPropsType<typeof g
 
         <div className="flex flex-col">
           <Link href="mailto:hi@epicfreegames.net">{t({ key: "contact_us", translations })}</Link>
-          <Link href="/discord">{t({ key: "discord_server", translations })}</Link>
+          <Link href="/discord" locale={false}>
+            {t({ key: "discord_server", translations })}
+          </Link>
         </div>
 
         <div className="flex flex-col">
-          <Link href="/privacy-policy">{t({ key: "privacy_policy", translations })}</Link>
-          <Link href="/terms-of-service">{t({ key: "terms_of_service", translations })}</Link>
+          <Link href="/privacy-policy" locale={false}>
+            {t({ key: "privacy_policy", translations })}
+          </Link>
+          <Link href="/terms-of-service" locale={false}>
+            {t({ key: "terms_of_service", translations })}
+          </Link>
         </div>
       </div>
     </div>

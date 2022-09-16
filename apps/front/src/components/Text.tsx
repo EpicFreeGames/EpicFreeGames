@@ -61,10 +61,11 @@ export const Code = ({ children, toCopy }: CodeProps) => {
 type LinkProps = {
   children: ReactNode;
   href: string;
+  locale?: false;
 };
 
-export const Link = ({ children, href }: LinkProps) => (
-  <NextLink href={href} passHref>
+export const Link = ({ children, href, locale }: LinkProps) => (
+  <NextLink href={href} passHref locale={locale}>
     <a className="focus rounded-md outline-none">
       <span className="border-b-2 border-b-blue-400 border-opacity-40 text-sm font-bold text-blue-400 outline-none transition-all duration-200 hover:border-opacity-100 sm:text-base">
         {children}
