@@ -12,7 +12,7 @@ body {
 
 @layer components {
   .btnBase {
-    @apply flex select-none items-center justify-center rounded-md px-2 py-[0.3rem] text-[0.95rem] outline-none transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500;
+    @apply flex select-none items-center justify-center rounded-md px-2 py-[0.3rem] text-[0.95rem];
   }
 
   .focus {
