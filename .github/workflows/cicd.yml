@@ -337,8 +337,8 @@ jobs:
           -b NEXT_PUBLIC_EFG_API_BASEURL=${{ secrets.NEXT_PUBLIC_EFG_API_BASEURL }} \
           -b NEXT_PUBLIC_EFG_API_WS_URL=${{ secrets.NEXT_PUBLIC_EFG_API_WS_URL }}
 
-  front-deploy-prod:
-    name: "Front: Deploy to Production"
+  website-deploy-prod:
+    name: "Website: Deploy to Production"
     environment: Production
     runs-on: ubuntu-latest
     needs: [website-deploy-staging]
