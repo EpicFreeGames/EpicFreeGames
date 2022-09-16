@@ -83,9 +83,13 @@ export const Layout = ({ title, children, translations, languages, env }: Props)
         data-domain={baseUrl.replace("https://", "")}
       ></Script>
 
-      <NavBar translations={translations} languages={languages} />
+      <div className="flex flex-col">
+        <NavBar translations={translations} languages={languages} />
 
-      <main className="mx-auto mt-[3rem] max-w-screen-sm px-3 sm:mt-[5rem]">{children}</main>
+        <main className="mx-auto mb-[4rem] mt-[6rem] w-full max-w-screen-sm px-3 sm:mt-[9rem]">
+          {children}
+        </main>
+      </div>
     </>
   );
 };

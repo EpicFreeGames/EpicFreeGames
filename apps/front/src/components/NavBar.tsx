@@ -17,14 +17,14 @@ type Props = {
 };
 
 export const NavBar = ({ translations, languages }: Props) => {
-  const mobile = useMediaQuery("(max-width: 560px)");
+  const mobile = useMediaQuery("(max-width: 650px)");
   const isBrowser = useIsBrowser();
 
   if (!isBrowser) return null;
 
   return (
-    <nav className="sticky inset-0 z-10 bg-gray-900/50 backdrop-blur-sm">
-      <div className="mx-auto flex max-w-[680px] items-center justify-between gap-3 p-3 sm:p-5">
+    <nav className="fixed w-full bg-gray-900/50 backdrop-blur-sm">
+      <div className="mx-auto flex h-[3.5rem] max-w-[680px] items-center justify-between gap-3 px-3 sm:h-[4.5rem] sm:p-5">
         {!mobile ? (
           <div className="flex gap-3">
             <Navlink href="/">{t({ key: "home", translations })}</Navlink>
