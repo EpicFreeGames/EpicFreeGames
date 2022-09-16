@@ -6,8 +6,7 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "build": "rm -rf dist && ./node_modules/.bin/tsc -p ./tsconfig.json",
-    "clean": "rm -rf node_modules && rm -rf .turbo && rm -rf dist"
+    "build": "rm -rf dist && ./node_modules/.bin/tsc -p ./tsconfig.json"
   },
   "files": [
     "dist/**"

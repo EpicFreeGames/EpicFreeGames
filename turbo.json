@@ -12,7 +12,6 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**"]
     },
-    "clean": { "cache": false },
     "start": {
       "dependsOn": ["^build", "^buildprod", "build", "^start"],
       "cache": false

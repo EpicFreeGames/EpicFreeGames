@@ -7,8 +7,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-code:
-    name: "Build code"
+  bot-api-typecheck:
+    name: "Bot & Api: Typecheck"
     runs-on: ubuntu-latest
     steps:
       - name: Cancel previous workflows
@@ -33,7 +33,7 @@ jobs:
         run: yarn build
 
   frontends-typecheck:
-    name: "Frontends typecheck"
+    name: "Frontends: Typecheck"
     runs-on: ubuntu-latest
     steps:
       - name: Cancel previous workflows
@@ -59,7 +59,7 @@ jobs:
 
   bot-api-docker-build-push:
     name: "Bot & Api: build and push Docker images"
-    needs: [build-code]
+    needs: [bot-api-typecheck]
     runs-on: ubuntu-latest
     strategy: 
       matrix: 
@@ -186,8 +186,8 @@ jobs:
               VERSION=${{ env.VERSION }} \
                 docker compose -f docker-compose-staging.yml -p efg-staging up -d --force-recreate
 
-  dash-deploy-staging:
-    name: "Dash: Deploy to Staging"
+  internal-dash-deploy-staging:
+    name: "Internal dash: Deploy to Staging"
     environment: Staging
     runs-on: ubuntu-latest
     needs: [frontends-typecheck]
@@ -215,8 +215,8 @@ jobs:
           -b NEXT_PUBLIC_EFG_API_BASEURL=${{ secrets.NEXT_PUBLIC_EFG_API_BASEURL }} \
           -b NEXT_PUBLIC_EFG_API_WS_URL=${{ secrets.NEXT_PUBLIC_EFG_API_WS_URL }}
 
-  front-deploy-staging:
-    name: "Front: Deploy to Staging"
+  website-deploy-staging:
+    name: "Website: Deploy to Staging"
     environment: Staging
     runs-on: ubuntu-latest
     needs: [frontends-typecheck]
@@ -308,11 +308,11 @@ jobs:
               DEBUG=1 \
                 docker compose -f docker-compose-prod.yml -p efg-prod up -d --force-recreate
 
-  dash-deploy-prod:
-    name: "Dash: Deploy to Production"
+  internal-dash-deploy-prod:
+    name: "Internal dash: Deploy to Production"
     environment: Production
     runs-on: ubuntu-latest
-    needs: [dash-deploy-staging]
+    needs: [internal-dash-deploy-staging]
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -341,7 +341,7 @@ jobs:
     name: "Front: Deploy to Production"
     environment: Production
     runs-on: ubuntu-latest
-    needs: [front-deploy-staging]
+    needs: [website-deploy-staging]
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
