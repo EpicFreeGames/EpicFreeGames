@@ -364,9 +364,9 @@ jobs:
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_FRONT }}
         run: | 
           vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }} \
-            -b EFG_API_BASEURL=${{ secrets.EFG_API_BASEURL }} \
+            -b EFG_API_BASEURL=${{ secrets.NEXT_PUBLIC_EFG_API_BASEURL }} \
             -b EFG_API_FRONT_TOKEN=${{ secrets.VALID_FRONT_TOKEN }} \
             -b ENV=Production \
-            -e EFG_API_BASEURL=${{ secrets.EFG_API_BASEURL }} \
+            -e EFG_API_BASEURL=${{ secrets.NEXT_PUBLIC_EFG_API_BASEURL }} \
             -e EFG_API_FRONT_TOKEN=${{ secrets.VALID_FRONT_TOKEN }} \
             -e ENV=Production
