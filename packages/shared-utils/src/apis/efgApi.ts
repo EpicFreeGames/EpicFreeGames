@@ -24,7 +24,9 @@ export const efgApi = async <TData>({
   body,
   query,
 }: Args): Promise<ApiResponse<TData>> => {
-  const url = `${configuration.EFG_API_BASEURL}${path}${query ? `?${query.toString()}` : ""}`;
+  const url = `${configuration.EFG_API_INTERNAL_BASEURL}${path}${
+    query ? `?${query.toString()}` : ""
+  }`;
 
   logger.debug(`EFG API request: ${method} ${url}`);
 

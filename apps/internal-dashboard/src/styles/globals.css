@@ -11,18 +11,6 @@
     @apply outline-none transition-all duration-200;
   }
 
-  .focus:focus {
-    @apply outline-none;
-    box-shadow: var(--focus-color) 0 0 0 2px;
-    border-color: var(--focus-color);
-  }
-
-  .focus:focus-within {
-    @apply outline-none;
-    box-shadow: var(--focus-color) 0 0 0 2px;
-    border-color: var(--focus-color);
-  }
-
   .focus:focus-visible {
     @apply outline-none;
     box-shadow: var(--focus-color) 0 0 0 2px;

@@ -1,6 +1,5 @@
 import Head from "next/head";
 import { ElementType, ReactNode } from "react";
-import { Toaster } from "react-hot-toast";
 
 import { useNotifs } from "~hooks/useNotifs";
 import { useUser } from "~hooks/useUser";
@@ -28,18 +27,9 @@ export const Layout = ({ children, title, titleButtons }: Props) => {
 
       {!!user && (
         <>
-          <Toaster
-            toastOptions={{
-              style: {
-                backgroundColor: "rgb(17 24 39)",
-                color: "rgb(241 245 249)",
-              },
-            }}
-          />
-
           <NavBar />
 
-          <main className="mx-auto max-w-screen-lg md:px-4">
+          <main className="mx-auto max-w-screen-lg px-3 pt-[3.5rem]">
             <div className="flex flex-col">
               <div className="flex items-center justify-between px-3 py-3 md:px-0 md:py-4">
                 <h1 className="flex items-center text-[1.5rem] leading-[1.25rem] md:text-[2.25rem] md:leading-[2rem]">

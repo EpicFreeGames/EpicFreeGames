@@ -6,11 +6,15 @@ import {
 import { embeds } from "@efg/embeds";
 import { logger } from "@efg/logger";
 import { discordApi, displayRole, objToStr, wait } from "@efg/shared-utils";
-import { IGame } from "@efg/types";
+import { IGameWithStuff } from "@efg/types";
 
 import { MessageServer, logLog } from "./utils";
 
-export const sendMessages = async (games: IGame[], servers: MessageServer[], sendingId: string) => {
+export const sendMessages = async (
+  games: IGameWithStuff[],
+  servers: MessageServer[],
+  sendingId: string
+) => {
   for (const server of servers) {
     await wait(30);
 

@@ -1,4 +1,3 @@
-import { Game } from "@prisma/client";
 import { NextFunction, Request, Response } from "express";
 import type { Server } from "ws";
 
@@ -21,6 +20,3 @@ declare module "express-serve-static-core" {
     user: { identifier: string; flags: number };
   }
 }
-
-export type GameStatus = "up" | "free" | "gone";
-export type GameWithStatus = Game & { status: GameStatus };

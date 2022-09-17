@@ -24,15 +24,29 @@ export type IGame = {
    * Date as an ISO string
    */
   end: string;
+  storeId: string;
   path: string;
   confirmed: boolean;
   prices: IGamePrice[];
-  sendingId: string;
+  sendingId: string | null;
 };
 
 export type IGameStatus = "up" | "free" | "gone";
-export type IGameWithStatus = IGame & {
+export type IGameStore = {
+  id: string;
+  name: string;
+  webLinkName: string;
+  webBaseUrl: string;
+  appLinkName: string | null;
+  appBaseUrl: string | null;
+};
+export type IGameWithStuff = IGame & {
   status: IGameStatus;
+  store: IGameStore;
+  webLink: string;
+  appLink: string;
+  redirectWebUrl: string;
+  redirectAppUrl: string | null;
 };
 
 export type ILanguage = {

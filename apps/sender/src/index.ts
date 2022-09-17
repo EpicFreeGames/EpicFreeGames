@@ -104,6 +104,20 @@ const bodySchema = z.object({
           currencyCode: z.string(),
         })
       ),
+      storeId: z.string(),
+      store: z.object({
+        id: z.string(),
+        name: z.string(),
+        webLinkName: z.string(),
+        webBaseUrl: z.string(),
+        appLinkName: z.string().nullable(),
+        appBaseUrl: z.string().nullable(),
+      }),
+      redirectWebUrl: z.string(),
+      redirectAppUrl: z.string().nullable(),
+      webLink: z.string(),
+      appLink: z.string(),
+      status: z.union([z.literal("up"), z.literal("free"), z.literal("gone")]),
     })
   ),
 });

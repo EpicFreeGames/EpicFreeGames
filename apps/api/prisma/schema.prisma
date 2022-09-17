@@ -17,6 +17,7 @@ model Game {
   end         DateTime
   confirmed   Boolean     @default(false)
   path        String
+  storeId     String
   prices      GamePrice[]
   Sending     Sending?    @relation(fields: [sendingId], references: [id])
   sendingId   String?

@@ -11,7 +11,7 @@ export const DropdownMenu = ({ children }: Props) => {
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
-        <Menu.Button className="rounded-md border-[1px] border-gray-600 bg-gray-800 p-1">
+        <Menu.Button className="focus rounded-md border-[1px] border-gray-600 bg-gray-800 p-1">
           <Menu2 size={20} />
         </Menu.Button>
 
@@ -24,7 +24,7 @@ export const DropdownMenu = ({ children }: Props) => {
           leaveFrom="transform opacity-100"
           leaveTo="transform opacity-0"
         >
-          <Menu.Items className="absolute mt-1 rounded-md border-[1px] border-gray-600 bg-gray-800 p-[0.4rem] text-sm sm:text-base">
+          <Menu.Items className="focus absolute mt-1 rounded-md border-[1px] border-gray-600 bg-gray-800 p-[0.4rem] text-sm sm:text-base">
             {children}
           </Menu.Items>
         </Transition>

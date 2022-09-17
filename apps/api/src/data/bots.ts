@@ -21,7 +21,7 @@ export const bots = [
   {
     identifier: "frontend",
     token: configuration.VALID_FRONT_TOKEN,
-    flags: Flags.GetLanguages | Flags.GetTranslations,
+    flags: Flags.GetLanguages | Flags.GetTranslations | Flags.GetGames,
   },
   {
     identifier: "scraper",

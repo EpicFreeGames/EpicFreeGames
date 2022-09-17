@@ -1,15 +1,14 @@
 import { ReactNode } from "react";
 
-import { Flags } from "@efg/types";
+import { Flags, IGameWithStuff } from "@efg/types";
 
 import { useHasFlags } from "~hooks/useHasFlags";
 import { useEditGameMutation } from "~utils/api/games/editGame";
-import { IGameWithStatus } from "~utils/api/types";
 
 import { DeleteGame } from "./DeleteGame";
 import { EditGame } from "./EditGame";
 
-export const Game = ({ game }: { game: IGameWithStatus }) => {
+export const Game = ({ game }: { game: IGameWithStuff }) => {
   const canEdit = useHasFlags(Flags.EditGames);
   const canDelete = useHasFlags(Flags.DeleteGames);
 
@@ -35,7 +34,18 @@ export const Game = ({ game }: { game: IGameWithStatus }) => {
         <div className="flex w-full flex-col gap-2 md:grid md:grid-cols-2">
           <div className="flex flex-col gap-2">
             <Spec title="Name:" value={game.name} wordWrap />
-            <Spec title="Path:" value={game.path} />
+            <Spec
+              title="Path:"
+              value={
+                <a
+                  className="border-b-2 border-blue-400/40 text-blue-400 transition-all duration-200 hover:border-blue-400"
+                  href={game.link}
+                  target="_blank"
+                >
+                  {game.path}
+                </a>
+              }
+            />
             <Spec title="Sale starts:" value={game.start} />
             <Spec title="Sale ends:" value={game.end} />
             <Spec title="Status:" value={game.status} />
@@ -60,7 +70,7 @@ export const Game = ({ game }: { game: IGameWithStatus }) => {
   );
 };
 
-const Confirmed = ({ game }: { game: IGameWithStatus }) => {
+const Confirmed = ({ game }: { game: IGameWithStuff }) => {
   const { mutateAsync } = useEditGameMutation();
   const canEdit = useHasFlags(Flags.EditGames);
 
@@ -78,7 +88,15 @@ const Confirmed = ({ game }: { game: IGameWithStatus }) => {
   );
 };
 
-const Spec = ({ title, value, wordWrap }: { title: string; value: string; wordWrap?: boolean }) => (
+const Spec = ({
+  title,
+  value,
+  wordWrap,
+}: {
+  title: string;
+  value: ReactNode;
+  wordWrap?: boolean;
+}) => (
   <p className={`rounded-md bg-gray-800 p-3 ${wordWrap ? "" : "whitespace-nowrap"}`}>
     <b className="text-[17px]">{title}</b> <br /> {value}
   </p>

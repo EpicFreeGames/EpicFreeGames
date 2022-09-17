@@ -1,6 +1,6 @@
 import { embeds } from "@efg/embeds";
 import { efgApi } from "@efg/shared-utils";
-import { IGame } from "@efg/types";
+import { IGameWithStuff } from "@efg/types";
 
 import { interactionReply } from "../utils/interactions/responding/interactionReply";
 import { SlashCommand } from "../utils/interactions/types";
@@ -9,7 +9,7 @@ export const freeCommand: SlashCommand = {
   needsGuild: false,
   needsManageGuild: false,
   execute: async ({ i, server, language, currency }, res) => {
-    const { error, data: games } = await efgApi<IGame[]>({
+    const { error, data: games } = await efgApi<IGameWithStuff[]>({
       method: "GET",
       path: "/games/free",
     });

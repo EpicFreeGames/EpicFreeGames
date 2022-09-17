@@ -2,12 +2,13 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { Trash } from "tabler-icons-react";
 
+import { IGameWithStuff } from "@efg/types";
+
 import { AlertDialog } from "~components/AlertDialog";
 import { useDeleteGameMutation } from "~utils/api/games/deleteGame";
-import { IGame } from "~utils/api/types";
 
 type Props = {
-  game: IGame;
+  game: IGameWithStuff;
 };
 
 export const DeleteGame = ({ game }: Props) => {

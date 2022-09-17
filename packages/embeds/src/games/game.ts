@@ -1,10 +1,9 @@
-import { botConstants } from "@efg/configuration";
 import { t } from "@efg/i18n";
-import { ICurrency, IEmbed, IGame, ILanguage } from "@efg/types";
+import { ICurrency, IEmbed, IGame, IGameWithStuff, ILanguage } from "@efg/types";
 
 import { embedUtils } from "../_utils";
 
-export default (game: IGame, language: ILanguage, currency: ICurrency): IEmbed => {
+export default (game: IGameWithStuff, language: ILanguage, currency: ICurrency): IEmbed => {
   const now = Date.now() / 1000;
   const start = new Date(game.start).getTime() / 1000;
   const end = new Date(game.end).getTime() / 1000;
@@ -22,14 +21,14 @@ export default (game: IGame, language: ILanguage, currency: ICurrency): IEmbed =
       "\n" +
       
       embedUtils.link(
-        "Epicgames.com",
-        botConstants.browserRedirect(game.path)
-      ) +
-      embedUtils.chars.separator +
-      embedUtils.link(
-        "Epic Launcher",
-        botConstants.launcherRedirect(game.path)
-      ) +
+        game.store.webLinkName,
+        game.redirectWebUrl
+      ) + 
+      (game.redirectAppUrl && game.store.appLinkName && embedUtils.chars.separator +
+        embedUtils.link(
+          game.store.appLinkName,
+          game.redirectAppUrl
+        )) + 
 
       "\n\n" +
       

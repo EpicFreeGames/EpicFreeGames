@@ -17,7 +17,7 @@ import { botConstants, configuration } from "@efg/configuration";
 import { embeds } from "@efg/embeds";
 import { logger } from "@efg/logger";
 import { discordApi, displayRole, efgApi, objToStr } from "@efg/shared-utils";
-import { ICurrency, IGame, ILanguage, IServer, PermissionString } from "@efg/types";
+import { ICurrency, IGameWithStuff, ILanguage, IServer, PermissionString } from "@efg/types";
 
 import { interactionGetTypedOption } from "../../utils/interactions/interactionGetTypedOption";
 import { interactionDeferReply } from "../../utils/interactions/responding/interactionDeferReply";
@@ -251,7 +251,7 @@ export const setThreadSubCommand = async (
   });
 
   // send current free games to the set thread
-  const { error: gameError, data: freeGames } = await efgApi<IGame[]>({
+  const { error: gameError, data: freeGames } = await efgApi<IGameWithStuff[]>({
     method: "GET",
     path: "/games/free",
   });

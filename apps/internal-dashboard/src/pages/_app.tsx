@@ -1,6 +1,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { ReactNode } from "react";
+import { Toaster } from "react-hot-toast";
 
 import { Flags } from "@efg/types";
 
@@ -31,6 +32,16 @@ const Auth = ({ requiredFlags, children }: { requiredFlags: Flags[]; children: R
 const MyApp = ({ Component, pageProps }: MyAppProps) => {
   return (
     <QueryClientProvider client={queryClient}>
+      <Toaster
+        toastOptions={{
+          style: {
+            backgroundColor: "#1f2937",
+            border: "1px solid #374151",
+            color: "#f8fafc",
+          },
+        }}
+      />
+
       {Component.requireAuth ? (
         <Auth requiredFlags={Component.requiredFlags ?? []}>
           <Component {...pageProps} />

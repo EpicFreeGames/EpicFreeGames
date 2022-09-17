@@ -25,8 +25,7 @@ const envSchema = z.object({
   VALID_FRONT_TOKEN: z.string(),
   VALID_SCRAPER_TOKEN: z.string(),
 
-  EFG_API_BASEURL: z.string(),
-  EFG_API_WS_URL: z.string(),
+  EFG_API_INTERNAL_BASEURL: z.string(),
   EFG_FRONT_BASEURL: z.string(),
   EFG_DISCORD_REST_PROXY_BASEURL: z.string(),
 
@@ -71,9 +70,6 @@ export const configuration = {
 export const botConstants = {
   inviteGif:
     "https://media1.tenor.com/images/8be041fe538a0f292bb85885768341a7/tenor.gif?itemid=5261112",
-
-  browserRedirect: (path: string) => `${configuration.EFG_FRONT_BASEURL}/r/browser${path}`,
-  launcherRedirect: (path: string) => `${configuration.EFG_FRONT_BASEURL}/r/launcher${path}`,
 
   website: {
     home: `${configuration.EFG_FRONT_BASEURL}`,

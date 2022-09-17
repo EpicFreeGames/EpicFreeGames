@@ -3,14 +3,15 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Edit } from "tabler-icons-react";
 
+import { IGameWithStuff } from "@efg/types";
+
 import { Dialog, DialogCloseButton } from "~components/Dialog";
 import { Input } from "~components/Input";
 import { EditGameProps, useEditGameMutation } from "~utils/api/games/editGame";
-import { IGameWithStatus } from "~utils/api/types";
 import { getHtmlDate } from "~utils/getHtmlDate";
 
 type Props = {
-  game: IGameWithStatus;
+  game: IGameWithStuff;
 };
 
 export const EditGame = ({ game }: Props) => {
@@ -18,13 +19,14 @@ export const EditGame = ({ game }: Props) => {
 
   const { mutateAsync } = useEditGameMutation();
 
-  const { prices, sendingId, id, status, confirmed, ...rest } = game;
-
   const form = useForm({
     defaultValues: {
-      ...rest,
-      start: getHtmlDate(rest.start),
-      end: getHtmlDate(rest.end),
+      name: game.name,
+      displayName: game.displayName,
+      imageUrl: game.imageUrl,
+      path: game.path,
+      start: getHtmlDate(game.start),
+      end: getHtmlDate(game.end),
     },
   });
 

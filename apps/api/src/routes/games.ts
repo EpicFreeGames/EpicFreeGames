@@ -5,9 +5,10 @@ import { currencies } from "@efg/i18n";
 import { Flags } from "@efg/types";
 
 import { endpointAuth } from "../auth/endpointAuth";
+import { gameStores } from "../data/gameStores";
 import prisma from "../data/prisma";
 import { prismaUpdateCatcher } from "../data/prismaUpdateCatcher";
-import { addStatusToGame, addStatusToGames } from "../utils/addStatusToGames";
+import { addStuffToGames, addStufftoGame } from "../utils/addStuffToGames";
 import { withValidation } from "../utils/withValidation";
 
 const router = Router();
@@ -15,7 +16,7 @@ const router = Router();
 router.get("/", endpointAuth(Flags.GetGames), async (req, res) => {
   const games = await prisma.game.findMany({ include: { prices: true } });
 
-  res.json(addStatusToGames(games));
+  res.json(addStuffToGames(games));
 });
 
 router.get("/free", endpointAuth(Flags.GetGames), async (req, res) => {
@@ -34,7 +35,7 @@ router.get("/free", endpointAuth(Flags.GetGames), async (req, res) => {
     },
   });
 
-  res.json(addStatusToGames(games));
+  res.json(addStuffToGames(games));
 });
 
 router.get("/up", endpointAuth(Flags.GetGames), async (req, res) => {
@@ -53,7 +54,7 @@ router.get("/up", endpointAuth(Flags.GetGames), async (req, res) => {
     },
   });
 
-  res.json(addStatusToGames(games));
+  res.json(addStuffToGames(games));
 });
 
 router.get("/not-confirmed", endpointAuth(Flags.GetGames), async (req, res) => {
@@ -66,7 +67,7 @@ router.get("/not-confirmed", endpointAuth(Flags.GetGames), async (req, res) => {
     },
   });
 
-  res.json(addStatusToGames(games));
+  res.json(addStuffToGames(games));
 });
 
 router.get("/confirmed", endpointAuth(Flags.GetGames), async (req, res) => {
@@ -79,7 +80,7 @@ router.get("/confirmed", endpointAuth(Flags.GetGames), async (req, res) => {
     },
   });
 
-  res.json(addStatusToGames(games));
+  res.json(addStuffToGames(games));
 });
 
 router.get(
@@ -95,18 +96,16 @@ router.get(
       const { gameId } = req.params;
 
       const game = await prisma.game.findUnique({
-        where: {
-          id: gameId,
-        },
+        where: { id: gameId },
         include: { prices: true },
       });
 
-      if (!game)
+      if (!game || !game.confirmed)
         return res
           .status(404)
           .json({ statusCode: 404, error: "Not found", message: "Game not found" });
 
-      res.json(addStatusToGame(game));
+      res.json(addStufftoGame(game));
     }
   )
 );
@@ -158,7 +157,7 @@ router.patch(
         });
       }
 
-      res.json(addStatusToGame(game));
+      res.json(addStufftoGame(game));
     }
   )
 );
@@ -170,13 +169,14 @@ router.post(
     {
       body: z
         .object({
-          name: z.string(),
-          displayName: z.string(),
-          imageUrl: z.string(),
-          start: z.string(),
-          end: z.string(),
-          path: z.string(),
-          usdPrice: z.string(),
+          name: z.string().min(1),
+          displayName: z.string().min(1),
+          imageUrl: z.string().min(1),
+          start: z.string().min(1),
+          end: z.string().min(1),
+          path: z.string().min(1),
+          usdPrice: z.string().min(1),
+          storeId: z.string().min(1),
           priceValue: z.number(),
         })
         .strict(),
@@ -212,7 +212,7 @@ router.post(
         include: { prices: true },
       });
 
-      res.json(addStatusToGame(createdGame));
+      res.json(addStufftoGame(createdGame));
     }
   )
 );
@@ -236,6 +236,7 @@ router.put(
               currencyCode: z.string().min(1),
             })
           ),
+          storeId: z.string().min(1),
         })
       ),
     },
@@ -244,20 +245,27 @@ router.put(
        * Map<GameName, CurrencyCodes>
        */
       const excludedPriceCodes: Map<string, string[]> = new Map();
+      const excludedGames: { name: string; reason: string }[] = [];
 
       const dbGames = await prisma.game.findMany({ include: { prices: true } });
 
       for (const game of req.body) {
-        const { prices, start, end, ...rest } = game;
-        const dbGame = dbGames.find((g) => g.name === rest.name);
+        const { prices, start, end, path, ...restOfGame } = game;
+        const dbGame = dbGames.find((g) => g.name === restOfGame.name);
+        const dbStore = gameStores.find((s) => s.id === restOfGame.storeId);
+
+        if (!dbStore) {
+          excludedGames.push({ name: restOfGame.name, reason: "Store not found" });
+          continue;
+        }
 
         const pricesToSave = prices
           .filter((price) => {
             const currency = currencies.get(price.currencyCode);
 
             if (!currency) {
-              excludedPriceCodes.set(rest.name, [
-                ...(excludedPriceCodes.get(rest.name) || []),
+              excludedPriceCodes.set(restOfGame.name, [
+                ...(excludedPriceCodes.get(restOfGame.name) || []),
                 price.currencyCode,
               ]);
               return false;
@@ -277,35 +285,32 @@ router.put(
             name: game.name,
           },
           update: {
-            ...rest,
+            ...restOfGame,
             start: new Date(start),
             end: new Date(end),
-            ...(hasPrices
-              ? {
-                  prices: {
-                    upsert: pricesToSave.map(({ id, ...rest }) => ({
-                      where: {
-                        id: id,
-                      },
-                      create: rest,
-                      update: rest,
-                    })),
-                  },
-                }
-              : {}),
+            ...(hasPrices && {
+              prices: {
+                upsert: pricesToSave.map(({ id, ...restOfGame }) => ({
+                  where: { id: id },
+                  create: restOfGame,
+                  update: restOfGame,
+                })),
+              },
+            }),
           },
           create: {
-            ...rest,
+            ...restOfGame,
             displayName: game.name,
             start: new Date(start),
             end: new Date(end),
-            ...(hasPrices
-              ? {
-                  prices: {
-                    createMany: { data: pricesToSave.map(({ id, ...rest }) => ({ ...rest })) },
-                  },
-                }
-              : {}),
+            path,
+            ...(hasPrices && {
+              prices: {
+                createMany: {
+                  data: pricesToSave.map(({ id, ...restOfGame }) => ({ ...restOfGame })),
+                },
+              },
+            }),
           },
           include: {
             prices: true,
@@ -313,11 +318,11 @@ router.put(
         });
       }
 
-      if (excludedPriceCodes.size)
+      if (excludedPriceCodes.size || excludedGames.length)
         return res.status(200).json({
           statusCode: 200,
-          message: "Some prices were excluded due to non-existing currency",
-          excluded: Array.from(excludedPriceCodes.entries()),
+          currencyExcluded: Array.from(excludedPriceCodes.entries()),
+          gamesExcluded: excludedGames,
         });
 
       res.status(204).send();

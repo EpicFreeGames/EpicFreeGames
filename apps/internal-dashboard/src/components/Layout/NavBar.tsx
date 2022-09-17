@@ -2,8 +2,8 @@ import { Logout } from "./Logout";
 import { Menu } from "./Menu";
 
 export const NavBar = () => (
-  <nav className="sticky inset-0 z-10 bg-gray-900/50 backdrop-blur-sm">
-    <div className="mx-auto flex max-w-screen-lg justify-between p-3 md:p-4">
+  <nav className="fixed z-10 w-full bg-gray-900/50 backdrop-blur-sm">
+    <div className="mx-auto flex h-[3.5rem] max-w-screen-lg items-center justify-between gap-3 px-3 ">
       <Menu />
 
       <Logout />

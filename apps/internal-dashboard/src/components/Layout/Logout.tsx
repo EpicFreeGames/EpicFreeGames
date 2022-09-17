@@ -9,7 +9,7 @@ export const Logout = () => {
 
   return (
     <button
-      className="focus flex items-center justify-center rounded-md border-[1px] border-gray-700 bg-gray-800 px-1 text-sm"
+      className="focus flex items-center justify-center rounded-md border-[1px] border-gray-700 bg-gray-800 px-2 py-1 text-sm"
       onClick={onClick}
     >
       {user?.name ?? user?.identifier}
