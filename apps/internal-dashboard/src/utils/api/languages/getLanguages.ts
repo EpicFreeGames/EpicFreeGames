@@ -1,7 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 
+import { ILanguage } from "@efg/types";
+
 import { apiRequest } from "../api";
-import { ILanguage } from "../types";
 
 const fetchLanguages = () =>
   apiRequest<ILanguage[]>({

@@ -1,4 +1,4 @@
-import { IUser } from "../types";
+import { IUser } from "@efg/types";
 
 export type UserContext = {
   prevUsers: IUser[];

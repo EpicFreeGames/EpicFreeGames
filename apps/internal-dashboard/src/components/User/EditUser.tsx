@@ -3,12 +3,11 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Edit } from "tabler-icons-react";
 
-import { Flag, Flags } from "@efg/types";
+import { Flag, Flags, IUser } from "@efg/types";
 
 import { Dialog, DialogCloseButton } from "~components/Dialog";
 import { Label } from "~components/Label";
 import { useCalcFlags } from "~hooks/useCalcFlags";
-import { IUser } from "~utils/api/types";
 import { EditUserProps, useEditUserMutation } from "~utils/api/users/editUser";
 
 import { SelectFlags } from "./SelectFlags";

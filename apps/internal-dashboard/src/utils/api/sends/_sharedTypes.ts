@@ -1,4 +1,4 @@
-import { ISending } from "../types";
+import { ISending } from "@efg/types";
 
 export type SendingContext = {
   prevSends: ISending[];

@@ -2,8 +2,9 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { Trash } from "tabler-icons-react";
 
+import { IUser } from "@efg/types";
+
 import { AlertDialog } from "~components/AlertDialog";
-import { IUser } from "~utils/api/types";
 import { useDeleteUserMutation } from "~utils/api/users/deleteUser";
 
 type Props = {

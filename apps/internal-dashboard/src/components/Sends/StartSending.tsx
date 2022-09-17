@@ -1,9 +1,10 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 
+import { ISending } from "@efg/types";
+
 import { useStartSendingMutation } from "~/utils/api/sends/startSending";
 import { AlertDialog } from "~components/AlertDialog";
-import { ISending } from "~utils/api/types";
 
 import { arrayToCoolString } from "./DeleteSending";
 

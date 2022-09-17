@@ -1,7 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 
+import { ICurrency } from "@efg/types";
+
 import { apiRequest } from "../api";
-import { ICurrency } from "../types";
 
 const fetchCurrencies = () =>
   apiRequest<ICurrency[]>({

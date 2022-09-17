@@ -1,7 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 
+import { ICounts } from "@efg/types";
+
 import { apiRequest } from "../api";
-import { ICounts } from "../types";
 
 const fetchCounts = () =>
   apiRequest<ICounts>({

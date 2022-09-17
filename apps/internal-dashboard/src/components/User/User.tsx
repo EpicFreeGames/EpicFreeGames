@@ -1,9 +1,8 @@
-import { Flags } from "@efg/types";
+import { Flags, IUser } from "@efg/types";
 
 import { useCalcFlags } from "~hooks/useCalcFlags";
 import { useHasFlags } from "~hooks/useHasFlags";
 import { useUser } from "~hooks/useUser";
-import { IUser } from "~utils/api/types";
 
 import { DeleteUser } from "./DeleteUser";
 import { EditUser } from "./EditUser";

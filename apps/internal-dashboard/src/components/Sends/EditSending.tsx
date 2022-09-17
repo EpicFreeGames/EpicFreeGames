@@ -3,10 +3,11 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Edit } from "tabler-icons-react";
 
+import { ISending } from "@efg/types";
+
 import { Dialog, DialogCloseButton } from "~components/Dialog";
 import { Label } from "~components/Label";
 import { EditSendingProps, useEditSendingMutation } from "~utils/api/sends/editSending";
-import { ISending } from "~utils/api/types";
 
 type Props = {
   sending: ISending;

@@ -1,7 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
+import { IUser } from "@efg/types";
+
 import { ApiError, apiRequest } from "../api";
-import { IUser } from "../types";
 import { UserContext } from "./_sharedTypes";
 
 export type AddUserProps = {

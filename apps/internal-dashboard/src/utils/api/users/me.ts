@@ -1,7 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 
+import { IUser } from "@efg/types";
+
 import { ApiError, apiRequest } from "../api";
-import { IUser } from "../types";
 
 const fetchMe = (required = true) =>
   apiRequest<IUser>({

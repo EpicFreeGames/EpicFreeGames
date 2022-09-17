@@ -1,7 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 
+import { ISending } from "@efg/types";
+
 import { apiRequest } from "../api";
-import { ISending } from "../types";
 
 const fetchSends = () =>
   apiRequest<

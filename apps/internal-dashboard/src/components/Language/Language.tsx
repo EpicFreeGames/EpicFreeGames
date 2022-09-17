@@ -1,4 +1,5 @@
-import { ILanguage } from "~utils/api/types";
+import { ILanguage } from "@efg/types";
+
 import { pluralize } from "~utils/pluralize";
 
 type Props = {

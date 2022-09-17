@@ -39,7 +39,7 @@ export const Game = ({ game }: { game: IGameWithStuff }) => {
               value={
                 <a
                   className="border-b-2 border-blue-400/40 text-blue-400 transition-all duration-200 hover:border-blue-400"
-                  href={game.link}
+                  href={game.webLink}
                   target="_blank"
                 >
                   {game.path}

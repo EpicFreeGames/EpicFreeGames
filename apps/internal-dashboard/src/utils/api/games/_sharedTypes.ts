@@ -1,4 +1,4 @@
-import { IGame } from "~utils/api/types";
+import { IGame } from "@efg/types";
 
 export type GameContext = {
   prevGames: IGame[];

@@ -2,9 +2,10 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { Trash } from "tabler-icons-react";
 
+import { ISending } from "@efg/types";
+
 import { AlertDialog } from "~components/AlertDialog";
 import { useDeleteSendingMutation } from "~utils/api/sends/deleteSending";
-import { ISending } from "~utils/api/types";
 
 type Props = {
   sending: ISending;

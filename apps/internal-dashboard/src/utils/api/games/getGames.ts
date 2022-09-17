@@ -1,22 +1,22 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { IGameWithStatus } from "~utils/api/types";
+import { IGameWithStuff } from "@efg/types";
 
 import { ApiError, apiRequest } from "../api";
 
 const fetchGames = () =>
-  apiRequest<IGameWithStatus[]>({
+  apiRequest<IGameWithStuff[]>({
     path: "/games",
     method: "GET",
   });
 
-export const useGames = () => useQuery<IGameWithStatus[], ApiError>(["games"], fetchGames);
+export const useGames = () => useQuery<IGameWithStuff[], ApiError>(["games"], fetchGames);
 
 const fetchConfirmedGames = () =>
-  apiRequest<IGameWithStatus[]>({
+  apiRequest<IGameWithStuff[]>({
     path: "/games/confirmed",
     method: "GET",
   });
 
 export const useConfirmedGames = () =>
-  useQuery<IGameWithStatus[], ApiError>(["games"], fetchConfirmedGames);
+  useQuery<IGameWithStuff[], ApiError>(["games"], fetchConfirmedGames);

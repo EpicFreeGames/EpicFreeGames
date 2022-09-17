@@ -1,4 +1,5 @@
-import { ICurrency } from "~utils/api/types";
+import { ICurrency } from "@efg/types";
+
 import { pluralize } from "~utils/pluralize";
 
 type Props = {

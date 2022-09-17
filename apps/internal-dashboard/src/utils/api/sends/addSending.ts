@@ -1,7 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
+import { ISending } from "@efg/types";
+
 import { ApiError, apiRequest } from "../api";
-import { ISending } from "../types";
 
 export type AddSendingProps = {
   gameIds: string[];

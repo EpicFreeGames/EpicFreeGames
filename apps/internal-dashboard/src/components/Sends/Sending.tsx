@@ -1,7 +1,6 @@
-import { Flags } from "@efg/types";
+import { Flags, ISending } from "@efg/types";
 
 import { useHasFlags } from "~hooks/useHasFlags";
-import { ISending } from "~utils/api/types";
 
 import { DeleteSending } from "./DeleteSending";
 import { EditSending } from "./EditSending";
