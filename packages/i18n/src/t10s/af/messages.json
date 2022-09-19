@@ -23,7 +23,7 @@
   "having_problems": "Het u probleme? Laat weet ons op ons [ondersteuningsbediener](<serverInvite>) en ons sal jou help!",
   "how_to_tutorial": "Hoe om outomaties in kennis gestel te word van gratis speletjies? [Klik hier](<tutorialLink>) vir 'n tutoriaal!",
   "looking_for_commands": "Op soek na opdragte? [Klik hier](<commandsLink>) vir my opdraglys!",
-  "help_desc": "I'm a customizable bot focused around notifying servers about free games. Thank you for choosing me!",
+  "help_desc": "Ek is 'n aanpasbare bot gefokus op die in kennisstelling van bedieners oor gratis speletjies. Dankie dat jy my gekies het!\n",
   "open_in": "Maak oop in:",
   "free": "Gratis",
   "invite": "Nooi",
@@ -37,7 +37,7 @@
   "currency": "Geldeenheid",
   "settings": "Instellings",
   "help": "Help",
-  "missing": "Missing!",
-  "thank_you": "Thank you!",
+  "missing": "Vermis!",
+  "thank_you": "Dankie!",
   "webhooks_notification": "Ek ondersteun deesdae webhooks! Hulle laat my toe om die kennisgewings baie vinniger te stuur. Bediener admins, doen asseblief `/set channel` (of `/set thread`) om kennisgewings deur webhooks te aktiveer."
 }
