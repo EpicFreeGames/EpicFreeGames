@@ -15,7 +15,7 @@
     "@efg/types": "*",
     "@efg/logger": "*",
     "@efg/shared-utils": "*",
-    "discord-api-types": "^0.37.7",
+    "discord-api-types": "^0.37.10",
     "discord-interactions": "^2.4.1",
     "express": "^4.17.2"
   },
