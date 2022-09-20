@@ -1,7 +1,7 @@
 {
   "cmd_desc_set_currency": "Pick a currency for the games' prices on this server",
   "cmd_desc_set_thread": "Alege un fir unde voi posta noi jocuri gratuite",
-  "cmd_desc_set_channel": "Pick a channel I'll post new free games on",
+  "cmd_desc_set_channel": "Alege un fir unde voi posta noi jocuri gratuite",
   "cmd_desc_set_role": "Pick a role I'll ping when a new game comes free",
   "cmd_desc_set_language": "Pick a language for my messages on this server",
   "cmd_desc_remove_channel": "Elimină canalul setat (sau firul setat)",
