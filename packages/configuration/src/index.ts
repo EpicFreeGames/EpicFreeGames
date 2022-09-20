@@ -84,7 +84,8 @@ export const botConstants = {
     "Discordlist.gg": "https://discordlist.gg/bot/719806770133991434/vote",
   },
 
-  botName: "EpicFreeGames",
+  botName:
+    configuration.ENV === "Production" ? "EpicFreeGames" : `${configuration.ENV} EpicFreeGames`,
   webhookName:
     configuration.ENV === "Production"
       ? "EpicFreeGames Notifications"
