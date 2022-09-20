@@ -1,6 +1,6 @@
 import { embeds } from "@efg/embeds";
 import { logger } from "@efg/logger";
-import { discordApi, displayRole, objToStr, wait } from "@efg/shared-utils";
+import { displayRole, executeDiscordWebhook, objToStr, wait } from "@efg/shared-utils";
 import { IGameWithStuff } from "@efg/types";
 
 import { HookServer, logLog } from "./utils";
@@ -17,21 +17,15 @@ export const executeHooks = async (
       embeds.games.game(game, server.language, server.currency)
     );
 
-    const role = server.roleId ? displayRole(server.roleId) : undefined;
-
-    discordApi(
-      {
-        method: "POST",
-        path: `/webhooks/${server.webhookId}/${server.webhookToken}${
-          server.threadId ? `?thread_id=${server.threadId}` : ""
-        }`,
-        body: {
-          ...(role ? { content: role } : {}),
-          embeds: gameEmbeds,
-        },
+    executeDiscordWebhook({
+      webhookId: server.webhookId,
+      webhookToken: server.webhookToken,
+      threadId: server.threadId,
+      body: {
+        ...(server.roleId ? { content: displayRole(server.roleId) } : {}),
+        embeds: gameEmbeds,
       },
-      { useProxy: false }
-    )
+    })
       .then(({ error }) => {
         if (!error) {
           logger.success(

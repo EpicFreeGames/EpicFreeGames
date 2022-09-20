@@ -9,20 +9,22 @@ type Args =
       method: Exclude<Method, "GET" | "HEAD">;
       path: string;
       body?: any;
+      query?: URLSearchParams;
     }
   | {
       method: "GET" | "HEAD";
       path: string;
       body?: never;
+      query?: URLSearchParams;
     };
 
 export const discordApi = async <TData>(
-  { method, path, body }: Args,
+  { method, path, body, query }: Args,
   { useProxy } = { useProxy: true }
 ): Promise<ApiResponse<TData>> => {
   const url = `${
     useProxy ? configuration.EFG_DISCORD_REST_PROXY_BASEURL : configuration.DISCORD_API_BASEURL
-  }${path}`;
+  }${path}${query ? `?${query.toString()}` : ""}`;
 
   logger.debug(`Discord API request: ${method} ${url} ${objToStr(body)}`);
 

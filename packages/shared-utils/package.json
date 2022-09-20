@@ -12,8 +12,9 @@
     "dist/**"
   ],
   "dependencies": {
+    "@efg/configuration": "*",
     "@efg/logger": "*",
-    "@efg/configuration": "*"
+    "discord-api-types": "^0.37.10"
   },
   "devDependencies": {
     "@efg/tsconfig": "*",

@@ -7,16 +7,21 @@ import {
   MessageFlags,
   RESTGetAPIChannelResult,
   RESTGetAPIChannelWebhooksResult,
-  RESTPostAPIChannelWebhookJSONBody,
-  RESTPostAPIChannelWebhookResult,
-  RESTPostAPIWebhookWithTokenJSONBody,
 } from "discord-api-types/v10";
 import { Response } from "express";
 
 import { botConstants, configuration } from "@efg/configuration";
 import { embeds } from "@efg/embeds";
 import { logger } from "@efg/logger";
-import { discordApi, displayRole, efgApi, objToStr } from "@efg/shared-utils";
+import {
+  createDiscordWebhook,
+  deleteDiscordWebhook,
+  discordApi,
+  displayRole,
+  efgApi,
+  executeDiscordWebhook,
+  objToStr,
+} from "@efg/shared-utils";
 import { ICurrency, IGameWithStuff, ILanguage, IServer, PermissionString } from "@efg/types";
 
 import { interactionGetTypedOption } from "../../utils/interactions/interactionGetTypedOption";
@@ -57,7 +62,10 @@ export const setThreadSubCommand = async (
   });
 
   if (threadError)
-    return await interactionEditReply(i.token, { embeds: [embeds.errors.genericError()] });
+    return await interactionEditReply(i.token, {
+      embeds: [embeds.errors.genericError()],
+      flags: MessageFlags.Ephemeral,
+    });
 
   if (!thread) {
     logger.error(
@@ -69,7 +77,10 @@ export const setThreadSubCommand = async (
       ].join("\n")
     );
 
-    return await interactionEditReply(i.token, { embeds: [embeds.errors.genericError()] });
+    return await interactionEditReply(i.token, {
+      embeds: [embeds.errors.genericError()],
+      flags: MessageFlags.Ephemeral,
+    });
   }
 
   if (thread.type !== ChannelType.PublicThread) {
@@ -82,7 +93,10 @@ export const setThreadSubCommand = async (
       ].join("\n")
     );
 
-    return await interactionEditReply(i.token, { embeds: [embeds.errors.genericError()] });
+    return await interactionEditReply(i.token, {
+      embeds: [embeds.errors.genericError()],
+      flags: MessageFlags.Ephemeral,
+    });
   }
 
   if (!thread.parent_id) {
@@ -95,7 +109,10 @@ export const setThreadSubCommand = async (
       ].join("\n")
     );
 
-    return await interactionEditReply(i.token, { embeds: [embeds.errors.genericError()] });
+    return await interactionEditReply(i.token, {
+      embeds: [embeds.errors.genericError()],
+      flags: MessageFlags.Ephemeral,
+    });
   }
 
   const threadParentId = BigInt(thread.parent_id);
@@ -120,7 +137,10 @@ export const setThreadSubCommand = async (
       ].join("\n")
     );
 
-    return await interactionEditReply(i.token, { embeds: [embeds.errors.genericError()] });
+    return await interactionEditReply(i.token, {
+      embeds: [embeds.errors.genericError()],
+      flags: MessageFlags.Ephemeral,
+    });
   }
 
   if (hasPerms === false)
@@ -155,9 +175,9 @@ export const setThreadSubCommand = async (
 
   // remove the previous webhook if new channel !== old channel
   if (server?.webhookId && server?.webhookToken && server?.channelId !== String(threadParentId))
-    await discordApi({
-      method: "DELETE",
-      path: `/webhooks/${server.webhookId}/${server.webhookToken}`,
+    await deleteDiscordWebhook({
+      webhookId: server.webhookId,
+      webhookToken: server.webhookToken,
     });
 
   let webhook = parentChannelsWebhooks.find(
@@ -182,15 +202,13 @@ export const setThreadSubCommand = async (
       });
     }
 
-    const { data: newWebhook, error: newWebhookError } =
-      await discordApi<RESTPostAPIChannelWebhookResult>({
-        method: "POST",
-        path: `/channels/${threadParentId}/webhooks`,
-        body: {
-          name: botConstants.webhookName,
-          avatar: botConstants.base64Logo,
-        } as RESTPostAPIChannelWebhookJSONBody,
-      });
+    const { data: newWebhook, error: newWebhookError } = await createDiscordWebhook({
+      channelId: String(threadParentId),
+      body: {
+        name: botConstants.webhookName,
+        avatar: botConstants.base64Logo,
+      },
+    });
 
     if (newWebhookError) {
       logger.error(
@@ -211,6 +229,23 @@ export const setThreadSubCommand = async (
     }
 
     webhook = newWebhook;
+  }
+
+  if (!webhook.token) {
+    logger.error(
+      [
+        "Failed to set thread",
+        "Cause: Returned webhook didn't have a token",
+        `Selected thread ID: ${selectedThreadId}`,
+        `Selected thread's parent ID: ${threadParentId}`,
+        `Guild ID: ${i.guild_id}`,
+      ].join("\n")
+    );
+
+    return await interactionEditReply(i.token, {
+      embeds: [embeds.errors.genericError()],
+      flags: MessageFlags.Ephemeral,
+    });
   }
 
   const { error: updatedServerError, data: updatedServer } = await efgApi<IServer>({
@@ -258,15 +293,13 @@ export const setThreadSubCommand = async (
 
   if (gameError || !freeGames.length) return;
 
-  await discordApi(
-    {
-      method: "POST",
-      path: `/webhooks/${webhook.id}/${webhook.token}?thread_id=${selectedThreadId}`,
-      body: {
-        ...(updatedServer.roleId ? { content: displayRole(updatedServer.roleId) } : {}),
-        embeds: [freeGames.map((g) => embeds.games.game(g, language, currency))],
-      } as RESTPostAPIWebhookWithTokenJSONBody,
+  await executeDiscordWebhook({
+    webhookId: webhook.id,
+    webhookToken: webhook.token,
+    threadId: String(selectedThreadId),
+    body: {
+      ...(updatedServer.roleId ? { content: displayRole(updatedServer.roleId) } : {}),
+      embeds: freeGames.map((g) => embeds.games.game(g, language, currency)),
     },
-    { useProxy: false }
-  );
+  });
 };

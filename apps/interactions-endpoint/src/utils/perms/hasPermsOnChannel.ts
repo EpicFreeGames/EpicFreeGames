@@ -89,8 +89,15 @@ export const hasPermsOnChannel = async (
       cause: `Member is null with no errors`,
     };
 
-  if (channel.type !== ChannelType.GuildText && channel.type !== ChannelType.PublicThread)
-    return { error: true, cause: `Channel is not a text channel or a public thread` };
+  if (
+    channel.type !== ChannelType.GuildText &&
+    channel.type !== ChannelType.PublicThread &&
+    channel.type !== ChannelType.GuildForum
+  )
+    return {
+      error: true,
+      cause: `Channel (might also be the parent) is not a text channel, a public thread or a forum`,
+    };
 
   const everyoneRole = guild.roles.find((role) => role.id === guildId);
   if (!everyoneRole) return { error: true, cause: `Failed to find @everyone role` };

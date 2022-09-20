@@ -4,16 +4,21 @@ import {
   ApplicationCommandOptionType,
   MessageFlags,
   RESTGetAPIChannelWebhooksResult,
-  RESTPostAPIChannelWebhookJSONBody,
-  RESTPostAPIChannelWebhookResult,
-  RESTPostAPIWebhookWithTokenJSONBody,
 } from "discord-api-types/v10";
 import { Response } from "express";
 
 import { botConstants, configuration } from "@efg/configuration";
 import { embeds } from "@efg/embeds";
 import { logger } from "@efg/logger";
-import { discordApi, displayRole, efgApi, objToStr } from "@efg/shared-utils";
+import {
+  createDiscordWebhook,
+  deleteDiscordWebhook,
+  discordApi,
+  displayRole,
+  efgApi,
+  executeDiscordWebhook,
+  objToStr,
+} from "@efg/shared-utils";
 import { ICurrency, IGameWithStuff, ILanguage, IServer, PermissionString } from "@efg/types";
 
 import { interactionGetTypedOption } from "../../utils/interactions/interactionGetTypedOption";
@@ -101,11 +106,11 @@ export const setChannelSubCommand = async (
     });
   }
 
-  // remove the previous webhook if new channel !== old channel
+  // delete the previous webhook if new channel !== old channel
   if (server?.webhookId && server?.webhookToken && server?.channelId !== String(selectedChannelId))
-    await discordApi({
-      method: "DELETE",
-      path: `/webhooks/${server.webhookId}/${server.webhookToken}`,
+    await deleteDiscordWebhook({
+      webhookId: server.webhookId,
+      webhookToken: server.webhookToken,
     });
 
   let webhook = channelsWebhooks.find(
@@ -129,15 +134,13 @@ export const setChannelSubCommand = async (
       });
     }
 
-    const { data: newWebhook, error: newWebhookError } =
-      await discordApi<RESTPostAPIChannelWebhookResult>({
-        method: "POST",
-        path: `/channels/${selectedChannelId}/webhooks`,
-        body: {
-          name: botConstants.webhookName,
-          avatar: botConstants.base64Logo,
-        } as RESTPostAPIChannelWebhookJSONBody,
-      });
+    const { data: newWebhook, error: newWebhookError } = await createDiscordWebhook({
+      channelId: String(selectedChannelId),
+      body: {
+        name: botConstants.webhookName,
+        avatar: botConstants.base64Logo,
+      },
+    });
 
     if (newWebhookError) {
       logger.error(
@@ -157,6 +160,22 @@ export const setChannelSubCommand = async (
     }
 
     webhook = newWebhook;
+  }
+
+  if (!webhook.token) {
+    logger.error(
+      [
+        "Failed to set channel",
+        "Cause: Returned webhook didn't have a token",
+        `Channel ID: ${selectedChannelId}`,
+        `Guild ID: ${i.guild_id}`,
+      ].join("\n")
+    );
+
+    return await interactionEditReply(i.token, {
+      embeds: [embeds.errors.genericError()],
+      flags: MessageFlags.Ephemeral,
+    });
   }
 
   const { error: updatedServerError, data: updatedServer } = await efgApi<IServer>({
@@ -202,15 +221,12 @@ export const setChannelSubCommand = async (
 
   if (gameError || !freeGames.length) return;
 
-  await discordApi(
-    {
-      method: "POST",
-      path: `/webhooks/${webhook.id}/${webhook.token}`,
-      body: {
-        ...(updatedServer.roleId ? { content: displayRole(updatedServer.roleId) } : {}),
-        embeds: [freeGames.map((g) => embeds.games.game(g, language, currency))],
-      } as RESTPostAPIWebhookWithTokenJSONBody,
+  await executeDiscordWebhook({
+    webhookId: webhook.id,
+    webhookToken: webhook.token,
+    body: {
+      ...(updatedServer.roleId ? { content: displayRole(updatedServer.roleId) } : {}),
+      embeds: freeGames.map((g) => embeds.games.game(g, language, currency)),
     },
-    { useProxy: false }
-  );
+  });
 };
