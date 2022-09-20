@@ -8,6 +8,7 @@ import { endpointAuth } from "../auth/endpointAuth";
 import prisma from "../data/prisma";
 import { prismaUpdateCatcher } from "../data/prismaUpdateCatcher";
 import { addLocaleInfoToServers } from "../utils/addLocaleInfoToServers";
+import { addStuffToGames } from "../utils/addStuffToGames";
 import { bigintSchema } from "../utils/jsonfix";
 import { withValidation } from "../utils/withValidation";
 
@@ -230,7 +231,7 @@ router.post(
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           sendingId,
-          games: sending.games,
+          games: addStuffToGames(sending.games),
         }),
       });
 
