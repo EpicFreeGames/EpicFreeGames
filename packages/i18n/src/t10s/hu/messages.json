@@ -38,6 +38,6 @@
   "settings": "Beállítások",
   "help": "Segítség",
   "missing": "Hiányzik!",
-  "thank_you": "Thank you!",
+  "thank_you": "Köszönjük!",
   "webhooks_notification": "Mostanában támogatom a webhookokat! Segítségükkel sokkal gyorsabban tudom elküldeni az értesítéseket. Szerver adminok kérlek, a `/set channel` (vagy `/set thread`) paranccsal tudjátok engedélyezni a webhookokon keresztüli értesítéseket."
 }

@@ -1,5 +1,5 @@
 {
-  "tutorial": "Tutorial",
+  "tutorial": "Útmutató",
   "tutorial_q": "How to setup <botName> to automatically notify about free games?",
   "tutorial_1": "Firstly, [get the bot to your server](<inviteLink>).",
   "tutorial_2": "Then, set a channel using the `/set channel` command. The bot will use that channel when posting free games.",
