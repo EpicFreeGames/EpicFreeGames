@@ -53,7 +53,7 @@ const nextConfig = {
     },
   ],
   i18n: {
-    locales: ["en", "pl", "es-ES", "vi", "zh-TW"],
+    locales: ["en", "pl", "es-ES", "vi", "zh-TW", "af"],
     defaultLocale: "en",
     localeDetection: true,
   },
