@@ -1,7 +1,6 @@
 import type { AppType } from "next/dist/shared/lib/utils";
 import { Toaster } from "react-hot-toast";
 
-import { TooltipProvider } from "~components/Tooltip";
 import "~styles/globals.css";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
@@ -18,9 +17,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
         }}
       />
 
-      <TooltipProvider>
-        <Component {...pageProps} />
-      </TooltipProvider>
+      <Component {...pageProps} />
     </>
   );
 };
