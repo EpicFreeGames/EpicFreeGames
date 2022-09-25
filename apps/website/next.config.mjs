@@ -1,4 +1,6 @@
-const withBundleAnalyzer = require("@next/bundle-analyzer")({ enabled: !!process.env.ANALYZE });
+import withBundleAnalyzer from "@next/bundle-analyzer";
+
+import { webLanguages } from "@efg/i18n/languages";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -55,10 +57,10 @@ const nextConfig = {
     },
   ],
   i18n: {
-    locales: ["en", "pl", "es-ES", "vi", "zh-TW", "af"],
+    locales: webLanguages.map(([code]) => code),
     defaultLocale: "en",
     localeDetection: true,
   },
 };
 
-module.exports = withBundleAnalyzer(nextConfig);
+export default withBundleAnalyzer({ enabled: !!process.env.ANALYZE })(nextConfig);

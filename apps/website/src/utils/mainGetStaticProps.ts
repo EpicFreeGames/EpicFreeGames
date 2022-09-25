@@ -1,6 +1,6 @@
 import { GetStaticProps } from "next";
 
-import { defaultLanguage, languages, translations } from "@efg/i18n";
+import { defaultLanguage, languages, translations, webLanguages } from "@efg/i18n";
 import type { ILanguage } from "@efg/types";
 
 import { IEnvironment, environment } from "./envs";
@@ -16,7 +16,7 @@ export const mainGetStaticProps: GetStaticProps<{
   return {
     props: {
       language,
-      languages: [...languages.values()],
+      languages: [...webLanguages].map(([key, lang]) => lang),
       translations: translations.get(language.code)!,
       env: environment,
     },

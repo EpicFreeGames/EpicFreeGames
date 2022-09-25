@@ -26,7 +26,7 @@ export const Layout = ({ title, children, translations, languages, env }: Props)
   const prod = env === "Production";
 
   const baseUrl = `${`https://${prod ? "" : "staging."}epicfreegames.net`}`;
-  const botName = prod ? "EpicFreeGames" : "Staging-EpicFreeGames";
+  const botName = prod ? "EpicFreeGames" : `${env}-EpicFreeGames`;
 
   return (
     <>
@@ -72,7 +72,18 @@ export const Layout = ({ title, children, translations, languages, env }: Props)
           id="keywords"
         />
 
-        <AltLanguages baseUrl={baseUrl} pathname={pathname} isHome={isHome} />
+        {languages.map((language) => (
+          <link
+            key={language.code}
+            rel="alternate"
+            hrefLang={language.code}
+            href={
+              language.code === "en"
+                ? `${baseUrl}${!isHome ? pathname : ""}`
+                : `${baseUrl}/${language.code}${!isHome ? pathname : ""}`
+            }
+          />
+        ))}
 
         <link rel="alternate" hrefLang="x-default" href={`${baseUrl}${!isHome ? pathname : ""}`} />
       </Head>
@@ -96,50 +107,3 @@ export const Layout = ({ title, children, translations, languages, env }: Props)
     </>
   );
 };
-
-type AltLanguagesProps = {
-  isHome: boolean;
-  pathname: string;
-  baseUrl: string;
-};
-
-const AltLanguages = ({ baseUrl, isHome, pathname }: AltLanguagesProps) => (
-  <>
-    {/* en */}
-    <link key="en" rel="alternate" hrefLang="en" href={`${baseUrl}${isHome ? pathname : ""}`} />
-
-    {/* pl */}
-    <link key="pl" rel="alternate" hrefLang="pl" href={`${baseUrl}/pl${!isHome ? pathname : ""}`} />
-
-    {/* es and es-ES points to the same location */}
-    <link
-      key="es"
-      rel="alternate"
-      hrefLang="es"
-      href={`${baseUrl}/es-ES${!isHome ? pathname : ""}`}
-    />
-    <link
-      key="es-ES"
-      rel="alternate"
-      hrefLang="es-ES"
-      href={`${baseUrl}/es-ES${!isHome ? pathname : ""}`}
-    />
-
-    {/* vi */}
-    <link key="vi" rel="alternate" hrefLang="vi" href={`${baseUrl}/vi${!isHome ? pathname : ""}`} />
-
-    {/* zh and zh-TW points to the same location */}
-    <link
-      key="zh"
-      rel="alternate"
-      hrefLang="zh"
-      href={`${baseUrl}/zh-TW${!isHome ? pathname : ""}`}
-    />
-    <link
-      key="zh-TW"
-      rel="alternate"
-      hrefLang="zh-TW"
-      href={`${baseUrl}/zh-TW${!isHome ? pathname : ""}`}
-    />
-  </>
-);
