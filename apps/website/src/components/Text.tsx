@@ -54,7 +54,7 @@ export const Code = ({ children, toCopy }: CodeProps) => {
           copy();
         }
       }}
-      className={`focus whitespace-nowrap rounded-md border-[1px] border-gray-700 bg-gray-800 py-[0.1rem] px-1 font-mono text-xs outline-none transition-all duration-200 sm:text-base ${
+      className={`focus whitespace-nowrap rounded-md border-[1px] border-gray-700 bg-gray-800 py-[0.1rem] px-1 font-mono text-xs transition-all duration-200 sm:text-base ${
         toCopy ? "hover:cursor-pointer hover:bg-gray-800/50" : ""
       }`}
       tabIndex={toCopy ? 0 : -1}
@@ -72,8 +72,8 @@ type LinkProps = {
 
 export const Link = ({ children, href, locale }: LinkProps) => (
   <NextLink href={href} passHref locale={locale}>
-    <a className="focus rounded-md outline-none">
-      <span className="border-b-2 border-b-blue-400 border-opacity-40 text-sm font-bold text-blue-400 outline-none transition-all duration-200 hover:border-opacity-100 sm:text-base">
+    <a className="focus w-max rounded-md">
+      <span className="border-b-2 border-b-blue-400 border-opacity-40 text-sm font-bold text-blue-400 transition-all duration-200 hover:border-opacity-100 sm:text-base">
         {children}
       </span>
     </a>

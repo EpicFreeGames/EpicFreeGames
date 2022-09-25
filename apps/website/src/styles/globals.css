@@ -16,13 +16,7 @@ body {
   }
 
   .focus {
-    @apply outline-none transition-all duration-200;
-  }
-
-  .focus:focus-visible {
-    @apply outline-none;
-    box-shadow: var(--focus-color) 0 0 0 2px;
-    border-color: var(--focus-color);
+    @apply outline-none outline outline-[3px] outline-offset-2 outline-transparent transition-all duration-200 focus-visible:outline-blue-500;
   }
 }
 

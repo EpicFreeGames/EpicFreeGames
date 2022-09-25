@@ -2,7 +2,7 @@ import * as Collapsible from "@radix-ui/react-collapsible";
 import { AnimatePresence, motion } from "framer-motion";
 import { ReactNode, useState } from "react";
 
-import { t } from "~i18n/translate";
+import { useT } from "~hooks/useT";
 
 import { AnimatedChevron } from "./AnimatedChevron";
 import { Markdown } from "./Markdown";
@@ -57,6 +57,7 @@ const AccordionItem = ({ title, children, value, currentValue, change }: Accordi
 };
 
 export const FAQAccordion = ({ translations }: { translations: Record<string, string> }) => {
+  const t = useT(translations);
   const [value, setValue] = useState("");
 
   const change = (open: boolean, value: string) => (open ? setValue(value) : setValue(""));
@@ -66,37 +67,32 @@ export const FAQAccordion = ({ translations }: { translations: Record<string, st
       <AccordionItem
         title={
           <h2 className="text-sm font-bold sm:text-base">
-            <Markdown>{`${t({ translations, key: "faq_1_q" })}`}</Markdown>
+            <Markdown>{`${t({ key: "faq_1_q" })}`}</Markdown>
           </h2>
         }
         value="1"
         currentValue={value}
         change={change}
       >
-        <Markdown>
-          {`${t({ translations, key: "faq_1_a", vars: { serverInvite: "/discord" } })}`}
-        </Markdown>
+        <Markdown>{`${t({ key: "faq_1_a", vars: { serverInvite: "/discord" } })}`}</Markdown>
       </AccordionItem>
 
       <AccordionItem
         title={
           <h2 className="text-sm font-bold sm:text-base">
-            <Markdown>{`${t({ translations, key: "faq_2_q" })}`}</Markdown>
+            <Markdown>{`${t({ key: "faq_2_q" })}`}</Markdown>
           </h2>
         }
         value="2"
         currentValue={value}
         change={change}
       >
-        <Markdown>
-          {`${t({ translations, key: "faq_2_a", vars: { serverInvite: "/discord" } })}`}
-        </Markdown>
+        <Markdown>{`${t({ key: "faq_2_a", vars: { serverInvite: "/discord" } })}`}</Markdown>
       </AccordionItem>
 
       <AccordionItem
         title={
           <h2 className="text-sm font-bold sm:text-base">{`${t({
-            translations,
             key: "faq_3_q",
           })}`}</h2>
         }
@@ -104,13 +100,12 @@ export const FAQAccordion = ({ translations }: { translations: Record<string, st
         currentValue={value}
         change={change}
       >
-        <Markdown>{t({ translations, key: "faq_3_a" })}</Markdown>
+        <Markdown>{t({ key: "faq_3_a" })}</Markdown>
       </AccordionItem>
 
       <AccordionItem
         title={
           <h2 className="text-sm font-bold sm:text-base">{`${t({
-            translations,
             key: "faq_4_q",
           })}`}</h2>
         }
@@ -120,7 +115,6 @@ export const FAQAccordion = ({ translations }: { translations: Record<string, st
       >
         <Markdown>
           {`${t({
-            translations,
             key: "faq_4_a",
             vars: { serverInvite: "/discord" },
           })}`}

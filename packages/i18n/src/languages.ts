@@ -295,4 +295,6 @@ export const languages = new Map<string, ILanguage & { websiteReady: boolean }>(
   ],
 ]);
 
+export const webLanguages = [...languages].filter(([key, lang]) => lang.websiteReady);
+
 export const defaultLanguage: ILanguage = languages.get("en")!;

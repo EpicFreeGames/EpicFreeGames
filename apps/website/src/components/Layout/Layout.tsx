@@ -5,6 +5,7 @@ import { ReactNode } from "react";
 
 import type { ILanguage } from "@efg/types";
 
+import { Footer } from "./Footer/Footer";
 import { NavBar } from "./NavBar";
 
 type Props = {
@@ -86,9 +87,11 @@ export const Layout = ({ title, children, translations, languages, env }: Props)
       <div className="flex flex-col">
         <NavBar translations={translations} languages={languages} />
 
-        <main className="mx-auto mb-[4rem] mt-[6rem] w-full max-w-screen-sm px-3 sm:mt-[9rem]">
+        <main className="mx-auto mt-[6rem] w-full max-w-screen-sm px-3 sm:mt-[9rem]">
           {children}
         </main>
+
+        <Footer translations={translations} languages={languages} />
       </div>
     </>
   );
