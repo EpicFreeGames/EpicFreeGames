@@ -1,6 +1,13 @@
 import { useCallback } from "react";
 
-import { ITranslations, Join, PathKeys, Variables, variableEnd, variableStart } from "@efg/i18n";
+import {
+  ITranslations,
+  Join,
+  PathKeys,
+  Variables,
+  variableEnd,
+  variableStart,
+} from "@efg/i18n/types";
 
 type T = ITranslations;
 
