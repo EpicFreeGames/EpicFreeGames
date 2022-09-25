@@ -183,6 +183,16 @@ export const currencies: Map<string, ICurrency> = new Map<string, ICurrency>([
     },
   ],
   [
+    "TWD",
+    {
+      name: "NT$ New Taiwan dollar (TWD)",
+      code: "TWD",
+      afterPrice: "",
+      inFrontOfPrice: "NT$",
+      apiValue: "TW",
+    },
+  ],
+  [
     "HUF",
     {
       name: "Ft Hungarian Forint (HUF)",
