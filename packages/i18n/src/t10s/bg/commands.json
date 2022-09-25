@@ -1,10 +1,10 @@
 {
-  "cmd_desc_set_currency": "Pick a currency for the games' prices on this server",
+  "cmd_desc_set_currency": "Изберете валута за цените на игрите на този сървър",
   "cmd_desc_set_thread": "Избери тред и аз ще поствам нови безплатни игри",
   "cmd_desc_set_channel": "Избери канал и там ще поствам нови безплатни игрички",
-  "cmd_desc_set_role": "Pick a role I'll ping when a new game comes free",
-  "cmd_desc_set_language": "Pick a language for my messages on this server",
-  "cmd_desc_remove_channel": "Remove the set channel (or thread)",
+  "cmd_desc_set_role": "Изберете роля, която ще изпратя, когато се появи нова игра безплатно",
+  "cmd_desc_set_language": "Изберете език за моите съобщения на този сървър",
+  "cmd_desc_remove_channel": "Премахнете зададения канал (или нишка(тред))",
   "cmd_desc_remove_role": "Махни избраната роля",
   "cmd_desc_invite": "Дай ми инвайт линк",
   "cmd_desc_help": "Използвай това, ако се нуждаеш от помощ",
@@ -13,5 +13,5 @@
   "cmd_desc_free": "Виж последните безплатни игри",
   "cmd_desc_settings": "Виж настройките",
   "cmd_desc_vote": "Вотнете за мен",
-  "cmd_desc_test": "Sends a test message to the set channel and pings the set role"
+  "cmd_desc_test": "Изпраща тестово съобщение до зададения канал и пингва зададената роля"
 }

@@ -173,9 +173,6 @@ export type ITranslations = {
   command: "Command";
   description: "Description";
 
-  home: "Home";
-
-  links: "Links";
   contact_us: "Contact us";
   privacy_policy: "Privacy policy";
   terms_of_service: "Terms of service";
