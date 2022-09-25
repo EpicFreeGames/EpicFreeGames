@@ -332,7 +332,7 @@ router.put(
 
 router.delete(
   "/:gameId",
-  endpointAuth(Flags.DeleteGames, Flags.GetGames),
+  endpointAuth(Flags.DeleteGames),
   withValidation(
     {
       params: z.object({
