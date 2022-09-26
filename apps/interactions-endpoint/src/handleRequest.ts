@@ -35,7 +35,7 @@ export const handleRequests = async (req: Request, res: Response) => {
       path: `/servers/${i.guild_id}`,
     });
 
-    if (server) server = data;
+    if (data) server = data;
   }
 
   const language = server?.language || defaultLanguage;
