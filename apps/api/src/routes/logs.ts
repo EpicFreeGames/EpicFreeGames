@@ -21,14 +21,26 @@ router.post(
         .object({
           command: z.string(),
           senderId: z.string(),
-          serverId: bigintSchema,
+          serverId: bigintSchema.nullable(),
           error: z.string().nullable(),
         })
         .strict(),
     },
     async (req, res) => {
+      const { serverId, ...rest } = req.body;
+
       await prisma.commandLog.create({
-        data: req.body,
+        data: {
+          ...rest,
+          ...(serverId && {
+            server: {
+              connectOrCreate: {
+                create: { id: serverId },
+                where: { id: serverId },
+              },
+            },
+          }),
+        },
       });
 
       broadcastWss(req.wss, WsMsgType.Command, req.body.command);

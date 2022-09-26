@@ -25,12 +25,18 @@ export const handleRequests = async (req: Request, res: Response) => {
   if (i.type === InteractionType.ApplicationCommandAutocomplete)
     return autoCompleteHandler(command, i, res, commandName);
 
-  const { data: server } = await efgApi<IServer | undefined>({
-    method: "GET",
-    path: `/servers/${i.guild_id}`,
-  });
-
   if (command.needsGuild && !i.guild_id) return;
+
+  let server: IServer | undefined = undefined;
+
+  if (i.guild_id) {
+    const { data } = await efgApi<IServer | undefined>({
+      method: "GET",
+      path: `/servers/${i.guild_id}`,
+    });
+
+    if (server) server = data;
+  }
 
   const language = server?.language || defaultLanguage;
   const currency = server?.currency || defaultCurrency;
@@ -71,7 +77,7 @@ export const handleRequests = async (req: Request, res: Response) => {
       path: "/logs/commands",
       body: {
         command: commandName,
-        serverId: i.guild_id,
+        serverId: i.guild_id || null,
         senderId,
         error: null,
       },
