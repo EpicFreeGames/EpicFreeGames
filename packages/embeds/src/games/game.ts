@@ -37,7 +37,7 @@ export default (game: IGameWithStuff, language: ILanguage, currency: ICurrency):
 
       "\n\n" +
 
-      `💰 ${embedUtils.bold(`${embedUtils.strike(getGamePrice(game, currency))} ${embedUtils.chars.arrow} ${t({language,key: "free"})}`)}!` +
+      `💰 ${embedUtils.bold(`${embedUtils.strike(getGamePrice(game, currency))} ${embedUtils.chars.arrow} ${t({language,key: "free"})}`!)}` +
 
 
       embedUtils.footer(language),
