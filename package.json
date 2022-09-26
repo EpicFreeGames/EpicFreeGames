@@ -17,7 +17,9 @@
     "web::dev": "./node_modules/.bin/dotenv -e .env.development -- turbo run dev --filter=website...",
     "sender::dev": "./node_modules/.bin/dotenv -e .env.development -- turbo run dev --filter=sender...",
     "idash::dev": "./node_modules/.bin/dotenv -e .env.development -- turbo run dev --filter=internal-dashboard...",
-    "cmds": "./node_modules/.bin/dotenv -e .env.development -- turbo run start --filter=slash-commands..."
+    "cmds": "./node_modules/.bin/dotenv -e .env.development -- turbo run start --filter=slash-commands...",
+    "db::update": "cd apps/api/ && ../../node_modules/.bin/dotenv -e ../../.env.development -- yarn prisma db push",
+    "db::studio": "cd apps/api/ && ../../node_modules/.bin/dotenv -e ../../.env.development -- yarn prisma studio"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^3.3.0",
