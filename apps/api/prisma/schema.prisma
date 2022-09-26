@@ -52,7 +52,7 @@ model CommandLog {
   senderId String
   serverId BigInt?
   server   Server? @relation(fields: [serverId], references: [id], onDelete: Cascade)
-  error    String?
+  error    String? @db.Text
 }
 
 model SendingLog {

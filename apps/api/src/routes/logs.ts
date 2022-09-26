@@ -27,13 +27,13 @@ router.post(
         .strict(),
     },
     async (req, res) => {
-      const addedLog = await prisma.commandLog.create({
+      await prisma.commandLog.create({
         data: req.body,
       });
 
       broadcastWss(req.wss, WsMsgType.Command, req.body.command);
 
-      return res.send(addedLog);
+      return res.status(204).end();
     }
   )
 );

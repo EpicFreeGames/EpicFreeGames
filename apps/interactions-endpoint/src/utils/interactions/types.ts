@@ -34,12 +34,10 @@ export type SlashCommand =
       execute: (
         {
           i,
-          server,
           language,
           currency,
         }: {
           i: APIChatInputApplicationCommandDMInteraction;
-          server?: never;
           language: ILanguage;
           currency: ICurrency;
         },
