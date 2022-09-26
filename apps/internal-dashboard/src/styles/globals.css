@@ -50,3 +50,7 @@ body {
   outline-width: 2px;
   border-radius: var(--rmsc-radius);
 }
+
+.nav-bar {
+  padding-right: calc(var(--removed-body-scroll-bar-size, 0px) + 0.75rem);
+}
