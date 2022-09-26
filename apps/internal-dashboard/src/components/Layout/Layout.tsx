@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { ElementType, ReactNode } from "react";
+import { Toaster } from "react-hot-toast";
 
 import { useNotifs } from "~hooks/useNotifs";
 import { useUser } from "~hooks/useUser";
@@ -27,6 +28,16 @@ export const Layout = ({ children, title, titleButtons }: Props) => {
 
       {!!user && (
         <>
+          <Toaster
+            toastOptions={{
+              style: {
+                backgroundColor: "#1f2937",
+                border: "1px solid #374151",
+                color: "#f8fafc",
+              },
+            }}
+          />
+
           <NavBar />
 
           <main className="mx-auto max-w-screen-lg px-3 pt-[3.5rem]">
