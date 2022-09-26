@@ -6,7 +6,8 @@
   "scripts": {
     "build": "rm -rf dist && ./node_modules/.bin/tsc -p ./tsconfig.json",
     "start": "node --experimental-specifier-resolution=node ./dist/index.js",
-    "dev": "nodemon -q -e ts,json --ignore ./dist --watch ./ --exec 'yarn build && yarn start'"
+    "devstart": "yarn build && yarn start",
+    "dev": "nodemon -q -e ts,json --ignore ./dist --watch ./ --exec 'yarn devstart'"
   },
   "dependencies": {
     "@efg/configuration": "*",
