@@ -13,7 +13,7 @@ const router = Router();
 
 router.post(
   "/:userId/flags",
-  endpointAuth(Flags.EditUsers, Flags.GetServers),
+  endpointAuth(Flags.EditUsers),
   withValidation(
     {
       params: z
