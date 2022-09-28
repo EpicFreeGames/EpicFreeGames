@@ -10,21 +10,22 @@ export const Menu = () => {
 
   const showGames = useHasFlags(userFlags, Flags.GetGames);
   const showCurrencies = useHasFlags(userFlags, Flags.GetCurrencies);
+  const showLanguages = useHasFlags(userFlags, Flags.GetLanguages);
   const showSends = useHasFlags(userFlags, Flags.GetSendings);
   const showUsers = useHasFlags(userFlags, Flags.GetUsers);
 
-  const showMenu = showGames || showCurrencies || showSends || showUsers;
+  const showMenu = showGames || showCurrencies || showLanguages || showSends || showUsers;
 
   if (!showMenu) return null;
 
   return (
     <DropdownMenu>
       <DropdownMenuLinkItem href="/">Home</DropdownMenuLinkItem>
-      <DropdownMenuLinkItem href="/games">Games</DropdownMenuLinkItem>
-      <DropdownMenuLinkItem href="/currencies">Currencies</DropdownMenuLinkItem>
-      <DropdownMenuLinkItem href="/languages">Languages</DropdownMenuLinkItem>
-      <DropdownMenuLinkItem href="/users">Users</DropdownMenuLinkItem>
-      <DropdownMenuLinkItem href="/sends">Sends</DropdownMenuLinkItem>
+      {showGames && <DropdownMenuLinkItem href="/games">Games</DropdownMenuLinkItem>}
+      {showCurrencies && <DropdownMenuLinkItem href="/currencies">Currencies</DropdownMenuLinkItem>}
+      {showLanguages && <DropdownMenuLinkItem href="/languages">Languages</DropdownMenuLinkItem>}
+      {showUsers && <DropdownMenuLinkItem href="/users">Users</DropdownMenuLinkItem>}
+      {showSends && <DropdownMenuLinkItem href="/sends">Sends</DropdownMenuLinkItem>}
     </DropdownMenu>
   );
 };
