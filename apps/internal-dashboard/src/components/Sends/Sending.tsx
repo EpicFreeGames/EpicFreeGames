@@ -37,7 +37,6 @@ export const Sending = ({ sending }: Props) => {
 
       <div className="flex flex-col gap-2">
         <Spec title="Games" value={sending.games?.map((g) => g.name).join(", ") ?? ""} />
-        <Spec title="Target" value={sending.target} />
         <Spec title="Sent" value={sending._count.logs} />
       </div>
     </div>
