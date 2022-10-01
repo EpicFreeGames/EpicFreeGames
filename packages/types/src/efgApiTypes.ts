@@ -80,6 +80,7 @@ export type IServer = {
 
 export type ICounts = {
   total: number;
+  totalToday: number;
   sendable: number;
   hasWebhook: number;
   hasRole: number;

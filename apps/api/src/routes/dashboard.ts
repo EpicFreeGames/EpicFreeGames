@@ -1,3 +1,4 @@
+import { startOfToday } from "date-fns";
 import { Router } from "express";
 
 import { defaultCurrency, defaultLanguage } from "@efg/i18n";
@@ -11,6 +12,7 @@ const router = Router();
 router.get("/counts", endpointAuth(Flags.GetDashboard), async (req, res) => {
   const [
     total,
+    totalToday,
     sendable,
     hasWebhook,
     hasRole,
@@ -22,6 +24,14 @@ router.get("/counts", endpointAuth(Flags.GetDashboard), async (req, res) => {
   ] = await prisma.$transaction([
     // total
     prisma.server.count(),
+    // total today
+    prisma.server.count({
+      where: {
+        createdAt: {
+          gte: startOfToday(),
+        },
+      },
+    }),
     // sendable
     prisma.server.count({
       where: {
@@ -94,6 +104,7 @@ router.get("/counts", endpointAuth(Flags.GetDashboard), async (req, res) => {
 
   res.send({
     total,
+    totalToday,
     sendable,
     hasWebhook,
     hasRole,

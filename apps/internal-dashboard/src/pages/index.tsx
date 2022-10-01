@@ -26,7 +26,12 @@ const Counts = () => {
           <div className="flex flex-col items-center gap-2 rounded-md bg-gray-800 py-2 px-3">
             <Heading>Total servers in db:</Heading>
 
-            <p className="text-lg">{counts?.total}</p>
+            <div className="flex items-center gap-2">
+              <p className="text-lg">{counts?.total}</p>
+              {counts?.totalToday && (
+                <p className="text-sm text-green-500">(+{counts?.totalToday} today)</p>
+              )}
+            </div>
           </div>
 
           <div className="flex flex-col items-center gap-2 rounded-md bg-gray-800 py-2 px-3">
