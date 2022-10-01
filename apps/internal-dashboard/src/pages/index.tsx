@@ -28,7 +28,7 @@ const Counts = () => {
 
             <div className="flex items-center gap-2">
               <p className="text-lg">{counts?.total}</p>
-              {counts?.totalToday && (
+              {!!counts?.totalToday && (
                 <p className="text-sm text-green-500">(+{counts?.totalToday} today)</p>
               )}
             </div>
