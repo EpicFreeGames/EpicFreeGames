@@ -7,21 +7,18 @@ type Props = {
   path: string;
   method: string;
   body?: any;
+  query?: URLSearchParams;
   redirect40X?: boolean;
 };
 
-export const apiRequest = <TData = any>({ method, path, body, redirect40X = true }: Props) =>
-  fetch(`${apiBaseUrl}${path}`, {
+export const apiRequest = <TData = any>({ method, path, body, query, redirect40X = true }: Props) =>
+  fetch(`${apiBaseUrl}${path}${!!query ? `?${query.toString()}` : ""}`, {
     method,
     credentials: "include",
-    ...(body
-      ? {
-          body: JSON.stringify(body),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      : {}),
+    ...(body && {
+      body: JSON.stringify(body),
+      headers: { "Content-Type": "application/json" },
+    }),
   }).then(async (r) => {
     const json = await r.json().catch((e) => null);
 
