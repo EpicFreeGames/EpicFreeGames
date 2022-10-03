@@ -8,6 +8,7 @@ const fetchCounts = () =>
   apiRequest<ICounts>({
     method: "GET",
     path: "/dashboard/counts",
+    query: new URLSearchParams({ today: new Date().toISOString() }),
   });
 
 export const useDashboardCounts = () => useQuery(["counts"], fetchCounts);
