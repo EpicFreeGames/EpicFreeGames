@@ -19,6 +19,8 @@ router.get(
       query: z.object({ today: z.string() }),
     },
     async (req, res) => {
+      const startOfFrontendToday = startOfDay(parseISO(decodeURIComponent(req.query.today)));
+
       const [
         total,
         totalToday,
@@ -36,7 +38,7 @@ router.get(
         prisma.server.count(),
         // total today
         prisma.server.count({
-          where: { createdAt: { gte: startOfDay(parseISO(decodeURIComponent(req.query.today))) } },
+          where: { createdAt: { gte: startOfFrontendToday } },
         }),
         // sendable
         prisma.server.count({
@@ -78,7 +80,7 @@ router.get(
         prisma.commandLog.count(),
         // total commands today
         prisma.commandLog.count({
-          where: { createdAt: { gte: startOfDay(parseISO(decodeURIComponent(req.query.today))) } },
+          where: { createdAt: { gte: startOfFrontendToday } },
         }),
       ]);
 
