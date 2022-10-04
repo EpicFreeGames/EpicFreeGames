@@ -16,9 +16,7 @@ router.get(
   endpointAuth(Flags.GetDashboard),
   withValidation(
     {
-      query: z.object({
-        today: z.string(),
-      }),
+      query: z.object({ today: z.string() }),
     },
     async (req, res) => {
       const [
@@ -32,6 +30,7 @@ router.get(
         hasThread,
         hasOnlyChannel,
         totalCommands,
+        totalCommandsToday,
       ] = await prisma.$transaction([
         // total
         prisma.server.count(),
@@ -77,6 +76,10 @@ router.get(
         }),
         // total commands
         prisma.commandLog.count(),
+        // total commands today
+        prisma.commandLog.count({
+          where: { createdAt: { gte: startOfDay(parseISO(decodeURIComponent(req.query.today))) } },
+        }),
       ]);
 
       const webhookAdoption = `${((hasWebhook / sendable) * 100 || 0).toFixed(2)} %`;
@@ -93,6 +96,7 @@ router.get(
         webhookAdoption,
         hasOnlyChannel,
         totalCommands,
+        totalCommandsToday,
       });
     }
   )

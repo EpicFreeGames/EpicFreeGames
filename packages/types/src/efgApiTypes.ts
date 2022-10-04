@@ -90,6 +90,7 @@ export type ICounts = {
   hasOnlyChannel: number;
   webhookAdoption: string;
   totalCommands: number;
+  totalCommandsToday: number;
 };
 
 export type ISendingLog = {

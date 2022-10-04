@@ -43,7 +43,12 @@ const Counts = () => {
           <div className="flex flex-col items-center gap-2 rounded-md bg-gray-800 py-2 px-3">
             <Heading>Total commands:</Heading>
 
-            <p className="text-lg">{counts?.totalCommands}</p>
+            <div className="flex items-center gap-2">
+              <p className="text-lg">{counts?.totalCommands}</p>
+              {!!counts?.totalCommandsToday && (
+                <p className="text-sm text-green-500">(+{counts?.totalCommandsToday} today)</p>
+              )}
+            </div>
           </div>
         </div>
       </div>

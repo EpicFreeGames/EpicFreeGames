@@ -47,12 +47,13 @@ model Server {
 }
 
 model CommandLog {
-  id       String  @id @default(cuid())
-  command  String
-  senderId String
-  serverId BigInt?
-  server   Server? @relation(fields: [serverId], references: [id], onDelete: Cascade)
-  error    String? @db.Text
+  id        String   @id @default(cuid())
+  command   String
+  senderId  String
+  serverId  BigInt?
+  server    Server?  @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  error     String?  @db.Text
+  createdAt DateTime @default(now())
 }
 
 model SendingLog {
