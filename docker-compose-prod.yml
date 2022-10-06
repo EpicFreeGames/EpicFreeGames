@@ -58,6 +58,7 @@ services:
     restart: always
     environment:
       <<: *envs
+      DEBUG: 1
     networks:
       - efg
 
@@ -69,6 +70,7 @@ services:
     restart: always
     environment:
       <<: *envs
+      DEBUG: 1
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.efg-ie-prod.entrypoints=https"
