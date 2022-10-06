@@ -17,9 +17,9 @@
   "channel_thread_not_set": "No establecido, puedes establecer uno con `/set channel` o `/set thread`",
   "role_not_set": "No establecido, puedes establecer uno con `/set role`",
   "too_many_webhooks": "Demasiados webhooks",
-  "ten_webhooks_only": "Un canal puede tener 10 webhooks como máximo. Por favor elimina uno y vuelve a intentarlo.",
+  "ten_webhooks_only": "Un canal puede tener 10 webhooks como máximo. Por favor, elimina uno y vuelve a intentarlo.",
   "would_you_like_to_translate": "¿Te gustaría ayudar a traducir <botName>?",
-  "if_would_like_to_translate": "Si es así, ¡por favor háznoslo saber en nuestro [servidor de soporte](<serverInvite>)!",
+  "if_would_like_to_translate": "Si es así, ¡por favor, háznoslo saber en nuestro [servidor de soporte](<serverInvite>)!",
   "having_problems": "¿Tienes problemas? ¡Háznoslo saber en nuestro [servidor de soporte](<serverInvite>) y te ayudaremos!",
   "how_to_tutorial": "¿Cómo ser notificado automáticamente de juegos gratuitos? ¡[Haz clic aquí](<tutorialLink>) para un tutorial!",
   "looking_for_commands": "¿Buscas comandos? ¡[Haz clic aquí](<commandsLink>) para mi lista de comandos!",
@@ -39,5 +39,5 @@
   "help": "Ayuda",
   "missing": "¡Faltan!",
   "thank_you": "¡Gracias!",
-  "webhooks_notification": "¡Hoy apoyo los webhooks! Me permiten enviar las notificaciones mucho más rápido. Administradores del servidor, por favor haz `/set channel` (o `/set thread`) para habilitar las notificaciones a través de webhooks."
+  "webhooks_notification": "¡Hoy apoyo los webhooks! Me permiten enviar las notificaciones mucho más rápido. Administradores del servidor, por favor, haz `/set channel` (o `/set thread`) para habilitar las notificaciones a través de webhooks."
 }
