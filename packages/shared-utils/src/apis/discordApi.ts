@@ -54,7 +54,12 @@ export const discordApi = async <TData>(
             "Discord API request failed",
             `Request url: ${url}`,
             `Error: ${objToStr(error)}`,
-            `Body used: ${objToStr(body)}`,
+            `Body used: ${JSON.stringify(body)}`,
+            `Details?: ${objToStr({
+              "res.status": res.status,
+              "res.headers": res.headers,
+              "res.data": json,
+            })}`,
           ].join("\n")
         );
 
@@ -67,7 +72,7 @@ export const discordApi = async <TData>(
           "Discord API request failed",
           `Request url: ${url}`,
           `Error: ${objToStr(error)}`,
-          `Body used: ${objToStr(body)}`,
+          `Body used: ${JSON.stringify(body)}`,
         ].join("\n")
       );
 
