@@ -98,7 +98,7 @@ export const setRoleSubCommand = async (
   const { data: updatedServer, error: serverUpdateError } = await efgApi<IServer>({
     method: "PUT",
     path: `/servers/${server.id}/role`,
-    body: { roleId: selectedRoleId },
+    body: { roleId: useful.toDb },
   });
 
   if (serverUpdateError) {
