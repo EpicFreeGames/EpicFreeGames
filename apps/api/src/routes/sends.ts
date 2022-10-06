@@ -44,7 +44,18 @@ router.get(
         },
         where: {
           channelId: { not: null },
-          sendingLogs: { none: { sendingId } },
+          OR: [
+            {
+              sendingLogs: {
+                some: {
+                  sendingId,
+                  result: { contains: "429" },
+                  success: false,
+                },
+              },
+            },
+            { sendingLogs: { none: { sendingId } } },
+          ],
         },
         take: 10000,
         ...(after
