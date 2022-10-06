@@ -61,14 +61,14 @@ app.post("/", async (req, res) => {
       .json({ message: "Sending was not started, all servers got filtered out", success: false });
   }
 
+  const serverCount = filterResult.hookServers.length + filterResult.messageServers.length;
+
   logger.info(
     [
       `[${sendingId}] - Filtering done`,
       `Webhook servers: ${filterResult.hookServers.length}`,
       `Message servers: ${filterResult.messageServers.length}`,
-      `Starting sending to ${
-        filterResult.hookServers.length + filterResult.messageServers.length
-      } servers...`,
+      `Starting sending to ${serverCount} servers...`,
     ].join("\n")
   );
 
@@ -76,7 +76,7 @@ app.post("/", async (req, res) => {
   executeHooks(games, filterResult.hookServers, sendingId);
 
   logger.info("Sending started");
-  return res.json({ message: "Sending started", success: true });
+  return res.json({ message: "Sending started", success: true, serverCount });
 });
 
 const port = process.env.PORT || 3000;
