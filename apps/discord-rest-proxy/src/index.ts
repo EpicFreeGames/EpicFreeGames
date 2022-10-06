@@ -4,6 +4,7 @@ import express from "express";
 
 import { configuration } from "@efg/configuration";
 import { logger } from "@efg/logger";
+import { objToStr } from "@efg/shared-utils";
 
 (async () => {
   const app = express();
@@ -24,12 +25,21 @@ import { logger } from "@efg/logger";
       url: proxyTo,
       headers: {
         Authorization: `Bot ${configuration.DISCORD_BOT_TOKEN}`,
-        "Content-Type": "application/json",
+        ...(bodyHasProps && { "Content-Type": "application/json" }),
       },
       ...(bodyHasProps && { data: body }),
     }).catch((err) => err.response);
 
-    if (!discordResponse || discordResponse.status !== 200) console.log(discordResponse);
+    if (!discordResponse || discordResponse.status !== 200)
+      logger.error(
+        `Discord API request failed to: ${proxyTo}`,
+        objToStr({
+          method,
+          status: discordResponse?.status,
+          data: discordResponse?.data,
+          headers: discordResponse?.headers,
+        })
+      );
 
     logger.debug(`Sending response from ${proxyTo} with status ${discordResponse.status}`);
 
