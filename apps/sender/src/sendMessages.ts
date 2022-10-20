@@ -16,7 +16,7 @@ export const sendMessages = async (
   sendingId: string
 ) => {
   for (const server of servers) {
-    await wait(30);
+    await wait(45);
 
     const gameEmbeds = games.map((game) =>
       embeds.games.game(game, server.language, server.currency)
