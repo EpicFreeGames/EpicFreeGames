@@ -9,7 +9,7 @@ FROM base AS pruner
 ARG APP
 ARG APP_FOLDER
 
-RUN yarn global add turbo
+RUN yarn global add turbo@1.4.4
 
 COPY ./*.json yarn.lock ./
 COPY ./apps ./apps
