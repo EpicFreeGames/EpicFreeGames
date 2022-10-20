@@ -1,8 +1,8 @@
 {
   "support_click_here": "Si necesitas ayuda, [haz clic aquí](<serverInvite>) para unirte a nuestro servidor de soporte",
   "set_channel_first": "¡Tienes que establecer un canal primero!",
-  "no_free_games": "No hay juegos gratis en este momento",
-  "no_upcoming_games": "No hay juegos por el momento",
+  "no_free_games": "No hay juegos gratuitos en este momento",
+  "no_upcoming_games": "No hay juegos próximos gratuitos por el momento",
   "bot_missing_perms": "¡Me faltan algunos permisos en <channel>!",
   "user_missing_perms": "No tienes permisos suficientes para usar este comando",
   "manage_guild_needed": "Este comando requiere que tengas el permiso de **administrar servidor**",
@@ -28,8 +28,8 @@
   "free": "Gratis",
   "invite": "Invitar",
   "vote": "Votar",
-  "support": "Apoyo",
-  "website": "Página Web",
+  "support": "Soporte",
+  "website": "Página web",
   "channel": "Canal",
   "thread": "Hilo",
   "role": "Rol",
@@ -39,5 +39,5 @@
   "help": "Ayuda",
   "missing": "¡Faltan!",
   "thank_you": "¡Gracias!",
-  "webhooks_notification": "¡Hoy apoyo los webhooks! Me permiten enviar las notificaciones mucho más rápido. Administradores del servidor, por favor, haz `/set channel` (o `/set thread`) para habilitar las notificaciones a través de webhooks."
+  "webhooks_notification": "¡Hoy apoyo los webhooks! Me permiten enviar las notificaciones mucho más rápido. Administradores del servidor, por favor, haced `/set channel` (o `/set thread`) para habilitar las notificaciones a través de webhooks."
 }

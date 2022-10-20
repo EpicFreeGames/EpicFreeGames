@@ -9,9 +9,9 @@
   "cmd_desc_invite": "Get my invite link",
   "cmd_desc_help": "Use this if you need some help",
   "cmd_desc_debug": "Used for debugging",
-  "cmd_desc_up": "See the upcoming free games",
-  "cmd_desc_free": "See the current free games",
-  "cmd_desc_settings": "See the settings",
-  "cmd_desc_vote": "Vote for me",
+  "cmd_desc_up": "Voir les prochains jeux gratuits",
+  "cmd_desc_free": "Voir les jeux gratuits du moment",
+  "cmd_desc_settings": "Voir les paramètres",
+  "cmd_desc_vote": "Votez pour moi",
   "cmd_desc_test": "Sends a test message to the set channel and pings the set role"
 }

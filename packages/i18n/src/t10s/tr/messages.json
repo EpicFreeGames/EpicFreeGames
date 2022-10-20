@@ -2,7 +2,7 @@
   "support_click_here": "Eğer yardıma ihtiyacınız varsa [buraya tıklayarak](<serverInvite>) destek sunucumuza katılabilirsiniz",
   "set_channel_first": "Önce kanalı ayarlamalısın!",
   "no_free_games": "Şu an bedava bir oyun yok",
-  "no_upcoming_games": "Şu an yaklaşan bir oyun yok",
+  "no_upcoming_games": "Şu an yaklaşan bedava bir oyun yok",
   "bot_missing_perms": "<channel> kanalı için bazı yetkilerim eksik.",
   "user_missing_perms": "Bu komutu kullanmak için iznin yok",
   "manage_guild_needed": "Bu komudu kullanmak için **Sunucuyu Yönet** iznine sahip olmalısın",

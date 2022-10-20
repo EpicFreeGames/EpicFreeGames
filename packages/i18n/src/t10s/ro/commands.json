@@ -1,9 +1,9 @@
 {
-  "cmd_desc_set_currency": "Pick a currency for the games' prices on this server",
+  "cmd_desc_set_currency": "Alege o monedă pentru afișarea prețurilor jocurilor de pe acest server",
   "cmd_desc_set_thread": "Alege un fir unde voi posta noi jocuri gratuite",
   "cmd_desc_set_channel": "Alege un fir unde voi posta noi jocuri gratuite",
-  "cmd_desc_set_role": "Pick a role I'll ping when a new game comes free",
-  "cmd_desc_set_language": "Pick a language for my messages on this server",
+  "cmd_desc_set_role": "Alege un rol care va fi notificat atunci când apare un joc gratuit",
+  "cmd_desc_set_language": "Alege o limbă de vorbire pentru mesajele mele pe acest server",
   "cmd_desc_remove_channel": "Elimină canalul setat (sau firul setat)",
   "cmd_desc_remove_role": "Elimină rolul setat",
   "cmd_desc_invite": "Obține link-ul meu de invitație",
