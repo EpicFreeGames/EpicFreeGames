@@ -1,9 +1,9 @@
 {
-  "cmd_desc_set_currency": "Pick a currency for the games' prices on this server",
+  "cmd_desc_set_currency": "Выберите валюту для цен игр на этом сервере",
   "cmd_desc_set_thread": "Выберите тему, на которую я буду отправлять новые бесплатные игры",
-  "cmd_desc_set_channel": "Pick a channel I'll post new free games on",
-  "cmd_desc_set_role": "Pick a role I'll ping when a new game comes free",
-  "cmd_desc_set_language": "Pick a language for my messages on this server",
+  "cmd_desc_set_channel": "Выберите тему, на которую я буду отправлять новые бесплатные игры",
+  "cmd_desc_set_role": "Выберите роль, которую я буду пинговать, когда новая игра станет бесплатной",
+  "cmd_desc_set_language": "Выберите язык для моих сообщений на этом сервере",
   "cmd_desc_remove_channel": "Удалить выбранный канал (или поток)",
   "cmd_desc_remove_role": "Удалить установленную роль",
   "cmd_desc_invite": "Получить мою пригласительную ссылку",
@@ -13,5 +13,5 @@
   "cmd_desc_free": "Смотреть текущие бесплатные игры",
   "cmd_desc_settings": "Смотреть настройки",
   "cmd_desc_vote": "Голосуй за меня",
-  "cmd_desc_test": "Sends a test message to the set channel and pings the set role"
+  "cmd_desc_test": "Отправляет тестовое сообщение в установленный канал и пингов установленную роль"
 }
