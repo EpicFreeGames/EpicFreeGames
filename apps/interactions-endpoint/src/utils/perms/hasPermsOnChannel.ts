@@ -92,11 +92,12 @@ export const hasPermsOnChannel = async (
   if (
     channel.type !== ChannelType.GuildText &&
     channel.type !== ChannelType.PublicThread &&
-    channel.type !== ChannelType.GuildForum
+    channel.type !== ChannelType.GuildForum &&
+    channel.type !== ChannelType.GuildAnnouncement
   )
     return {
       error: true,
-      cause: `Channel (might also be the parent) is not a text channel, a public thread or a forum`,
+      cause: `Channel (might also be the parent) is not a text channel, a public thread, a forum or an announcement channel`,
     };
 
   const everyoneRole = guild.roles.find((role) => role.id === guildId);
