@@ -14,8 +14,8 @@
   "role_remove_success_desc": "Saya tidak akan menyebutkan/ping <role> ketika diberitahu tentang game gratis",
   "updated_settings": "Berikut ini adalah pengaturan yang diperbarui:",
   "current_settings": "Berikut adalah pengaturan saat ini:",
-  "channel_thread_not_set": "Belum diatur, Anda dapat mengaturnya dengan '/set channel' atau '/set thread'",
-  "role_not_set": "Belum diatur, Anda dapat mengatur dengan '/set role'",
+  "channel_thread_not_set": "Belum diatur, Anda dapat mengaturnya dengan `/set channel` atau `/set thread`",
+  "role_not_set": "Belum diatur, Anda dapat mengatur dengan `/set role`",
   "too_many_webhooks": "Terlalu banyak webhooks",
   "ten_webhooks_only": "Sebuah saluran dapat memiliki paling banyak 10 webhooks. Silakan hapus satu, dan coba lagi.",
   "would_you_like_to_translate": "Akankah Anda ingin membantu menerjemahkan <botName>?",
@@ -39,5 +39,5 @@
   "help": "Bantuan",
   "missing": "Hilang!",
   "thank_you": "Terima Kasih!",
-  "webhooks_notification": "Saya mendukung webhook saat ini! Mereka memungkinkan saya untuk mengirim pemberitahuan lebih cepat. Admin server, silakan lakukan '/set channel' (atau '/set thread') untuk mengaktifkan notifikasi melalui webhook."
+  "webhooks_notification": "Saya mendukung webhook saat ini! Mereka memungkinkan saya untuk mengirim pemberitahuan lebih cepat. Admin server, silakan lakukan `/set channel` (atau `/set thread`) untuk mengaktifkan notifikasi melalui webhook."
 }
