@@ -40,7 +40,7 @@ export const discordApi = async <TData>(
       const json = await res.json().catch((e) => null);
 
       if (res.ok) {
-        logger.debug(`Discord API response: ${method} ${url} ${res.status}`);
+        logger.debug(`Discord API response: ${method} ${url} (status ${res.status})`);
         return { data: json };
       } else {
         const error = json ?? {
@@ -53,11 +53,11 @@ export const discordApi = async <TData>(
           [
             "Discord API request failed",
             `Request url: ${url}`,
-            `Error: ${objToStr(error)}`,
+            `Error: ${JSON.stringify(error)}`,
             `Body used: ${JSON.stringify(body)}`,
-            `Details?: ${objToStr({
+            `Details?: ${JSON.stringify({
               "res.status": res.status,
-              "res.headers": res.headers,
+              "res.headers": JSON.stringify(res.headers.forEach((v, k) => ({ [k]: v }))),
               "res.data": json,
             })}`,
           ].join("\n")

@@ -135,7 +135,7 @@ export const languages = new Map<string, ILanguage & { websiteReady: boolean }>(
       code: "id",
       englishName: "Indonesian",
       nativeName: "Bahasa Indonesia",
-      websiteReady: false,
+      websiteReady: true,
     },
   ],
   [
