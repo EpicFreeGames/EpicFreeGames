@@ -1,7 +1,7 @@
 export const efgApiBaseUrl = process.env.EFG_API_BASEURL;
 export const efgApiToken = process.env.EFG_API_FRONT_TOKEN;
 
-export type IEnvironment = "Production" | "Staging";
+export type IEnvironment = "Production" | "Staging" | "Development";
 export const environment: IEnvironment = process.env.ENV as any;
 
 if (environment !== "Production" && environment !== "Staging" && environment !== "Development")
