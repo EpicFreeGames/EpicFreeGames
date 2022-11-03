@@ -11,7 +11,7 @@ export const executeHooks = async (
   sendingId: string
 ) => {
   for (const server of servers) {
-    await wait(10);
+    await wait(20);
 
     const gameEmbeds = games.map((game) =>
       embeds.games.game(game, server.language, server.currency)
