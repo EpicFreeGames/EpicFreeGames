@@ -6,7 +6,7 @@ x-envs: &envs
   DISCORD_PUBLIC_KEY: "014fe96494fb870ad12f31b0e7eb4066418c681747f3c40063051c4f86d7df6f"
   DISCORD_API_BASEURL: "https://discord.com/api/v10"
   DISCORD_REDIRECT_URL: "https://api.epicfreegames.net/api/auth/discord-callback"
-  SENDER_URL: "http://prod-sender:3000"
+  SENDER_URL: "http://10.0.0.2:30000"
   DASH_URL: "https://dash.epicfreegames.net"
   JWT_ISS: "https://api.epicfreegames.net"
   JWT_AUD: "https://api.epicfreegames.net"
@@ -38,6 +38,8 @@ services:
       - "traefik.http.routers.efg-api-prod.rule=Host(`api.epicfreegames.net`)"
       - "traefik.http.services.efg-api-prod.loadbalancer.server.port=3000"
       - "traefik.docker.network=efg"
+    ports:
+      - "30000:3000"
     networks:
       - efg
 
@@ -47,20 +49,22 @@ services:
     environment:
       <<: *envs
       DEBUG: 1
+    ports:
+      - "30001:3000"
     networks:
       - efg
 
-  prod-sender:
-    depends_on:
-      - prod-api
-      - prod-discord-rest-proxy
-    image: ${REGISTRY}/${REGISTRY_USER}/efg-sender:${VERSION}
-    restart: always
-    environment:
-      <<: *envs
-      DEBUG: 1
-    networks:
-      - efg
+  # prod-sender:
+  #   depends_on:
+  #     - prod-api
+  #     - prod-discord-rest-proxy
+  #   image: ${REGISTRY}/${REGISTRY_USER}/efg-sender:${VERSION}
+  #   restart: always
+  #   environment:
+  #     <<: *envs
+  #     DEBUG: 1
+  #   networks:
+  #     - efg
 
   prod-interactions-endpoint:
     depends_on:
