@@ -8,9 +8,18 @@ type Props = {
   action: ReactNode;
   open: boolean;
   setOpen: (open: boolean) => void;
+  children?: ReactNode;
 };
 
-export const AlertDialog = ({ title, description, trigger, action, open, setOpen }: Props) => {
+export const AlertDialog = ({
+  title,
+  description,
+  trigger,
+  action,
+  open,
+  setOpen,
+  children,
+}: Props) => {
   return (
     <AlertDialogPrimitive.Root open={open} onOpenChange={setOpen}>
       <AlertDialogPrimitive.Trigger asChild>{trigger}</AlertDialogPrimitive.Trigger>
@@ -25,6 +34,8 @@ export const AlertDialog = ({ title, description, trigger, action, open, setOpen
               {description && (
                 <AlertDialogPrimitive.Description>{description}</AlertDialogPrimitive.Description>
               )}
+
+              {children ? children : null}
             </div>
 
             <div className="flex justify-between">

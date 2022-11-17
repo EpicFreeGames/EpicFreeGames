@@ -14,15 +14,21 @@ type Props = {
 
 export const StartSending = ({ sending }: Props) => {
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [failedOnly, setFailedOnly] = useState(false);
+
+  const failedOnlyText = failedOnly ? "only failed" : "all";
 
   const { mutateAsync } = useStartSendingMutation();
 
   const onSubmit = async () => {
-    await toast.promise(mutateAsync({ sendingId: sending.id }), {
-      success: "Sending started",
-      error: "Error starting sending",
-      loading: "Starting sending",
-    });
+    await toast.promise(
+      mutateAsync({ sendingId: sending.id, failedOnly: failedOnly ? "1" : "0" }),
+      {
+        success: `Sending started to ${failedOnlyText} servers`,
+        error: `Error starting sending to ${failedOnlyText} servers`,
+        loading: `Starting sending to ${failedOnlyText} servers`,
+      }
+    );
 
     setDialogOpen(false);
   };
@@ -44,6 +50,16 @@ export const StartSending = ({ sending }: Props) => {
           Yes, start sending
         </button>
       }
-    />
+    >
+      <label className="flex items-center gap-4">
+        <input
+          className="h-5 w-5"
+          type="checkbox"
+          checked={failedOnly}
+          onChange={() => setFailedOnly(!failedOnly)}
+        />
+        Send to failed servers only
+      </label>
+    </AlertDialog>
   );
 };

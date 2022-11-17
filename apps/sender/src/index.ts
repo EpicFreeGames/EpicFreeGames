@@ -22,16 +22,16 @@ app.post("/", async (req, res) => {
     return res.status(400).json({ error: validationResult.error.message });
   }
 
-  const { sendingId, games } = validationResult.data;
+  const { sendingId, games, failedOnly } = validationResult.data;
 
   let servers: IServer[] = [];
 
-  logger.info(`[${sendingId}] - Received request, getting servers...`);
+  logger.info(`[${sendingId}] - Received request again=${failedOnly}, getting servers...`);
 
   let resServers = await efgApi<IServer[]>({
     method: "GET",
     path: `/sends/servers-to-send`,
-    query: new URLSearchParams({ sendingId }),
+    query: new URLSearchParams({ sendingId, failedOnly }),
   });
 
   while (resServers?.data?.length) {
@@ -44,6 +44,7 @@ app.post("/", async (req, res) => {
       path: `/sends/servers-to-send`,
       query: new URLSearchParams({
         sendingId,
+        failedOnly,
         ...(lastServer && { after: lastServer.id }),
       }),
     });
@@ -85,6 +86,7 @@ app.listen(port, () => logger.info(`Sender listening on port ${port}`));
 
 const bodySchema = z.object({
   sendingId: z.string(),
+  failedOnly: z.enum(["0", "1"]),
   games: z.array(
     z.object({
       id: z.string(),

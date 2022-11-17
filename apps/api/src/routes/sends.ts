@@ -31,11 +31,12 @@ router.get(
         .object({
           after: bigintSchema.optional(),
           sendingId: z.string(),
+          failedOnly: z.enum(["0", "1"]).transform((v) => v === "1"),
         })
         .strict(),
     },
     async (req, res) => {
-      const { after, sendingId } = req.query;
+      const { after, sendingId, failedOnly } = req.query;
 
       const servers = await prisma.server.findMany({
         include: { sendingLogs: true },
@@ -44,18 +45,20 @@ router.get(
         },
         where: {
           channelId: { not: null },
-          OR: [
-            {
-              sendingLogs: {
-                some: {
-                  sendingId,
-                  result: { contains: "429" },
-                  success: false,
+          ...(failedOnly
+            ? {
+                sendingLogs: {
+                  some: {
+                    sendingId,
+                    success: false,
+                  },
+                  none: {
+                    sendingId,
+                    success: true,
+                  },
                 },
-              },
-            },
-            { sendingLogs: { none: { sendingId } } },
-          ],
+              }
+            : { sendingLogs: { none: { sendingId } } }),
         },
         take: 10000,
         ...(after
@@ -216,14 +219,12 @@ router.post(
   endpointAuth(Flags.Send, Flags.GetSendings),
   withValidation(
     {
-      params: z
-        .object({
-          sendingId: z.string(),
-        })
-        .strict(),
+      params: z.object({ sendingId: z.string() }).strict(),
+      body: z.object({ failedOnly: z.enum(["0", "1"]) }).strict(),
     },
     async (req, res) => {
       const { sendingId } = req.params;
+      const { failedOnly } = req.body;
 
       const sending = await prisma.sending.findUnique({
         where: { id: sendingId },
@@ -241,6 +242,7 @@ router.post(
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          failedOnly,
           sendingId,
           games: addStuffToGames(sending.games),
         }),

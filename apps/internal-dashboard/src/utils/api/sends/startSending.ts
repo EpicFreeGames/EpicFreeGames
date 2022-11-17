@@ -5,21 +5,21 @@ import { SendingContext } from "./_sharedTypes";
 
 type StartSendingProps = {
   sendingId: string;
+  failedOnly: string;
 };
 
 const startSendingRequest = (props: StartSendingProps) =>
   apiRequest<void>({
     method: "POST",
     path: `/sends/${props.sendingId}/send`,
+    body: { failedOnly: props.failedOnly },
   });
 
 export const useStartSendingMutation = () => {
   const qc = useQueryClient();
   const mutation = useMutation<void, ApiError, StartSendingProps, SendingContext>(
     startSendingRequest,
-    {
-      onSuccess: () => qc.invalidateQueries(["sends"]),
-    }
+    { onSuccess: () => qc.invalidateQueries(["sends"]) }
   );
 
   return mutation;
