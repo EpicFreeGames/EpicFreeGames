@@ -41,6 +41,7 @@ export const discordApi = async <TData>(
 
       if (res.ok) {
         logger.debug(`Discord API response: ${method} ${url} (status ${res.status})`);
+
         return { data: json };
       } else {
         const error = json ?? {
@@ -48,6 +49,11 @@ export const discordApi = async <TData>(
           error: res.statusText ?? "Unknown error",
           message: res.statusText ?? "Unknown error",
         };
+
+        let headers: Record<string, unknown> = {};
+        res.headers.forEach((value, key) => {
+          headers[key] = value;
+        });
 
         logger.debug(
           [
@@ -57,7 +63,7 @@ export const discordApi = async <TData>(
             `Body used: ${JSON.stringify(body)}`,
             `Details?: ${JSON.stringify({
               "res.status": res.status,
-              "res.headers": JSON.stringify(res.headers.forEach((v, k) => ({ [k]: v }))),
+              "res.headers": JSON.stringify(headers),
               "res.data": json,
             })}`,
           ].join("\n")
