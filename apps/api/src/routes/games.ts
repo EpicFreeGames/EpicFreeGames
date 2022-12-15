@@ -228,7 +228,7 @@ router.put(
           imageUrl: z.string().min(1),
           start: z.string().min(1),
           end: z.string().min(1),
-          path: z.string().min(1),
+          path: z.string(),
           prices: z.array(
             z.object({
               value: z.number(),
