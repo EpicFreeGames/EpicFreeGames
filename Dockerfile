@@ -1,8 +1,6 @@
-FROM node:18-alpine as base
+FROM node:18-bullseye-slim as base
 
 WORKDIR /app
-
-RUN apk update && apk --no-cache add curl libc6-compat openssl
 
 FROM base AS pruner
 
