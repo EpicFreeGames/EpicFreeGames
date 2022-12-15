@@ -2,7 +2,7 @@ FROM node:18-alpine as base
 
 WORKDIR /app
 
-RUN apk update && apk --no-cache add curl libc6-compat
+RUN apk update && apk --no-cache add curl libc6-compat openssl
 
 FROM base AS pruner
 
