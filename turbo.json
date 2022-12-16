@@ -2,18 +2,15 @@
   "pipeline": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**"],
-      "env": ["ENV", "VERSION"]
+      "outputs": ["dist/**"]
     },
     "buildprod": {
       "dependsOn": ["^build", "^buildprod"],
-      "outputs": ["dist/**", ".next/**"],
-      "env": ["ENV", "VERSION"]
+      "outputs": ["dist/**", ".next/**"]
     },
     "dev": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", ".next/**"],
-      "env": ["ENV", "VERSION"]
+      "outputs": ["dist/**", ".next/**"]
     },
     "start": {
       "dependsOn": ["^build", "^buildprod", "build", "^start"],
@@ -23,5 +20,6 @@
       "dependsOn": ["^build", "build", "^typecheck"],
       "cache": false
     }
-  }
+  },
+  "globalEnv": ["ENV", "VERSION"]
 }
