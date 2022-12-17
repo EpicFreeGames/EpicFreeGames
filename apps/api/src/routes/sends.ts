@@ -51,6 +51,7 @@ router.get(
                   some: {
                     sendingId,
                     success: false,
+                    result: { contains: "429" },
                   },
                   none: {
                     sendingId,
