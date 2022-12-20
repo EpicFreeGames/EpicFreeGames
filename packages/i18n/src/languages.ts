@@ -272,7 +272,7 @@ export const languages = new Map<string, ILanguage & { websiteReady: boolean }>(
       code: "uk",
       englishName: "Ukrainian",
       nativeName: "Українська",
-      websiteReady: false,
+      websiteReady: true,
     },
   ],
   [
