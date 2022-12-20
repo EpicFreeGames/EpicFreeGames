@@ -2,13 +2,11 @@
   "pipeline": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**"],
-      "cache": false
+      "outputs": ["dist/**"]
     },
     "buildprod": {
       "dependsOn": ["^build", "^buildprod"],
-      "outputs": ["dist/**", ".next/**"],
-      "cache": false
+      "outputs": ["dist/**", ".next/**"]
     },
     "dev": {
       "dependsOn": ["^build"],
