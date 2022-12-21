@@ -2,6 +2,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import express, { Express, Router } from "express";
 import http from "http";
+import { v4 as uuidv4 } from "uuid";
 
 import { configuration } from "@efg/configuration";
 
@@ -30,6 +31,25 @@ export const createServer = async () => {
 
   app.use((req, res, next) => {
     req.wss = wss;
+
+    next();
+  });
+
+  app.use((req, res, next) => {
+    const requestId = uuidv4();
+    const start = new Date().getTime();
+    const timestamp = `${new Date().toISOString()}`;
+
+    console.log(`[${timestamp}]::[${requestId}] - ${req.method} ${req.url}`);
+
+    res.on("finish", () => {
+      const end = new Date().getTime();
+      const duration = end - start;
+
+      console.log(
+        `[${timestamp}]::[${requestId}] - ${req.method} ${req.url} - ${res.statusCode} - ${duration}ms`
+      );
+    });
 
     next();
   });
