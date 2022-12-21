@@ -46,9 +46,7 @@ export const createServer = async () => {
       const end = new Date().getTime();
       const duration = end - start;
 
-      console.log(
-        `[${timestamp}]::[${requestId}] - ${req.method} ${req.url} - ${res.statusCode} - ${duration}ms`
-      );
+      console.log(`[${timestamp}]::[${requestId}]::FINISH - ${res.statusCode} - ${duration}ms`);
     });
 
     next();
