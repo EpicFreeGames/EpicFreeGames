@@ -202,6 +202,16 @@ export const currencies: Map<string, ICurrency> = new Map<string, ICurrency>([
       apiValue: "HU",
     },
   ],
+  [
+    "PLN",
+    {
+      name: "zł Polish Zloty (PLN)",
+      code: "PLN",
+      afterPrice: " zł",
+      inFrontOfPrice: "",
+      apiValue: "PL",
+    },
+  ],
 ]);
 
 export const defaultCurrency = currencies.get("USD")!;
