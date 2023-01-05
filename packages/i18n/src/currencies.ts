@@ -212,6 +212,16 @@ export const currencies: Map<string, ICurrency> = new Map<string, ICurrency>([
       apiValue: "PL",
     },
   ],
+  [
+    "COP",
+    {
+      name: "Col$ Colombian Peso (COP)",
+      code: "COP",
+      afterPrice: "",
+      inFrontOfPrice: "Col$",
+      apiValue: "CO",
+    },
+  ],
 ]);
 
 export const defaultCurrency = currencies.get("USD")!;
