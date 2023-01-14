@@ -222,6 +222,16 @@ export const currencies: Map<string, ICurrency> = new Map<string, ICurrency>([
       apiValue: "CO",
     },
   ],
+  [
+    "MYR",
+    {
+      name: "RM Malaysian Ringgit (MYR)",
+      code: "MYR",
+      afterPrice: "",
+      inFrontOfPrice: "RM",
+      apiValue: "MY",
+    },
+  ],
 ]);
 
 export const defaultCurrency = currencies.get("USD")!;
