@@ -176,7 +176,6 @@ router.post(
           end: z.string().min(1),
           path: z.string().min(1),
           usdPrice: z.string().min(1),
-          storeId: z.string().min(1),
           priceValue: z.number(),
         })
         .strict(),
@@ -198,6 +197,7 @@ router.post(
       const createdGame = await prisma.game.create({
         data: {
           ...rest,
+          storeId: "epic-games",
           start: new Date(start),
           end: new Date(end),
           confirmed: false,
