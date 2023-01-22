@@ -232,6 +232,16 @@ export const currencies: Map<string, ICurrency> = new Map<string, ICurrency>([
       apiValue: "MY",
     },
   ],
+  [
+    "CLP",
+    {
+      name: "CLP$ Chilean Peso (CLP)",
+      code: "CLP",
+      afterPrice: "",
+      inFrontOfPrice: "CLP$",
+      apiValue: "CL",
+    },
+  ],
 ]);
 
 export const defaultCurrency = currencies.get("USD")!;
