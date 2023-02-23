@@ -284,11 +284,41 @@ router.post(
         .strict(),
     },
     async (req, res) => {
-      const addedLog = await prisma.sendingLog.create({
-        data: req.body,
-      });
+      const { success, result, serverId, type, sendingId } = req.body;
 
-      res.send(addedLog);
+      // If the sending wasn't successful and the error wasn't a 429 (rate limit)
+      // the channel and webhook should be set to null, so that the next sending
+      // doesn't try sending games to the same channel/webhook
+      if (!success && !result.includes("429")) {
+        await prisma.server.update({
+          where: { id: serverId },
+          data: {
+            channelId: null,
+            webhookId: null,
+            webhookToken: null,
+            sendingLogs: {
+              create: {
+                result,
+                success,
+                type,
+                sending: { connect: { id: sendingId } },
+              },
+            },
+          },
+        });
+      } else {
+        await prisma.sendingLog.create({
+          data: {
+            result,
+            success,
+            type,
+            sending: { connect: { id: sendingId } },
+            server: { connect: { id: serverId } },
+          },
+        });
+      }
+
+      res.status(204).end();
     }
   )
 );
