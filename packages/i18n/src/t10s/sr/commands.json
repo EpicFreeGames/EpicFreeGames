@@ -1,17 +1,17 @@
 {
-  "cmd_desc_set_currency": "Pick a currency for the games' prices on this server",
+  "cmd_desc_set_currency": "Одабери валуту за цене видео-игрица на овом серверу",
   "cmd_desc_set_thread": "Изаберите тему на којој ћу објављивати нове бесплатне игре",
   "cmd_desc_set_channel": "Изаберите канал на којем ћу објављивати нове бесплатне игре",
-  "cmd_desc_set_role": "Pick a role I'll ping when a new game comes free",
-  "cmd_desc_set_language": "Pick a language for my messages on this server",
+  "cmd_desc_set_role": "Изаберите улогу ја ћу вас обавестити када нова видео игрица буде бесплатна",
+  "cmd_desc_set_language": "Одабери језик за моје поруке на овом серверу",
   "cmd_desc_remove_channel": "Уклоните канал (или тхред)",
   "cmd_desc_remove_role": "Уклоните задату улогу",
   "cmd_desc_invite": "Узми мој линк за позив",
   "cmd_desc_help": "Користите ово ако вам треба помоћ",
   "cmd_desc_debug": "Користи се за дебаговање",
-  "cmd_desc_up": "See the upcoming free games",
+  "cmd_desc_up": "Погледајте предстојеће бесплатне видео игрице",
   "cmd_desc_free": "Погледајте тренутне бесплатне игре",
   "cmd_desc_settings": "Погледајте подешавања",
   "cmd_desc_vote": "Гласају за мене",
-  "cmd_desc_test": "Sends a test message to the set channel and pings the set role"
+  "cmd_desc_test": "Шаљем пробну поруку на постављени канал и обавештавам постављену улогу"
 }

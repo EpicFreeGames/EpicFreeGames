@@ -13,5 +13,5 @@
   "cmd_desc_free": "Lásd a jelenlegi ingyenes játékokat",
   "cmd_desc_settings": "A beállítások megtekintése",
   "cmd_desc_vote": "Szavazz rám",
-  "cmd_desc_test": "Sends a test message to the set channel and pings the set role"
+  "cmd_desc_test": "Tesztüzenetet küld a beállított csatornára és pingeli a beállított rangot"
 }
