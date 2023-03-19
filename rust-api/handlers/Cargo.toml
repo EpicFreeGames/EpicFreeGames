@@ -1,0 +1,14 @@
+[package]
+name = "handlers"
+version = "0.0.0"
+edition = "2021"
+
+[dependencies]
+database = { path = "../database" }
+discord = { path = "../discord" }
+thiserror = { workspace = true }
+anyhow = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+jsonwebtoken = { workspace = true }
+tracing = { workspace = true }

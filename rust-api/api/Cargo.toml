@@ -1,0 +1,23 @@
+[package]
+name = "api"
+version = "0.0.0"
+edition = "2021"
+
+[dependencies]
+database = { path = "../database" }
+
+handlers = { path = "../handlers" }
+discord = { path = "../discord" }
+config = { path = "../config" }
+tokio = { version = "1.25.0", features = ["full"] }
+axum = "0.6.6"
+hyper = "0.14.25"
+tower = "0.4.13"
+tower-http = { version = "0.3", features = ["trace"] }
+ulid = "1"
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+thiserror = { workspace = true }
+anyhow = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }

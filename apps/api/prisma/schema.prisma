@@ -1,87 +1,81 @@
 datasource db {
-  url      = env("DATABASE_URL")
-  provider = "postgresql"
+    url      = env("DATABASE_URL")
+    provider = "postgresql"
 }
 
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["interactiveTransactions"]
+    provider = "prisma-client-js"
 }
 
-model Game {
-  id          String      @id @default(cuid())
-  name        String      @unique
-  displayName String
-  imageUrl    String      @db.Text
-  start       DateTime
-  end         DateTime
-  confirmed   Boolean     @default(false)
-  path        String
-  storeId     String
-  prices      GamePrice[]
-  Sending     Sending?    @relation(fields: [sendingId], references: [id])
-  sendingId   String?
+model games {
+    id           String       @id
+    name         String       @unique @db.Text
+    display_name String       @db.Text
+    image_url    String       @db.Text
+    start_date   DateTime     @db.Timestamptz
+    end_date     DateTime     @db.Timestamptz
+    confirmed    Boolean      @default(false)
+    path         String
+    store_id     String
+    prices       gamePrices[]
+    sending      sendings?    @relation(fields: [sending_id], references: [id])
+    sending_id   String?
 }
 
-model GamePrice {
-  id             String @id @default(cuid())
-  value          Float
-  formattedValue String
-  gameId         String
-  game           Game   @relation(fields: [gameId], references: [id], onDelete: Cascade)
-  currencyCode   String
+model gamePrices {
+    id              String @id
+    value           Float
+    formatted_value String
+    game_id         String
+    game            games  @relation(fields: [game_id], references: [id], onDelete: Cascade)
+    currency_code   String
 }
 
-model Server {
-  id           BigInt       @id @unique
-  roleId       String?
-  channelId    String?
-  threadId     String?
-  webhookId    String?
-  webhookToken String?
-  languageCode String       @default("en")
-  currencyCode String       @default("USD")
-  createdAt    DateTime     @default(now())
-  commandLogs  CommandLog[]
-  sendingLogs  SendingLog[]
+model servers {
+    id            BigInt        @id @unique
+    role_id       String?
+    channel_id    String?
+    thread_id     String?
+    webhook_id    String?
+    webhook_token String?
+    language_code String        @default("en")
+    currency_code String        @default("USD")
+    created_at    DateTime      @default(now())
+    command_logs  commandLogs[]
+    sending_logs  sendingLogs[]
 }
 
-model CommandLog {
-  id        String   @id @default(cuid())
-  command   String
-  senderId  String
-  serverId  BigInt?
-  server    Server?  @relation(fields: [serverId], references: [id], onDelete: Cascade)
-  error     String?  @db.Text
-  createdAt DateTime @default(now())
+model commandLogs {
+    id         String   @id
+    command    String
+    sender_id  String
+    server_id  BigInt?
+    server     servers? @relation(fields: [server_id], references: [id], onDelete: Cascade)
+    error      String?  @db.Text
+    created_at DateTime @default(now())
 }
 
-model SendingLog {
-  id        String         @id @default(cuid())
-  type      SendingLogType
-  result    String         @db.Text
-  success   Boolean
-  serverId  BigInt
-  server    Server         @relation(fields: [serverId], references: [id], onDelete: Cascade)
-  sending   Sending        @relation(fields: [sendingId], references: [id], onDelete: Cascade)
-  sendingId String
+model sendingLogs {
+    id         String   @id
+    type       String
+    result     String   @db.Text
+    success    Boolean
+    server_id  BigInt
+    server     servers  @relation(fields: [server_id], references: [id], onDelete: Cascade)
+    sending    sendings @relation(fields: [sending_id], references: [id], onDelete: Cascade)
+    sending_id String
 }
 
-model Sending {
-  id    String       @id @default(cuid())
-  games Game[]
-  logs  SendingLog[]
+model sendings {
+    id    String        @id
+    games games[]
+    logs  sendingLogs[]
 }
 
-model User {
-  id           String  @id @default(cuid())
-  identifier   String  @unique
-  flags        Int
-  name         String?
-  tokenVersion String
-}
-
-enum SendingLogType {
-  MESSAGE
-  WEBHOOK
+model users {
+    id            String  @id
+    identifier    String  @unique
+    flags         BigInt
+    username      String?
+    token_version String
 }
