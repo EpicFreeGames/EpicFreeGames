@@ -1,6 +1,7 @@
 use anyhow::Context;
 
 #[derive(Clone, serde::Deserialize)]
+#[serde(rename_all = "lowercase")]
 pub enum Env {
     Development,
     Staging,
