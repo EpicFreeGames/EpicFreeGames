@@ -22,7 +22,7 @@ impl DbUserMethods {
 
         sqlx::query_as!(
             DbUser,
-            "INSERT INTO users (id, username, flags, identifier, token_version) VALUES ($1, $2, $3, $4, $5)",
+            "INSERT INTO api_user (id, username, flags, identifier, token_version) VALUES ($1, $2, $3, $4, $5)",
             user.id,
             user.username,
             user.flags,
@@ -54,7 +54,7 @@ impl DbUserMethods {
 
         sqlx::query_as!(
             DbUser,
-            "INSERT INTO users (id, username, flags, identifier, token_version) VALUES ($1, $2, $3, $4, $5)",
+            "INSERT INTO api_user (id, username, flags, identifier, token_version) VALUES ($1, $2, $3, $4, $5)",
             user.id,
             user.username,
             user.flags,
@@ -69,7 +69,7 @@ impl DbUserMethods {
     }
 
     pub async fn delete(&self, id: &str) -> Result<(), anyhow::Error> {
-        sqlx::query_as!(DbUser, "DELETE FROM users WHERE id = $1", id)
+        sqlx::query_as!(DbUser, "DELETE FROM api_user WHERE id = $1", id)
             .execute(&self.pool)
             .await
             .context("Failed to delete user")?;
@@ -78,7 +78,7 @@ impl DbUserMethods {
     }
 
     pub async fn get_by_id(&self, id: &str) -> Result<Option<DbUser>, anyhow::Error> {
-        let user = sqlx::query_as!(DbUser, "SELECT * FROM users WHERE id = $1", id)
+        let user = sqlx::query_as!(DbUser, "SELECT * FROM api_user WHERE id = $1", id)
             .fetch_optional(&self.pool)
             .await
             .context("Failed to get user by id")?;
@@ -87,7 +87,7 @@ impl DbUserMethods {
     }
 
     pub async fn get_all(&self) -> Result<Vec<DbUser>, anyhow::Error> {
-        let users = sqlx::query_as!(DbUser, "SELECT * FROM users")
+        let users = sqlx::query_as!(DbUser, "SELECT * FROM api_user")
             .fetch_all(&self.pool)
             .await
             .context("Failed to get all users")?;
@@ -103,7 +103,8 @@ impl DbUserMethods {
     ) -> Result<(), anyhow::Error> {
         sqlx::query_as!(
             DbUser,
-            "UPDATE users SET flags = $1, token_version = $2 WHERE id = $3",
+            "UPDATE api_user SET flags = $1, token_version = $2 
+            WHERE id = $3",
             flags,
             token_version,
             id,
