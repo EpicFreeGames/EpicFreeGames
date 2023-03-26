@@ -12,8 +12,8 @@ model game {
     name         String       @unique @db.Text
     display_name String       @db.Text
     image_url    String       @db.Text
-    start_date   DateTime     @db.Timestamptz
-    end_date     DateTime     @db.Timestamptz
+    start_date   DateTime     @db.Timestamp
+    end_date     DateTime     @db.Timestamp
     confirmed    Boolean      @default(false)
     path         String
     store_id     String

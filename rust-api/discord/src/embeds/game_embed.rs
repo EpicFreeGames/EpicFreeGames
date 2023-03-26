@@ -1,4 +1,4 @@
-use database::models::DbGame;
+use data::games::games_types::ApiGame;
 use twilight_model::channel::message::Embed;
 
 use crate::types::{
@@ -6,7 +6,7 @@ use crate::types::{
     embed::{embed_color, EmbedColor},
 };
 
-pub fn game_embed(game: &DbGame, language: &Language, currency: &Currency) -> Embed {
+pub fn game_embed(game: &ApiGame, language: &Language, currency: &Currency) -> Embed {
     return Embed {
         color: Some(embed_color(EmbedColor::Gray)),
         title: Some(game.name.clone()),

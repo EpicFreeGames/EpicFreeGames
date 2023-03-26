@@ -1,5 +1,5 @@
 [package]
-name = "handlers"
+name = "entity"
 version = "0.0.0"
 edition = "2021"
 
@@ -8,8 +8,5 @@ thiserror = { workspace = true }
 anyhow = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
-jsonwebtoken = { workspace = true }
 tracing = { workspace = true }
-database = { path = "../database" }
-data = { path = "../data" }
-discord = { path = "../discord" }
+sea-orm = { version = "0.11.1", features = [ "sqlx-postgres", "runtime-tokio-rustls", "macros" ] }

@@ -3,7 +3,8 @@ use axum::{
     response::{IntoResponse, Response},
     Json,
 };
-use database::Db;
+use data::games::games_cache::ApiGamesCache;
+use database::types::Db;
 use handlers::types::HandlerError;
 use hyper::StatusCode;
 use serde_json::json;
@@ -11,11 +12,15 @@ use serde_json::json;
 #[derive(Clone)]
 pub struct RequestContextStruct {
     pub db: Db,
+    pub api_games_cache: ApiGamesCache,
 }
 
 impl RequestContextStruct {
-    pub fn new(db: Db) -> Self {
-        Self { db }
+    pub fn new(db: Db, api_games_cache: ApiGamesCache) -> Self {
+        Self {
+            db,
+            api_games_cache,
+        }
     }
 }
 

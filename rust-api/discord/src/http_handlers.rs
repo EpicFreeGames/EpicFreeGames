@@ -1,5 +1,6 @@
 use anyhow::Context;
-use database::Db;
+use data::games::games_cache::ApiGamesCache;
+use database::types::Db;
 use ed25519_dalek::{PublicKey, Signature, Verifier};
 use twilight_model::{
     application::interaction::{InteractionData, InteractionType},
@@ -44,6 +45,7 @@ pub async fn validate_discord_request(
 
 pub async fn handle_request(
     db: &Db,
+    api_games_cache: &ApiGamesCache,
     body: Interaction,
 ) -> Result<Option<InteractionResponse>, anyhow::Error> {
     if body.kind == InteractionType::Ping {
@@ -78,7 +80,7 @@ pub async fn handle_request(
 
         if command_name == "free" {
             return Ok(Some(
-                no_guild::free_command::free_command(db, &body, &language, &currency)
+                no_guild::free_command::free_command(api_games_cache, &body, &language, &currency)
                     .await
                     .context("free command failed")?,
             ));

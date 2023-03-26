@@ -1,4 +1,4 @@
-use database::Db;
+use data::games::games_cache::ApiGamesCache;
 use twilight_model::{
     channel::message::Embed,
     http::interaction::{InteractionResponse, InteractionResponseData, InteractionResponseType},
@@ -10,14 +10,12 @@ use crate::types::{
 };
 
 pub async fn free_command(
-    db: &Db,
+    api_games_cache: &ApiGamesCache,
     _i: &Interaction,
     language: &Language,
     currency: &Currency,
 ) -> Result<InteractionResponse, anyhow::Error> {
-    let games = db.games.get_free().await?;
-
-    tracing::info!("games: {:?}", games);
+    let games = &api_games_cache.free_games;
 
     let game_embeds: Vec<Embed> = games
         .iter()

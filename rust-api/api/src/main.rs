@@ -2,6 +2,7 @@ use std::{net::SocketAddr, time::Duration};
 
 use axum::{body::Body, middleware, response::Response, routing::post, Router};
 use config::CONFIG;
+use data::games::games_cache::ApiGamesCache;
 use database::get_db;
 use hyper::Request;
 use tower_http::trace::TraceLayer;
@@ -25,6 +26,10 @@ async fn main() {
 
     let db = get_db().await;
 
+    let api_games_cache = ApiGamesCache::new(db.clone())
+        .await
+        .expect("Failed to initialize games cache");
+
     let v1_routes = Router::new()
         .route("/discord", post(endpoints::discord::discord_endpoint))
         .layer(middleware::from_fn(endpoints::discord::discord_middleware));
@@ -33,7 +38,7 @@ async fn main() {
 
     let app = Router::new()
         .nest("/api", api_routes)
-        .with_state(RequestContextStruct::new(db))
+        .with_state(RequestContextStruct::new(db, api_games_cache))
         .layer(
             TraceLayer::new_for_http()
                 .make_span_with(|request: &Request<Body>| {
