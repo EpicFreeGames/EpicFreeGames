@@ -5,6 +5,7 @@ use axum::{
 };
 use data::games::games_cache::ApiGamesCache;
 use database::types::Db;
+use discord::translate::Translator;
 use handlers::types::HandlerError;
 use hyper::StatusCode;
 use serde_json::json;
@@ -13,6 +14,7 @@ use serde_json::json;
 pub struct RequestContextStruct {
     pub db: Db,
     pub api_games_cache: ApiGamesCache,
+    pub translator: Translator,
 }
 
 impl RequestContextStruct {
@@ -20,6 +22,7 @@ impl RequestContextStruct {
         Self {
             db,
             api_games_cache,
+            translator: Translator::new(),
         }
     }
 }

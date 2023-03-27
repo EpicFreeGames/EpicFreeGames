@@ -1,0 +1,17 @@
+{
+  "cmd_desc_set_currency": "Kies 'n geldeenheid vir die speletjies se pryse op hierdie bediener",
+  "cmd_desc_set_thread": "Kies 'n draad waarop ek nuwe gratis speletjies sal plaas",
+  "cmd_desc_set_channel": "Kies 'n kanaal waarop ek nuwe gratis speletjies sal plaas",
+  "cmd_desc_set_role": "Kies 'n rol wat ek sal ping wanneer 'n nuwe speletjie gratis kom",
+  "cmd_desc_set_language": "Kies 'n taal vir my boodskappe op hierdie bediener",
+  "cmd_desc_remove_channel": "Verwyder die vasgestelde kanaal (of draad)",
+  "cmd_desc_remove_role": "Verwyder die vasgestelde rol",
+  "cmd_desc_invite": "Kry my uitnodiging skakel",
+  "cmd_desc_help": "Gebruik dit as jy hulp nodig het",
+  "cmd_desc_debug": "Word gebruik vir ontfouting",
+  "cmd_desc_up": "Sien die komende gratis speletjies",
+  "cmd_desc_free": "Sien die huidige gratis speletjies",
+  "cmd_desc_settings": "Sien die instellings",
+  "cmd_desc_vote": "Stem vir my",
+  "cmd_desc_test": "Stuur 'n toetsboodskap na die vasgestelde kanaal en ping die vasgestelde rol"
+}
