@@ -4,12 +4,6 @@ version = "0.0.0"
 edition = "2021"
 
 [dependencies]
-database = { path = "../database" }
-data = { path = "../data" }
-ed25519-dalek = "1.0.1"
-hex = "0.4.3"
-twilight-model = "0.15.1"
-bitflags = "2.0.1"
 chrono = { workspace = true }
 once_cell = { workspace = true }
 thiserror = { workspace = true }
@@ -18,3 +12,10 @@ serde = { workspace = true }
 serde_json = { workspace = true }
 jsonwebtoken = { workspace = true }
 tracing = { workspace = true }
+database = { path = "../database" }
+data = { path = "../data" }
+config = { path = "../config" }
+ed25519-dalek = "1.0.1"
+hex = "0.4.3"
+twilight-model = "0.15.1"
+bitflags = "2.0.1"

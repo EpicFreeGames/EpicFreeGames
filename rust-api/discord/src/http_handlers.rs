@@ -1,4 +1,5 @@
 use anyhow::Context;
+use config::CONFIG;
 use data::games::games_cache::ApiGamesCache;
 use database::types::Db;
 use ed25519_dalek::{PublicKey, Signature, Verifier};
@@ -15,14 +16,13 @@ use crate::{
     },
 };
 
-static PUB_KEY: &str = "30a5ec705e7c46abb11bc46bfe21935538076aad4f04dd2bbdb69eab333b0159";
-
 pub async fn validate_discord_request(
     body: &[u8],
     signature: &str,
     timestamp: &str,
 ) -> Result<(), anyhow::Error> {
-    let pub_key = PublicKey::from_bytes(hex::decode(PUB_KEY).unwrap().as_slice()).unwrap();
+    let pub_key =
+        PublicKey::from_bytes(hex::decode(&CONFIG.discord_public_key).unwrap().as_slice()).unwrap();
 
     let decoded_signature_header =
         hex::decode(signature).context("signature is not a valid hex string")?;

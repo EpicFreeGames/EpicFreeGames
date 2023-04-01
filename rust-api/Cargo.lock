@@ -568,6 +568,7 @@ dependencies = [
  "anyhow",
  "bitflags 2.0.1",
  "chrono",
+ "config",
  "data",
  "database",
  "ed25519-dalek",
