@@ -13,3 +13,4 @@ tracing = { workspace = true }
 database = { path = "../database" }
 data = { path = "../data" }
 discord = { path = "../discord" }
+i18n = { path = "../i18n" }

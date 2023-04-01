@@ -1,15 +1,17 @@
 use data::games::games_cache::ApiGamesCache;
+use i18n::{
+    translator::Translator,
+    types::{Currency, Language},
+};
 use twilight_model::{
     channel::message::Embed,
     http::interaction::{InteractionResponse, InteractionResponseData, InteractionResponseType},
 };
 
-use crate::types::{
-    bot::{Currency, Language},
-    interaction::Interaction,
-};
+use crate::{embeds, types::interaction::Interaction};
 
 pub async fn free_command(
+    translator: &Translator,
     api_games_cache: &ApiGamesCache,
     _i: &Interaction,
     language: &Language,
@@ -19,10 +21,18 @@ pub async fn free_command(
 
     let game_embeds: Vec<Embed> = games
         .iter()
-        .map(|game| crate::embeds::game_embed::game_embed(game, language, currency))
+        .map(|game| embeds::game_embed::game_embed(game, language, currency))
         .collect();
 
     tracing::debug!("game_embeds: {:?}", game_embeds);
+
+    let embeds = if game_embeds.is_empty() {
+        vec![embeds::game_embed::no_free_games_embed(
+            language, translator,
+        )]
+    } else {
+        game_embeds
+    };
 
     let response: InteractionResponse = InteractionResponse {
         data: Some(InteractionResponseData {
@@ -30,7 +40,7 @@ pub async fn free_command(
             flags: None,
             choices: None,
             custom_id: None,
-            embeds: Some(game_embeds),
+            embeds: Some(embeds),
             title: None,
             ..Default::default()
         }),

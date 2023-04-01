@@ -3,6 +3,10 @@ use config::CONFIG;
 use data::games::games_cache::ApiGamesCache;
 use database::types::Db;
 use ed25519_dalek::{PublicKey, Signature, Verifier};
+use i18n::{
+    translator::Translator,
+    types::{Currency, Language},
+};
 use twilight_model::{
     application::interaction::{InteractionData, InteractionType},
     http::interaction::InteractionResponseType,
@@ -10,10 +14,7 @@ use twilight_model::{
 
 use crate::{
     commands::no_guild,
-    types::{
-        bot::{Currency, Language},
-        interaction::{Interaction, InteractionResponse},
-    },
+    types::interaction::{Interaction, InteractionResponse},
 };
 
 pub async fn validate_discord_request(
@@ -46,6 +47,7 @@ pub async fn validate_discord_request(
 pub async fn handle_request(
     db: &Db,
     api_games_cache: &ApiGamesCache,
+    translator: &Translator,
     body: Interaction,
 ) -> Result<Option<InteractionResponse>, anyhow::Error> {
     if body.kind == InteractionType::Ping {
@@ -80,9 +82,15 @@ pub async fn handle_request(
 
         if command_name == "free" {
             return Ok(Some(
-                no_guild::free_command::free_command(api_games_cache, &body, &language, &currency)
-                    .await
-                    .context("free command failed")?,
+                no_guild::free_command::free_command(
+                    translator,
+                    api_games_cache,
+                    &body,
+                    &language,
+                    &currency,
+                )
+                .await
+                .context("free command failed")?,
             ));
         } else {
             return Ok(None);

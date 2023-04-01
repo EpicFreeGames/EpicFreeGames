@@ -1,9 +1,7 @@
+use i18n::translator::Translator;
 use twilight_model::channel::message::Embed;
 
-use crate::{
-    translate::Translator,
-    types::embed::{embed_color, EmbedColor},
-};
+use crate::types::embed::{embed_color, EmbedColor};
 
 pub fn generic_error_embed() -> Embed {
     return Embed {
@@ -26,7 +24,7 @@ pub fn generic_error_embed() -> Embed {
 pub fn admin_only_command_error_embed(translator: Translator) -> Embed {
     return Embed {
         color: Some(embed_color(EmbedColor::Red)),
-        description: Some(),
+        description: Some("test".to_string()),
         title: Some("❌".to_string()),
         kind: "rich".to_string(),
         fields: Vec::new(),

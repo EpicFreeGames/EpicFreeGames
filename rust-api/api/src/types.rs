@@ -5,9 +5,9 @@ use axum::{
 };
 use data::games::games_cache::ApiGamesCache;
 use database::types::Db;
-use discord::translate::Translator;
 use handlers::types::HandlerError;
 use hyper::StatusCode;
+use i18n::translator::Translator;
 use serde_json::json;
 
 #[derive(Clone)]

@@ -7,7 +7,9 @@ use database::get_db;
 use hyper::Request;
 use tower_http::trace::TraceLayer;
 use tracing::{debug_span, Span};
-use tracing_subscriber::{prelude::__tracing_subscriber_SubscriberExt, util::SubscriberInitExt};
+use tracing_subscriber::{
+    filter, prelude::__tracing_subscriber_SubscriberExt, util::SubscriberInitExt,
+};
 use types::RequestContextStruct;
 use ulid::Ulid;
 
@@ -17,10 +19,7 @@ pub mod types;
 #[tokio::main]
 async fn main() {
     tracing_subscriber::registry()
-        .with(
-            tracing_subscriber::EnvFilter::try_from_default_env()
-                .unwrap_or_else(|_| "api=debug,database=debug,discord=debug,handlers=debug".into()),
-        )
+        .with(filter::LevelFilter::INFO)
         .with(tracing_subscriber::fmt::layer())
         .init();
 
