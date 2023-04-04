@@ -35,5 +35,9 @@ jobs:
             --detach \
             --remote-only \
             --region ams
+            -e DATABASE_URL=${{ secrets.DATABASE_URL }}
+            -e JWT_SECRET=${{ secrets.JWT_SECRET }}
+            -e DISCORD_PUBLIC_KEY=${{ secrets.DISCORD_PUBLIC_KEY }}
+            -e ENV="staging"
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
