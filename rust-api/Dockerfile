@@ -1,25 +1,23 @@
-FROM rust:slim AS pre
-
+FROM rust:slim AS base
 WORKDIR /app
 
-COPY ./Cargo.toml ./Cargo.lock ./
-COPY ./api ./api
-COPY ./config ./config
-COPY ./data ./data
-COPY ./database ./database
-COPY ./discord ./discord
-COPY ./entity ./entity
-COPY ./handlers ./handlers
-COPY ./i18n ./i18n
+FROM base as planner
+RUN cargo install cargo-chef 
+COPY . .
+RUN cargo chef prepare --recipe-path recipe.json
 
+FROM base as cacher
+RUN cargo install cargo-chef
+COPY --from=planner /app/recipe.json recipe.json
+RUN cargo chef cook --release --recipe-path recipe.json
+
+FROM base as pre
+COPY . .
+COPY --from=cacher /app/target target
 RUN cargo build --release
 
-
 FROM debian:bullseye-slim as final
-
 WORKDIR /app
-
 COPY --from=pre /app/target/release/api .
 COPY --from=pre /app/i18n/t10s ./t10s
-
 CMD ["./api"]
