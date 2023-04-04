@@ -24,8 +24,6 @@ pub async fn free_command(
         .map(|game| embeds::game_embed::game_embed(game, language, currency))
         .collect();
 
-    tracing::debug!("game_embeds: {:?}", game_embeds);
-
     let embeds = if game_embeds.is_empty() {
         vec![embeds::game_embed::no_free_games_embed(
             language, translator,
@@ -46,8 +44,6 @@ pub async fn free_command(
         }),
         kind: InteractionResponseType::ChannelMessageWithSource,
     };
-
-    tracing::debug!("response: {:?}", response);
 
     return Ok(response);
 }
