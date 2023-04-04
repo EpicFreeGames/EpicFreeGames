@@ -57,7 +57,7 @@ async fn main() {
                 }),
         );
 
-    let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
+    let addr = SocketAddr::from(([0, 0, 0, 0], 3000));
 
     tracing::info!("App started in {}, listening at {}", CONFIG.env, addr);
 
