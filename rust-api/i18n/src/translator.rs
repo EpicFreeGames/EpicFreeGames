@@ -55,14 +55,31 @@ impl Translator {
         };
     }
 
-    pub fn translate(&self, key: &str, language: &Language) -> String {
+    pub fn translate(
+        &self,
+        key: &str,
+        language: &Language,
+        placeholders: Option<&HashMap<String, String>>,
+    ) -> String {
+        let translation = self.get_translation(key, language);
+
+        if let Some(translation) = translation {
+            let translation = self.replace_placeholders(&translation, placeholders);
+
+            return translation;
+        } else {
+            return key.to_string();
+        }
+    }
+
+    fn get_translation(&self, key: &str, language: &Language) -> Option<String> {
         if let Some(translations) = self.translations.get(&language.code.to_string()) {
             // Translations are found for the language code
 
             if let Some(translation) = translations.get(key) {
                 // Translation is found for the key, return the translation
 
-                return translation.to_string();
+                return Some(translation.to_string());
             } else {
                 // No translation found for the key, return the key
                 tracing::warn!(
@@ -71,7 +88,7 @@ impl Translator {
                     language.code
                 );
 
-                return key.to_string();
+                return None;
             }
         } else {
             // No translations found for the language code,
@@ -88,7 +105,7 @@ impl Translator {
                 if let Some(translation) = translations.get(key) {
                     // Translation is found for the key, return the translation
 
-                    return translation.to_string();
+                    return Some(translation.to_string());
                 } else {
                     // No translation found for the key, return the key
                     tracing::warn!(
@@ -97,7 +114,7 @@ impl Translator {
                         language.code
                     );
 
-                    return key.to_string();
+                    return None;
                 }
             } else {
                 // No translations found for the default language code, return the key
@@ -106,8 +123,26 @@ impl Translator {
                     Language::default().code
                 );
 
-                return key.to_string();
+                return None;
             }
+        }
+    }
+
+    fn replace_placeholders(
+        &self,
+        translation: &str,
+        placeholders: Option<&HashMap<String, String>>,
+    ) -> String {
+        if let Some(placeholders) = placeholders {
+            let mut translation = translation.to_string();
+
+            for (placeholder, value) in placeholders {
+                translation = translation.replace(&format!("<{}>", placeholder), value);
+            }
+
+            return translation;
+        } else {
+            return translation.to_string();
         }
     }
 }
