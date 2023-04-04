@@ -83,6 +83,13 @@ pub async fn handle_request(
             code: "EUR".to_string(),
         };
 
+        tracing::info!(
+            "New command: {}, currency: {:?}, language: {:?}",
+            command_name,
+            currency,
+            language
+        );
+
         if command_name == "free" {
             return Ok(Some(
                 no_guild::free_command::free_command(
@@ -106,6 +113,12 @@ pub async fn handle_request(
                 )
                 .await
                 .context("up command failed")?,
+            ));
+        } else if command_name == "help" {
+            return Ok(Some(
+                no_guild::help_command::help_command(translator, &body, &language)
+                    .await
+                    .context("help command failed")?,
             ));
         } else {
             return Ok(None);

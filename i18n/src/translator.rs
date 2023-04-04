@@ -59,7 +59,7 @@ impl Translator {
         &self,
         key: &str,
         language: &Language,
-        placeholders: Option<&HashMap<String, String>>,
+        placeholders: Option<&HashMap<&str, &str>>,
     ) -> String {
         let translation = self.get_translation(key, language);
 
@@ -131,7 +131,7 @@ impl Translator {
     fn replace_placeholders(
         &self,
         translation: &str,
-        placeholders: Option<&HashMap<String, String>>,
+        placeholders: Option<&HashMap<&str, &str>>,
     ) -> String {
         if let Some(placeholders) = placeholders {
             let mut translation = translation.to_string();

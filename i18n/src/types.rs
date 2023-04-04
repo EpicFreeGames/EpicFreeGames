@@ -1,3 +1,4 @@
+#[derive(Debug)]
 pub struct Language {
     pub name: String,
     pub code: String,
@@ -12,6 +13,7 @@ impl Default for Language {
     }
 }
 
+#[derive(Debug)]
 pub struct Currency {
     pub name: String,
     pub code: String,
