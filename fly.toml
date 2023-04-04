@@ -1,4 +1,0 @@
-# fly.toml file generated for rust-staging on 2023-04-04T21:23:16+03:00
-
-app = "rust-staging"
-primary_region = "ams"
