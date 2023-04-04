@@ -22,3 +22,7 @@ hyper = "0.14.25"
 tower = "0.4.13"
 tower-http = { version = "0.3", features = ["trace"] }
 ulid = "1"
+
+[profile.release]
+strip = true
+lto = true
