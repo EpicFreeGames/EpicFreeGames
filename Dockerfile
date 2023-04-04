@@ -1,40 +1,23 @@
-FROM node:18-bullseye-slim as base
-
+FROM rust:slim AS base
 WORKDIR /app
 
-FROM base AS pruner
+FROM base as planner
+RUN cargo install cargo-chef 
+COPY . .
+RUN cargo chef prepare --recipe-path recipe.json
 
-ARG APP
-ARG APP_FOLDER
+FROM base as cacher
+RUN cargo install cargo-chef
+COPY --from=planner /app/recipe.json recipe.json
+RUN cargo chef cook --release --recipe-path recipe.json
 
-RUN yarn global add turbo@1.4.4
+FROM base as pre
+COPY . .
+COPY --from=cacher /app/target target
+RUN cargo build --release
 
-COPY ./*.json yarn.lock ./
-COPY ./apps ./apps
-COPY ./packages ./packages
-
-RUN turbo prune --scope=${APP} --docker
-
-
-FROM base as deps
-
-COPY --from=pruner /app/out/json/ ./
-COPY --from=pruner /app/out/yarn.lock ./yarn.lock
-
-RUN yarn --pure-lockfile
-
-
-FROM base as runner
-
-ARG APP_FOLDER
-ENV APP_FOLDER=${APP_FOLDER}
-
-ARG VERSION
-ENV VERSION=${VERSION}
-
-COPY --from=deps /app/ ./
-COPY --from=pruner /app/out/full/ ./
-
-RUN yarn build
-
-CMD cd ./apps/${APP_FOLDER} && yarn start
+FROM debian:bullseye-slim as final
+WORKDIR /app
+COPY --from=pre /app/target/release/api .
+COPY --from=pre /app/i18n/t10s ./t10s
+CMD ["./api"]

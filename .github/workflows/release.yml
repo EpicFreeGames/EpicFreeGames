@@ -28,10 +28,10 @@ jobs:
       - name: "Deploy"
         run: |
           flyctl \
-            deploy --dockerfile ./rust-api/Dockerfile \
+            deploy --dockerfile ./Dockerfile \
+            --app rust-staging \
             --strategy immediate \
             --now \
-            --app rust-staging \
             --detach \
             --remote-only \
             --region ams

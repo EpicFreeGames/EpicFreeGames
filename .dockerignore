@@ -1,6 +1,6 @@
-**/DATA
-**/dist
-**/node_modules
-**/.turbo
-**/.env
-**/.env.local
+target
+*.env
+.env
+docker-compose.yml
+Dockerfile
+readme.md

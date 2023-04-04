@@ -1,0 +1,21 @@
+{
+  "name": "@efg/types",
+  "version": "0.0.0",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "rm -rf dist && ./node_modules/.bin/tsc -p ./tsconfig.json"
+  },
+  "files": [
+    "dist/**"
+  ],
+  "dependencies": {
+    "@efg/configuration": "*"
+  },
+  "devDependencies": {
+    "@efg/tsconfig": "*",
+    "typescript": "4.7.4"
+  }
+}
