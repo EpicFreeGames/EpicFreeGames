@@ -6,7 +6,7 @@ use sea_orm::entity::prelude::*;
 #[sea_orm(table_name = "server")]
 pub struct Model {
     #[sea_orm(primary_key, auto_increment = false)]
-    pub id: i64,
+    pub id: u64,
     #[sea_orm(column_type = "Text", nullable)]
     pub role_id: Option<String>,
     #[sea_orm(column_type = "Text", nullable)]
@@ -14,7 +14,7 @@ pub struct Model {
     #[sea_orm(column_type = "Text", nullable)]
     pub thread_id: Option<String>,
     #[sea_orm(column_type = "Text", nullable)]
-    pub webhook_id: Option<String>,
+    pub webhook_id: Option<u64>,
     #[sea_orm(column_type = "Text", nullable)]
     pub webhook_token: Option<String>,
     #[sea_orm(column_type = "Text")]
