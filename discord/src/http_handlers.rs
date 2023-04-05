@@ -57,14 +57,14 @@ pub async fn handle_request(
             kind: InteractionResponseType::Pong,
         }));
     } else {
-        let interactionData = match body.data.as_ref() {
+        let interaction_data = match body.data.as_ref() {
             Some(data) => data,
             None => {
                 return Ok(None);
             }
         };
 
-        let command_name = match interactionData {
+        let command_name = match interaction_data {
             InteractionData::ApplicationCommand(data) => data.name.as_str(),
             _ => {
                 return Ok(None);
@@ -88,26 +88,33 @@ pub async fn handle_request(
             language
         );
 
-        if command_name == "free" {
-            return Ok(Some(
-                no_guild::free_command::free_command(data, translator, &body, &language, &currency)
+        match command_name {
+            "free" => {
+                return Ok(Some(
+                    no_guild::free_command::free_command(
+                        data, translator, &body, &language, &currency,
+                    )
                     .await
                     .context("free command failed")?,
-            ));
-        } else if command_name == "up" {
-            return Ok(Some(
-                no_guild::up_command::up_command(data, translator, &body, &language, &currency)
-                    .await
-                    .context("up command failed")?,
-            ));
-        } else if command_name == "help" {
-            return Ok(Some(
-                no_guild::help_command::help_command(translator, &body, &language)
-                    .await
-                    .context("help command failed")?,
-            ));
-        } else {
-            return Ok(None);
+                ));
+            }
+            "up" => {
+                return Ok(Some(
+                    no_guild::up_command::up_command(data, translator, &body, &language, &currency)
+                        .await
+                        .context("up command failed")?,
+                ));
+            }
+            "help" => {
+                return Ok(Some(
+                    no_guild::help_command::help_command(translator, &body, &language)
+                        .await
+                        .context("help command failed")?,
+                ));
+            }
+            _ => {
+                return Ok(None);
+            }
         }
     }
 }
