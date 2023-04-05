@@ -14,5 +14,4 @@ tracing = { workspace = true }
 sqlx = { version = "0.6.2", features = [ "runtime-tokio-rustls", "postgres", "chrono" ] }
 sea-orm = { version = "0.11.1", features = [ "sqlx-postgres", "runtime-tokio-rustls", "macros" ] }
 entity = { path = "../entity" }
-database = { path = "../database" }
 config = { path = "../config" }

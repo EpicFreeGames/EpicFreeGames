@@ -48,7 +48,6 @@ dependencies = [
  "axum",
  "config",
  "data",
- "database",
  "discord",
  "handlers",
  "hyper",
@@ -494,25 +493,7 @@ dependencies = [
  "anyhow",
  "chrono",
  "config",
- "database",
  "entity",
- "sea-orm",
- "serde",
- "serde_json",
- "sqlx",
- "thiserror",
- "tracing",
- "uuid",
-]
-
-[[package]]
-name = "database"
-version = "0.0.0"
-dependencies = [
- "anyhow",
- "chrono",
- "config",
- "futures",
  "sea-orm",
  "serde",
  "serde_json",
@@ -571,7 +552,6 @@ dependencies = [
  "chrono",
  "config",
  "data",
- "database",
  "ed25519-dalek",
  "hex",
  "i18n",
@@ -675,7 +655,6 @@ checksum = "13e2792b0ff0340399d58445b88fd9770e3489eff258a4cbc1523418f12abf84"
 dependencies = [
  "futures-channel",
  "futures-core",
- "futures-executor",
  "futures-io",
  "futures-sink",
  "futures-task",
@@ -699,17 +678,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ec90ff4d0fe1f57d600049061dc6bb68ed03c7d2fbd697274c41805dcb3f8608"
 
 [[package]]
-name = "futures-executor"
-version = "0.3.26"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e8de0a35a6ab97ec8869e32a2473f4b1324459e14c29275d14b10cb1fd19b50e"
-dependencies = [
- "futures-core",
- "futures-task",
- "futures-util",
-]
-
-[[package]]
 name = "futures-intrusive"
 version = "0.4.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -725,17 +693,6 @@ name = "futures-io"
 version = "0.3.27"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "89d422fa3cbe3b40dca574ab087abb5bc98258ea57eea3fd6f1fa7162c778b91"
-
-[[package]]
-name = "futures-macro"
-version = "0.3.26"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "95a73af87da33b5acf53acfebdc339fe592ecf5357ac7c0a7734ab9d8c876a70"
-dependencies = [
- "proc-macro2",
- "quote",
- "syn",
-]
 
 [[package]]
 name = "futures-sink"
@@ -758,7 +715,6 @@ dependencies = [
  "futures-channel",
  "futures-core",
  "futures-io",
- "futures-macro",
  "futures-sink",
  "futures-task",
  "memchr",
@@ -805,7 +761,6 @@ version = "0.0.0"
 dependencies = [
  "anyhow",
  "data",
- "database",
  "discord",
  "i18n",
  "jsonwebtoken",

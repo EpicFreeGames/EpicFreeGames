@@ -1,6 +1,7 @@
+use crate::types::Db;
+
 use super::games_types::ApiGame;
 use anyhow::Context;
-use database::types::Db;
 use entity::{game, game::Entity as Game, game_price::Entity as GamePrice};
 use sea_orm::{EntityTrait, Order, QueryOrder};
 

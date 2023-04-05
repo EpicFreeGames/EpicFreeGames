@@ -1,4 +1,4 @@
-use data::games::games_cache::ApiGamesCache;
+use data::types::Data;
 use i18n::{
     translator::Translator,
     types::{Currency, Language},
@@ -11,13 +11,13 @@ use twilight_model::{
 use crate::{embeds, types::interaction::Interaction};
 
 pub async fn free_command(
+    data: &Data,
     translator: &Translator,
-    api_games_cache: &ApiGamesCache,
     _i: &Interaction,
     language: &Language,
     currency: &Currency,
 ) -> Result<InteractionResponse, anyhow::Error> {
-    let games = &api_games_cache.free_games;
+    let games = &data.api_games_cache.free_games;
 
     let game_embeds: Vec<Embed> = games
         .iter()

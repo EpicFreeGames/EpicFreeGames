@@ -11,8 +11,7 @@ pub async fn discord_endpoint(
     State(state): RequestContext,
     Json(json): Json<Interaction>,
 ) -> Result<impl IntoResponse, ApiError> {
-    let response =
-        discord_request_handler(&state.db, &state.api_games_cache, &state.translator, json).await?;
+    let response = discord_request_handler(&state.data, &state.translator, json).await?;
 
     if let Some(response) = response {
         return Ok(Json(response));

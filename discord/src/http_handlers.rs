@@ -1,17 +1,16 @@
 use anyhow::Context;
 use config::CONFIG;
-use data::games::games_cache::ApiGamesCache;
-use database::types::Db;
+use data::{
+    games::games_cache::ApiGamesCache,
+    types::{Data, Db},
+};
 use ed25519_dalek::{PublicKey, Signature, Verifier};
 use i18n::{
     translator::Translator,
     types::{Currency, Language},
 };
 use twilight_model::{
-    application::{
-        command,
-        interaction::{InteractionData, InteractionType},
-    },
+    application::interaction::{InteractionData, InteractionType},
     http::interaction::InteractionResponseType,
 };
 
@@ -48,8 +47,7 @@ pub async fn validate_discord_request(
 }
 
 pub async fn handle_request(
-    db: &Db,
-    api_games_cache: &ApiGamesCache,
+    data: &Data,
     translator: &Translator,
     body: Interaction,
 ) -> Result<Option<InteractionResponse>, anyhow::Error> {
@@ -59,14 +57,14 @@ pub async fn handle_request(
             kind: InteractionResponseType::Pong,
         }));
     } else {
-        let data = match body.data.as_ref() {
+        let interactionData = match body.data.as_ref() {
             Some(data) => data,
             None => {
                 return Ok(None);
             }
         };
 
-        let command_name = match data {
+        let command_name = match interactionData {
             InteractionData::ApplicationCommand(data) => data.name.as_str(),
             _ => {
                 return Ok(None);
@@ -92,27 +90,15 @@ pub async fn handle_request(
 
         if command_name == "free" {
             return Ok(Some(
-                no_guild::free_command::free_command(
-                    translator,
-                    api_games_cache,
-                    &body,
-                    &language,
-                    &currency,
-                )
-                .await
-                .context("free command failed")?,
+                no_guild::free_command::free_command(data, translator, &body, &language, &currency)
+                    .await
+                    .context("free command failed")?,
             ));
         } else if command_name == "up" {
             return Ok(Some(
-                no_guild::up_command::up_command(
-                    translator,
-                    api_games_cache,
-                    &body,
-                    &language,
-                    &currency,
-                )
-                .await
-                .context("up command failed")?,
+                no_guild::up_command::up_command(data, translator, &body, &language, &currency)
+                    .await
+                    .context("up command failed")?,
             ));
         } else if command_name == "help" {
             return Ok(Some(

@@ -2,11 +2,10 @@ use std::{net::SocketAddr, time::Duration};
 
 use axum::{body::Body, middleware, response::Response, routing::post, Router};
 use config::CONFIG;
-use data::games::games_cache::ApiGamesCache;
-use database::get_db;
+use data::types::Data;
 use hyper::Request;
 use tower_http::trace::TraceLayer;
-use tracing::{debug_span, Span};
+use tracing::{info_span, Span};
 use tracing_subscriber::{
     filter, prelude::__tracing_subscriber_SubscriberExt, util::SubscriberInitExt,
 };
@@ -23,11 +22,7 @@ async fn main() {
         .with(tracing_subscriber::fmt::layer())
         .init();
 
-    let db = get_db().await;
-
-    let api_games_cache = ApiGamesCache::new(db.clone())
-        .await
-        .expect("Failed to initialize games cache");
+    let data = Data::new().await;
 
     let v1_routes = Router::new()
         .route("/discord", post(endpoints::discord::discord_endpoint))
@@ -37,11 +32,11 @@ async fn main() {
 
     let app = Router::new()
         .nest("/api", api_routes)
-        .with_state(RequestContextStruct::new(db, api_games_cache))
+        .with_state(RequestContextStruct::new(data))
         .layer(
             TraceLayer::new_for_http()
                 .make_span_with(|request: &Request<Body>| {
-                    debug_span!(
+                    info_span!(
                         "request",
                         id = %Ulid::new(),
                         method = %request.method(),

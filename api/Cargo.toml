@@ -10,7 +10,6 @@ thiserror = { workspace = true }
 anyhow = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
-database = { path = "../database" }
 data = { path = "../data" }
 handlers = { path = "../handlers" }
 discord = { path = "../discord" }
