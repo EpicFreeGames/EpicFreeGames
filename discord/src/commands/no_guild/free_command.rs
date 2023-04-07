@@ -8,7 +8,7 @@ use twilight_model::{
     http::interaction::{InteractionResponse, InteractionResponseData, InteractionResponseType},
 };
 
-use crate::{embeds, types::interaction::Interaction};
+use crate::{embeds, types::exports::Interaction};
 
 pub async fn free_command(
     data: &Data,
@@ -29,7 +29,7 @@ pub async fn free_command(
             language, translator,
         )]
     } else {
-        game_embeds
+        game_embeds.clone()
     };
 
     let response: InteractionResponse = InteractionResponse {

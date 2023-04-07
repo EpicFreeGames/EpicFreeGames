@@ -8,7 +8,7 @@ use twilight_model::{
     http::interaction::{InteractionResponse, InteractionResponseData, InteractionResponseType},
 };
 
-use crate::{embeds, types::interaction::Interaction};
+use crate::{embeds, types::exports::Interaction};
 
 pub async fn up_command(
     data: &Data,

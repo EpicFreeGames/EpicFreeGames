@@ -1,14 +1,15 @@
+use std::sync::Arc;
+
 use anyhow::Context;
 use config::CONFIG;
-use data::{
-    games::games_cache::ApiGamesCache,
-    types::{Data, Db},
-};
+use data::types::Data;
 use ed25519_dalek::{PublicKey, Signature, Verifier};
+use entity::server;
 use i18n::{
     translator::Translator,
     types::{Currency, Language},
 };
+use sea_orm::{sea_query::OnConflict, ActiveValue, EntityTrait};
 use twilight_model::{
     application::interaction::{InteractionData, InteractionType},
     http::interaction::InteractionResponseType,
@@ -16,7 +17,7 @@ use twilight_model::{
 
 use crate::{
     commands::no_guild,
-    types::interaction::{Interaction, InteractionResponse},
+    types::exports::{HttpClient, Interaction, InteractionResponse},
 };
 
 pub async fn validate_discord_request(
@@ -48,6 +49,7 @@ pub async fn validate_discord_request(
 
 pub async fn handle_request(
     data: &Data,
+    http_client: Arc<HttpClient>,
     translator: &Translator,
     body: Interaction,
 ) -> Result<Option<InteractionResponse>, anyhow::Error> {
@@ -57,29 +59,39 @@ pub async fn handle_request(
             kind: InteractionResponseType::Pong,
         }));
     } else {
-        let interaction_data = match body.data.as_ref() {
-            Some(data) => data,
-            None => {
-                return Ok(None);
-            }
-        };
+        tracing::info!("gettin user");
+        let user = http_client.current_user().await.unwrap();
+        tracing::info!("got user {:?}", user);
 
-        let command_name = match interaction_data {
-            InteractionData::ApplicationCommand(data) => data.name.as_str(),
+        let interaction_data = match body.data.as_ref() {
+            Some(InteractionData::ApplicationCommand(data)) => data,
             _ => {
                 return Ok(None);
             }
         };
 
-        let language = Language {
-            name: "English".to_string(),
-            code: "en".to_string(),
+        let db_server = server::Entity::find_by_id(body.guild_id.unwrap().get() as i64)
+            .one(&data.db)
+            .await
+            .context("Failed to get server from the database")?;
+
+        let language = match db_server {
+            Some(server) => match Language::from_code(&server.language_code) {
+                Ok(language) => language,
+                Err(_) => Language::default(),
+            },
+            None => Language::default(),
         };
 
         let currency = Currency {
             name: "Euro".to_string(),
             code: "EUR".to_string(),
+            after_price: " €".to_string(),
+            in_front_of_price: "".to_string(),
+            api_code: "DE".to_string(),
         };
+
+        let command_name = interaction_data.name.as_str();
 
         tracing::info!(
             "New command: {}, currency: {:?}, language: {:?}",
@@ -88,33 +100,25 @@ pub async fn handle_request(
             language
         );
 
-        match command_name {
-            "free" => {
-                return Ok(Some(
-                    no_guild::free_command::free_command(
-                        data, translator, &body, &language, &currency,
-                    )
+        let response = match command_name {
+            "free" => Some(
+                no_guild::free_command::free_command(data, translator, &body, &language, &currency)
                     .await
                     .context("free command failed")?,
-                ));
-            }
-            "up" => {
-                return Ok(Some(
-                    no_guild::up_command::up_command(data, translator, &body, &language, &currency)
-                        .await
-                        .context("up command failed")?,
-                ));
-            }
-            "help" => {
-                return Ok(Some(
-                    no_guild::help_command::help_command(translator, &body, &language)
-                        .await
-                        .context("help command failed")?,
-                ));
-            }
-            _ => {
-                return Ok(None);
-            }
-        }
+            ),
+            "up" => Some(
+                no_guild::up_command::up_command(data, translator, &body, &language, &currency)
+                    .await
+                    .context("up command failed")?,
+            ),
+            "help" => Some(
+                no_guild::help_command::help_command(translator, &body, &language)
+                    .await
+                    .context("help command failed")?,
+            ),
+            _ => None,
+        };
+
+        return Ok(response);
     }
 }

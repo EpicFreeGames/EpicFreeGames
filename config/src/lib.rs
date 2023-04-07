@@ -24,6 +24,7 @@ pub struct Config {
     pub database_url: String,
     pub jwt_secret: String,
     pub discord_public_key: String,
+    pub discord_token: String,
 }
 
 impl Config {

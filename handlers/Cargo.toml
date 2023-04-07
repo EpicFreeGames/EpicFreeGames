@@ -10,7 +10,6 @@ serde = { workspace = true }
 serde_json = { workspace = true }
 jsonwebtoken = { workspace = true }
 tracing = { workspace = true }
-
 data = { path = "../data" }
 discord = { path = "../discord" }
 i18n = { path = "../i18n" }

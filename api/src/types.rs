@@ -1,9 +1,13 @@
+use std::time::Duration;
+
 use axum::{
     extract::State,
     response::{IntoResponse, Response},
     Json,
 };
+use config::CONFIG;
 use data::types::Data;
+use discord::types::exports::HttpClient;
 use handlers::types::HandlerError;
 use hyper::StatusCode;
 use i18n::translator::Translator;
@@ -12,13 +16,19 @@ use serde_json::json;
 #[derive(Clone)]
 pub struct RequestContextStruct {
     pub data: Data,
+    pub http_client: std::sync::Arc<HttpClient>,
     pub translator: Translator,
 }
 
 impl RequestContextStruct {
     pub fn new(data: Data) -> Self {
+        let http_client = HttpClient::builder()
+            .token(CONFIG.discord_token.to_string())
+            .build();
+
         Self {
             data,
+            http_client: std::sync::Arc::new(http_client),
             translator: Translator::new(),
         }
     }

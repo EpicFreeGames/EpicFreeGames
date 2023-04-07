@@ -2,7 +2,7 @@ use anyhow::Context;
 use axum::{
     body::Body, extract::State, http::Request, middleware::Next, response::IntoResponse, Json,
 };
-use discord::{http_handlers::validate_discord_request, types::interaction::Interaction};
+use discord::{http_handlers::validate_discord_request, types::exports::Interaction};
 use handlers::discord::discord_request_handler;
 
 use crate::types::{ApiError, RequestContext};
@@ -11,7 +11,13 @@ pub async fn discord_endpoint(
     State(state): RequestContext,
     Json(json): Json<Interaction>,
 ) -> Result<impl IntoResponse, ApiError> {
-    let response = discord_request_handler(&state.data, &state.translator, json).await?;
+    let response = discord_request_handler(
+        &state.data,
+        state.http_client.clone(),
+        &state.translator,
+        json,
+    )
+    .await?;
 
     if let Some(response) = response {
         return Ok(Json(response));
