@@ -1,3 +1,7 @@
+[profile.release]
+strip = true
+lto = true
+
 [workspace]
 
 members = [
