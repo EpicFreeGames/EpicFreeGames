@@ -33,10 +33,10 @@ model game_price {
 
 model server {
     id            BigInt        @id @unique
-    role_id       String?
-    channel_id    String?
-    thread_id     String?
-    webhook_id    String?
+    role_id       BigInt?
+    channel_id    BigInt?
+    thread_id     BigInt?
+    webhook_id    BigInt?
     webhook_token String?
     language_code String        @default("en")
     currency_code String        @default("USD")
@@ -48,7 +48,7 @@ model server {
 model command_log {
     id         String   @id
     command    String
-    sender_id  String
+    sender_id  BigInt
     server_id  BigInt?
     server     server?  @relation(fields: [server_id], references: [id], onDelete: Cascade)
     error      String?  @db.Text
