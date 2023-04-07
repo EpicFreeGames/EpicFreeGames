@@ -9,7 +9,7 @@ use i18n::{
     translator::Translator,
     types::{Currency, Language},
 };
-use sea_orm::{sea_query::OnConflict, ActiveValue, EntityTrait};
+use sea_orm::EntityTrait;
 use twilight_model::{
     application::interaction::{InteractionData, InteractionType},
     http::interaction::InteractionResponseType,
@@ -59,10 +59,6 @@ pub async fn handle_request(
             kind: InteractionResponseType::Pong,
         }));
     } else {
-        tracing::info!("gettin user");
-        let user = http_client.current_user().await.unwrap();
-        tracing::info!("got user {:?}", user);
-
         let interaction_data = match body.data.as_ref() {
             Some(InteractionData::ApplicationCommand(data)) => data,
             _ => {
