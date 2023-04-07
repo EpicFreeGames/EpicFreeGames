@@ -1,6 +1,9 @@
 use anyhow::Context;
 
-use crate::languages::{DEFAULT_LANGUAGE, LANGUAGES};
+use crate::{
+    currencies::{CURRENCIES, DEFAULT_CURRENCY},
+    languages::{DEFAULT_LANGUAGE, LANGUAGES},
+};
 
 #[derive(Debug, Clone)]
 pub struct Language {
@@ -26,11 +29,27 @@ impl Language {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Currency {
     pub name: String,
     pub code: String,
     pub api_code: String,
     pub after_price: String,
     pub in_front_of_price: String,
+}
+
+impl Default for Currency {
+    fn default() -> Self {
+        return DEFAULT_CURRENCY.clone();
+    }
+}
+
+impl Currency {
+    pub fn from_code(code: &str) -> Result<Self, anyhow::Error> {
+        let currency = CURRENCIES
+            .get(code)
+            .context(format!("Currency with code {} not found", code))?;
+
+        return Ok(currency.clone());
+    }
 }

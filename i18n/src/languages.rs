@@ -2,8 +2,6 @@ use std::collections::HashMap;
 
 use crate::types::Language;
 
-type LanguageCode = &'static str;
-
 pub static DEFAULT_LANGUAGE: once_cell::sync::Lazy<Language> = once_cell::sync::Lazy::new(|| {
     return Language {
         name: "English".to_string(),
@@ -12,6 +10,8 @@ pub static DEFAULT_LANGUAGE: once_cell::sync::Lazy<Language> = once_cell::sync::
         website_ready: true,
     };
 });
+
+type LanguageCode = &'static str;
 
 pub static LANGUAGES: once_cell::sync::Lazy<HashMap<LanguageCode, Language>> =
     once_cell::sync::Lazy::new(|| {

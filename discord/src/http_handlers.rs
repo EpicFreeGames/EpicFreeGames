@@ -71,20 +71,21 @@ pub async fn handle_request(
             .await
             .context("Failed to get server from the database")?;
 
-        let language = match db_server {
-            Some(server) => match Language::from_code(&server.language_code) {
-                Ok(language) => language,
-                Err(_) => Language::default(),
-            },
-            None => Language::default(),
-        };
+        let (language, currency) = match db_server {
+            Some(server) => {
+                let language = match Language::from_code(&server.language_code) {
+                    Ok(language) => language,
+                    Err(_) => Language::default(),
+                };
 
-        let currency = Currency {
-            name: "Euro".to_string(),
-            code: "EUR".to_string(),
-            after_price: " €".to_string(),
-            in_front_of_price: "".to_string(),
-            api_code: "DE".to_string(),
+                let currency = match Currency::from_code(&server.currency_code) {
+                    Ok(currency) => currency,
+                    Err(_) => Currency::default(),
+                };
+
+                (language, currency)
+            }
+            None => (Language::default(), Currency::default()),
         };
 
         let command_name = interaction_data.name.as_str();
