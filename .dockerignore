@@ -4,3 +4,7 @@ target
 docker-compose.yml
 Dockerfile
 readme.md
+*.md
+*.git
+*.gitignore
+ts-api
