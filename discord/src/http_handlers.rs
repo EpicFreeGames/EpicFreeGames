@@ -16,7 +16,7 @@ use twilight_model::{
 };
 
 use crate::{
-    commands::no_guild,
+    commands::{guild, no_guild},
     types::exports::{HttpClient, Interaction, InteractionResponse},
 };
 
@@ -71,7 +71,7 @@ pub async fn handle_request(
             .await
             .context("Failed to get server from the database")?;
 
-        let (language, currency) = match db_server {
+        let (language, currency) = match db_server.clone() {
             Some(server) => {
                 let language = match Language::from_code(&server.language_code) {
                     Ok(language) => language,
@@ -112,6 +112,13 @@ pub async fn handle_request(
                 no_guild::help_command::help_command(translator, &body, &language)
                     .await
                     .context("help command failed")?,
+            ),
+            "settings" => Some(
+                guild::settings_command::settings_command(
+                    translator, &db_server, &language, &currency,
+                )
+                .await
+                .context("settings command failed")?,
             ),
             _ => None,
         };
