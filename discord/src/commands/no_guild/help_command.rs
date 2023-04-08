@@ -12,13 +12,16 @@ pub async fn help_command(
 ) -> Result<InteractionResponse, anyhow::Error> {
     let response: InteractionResponse = InteractionResponse {
         data: Some(InteractionResponseData {
+            embeds: Some(vec![embeds::help_embed::help_embed(translator, language)]),
+            allowed_mentions: None,
+            attachments: None,
+            choices: None,
+            components: None,
             content: None,
             flags: None,
-            choices: None,
+            tts: None,
             custom_id: None,
-            embeds: Some(vec![embeds::help_embed::help_embed(translator, language)]),
             title: None,
-            ..Default::default()
         }),
         kind: InteractionResponseType::ChannelMessageWithSource,
     };

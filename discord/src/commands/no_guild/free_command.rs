@@ -34,13 +34,16 @@ pub async fn free_command(
 
     let response: InteractionResponse = InteractionResponse {
         data: Some(InteractionResponseData {
+            embeds: Some(embeds),
+            allowed_mentions: None,
+            attachments: None,
+            choices: None,
+            components: None,
             content: None,
             flags: None,
-            choices: None,
+            tts: None,
             custom_id: None,
-            embeds: Some(embeds),
             title: None,
-            ..Default::default()
         }),
         kind: InteractionResponseType::ChannelMessageWithSource,
     };
