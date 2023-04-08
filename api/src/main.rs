@@ -18,7 +18,7 @@ pub mod types;
 #[tokio::main]
 async fn main() {
     tracing_subscriber::registry()
-        .with(filter::LevelFilter::DEBUG)
+        .with(filter::LevelFilter::INFO)
         .with(tracing_subscriber::fmt::layer())
         .init();
 
