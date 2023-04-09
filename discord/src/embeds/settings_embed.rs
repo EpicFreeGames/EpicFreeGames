@@ -7,6 +7,8 @@ use twilight_model::channel::message::Embed;
 
 use crate::types::embed::{embed_color, EmbedColor};
 
+use super::embed_utils::bold;
+
 pub fn settings_embed(
     translator: &Translator,
     server: &Option<server::Model>,
@@ -18,7 +20,7 @@ pub fn settings_embed(
         title: Some(translator.translate("settings", language, None)),
         description: Some(format!(
             "
-            {channel_or_thread_title__channel}/{channel_or_thread_title__thread}: {channel_or_thread_value}
+            {channel_or_thread_title}: {channel_or_thread_value}
             
             {role_title}: {role_value}
 
@@ -26,17 +28,18 @@ pub fn settings_embed(
 
             {currency_title}: {currency_value}
             ",
-            channel_or_thread_title__channel = translator.translate("channel", language, None),
-            channel_or_thread_title__thread = translator.translate("thread", language, None),
-            channel_or_thread_value = handle_channel_or_thread_value(&server, &translator, &language),
-            
-            role_title =   translator.translate("role", language, None),
+            channel_or_thread_title = bold(format!(
+                "{}/{}",
+                translator.translate("channel", language, None),
+                translator.translate("thread", language, None)
+            )),
+            channel_or_thread_value =
+                handle_channel_or_thread_value(&server, &translator, &language),
+            role_title = bold(translator.translate("role", language, None)),
             role_value = handle_role_value(&server, &translator, &language),
-            
-            language_title = translator.translate("language", language, None),
+            language_title = bold(translator.translate("language", language, None)),
             language_value = language.name,
-            
-            currency_title = translator.translate("currency", language, None),
+            currency_title = bold(translator.translate("currency", language, None)),
             currency_value = currency.name,
         )),
         author: None,
