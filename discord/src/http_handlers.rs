@@ -16,7 +16,10 @@ use twilight_model::{
 };
 
 use crate::{
-    commands::{guild, no_guild},
+    commands::{
+        guild::{self},
+        no_guild,
+    },
     types::exports::{HttpClient, Interaction, InteractionResponse},
 };
 

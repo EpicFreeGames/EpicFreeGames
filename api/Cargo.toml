@@ -10,12 +10,12 @@ thiserror = { workspace = true }
 anyhow = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
+tokio = { workspace = true }
 data = { path = "../data" }
 handlers = { path = "../handlers" }
 discord = { path = "../discord" }
 config = { path = "../config" }
 i18n = { path = "../i18n" }
-tokio = { version = "1.25.0", features = ["full"] }
 axum = "0.6.6"
 hyper = "0.14.25"
 tower = "0.4.13"
