@@ -61,7 +61,7 @@ pub fn help_embed(translator: &Translator, language: &Language) -> Embed {
             ),
             would_like_to_translate = format!(
                 "🚩 {}",
-                bold(translator.translate(
+                bold(&translator.translate(
                     "would_you_like_to_translate",
                     language,
                     Some(&HashMap::from([("botName", CONSTANTS.bot_name.as_str())]))

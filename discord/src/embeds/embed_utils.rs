@@ -1,6 +1,6 @@
 use chrono::NaiveDateTime;
 
-pub fn bold(text: String) -> String {
+pub fn bold(text: &str) -> String {
     return format!("**{}**", text);
 }
 

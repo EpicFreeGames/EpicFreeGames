@@ -28,18 +28,18 @@ pub fn settings_embed(
 
             {currency_title}: {currency_value}
             ",
-            channel_or_thread_title = bold(format!(
+            channel_or_thread_title = bold(&format!(
                 "{}/{}",
                 translator.translate("channel", language, None),
                 translator.translate("thread", language, None)
             )),
             channel_or_thread_value =
                 handle_channel_or_thread_value(&server, &translator, &language),
-            role_title = bold(translator.translate("role", language, None)),
+            role_title = bold(&translator.translate("role", language, None)),
             role_value = handle_role_value(&server, &translator, &language),
-            language_title = bold(translator.translate("language", language, None)),
+            language_title = bold(&translator.translate("language", language, None)),
             language_value = language.name,
-            currency_title = bold(translator.translate("currency", language, None)),
+            currency_title = bold(&translator.translate("currency", language, None)),
             currency_value = currency.name,
         )),
         author: None,
