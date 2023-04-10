@@ -3,11 +3,11 @@ use i18n::{
     translator::Translator,
     types::{Currency, Language},
 };
-use twilight_model::channel::message::Embed;
+use twilight_model::channel::message::{embed::EmbedImage, Embed};
 
 use crate::types::embed::{embed_color, EmbedColor};
 
-use super::embed_utils::{bold, relatime_timestamp, EMBED_SEPARATOR};
+use super::embed_utils::{bold, link, relatime_timestamp, EMBED_SEPARATOR};
 
 pub fn game_embed(
     game: &ApiGame,
@@ -20,7 +20,7 @@ pub fn game_embed(
         title: Some(game.name.clone()),
         description: Some(format!(
             "
-            {open_in}:
+            {open_in}
             {web_link}{separator}{app_link}
 
             🟢 {game_start}
@@ -29,18 +29,23 @@ pub fn game_embed(
 
             💰 {price}
             ",
-            open_in = bold(translator.translate("open_in", &language, None)),
-            web_link = game.web_link.clone(),
+            open_in = bold(&translator.translate("open_in", &language, None)),
+            web_link = link(&game.store.web_link_label, &game.redirect_web_link),
             separator = EMBED_SEPARATOR,
-            app_link = game.app_link.clone(),
+            app_link = link(&game.store.app_link_label, &game.redirect_app_link),
             game_start = relatime_timestamp(&game.start_date),
             game_end = relatime_timestamp(&game.end_date),
             price = game.get_formatted_price(&currency.code),
         )),
+        image: Some(EmbedImage {
+            url: game.image_url.clone(),
+            proxy_url: None,
+            height: None,
+            width: None,
+        }),
         author: None,
         fields: Vec::new(),
         footer: None,
-        image: None,
         kind: "rich".to_string(),
         provider: None,
         thumbnail: None,

@@ -73,7 +73,7 @@ impl ApiGame {
             id: "epic".to_string(),
             name: "Epic Games Store".to_string(),
             web_base_url: STORE_BASE_URL.to_string(),
-            web_link_label: "Epic Games Store".to_string(),
+            web_link_label: "Epicgames.com".to_string(),
         };
 
         let status = if db_game.start_date > chrono::Utc::now().naive_utc() {
