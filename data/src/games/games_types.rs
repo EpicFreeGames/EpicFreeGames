@@ -11,7 +11,7 @@ pub struct ApiGameStore {
     pub app_base_url: String,
 }
 
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq)]
 #[serde(rename_all = "lowercase")]
 pub enum ApiGameStatus {
     Free,

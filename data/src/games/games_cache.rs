@@ -1,4 +1,4 @@
-use crate::types::Db;
+use crate::{games::games_types::ApiGameStatus, types::Db};
 
 use super::games_types::ApiGame;
 use anyhow::Context;
@@ -15,14 +15,13 @@ pub struct ApiGamesCache {
 
 impl ApiGamesCache {
     pub async fn new(db: Db) -> Result<Self, anyhow::Error> {
-        let new_cache = Self {
+        let mut new_cache = Self {
             db,
             free_games: Vec::new(),
             upcoming_free_games: Vec::new(),
         };
 
         new_cache
-            .clone()
             .refresh()
             .await
             .context("Failed to refresh games cache")?;
@@ -30,20 +29,28 @@ impl ApiGamesCache {
         return Ok(new_cache);
     }
 
-    pub async fn refresh(mut self) -> Result<(), anyhow::Error> {
+    pub async fn refresh(&mut self) -> Result<(), anyhow::Error> {
         tracing::debug!("Refreshing games cache");
 
         let games = self.get_games().await.context("Failed to get new games")?;
 
-        self.free_games = games
+        let confirmed_games: Vec<ApiGame> = games
             .iter()
-            .filter(|api_game| api_game.start_date > chrono::Utc::now().naive_utc())
+            .filter(|api_game| api_game.confirmed)
             .cloned()
             .collect();
 
-        self.upcoming_free_games = games
+        tracing::info!("Confirmed games: {:?}", confirmed_games);
+
+        self.free_games = confirmed_games
             .iter()
-            .filter(|api_game| api_game.start_date < chrono::Utc::now().naive_utc())
+            .filter(|api_game| api_game.status == ApiGameStatus::Free)
+            .cloned()
+            .collect();
+
+        self.upcoming_free_games = confirmed_games
+            .iter()
+            .filter(|api_game| api_game.status == ApiGameStatus::Upcoming)
             .cloned()
             .collect();
 
