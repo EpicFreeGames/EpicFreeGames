@@ -540,6 +540,7 @@ dependencies = [
  "chrono",
  "config",
  "entity",
+ "i18n",
  "sea-orm",
  "serde",
  "serde_json",

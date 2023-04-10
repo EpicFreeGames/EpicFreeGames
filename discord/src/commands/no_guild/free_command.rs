@@ -21,7 +21,7 @@ pub async fn free_command(
 
     let game_embeds: Vec<Embed> = games
         .iter()
-        .map(|game| embeds::game_embed::game_embed(game, language, currency))
+        .map(|game| embeds::game_embed::game_embed(game, language, currency, translator))
         .collect();
 
     let embeds = if game_embeds.is_empty() {

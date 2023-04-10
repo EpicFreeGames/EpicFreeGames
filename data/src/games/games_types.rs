@@ -1,5 +1,6 @@
 use chrono::NaiveDateTime;
 use entity::{game, game_price};
+use i18n::types::Currency;
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub struct ApiGameStore {
@@ -106,5 +107,27 @@ impl ApiGame {
             redirect_app_link,
             prices,
         };
+    }
+
+    pub fn get_formatted_price(&self, currency_code: &str) -> String {
+        let price_in_currency = self
+            .prices
+            .iter()
+            .find(|price| price.currency_code == currency_code);
+
+        match price_in_currency {
+            Some(price) => price.formatted_value.to_string(),
+            None => {
+                let price_default_currency = self
+                    .prices
+                    .iter()
+                    .find(|price| price.currency_code == Currency::default().code);
+
+                match price_default_currency {
+                    Some(price) => price.formatted_value.to_string(),
+                    None => "???".to_string(),
+                }
+            }
+        }
     }
 }
