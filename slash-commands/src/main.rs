@@ -1,4 +1,3 @@
-use anyhow::Context;
 use config::CONFIG;
 use slash_commands::get_slash_commands;
 use twilight_http::Client;

@@ -52,7 +52,7 @@ pub async fn validate_discord_request(
 
 pub async fn handle_request(
     data: &Data,
-    http_client: Arc<HttpClient>,
+    _http_client: Arc<HttpClient>,
     translator: &Translator,
     body: Interaction,
 ) -> Result<Option<InteractionResponse>, anyhow::Error> {

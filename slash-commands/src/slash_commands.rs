@@ -1,5 +1,3 @@
-use std::collections::HashMap;
-
 use i18n::{translator::Translator, types::Language};
 use twilight_model::{
     application::command::{Command, CommandType},
