@@ -5,7 +5,7 @@ use crate::{
     languages::{DEFAULT_LANGUAGE, LANGUAGES},
 };
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, serde::Deserialize, serde::Serialize)]
 pub struct Language {
     pub name: String,
     pub name_english: String,
@@ -29,7 +29,7 @@ impl Language {
     }
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, serde::Deserialize, serde::Serialize)]
 pub struct Currency {
     pub name: String,
     pub code: String,

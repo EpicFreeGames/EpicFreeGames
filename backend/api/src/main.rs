@@ -1,9 +1,11 @@
 use std::{net::SocketAddr, time::Duration};
 
-use axum::{body::Body, middleware, response::Response, routing::post, Router};
+use axum::http::HeaderValue;
+use axum::{body::Body, middleware, response::Response, routing::get, routing::post, Router};
 use config::CONFIG;
 use data::types::Data;
-use hyper::Request;
+use hyper::{Method, Request};
+use tower_http::cors::{Any, CorsLayer};
 use tower_http::trace::TraceLayer;
 use tracing::{info_span, Span};
 use tracing_subscriber::{
@@ -22,11 +24,33 @@ async fn main() {
         .with(tracing_subscriber::fmt::layer())
         .init();
 
+    let cors = CorsLayer::new()
+        .allow_methods([
+            Method::GET,
+            Method::POST,
+            Method::OPTIONS,
+            Method::PATCH,
+            Method::DELETE,
+            Method::PUT,
+            Method::HEAD,
+        ])
+        .allow_origin(
+            "http://localhost:3000"
+                .parse::<HeaderValue>()
+                .expect("Invalid origin"),
+        );
+
     let data = Data::new().await;
+
+    let i18n_routes = Router::new().route(
+        "/languages",
+        get(endpoints::i18n::languages::get_languages_endpoint),
+    );
 
     let v1_routes = Router::new()
         .route("/discord", post(endpoints::discord::discord_endpoint))
-        .layer(middleware::from_fn(endpoints::discord::discord_middleware));
+        .layer(middleware::from_fn(endpoints::discord::discord_middleware))
+        .nest("/i18n", i18n_routes);
 
     let api_routes = Router::new().nest("/v1", v1_routes);
 
@@ -50,9 +74,10 @@ async fn main() {
                         response.status()
                     );
                 }),
-        );
+        )
+        .layer(cors);
 
-    let addr = SocketAddr::from(([0, 0, 0, 0], 3000));
+    let addr = SocketAddr::from(([0, 0, 0, 0], 5000));
 
     tracing::info!("App started in {}, listening at {}", CONFIG.env, addr);
 

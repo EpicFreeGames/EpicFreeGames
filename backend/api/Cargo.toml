@@ -19,5 +19,5 @@ i18n = { path = "../i18n" }
 axum = "0.6.6"
 hyper = "0.14.25"
 tower = "0.4.13"
-tower-http = { version = "0.3", features = ["trace"] }
+tower-http = { version = "0.3", features = [ "trace", "cors" ] }
 ulid = "1"
