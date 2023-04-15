@@ -8,7 +8,7 @@ export const i18n = {
 	locales: ["en", "de", "cs"],
 } as const;
 
-export type Locale = typeof i18n["locales"][number];
+export type Locale = (typeof i18n)["locales"][number];
 export function isValidLocale(locale: string): locale is Locale {
 	return i18n.locales.includes(locale as Locale);
 }
@@ -30,7 +30,7 @@ export async function getT(locale: Locale): Promise<TFunction> {
 		const fullTranslation =
 			varKeys && varKeys.length
 				? varKeys.reduce((acc, key) => {
-						return acc.replace(`<${key}>`, vars[key]);
+						return acc.replace(`<${key}>`, vars[key as keyof typeof vars]!);
 				  }, translation)
 				: translation;
 

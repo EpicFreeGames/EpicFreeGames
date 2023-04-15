@@ -1,4 +1,6 @@
-import { Locale, getT, i18n } from "@/i18n/i18n";
+import { type Locale, getT, i18n } from "@/i18n/i18n";
+
+import "./globals.css";
 
 export const generateStaticParams = async () => {
 	return i18n.locales.map((locale) => ({

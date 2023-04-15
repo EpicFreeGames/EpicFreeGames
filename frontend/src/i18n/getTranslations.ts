@@ -1,5 +1,6 @@
 import "server-only";
-import { isValidLocale, Locale } from "./i18n";
+
+import { type Locale, isValidLocale } from "./i18n";
 
 const translations = {
 	en: async () => {
