@@ -8,7 +8,6 @@ thiserror = { workspace = true }
 anyhow = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
-jsonwebtoken = { workspace = true }
 tracing = { workspace = true }
 data = { path = "../data" }
 discord = { path = "../discord" }
