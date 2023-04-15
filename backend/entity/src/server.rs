@@ -7,6 +7,10 @@ use sea_orm::entity::prelude::*;
 pub struct Model {
     #[sea_orm(primary_key, auto_increment = false)]
     pub id: i64,
+    pub role_id: Option<i64>,
+    pub channel_id: Option<i64>,
+    pub thread_id: Option<i64>,
+    pub webhook_id: Option<i64>,
     #[sea_orm(column_type = "Text", nullable)]
     pub webhook_token: Option<String>,
     #[sea_orm(column_type = "Text")]
@@ -14,10 +18,6 @@ pub struct Model {
     #[sea_orm(column_type = "Text")]
     pub currency_code: String,
     pub created_at: DateTime,
-    pub role_id: Option<i64>,
-    pub channel_id: Option<i64>,
-    pub thread_id: Option<i64>,
-    pub webhook_id: Option<i64>,
 }
 
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]

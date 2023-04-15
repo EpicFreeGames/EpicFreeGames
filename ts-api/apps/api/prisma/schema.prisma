@@ -73,9 +73,19 @@ model sending {
 }
 
 model api_user {
-    id            String  @id
-    identifier    String  @unique
-    flags         BigInt
-    username      String?
-    token_version String
+    id         String    @id
+    identifier String    @unique
+    flags      BigInt
+    username   String?
+    sessions   session[]
+}
+
+model session {
+    id         String   @id
+    created_at DateTime @default(now())
+    expires_at DateTime
+    ip         String
+    user_agent String
+    user_id    String
+    user       api_user @relation(fields: [user_id], references: [id])
 }

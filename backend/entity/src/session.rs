@@ -3,34 +3,35 @@
 use sea_orm::entity::prelude::*;
 
 #[derive(Clone, Debug, PartialEq, DeriveEntityModel, Eq)]
-#[sea_orm(table_name = "command_log")]
+#[sea_orm(table_name = "session")]
 pub struct Model {
     #[sea_orm(primary_key, auto_increment = false, column_type = "Text")]
     pub id: String,
-    #[sea_orm(column_type = "Text")]
-    pub command: String,
-    pub sender_id: i64,
-    pub server_id: Option<i64>,
-    #[sea_orm(column_type = "Text", nullable)]
-    pub error: Option<String>,
     pub created_at: DateTime,
+    pub expires_at: DateTime,
+    #[sea_orm(column_type = "Text")]
+    pub ip: String,
+    #[sea_orm(column_type = "Text")]
+    pub user_agent: String,
+    #[sea_orm(column_type = "Text")]
+    pub user_id: String,
 }
 
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
 pub enum Relation {
     #[sea_orm(
-        belongs_to = "super::server::Entity",
-        from = "Column::ServerId",
-        to = "super::server::Column::Id",
+        belongs_to = "super::api_user::Entity",
+        from = "Column::UserId",
+        to = "super::api_user::Column::Id",
         on_update = "Cascade",
-        on_delete = "Cascade"
+        on_delete = "Restrict"
     )]
-    Server,
+    ApiUser,
 }
 
-impl Related<super::server::Entity> for Entity {
+impl Related<super::api_user::Entity> for Entity {
     fn to() -> RelationDef {
-        Relation::Server.def()
+        Relation::ApiUser.def()
     }
 }
 

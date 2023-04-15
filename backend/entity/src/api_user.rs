@@ -12,11 +12,18 @@ pub struct Model {
     pub flags: i64,
     #[sea_orm(column_type = "Text", nullable)]
     pub username: Option<String>,
-    #[sea_orm(column_type = "Text")]
-    pub token_version: String,
 }
 
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
-pub enum Relation {}
+pub enum Relation {
+    #[sea_orm(has_many = "super::session::Entity")]
+    Session,
+}
+
+impl Related<super::session::Entity> for Entity {
+    fn to() -> RelationDef {
+        Relation::Session.def()
+    }
+}
 
 impl ActiveModelBehavior for ActiveModel {}

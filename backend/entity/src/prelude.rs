@@ -7,3 +7,4 @@ pub use super::game_price::Entity as GamePrice;
 pub use super::sending::Entity as Sending;
 pub use super::sending_log::Entity as SendingLog;
 pub use super::server::Entity as Server;
+pub use super::session::Entity as Session;

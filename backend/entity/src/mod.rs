@@ -9,3 +9,4 @@ pub mod game_price;
 pub mod sending;
 pub mod sending_log;
 pub mod server;
+pub mod session;
