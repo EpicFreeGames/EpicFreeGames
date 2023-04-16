@@ -41,6 +41,12 @@ pub enum ApiError {
 
     #[error("{0}")]
     BadRequestError(String),
+
+    #[error("{0}")]
+    UnauthorizedError(String),
+
+    #[error("Forbidden")]
+    ForbiddenError,
 }
 
 impl IntoResponse for ApiError {
@@ -49,13 +55,24 @@ impl IntoResponse for ApiError {
             ApiError::UnexpectedError(err) => {
                 tracing::error!("Unexpected error: {:#?}", err);
 
-                (StatusCode::INTERNAL_SERVER_ERROR, err.to_string())
+                (
+                    StatusCode::INTERNAL_SERVER_ERROR,
+                    json!({  "message": "Internal server error",}),
+                )
             }
             ApiError::BadRequestError(err) => {
-                tracing::error!("Validation error: {:#?}", err);
+                tracing::info!("Validation error: {:#?}", err);
 
-                (StatusCode::BAD_REQUEST, err.to_string())
+                (
+                    StatusCode::BAD_REQUEST,
+                    json!({   "message": "Bad request"}),
+                )
             }
+            ApiError::UnauthorizedError(err) => (
+                StatusCode::UNAUTHORIZED,
+                json!({ "message": "Bad request" }),
+            ),
+            ApiError::ForbiddenError => (StatusCode::FORBIDDEN, json!({ "message": "Bad request"})),
         };
 
         let body = Json(json!({

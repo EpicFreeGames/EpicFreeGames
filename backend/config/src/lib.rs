@@ -23,6 +23,8 @@ pub struct Config {
     pub env: Env,
     pub database_url: String,
     pub jwt_secret: String,
+    pub jwt_aud: String,
+    pub jwt_sub: String,
     pub discord_public_key: String,
     pub discord_token: String,
 }
