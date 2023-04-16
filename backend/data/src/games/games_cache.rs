@@ -40,8 +40,6 @@ impl ApiGamesCache {
             .cloned()
             .collect();
 
-        tracing::info!("Confirmed games: {:?}", confirmed_games);
-
         self.free_games = confirmed_games
             .iter()
             .filter(|api_game| api_game.status == ApiGameStatus::Free)
