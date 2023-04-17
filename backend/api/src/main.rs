@@ -39,7 +39,8 @@ async fn main() {
             "http://localhost:3000"
                 .parse::<HeaderValue>()
                 .expect("Invalid origin"),
-        );
+        )
+        .allow_credentials(true);
 
     let data = Data::new().await;
 
@@ -48,10 +49,17 @@ async fn main() {
         get(endpoints::i18n::languages::get_languages_endpoint),
     );
 
-    let auth_routes = Router::new().route(
-        "/session",
-        get(endpoints::auth::session::get_session_endpoint),
-    );
+    let auth_routes = Router::new()
+        .route(
+            "/session",
+            get(endpoints::auth::session::get_session_endpoint),
+        )
+        .nest(
+            "/discord",
+            Router::new()
+                .route("/init", get(endpoints::auth::discord::init))
+                .route("/callback", get(endpoints::auth::discord::callback)),
+        );
 
     let v1_routes = Router::new()
         .route("/discord", post(endpoints::discord::discord_endpoint))
@@ -84,7 +92,7 @@ async fn main() {
         )
         .layer(cors);
 
-    let addr = SocketAddr::from(([0, 0, 0, 0], 6000));
+    let addr = SocketAddr::from(([0, 0, 0, 0], 8000));
 
     tracing::info!("App started in {}, listening at {}", CONFIG.env, addr);
 

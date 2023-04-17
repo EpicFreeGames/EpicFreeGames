@@ -57,7 +57,7 @@ impl IntoResponse for ApiError {
 
                 (
                     StatusCode::INTERNAL_SERVER_ERROR,
-                    json!({  "message": "Internal server error",}),
+                    json!({ "message": "Internal server error",}),
                 )
             }
             ApiError::BadRequestError(err) => {
@@ -68,11 +68,10 @@ impl IntoResponse for ApiError {
                     json!({   "message": "Bad request"}),
                 )
             }
-            ApiError::UnauthorizedError(err) => (
-                StatusCode::UNAUTHORIZED,
-                json!({ "message": "Bad request" }),
-            ),
-            ApiError::ForbiddenError => (StatusCode::FORBIDDEN, json!({ "message": "Bad request"})),
+            ApiError::UnauthorizedError(err) => {
+                (StatusCode::UNAUTHORIZED, json!({ "message": err }))
+            }
+            ApiError::ForbiddenError => (StatusCode::FORBIDDEN, json!({ "message": "Forbidden" })),
         };
 
         let body = Json(json!({

@@ -24,3 +24,4 @@ hyper = "0.14.25"
 tower = "0.4.13"
 tower-http = { version = "0.3", features = [ "trace", "cors" ] }
 ulid = "1"
+reqwest = { version = "0.11.6", features = [ "json" ] }

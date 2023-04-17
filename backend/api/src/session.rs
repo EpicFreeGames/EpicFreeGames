@@ -1,15 +1,14 @@
 use anyhow::Context;
 use axum::{
     async_trait,
-    extract::{rejection::TypedHeaderRejectionReason, Extension, FromRequestParts},
-    headers::{authorization::Bearer, Authorization, Cookie},
+    extract::{Extension, FromRef, FromRequestParts},
+    headers::Cookie,
     http::request::Parts,
     RequestPartsExt, TypedHeader,
 };
 use entity::session::Entity as SessionEntity;
-use hyper::header::AUTHORIZATION;
 
-use crate::types::{ApiError, RequestContext};
+use crate::types::{ApiError, RequestContext, RequestContextStruct};
 use sea_orm::EntityTrait;
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
@@ -21,11 +20,12 @@ pub struct Session {
 #[async_trait]
 impl<S> FromRequestParts<S> for Session
 where
+    RequestContextStruct: FromRef<S>,
     S: Send + Sync,
 {
     type Rejection = ApiError;
 
-    async fn from_request_parts(parts: &mut Parts, _state: &S) -> Result<Self, Self::Rejection> {
+    async fn from_request_parts(parts: &mut Parts, state: &S) -> Result<Self, Self::Rejection> {
         let cookie_header: &Option<TypedHeader<Cookie>> = &parts
             .extract()
             .await
@@ -36,13 +36,10 @@ where
             .and_then(|cookie| cookie.get("session_id"))
             .ok_or_else(|| ApiError::UnauthorizedError("Missing session_id cookie".to_string()))?;
 
-        let Extension(request_context) = parts
-            .extract::<Extension<RequestContext>>()
-            .await
-            .context("Failed to extract request context")?;
+        let state = RequestContextStruct::from_ref(state);
 
         let session = SessionEntity::find_by_id(session_id)
-            .one(&request_context.data.db)
+            .one(&state.data.db)
             .await
             .context("Failed to do SessionEntity::find_by_id")?;
 
