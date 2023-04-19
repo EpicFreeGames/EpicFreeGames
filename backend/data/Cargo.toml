@@ -15,4 +15,3 @@ sea-orm = { workspace = true }
 entity = { path = "../entity" }
 config = { path = "../config" }
 i18n = { path = "../i18n" }
-sqlx = { version = "0.6.2", features = [ "runtime-tokio-rustls", "postgres", "chrono" ] }
