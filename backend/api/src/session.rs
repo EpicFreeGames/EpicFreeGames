@@ -28,19 +28,24 @@ where
     type Rejection = ApiError;
 
     async fn from_request_parts(parts: &mut Parts, state: &S) -> Result<Self, Self::Rejection> {
-        let cookie_header: &Option<TypedHeader<Cookie>> = &parts
-            .extract()
-            .await
-            .map_err(|_| ApiError::UnauthorizedError("Missing cookie".to_string()))?;
+        let cookie = parts
+            .headers
+            .typed_get::<Cookie>()
+            .ok_or_else(|| ApiError::UnauthorizedError("Missing cookie".to_string()))?;
 
-        let session_id = cookie_header
-            .as_ref()
-            .and_then(|cookie| cookie.get("session_id"))
-            .ok_or_else(|| ApiError::UnauthorizedError("Missing session_id cookie".to_string()))?;
+        let user_id_and_session = cookie
+            .get("session")
+            .ok_or_else(|| ApiError::UnauthorizedError("Missing session cookie".to_string()))?;
+
+        let (user_id, session_id) = user_id_and_session
+            .split_once(".")
+            .ok_or_else(|| ApiError::UnauthorizedError("Invalid session cookie".to_string()))?;
 
         let state = RequestContextStruct::from_ref(state);
 
-        let session = SessionEntity::find_by_id(session_id)
+        let session = SessionEntity::find()
+            .filter(session::Column::Id.eq(session_id))
+            .filter(session::Column::UserId.eq(user_id))
             .one(&state.data.db)
             .await
             .context("Failed to do SessionEntity::find_by_id")?;
