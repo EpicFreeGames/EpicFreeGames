@@ -1,4 +1,4 @@
-FROM rust:slim AS base
+FROM rust AS base
 WORKDIR /app
 
 FROM base as pre
