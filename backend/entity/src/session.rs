@@ -24,7 +24,7 @@ pub enum Relation {
         from = "Column::UserId",
         to = "super::api_user::Column::Id",
         on_update = "Cascade",
-        on_delete = "Restrict"
+        on_delete = "Cascade"
     )]
     ApiUser,
 }

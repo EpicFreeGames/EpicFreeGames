@@ -1,6 +1,5 @@
 use std::{net::SocketAddr, time::Duration};
 
-use crate::session::session_middleware;
 use axum::http::HeaderValue;
 use axum::{body::Body, middleware, response::Response, routing::get, routing::post, Router};
 use config::CONFIG;
@@ -15,8 +14,8 @@ use tracing_subscriber::{
 use types::RequestContextStruct;
 use ulid::Ulid;
 
+mod auth;
 mod endpoints;
-mod session;
 pub mod types;
 
 #[tokio::main]
@@ -46,35 +45,39 @@ async fn main() {
     let data = Data::new().await;
     let state = RequestContextStruct::new(data);
 
-    let i18n_routes = Router::new().route(
-        "/languages",
-        get(endpoints::i18n::languages::get_languages_endpoint),
-    );
-
-    let auth_routes = Router::new()
+    let v1_auth_routes = Router::new()
         .route(
             "/session",
             get(endpoints::auth::session::get_session_endpoint),
         )
-        .nest(
-            "/discord",
-            Router::new()
-                .route("/init", get(endpoints::auth::discord::init))
-                .route("/callback", get(endpoints::auth::discord::callback)),
-        );
-
-    let games_routes = Router::new().route("/", get(endpoints::games::get_games_endpoint));
-
-    let v1_routes = Router::new()
-        .route("/discord", post(endpoints::discord::discord_endpoint))
-        .layer(middleware::from_fn(endpoints::discord::discord_middleware))
-        .nest("/i18n", i18n_routes)
-        .nest("/auth", auth_routes)
-        .nest("/games", games_routes)
         .route_layer(middleware::from_fn_with_state(
             state.clone(),
-            session_middleware,
+            auth::middleware,
+        ))
+        .merge(
+            Router::new()
+                .route("/discord-oauth/init", get(endpoints::auth::discord::init))
+                .route(
+                    "/discord-oauth/callback",
+                    get(endpoints::auth::discord::callback),
+                ),
+        );
+
+    let v1_games_routes = Router::new()
+        .route("/", get(endpoints::games::get_games_endpoint))
+        .layer(middleware::from_fn_with_state(
+            state.clone(),
+            auth::middleware,
         ));
+
+    let v1_discord_routes = Router::new()
+        .route("/discord", post(endpoints::discord::discord_endpoint))
+        .route_layer(middleware::from_fn(endpoints::discord::discord_middleware));
+
+    let v1_routes = Router::new()
+        .nest("/discord", v1_discord_routes)
+        .nest("/auth", v1_auth_routes)
+        .nest("/games", v1_games_routes);
 
     let api_routes = Router::new().nest("/v1", v1_routes);
 

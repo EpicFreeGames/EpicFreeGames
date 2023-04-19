@@ -33,7 +33,7 @@ pub enum Relation {
         from = "Column::SendingId",
         to = "super::sending::Column::Id",
         on_update = "Cascade",
-        on_delete = "SetNull"
+        on_delete = "Cascade"
     )]
     Sending,
 }

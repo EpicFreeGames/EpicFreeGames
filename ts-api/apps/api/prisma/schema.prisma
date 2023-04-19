@@ -18,7 +18,7 @@ model game {
     path         String
     store_id     String
     prices       game_price[]
-    sending      sending?     @relation(fields: [sending_id], references: [id])
+    sending      sending?     @relation(fields: [sending_id], references: [id], onDelete: Cascade)
     sending_id   String?
 }
 
@@ -87,5 +87,5 @@ model session {
     ip         String
     user_agent String
     user_id    String
-    user       api_user @relation(fields: [user_id], references: [id])
+    user       api_user @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }

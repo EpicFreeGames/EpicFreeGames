@@ -118,7 +118,7 @@ pub async fn callback(
 
         let db_new_session = session::ActiveModel {
             id: ActiveValue::Set(db_new_session_id.to_string()),
-            user_id: ActiveValue::Set(db_user.id),
+            user_id: ActiveValue::Set(db_user.id.to_string()),
             expires_at: ActiveValue::Set(db_new_session_expires_at),
             created_at: ActiveValue::Set(chrono::Utc::now().naive_utc()),
             ip: ActiveValue::Set("".to_string()),
@@ -135,7 +135,11 @@ pub async fn callback(
                 SET_COOKIE,
                 format!(
                     "session_id={}; Path=/; Expires={}; HttpOnly",
-                    db_new_session_id.to_string(),
+                    format!(
+                        "{}.{}",
+                        db_user.id.to_string(),
+                        db_new_session_id.to_string()
+                    ),
                     db_new_session_expires_at.format("%a, %d %b %Y %T GMT")
                 )
                 .parse()
