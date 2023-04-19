@@ -2,16 +2,16 @@ use anyhow::Context;
 use axum::{
     async_trait,
     extract::{FromRef, FromRequestParts},
-    headers::Cookie,
+    headers::{Cookie, HeaderMapExt},
     http::request::Parts,
     response::IntoResponse,
-    Json, RequestPartsExt, TypedHeader,
+    RequestExt, RequestPartsExt, TypedHeader,
 };
-use entity::session::Entity as SessionEntity;
-use hyper::header::COOKIE;
+use axum::{body::Body, extract::State, http::Request, middleware::Next};
+use entity::session::{self, Entity as SessionEntity};
 
-use crate::types::{ApiError, RequestContextStruct};
-use sea_orm::EntityTrait;
+use crate::types::{ApiError, RequestContext, RequestContextStruct};
+use sea_orm::{ColumnTrait, EntityTrait, QueryFilter};
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub struct Session {
@@ -67,21 +67,27 @@ where
         }
     }
 }
-use axum::{body::Body, http::Request, middleware::Next};
-pub async fn session_middleware(
-    req: Request<Body>,
-    next: Next<Body>,
+pub async fn session_middleware<B>(
+    State(state): State<RequestContextStruct>,
+    req: Request<B>,
+    next: Next<B>,
 ) -> Result<impl IntoResponse, ApiError> {
-    let cookie_header = req.headers().get(COOKIE);
-    let (parts, body) = req.into_parts();
+    let cookie = req
+        .headers()
+        .typed_get::<Cookie>()
+        .ok_or_else(|| ApiError::UnauthorizedError("Missing cookie".to_string()))?;
 
-    let session_id = cookie_header
-        .and_then(|cookie| cookie.get("session_id"))
-        .ok_or_else(|| ApiError::UnauthorizedError("Missing session_id cookie".to_string()))?;
+    let user_id_and_session = cookie
+        .get("session")
+        .ok_or_else(|| ApiError::UnauthorizedError("Missing session cookie".to_string()))?;
 
-    let state = RequestContextStruct::from_ref(state);
+    let (user_id, session_id) = user_id_and_session
+        .split_once(".")
+        .ok_or_else(|| ApiError::UnauthorizedError("Invalid session cookie".to_string()))?;
 
-    let session = SessionEntity::find_by_id(session_id)
+    let session = SessionEntity::find()
+        .filter(session::Column::Id.eq(session_id))
+        .filter(session::Column::UserId.eq(user_id))
         .one(&state.data.db)
         .await
         .context("Failed to do SessionEntity::find_by_id")?;
@@ -90,10 +96,7 @@ pub async fn session_middleware(
         if session.expires_at > chrono::Utc::now().naive_utc() {
             // Session is found and not expired, return it
 
-            return Ok(Json(Session {
-                id: session.id,
-                user_id: session.user_id,
-            }));
+            return Ok(next.run(req).await);
         } else {
             // Session has expired, return forbidden
 
@@ -102,8 +105,6 @@ pub async fn session_middleware(
     } else {
         // Session was not found, return unauthorized
 
-        return Err(ApiError::UnauthorizedError(
-            "Session has expired".to_string(),
-        ));
+        return Err(ApiError::UnauthorizedError("Session not found".to_string()));
     }
 }

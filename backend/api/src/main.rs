@@ -1,5 +1,6 @@
 use std::{net::SocketAddr, time::Duration};
 
+use crate::session::session_middleware;
 use axum::http::HeaderValue;
 use axum::{body::Body, middleware, response::Response, routing::get, routing::post, Router};
 use config::CONFIG;
@@ -43,6 +44,7 @@ async fn main() {
         .allow_credentials(true);
 
     let data = Data::new().await;
+    let state = RequestContextStruct::new(data);
 
     let i18n_routes = Router::new().route(
         "/languages",
@@ -68,13 +70,17 @@ async fn main() {
         .layer(middleware::from_fn(endpoints::discord::discord_middleware))
         .nest("/i18n", i18n_routes)
         .nest("/auth", auth_routes)
-        .nest("/games", games_routes);
+        .nest("/games", games_routes)
+        .route_layer(middleware::from_fn_with_state(
+            state.clone(),
+            session_middleware,
+        ));
 
     let api_routes = Router::new().nest("/v1", v1_routes);
 
     let app = Router::new()
         .nest("/api", api_routes)
-        .with_state(RequestContextStruct::new(data))
+        .with_state(state)
         .layer(
             TraceLayer::new_for_http()
                 .make_span_with(|request: &Request<Body>| {
