@@ -61,11 +61,14 @@ async fn main() {
                 .route("/callback", get(endpoints::auth::discord::callback)),
         );
 
+    let games_routes = Router::new().route("/", get(endpoints::games::get_games_endpoint));
+
     let v1_routes = Router::new()
         .route("/discord", post(endpoints::discord::discord_endpoint))
         .layer(middleware::from_fn(endpoints::discord::discord_middleware))
         .nest("/i18n", i18n_routes)
-        .nest("/auth", auth_routes);
+        .nest("/auth", auth_routes)
+        .nest("/games", games_routes);
 
     let api_routes = Router::new().nest("/v1", v1_routes);
 

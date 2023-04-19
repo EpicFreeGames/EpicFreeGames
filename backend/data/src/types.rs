@@ -21,7 +21,7 @@ impl Data {
 
         Self {
             db: db.clone(),
-            api_games_cache: ApiGamesCache::new(db)
+            api_games_cache: ApiGamesCache::new(db.clone())
                 .await
                 .expect("Failed to create games cache"),
         }
