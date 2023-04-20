@@ -14,7 +14,10 @@ use hyper::{
 use sea_orm::{ActiveModelTrait, ActiveValue, EntityTrait};
 use ulid::Ulid;
 
-use crate::types::{ApiError, RequestContext};
+use crate::{
+    auth::session_token::create_session_token,
+    types::{ApiError, RequestContext},
+};
 
 pub async fn init() -> impl IntoResponse {
     let auth_url = format!(
@@ -134,12 +137,8 @@ pub async fn callback(
             (
                 SET_COOKIE,
                 format!(
-                    "session_id={}; Path=/; Expires={}; HttpOnly",
-                    format!(
-                        "{}.{}",
-                        db_user.id.to_string(),
-                        db_new_session_id.to_string()
-                    ),
+                    "session={}; Path=/; Expires={}; HttpOnly",
+                    create_session_token(&db_user.id, &db_new_session_id),
                     db_new_session_expires_at.format("%a, %d %b %Y %T GMT")
                 )
                 .parse()
@@ -147,7 +146,8 @@ pub async fn callback(
             ),
             (
                 LOCATION,
-                "http://localhost:3000/i-dashboard"
+                CONFIG
+                    .i_dashboard_base_url
                     .parse()
                     .context("Failed to create location header")?,
             ),
@@ -158,7 +158,7 @@ pub async fn callback(
 
     let headers: HeaderMap = HeaderMap::from_iter(vec![(
         LOCATION,
-        "http://localhost:3000/i-dashboard?error=user_not_found"
+        format!("{}/login?error=user_not_found", CONFIG.i_dashboard_base_url)
             .parse()
             .context("Failed to create location header")?,
     )]);

@@ -12,6 +12,7 @@ use entity::{api_user::Entity as ApiUserEntity, session::Entity as SessionEntity
 use crate::types::{ApiError, RequestContext};
 use sea_orm::{ColumnTrait, EntityTrait, QueryFilter};
 
+use super::session_token::parse_session_token;
 use super::types::{ApiUser, Session};
 
 pub async fn middleware<B>(
@@ -24,24 +25,15 @@ pub async fn middleware<B>(
             .headers()
             .typed_get::<Cookie>()
             .and_then(|cookie_header| {
-                cookie_header.get("session").and_then(|cookie| {
-                    cookie.split_once(".").and_then(|(user_id, session_id)| {
-                        Some((user_id.to_string(), session_id.to_string()))
-                    })
-                })
+                cookie_header
+                    .get("session")
+                    .and_then(|session_token| parse_session_token(session_token))
             });
 
-        let from_bearer =
-            req.headers()
-                .typed_get::<Authorization<Bearer>>()
-                .and_then(|auth_token| {
-                    auth_token
-                        .token()
-                        .split_once(".")
-                        .and_then(|(user_id, session_id)| {
-                            Some((user_id.to_string(), session_id.to_string()))
-                        })
-                });
+        let from_bearer = req
+            .headers()
+            .typed_get::<Authorization<Bearer>>()
+            .and_then(|session_token| parse_session_token(session_token.token()));
 
         from_cookie
             .or(from_bearer)

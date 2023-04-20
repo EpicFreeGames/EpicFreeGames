@@ -30,6 +30,7 @@ pub struct Config {
     pub discord_client_id: String,
     pub discord_client_secret: String,
     pub discord_redirect_url: String,
+    pub i_dashboard_base_url: String,
 }
 
 impl Config {
