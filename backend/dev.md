@@ -9,3 +9,9 @@ Generate db sea-orm entities:
 ```bash
 sea-orm-cli generate entity -o entity/src
 ```
+
+Publish slash commands:
+
+```bash
+cargo run -p slash-commands
+```
