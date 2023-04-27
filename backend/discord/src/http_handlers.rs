@@ -12,7 +12,8 @@ use i18n::{
 use sea_orm::EntityTrait;
 use twilight_model::{
     application::interaction::{InteractionData, InteractionType},
-    http::interaction::InteractionResponseType,
+    channel::message::MessageFlags,
+    http::interaction::{InteractionResponseData, InteractionResponseType},
 };
 
 use crate::{
@@ -52,7 +53,7 @@ pub async fn validate_discord_request(
 
 pub async fn handle_request(
     data: &Data,
-    _http_client: Arc<HttpClient>,
+    http_client: Arc<HttpClient>,
     translator: &Translator,
     body: Interaction,
 ) -> Result<Option<InteractionResponse>, anyhow::Error> {
@@ -91,7 +92,12 @@ pub async fn handle_request(
             None => (Language::default(), Currency::default()),
         };
 
-        let command_name = interaction_data.name.as_str();
+        let command_name = interaction_data.name.clone();
+        let command_name = match interaction_data.options.get(0) {
+            Some(sub_command) => format!("{} {}", command_name, sub_command.name),
+            None => command_name,
+        };
+        let command_name = command_name.as_str();
 
         tracing::info!(
             "New command: {}, currency: {:?}, language: {:?}",
@@ -123,6 +129,21 @@ pub async fn handle_request(
                 .await
                 .context("settings command failed")?,
             ),
+            "set channel" => {
+                guild::set_channel_command::set_channel_command(
+                    translator,
+                    &db_server,
+                    &language,
+                    &currency,
+                    &interaction_data,
+                    &body,
+                    &http_client,
+                )
+                .await
+                .context("set_channel command failed")?;
+
+                None
+            }
             _ => None,
         };
 
