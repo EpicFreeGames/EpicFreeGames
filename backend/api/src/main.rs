@@ -21,7 +21,7 @@ pub mod types;
 #[tokio::main]
 async fn main() {
     tracing_subscriber::registry()
-        .with(filter::LevelFilter::INFO)
+        .with(filter::LevelFilter::DEBUG)
         .with(tracing_subscriber::fmt::layer())
         .init();
 
@@ -71,7 +71,7 @@ async fn main() {
         ));
 
     let v1_discord_routes = Router::new()
-        .route("/discord", post(endpoints::discord::discord_endpoint))
+        .route("/", post(endpoints::discord::discord_endpoint))
         .route_layer(middleware::from_fn(endpoints::discord::discord_middleware));
 
     let v1_routes = Router::new()
@@ -95,11 +95,14 @@ async fn main() {
                     )
                 })
                 .on_response(|response: &Response, latency: Duration, _span: &Span| {
-                    tracing::debug!(
+                    tracing::info!(
                         "response latency: {:?}, status: {:?}",
                         latency,
                         response.status()
                     );
+                })
+                .on_request(|request: &Request<Body>, _span: &Span| {
+                    tracing::info!("request: {:?}", request);
                 }),
         )
         .layer(cors);
