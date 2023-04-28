@@ -1,0 +1,33 @@
+{
+	"compilerOptions": {
+		"types": ["bun-types"],
+
+		"lib": ["esnext"],
+		"module": "esnext",
+		"target": "esnext",
+
+		"moduleResolution": "bundler",
+		"allowImportingTsExtensions": true,
+		"moduleDetection": "force",
+		"esModuleInterop": true,
+
+		"strict": true,
+		"forceConsistentCasingInFileNames": true,
+		"skipLibCheck": true,
+		"allowUnreachableCode": false,
+		"allowUnusedLabels": false,
+		"strictFunctionTypes": true,
+		"strictNullChecks": true,
+		"strictBindCallApply": true,
+		"strictPropertyInitialization": true,
+		"noUnusedLocals": true,
+		"noImplicitAny": true,
+		"noImplicitOverride": true,
+		"noImplicitReturns": false,
+		"noImplicitThis": true,
+		"noPropertyAccessFromIndexSignature": false,
+		"noFallthroughCasesInSwitch": true,
+		"noUncheckedIndexedAccess": true,
+		"useUnknownInCatchVariables": false
+	}
+}
