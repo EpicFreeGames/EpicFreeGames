@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "@planetscale/database": "^1.7.0",
+    "bun-types": "^0.5.8",
+    "discord-api-types": "^0.37.40",
+    "drizzle-orm": "^0.25.3",
+    "tweetnacl": "^1.0.3",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/uuid": "^9.0.1"
+  }
+}
