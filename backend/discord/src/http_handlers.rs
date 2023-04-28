@@ -70,6 +70,15 @@ pub async fn handle_request(
             }
         };
 
+        // let servers = server::Entity::find()
+        //     .all(&data.db)
+        //     .await
+        //     .context("Failed to get servers from the database")?;
+
+        // sender::sender::send(&data.db, &http_client, &servers)
+        //     .await
+        //     .context("Failed to send")?;
+
         let db_server = server::Entity::find_by_id(body.guild_id.unwrap().get() as i64)
             .one(&data.db)
             .await

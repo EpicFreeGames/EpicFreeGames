@@ -27,7 +27,7 @@ pub struct Config {
     pub jwt_sub: String,
     pub discord_public_key: String,
     pub discord_token: String,
-    pub discord_client_id: String,
+    pub discord_client_id: twilight_model::id::Id<twilight_model::id::marker::ApplicationMarker>,
     pub discord_client_secret: String,
     pub discord_redirect_url: String,
     pub i_dashboard_base_url: String,

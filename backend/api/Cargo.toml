@@ -13,6 +13,9 @@ serde_json = { workspace = true }
 tokio = { workspace = true }
 sea-orm = { workspace = true }
 chrono = { workspace = true }
+ulid = { workspace = true }
+twilight-http = { workspace = true }
+twilight-model = { workspace = true }
 data = { path = "../data" }
 entity = { path = "../entity" }
 handlers = { path = "../handlers" }
@@ -23,5 +26,4 @@ axum = { version = "0.6.16", features = [ "headers" ]}
 hyper = "0.14.25"
 tower = "0.4.13"
 tower-http = { version = "0.3", features = [ "trace", "cors" ] }
-ulid = "1"
 reqwest = { version = "0.11.6", features = [ "json" ] }
