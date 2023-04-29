@@ -44,8 +44,12 @@ type Props = {
 };
 
 function log(props: Props) {
-	const shouldLogToConsole = levelMap[env?.LOG || "debug"] > levelMap[props.level];
+	const shouldLogToConsole = levelMap[env?.LOG || "debug"] >= levelMap[props.level];
+
+	const datetime = new Date().toISOString();
 
 	shouldLogToConsole &&
-		console[props.level](JSON.stringify(props, null, env?.PRETTY_LOG ? 2 : undefined));
+		console[props.level](
+			JSON.stringify({ datetime, ...props }, null, env?.PRETTY_LOG ? 2 : undefined)
+		);
 }
