@@ -4,6 +4,7 @@ import { objToStr } from "./utils";
 const envSchema = z.object({
 	DC_API_BASE: z.string(),
 	DC_CLIENT_ID: z.string(),
+	DC_PUB_KEY: z.string(),
 	DC_TOKEN: z.string(),
 	LOG: z.enum(["debug", "info", "warn", "error"]).optional(),
 	PRETTY_LOG: z.string().transform(Boolean).optional(),
