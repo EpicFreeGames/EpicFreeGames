@@ -1,15 +1,28 @@
 import nacl from "tweetnacl";
+import { env } from "../env";
+import { Logger } from "../logger";
 
-if (!Bun.env.DC_PUB_KEY) throw new Error("DC_PUB_KEY is not set");
-const publicKey = valueToUint8Array(Bun.env.DC_PUB_KEY, true);
+const publicKey = valueToUint8Array(env.DC_PUB_KEY, true);
 
 export async function verifyDiscordRequest(req: Request, reqBody: string) {
-	const timestamp = valueToUint8Array(req.headers.get("X-Signature-Timestamp") || "");
-	const body = valueToUint8Array(reqBody);
-	const timestampAndBody = mergeUint8Arrays(timestamp, body);
+	const timestampHeader = req.headers.get("X-Signature-Timestamp");
+	const signatureHeader = req.headers.get("X-Signature-Ed25519");
 
-	const signature = valueToUint8Array(req.headers.get("X-Signature-Ed25519") || "", true);
-	return nacl.sign.detached.verify(timestampAndBody, signature, publicKey);
+	if (!timestampHeader || !signatureHeader) {
+		return false;
+	}
+
+	try {
+		const timestamp = valueToUint8Array(req.headers.get("X-Signature-Timestamp") || "");
+		const body = valueToUint8Array(reqBody);
+		const timestampAndBody = mergeUint8Arrays(timestamp, body);
+
+		const signature = valueToUint8Array(req.headers.get("X-Signature-Ed25519") || "", true);
+		return nacl.sign.detached.verify(timestampAndBody, signature, publicKey);
+	} catch (err) {
+		Logger.debug("Error verifying Discord request", { err });
+		return false;
+	}
 }
 
 function valueToUint8Array(
