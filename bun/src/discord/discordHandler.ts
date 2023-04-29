@@ -5,30 +5,28 @@ import {
 	InteractionType,
 } from "discord-api-types/v10";
 import { verifyDiscordRequest } from "./verifyRequest";
-import { createResponse } from "./interactions";
 import { discordApiRequest } from "./discordApiRequest";
 import { Logger } from "../logger";
+import { post } from "../router/handler";
+import { createResponse } from "../utils";
 
-export async function discordHandler(req: Request) {
+export const discordHandler = post("/discord", async (req) => {
 	Logger.debug("Incoming interaction request");
 
-	const body = await req.text();
-
-	const verified = await verifyDiscordRequest(req, body);
+	const verified = await verifyDiscordRequest(req.req, req.textBody);
 	if (!verified) {
-		Logger.debug("Interaction request failed verification");
-		return new Response(undefined, { status: 400 });
+		return createResponse(400, { error: "Invalid request signature" });
 	}
 
 	Logger.debug("Interaction request verified");
 
-	const interaction = bodyToInteraction(body);
+	const interaction = req.body as APIInteraction;
 	if (!interaction) return new Response(undefined, { status: 400 });
 
 	Logger.debug("Interaction request", { interaction });
 
 	if (interaction.type === InteractionType.Ping) {
-		return createResponse({
+		return createResponse(200, {
 			type: InteractionResponseType.Pong,
 		});
 	} else {
@@ -41,18 +39,9 @@ export async function discordHandler(req: Request) {
 				},
 			});
 		} catch (err) {
-			return new Response(undefined, { status: 500 });
+			return createResponse(500, { error: "Failed to send interaction response" });
 		}
 
-		return new Response(undefined, { status: 200 });
+		return createResponse(200);
 	}
-}
-
-function bodyToInteraction(body: string): APIInteraction | undefined {
-	try {
-		return JSON.parse(body) as APIInteraction;
-	} catch (err) {
-		Logger.debug("Interaction was not valid JSON");
-		return undefined;
-	}
-}
+});
