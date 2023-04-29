@@ -1,7 +1,7 @@
 import nacl from "tweetnacl";
 
 if (!Bun.env.DC_PUB_KEY) throw new Error("DC_PUB_KEY is not set");
-const publicKey = valueToUint8Array(Bun.env.DC_PUB_KEY);
+const publicKey = valueToUint8Array(Bun.env.DC_PUB_KEY, true);
 
 export async function verifyDiscordRequest(req: Request, reqBody: string) {
 	const timestamp = valueToUint8Array(req.headers.get("X-Signature-Timestamp") || "");
@@ -45,7 +45,9 @@ function valueToUint8Array(
 		return value;
 	}
 
-	throw new Error("Value is not a valid string, Buffer, ArrayBuffer, or Uint8Array");
+	throw new Error(
+		`Value is not a valid string, Buffer, ArrayBuffer, or Uint8Array - Value: ${value}`
+	);
 }
 
 function mergeUint8Arrays(a: Uint8Array, b: Uint8Array): Uint8Array {

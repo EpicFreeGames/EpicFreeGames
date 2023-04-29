@@ -1,13 +1,14 @@
 {
   "dependencies": {
     "@planetscale/database": "^1.7.0",
-    "bun-types": "^0.5.8",
     "discord-api-types": "^0.37.40",
     "drizzle-orm": "^0.25.3",
     "tweetnacl": "^1.0.3",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
-    "@types/uuid": "^9.0.1"
+    "@types/uuid": "^9.0.1",
+    "bun-types": "^0.5.8"
   }
 }

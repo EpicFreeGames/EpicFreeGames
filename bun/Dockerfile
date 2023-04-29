@@ -1,8 +1,7 @@
-FROM oven/bun:latest as runtime
+FROM oven/bun
 
 WORKDIR /app
 
-COPY --from=installer ~/.bun/bin/bun /usr/local/bin/bun
 COPY ./src ./src
 COPY ./package.json ./package.json
 COPY ./bun.lockb ./bun.lockb
