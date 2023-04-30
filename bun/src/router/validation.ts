@@ -2,16 +2,16 @@ import { z } from "zod";
 import { RequestData } from "./request";
 
 export async function validateRequestData<
-	TBody extends z.ZodTypeAny,
-	TPathParams extends z.ZodTypeAny,
-	TQueryParams extends z.ZodTypeAny
+	TBody extends z.ZodType<{}>,
+	TPathParams extends z.ZodType<{}>,
+	TQueryParams extends z.ZodType<{}>
 >(
-	req: RequestData<z.infer<TBody>, z.infer<TPathParams>, z.infer<TQueryParams>>,
+	req: RequestData<TBody, TPathParams, TQueryParams>,
 	validation: HandlerValidation<TBody, TPathParams, TQueryParams>
 ): Promise<
 	| {
 			valid: true;
-			req: RequestData<z.infer<TBody>, z.infer<TPathParams>, z.infer<TQueryParams>>;
+			req: RequestData<TBody, TPathParams, TQueryParams>;
 			errors?: never;
 	  }
 	| {
@@ -63,7 +63,7 @@ export async function validateRequestData<
 	if (valid) {
 		return {
 			valid: true,
-			req: req as RequestData<z.infer<TBody>, z.infer<TPathParams>, z.infer<TQueryParams>>,
+			req: req as RequestData<TBody, TPathParams, TQueryParams>,
 		};
 	} else {
 		return {
@@ -74,9 +74,9 @@ export async function validateRequestData<
 }
 
 export type HandlerValidation<
-	TBody extends z.ZodTypeAny,
-	TPathParams extends z.ZodTypeAny,
-	TQueryParams extends z.ZodTypeAny
+	TBody extends z.ZodType<{}>,
+	TPathParams extends z.ZodType<{}>,
+	TQueryParams extends z.ZodType<{}>
 > = {
 	body?: TBody;
 	path?: TPathParams;

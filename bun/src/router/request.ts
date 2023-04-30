@@ -3,13 +3,13 @@ import { Method } from "./method";
 import { Path, extractUrlData } from "./path";
 
 export async function getRequestData<
-	TBody extends z.ZodTypeAny,
-	TPathParams extends z.ZodTypeAny,
-	TQueryParams extends z.ZodTypeAny
+	TBody extends z.ZodType<{}>,
+	TPathParams extends z.ZodType<{}>,
+	TQueryParams extends z.ZodType<{}>
 >(req: Request) {
 	const method = req.method as Method;
 	const url = new URL(req.url);
-	const urlData = extractUrlData<TPathParams, TQueryParams>(url);
+	const urlData = extractUrlData(url);
 	const headers = req.headers;
 	const textBody = await req.text();
 	const body = textBody ? JSON.parse(textBody) : undefined;
@@ -17,16 +17,17 @@ export async function getRequestData<
 	return {
 		method,
 		path: url.pathname as Path,
-		...urlData,
+		pathParams: urlData.pathParams as z.infer<TPathParams>,
+		queryParams: urlData.queryParams as z.infer<TQueryParams>,
 		headers,
 		textBody,
-		body: body as TBody,
+		body: body as z.infer<TBody>,
 		req,
 	};
 }
 
 export type RequestData<
-	TBody extends z.ZodTypeAny,
-	TPathParams extends z.ZodTypeAny,
-	TQueryParams extends z.ZodTypeAny
+	TBody extends z.ZodType<{}>,
+	TPathParams extends z.ZodType<{}>,
+	TQueryParams extends z.ZodType<{}>
 > = Awaited<ReturnType<typeof getRequestData<TBody, TPathParams, TQueryParams>>>;

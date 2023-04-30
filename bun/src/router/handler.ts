@@ -7,26 +7,26 @@ import { HandlerValidation, validateRequestData } from "./validation";
 import { z } from "zod";
 
 export type Handler<
-	TBody extends z.ZodTypeAny,
-	TPathParams extends z.ZodTypeAny,
-	TQueryParams extends z.ZodTypeAny
+	TBody extends z.ZodType<{}>,
+	TPathParams extends z.ZodType<{}>,
+	TQueryParams extends z.ZodType<{}>
 > =
 	| EndpointHandler<TBody, TPathParams, TQueryParams>
 	| RouterHandler<TBody, TPathParams, TQueryParams>;
 
 export type HandlerHandleFunction<
-	TBody extends z.ZodTypeAny,
-	TPathParams extends z.ZodTypeAny,
-	TQueryParams extends z.ZodTypeAny
+	TBody extends z.ZodType<{}>,
+	TPathParams extends z.ZodType<{}>,
+	TQueryParams extends z.ZodType<{}>
 > = (
 	req: RequestData<TBody, TPathParams, TQueryParams>,
 	prevPathPrefix?: Path
 ) => Promise<Response | void> | Response | void;
 
 type EndpointHandler<
-	TBody extends z.ZodTypeAny,
-	TPathParams extends z.ZodTypeAny,
-	TQueryParams extends z.ZodTypeAny
+	TBody extends z.ZodType<{}>,
+	TPathParams extends z.ZodType<{}>,
+	TQueryParams extends z.ZodType<{}>
 > = {
 	path: Path;
 	method: Method;
@@ -35,9 +35,9 @@ type EndpointHandler<
 };
 
 type RouterHandler<
-	TBody extends z.ZodTypeAny,
-	TPathParams extends z.ZodTypeAny,
-	TQueryParams extends z.ZodTypeAny
+	TBody extends z.ZodType<{}>,
+	TPathParams extends z.ZodType<{}>,
+	TQueryParams extends z.ZodType<{}>
 > = {
 	path: Path;
 	method: Method;
@@ -46,25 +46,21 @@ type RouterHandler<
 };
 
 export async function rootHandler<
-	TBody extends z.ZodTypeAny,
-	TPathParams extends z.ZodTypeAny,
-	TQueryParams extends z.ZodTypeAny
+	TBody extends z.ZodType<{}>,
+	TPathParams extends z.ZodType<{}>,
+	TQueryParams extends z.ZodType<{}>
 >(rootPath: string, req: Request, ...handlers: Handler<TBody, TPathParams, TQueryParams>[]) {
-	const requestData = await getRequestData<TBody, TPathParams, TQueryParams>(req);
+	const requestData = await getRequestData(req);
 
-	const handler = matchHandler<TBody, TPathParams, TQueryParams>(
-		requestData,
-		handlers,
-		rootPath as Path
-	);
+	const handler = matchHandler(requestData, handlers, rootPath as Path);
 
 	return handler?.handle(requestData, rootPath as Path);
 }
 
 export function matchHandler<
-	TBody extends z.ZodTypeAny,
-	TPathParams extends z.ZodTypeAny,
-	TQueryParams extends z.ZodTypeAny
+	TBody extends z.ZodType<{}>,
+	TPathParams extends z.ZodType<{}>,
+	TQueryParams extends z.ZodType<{}>
 >(
 	requestData: RequestData<TBody, TPathParams, TQueryParams>,
 	handlers: Handler<TBody, TPathParams, TQueryParams>[],
@@ -109,9 +105,9 @@ export function matchHandler<
 }
 
 export function get<
-	TBody extends z.ZodTypeAny,
-	TPathParams extends z.ZodTypeAny,
-	TQueryParams extends z.ZodTypeAny
+	TBody extends z.ZodType<{}>,
+	TPathParams extends z.ZodType<{}>,
+	TQueryParams extends z.ZodType<{}>
 >(
 	path: string,
 	props: {
@@ -134,9 +130,9 @@ export function get<
 }
 
 async function handleWithValidation<
-	TBody extends z.ZodTypeAny,
-	TPathParams extends z.ZodTypeAny,
-	TQueryParams extends z.ZodTypeAny
+	TBody extends z.ZodType<{}>,
+	TPathParams extends z.ZodType<{}>,
+	TQueryParams extends z.ZodType<{}>
 >(props: {
 	validation?: HandlerValidation<TBody, TPathParams, TQueryParams>;
 	handle: HandlerHandleFunction<TBody, TPathParams, TQueryParams>;

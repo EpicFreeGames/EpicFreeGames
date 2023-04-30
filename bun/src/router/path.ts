@@ -32,12 +32,12 @@ export function matchPaths(left: Path, right: Path) {
 	return true;
 }
 
-export function extractUrlData<TPathParams, TQueryParams>(url: URL) {
+export function extractUrlData(url: URL) {
 	const queryParams = Object.fromEntries(url.searchParams.entries());
 
 	return {
-		queryParams: queryParams as TQueryParams,
-		pathParams: extractPathParams(url.pathname as Path) as TPathParams,
+		queryParams: queryParams,
+		pathParams: extractPathParams(url.pathname as Path),
 	};
 }
 
