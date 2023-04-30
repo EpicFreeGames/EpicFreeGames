@@ -50,7 +50,7 @@ export async function rootHandler<
 	TPathParams extends z.ZodType<{}>,
 	TQueryParams extends z.ZodType<{}>
 >(rootPath: string, req: Request, ...handlers: Handler<TBody, TPathParams, TQueryParams>[]) {
-	const requestData = await getRequestData(req);
+	const requestData = await getRequestData<TBody, TPathParams, TQueryParams>(req);
 
 	const handler = matchHandler(requestData, handlers, rootPath as Path);
 
@@ -118,6 +118,106 @@ export function get<
 	return {
 		path: path as Path,
 		method: "GET",
+		type: "endpoint",
+		handle: (req, prevPathPrefix) =>
+			handleWithValidation<TBody, TPathParams, TQueryParams>({
+				validation: props.validation,
+				handle: props.handle,
+				req,
+				prevPathPrefix,
+			}),
+	};
+}
+
+export function post<
+	TBody extends z.ZodType<{}>,
+	TPathParams extends z.ZodType<{}>,
+	TQueryParams extends z.ZodType<{}>
+>(
+	path: string,
+	props: {
+		validation?: HandlerValidation<TBody, TPathParams, TQueryParams>;
+		handle: HandlerHandleFunction<TBody, TPathParams, TQueryParams>;
+	}
+): Handler<TBody, TPathParams, TQueryParams> {
+	return {
+		path: path as Path,
+		method: "POST",
+		type: "endpoint",
+		handle: (req, prevPathPrefix) =>
+			handleWithValidation<TBody, TPathParams, TQueryParams>({
+				validation: props.validation,
+				handle: props.handle,
+				req,
+				prevPathPrefix,
+			}),
+	};
+}
+
+export function put<
+	TBody extends z.ZodType<{}>,
+	TPathParams extends z.ZodType<{}>,
+	TQueryParams extends z.ZodType<{}>
+>(
+	path: string,
+	props: {
+		validation?: HandlerValidation<TBody, TPathParams, TQueryParams>;
+		handle: HandlerHandleFunction<TBody, TPathParams, TQueryParams>;
+	}
+): Handler<TBody, TPathParams, TQueryParams> {
+	return {
+		path: path as Path,
+		method: "PUT",
+		type: "endpoint",
+		handle: (req, prevPathPrefix) =>
+			handleWithValidation<TBody, TPathParams, TQueryParams>({
+				validation: props.validation,
+				handle: props.handle,
+				req,
+				prevPathPrefix,
+			}),
+	};
+}
+
+export function patch<
+	TBody extends z.ZodType<{}>,
+	TPathParams extends z.ZodType<{}>,
+	TQueryParams extends z.ZodType<{}>
+>(
+	path: string,
+	props: {
+		validation?: HandlerValidation<TBody, TPathParams, TQueryParams>;
+		handle: HandlerHandleFunction<TBody, TPathParams, TQueryParams>;
+	}
+): Handler<TBody, TPathParams, TQueryParams> {
+	return {
+		path: path as Path,
+		method: "PATCH",
+		type: "endpoint",
+		handle: (req, prevPathPrefix) =>
+			handleWithValidation<TBody, TPathParams, TQueryParams>({
+				validation: props.validation,
+				handle: props.handle,
+				req,
+				prevPathPrefix,
+			}),
+	};
+}
+
+export function del<
+	TBody extends z.ZodType<{}>,
+	TPathParams extends z.ZodType<{}>,
+	TQueryParams extends z.ZodType<{}>
+>(
+	path: string,
+	props: {
+		validation?: HandlerValidation<TBody, TPathParams, TQueryParams>;
+		handle: HandlerHandleFunction<TBody, TPathParams, TQueryParams>;
+	}
+): Handler<TBody, TPathParams, TQueryParams> {
+	return {
+		path: path as Path,
+		method: "DELETE",
 		type: "endpoint",
 		handle: (req, prevPathPrefix) =>
 			handleWithValidation<TBody, TPathParams, TQueryParams>({

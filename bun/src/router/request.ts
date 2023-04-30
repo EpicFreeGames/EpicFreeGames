@@ -6,7 +6,7 @@ export async function getRequestData<
 	TBody extends z.ZodType<{}>,
 	TPathParams extends z.ZodType<{}>,
 	TQueryParams extends z.ZodType<{}>
->(req: Request) {
+>(req: Request): Promise<RequestData<TBody, TPathParams, TQueryParams>> {
 	const method = req.method as Method;
 	const url = new URL(req.url);
 	const urlData = extractUrlData(url);
@@ -30,4 +30,13 @@ export type RequestData<
 	TBody extends z.ZodType<{}>,
 	TPathParams extends z.ZodType<{}>,
 	TQueryParams extends z.ZodType<{}>
-> = Awaited<ReturnType<typeof getRequestData<TBody, TPathParams, TQueryParams>>>;
+> = {
+	method: Method;
+	path: Path;
+	pathParams: z.infer<TPathParams>;
+	queryParams: z.infer<TQueryParams>;
+	headers: Headers;
+	textBody: string;
+	body: z.infer<TBody>;
+	req: Request;
+};
