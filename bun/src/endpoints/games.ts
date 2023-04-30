@@ -4,12 +4,14 @@ import { createResponse } from "../utils";
 
 export const gamesRouter = router(
 	"/games",
-	get("/", (req) => {
-		return createResponse(200, [
-			{
-				id: 1,
-				name: "Game 1",
-			},
-		]);
+	get("/", {
+		handle: (req) => {
+			return createResponse(200, [
+				{
+					id: 1,
+					name: "Game 1",
+				},
+			]);
+		},
 	})
 );

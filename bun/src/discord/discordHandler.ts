@@ -10,38 +10,40 @@ import { Logger } from "../logger";
 import { post } from "../router/handler";
 import { createResponse } from "../utils";
 
-export const discordHandler = post("/discord", async (req) => {
-	Logger.debug("Incoming interaction request");
+export const discordHandler = post("/discord", {
+	handle: async (req) => {
+		Logger.debug("Incoming interaction request");
 
-	const verified = await verifyDiscordRequest(req.req, req.textBody);
-	if (!verified) {
-		return createResponse(400, { error: "Invalid request signature" });
-	}
-
-	Logger.debug("Interaction request verified");
-
-	const interaction = req.body as APIInteraction;
-	if (!interaction) return new Response(undefined, { status: 400 });
-
-	Logger.debug("Interaction request", { interaction });
-
-	if (interaction.type === InteractionType.Ping) {
-		return createResponse(200, {
-			type: InteractionResponseType.Pong,
-		});
-	} else {
-		try {
-			await discordApiRequest({
-				method: "POST",
-				path: `/api/interactions/${interaction.id}/${interaction.token}/callback`,
-				body: <APIInteractionResponse>{
-					type: InteractionResponseType.DeferredChannelMessageWithSource,
-				},
-			});
-		} catch (err) {
-			return createResponse(500, { error: "Failed to send interaction response" });
+		const verified = await verifyDiscordRequest(req.req, req.textBody);
+		if (!verified) {
+			return createResponse(400, { error: "Invalid request signature" });
 		}
 
-		return createResponse(200);
-	}
+		Logger.debug("Interaction request verified");
+
+		const interaction = req.body as APIInteraction;
+		if (!interaction) return new Response(undefined, { status: 400 });
+
+		Logger.debug("Interaction request", { interaction });
+
+		if (interaction.type === InteractionType.Ping) {
+			return createResponse(200, {
+				type: InteractionResponseType.Pong,
+			});
+		} else {
+			try {
+				await discordApiRequest({
+					method: "POST",
+					path: `/api/interactions/${interaction.id}/${interaction.token}/callback`,
+					body: <APIInteractionResponse>{
+						type: InteractionResponseType.DeferredChannelMessageWithSource,
+					},
+				});
+			} catch (err) {
+				return createResponse(500, { error: "Failed to send interaction response" });
+			}
+
+			return createResponse(200);
+		}
+	},
 });
