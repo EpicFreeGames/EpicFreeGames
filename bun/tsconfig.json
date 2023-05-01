@@ -6,6 +6,9 @@
 		"module": "esnext",
 		"target": "esnext",
 
+		"baseUrl": ".",
+		"paths": { "@/*": ["./src/*"] },
+
 		"moduleResolution": "bundler",
 		"moduleDetection": "force",
 		"esModuleInterop": true,

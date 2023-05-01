@@ -1,3 +1,4 @@
+import { discordRouter } from "./discord/discordHandler";
 import { gamesRouter } from "./endpoints/games";
 import { env } from "./env";
 import { Root, Router } from "./router/router";
@@ -6,6 +7,7 @@ const root = new Root();
 const apiRouter = new Router();
 
 apiRouter.use("/games", gamesRouter);
+apiRouter.use("/discord", discordRouter);
 
 root.use("/api", apiRouter);
 

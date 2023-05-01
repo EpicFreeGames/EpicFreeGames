@@ -1,14 +1,11 @@
-import {
-	APIInteraction,
-	APIInteractionResponse,
-	InteractionResponseType,
-	InteractionType,
-} from "discord-api-types/v10";
-import { verifyDiscordRequest } from "./verifyRequest";
+import { APIInteraction, InteractionResponseType, InteractionType } from "discord-api-types/v10";
+
+import { Logger } from "@/logger";
+import { Router } from "@/router/router";
+import { createResponse } from "@/utils";
+
 import { discordApiRequest } from "./discordApiRequest";
-import { Logger } from "../logger";
-import { createResponse } from "../utils";
-import { Router } from "../router/router";
+import { verifyDiscordRequest } from "./verifyRequest";
 
 export const discordRouter = new Router().post("/discord", async (req) => {
 	Logger.debug("Incoming interaction request");
@@ -34,7 +31,7 @@ export const discordRouter = new Router().post("/discord", async (req) => {
 			await discordApiRequest({
 				method: "POST",
 				path: `/api/interactions/${interaction.id}/${interaction.token}/callback`,
-				body: <APIInteractionResponse>{
+				body: {
 					type: InteractionResponseType.DeferredChannelMessageWithSource,
 				},
 			});
