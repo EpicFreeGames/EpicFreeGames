@@ -137,30 +137,160 @@ export class Router {
 	>(
 		path: string,
 		validation: {
-			body?: TBody;
 			pathParams?: TPathParams;
 			queryParams?: TQueryParams;
 		},
-		handle: Handler<TBody, TPathParams, TQueryParams>["handle"]
+		handle: Handler<z.infer<TBody>, z.infer<TPathParams>, z.infer<TQueryParams>>["handle"]
 	) {
 		this._handlers.push({
 			path,
 			method: "GET",
 			handle: async (req) => {
-				if (validation.body) {
-					const bodyRes = validation.body.safeParse(req.body);
-					if (!bodyRes.success) {
-						return createResponse(400, {
-							error: "Invalid request body",
-							details: bodyRes.error,
-						});
-					}
+				const validationRes = await handleWithValidation<TBody, TPathParams, TQueryParams>({
+					request: req,
+					validation,
+				});
+
+				if (!validationRes.valid) {
+					return createResponse(400, {
+						error: "Invalid request",
+						details: validationRes.errors,
+					});
 				}
-				return handle(req as RequestData<TBody, TPathParams, TQueryParams>);
+
+				return handle(validationRes.validRequestData);
 			},
 		});
 
 		return this;
+	}
+
+	post(path: string, handle: Handler["handle"]) {
+		this._handlers.push({
+			path,
+			method: "POST",
+			handle,
+		});
+
+		return this;
+	}
+
+	postWithValidation<
+		TBody extends z.ZodType<{}>,
+		TPathParams extends z.ZodType<{}>,
+		TQueryParams extends z.ZodType<{}>
+	>(
+		path: string,
+		validation: {
+			body?: TBody;
+			pathParams?: TPathParams;
+			queryParams?: TQueryParams;
+		},
+		handle: Handler<z.infer<TBody>, z.infer<TPathParams>, z.infer<TQueryParams>>["handle"]
+	) {
+		this._handlers.push({
+			path,
+			method: "POST",
+			handle: async (req) => {
+				const validationRes = await handleWithValidation<TBody, TPathParams, TQueryParams>({
+					request: req,
+					validation,
+				});
+
+				if (!validationRes.valid) {
+					return createResponse(400, {
+						error: "Invalid request",
+						details: validationRes.errors,
+					});
+				}
+
+				return handle(validationRes.validRequestData);
+			},
+		});
+
+		return this;
+	}
+}
+
+async function handleWithValidation<
+	TBody extends z.ZodTypeAny,
+	TPathParams extends z.ZodTypeAny,
+	TQueryParams extends z.ZodTypeAny
+>(props: {
+	validation: {
+		body?: TBody;
+		pathParams?: TPathParams;
+		queryParams?: TQueryParams;
+	};
+	request: RequestData;
+}): Promise<
+	| {
+			valid: true;
+			validRequestData: RequestData<
+				z.infer<TBody>,
+				z.infer<TPathParams>,
+				z.infer<TQueryParams>
+			>;
+			errors?: never;
+	  }
+	| {
+			valid: false;
+			validRequestData?: never;
+			errors: {
+				body: z.ZodIssue[];
+				pathParams: z.ZodIssue[];
+				queryParams: z.ZodIssue[];
+			};
+	  }
+> {
+	let valid = true;
+	const errors: {
+		body: z.ZodIssue[];
+		pathParams: z.ZodIssue[];
+		queryParams: z.ZodIssue[];
+	} = {
+		body: [],
+		pathParams: [],
+		queryParams: [],
+	};
+
+	if (props.validation.body) {
+		const bodyRes = props.validation.body.safeParse(props.request.body);
+		if (!bodyRes.success) {
+			valid = false;
+			errors.body = bodyRes.error.issues;
+		}
+	}
+
+	if (props.validation.pathParams) {
+		const pathParamsRes = props.validation.pathParams.safeParse(props.request.pathParams);
+		if (!pathParamsRes.success) {
+			valid = false;
+			errors.pathParams = pathParamsRes.error.issues;
+		}
+	}
+
+	if (props.validation.queryParams) {
+		const queryParamsRes = props.validation.queryParams.safeParse(props.request.queryParams);
+		if (!queryParamsRes.success) {
+			valid = false;
+			errors.queryParams = queryParamsRes.error.issues;
+		} else {
+			props.request.queryParams = queryParamsRes.data as z.infer<TQueryParams>;
+		}
+	}
+
+	if (!valid) {
+		return { valid, errors };
+	} else {
+		return {
+			valid,
+			validRequestData: props.request as RequestData<
+				z.infer<TBody>,
+				z.infer<TPathParams>,
+				z.infer<TQueryParams>
+			>,
+		};
 	}
 }
 
@@ -235,24 +365,16 @@ function getPathParams(requestPath: string, handlerPath: string) {
 
 type Method = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
-type RequestData<
-	TBody extends z.ZodType<{}> = z.ZodType<{}>,
-	TPathParams extends z.ZodType<{}> = z.ZodType<{}>,
-	TQueryParams extends z.ZodType<{}> = z.ZodType<{}>
-> = {
+type RequestData<TBody = {}, TPathParams = {}, TQueryParams = {}> = {
 	path: string;
-	pathParams: z.infer<TPathParams>;
-	queryParams: z.infer<TQueryParams>;
-	body: z.infer<TBody>;
+	pathParams: TPathParams;
+	queryParams: TQueryParams;
+	body: TBody;
 	textBody: string;
 	originalRequest: Request;
 };
 
-type Handler<
-	TBody extends z.ZodType<{}> = z.ZodType<{}>,
-	TPathParams extends z.ZodType<{}> = z.ZodType<{}>,
-	TQueryParams extends z.ZodType<{}> = z.ZodType<{}>
-> = {
+type Handler<TBody = {}, TPathParams = {}, TQueryParams = {}> = {
 	path: string;
 	method: Method;
 	handle: (

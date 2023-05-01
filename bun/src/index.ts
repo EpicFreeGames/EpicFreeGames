@@ -1,6 +1,6 @@
 import { gamesRouter } from "./endpoints/games";
 import { env } from "./env";
-import { Root, Router } from "./router2.0/router";
+import { Root, Router } from "./router/router";
 
 const root = new Root();
 const apiRouter = new Router();
