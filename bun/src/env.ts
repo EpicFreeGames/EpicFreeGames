@@ -6,6 +6,7 @@ const envSchema = z.object({
 	DC_CLIENT_ID: z.string(),
 	DC_PUB_KEY: z.string(),
 	DC_TOKEN: z.string(),
+	PORT: z.string().transform(Number).optional(),
 	LOG: z.enum(["debug", "info", "warn", "error"]).optional(),
 	PRETTY_LOG: z.string().transform(Boolean).optional(),
 	ENV: z.enum(["development", "staging", "production"]).optional(),

@@ -1,16 +1,20 @@
-import { discordHandler } from "./discord/discordHandler";
 import { gamesRouter } from "./endpoints/games";
-import { rootHandler } from "./router/handler";
+import { env } from "./env";
+import { Root, Router } from "./router2.0/router";
+
+const root = new Root();
+const apiRouter = new Router();
+
+apiRouter.use("/games", gamesRouter);
+
+root.use("/api", apiRouter);
 
 Bun.serve({
-	port: 8000,
+	port: env.PORT || 8000,
 	development: false,
 	async fetch(req) {
-		const response = await rootHandler("/api", req, discordHandler, gamesRouter);
+		const response = await root.handle(req);
 
-		return (
-			response ||
-			new Response(JSON.stringify({ error: "Endpoint does not exist" }), { status: 404 })
-		);
+		return response;
 	},
 });

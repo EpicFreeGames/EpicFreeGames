@@ -1,21 +1,12 @@
 import { z } from "zod";
-import { get } from "../router/handler";
-import { router } from "../router/router";
+import { Router } from "../router2.0/router";
 import { createResponse } from "../utils";
 
-export const gamesRouter = router(
-	"/games",
-	get("/:id", {
-		validation: { path: z.object({ id: z.string() }) },
-		handle: (req) => {
-			console.log({ id: req.pathParams.id });
-
-			return createResponse(200, [
-				{
-					id: 1,
-					name: "Game 1",
-				},
-			]);
+export const gamesRouter = new Router().get("/:id", async () => {
+	return createResponse(200, [
+		{
+			id: 1,
+			name: "game 1",
 		},
-	})
-);
+	]);
+});
