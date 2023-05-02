@@ -12,14 +12,6 @@ export const gamesRouter = new Router()
 			},
 		]);
 	})
-	.getWithValidation(
-		"/test",
-		{
-			pathParams: z.object({
-				test: z.string(),
-			}),
-		},
-		async (req) => {
-			req.pathParams.test;
-		}
-	);
+	.getWithValidation("/test", { pathParams: z.object({ test: z.string() }) }, async (req) => {
+		req.pathParams.test;
+	});
