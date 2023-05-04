@@ -1,6 +1,6 @@
+import { env } from "./configuration/env";
 import { discordRouter } from "./discord/discordHandler";
 import { gamesRouter } from "./endpoints/games";
-import { env } from "./env";
 import { Root, Router } from "./router/router";
 
 const root = new Root();

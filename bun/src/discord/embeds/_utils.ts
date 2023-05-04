@@ -1,3 +1,4 @@
+import { constants } from "@/configuration/constants";
 import { Language } from "@/discord/i18n/language";
 import { t } from "@/discord/i18n/translate";
 
@@ -34,9 +35,9 @@ const createFooter = (language: Language) => {
 
 	const list = [invite, support, website];
 	const withVars = [
-		embedUtils.link(invite, botConstants.website.botInvite),
-		embedUtils.link(support, botConstants.website.serverInvite),
-		embedUtils.link(website, botConstants.website.home),
+		embedUtils.link(invite, constants.links.botInvite),
+		embedUtils.link(support, constants.links.serverInvite),
+		embedUtils.link(website, constants.links.frontHome),
 	];
 
 	const concatted = list.join(embedUtils.chars.separator);

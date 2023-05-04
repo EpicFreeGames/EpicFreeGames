@@ -1,6 +1,6 @@
 import nacl from "tweetnacl";
 
-import { env } from "../env";
+import { env } from "../configuration/env";
 import { Logger } from "../logger";
 
 const publicKey = valueToUint8Array(env.DC_PUB_KEY, true);

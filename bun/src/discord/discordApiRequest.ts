@@ -1,4 +1,4 @@
-import { env } from "../env";
+import { env } from "../configuration/env";
 import { Logger } from "../logger";
 
 type Method = "GET" | "POST" | "PUT" | "PATCH" | "DELETE" | "HEAD";

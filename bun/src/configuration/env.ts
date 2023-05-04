@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { objToStr } from "./utils";
+import { objToStr } from "../utils";
 
 const envSchema = z.object({
 	DC_API_BASE: z.string(),
@@ -10,7 +10,7 @@ const envSchema = z.object({
 	PORT: z.string().transform(Number).optional(),
 	LOG: z.enum(["debug", "info", "warn", "error"]).optional(),
 	PRETTY_LOG: z.string().transform(Boolean).optional(),
-	ENV: z.enum(["development", "staging", "production"]).optional(),
+	ENV: z.enum(["development", "staging", "production"]),
 });
 
 console.debug("Parsing environment variables...");
@@ -23,4 +23,5 @@ if (!parseResult.success) {
 	);
 }
 
+export const inProd = parseResult.data.ENV === "production";
 export const env = parseResult.data;

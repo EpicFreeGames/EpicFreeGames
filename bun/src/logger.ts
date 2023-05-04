@@ -1,4 +1,4 @@
-import { env } from "./env";
+import { env } from "./configuration/env";
 
 const levelMap = {
 	debug: 1,
