@@ -1,0 +1,26 @@
+{
+	"name": "epicfreegames-monorepo",
+	"private": true,
+	"workspaces": [
+		"apps/*",
+		"packages/*"
+	],
+	"scripts": {
+		"dev": "APP_ENV=dev op run --env-file=\"./.1password.env\" -- turbo dev",
+		"clean": "rm -rf ./node_modules ./.turbo ./**/**/node_modules ./**/**/dist ./**/**/.turbo",
+		"db": "docker run -v efg-dev -it -p 5432:5432 -e POSTGRES_PASSWORD=postgres postgres"
+	},
+	"packageManager": "yarn@1.22.19",
+	"engines": {
+		"node": ">=16.0.0",
+		"npm": ">=7.0.0"
+	},
+	"devDependencies": {
+		"@trivago/prettier-plugin-sort-imports": "^4.1.1",
+		"@types/uuid": "^9.0.1",
+		"prettier": "^2.8.8",
+		"prettier-plugin-tailwindcss": "^0.2.8",
+		"turbo": "^1.9.3",
+		"typescript": "^5.0.2"
+	}
+}

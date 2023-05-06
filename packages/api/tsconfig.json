@@ -1,0 +1,19 @@
+{
+	"extends": "@efg/tsconfig/base.json",
+	"compilerOptions": {
+		"module": "ESNext",
+		"target": "ESNext",
+		"lib": ["ESNext", "DOM"],
+
+		"moduleResolution": "node",
+		"esModuleInterop": true,
+		"verbatimModuleSyntax": true,
+		"declaration": true,
+		"declarationMap": true,
+		"sourceMap": true,
+
+		"rootDir": "src",
+		"outDir": "dist"
+	},
+	"include": ["src"]
+}

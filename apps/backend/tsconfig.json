@@ -1,0 +1,14 @@
+{
+	"extends": "@efg/tsconfig/base.json",
+	"compilerOptions": {
+		"lib": ["ESNext", "DOM"],
+		"module": "ESNext",
+		"target": "ESNext",
+
+		"baseUrl": ".",
+		"paths": { "@/*": ["./src/*"] },
+
+		"esModuleInterop": true,
+		"moduleResolution": "node"
+	}
+}

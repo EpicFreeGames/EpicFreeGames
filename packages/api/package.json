@@ -1,0 +1,28 @@
+{
+	"name": "@efg/api",
+	"version": "0.0.0",
+	"license": "MIT",
+	"type": "module",
+	"files": [
+		"dist/**"
+	],
+	"main": "dist/index.js",
+	"scripts": {
+		"build": "tsc",
+		"dev": "tsc --preserveWatchOutput --watch",
+		"clean": "rm -rf dist node_modules"
+	},
+	"dependencies": {
+		"@trpc/server": "^10.25.0",
+		"drizzle-orm": "^0.25.4",
+		"jose": "^4.14.4",
+		"mysql2": "^3.2.4",
+		"superjson": "^1.12.3",
+		"zod": "^3.21.4",
+		"@efg/db": "*"
+	},
+	"devDependencies": {
+		"@efg/tsconfig": "*",
+		"tsup": "^6.7.0"
+	}
+}

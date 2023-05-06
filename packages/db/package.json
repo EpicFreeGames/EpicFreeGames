@@ -1,0 +1,23 @@
+{
+	"name": "@efg/db",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"files": [
+		"dist/**"
+	],
+	"main": "dist/index.js",
+	"scripts": {
+		"build": "tsc",
+		"dev": "tsc --preserveWatchOutput --watch",
+		"clean": "rm -rf dist node_modules"
+	},
+	"dependencies": {
+		"drizzle-orm": "^0.25.4",
+		"pg": "^8.10.0"
+	},
+	"devDependencies": {
+		"@efg/tsconfig": "*",
+		"@types/pg": "^8.6.6"
+	}
+}
