@@ -1,19 +1,21 @@
 import { verifyToken } from "./token";
-import { db } from "@efg/db";
+import type { Database } from "@efg/db";
 import { TRPCError, type inferAsyncReturnType, initTRPC } from "@trpc/server";
 import { type CreateHTTPContextOptions } from "@trpc/server/adapters/standalone";
 import superjson from "superjson";
 
-export async function createContext(opts: CreateHTTPContextOptions) {
-	const token = opts.req.headers.authorization?.replace("Bearer ", "");
+export function createContext(db: Database) {
+	return async (opts: CreateHTTPContextOptions) => {
+		const token = opts.req.headers.authorization?.replace("Bearer ", "");
 
-	const userId = token
-		? await verifyToken(token)
-				.then((v) => v.payload.userId)
-				.catch(() => null)
-		: null;
+		const userId = token
+			? await verifyToken(token)
+					.then((v) => v.payload.userId)
+					.catch(() => null)
+			: null;
 
-	return { db, userId };
+		return { db, userId };
+	};
 }
 
 type Context = inferAsyncReturnType<typeof createContext>;

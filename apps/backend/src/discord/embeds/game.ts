@@ -1,8 +1,8 @@
 import { APIEmbed } from "discord-api-types/v10";
 
-import { constants } from "@/configuration/constants";
 import { Game, GamePrice } from "@efg/db";
 
+import { constants } from "../../configuration/constants";
 import { Currency } from "../i18n/currency";
 import { Language } from "../i18n/language";
 import { t } from "../i18n/translate";

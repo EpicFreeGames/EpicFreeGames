@@ -7,7 +7,6 @@
 
 		"moduleResolution": "node",
 		"esModuleInterop": true,
-		"verbatimModuleSyntax": true,
 		"declaration": true,
 		"declarationMap": true,
 		"sourceMap": true,

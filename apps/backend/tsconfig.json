@@ -5,10 +5,13 @@
 		"module": "ESNext",
 		"target": "ESNext",
 
-		"baseUrl": ".",
-		"paths": { "@/*": ["./src/*"] },
-
 		"esModuleInterop": true,
-		"moduleResolution": "node"
-	}
+		"moduleResolution": "node",
+
+		"resolveJsonModule": true,
+
+		"outDir": "./dist",
+		"rootDir": "./src"
+	},
+	"include": ["./src/**/*"]
 }

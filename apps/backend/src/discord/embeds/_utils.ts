@@ -1,6 +1,6 @@
-import { constants } from "@/configuration/constants";
-import { Language } from "@/discord/i18n/language";
-import { t } from "@/discord/i18n/translate";
+import { constants } from "../../configuration/constants";
+import { Language } from "../i18n/language";
+import { t } from "../i18n/translate";
 
 export const embedUtils = {
 	footer: (language: Language) => "\n\n" + createFooter(language),

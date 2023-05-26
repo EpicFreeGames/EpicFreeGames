@@ -4,6 +4,7 @@
 	"compilerOptions": {
 		"skipLibCheck": true,
 
+		"verbatimModuleSyntax": true,
 		"strict": true,
 		"noUncheckedIndexedAccess": true,
 		"allowUnreachableCode": true,

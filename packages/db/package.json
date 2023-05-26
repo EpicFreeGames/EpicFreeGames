@@ -13,11 +13,9 @@
 		"clean": "rm -rf dist node_modules"
 	},
 	"dependencies": {
-		"drizzle-orm": "^0.25.4",
-		"pg": "^8.10.0"
+		"mongodb": "^5.5.0"
 	},
 	"devDependencies": {
-		"@efg/tsconfig": "*",
-		"@types/pg": "^8.6.6"
+		"@efg/tsconfig": "*"
 	}
 }

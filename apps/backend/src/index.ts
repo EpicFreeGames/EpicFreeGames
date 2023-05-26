@@ -1,13 +1,16 @@
 import { createServer } from "node:http";
 
 import { apiRouter, createContext } from "@efg/api";
+import { getMongo } from "@efg/db";
 import { createHTTPHandler } from "@trpc/server/adapters/standalone";
 
 import { discordHandler, isDiscordRequest } from "./discord/discordHandler";
 
+const db = await getMongo();
+
 const handler = createHTTPHandler({
 	router: apiRouter,
-	createContext,
+	createContext: createContext(db),
 });
 
 createServer(async (req, res) => {
@@ -26,17 +29,9 @@ createServer(async (req, res) => {
 	}
 
 	if (isDiscordRequest(req)) {
-		const { code, body } = await discordHandler(req);
-
-		res.writeHead(code, body ? { "Content-Type": "application/json" } : undefined);
-
-		if (body) {
-			res.write(JSON.stringify(body));
-		}
-
-		res.end();
+		await discordHandler(req, res, db);
 		return;
 	}
 
 	handler(req, res);
-}).listen(5000, () => console.log("Server started on port 5000"));
+}).listen(10000, () => console.log("Server started on port 10000"));

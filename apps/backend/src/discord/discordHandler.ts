@@ -1,12 +1,24 @@
-import { APIInteraction, InteractionResponseType, InteractionType } from "discord-api-types/v10";
-import { IncomingMessage } from "node:http";
+import {
+	type APIInteraction,
+	InteractionResponseType,
+	InteractionType,
+} from "discord-api-types/v10";
+import { IncomingMessage, ServerResponse } from "node:http";
 
-import { Logger } from "@/logger";
+import { type Database } from "@efg/db";
 
-import { discordApiRequest } from "./discordApiRequest";
+import { getCtx } from "../ctx";
+import { respondWith } from "../utils";
+import { commandHandler } from "./commands/commandHandler";
 import { verifyDiscordRequest } from "./verifyRequest";
 
-export const discordHandler = async (req: IncomingMessage) => {
+export const discordHandler = async (
+	req: IncomingMessage,
+	res: ServerResponse<IncomingMessage>,
+	db: Database
+) => {
+	const ctx = getCtx(req, res, db);
+
 	const textBody = await new Promise<string>((resolve) => {
 		let data = "";
 		req.on("data", (chunk) => {
@@ -17,7 +29,7 @@ export const discordHandler = async (req: IncomingMessage) => {
 		});
 	});
 
-	Logger.debug("Incoming interaction request");
+	ctx.logger.debug("Incoming interaction request");
 
 	const verified = await verifyDiscordRequest(
 		textBody,
@@ -25,40 +37,43 @@ export const discordHandler = async (req: IncomingMessage) => {
 		req.headers["x-signature-ed25519"] as string
 	);
 	if (!verified) {
-		return { code: 400, body: undefined };
+		return respondWith(res, 401, "Invalid request signature");
 	}
 
-	Logger.debug("Interaction request verified");
+	ctx.logger.debug("Interaction request verified");
 
 	let jsonBody = null;
 	try {
 		jsonBody = JSON.parse(textBody);
 	} catch (err) {
-		Logger.debug("Error parsing interaction request body", { err });
-		return { code: 400, body: undefined };
+		ctx.logger.debug("Error parsing interaction request body", { err });
+		return respondWith(res, 400, "Invalid request body");
 	}
 
 	const interaction = jsonBody as APIInteraction;
-	if (!interaction) return { code: 400, body: undefined };
+	if (!interaction) return respondWith(res, 400, "Invalid request");
 
-	Logger.debug("Interaction request", { interaction });
+	ctx.logger.debug("Interaction request", { interaction });
 
 	if (interaction.type === InteractionType.Ping) {
-		return { code: 200, body: { type: InteractionResponseType.Pong } };
+		return respondWith(res, 200, { type: InteractionResponseType.Pong });
 	} else {
-		try {
-			await discordApiRequest({
-				method: "POST",
-				path: `/api/interactions/${interaction.id}/${interaction.token}/callback`,
-				body: {
-					type: InteractionResponseType.DeferredChannelMessageWithSource,
-				},
-			});
-		} catch (err) {
-			return { code: 400, body: undefined };
-		}
+		const language = {
+			code: "en",
+			englishName: "English",
+			name: "English",
+			websiteReady: true,
+		};
 
-		return { code: 200, body: undefined };
+		const currency = {
+			after: "€",
+			before: "",
+			code: "EUR",
+			englishName: "Euro",
+			name: "Euro",
+		};
+
+		await commandHandler(ctx, interaction, language, currency, null);
 	}
 };
 

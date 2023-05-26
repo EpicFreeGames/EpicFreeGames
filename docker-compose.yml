@@ -1,0 +1,15 @@
+version: "3.9"
+
+services:
+    db:
+        image: mongo
+        restart: always
+        ports:
+            - 27017:27017
+        volumes:
+            - db_data:/data/db
+            - db_config:/data/configdb
+
+volumes:
+    db_data:
+    db_config:
