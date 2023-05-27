@@ -1,12 +1,21 @@
 import { Database } from "./db/db";
-import { LoggerWithRequestId } from "./logger";
+import { Logger } from "./logger";
 import { ulid } from "ulid";
 
+export type RequestId = string & { __brand: "RequestId" };
+
+function createRequestId() {
+	return ulid() as RequestId;
+}
+
 export function getCtx(req: Request, db: Database) {
+	const requestId = createRequestId();
+
 	return {
 		req,
 		db,
-		logger: LoggerWithRequestId((req.headers.get("x-request-id") as string) ?? ulid()),
+		requestId,
+		log: Logger(db, requestId),
 	};
 }
 

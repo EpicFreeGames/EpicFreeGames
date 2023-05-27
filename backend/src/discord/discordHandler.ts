@@ -1,5 +1,5 @@
 import { getCtx } from "../ctx";
-import type { Database } from "../db/db";
+import { Database } from "../db/db";
 import { respondWith } from "../utils";
 import { commandHandler } from "./commands/commandHandler";
 import { verifyDiscordRequest } from "./verifyRequest";
@@ -15,34 +15,33 @@ export const discordHandler = async (req: Request, db: Database) => {
 
 	const textBody = await req.text();
 
-	ctx.logger.debug("Incoming interaction request");
+	ctx.log("Incoming interaction request");
 
 	const verified = await verifyDiscordRequest(
+		ctx,
 		textBody,
 		req.headers.get("x-signature-timestamp"),
 		req.headers.get("x-signature-ed25519")
 	);
 	if (!verified) {
-		return respondWith(401, "Invalid request signature");
+		return respondWith(ctx, 401, "Invalid request signature");
 	}
 
-	ctx.logger.debug("Interaction request verified");
+	ctx.log("Interaction request verified");
 
 	let jsonBody = null;
 	try {
 		jsonBody = JSON.parse(textBody);
 	} catch (err) {
-		ctx.logger.debug("Error parsing interaction request body", { err });
-		return respondWith(400, "Invalid request body");
+		ctx.log("Error parsing interaction request body", { err });
+		return respondWith(ctx, 400, "Invalid request body");
 	}
 
 	const interaction = jsonBody as APIInteraction;
-	if (!interaction) return respondWith(400, "Invalid request");
-
-	ctx.logger.debug("Interaction request", { interaction });
+	if (!interaction) return respondWith(ctx, 400, "Invalid request");
 
 	if (interaction.type === InteractionType.Ping) {
-		return respondWith(200, { type: InteractionResponseType.Pong });
+		return respondWith(ctx, 200, { type: InteractionResponseType.Pong });
 	} else {
 		const language = {
 			code: "en",

@@ -1,11 +1,12 @@
-import type { Ctx } from "../../ctx";
+import { Ctx } from "../../ctx";
 import { DbServer } from "../../db/types";
 import { respondWith } from "../../utils";
 import { getCommandName } from "../discordUtils";
-import type { Currency } from "../i18n/currency";
-import type { Language } from "../i18n/language";
+import { Currency } from "../i18n/currency";
+import { Language } from "../i18n/language";
 import { freeCommand } from "./noGuildCommands/freeCommand";
 import { helpCommand } from "./noGuildCommands/helpCommand";
+import { inviteCommand } from "./noGuildCommands/inviteCommand";
 import { upCommand } from "./noGuildCommands/upCommand";
 import {
 	isContextMenuApplicationCommandInteraction,
@@ -48,6 +49,7 @@ const commands = new Map<string, Command>();
 commands.set("/free", freeCommand);
 commands.set("/up", upCommand);
 commands.set("/help", helpCommand);
+commands.set("/invite", inviteCommand);
 
 export async function commandHandler(
 	ctx: Ctx,
@@ -62,32 +64,42 @@ export async function commandHandler(
 ) {
 	if (i.type === InteractionType.ApplicationCommand) {
 		if (isContextMenuApplicationCommandInteraction(i))
-			return respondWith(400, "Invalid request");
+			return respondWith(ctx, 400, "Invalid request");
 
 		const commandName = getCommandName(i);
 
 		const command = commands.get(commandName);
 
 		if (!command) {
-			ctx.logger.warn("Command not found", { commandName });
-			return respondWith(400, "Invalid request");
+			ctx.log(`Command not found`, { n: commandName });
+			return respondWith(ctx, 400, "Invalid request");
 		}
 
-		if (command.requiresGuild) {
-			if (!isGuildInteraction(i)) {
-				ctx.logger.warn("Command requires guild, but wasn't ran in one", { commandName });
-				return respondWith(400, "Invalid request");
-			} else {
-				const response = await command.handler(ctx, i, language, currency, dbServer);
+		const isGuild = isGuildInteraction(i);
 
-				return response;
+		if (command.requiresGuild) {
+			if (!isGuild) {
+				ctx.log(`Command requires guild, but wasn't ran in one`, { n: commandName });
+				return respondWith(ctx, 400, "Invalid request");
+			} else {
+				ctx.log("Running command", {
+					n: commandName,
+					g: i.guild_id,
+					u: i.member?.user.id || i.user?.id,
+				});
+
+				return await command.handler(ctx, i, language, currency, dbServer);
 			}
 		} else {
-			const response = await command.handler(ctx, i, language, currency);
+			ctx.log("Running command", {
+				n: commandName,
+				g: i.guild_id ?? null,
+				u: i.member?.user.id || i.user?.id,
+			});
 
-			return response;
+			return await command.handler(ctx, i, language, currency);
 		}
 	}
 
-	return respondWith(400, "Invalid request");
+	return respondWith(ctx, 400, "Invalid request");
 }

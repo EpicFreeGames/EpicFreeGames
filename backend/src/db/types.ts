@@ -33,15 +33,6 @@ export type DbServer = {
 	createdAt: Date;
 };
 
-export type DbCommandLog = {
-	command: string;
-	args: string[];
-	senderDiscordId: string;
-	serverDiscordId: string;
-	error: string | null;
-	createdAt: Date;
-};
-
 export type DbSending = {
 	gameIds: string[];
 };
@@ -57,4 +48,23 @@ export type DbSession = {
 	userId: string;
 	createdAt: Date;
 	expiresAt: Date;
+};
+
+export type DbLog = {
+	/**
+	 * Date
+	 */
+	d: Date;
+	/**
+	 * Log message
+	 */
+	m: string;
+	/**
+	 * Request ID
+	 */
+	r: string;
+	/**
+	 * Log context
+	 */
+	c: any;
 };

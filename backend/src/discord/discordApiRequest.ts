@@ -1,5 +1,5 @@
 import { env } from "../configuration/env";
-import type { Ctx } from "../ctx";
+import { Ctx } from "../ctx";
 
 type Method = "GET" | "POST" | "PUT" | "PATCH" | "DELETE" | "HEAD";
 
@@ -38,7 +38,7 @@ export async function discordApiRequest<TResponseData = unknown>({
 }: Props): Promise<ApiResponse<TResponseData>> {
 	const url = `${env.DC_API_BASE}${path}${query ? `?${query.toString()}` : ""}`;
 
-	ctx.logger.debug("Discord API request", { method, url, body });
+	ctx.log("Discord API request", { method, url, body });
 
 	return fetch(url, {
 		method,
@@ -52,7 +52,7 @@ export async function discordApiRequest<TResponseData = unknown>({
 			const json = await res.json().catch((e) => null);
 
 			if (res.ok) {
-				ctx.logger.debug("Discord API response", { method, url, body, status: res.status });
+				ctx.log("Discord API response", { method, url, body, status: res.status });
 
 				return { data: json as TResponseData };
 			} else {
@@ -61,7 +61,7 @@ export async function discordApiRequest<TResponseData = unknown>({
 					message: res.statusText ?? "Unknown error",
 				};
 
-				ctx.logger.error("Discord API request failed", {
+				ctx.log("Discord API request failed", {
 					method,
 					url,
 					body,
@@ -74,7 +74,7 @@ export async function discordApiRequest<TResponseData = unknown>({
 			}
 		})
 		.catch((error) => {
-			ctx.logger.error("Discord API request failed", {
+			ctx.log("Discord API request failed", {
 				method,
 				url,
 				body,

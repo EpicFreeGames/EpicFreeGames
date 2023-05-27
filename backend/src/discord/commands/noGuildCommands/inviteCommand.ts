@@ -1,14 +1,14 @@
 import { createInteractionResponse } from "../../discordUtils";
-import { helpEmbed } from "../../embeds/help";
+import { inviteEmbed } from "../../embeds/invite";
 import { Command } from "../commandHandler";
 import { InteractionResponseType } from "discord-api-types/v10";
 
-export const helpCommand = {
+export const inviteCommand = {
 	requiresGuild: false,
 	handler: async (ctx, i, language, currency) => {
 		return createInteractionResponse({
 			type: InteractionResponseType.ChannelMessageWithSource,
-			data: { embeds: [helpEmbed(language)] },
+			data: { embeds: [inviteEmbed(language)] },
 		});
 	},
 } satisfies Command;

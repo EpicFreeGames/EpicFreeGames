@@ -1,10 +1,10 @@
 import { constants } from "../../configuration/constants";
 import { DbGame } from "../../db/types";
-import type { Currency } from "../i18n/currency";
-import type { Language } from "../i18n/language";
+import { Currency } from "../i18n/currency";
+import { Language } from "../i18n/language";
 import { t } from "../i18n/translate";
 import { embedUtils } from "./_utils";
-import type { APIEmbed } from "discord-api-types/v10";
+import { APIEmbed } from "discord-api-types/v10";
 
 export function gameEmbed(game: DbGame, language: Language, currency: Currency) {
 	return {

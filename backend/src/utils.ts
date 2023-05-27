@@ -1,11 +1,11 @@
-import { Logger } from "./logger";
+import { Ctx } from "./ctx";
 
 export function objToStr(obj: object) {
 	return JSON.stringify(obj, null, 2);
 }
 
-export function respondWith(code: number, details?: any) {
-	Logger.debug("Responding with", { code, details });
+export function respondWith(ctx: Ctx, code: number, details?: any) {
+	ctx.log("Responding with", { code, details });
 
 	if (details) {
 		if (typeof details === "string") {

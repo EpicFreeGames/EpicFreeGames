@@ -1,12 +1,15 @@
 import { env } from "./configuration/env";
 import { getMongo } from "./db/db";
 import { discordHandler } from "./discord/discordHandler";
-import { Logger } from "./logger";
 
+console.log("Connecting to MongoDB");
 const db = await getMongo();
+console.log("Connected to MongoDB");
+
+const port = env.PORT || 8000;
 
 Bun.serve({
-	port: env.PORT,
+	port,
 	async fetch(request) {
 		const response = await discordHandler(request, db);
 
@@ -14,4 +17,4 @@ Bun.serve({
 	},
 });
 
-Logger.info("Server started", { port: env.PORT, apiBase: env.DC_API_BASE });
+console.log("Server started", { port, apiBase: env.DC_API_BASE, env: env.ENV });

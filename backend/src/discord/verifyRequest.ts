@@ -1,10 +1,11 @@
 import { env } from "../configuration/env";
-import { Logger } from "../logger";
+import { Ctx } from "../ctx";
 import nacl from "tweetnacl";
 
 const publicKey = valueToUint8Array(env.DC_PUB_KEY, true);
 
 export async function verifyDiscordRequest(
+	ctx: Ctx,
 	stringBody: string,
 	timestampHeader?: string | null,
 	signatureHeader?: string | null
@@ -21,7 +22,7 @@ export async function verifyDiscordRequest(
 		const signature = valueToUint8Array(signatureHeader, true);
 		return nacl.sign.detached.verify(timestampAndBody, signature, publicKey);
 	} catch (err) {
-		Logger.debug("Error verifying Discord request", { err });
+		ctx.log("Error verifying Discord request", { err });
 		return false;
 	}
 }
