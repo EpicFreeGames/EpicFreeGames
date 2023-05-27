@@ -1,18 +1,8 @@
 {
-	"name": "@efg/backend",
-	"version": "0.0.0",
 	"private": true,
-	"type": "module",
-	"scripts": {
-		"dev": "tsx watch --clear-screen=false src/index.ts",
-		"build": "tsc",
-		"start": "node --experimental-specifier-resolution=node ./dist/index.js"
-	},
 	"dependencies": {
-		"@efg/api": "*",
-		"@planetscale/database": "^1.7.0",
-		"@trpc/server": "^10.25.0",
 		"discord-api-types": "^0.37.40",
+		"mongodb": "^5.5.0",
 		"tweetnacl": "^1.0.3",
 		"ulid": "^2.3.0",
 		"uuid": "^9.0.0",
@@ -22,6 +12,7 @@
 		"@trivago/prettier-plugin-sort-imports": "^4.1.1",
 		"@types/node": "^20.0.0",
 		"@types/uuid": "^9.0.1",
+		"bun-types": "^0.6.3",
 		"prettier": "^2.8.8",
 		"prettier-plugin-tailwindcss": "^0.2.8",
 		"tsx": "^3.12.7",

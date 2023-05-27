@@ -1,3 +1,12 @@
+import type { Ctx } from "../../ctx";
+import { DbServer } from "../../db/types";
+import { respondWith } from "../../utils";
+import { getCommandName } from "../discordUtils";
+import type { Currency } from "../i18n/currency";
+import type { Language } from "../i18n/language";
+import { freeCommand } from "./noGuildCommands/freeCommand";
+import { helpCommand } from "./noGuildCommands/helpCommand";
+import { upCommand } from "./noGuildCommands/upCommand";
 import {
 	isContextMenuApplicationCommandInteraction,
 	isGuildInteraction,
@@ -5,22 +14,12 @@ import {
 import {
 	type APIApplicationCommandAutocompleteInteraction,
 	type APIApplicationCommandInteraction,
-	type APIChatInputApplicationCommandDMInteraction,
 	type APIChatInputApplicationCommandGuildInteraction,
 	type APIChatInputApplicationCommandInteraction,
-	type APIGuildInteraction,
 	type APIMessageComponentInteraction,
 	type APIModalSubmitInteraction,
 	InteractionType,
 } from "discord-api-types/v10";
-
-import type { DbServer } from "@efg/db";
-
-import type { Ctx } from "../../ctx";
-import { getCommandName } from "../discordUtils";
-import type { Currency } from "../i18n/currency";
-import type { Language } from "../i18n/language";
-import { freeCommand } from "./noGuildCommands/freeCommand";
 
 export type Command =
 	| {
@@ -31,7 +30,7 @@ export type Command =
 				language: Language,
 				currency: Currency,
 				server: DbServer | null
-			) => Promise<void>;
+			) => Promise<Response>;
 	  }
 	| {
 			requiresGuild: false;
@@ -41,12 +40,14 @@ export type Command =
 				language: Language,
 				currency: Currency,
 				server?: never
-			) => Promise<void>;
+			) => Promise<Response>;
 	  };
 
 const commands = new Map<string, Command>();
 
 commands.set("/free", freeCommand);
+commands.set("/up", upCommand);
+commands.set("/help", helpCommand);
 
 export async function commandHandler(
 	ctx: Ctx,
@@ -60,7 +61,8 @@ export async function commandHandler(
 	dbServer: DbServer | null
 ) {
 	if (i.type === InteractionType.ApplicationCommand) {
-		if (isContextMenuApplicationCommandInteraction(i)) return;
+		if (isContextMenuApplicationCommandInteraction(i))
+			return respondWith(400, "Invalid request");
 
 		const commandName = getCommandName(i);
 
@@ -68,18 +70,24 @@ export async function commandHandler(
 
 		if (!command) {
 			ctx.logger.warn("Command not found", { commandName });
-			return;
+			return respondWith(400, "Invalid request");
 		}
 
 		if (command.requiresGuild) {
 			if (!isGuildInteraction(i)) {
 				ctx.logger.warn("Command requires guild, but wasn't ran in one", { commandName });
-				return;
+				return respondWith(400, "Invalid request");
 			} else {
-				await command.handler(ctx, i, language, currency, dbServer);
+				const response = await command.handler(ctx, i, language, currency, dbServer);
+
+				return response;
 			}
 		} else {
-			await command.handler(ctx, i, language, currency);
+			const response = await command.handler(ctx, i, language, currency);
+
+			return response;
 		}
 	}
+
+	return respondWith(400, "Invalid request");
 }

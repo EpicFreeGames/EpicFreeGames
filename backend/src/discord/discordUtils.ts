@@ -3,6 +3,7 @@ import {
 	type APIApplicationCommandInteractionDataBasicOption,
 	type APIChatInputApplicationCommandInteraction,
 	ApplicationCommandOptionType,
+	APIInteractionResponse,
 } from "discord-api-types/v10";
 
 export function getTypedOption<
@@ -52,4 +53,11 @@ export function getCommandName(
 ) {
 	const subCommand = getTypedOption(i, ApplicationCommandOptionType.Subcommand);
 	return subCommand ? `/${i.data.name} ${subCommand.name}` : `/${i.data.name}`;
+}
+
+export function createInteractionResponse(data: APIInteractionResponse) {
+	return new Response(JSON.stringify(data), {
+		status: 200,
+		headers: { "Content-Type": "application/json" },
+	});
 }

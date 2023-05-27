@@ -1,8 +1,8 @@
+import { objToStr } from "../utils";
 import { z } from "zod";
 
-import { objToStr } from "../utils";
-
 const envSchema = z.object({
+	MONGO_URL: z.string(),
 	DC_API_BASE: z.string(),
 	DC_CLIENT_ID: z.string(),
 	DC_PUB_KEY: z.string(),

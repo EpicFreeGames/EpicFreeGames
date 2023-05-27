@@ -1,14 +1,13 @@
-import nacl from "tweetnacl";
-
 import { env } from "../configuration/env";
 import { Logger } from "../logger";
+import nacl from "tweetnacl";
 
 const publicKey = valueToUint8Array(env.DC_PUB_KEY, true);
 
 export async function verifyDiscordRequest(
 	stringBody: string,
-	timestampHeader: string,
-	signatureHeader: string
+	timestampHeader?: string | null,
+	signatureHeader?: string | null
 ) {
 	if (!timestampHeader || !signatureHeader) {
 		return false;
