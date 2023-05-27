@@ -13,12 +13,12 @@ import {
 	isGuildInteraction,
 } from "discord-api-types/utils/v10";
 import {
-	type APIApplicationCommandAutocompleteInteraction,
-	type APIApplicationCommandInteraction,
-	type APIChatInputApplicationCommandGuildInteraction,
-	type APIChatInputApplicationCommandInteraction,
-	type APIMessageComponentInteraction,
-	type APIModalSubmitInteraction,
+	APIApplicationCommandAutocompleteInteraction,
+	APIApplicationCommandInteraction,
+	APIChatInputApplicationCommandGuildInteraction,
+	APIChatInputApplicationCommandInteraction,
+	APIMessageComponentInteraction,
+	APIModalSubmitInteraction,
 	InteractionType,
 } from "discord-api-types/v10";
 
