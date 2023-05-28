@@ -12,6 +12,12 @@ export const getMongo = async () => {
 	db.createIndex("logs", { r: 1 });
 	db.createIndex("logs", { d: 1 }, { expireAfterSeconds: 60 * 60 * 24 * 7 }); // retain for 7 days
 
+	db.createIndex("servers", { id: 1 }, { unique: true });
+
+	db.createIndex("games", { startDate: 1, endDate: 1 });
+
+	db.createIndex("sendLogs", { sendId: 1, "server._id": 1 }, { unique: true });
+
 	return {
 		games: db.collection<DbGame>("games"),
 		servers: db.collection<DbServer>("servers"),
