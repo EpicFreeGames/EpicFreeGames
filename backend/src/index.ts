@@ -1,6 +1,8 @@
 import { env } from "./configuration/env";
+import { getCtx } from "./ctx";
 import { getMongo } from "./db/db";
 import { discordHandler } from "./discord/discordHandler";
+import { respondWith } from "./utils";
 
 console.log("Connecting to MongoDB");
 const db = await getMongo();
@@ -11,9 +13,13 @@ const port = env.PORT || 8000;
 Bun.serve({
 	port,
 	async fetch(request) {
-		const response = await discordHandler(request, db);
+		const ctx = getCtx(request, db);
 
-		return response;
+		const response = await discordHandler(ctx);
+
+		console.log("response", response);
+
+		return response ?? respondWith(ctx, 200, "ok");
 	},
 });
 

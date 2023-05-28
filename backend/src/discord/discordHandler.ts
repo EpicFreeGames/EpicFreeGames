@@ -1,5 +1,4 @@
-import { getCtx } from "../ctx";
-import { Database } from "../db/db";
+import { Ctx } from "../ctx";
 import { respondWith } from "../utils";
 import { commandHandler } from "./commands/commandHandler";
 import { verifyDiscordRequest } from "./verifyRequest";
@@ -10,18 +9,16 @@ import {
 } from "discord-api-types/v10";
 import { IncomingMessage } from "node:http";
 
-export const discordHandler = async (req: Request, db: Database) => {
-	const ctx = getCtx(req, db);
-
-	const textBody = await req.text();
+export const discordHandler = async (ctx: Ctx) => {
+	const textBody = await ctx.req.text();
 
 	ctx.log("Incoming interaction request");
 
 	const verified = await verifyDiscordRequest(
 		ctx,
 		textBody,
-		req.headers.get("x-signature-timestamp"),
-		req.headers.get("x-signature-ed25519")
+		ctx.req.headers.get("x-signature-timestamp"),
+		ctx.req.headers.get("x-signature-ed25519")
 	);
 	if (!verified) {
 		return respondWith(ctx, 401, "Invalid request signature");

@@ -23,3 +23,9 @@ export function respondWith(ctx: Ctx, code: number, details?: any) {
 		return new Response(undefined, { status: code });
 	}
 }
+
+export function* chunks<T>(arr: T[], n: number): Generator<T[], void> {
+	for (let i = 0; i < arr.length; i += n) {
+		yield arr.slice(i, i + n);
+	}
+}

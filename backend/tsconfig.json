@@ -32,5 +32,5 @@
 		"noUnusedParameters": false,
 		"useUnknownInCatchVariables": false
 	},
-	"include": ["./src/**/*"]
+	"include": ["./src/**/*", "src/discord/i18n"]
 }

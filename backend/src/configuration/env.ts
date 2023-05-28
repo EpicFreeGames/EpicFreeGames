@@ -3,6 +3,7 @@ import { z } from "zod";
 
 const envSchema = z.object({
 	MONGO_URL: z.string(),
+	DC_ADMIN_ID: z.string(),
 	DC_API_BASE: z.string(),
 	DC_CLIENT_ID: z.string(),
 	DC_PUB_KEY: z.string(),

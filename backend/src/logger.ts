@@ -6,7 +6,11 @@ export function Logger(db: Database, requestId: RequestId) {
 	return (message: string, context?: any) => {
 		const date = new Date();
 
-		console.log(`${date.toISOString()} ${requestId} ${message}`);
+		console.log(
+			`${date.toISOString()} ${requestId} ${message} ${
+				context ? JSON.stringify(context) : ""
+			}`
+		);
 
 		const log: DbLog = {
 			d: date,

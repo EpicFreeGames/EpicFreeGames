@@ -1,19 +1,19 @@
 import { createInteractionResponse } from "../../discordUtils";
 import { genericErrorEmbed } from "../../embeds/errors";
-import { gameEmbed, noUpcomingFreeGamesEmbed } from "../../embeds/game";
+import { gameEmbed, noUpcomingFreeGamesEmbed } from "../../embeds/gameEmbed";
 import { Command } from "../commandHandler";
 import { InteractionResponseType } from "discord-api-types/v10";
 
 export const upCommand: Command = {
 	requiresGuild: false,
-	handler: async (ctx, i, language, currency) => {
+	handler: async (ctx, i, commandName, language, currency) => {
 		try {
 			const now = new Date();
 
 			const upcomingFreeGames = await ctx.db.games
 				.find({
-					startDate: { $lte: now },
-					endDate: { $gte: now },
+					startDate: { $gte: now },
+					endDate: { $gt: now },
 					confirmed: true,
 				})
 				.toArray();

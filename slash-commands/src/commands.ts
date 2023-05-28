@@ -147,4 +147,124 @@ export const guildCommands: RESTPutAPIApplicationGuildCommandsJSONBody = [
 		name: "send",
 		description: "Start sending the free game notifications",
 	},
+	{
+		name: "games",
+		description: "Games related commands",
+		options: [
+			{
+				name: "add",
+				description: "Add a game",
+				type: ApplicationCommandOptionType.Subcommand,
+				options: [
+					{
+						name: "name",
+						description: "The name of the game",
+						type: ApplicationCommandOptionType.String,
+						required: true,
+					},
+					{
+						name: "image-url",
+						description: "The image url of the game",
+						type: ApplicationCommandOptionType.String,
+						required: true,
+					},
+					{
+						name: "path",
+						description: "The path of the game",
+						type: ApplicationCommandOptionType.String,
+						required: true,
+					},
+					{
+						name: "start-epoch",
+						description: "The start date of the game (epoch ms)",
+						type: ApplicationCommandOptionType.Integer,
+						required: true,
+					},
+					{
+						name: "end-epoch",
+						description: "The end date of the game (epoch ms)",
+						type: ApplicationCommandOptionType.Integer,
+						required: true,
+					},
+					{
+						name: "usd-price",
+						description: "The price of the game in USD",
+						type: ApplicationCommandOptionType.Number,
+						required: true,
+					},
+				],
+			},
+			{
+				name: "remove",
+				description: "Remove a game",
+				type: ApplicationCommandOptionType.Subcommand,
+			},
+			{
+				name: "edit",
+				description: "Edit a game",
+				type: ApplicationCommandOptionType.Subcommand,
+				options: [
+					{
+						name: "game-id",
+						description: "The id of the game",
+						type: ApplicationCommandOptionType.String,
+						required: true,
+					},
+					{
+						name: "name",
+						description: "The name of the game",
+						type: ApplicationCommandOptionType.String,
+					},
+					{
+						name: "image-url",
+						description: "The image url of the game",
+						type: ApplicationCommandOptionType.String,
+					},
+					{
+						name: "path",
+						description: "The path of the game",
+						type: ApplicationCommandOptionType.String,
+					},
+					{
+						name: "start-epoch",
+						description: "The start date of the game (epoch ms)",
+						type: ApplicationCommandOptionType.Integer,
+					},
+					{
+						name: "end-epoch",
+						description: "The end date of the game (epoch ms)",
+						type: ApplicationCommandOptionType.Integer,
+					},
+					{
+						name: "usd-price",
+						description: "The price of the game in USD",
+						type: ApplicationCommandOptionType.Number,
+					},
+					{
+						name: "confirmed",
+						description: "Whether the game is confirmed",
+						type: ApplicationCommandOptionType.Boolean,
+					},
+				],
+			},
+			{
+				name: "get",
+				description: "Get all games",
+				type: ApplicationCommandOptionType.Subcommand,
+			},
+			{
+				name: "get-one",
+				description: "Get one game",
+				type: ApplicationCommandOptionType.Subcommand,
+				options: [
+					{
+						name: "game-id",
+						description: "The id of the game",
+						type: ApplicationCommandOptionType.String,
+						required: true,
+					},
+				],
+			},
+		],
+	},
 ];

@@ -1,3 +1,5 @@
+import { ObjectId, WithId } from "mongodb";
+
 export type DbGame = {
 	name: string;
 	displayName: string;
@@ -13,16 +15,10 @@ export type DbGame = {
 	}[];
 };
 
-export type DbUser = {
-	email: string;
-	/**
-	 * BigInt stored as a string
-	 */
-	flags: string;
-};
+export type DbGameWithId = WithId<DbGame>;
 
 export type DbServer = {
-	discordId: string;
+	id: string;
 	languageCode: string;
 	currencyCode: string;
 	roleId: string | null;
@@ -33,21 +29,18 @@ export type DbServer = {
 	createdAt: Date;
 };
 
-export type DbSending = {
-	gameIds: string[];
+export type DbSend = {
+	gameIds: ObjectId[];
 };
 
-export type DbSendingLog = {
-	sendingId: string;
-	serverDiscordId: string;
-	type: "MESSAGE" | "WEBHOOK";
-	error: string | null;
-};
-
-export type DbSession = {
-	userId: string;
-	createdAt: Date;
-	expiresAt: Date;
+export type DbSendLog = {
+	sendId: ObjectId;
+	server: Exclude<DbServer, "createdAt">;
+	attempts: {
+		date: Date;
+		error: string | null;
+		server: Exclude<DbServer, "createdAt"> | null;
+	}[];
 };
 
 export type DbLog = {

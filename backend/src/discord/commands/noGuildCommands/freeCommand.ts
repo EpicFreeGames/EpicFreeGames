@@ -1,12 +1,12 @@
 import { createInteractionResponse } from "../../discordUtils";
 import { genericErrorEmbed } from "../../embeds/errors";
-import { gameEmbed, noFreeGamesEmbed } from "../../embeds/game";
+import { gameEmbed, noFreeGamesEmbed } from "../../embeds/gameEmbed";
 import { Command } from "../commandHandler";
 import { InteractionResponseType } from "discord-api-types/v10";
 
 export const freeCommand = {
 	requiresGuild: false,
-	handler: async (ctx, i, language, currency) => {
+	handler: async (ctx, i, commandName, language, currency) => {
 		try {
 			const now = new Date();
 
