@@ -1,5 +1,6 @@
 import { env } from "../configuration/env";
 import { Ctx } from "../ctx";
+import { ulid } from "ulid";
 
 type Method = "GET" | "POST" | "PUT" | "PATCH" | "DELETE" | "HEAD";
 
@@ -29,30 +30,36 @@ type ApiResponse<TResponseData> =
 			data?: never;
 	  };
 
-export async function discordApiRequest<TResponseData = unknown>({
-	ctx,
-	method,
-	path,
-	body,
-	query,
-}: Props): Promise<ApiResponse<TResponseData>> {
-	const url = `${env.DC_API_BASE}${path}${query ? `?${query.toString()}` : ""}`;
+export async function discordApiRequest<TResponseData = unknown>(
+	props: Props
+): Promise<ApiResponse<TResponseData>> {
+	const url = `${env.DC_API_BASE}${props.path}${props.query ? `?${props.query.toString()}` : ""}`;
+	const id = ulid();
 
-	ctx.log("Discord API request", { method, url, body });
+	props.ctx.log("Discord API request", {
+		id,
+		m: props.method,
+		u: url,
+		b: props.body,
+		q: props.query,
+	});
 
 	return fetch(url, {
-		method,
+		method: props.method,
 		headers: {
-			...(body && { "Content-Type": "application/json" }),
-			Authorization: `Bot ${env.DC_TOKEN}`,
+			...(props.body && { "Content-Type": "application/json" }),
 		},
-		...(body && { body: JSON.stringify(body) }),
+		...(props.body && { body: JSON.stringify(props.body) }),
 	})
 		.then(async (res) => {
 			const json = await res.json().catch((e) => null);
 
 			if (res.ok) {
-				ctx.log("Discord API response", { method, url, body, status: res.status });
+				props.ctx.log("Discord API response", {
+					id,
+					url,
+					s: res.status,
+				});
 
 				return { data: json as TResponseData };
 			} else {
@@ -61,24 +68,21 @@ export async function discordApiRequest<TResponseData = unknown>({
 					message: res.statusText ?? "Unknown error",
 				};
 
-				ctx.log("Discord API request failed", {
-					method,
+				props.ctx.log("Discord API response", {
+					id,
 					url,
-					body,
-					status: res.status,
-					error,
-					headers: res.headers,
+					s: res.status,
+					j: json,
 				});
 
 				return { error };
 			}
 		})
 		.catch((error) => {
-			ctx.log("Discord API request failed", {
-				method,
+			props.ctx.log("Discord API request failed", {
+				id,
 				url,
-				body,
-				error,
+				e: error,
 			});
 
 			return { error };

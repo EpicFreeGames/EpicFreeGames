@@ -41,7 +41,7 @@ export async function gamesEditSubCommand(
 	const game = await ctx.db.games.findOne({ _id: new ObjectId(gameId) });
 
 	if (!game) {
-		await editInteractionResponse(i, {
+		await editInteractionResponse(ctx, i, {
 			content: "Game not found",
 			flags: MessageFlags.Ephemeral,
 		});
@@ -91,7 +91,7 @@ export async function gamesEditSubCommand(
 
 	await ctx.db.games.updateOne({ _id: game._id }, { $set: newGame });
 
-	await editInteractionResponse(i, {
+	await editInteractionResponse(ctx, i, {
 		content: "Game updated",
 		flags: MessageFlags.Ephemeral,
 		embeds: [gameEmbed({ _id: game._id, ...newGame }, defaultLangauge, defaultCurrency, true)],

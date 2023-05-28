@@ -5,10 +5,12 @@ import {
 import { Ctx } from "../../ctx";
 import { DbServer } from "../../db/types";
 import { respondWith } from "../../utils";
-import { getCommandName } from "../discordUtils";
-import { Currency } from "../i18n/currency";
-import { Language } from "../i18n/language";
+import { createInteractionResponse, getCommandName } from "../discordUtils";
+import { genericErrorEmbed } from "../embeds/errors";
+import { Currency, currencies, defaultCurrency } from "../i18n/currency";
+import { Language, defaultLangauge, languages } from "../i18n/language";
 import { gamesCommand } from "./adminCommands/gamesCommand";
+import { setCommand } from "./guildCommands/setCommand/setCommand";
 import { freeCommand } from "./noGuildCommands/freeCommand";
 import { helpCommand } from "./noGuildCommands/helpCommand";
 import { inviteCommand } from "./noGuildCommands/inviteCommand";
@@ -20,6 +22,7 @@ import {
 	APIChatInputApplicationCommandInteraction,
 	APIMessageComponentInteraction,
 	APIModalSubmitInteraction,
+	InteractionResponseType,
 	InteractionType,
 } from "discord-api-types/v10";
 
@@ -54,16 +57,13 @@ export type Command =
 	  };
 
 const commands = new Map<string, Command>();
-const modalHandlers = new Map<
-	string,
-	(ctx: Ctx, i: APIModalSubmitInteraction) => Promise<Response | void>
->();
 
 commands.set("/free", freeCommand);
 commands.set("/up", upCommand);
 commands.set("/help", helpCommand);
 commands.set("/invite", inviteCommand);
 commands.set("/games", gamesCommand);
+commands.set("/set", setCommand);
 
 export async function commandHandler(
 	ctx: Ctx,
@@ -71,10 +71,7 @@ export async function commandHandler(
 		| APIMessageComponentInteraction
 		| APIApplicationCommandAutocompleteInteraction
 		| APIModalSubmitInteraction
-		| APIApplicationCommandInteraction,
-	language: Language,
-	currency: Currency,
-	dbServer: DbServer | null
+		| APIApplicationCommandInteraction
 ) {
 	if (i.type === InteractionType.ApplicationCommand) {
 		if (isContextMenuApplicationCommandInteraction(i))
@@ -87,15 +84,44 @@ export async function commandHandler(
 
 		if (!command) {
 			ctx.log(`Command not found`, { n: commandName, n2: baseCommand });
-			return respondWith(ctx, 400, "Invalid request");
+			return createInteractionResponse({
+				type: InteractionResponseType.ChannelMessageWithSource,
+				data: {
+					embeds: [
+						genericErrorEmbed({ language: defaultLangauge, requestId: ctx.requestId }),
+					],
+				},
+			});
 		}
 
 		const isGuild = isGuildInteraction(i);
 
+		let dbServer: DbServer | null = null;
+		let language: Language = defaultLangauge;
+		let currency: Currency = defaultCurrency;
+
+		if (isGuild) {
+			dbServer = await ctx.db.servers.findOne({ id: i.guild_id });
+			if (dbServer) {
+				language = languages.get(dbServer.languageCode) || defaultLangauge;
+				currency = currencies.get(dbServer.currencyCode) || defaultCurrency;
+			}
+		}
+
 		if (command.requiresGuild) {
 			if (!isGuild) {
 				ctx.log(`Command requires guild, but wasn't ran in one`, { n: commandName });
-				return respondWith(ctx, 400, "Invalid request");
+				return createInteractionResponse({
+					type: InteractionResponseType.ChannelMessageWithSource,
+					data: {
+						embeds: [
+							genericErrorEmbed({
+								language: defaultLangauge,
+								requestId: ctx.requestId,
+							}),
+						],
+					},
+				});
 			} else {
 				ctx.log("Running command", {
 					n: commandName,
@@ -114,18 +140,6 @@ export async function commandHandler(
 
 			return await command.handler(ctx, i, commandName, language, currency);
 		}
-	} else if (i.type === InteractionType.ModalSubmit) {
-		const modalCustomId = i.data.custom_id.split(":")[0]!;
-		const modalHandler = modalHandlers.get(modalCustomId);
-
-		if (!modalHandler) {
-			ctx.log(`Modal handler not found`, { n: modalCustomId });
-			return respondWith(ctx, 400, "Invalid request");
-		}
-
-		ctx.log("Running modal handler", { n: modalCustomId });
-
-		return await modalHandler(ctx, i);
 	}
 
 	return respondWith(ctx, 400, "Invalid request");

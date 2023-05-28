@@ -68,7 +68,7 @@ export async function gamesAddSubCommand(
 	});
 
 	if (!res.success) {
-		await editInteractionResponse(i, {
+		await editInteractionResponse(ctx, i, {
 			content: `Error:\n\`\`\`${JSON.stringify(res.error.flatten())}\`\`\``,
 		});
 	} else {
@@ -94,7 +94,7 @@ export async function gamesAddSubCommand(
 
 		const mongoResult = await ctx.db.games.insertOne(game);
 
-		await editInteractionResponse(i, {
+		await editInteractionResponse(ctx, i, {
 			content: "Game added!",
 			embeds: [gameEmbed({ ...game, _id: mongoResult.insertedId }, language, currency, true)],
 		});

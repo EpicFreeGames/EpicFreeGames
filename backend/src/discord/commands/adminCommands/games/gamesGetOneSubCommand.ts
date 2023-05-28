@@ -42,7 +42,7 @@ export async function gamesGetOneSubCommand(
 	const game = await ctx.db.games.findOne({ _id: new ObjectId(gameId) });
 
 	if (!game) {
-		await editInteractionResponse(i, {
+		await editInteractionResponse(ctx, i, {
 			content: "Game not found",
 			flags: MessageFlags.Ephemeral,
 		});
@@ -50,7 +50,7 @@ export async function gamesGetOneSubCommand(
 		return;
 	}
 
-	await editInteractionResponse(i, {
+	await editInteractionResponse(ctx, i, {
 		embeds: [gameEmbed(game, defaultLangauge, defaultCurrency, true)],
 	});
 }

@@ -40,22 +40,7 @@ export const discordHandler = async (ctx: Ctx) => {
 	if (interaction.type === InteractionType.Ping) {
 		return respondWith(ctx, 200, { type: InteractionResponseType.Pong });
 	} else {
-		const language = {
-			code: "en",
-			englishName: "English",
-			name: "English",
-			websiteReady: true,
-		};
-
-		const currency = {
-			after: "€",
-			before: "",
-			code: "EUR",
-			englishName: "Euro",
-			name: "Euro",
-		};
-
-		return await commandHandler(ctx, interaction, language, currency, null);
+		return await commandHandler(ctx, interaction);
 	}
 };
 

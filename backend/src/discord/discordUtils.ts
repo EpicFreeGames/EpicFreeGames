@@ -1,3 +1,5 @@
+import { Ctx } from "../ctx";
+import { discordApiRequest } from "./discordApiRequest";
 import {
 	type APIApplicationCommandAutocompleteInteraction,
 	type APIChatInputApplicationCommandInteraction,
@@ -97,32 +99,37 @@ export function createInteractionResponse(data: APIInteractionResponse) {
 	});
 }
 
-export function respondToInteraction(i: APIInteraction, data: APIInteractionResponse) {
-	return fetch(`https://discord.com/api/interactions/${i.id}/${i.token}/callback`, {
+export function respondToInteraction(ctx: Ctx, i: APIInteraction, data: APIInteractionResponse) {
+	return discordApiRequest({
+		ctx,
+		path: `/interactions/${i.id}/${i.token}/callback`,
 		method: "POST",
-		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify(data),
+		body: data,
 	});
 }
 
 export function editInteractionResponse(
+	ctx: Ctx,
 	i: APIInteraction,
 	data: APIInteractionResponseCallbackData
 ) {
-	return fetch(
-		`https://discord.com/api/webhooks/${i.application_id}/${i.token}/messages/@original`,
-		{
-			method: "PATCH",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify(data),
-		}
-	);
+	return discordApiRequest({
+		ctx,
+		path: `/webhooks/${i.application_id}/${i.token}/messages/@original`,
+		method: "PATCH",
+		body: data,
+	});
 }
 
-export function followUpToInteraction(i: APIInteraction, data: APIInteractionResponseCallbackData) {
-	return fetch(`https://discord.com/api/webhooks/${i.application_id}/${i.token}`, {
+export function followUpToInteraction(
+	ctx: Ctx,
+	i: APIInteraction,
+	data: APIInteractionResponseCallbackData
+) {
+	return discordApiRequest({
+		ctx,
+		path: `/webhooks/${i.application_id}/${i.token}`,
 		method: "POST",
-		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify(data),
+		body: data,
 	});
 }
