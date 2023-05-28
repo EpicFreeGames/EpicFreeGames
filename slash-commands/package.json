@@ -1,0 +1,9 @@
+{
+  "name": "@efg/slash-commands",
+  "version": "0.0.0",
+  "devDependencies": {
+    "bun-types": "^0.6.4",
+    "discord-api-types": "^0.37.42"
+  },
+  "private": true
+}
