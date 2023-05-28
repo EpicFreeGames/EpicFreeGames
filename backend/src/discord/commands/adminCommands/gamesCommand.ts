@@ -35,7 +35,7 @@ export const gamesCommand: Command = {
 
 		return createInteractionResponse({
 			type: InteractionResponseType.ChannelMessageWithSource,
-			data: { content: "Not implemented yet" },
+			data: { content: "Not implemented yet", flags: MessageFlags.Ephemeral },
 		});
 	},
 };
