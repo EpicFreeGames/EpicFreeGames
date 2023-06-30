@@ -16,5 +16,7 @@ yarn-error.log*
 next-env.d.ts
 target
 dist
+dist/
 .turbo
 .env
+.astro/

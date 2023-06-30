@@ -1,0 +1,42 @@
+---
+import { webLanguages } from "../../i18n/languages";
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import ChevronDownIcon from "../Icons/ChevronDownIcon.astro";
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang.code);
+---
+
+<div class="flex flex-col gap-1">
+    <label for="language-selector">{t("language")}</label>
+
+    <div class="relative">
+        <select
+            id="language-selector"
+            class="focus w-full appearance-none rounded-md border border-gray-600 bg-gray-800 py-1 pl-2 pr-7 text-sm sm:text-base"
+        >
+            {
+                webLanguages.map((l) => (
+                    <option value={l.code} selected={l.code === lang.code}>
+                        {l.name}
+                    </option>
+                ))
+            }
+        </select>
+
+        <div class="absolute right-[0.55rem] top-[0.5rem]">
+            <ChevronDownIcon />
+        </div>
+    </div>
+</div>
+
+<script>
+    const langSelector = document.getElementById("language-selector") as HTMLSelectElement | null;
+
+    langSelector?.addEventListener("change", changeLanguage);
+
+    function changeLanguage() {
+        const newLang = langSelector?.value;
+
+        window.location.href = `/${newLang}${window.location.pathname}`;
+    }
+</script>

@@ -1,0 +1,28 @@
+---
+import { marked } from "marked";
+
+type Props = {
+    stuff: string;
+};
+
+const parsedMarkdown = marked(Astro.props.stuff);
+
+const replacedMarkdown = parsedMarkdown
+    // Replace all <a> tags
+    .replace(
+        /(<a\s+(?:[^>]*?\s+)?href="[^"]*"(?:\s+[^>]*?)?\s*)>(.*?)<\/a>/gi,
+        '$1 class="focus w-max rounded-md"><span class="border-b-2 border-b-blue-400 border-opacity-40 font-bold text-blue-400 hover:border-opacity-100">$2</span></a>'
+    )
+    // Replace all <strong> tags
+    .replace(
+        /<strong\b[^>]*>(.*?)<\/strong>/gi,
+        '<strong class="font-bold text-blue-400">$1</strong>'
+    )
+    // Replace all <code> tags
+    .replace(
+        /<code\b[^>]*>(.*?)<\/code>/gi,
+        '<code tabindex="0" class="focus whitespace-nowrap rounded-md border border-gray-700 bg-gray-800 py-0.5 px-1.5 font-mono text-sm">$1</code>'
+    );
+---
+
+<Fragment set:html={replacedMarkdown} />

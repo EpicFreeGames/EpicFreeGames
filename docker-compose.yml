@@ -27,7 +27,7 @@ services:
             - PORT=5000
 
     proxy:
-        image: prxy
+        image: twilight-rs--http-proxy
         restart: always
         environment:
             - DISCORD_TOKEN=${DC_TOKEN}

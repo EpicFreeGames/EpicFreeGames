@@ -1,0 +1,31 @@
+---
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import Link from "../Link.astro";
+import LanguageSelector from "./LanguageSelector.astro";
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang.code);
+---
+
+<footer
+    class="mx-auto mt-[3rem] mb-[4rem] flex w-full max-w-screen-sm flex-col items-start gap-5 px-3 sm:mt-[6rem] sm:flex-row sm:justify-between sm:gap-0"
+>
+    <div class="flex flex-col gap-3">
+        <div class="flex flex-col">
+            <Link href="mailto:hi@epicfreegames.net">{t("contact_us")}</Link>
+            <Link href="/discord">
+                {t("discord_server")}
+            </Link>
+        </div>
+
+        <div class="flex flex-col">
+            <Link href="/privacy-policy">
+                {t("privacy_policy")}
+            </Link>
+            <Link href="/terms-of-service">
+                {t("terms_of_service")}
+            </Link>
+        </div>
+    </div>
+
+    <LanguageSelector />
+</footer>
