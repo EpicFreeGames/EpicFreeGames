@@ -1,17 +1,25 @@
 ---
 import type { HTMLAttributes } from "astro/types";
-import { getLangFromUrl } from "../i18n/utils";
+import { resolveHref } from "../utils";
 
 type Props = HTMLAttributes<"a"> & {
     href: string;
+    withLang?: boolean;
 };
 
-const props = Astro.props;
-const isHrefAbsolute = props.href.startsWith("/");
+const { withLang = true, href } = Astro.props;
 
-const lang = getLangFromUrl(Astro.url);
-
-const linkHref = isHrefAbsolute ? `/${lang.code}${props.href}` : props.href;
+const resolvedHref = resolveHref({
+    currentPath: Astro.url.pathname,
+    href,
+    withLang,
+});
 ---
 
-<a href={linkHref} class="focus w-max rounded-md"><slot /></a>
+<a href={resolvedHref} class="focus w-max rounded-md">
+    <span
+        class="border-b-2 duration-150 transition-all border-b-blue-400 border-opacity-40 font-bold text-blue-400 hover:border-opacity-100"
+    >
+        <slot />
+    </span>
+</a>

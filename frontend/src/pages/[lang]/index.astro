@@ -1,19 +1,15 @@
 ---
-import Layout from "../../Layout.astro";
-import Markdown from "../../components/Markdown.astro";
-import { languages } from "../../i18n/languages";
-import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import IndexPage from "../../components/IndexPage.astro";
+import { webLanguages } from "../../i18n/languages";
 import "../../styles.css";
 
 export async function getStaticPaths() {
-    const paths = Object.keys(languages).map((lang) => ({
-        params: { lang },
+    const paths = Object.values(webLanguages).map((lang) => ({
+        params: { lang: lang.code },
     }));
 
     return paths;
 }
-const lang = getLangFromUrl(Astro.url);
-const t = useTranslations(lang.code);
 ---
 
-<Layout title="" />
+<IndexPage />

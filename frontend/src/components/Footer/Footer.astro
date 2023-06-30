@@ -12,16 +12,16 @@ const t = useTranslations(lang.code);
     <div class="flex flex-col gap-3">
         <div class="flex flex-col">
             <Link href="mailto:hi@epicfreegames.net">{t("contact_us")}</Link>
-            <Link href="/discord">
+            <Link href="/discord" withLang={false}>
                 {t("discord_server")}
             </Link>
         </div>
 
         <div class="flex flex-col">
-            <Link href="/privacy-policy">
+            <Link href="/privacy-policy" withLang={false}>
                 {t("privacy_policy")}
             </Link>
-            <Link href="/terms-of-service">
+            <Link href="/terms-of-service" withLang={false}>
                 {t("terms_of_service")}
             </Link>
         </div>

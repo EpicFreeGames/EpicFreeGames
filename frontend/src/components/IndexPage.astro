@@ -1,0 +1,48 @@
+---
+import Layout from "../Layout.astro";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import Markdown from "./Markdown.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang.code);
+---
+
+<Layout title="">
+    <div class="flex flex-col items-start justify-start gap-[3rem] sm:gap-[6rem]">
+        <div class="flex w-full flex-col items-start">
+            <h1 class="pb-2 text-2xl font-bold">EpicFreeGames</h1>
+
+            <p class="text-lg">{t("the_sentence")}</p>
+
+            <a
+                href="/invite"
+                class="p-2 duration-150 transition-all focus mt-3 transform-gpu rounded-md bg-blue-600 px-4 text-[1.1rem] hover:scale-[1.05] active:scale-[0.98]"
+            >
+                {t("get_the_bot")}
+            </a>
+        </div>
+
+        <div class="flex flex-col">
+            <h2 class="pb-2 text-xl font-bold">
+                {t("what_is_bot", { botName: "EpicFreeGames" })}
+            </h2>
+
+            <div class="flex flex-col gap-2">
+                <Markdown
+                    stuff={t("what_is_bot_desc", {
+                        botName: "EpicFreeGames",
+                        commandsLink: "/commands",
+                    })}
+                />
+
+                <Markdown stuff={t("what_is_bot_desc_2")} />
+            </div>
+        </div>
+
+        <div class="flex flex-col">
+            <h2 class="pb-2 text-xl font-bold">{t("customization")}</h2>
+
+            <Markdown stuff={t("customization_desc", { commandsLink: "/commands" })} />
+        </div>
+    </div>
+</Layout>
