@@ -1,0 +1,78 @@
+---
+import Footer from "../Footer/Footer.astro";
+import SEO from "./SEO.astro";
+import Nav from "../Nav/Nav.astro";
+import { getLangFromUrl } from "../../i18n/utils";
+
+import "./styles.css";
+import "vercel-toast/css";
+
+type Props = { title: string };
+const props = Astro.props;
+
+const isProd = import.meta.env.PROD;
+
+const lang = getLangFromUrl(Astro.url);
+const langCode = lang.code;
+
+const botName = import.meta.env.PUBLIC_BOT_NAME;
+const pageTitle = props.title === "" ? botName : `${props.title} | ${botName}`;
+const relativeIcoUrl = isProd ? `/assets/epicfreegames.ico` : `/assets/epicfreegames-notprod.ico`;
+---
+
+<html lang={langCode}>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <meta name="generator" content={Astro.generator} />
+
+        <title>{pageTitle}</title>
+        <link rel="icon" type="image/x-icon" href={relativeIcoUrl} />
+
+        <SEO />
+    </head>
+
+    <body
+        class="bg-gray-900 text-slate-50 flex flex-col"
+        style="-webkit-font-smoothing: antialiazed; -webkit-tap-highlight-color: transparent;"
+    >
+        <Nav />
+
+        <main class="mx-auto mt-[6rem] w-full max-w-screen-sm px-3 sm:mt-[9rem]">
+            <slot />
+        </main>
+
+        <Footer />
+
+        <script>
+            import { createToast } from "vercel-toast";
+
+            document.addEventListener("DOMContentLoaded", () => {
+                const codeElements = document.querySelectorAll("code");
+
+                for (const codeElement of codeElements) {
+                    codeElement.addEventListener("click", () => {
+                        copyToClipboard(codeElement.innerText);
+                    });
+
+                    codeElement.addEventListener("keydown", (event) => {
+                        if (event.key === "Enter" || event.key === " ") {
+                            copyToClipboard(codeElement.innerText);
+                        }
+                    });
+                }
+            });
+
+            function copyToClipboard(text: string) {
+                try {
+                    navigator.clipboard.writeText(text);
+                    createToast(`Copied ${text} to clipboard!`, {
+                        timeout: 3000,
+                        type: "success",
+                    });
+                } catch (e) {}
+            }
+        </script>
+    </body>
+</html>

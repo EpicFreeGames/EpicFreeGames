@@ -33,18 +33,9 @@ export function resolvePathname(pathname: string) {
 export function resolveHref(props: { href: string; currentPath: string; withLang?: boolean }) {
 	const { href, currentPath, withLang = true } = props;
 
-	const { lang, pathname } = resolvePathname(props.currentPath);
+	const { lang, pathname } = resolvePathname(currentPath);
 
 	const innerWithLang = withLang && lang !== "en";
-
-	console.log({
-		currentPath,
-		href,
-		lang,
-		pathname,
-		withLang,
-		innerWithLang,
-	});
 
 	let toReturn = null;
 
@@ -71,4 +62,12 @@ export function resolveHref(props: { href: string; currentPath: string; withLang
 		: toReturn.match(/\/$/)
 		? toReturn.slice(0, -1)
 		: toReturn;
+}
+
+export function getStaticPathsCommon() {
+	const paths = Object.values(webLanguages).map((lang) => ({
+		params: { lang: lang.code },
+	}));
+
+	return paths;
 }

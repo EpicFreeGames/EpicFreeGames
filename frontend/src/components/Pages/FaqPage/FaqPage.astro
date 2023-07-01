@@ -1,0 +1,36 @@
+---
+import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
+import { markdown } from "../../../markdown";
+import Layout from "../../Layout/Layout.astro";
+import { FaqAccordion } from "./Accordion.tsx";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang.code);
+
+const currentPathname = Astro.url.pathname;
+
+const questionsAndAnswers = [
+    {
+        question: t("faq_1_q"),
+        answer: markdown(t("faq_1_a"), currentPathname),
+    },
+    {
+        question: t("faq_2_q"),
+        answer: markdown(t("faq_2_a"), currentPathname),
+    },
+    {
+        question: t("faq_3_q"),
+        answer: markdown(t("faq_3_a"), currentPathname),
+    },
+    {
+        question: t("faq_4_q"),
+        answer: markdown(t("faq_4_a"), currentPathname),
+    },
+];
+---
+
+<Layout title={t("faq")}>
+    <h1 class="pb-6 text-2xl font-bold">{t("faq_title")}</h1>
+
+    <FaqAccordion questionsAndAnswers={questionsAndAnswers} client:visible />
+</Layout>

@@ -30,13 +30,18 @@ const t = useTranslations(lang.code);
 </div>
 
 <script>
+    import { resolvePathname } from "../../utils";
+
     const langSelector = document.getElementById("language-selector") as HTMLSelectElement | null;
 
     langSelector?.addEventListener("change", changeLanguage);
 
     function changeLanguage() {
+        const { lang, pathname } = resolvePathname(window.location.pathname);
         const newLang = langSelector?.value;
+        const currentPath = window.location.pathname;
+        const href = lang === newLang ? currentPath : `/${newLang}${pathname.replace(/\/$/, "")}`;
 
-        window.location.href = `/${newLang}${window.location.pathname}`;
+        window.location.href = href;
     }
 </script>

@@ -1,14 +1,14 @@
 ---
-import Layout from "../Layout.astro";
-import { getLangFromUrl, useTranslations } from "../i18n/utils";
-import Markdown from "./Markdown.astro";
+import Layout from "../Layout/Layout.astro";
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import Markdown from "../Markdown.astro";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang.code);
 ---
 
 <Layout title="">
-    <div class="flex flex-col items-start justify-start gap-[3rem] sm:gap-[6rem]">
+    <div class="flex flex-col items-start justify-start gap-[4rem] sm:gap-[6rem]">
         <div class="flex w-full flex-col items-start">
             <h1 class="pb-2 text-2xl font-bold">EpicFreeGames</h1>
 

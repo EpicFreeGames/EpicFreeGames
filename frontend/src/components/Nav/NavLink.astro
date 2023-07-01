@@ -1,20 +1,18 @@
 ---
 import type { HTMLAttributes } from "astro/types";
-import { getLangFromUrl } from "../../i18n/utils";
+import { resolveHref, resolvePathname } from "../../utils";
 
-type Props = HTMLAttributes<"a">;
-
+type Props = HTMLAttributes<"a"> & { href: string };
 const props = Astro.props;
 
-const lang = getLangFromUrl(Astro.url);
-
-const currentUrl =
-    lang.code !== "en" ? Astro.url.pathname.replace(`/${lang.code}`, "") : Astro.url.pathname;
-const linkHref = lang.code !== "en" ? `/${lang.code}${props.href}` : props.href;
-const activeLinkClass = currentUrl === props.href ? "bg-gray-700" : "";
+const { pathname } = resolvePathname(Astro.url.pathname);
+const linkHref = resolveHref({ currentPath: Astro.url.pathname, href: props.href });
+const activeLinkClass = pathname === props.href ? "bg-gray-700" : "";
 ---
 
 <a
     class=`${activeLinkClass} outline-none outline outline-[3px] relative outline-offset-2 outline-transparent transition-all focus-visible:outline-blue-500 flex items-center justify-center rounded-md border border-transparent px-2 py-1 font-bold duration-150 active:bg-gray-700`
-    href={linkHref}><slot /></a
+    href={linkHref}
 >
+    <slot />
+</a>

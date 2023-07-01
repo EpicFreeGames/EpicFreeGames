@@ -1,7 +1,6 @@
 ---
-import IndexPage from "../../components/IndexPage.astro";
+import IndexPage from "../../components/Pages/IndexPage.astro";
 import { webLanguages } from "../../i18n/languages";
-import "../../styles.css";
 
 export async function getStaticPaths() {
     const paths = Object.values(webLanguages).map((lang) => ({

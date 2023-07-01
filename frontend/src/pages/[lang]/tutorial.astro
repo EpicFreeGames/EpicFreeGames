@@ -1,0 +1,10 @@
+---
+import TutorialPage from "../../components/Pages/TutorialPage.astro";
+import { getStaticPathsCommon } from "../../utils";
+
+export async function getStaticPaths() {
+    return getStaticPathsCommon();
+}
+---
+
+<TutorialPage />
