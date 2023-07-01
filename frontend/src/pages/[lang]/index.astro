@@ -1,14 +1,8 @@
 ---
-import IndexPage from "../../components/Pages/IndexPage.astro";
-import { webLanguages } from "../../i18n/languages";
+import IndexPage from "../../homepage/components/Pages/IndexPage.astro";
+import { getStaticPathsCommon } from "../../homepage/utils";
 
-export async function getStaticPaths() {
-    const paths = Object.values(webLanguages).map((lang) => ({
-        params: { lang: lang.code },
-    }));
-
-    return paths;
-}
+export const getStaticPaths = getStaticPathsCommon;
 ---
 
 <IndexPage />

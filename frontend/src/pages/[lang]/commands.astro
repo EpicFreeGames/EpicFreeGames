@@ -1,10 +1,8 @@
 ---
-import CommandsPage from "../../components/Pages/CommandsPage/CommandsPage.astro";
-import { getStaticPathsCommon } from "../../utils";
+import CommandsPage from "../../homepage/components/Pages/CommandsPage/CommandsPage.astro";
+import { getStaticPathsCommon } from "../../homepage/utils";
 
-export async function getStaticPaths() {
-    return getStaticPathsCommon();
-}
+export const getStaticPaths = getStaticPathsCommon;
 ---
 
 <CommandsPage />
