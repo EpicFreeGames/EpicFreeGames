@@ -2,29 +2,16 @@ version: "3.9"
 
 services:
     db:
-        image: mongo
+        image: postgres
         restart: always
         ports:
-            - 27017:27017
+            - 5432:5432
         volumes:
-            - db_data:/data/db
-            - db_config:/data/configdb
-
-    backend:
-        build: ./backend
-        restart: always
-        ports:
-            - 10000:5000
+            - db_data:/var/lib/postgresql/data
         environment:
-            - DC_API_BASE=${DC_API_BASE}
-            - DC_PUB_KEY=${DC_PUB_KEY}
-            - DC_CLIENT_ID=${DC_CLIENT_ID}
-            - DC_TOKEN=${DC_TOKEN}
-            - ENV=${ENV}
-            - MONGO_URL=mongodb://db:27017
-            - PRETTY_LOG=1
-            - LOG=debug
-            - PORT=5000
+            - POSTGRES_PASSWORD=postgres
+            - POSTGRES_USER=postgres
+            - POSTGRES_DB=efg-notprod
 
     proxy:
         image: twilight-rs--http-proxy
@@ -34,4 +21,3 @@ services:
 
 volumes:
     db_data:
-    db_config:
