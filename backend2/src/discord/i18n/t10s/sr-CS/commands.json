@@ -1,0 +1,17 @@
+{
+  "cmd_desc_set_currency": "Pick a currency for the games' prices on this server",
+  "cmd_desc_set_thread": "Izaberite temu na kojoj ću objavljivati nove besplatne igre",
+  "cmd_desc_set_channel": "Izaberite kanal na kojem ću objavljivati nove besplatne igre",
+  "cmd_desc_set_role": "Pick a role I'll ping when a new game comes free",
+  "cmd_desc_set_language": "Pick a language for my messages on this server",
+  "cmd_desc_remove_channel": "Uklonite postavljeni kanal (ili tema)",
+  "cmd_desc_remove_role": "Uklonite postavljenu ulogu",
+  "cmd_desc_invite": "Uzmi moj link za poziv",
+  "cmd_desc_help": "Koristite ovo ako vam treba pomoć",
+  "cmd_desc_debug": "Koristi se za otklanjanje grešaka",
+  "cmd_desc_up": "Pogledajte predstojeće besplatne igre",
+  "cmd_desc_free": "Pogledajte trenutne besplatne igre",
+  "cmd_desc_settings": "Pogledajte podešavanja",
+  "cmd_desc_vote": "Glasaju za mene",
+  "cmd_desc_test": "Sends a test message to the set channel and pings the set role"
+}

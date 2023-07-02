@@ -2,18 +2,23 @@
 	"name": "backend",
 	"scripts": {
 		"build": "tsc",
-		"dev": "dotenv -e ../.env.backend -- tsx watch src/index.ts"
+		"dev": "dotenv -e .env -- tsx watch src/index.ts"
 	},
 	"devDependencies": {
 		"@types/node": "^20.3.3",
+		"discord-api-types": "^0.37.47",
 		"dotenv-cli": "^7.2.1",
 		"prettier": "^2.8.8",
+		"prisma": "^4.16.2",
 		"tsx": "^3.12.7",
 		"typescript": "^5.1.6"
 	},
 	"dependencies": {
+		"@prisma/client": "^4.16.2",
 		"@trpc/server": "^10.33.0",
 		"superjson": "^1.12.4",
+		"tweetnacl": "^1.0.3",
+		"ulid": "^2.3.0",
 		"zod": "^3.21.4"
 	}
 }

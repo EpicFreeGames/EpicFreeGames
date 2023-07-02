@@ -1,10 +1,12 @@
 import z from "zod";
-import { envs } from "../env";
 import { publicProcedure, router } from "../trpc";
+import { envs } from "../configuration/env";
+
+const redirectUrl = envs.FRONT_BASE + "/dash/auth/callback";
 
 const params = new URLSearchParams({
-	client_id: envs.DISCORD_CLIENT_ID,
-	redirect_uri: envs.DISCORD_REDIRECT_URL,
+	client_id: envs.DC_CLIENT_ID,
+	redirect_uri: redirectUrl,
 	response_type: "code",
 	scope: "identify email",
 	promt: "consent",
@@ -21,11 +23,11 @@ export const authRouter = router({
 			method: "POST",
 			headers: { "Content-Type": "application/x-www-form-urlencoded" },
 			body: new URLSearchParams({
-				client_id: envs.DISCORD_CLIENT_ID,
-				client_secret: envs.DISCORD_CLIENT_SECRET,
+				client_id: envs.DC_CLIENT_ID,
+				client_secret: envs.DC_CLIENT_SECRET,
 				grant_type: "authorization_code",
 				code: props.input.code,
-				redirect_uri: envs.FRONT_BASE_URL + "/dash/auth/callback",
+				redirect_uri: redirectUrl,
 			}),
 		});
 		const codeResponseJson = await codeResponse.json();

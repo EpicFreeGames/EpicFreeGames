@@ -2,11 +2,15 @@ import { createHTTPHandler } from "@trpc/server/adapters/standalone";
 import { rootRouter } from "./rootRouter";
 import { createContext } from "./trpc";
 import { createServer } from "http";
+import { discordRequestHandler } from "./discord/requestHandler";
+import { PrismaClient } from "@prisma/client";
+
+const db = new PrismaClient();
 
 const port = 8000;
 const trpcHandler = createHTTPHandler({
 	router: rootRouter,
-	createContext,
+	createContext: createContext(db),
 });
 
 createServer((req, res) => {
@@ -20,7 +24,9 @@ createServer((req, res) => {
 		return;
 	}
 
-	if (req.url?.startsWith("/trpc")) {
+	if (req.url?.startsWith("/discord")) {
+		return discordRequestHandler(req, res, db);
+	} else if (req.url?.startsWith("/trpc")) {
 		req.url = req.url.replace("/trpc", "");
 
 		return trpcHandler(req, res);
