@@ -17,12 +17,14 @@ import { currencies, defaultCurrency } from "./i18n/currency";
 import { upCommand } from "./commands/upCommand";
 import { helpCommand } from "./commands/helpCommand";
 import { inviteCommand } from "./commands/inviteCommand";
+import { setCommand } from "./commands/setCommand/setCommand";
 
 const commands = new Map<string, Command>([
 	[freeCommand.name, freeCommand],
 	[upCommand.name, upCommand],
 	[helpCommand.name, helpCommand],
 	[inviteCommand.name, inviteCommand],
+	[setCommand.name, setCommand],
 ]);
 
 export async function commandHandler(
@@ -37,7 +39,7 @@ export async function commandHandler(
 
 	const command = commands.get(commandName);
 	if (!command) {
-		return ctx.respondWith(404);
+		return ctx.respondWith(404, `Command '${commandName}' not found`);
 	}
 
 	const isGuild = isGuildInteraction(i);

@@ -1,7 +1,7 @@
 import { constants } from "../../configuration/constants";
-import { PermissionString } from "../discordPerms";
 import { Language } from "../i18n/language";
 import { t } from "../i18n/translate";
+import { PermissionString } from "../perms/types";
 import { embedUtils } from "./_utils";
 
 export function channelSetEmbed(language: Language, channelId: string) {
@@ -27,7 +27,7 @@ const permissionMap = new Map([
 
 type Details = Map<PermissionString, boolean>;
 
-export function missingPermsEmbed(channelId: bigint, language: Language, details: Details) {
+export function missingPermsEmbed(channelId: string, language: Language, details: Details) {
 	return {
 		title: "❌",
 		color: embedUtils.colors.red,

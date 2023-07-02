@@ -25,7 +25,7 @@ type Result =
 export const hasPermsOnChannel = async (
 	ctx: DiscordRequestContext,
 	guildId: string,
-	channelId: bigint,
+	channelId: string,
 	neededPerms: PermissionString[]
 ): Promise<Result> => {
 	const [

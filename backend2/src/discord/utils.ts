@@ -1,4 +1,7 @@
+import { APIInteraction, APIInteractionResponseCallbackData } from "discord-api-types/v10";
+import { DiscordRequestContext } from "./context";
 import { Request } from "./requestHandler";
+import { discordApi } from "./discordApi";
 
 export function valueToUint8Array(
 	value: Uint8Array | ArrayBuffer | Buffer | string,
@@ -67,4 +70,18 @@ export function safeJsonParse<T>(jsonString: string): T | null {
 
 export function objToStr(obj: Record<string, unknown>) {
 	return JSON.stringify(obj, null, 4);
+}
+
+export function editInteractionResponse(
+	ctx: DiscordRequestContext,
+	i: APIInteraction,
+	data: APIInteractionResponseCallbackData
+) {
+	return discordApi(ctx, {
+		path: `/webhooks/${i.application_id}/${i.token}/messages/@original`,
+		method: "PATCH",
+		body: data,
+	}).catch((e) => {
+		ctx.log("Failed to edit interaction response", { error: e });
+	});
 }

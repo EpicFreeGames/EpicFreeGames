@@ -48,7 +48,7 @@ export function discordLogger(requestId: DiscordRequestId) {
 
 		console.log(
 			`${date.toISOString()} [discord] ${requestId} ${message}` +
-				(context ? JSON.stringify(context) : "")
+				(context ? " " + JSON.stringify(context) : "")
 		);
 	};
 }
