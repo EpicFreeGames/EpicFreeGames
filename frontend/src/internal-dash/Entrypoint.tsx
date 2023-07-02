@@ -1,10 +1,9 @@
-import { BrowserRouter } from "react-router-dom";
 import { AuthenticatedDash } from "./AuthenticatedDash";
+import { useAuth } from "./auth";
+import { UnAuthenticatedDash } from "./UnAuthenticatedDash";
 
 export function Entrypoint() {
-	return (
-		<BrowserRouter>
-			<AuthenticatedDash />
-		</BrowserRouter>
-	);
+	const auth = useAuth();
+
+	return auth ? <AuthenticatedDash /> : <UnAuthenticatedDash />;
 }

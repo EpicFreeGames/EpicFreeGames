@@ -1,12 +1,18 @@
 ---
-import { Entrypoint } from "../../internal-dash/Entrypoint";
+import { InternalDash } from "../../internal-dash/InternalDash";
 import InternalDashLayout from "../../internal-dash/components/InternalDashLayout.astro";
 
 export function getStaticPaths() {
-    return [{ params: { path: undefined } }, { params: { path: "games" } }];
+    return [
+        { params: { path: undefined } },
+        { params: { path: "app" } },
+        { params: { path: "app/games" } },
+        { params: { path: "auth/login" } },
+        { params: { path: "auth/callback" } },
+    ];
 }
 ---
 
 <InternalDashLayout>
-    <Entrypoint client:only />
+    <InternalDash client:only />
 </InternalDashLayout>
