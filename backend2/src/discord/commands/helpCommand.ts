@@ -1,6 +1,6 @@
 import { InteractionResponseType } from "discord-api-types/v10";
-import { Command } from "./_commandType";
 import { helpEmbed } from "../embeds/help";
+import { Command } from "./_commandType";
 
 export const helpCommand: Command = {
 	name: "help",

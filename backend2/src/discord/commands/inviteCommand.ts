@@ -1,6 +1,6 @@
 import { InteractionResponseType } from "discord-api-types/v10";
-import { Command } from "./_commandType";
 import { inviteEmbed } from "../embeds/invite";
+import { Command } from "./_commandType";
 
 export const inviteCommand: Command = {
 	name: "invite",

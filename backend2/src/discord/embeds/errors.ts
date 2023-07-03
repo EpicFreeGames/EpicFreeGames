@@ -33,3 +33,11 @@ export function manageGuildCommandError(language: Language) {
 			embedUtils.footer(language),
 	};
 }
+
+export function channelNotSetEmbed(language: Language) {
+	return {
+		title: "❌",
+		color: embedUtils.colors.red,
+		description: t(language, "set_channel_first") + embedUtils.footer(language),
+	};
+}

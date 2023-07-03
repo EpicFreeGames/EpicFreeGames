@@ -1,12 +1,12 @@
+import { discord_server } from "@prisma/client";
 import {
 	APIChatInputApplicationCommandDMInteraction,
 	APIChatInputApplicationCommandGuildInteraction,
 	APIChatInputApplicationCommandInteraction,
 } from "discord-api-types/v10";
 import { DiscordRequestContext } from "../context";
-import { Language } from "../i18n/language";
 import { Currency } from "../i18n/currency";
-import { discord_server } from "@prisma/client";
+import { Language } from "../i18n/language";
 
 export type Command =
 	| {

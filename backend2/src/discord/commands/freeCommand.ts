@@ -1,7 +1,7 @@
 import { InteractionResponseType } from "discord-api-types/v10";
-import { Command } from "./_commandType";
-import { gameEmbed, noFreeGamesEmbed } from "../embeds/gameEmbed";
 import { genericErrorEmbed } from "../embeds/errors";
+import { gameEmbed, noFreeGamesEmbed } from "../embeds/gameEmbed";
+import { Command } from "./_commandType";
 
 export const freeCommand: Command = {
 	name: "free",

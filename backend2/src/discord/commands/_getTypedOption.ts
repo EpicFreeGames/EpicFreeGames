@@ -1,17 +1,17 @@
 import {
 	APIApplicationCommandAutocompleteInteraction,
-	APIChatInputApplicationCommandInteraction,
-	ApplicationCommandOptionType,
 	APIApplicationCommandInteractionDataBooleanOption,
 	APIApplicationCommandInteractionDataChannelOption,
 	APIApplicationCommandInteractionDataIntegerOption,
 	APIApplicationCommandInteractionDataMentionableOption,
+	APIApplicationCommandInteractionDataNumberOption,
 	APIApplicationCommandInteractionDataRoleOption,
 	APIApplicationCommandInteractionDataStringOption,
 	APIApplicationCommandInteractionDataSubcommandGroupOption,
 	APIApplicationCommandInteractionDataSubcommandOption,
 	APIApplicationCommandInteractionDataUserOption,
-	APIApplicationCommandInteractionDataNumberOption,
+	APIChatInputApplicationCommandInteraction,
+	ApplicationCommandOptionType,
 } from "discord-api-types/v10";
 
 export function getTypedOption<TType extends ApplicationCommandOptionType>(
