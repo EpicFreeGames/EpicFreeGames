@@ -1,3 +1,4 @@
+import { discord_server } from "@prisma/client";
 import {
 	APIChatInputApplicationCommandGuildInteraction,
 	ApplicationCommandOptionType,
@@ -6,20 +7,19 @@ import {
 	RESTGetAPIChannelWebhooksResult,
 	RESTPostAPIChannelWebhookResult,
 } from "discord-api-types/v10";
+import { constants } from "../../../configuration/constants";
+import { envs } from "../../../configuration/env";
 import { DiscordRequestContext } from "../../context";
-import { discord_server } from "@prisma/client";
+import { discordApi } from "../../discordApi";
+import { genericErrorEmbed } from "../../embeds/errors";
+import { channelSetEmbed, maxNumOfWebhooks, missingPermsEmbed } from "../../embeds/setChannel";
+import { settingsEmbed } from "../../embeds/settings";
 import { Currency } from "../../i18n/currency";
 import { Language } from "../../i18n/language";
-import { getTypedOption } from "../_getTypedOption";
 import { hasPermsOnChannel } from "../../perms/hasPermsOnChannel";
 import { PermissionString } from "../../perms/types";
 import { editInteractionResponse } from "../../utils";
-import { genericErrorEmbed } from "../../embeds/errors";
-import { channelSetEmbed, maxNumOfWebhooks, missingPermsEmbed } from "../../embeds/setChannel";
-import { discordApi } from "../../discordApi";
-import { envs } from "../../../configuration/env";
-import { constants } from "../../../configuration/constants";
-import { settingsEmbed } from "../../embeds/settings";
+import { getTypedOption } from "../_getTypedOption";
 
 export const setChannelSubCommand = async (props: {
 	ctx: DiscordRequestContext;
@@ -113,7 +113,7 @@ export const setChannelSubCommand = async (props: {
 			props.dbServer.webhook_token &&
 			props.dbServer.channel_id !== selectedChannelId
 		) {
-			await discordApi(props.ctx, {
+			discordApi(props.ctx, {
 				method: "DELETE",
 				path: `/webhooks/${props.dbServer.webhook_id}/${props.dbServer.webhook_token}`,
 			});
