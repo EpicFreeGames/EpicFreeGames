@@ -62,24 +62,13 @@ export const discordApi = async <TData>(
 
 				return { data: json };
 			} else {
-				const error = json ?? {
-					statusCode: res.status ?? 500,
-					error: res.statusText ?? "Unknown error",
-					message: res.statusText ?? "Unknown error",
-				};
-
-				let headers: Record<string, unknown> = {};
-				res.headers.forEach((value, key) => {
-					headers[key] = value;
-				});
-
 				ctx.log("Discord API request failed", {
 					id,
 					statusCode: res.status,
-					error,
+					json,
 				});
 
-				return { error };
+				return { error: json };
 			}
 		})
 		.catch((error) => {
