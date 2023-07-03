@@ -1,11 +1,11 @@
 import { ApplicationCommandOptionType } from "discord-api-types/v10";
 import { Command } from "../_commandType";
 import { getTypedOption } from "../_getTypedOption";
+import { setCurrencySubCommand } from "./currency/setCurrencySubCommand";
+import { setLanguageSubCommand } from "./language/setLanguageSubCommand";
 import { setChannelSubCommand } from "./setChannelSubCommand";
 import { setRoleSubCommand } from "./setRoleSubCommand";
 import { setThreadSubCommand } from "./setThreadSubCommand";
-import { setLanguageSubCommand } from "./language/setLanguageSubCommand";
-import { setCurrencySubCommand } from "./currency/setCurrencySubCommand";
 
 export const setCommand: Command = {
 	name: "set",

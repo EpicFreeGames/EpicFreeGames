@@ -2,7 +2,7 @@ import { objToStr } from "../discord/utils";
 import { z } from "zod";
 
 const envSchema = z.object({
-	DB_URL: z.string(),
+	MONGO_URL: z.string(),
 	FRONT_BASE: z.string(),
 	DC_CLIENT_ID: z.string(),
 	DC_CLIENT_SECRET: z.string(),

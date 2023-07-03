@@ -1,19 +1,19 @@
-import { discord_server } from "@prisma/client";
 import { Currency, currencies } from "../i18n/currency";
 import { Language, languages } from "../i18n/language";
 import { t } from "../i18n/translate";
 import { embedUtils } from "./_utils";
+import { DbDiscordServer } from "../../db/dbTypes";
 
 export function settingsEmbed(
-	server: discord_server | null,
+	server: DbDiscordServer | null,
 	language: Language,
 	currency: Currency
 ) {
-	const embedLanguage = server?.language_code
-		? languages.get(server?.language_code) ?? language
+	const embedLanguage = server?.languageCode
+		? languages.get(server?.languageCode) ?? language
 		: language;
-	const embedCurrency = server?.currency_code
-		? currencies.get(server?.currency_code) ?? currency
+	const embedCurrency = server?.currencyCode
+		? currencies.get(server?.currencyCode) ?? currency
 		: currency;
 
 	return {
@@ -51,21 +51,21 @@ export function currentSettingsEmbed(language: Language) {
 	};
 }
 
-function showChannelOrThread(server: discord_server | null, language: Language) {
-	if (server?.thread_id) {
-		return `<#${server?.thread_id}>`;
-	} else if (server?.channel_id) {
-		return `<#${server?.channel_id}>`;
+function showChannelOrThread(server: DbDiscordServer | null, language: Language) {
+	if (server?.threadId) {
+		return `<#${server?.threadId}>`;
+	} else if (server?.channelId) {
+		return `<#${server?.channelId}>`;
 	} else {
 		return t(language, "channel_thread_not_set");
 	}
 }
 
-function showRole(server: discord_server | null, language: Language) {
-	if (server?.role_id) {
-		if (server.role_id === "1") return "@everyone";
+function showRole(server: DbDiscordServer | null, language: Language) {
+	if (server?.roleId) {
+		if (server.roleId === "1") return "@everyone";
 
-		return `<@&${server?.role_id}>`;
+		return `<@&${server?.roleId}>`;
 	} else {
 		return t(language, "role_not_set");
 	}

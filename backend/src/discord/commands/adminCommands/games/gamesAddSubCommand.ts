@@ -1,5 +1,5 @@
 import { Ctx } from "../../../../ctx";
-import { DbGame, DbServer } from "../../../../db/types";
+import { DbGame, DbDiscordServer } from "../../../../db/types";
 import {
 	editInteractionResponse,
 	getTypedOption,
@@ -34,7 +34,7 @@ export async function gamesAddSubCommand(
 	commandName: string,
 	language: Language,
 	currency: Currency,
-	server: DbServer | null
+	server: DbDiscordServer | null
 ) {
 	await respondToInteraction(i, {
 		type: InteractionResponseType.DeferredChannelMessageWithSource,

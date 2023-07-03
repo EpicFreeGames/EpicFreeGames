@@ -1,10 +1,10 @@
-import { DbServer } from "../../db/types";
+import { DbDiscordServer } from "../../db/types";
 import { Currency, currencies } from "../i18n/currency";
 import { Language, languages } from "../i18n/language";
 import { t } from "../i18n/translate";
 import { embedUtils } from "./_utils";
 
-export function settingsEmbed(server: DbServer | null, language: Language, currency: Currency) {
+export function settingsEmbed(server: DbDiscordServer | null, language: Language, currency: Currency) {
 	const embedLanguage = server?.languageCode
 		? languages.get(server?.languageCode) ?? language
 		: language;
@@ -31,7 +31,7 @@ export function settingsEmbed(server: DbServer | null, language: Language, curre
 	};
 }
 
-function showChannelOrThread(server: DbServer | null, language: Language) {
+function showChannelOrThread(server: DbDiscordServer | null, language: Language) {
 	if (server?.threadId) {
 		return `<#${server?.threadId}>`;
 	} else if (server?.channelId) {
@@ -41,7 +41,7 @@ function showChannelOrThread(server: DbServer | null, language: Language) {
 	}
 }
 
-function showRole(server: DbServer | null, language: Language) {
+function showRole(server: DbDiscordServer | null, language: Language) {
 	if (server?.roleId) {
 		if (server.roleId === "1") return "@everyone";
 

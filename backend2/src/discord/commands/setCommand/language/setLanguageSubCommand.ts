@@ -12,13 +12,14 @@ import { editInteractionResponse } from "../../../utils";
 import { settingsEmbed, updatedSettingsEmbed } from "../../../embeds/settings";
 import { Language, languages } from "../../../i18n/language";
 import { Currency } from "../../../i18n/currency";
+import { DbDiscordServer } from "../../../../db/dbTypes";
 
 export const setLanguageSubCommand = async (props: {
 	ctx: DiscordRequestContext;
 	i: APIChatInputApplicationCommandGuildInteraction;
 	language: Language;
 	currency: Currency;
-	dbServer: discord_server;
+	dbServer: DbDiscordServer;
 }) => {
 	try {
 		const languageOption = getTypedOption(
@@ -51,29 +52,50 @@ export const setLanguageSubCommand = async (props: {
 			data: { flags: MessageFlags.Ephemeral },
 		});
 
-		await props.ctx.db.discord_server.update({
-			where: { id: props.dbServer.id },
-			data: { language_code: newLanguageCode },
-		});
+		const updatedDbServerRes = await props.ctx.mongo.discordServers.findOneAndUpdate(
+			{ discordId: props.dbServer.discordId },
+			{ $set: { languageCode: newLanguageCode } },
+			{ returnDocument: "after" }
+		);
+
+		if (!updatedDbServerRes.ok) {
+			props.ctx.log("Failed to set language - failed to update db server", {
+				error: updatedDbServerRes.lastErrorObject,
+			});
+
+			await editInteractionResponse(props.ctx, props.i, {
+				flags: MessageFlags.Ephemeral,
+				embeds: [
+					genericErrorEmbed({ language: props.language, requestId: props.ctx.requestId }),
+				],
+			});
+
+			return;
+		}
+
+		if (!updatedDbServerRes.value) {
+			props.ctx.log("Failed to set language - failed to update db server, value falsy");
+
+			await editInteractionResponse(props.ctx, props.i, {
+				flags: MessageFlags.Ephemeral,
+				embeds: [
+					genericErrorEmbed({ language: props.language, requestId: props.ctx.requestId }),
+				],
+			});
+
+			return;
+		}
 
 		editInteractionResponse(props.ctx, props.i, {
 			flags: MessageFlags.Ephemeral,
 			embeds: [
 				updatedSettingsEmbed(props.language),
-				settingsEmbed(props.dbServer, props.language, props.currency),
+				settingsEmbed(updatedDbServerRes.value, props.language, props.currency),
 			],
 		});
 	} catch (e) {
-		props.ctx.log("Catched an error in /set language", {
+		props.ctx.log("Failed to set language - catched an error", {
 			error: e,
-			guildId: props.i.guild_id,
-		});
-
-		await editInteractionResponse(props.ctx, props.i, {
-			flags: MessageFlags.Ephemeral,
-			embeds: [
-				genericErrorEmbed({ language: props.language, requestId: props.ctx.requestId }),
-			],
 		});
 	}
 };

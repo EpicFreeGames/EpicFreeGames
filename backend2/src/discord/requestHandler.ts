@@ -1,16 +1,16 @@
-import { IncomingMessage, ServerResponse } from "http";
-import { DiscordRequestContext, getDiscordRequestContext } from "./context";
-import nacl from "tweetnacl";
-import { getTextBody, mergeUint8Arrays, safeJsonParse, valueToUint8Array } from "./utils";
 import { APIInteraction } from "discord-api-types/v10";
-import { interactionHandler } from "./interactionHandler";
-import { PrismaClient } from "@prisma/client";
+import { IncomingMessage, ServerResponse } from "http";
+import nacl from "tweetnacl";
 import { envs } from "../configuration/env";
+import { Database } from "../db/db";
+import { DiscordRequestContext, getDiscordRequestContext } from "./context";
+import { interactionHandler } from "./interactionHandler";
+import { getTextBody, mergeUint8Arrays, safeJsonParse, valueToUint8Array } from "./utils";
 
 export async function discordRequestHandler(
 	req: IncomingMessage,
 	res: ServerResponse<IncomingMessage>,
-	db: PrismaClient
+	db: Database
 ) {
 	const requestContext = getDiscordRequestContext(res as Response, db);
 
