@@ -1,3 +1,3 @@
-import { PrismaClient } from "@prisma/client";
+import { Database } from "../db/db";
 
-export async function enqueueSends(db: PrismaClient) {}
+export async function enqueueSends(db: Database) {}

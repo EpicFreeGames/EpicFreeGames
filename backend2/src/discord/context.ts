@@ -1,8 +1,7 @@
-import { ulid } from "ulid";
-import { Response } from "./requestHandler";
 import { APIInteractionResponse } from "discord-api-types/v10";
-import { PrismaClient } from "@prisma/client";
+import { ulid } from "ulid";
 import { Database } from "../db/db";
+import { Response } from "./requestHandler";
 
 export type DiscordRequestId = string & { __brand: "DiscordRequestContext" };
 

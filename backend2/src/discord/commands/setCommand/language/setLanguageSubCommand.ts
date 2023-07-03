@@ -4,15 +4,14 @@ import {
 	InteractionResponseType,
 	MessageFlags,
 } from "discord-api-types/v10";
-import { DiscordRequestContext } from "../../../context";
-import { discord_server } from "@prisma/client";
-import { getTypedOption } from "../../_getTypedOption";
-import { genericErrorEmbed } from "../../../embeds/errors";
-import { editInteractionResponse } from "../../../utils";
-import { settingsEmbed, updatedSettingsEmbed } from "../../../embeds/settings";
-import { Language, languages } from "../../../i18n/language";
-import { Currency } from "../../../i18n/currency";
 import { DbDiscordServer } from "../../../../db/dbTypes";
+import { DiscordRequestContext } from "../../../context";
+import { genericErrorEmbed } from "../../../embeds/errors";
+import { settingsEmbed, updatedSettingsEmbed } from "../../../embeds/settings";
+import { Currency } from "../../../i18n/currency";
+import { Language, languages } from "../../../i18n/language";
+import { editInteractionResponse } from "../../../utils";
+import { getTypedOption } from "../../_getTypedOption";
 
 export const setLanguageSubCommand = async (props: {
 	ctx: DiscordRequestContext;

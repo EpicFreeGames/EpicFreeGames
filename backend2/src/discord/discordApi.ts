@@ -1,7 +1,6 @@
 import { ulid } from "ulid";
 import { envs } from "../configuration/env";
 import { DiscordRequestContext } from "./context";
-import { objToStr } from "./utils";
 
 type Method = "GET" | "POST" | "PUT" | "PATCH" | "DELETE" | "HEAD" | "OPTIONS";
 
