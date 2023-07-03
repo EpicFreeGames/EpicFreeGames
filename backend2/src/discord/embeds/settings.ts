@@ -35,6 +35,22 @@ export function settingsEmbed(
 	};
 }
 
+export function updatedSettingsEmbed(language: Language) {
+	return {
+		title: "✅",
+		color: embedUtils.colors.green,
+		description: embedUtils.bold(t(language, "updated_settings")),
+	};
+}
+
+export function currentSettingsEmbed(language: Language) {
+	return {
+		title: "✅",
+		color: embedUtils.colors.green,
+		description: embedUtils.bold(t(language, "current_settings")),
+	};
+}
+
 function showChannelOrThread(server: discord_server | null, language: Language) {
 	if (server?.thread_id) {
 		return `<#${server?.thread_id}>`;

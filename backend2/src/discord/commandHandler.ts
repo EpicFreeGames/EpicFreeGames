@@ -1,5 +1,6 @@
 import {
 	APIApplicationCommandInteraction,
+	ApplicationCommandOptionType,
 	InteractionResponseType,
 	MessageFlags,
 } from "discord-api-types/v10";
@@ -18,6 +19,7 @@ import { upCommand } from "./commands/upCommand";
 import { helpCommand } from "./commands/helpCommand";
 import { inviteCommand } from "./commands/inviteCommand";
 import { setCommand } from "./commands/setCommand/setCommand";
+import { getTypedOption } from "./commands/_getTypedOption";
 
 const commands = new Map<string, Command>([
 	[freeCommand.name, freeCommand],
@@ -41,6 +43,10 @@ export async function commandHandler(
 	if (!command) {
 		return ctx.respondWith(404, `Command '${commandName}' not found`);
 	}
+
+	const userId = (i.member?.user ?? i.user)?.id!;
+	const subCommand = getTypedOption(i, ApplicationCommandOptionType.Subcommand);
+	ctx.log("c", { commandName, subCommand: subCommand?.name, guildId: i?.guild_id, userId });
 
 	const isGuild = isGuildInteraction(i);
 
@@ -68,6 +74,7 @@ export async function commandHandler(
 				command.needsManageGuild &&
 				!hasPerms(BigInt(i?.member?.permissions || 0n), ["MANAGE_GUILD"])
 			) {
+				ctx.log("No manage guild");
 				return ctx.respondWith(200, {
 					type: InteractionResponseType.ChannelMessageWithSource,
 					data: {

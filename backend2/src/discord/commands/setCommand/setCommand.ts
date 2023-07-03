@@ -4,6 +4,8 @@ import { getTypedOption } from "../_getTypedOption";
 import { setChannelSubCommand } from "./setChannelSubCommand";
 import { setRoleSubCommand } from "./setRoleSubCommand";
 import { setThreadSubCommand } from "./setThreadSubCommand";
+import { setLanguageSubCommand } from "./language/setLanguageSubCommand";
+import { setCurrencySubCommand } from "./currency/setCurrencySubCommand";
 
 export const setCommand: Command = {
 	name: "set",
@@ -11,7 +13,7 @@ export const setCommand: Command = {
 	needsManageGuild: true,
 	handle: async (props) => {
 		const subCommand = getTypedOption(props.i, ApplicationCommandOptionType.Subcommand);
-		if (!subCommand) return;
+		if (!subCommand) return props.ctx.respondWith(400, "No subcommand provided. (set)");
 
 		if (subCommand.name === "channel") {
 			return setChannelSubCommand(props);
@@ -19,6 +21,12 @@ export const setCommand: Command = {
 			return setRoleSubCommand(props);
 		} else if (subCommand.name === "thread") {
 			return setThreadSubCommand(props);
+		} else if (subCommand.name === "language") {
+			return setLanguageSubCommand(props);
+		} else if (subCommand.name === "currency") {
+			return setCurrencySubCommand(props);
+		} else {
+			return props.ctx.respondWith(400, `Unknown (set) subcommand: ${subCommand.name}`);
 		}
 	},
 };

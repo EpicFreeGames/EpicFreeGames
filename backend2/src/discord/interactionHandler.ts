@@ -1,6 +1,7 @@
 import { APIInteraction, InteractionType } from "discord-api-types/v10";
 import { DiscordRequestContext } from "./context";
 import { commandHandler } from "./commandHandler";
+import { autocompleteHandler } from "./autocompleteHandler";
 
 export function interactionHandler(ctx: DiscordRequestContext, i: APIInteraction) {
 	if (i.type === InteractionType.Ping) {
@@ -8,6 +9,6 @@ export function interactionHandler(ctx: DiscordRequestContext, i: APIInteraction
 	} else if (i.type === InteractionType.ApplicationCommand) {
 		return commandHandler(ctx, i);
 	} else if (i.type === InteractionType.ApplicationCommandAutocomplete) {
-		ctx.log("Autocomplete request", { i });
+		return autocompleteHandler(ctx, i);
 	}
 }

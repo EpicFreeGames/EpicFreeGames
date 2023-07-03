@@ -40,7 +40,6 @@ export const discordApi = async <TData>(
 		id,
 		method,
 		path,
-		body,
 	});
 
 	return fetch(url, {
