@@ -56,9 +56,8 @@ export const setChannelSubCommand = async (props: {
 		);
 
 		if (permsResult.error) {
-			props.ctx.log("Failed to check perms on channel", {
+			props.ctx.log("Failed to set channel - failed to check perms on channel", {
 				cause: permsResult.cause,
-				guildId: props.i.guild_id,
 				selectedChannelId,
 			});
 
@@ -90,9 +89,8 @@ export const setChannelSubCommand = async (props: {
 		);
 
 		if (selectedChannelsWebhookResult.error) {
-			props.ctx.log("Failed to get webhooks on channel", {
+			props.ctx.log("Failed to set channel - failed to get webhooks on channel", {
 				error: selectedChannelsWebhookResult.error,
-				guildId: props.i.guild_id,
 				selectedChannelId,
 			});
 
@@ -127,9 +125,8 @@ export const setChannelSubCommand = async (props: {
 
 		if (!webhook) {
 			if (selectedChannelsWebhookResult.data.length >= 10) {
-				props.ctx.log("Too many webhooks on channel", {
+				props.ctx.log("Failed to set channel - too many webhooks on channel", {
 					selectedChannelId,
-					guildId: props.i.guild_id,
 					amount: selectedChannelsWebhookResult.data.length,
 				});
 
@@ -151,9 +148,8 @@ export const setChannelSubCommand = async (props: {
 			});
 
 			if (newWebhookResult.error) {
-				props.ctx.log("Failed to create a new webhook", {
+				props.ctx.log("Failed to set channel - failed to create a new webhook", {
 					selectedChannelId,
-					guildId: props.i.guild_id,
 					error: newWebhookResult.error,
 				});
 
@@ -175,8 +171,7 @@ export const setChannelSubCommand = async (props: {
 
 		// just in case a miracle happens
 		if (!webhook.token) {
-			props.ctx.log("Created webhook doesn't have a token", {
-				guildId: props.i.guild_id,
+			props.ctx.log("Failed to set channel - created webhook doesn't have a token", {
 				selectedChannelId,
 			});
 
@@ -198,8 +193,7 @@ export const setChannelSubCommand = async (props: {
 		});
 
 		if (!updatedDbServer.channel_id) {
-			props.ctx.log("Channel id is falsy after update", {
-				guildId: props.i.guild_id,
+			props.ctx.log("Failed to set channel - channel id is falsy after update", {
 				selectedChannelId,
 			});
 
@@ -221,16 +215,8 @@ export const setChannelSubCommand = async (props: {
 			],
 		});
 	} catch (e) {
-		props.ctx.log("Catched an error in /set channel", {
+		props.ctx.log("Failed to set channel - catched an error", {
 			error: e,
-			guildId: props.i.guild_id,
-		});
-
-		await editInteractionResponse(props.ctx, props.i, {
-			flags: MessageFlags.Ephemeral,
-			embeds: [
-				genericErrorEmbed({ language: props.language, requestId: props.ctx.requestId }),
-			],
 		});
 	}
 };

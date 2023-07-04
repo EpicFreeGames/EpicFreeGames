@@ -64,16 +64,8 @@ export const setCurrencySubCommand = async (props: {
 			],
 		});
 	} catch (e) {
-		props.ctx.log("Catched an error in /set currency", {
+		props.ctx.log("Failed to set currency - catched an error", {
 			error: e,
-			guildId: props.i.guild_id,
-		});
-
-		await editInteractionResponse(props.ctx, props.i, {
-			flags: MessageFlags.Ephemeral,
-			embeds: [
-				genericErrorEmbed({ language: props.language, requestId: props.ctx.requestId }),
-			],
 		});
 	}
 };

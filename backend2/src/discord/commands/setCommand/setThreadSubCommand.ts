@@ -53,7 +53,6 @@ export const setThreadSubCommand = async (props: {
 		if (threadResult.error) {
 			props.ctx.log("Failed to set thread - failed to get thread", {
 				error: threadResult.error,
-				guildId: props.i.guild_id,
 				selectedThreadId,
 			});
 
@@ -70,7 +69,6 @@ export const setThreadSubCommand = async (props: {
 		// TODO: handle thread type error differently
 		if (threadResult.data?.type !== ChannelType.PublicThread) {
 			props.ctx.log("Failed to set thread - thread is not a public thread", {
-				guildId: props.i.guild_id,
 				selectedThreadId,
 			});
 
@@ -88,7 +86,6 @@ export const setThreadSubCommand = async (props: {
 
 		if (!selectedThreadParentId) {
 			props.ctx.log("Failed to set thread - thread has no parent_id", {
-				guildId: props.i.guild_id,
 				selectedThreadId,
 				selectedThreadParentId,
 			});
@@ -119,7 +116,6 @@ export const setThreadSubCommand = async (props: {
 		if (hasPermsResult.error) {
 			props.ctx.log("Failed to set thread - failed to check perms on parent", {
 				error: hasPermsResult.error,
-				guildId: props.i.guild_id,
 				selectedThreadId,
 				selectedThreadParentId,
 			});
@@ -136,7 +132,6 @@ export const setThreadSubCommand = async (props: {
 
 		if (hasPermsResult.hasPerms === false) {
 			props.ctx.log("Failed to set thread - missing perms on parent", {
-				guildId: props.i.guild_id,
 				selectedThreadId,
 				selectedThreadParentId,
 			});
@@ -167,7 +162,6 @@ export const setThreadSubCommand = async (props: {
 		if (parentChannelsWebhooksResult.error) {
 			props.ctx.log("Failed to set thread - failed to get webhooks on parent", {
 				error: parentChannelsWebhooksResult.error,
-				guildId: props.i.guild_id,
 				selectedThreadId,
 				selectedThreadParentId,
 			});
@@ -203,8 +197,7 @@ export const setThreadSubCommand = async (props: {
 
 		if (!webhook) {
 			if (parentChannelsWebhooksResult.data.length >= 10) {
-				props.ctx.log("Too many webhooks on parent", {
-					guildId: props.i.guild_id,
+				props.ctx.log("Failed to set thread - too many webhooks on parent", {
 					selectedThreadId,
 					selectedThreadParentId,
 					amount: parentChannelsWebhooksResult.data.length,
@@ -228,8 +221,7 @@ export const setThreadSubCommand = async (props: {
 			});
 
 			if (newWebhookResult.error) {
-				props.ctx.log("Failed to create a new webhook on parent", {
-					guildId: props.i.guild_id,
+				props.ctx.log("Failed to set thread - failed to create a new webhook on parent", {
 					selectedThreadId,
 					selectedThreadParentId,
 					error: newWebhookResult.error,
@@ -253,8 +245,8 @@ export const setThreadSubCommand = async (props: {
 
 		// just in case a miracle happens
 		if (!webhook.token) {
-			props.ctx.log("Created webhook doesn't have a token", {
-				guildId: props.i.guild_id,
+			props.ctx.log("Failed to set thread - created webhook doesn't have a token", {
+				selectedThreadId,
 				selectedThreadParentId,
 			});
 
@@ -277,8 +269,7 @@ export const setThreadSubCommand = async (props: {
 		});
 
 		if (!updatedDbServer.channel_id) {
-			props.ctx.log("Db server channel id is falsy after update", {
-				guildId: props.i.guild_id,
+			props.ctx.log("Failed to set thread - channel id is falsy after update", {
 				selectedThreadId,
 				selectedThreadParentId,
 			});
@@ -294,8 +285,7 @@ export const setThreadSubCommand = async (props: {
 		}
 
 		if (!updatedDbServer.thread_id) {
-			props.ctx.log("Db server thread id is falsy after update", {
-				guildId: props.i.guild_id,
+			props.ctx.log("Failed to set thread - thread id is falsy after update", {
 				selectedThreadId,
 				selectedThreadParentId,
 			});
@@ -318,21 +308,8 @@ export const setThreadSubCommand = async (props: {
 			],
 		});
 	} catch (e) {
-		props.ctx.log("Catched an error in /set thread", {
+		props.ctx.log("Failed to set thread - catched an error", {
 			error: e,
-			guildId: props.i.guild_id,
-		});
-
-		await editInteractionResponse(props.ctx, props.i, {
-			flags: MessageFlags.Ephemeral,
-			embeds: [
-				genericErrorEmbed({ language: props.language, requestId: props.ctx.requestId }),
-			],
 		});
 	}
 };
-
-function makeSenseOfRole(role: any) {
-	if (role.name === "@everyone") return { embed: "@everyone", toDb: "1" };
-	return { embed: `<@&${role.id}>`, toDb: role.id };
-}

@@ -1,5 +1,4 @@
 import { InteractionResponseType } from "discord-api-types/v10";
-import { genericErrorEmbed } from "../embeds/errors";
 import { gameEmbed, noUpcomingFreeGamesEmbed } from "../embeds/gameEmbed";
 import { Command } from "./_commandType";
 
@@ -29,19 +28,7 @@ export const upCommand: Command = {
 				},
 			});
 		} catch (e) {
-			props.ctx.log("Error in upCommand", { e });
-
-			return props.ctx.respondWith(200, {
-				type: InteractionResponseType.ChannelMessageWithSource,
-				data: {
-					embeds: [
-						genericErrorEmbed({
-							language: props.language,
-							requestId: props.ctx.requestId,
-						}),
-					],
-				},
-			});
+			props.ctx.log("Catched an error in /up", { e });
 		}
 	},
 };

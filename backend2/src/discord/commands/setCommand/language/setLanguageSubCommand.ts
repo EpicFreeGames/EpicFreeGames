@@ -4,7 +4,6 @@ import {
 	InteractionResponseType,
 	MessageFlags,
 } from "discord-api-types/v10";
-import { DbDiscordServer } from "../../../../db/dbTypes";
 import { DiscordRequestContext } from "../../../context";
 import { genericErrorEmbed } from "../../../embeds/errors";
 import { settingsEmbed, updatedSettingsEmbed } from "../../../embeds/settings";
@@ -65,16 +64,8 @@ export const setLanguageSubCommand = async (props: {
 			],
 		});
 	} catch (e) {
-		props.ctx.log("Catched an error in /set language", {
+		props.ctx.log("Failed to set language - catched an error", {
 			error: e,
-			guildId: props.i.guild_id,
-		});
-
-		await editInteractionResponse(props.ctx, props.i, {
-			flags: MessageFlags.Ephemeral,
-			embeds: [
-				genericErrorEmbed({ language: props.language, requestId: props.ctx.requestId }),
-			],
 		});
 	}
 };

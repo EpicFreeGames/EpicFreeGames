@@ -48,9 +48,8 @@ export const setRoleSubCommand = async (props: {
 		});
 
 		if (roleResult.error) {
-			props.ctx.log("Failed to fetch guild roles", {
+			props.ctx.log("Failed to set role - failed to fetch guild roles", {
 				error: roleResult.error,
-				guildId: props.i.guild_id,
 				selectedRoleId,
 			});
 
@@ -64,8 +63,7 @@ export const setRoleSubCommand = async (props: {
 
 		const selectedRole = roleResult.data?.find((r) => r.id === selectedRoleId);
 		if (!selectedRole) {
-			props.ctx.log("Failed to find selected role", {
-				guildId: props.i.guild_id,
+			props.ctx.log("Failed to set role - failed to find selected role", {
 				selectedRoleId,
 			});
 
@@ -91,16 +89,8 @@ export const setRoleSubCommand = async (props: {
 			],
 		});
 	} catch (e) {
-		props.ctx.log("Catched an error in /set role", {
+		props.ctx.log("Failed to set role - catched an error", {
 			error: e,
-			guildId: props.i.guild_id,
-		});
-
-		await editInteractionResponse(props.ctx, props.i, {
-			flags: MessageFlags.Ephemeral,
-			embeds: [
-				genericErrorEmbed({ language: props.language, requestId: props.ctx.requestId }),
-			],
 		});
 	}
 };

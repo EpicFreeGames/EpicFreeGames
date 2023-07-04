@@ -1,6 +1,5 @@
 import { APIInteractionResponse } from "discord-api-types/v10";
 import { ulid } from "ulid";
-import { Database } from "../db/db";
 import { Response } from "./requestHandler";
 import { PrismaClient } from "@prisma/client";
 
