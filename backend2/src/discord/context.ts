@@ -2,6 +2,7 @@ import { APIInteractionResponse } from "discord-api-types/v10";
 import { ulid } from "ulid";
 import { Database } from "../db/db";
 import { Response } from "./requestHandler";
+import { PrismaClient } from "@prisma/client";
 
 export type DiscordRequestId = string & { __brand: "DiscordRequestContext" };
 
@@ -9,7 +10,7 @@ function createRequestId() {
 	return ulid() as DiscordRequestId;
 }
 
-export function getDiscordRequestContext(res: Response, mongo: Database) {
+export function getDiscordRequestContext(res: Response, db: PrismaClient) {
 	const requestId = createRequestId();
 	const logger = discordLogger(requestId);
 
@@ -17,7 +18,7 @@ export function getDiscordRequestContext(res: Response, mongo: Database) {
 		respondWith: respondWith(logger, res),
 		requestId,
 		log: logger,
-		mongo,
+		db,
 	};
 }
 

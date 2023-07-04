@@ -1,5 +1,5 @@
 import { env } from "../configuration/env";
-import { DbGame, DbDiscordServer, DbLog, DbSend, DbSendLog } from "./types";
+import { DbGame, DbServer, DbLog, DbSend, DbSendLog } from "./types";
 import { MongoClient } from "mongodb";
 
 const mongo = new MongoClient(env.MONGO_URL);
@@ -20,7 +20,7 @@ export const getMongo = async () => {
 
 	return {
 		games: db.collection<DbGame>("games"),
-		servers: db.collection<DbDiscordServer>("servers"),
+		servers: db.collection<DbServer>("servers"),
 		sends: db.collection<DbSend>("sends"),
 		logs: db.collection<DbLog>("logs"),
 		sendLogs: db.collection<DbSendLog>("sendLogs"),

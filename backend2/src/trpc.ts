@@ -1,8 +1,8 @@
 import { TRPCError, initTRPC } from "@trpc/server";
 import { CreateHTTPContextOptions } from "@trpc/server/adapters/standalone";
 import superjson from "superjson";
-import { Database } from "./db/db";
 import { verifyToken } from "./auth";
+import { PrismaClient } from "@prisma/client";
 
 const t = initTRPC.context<Context>().create({
 	transformer: superjson,
@@ -35,7 +35,7 @@ const authMiddleware = middleware(async (props) => {
 
 export const authProcedure = publicProcedure.use(authMiddleware);
 
-export function createContext(db: Database) {
+export function createContext(db: PrismaClient) {
 	return (props: CreateHTTPContextOptions) => {
 		return {
 			req: props.req,

@@ -1,4 +1,5 @@
 import { InteractionResponseType } from "discord-api-types/v10";
+import { genericErrorEmbed } from "../embeds/errors";
 import { gameEmbed, noUpcomingFreeGamesEmbed } from "../embeds/gameEmbed";
 import { Command } from "./_commandType";
 
@@ -10,13 +11,14 @@ export const upCommand: Command = {
 		try {
 			const now = new Date();
 
-			const games = await props.ctx.mongo.games
-				.find({
-					startDate: { $gte: now },
-					endDate: { $gt: now },
+			const games = await props.ctx.db.game.findMany({
+				where: {
 					confirmed: true,
-				})
-				.toArray();
+					start_date: { gte: now },
+					end_date: { gte: now },
+				},
+				include: { prices: true },
+			});
 
 			return props.ctx.respondWith(200, {
 				type: InteractionResponseType.ChannelMessageWithSource,
@@ -27,7 +29,19 @@ export const upCommand: Command = {
 				},
 			});
 		} catch (e) {
-			props.ctx.log("Error in /up", { e });
+			props.ctx.log("Error in upCommand", { e });
+
+			return props.ctx.respondWith(200, {
+				type: InteractionResponseType.ChannelMessageWithSource,
+				data: {
+					embeds: [
+						genericErrorEmbed({
+							language: props.language,
+							requestId: props.ctx.requestId,
+						}),
+					],
+				},
+			});
 		}
 	},
 };

@@ -1,7 +1,7 @@
 import { constants } from "../../../../configuration/constants";
 import { env } from "../../../../configuration/env";
 import { Ctx } from "../../../../ctx";
-import { DbDiscordServer } from "../../../../db/types";
+import { DbServer } from "../../../../db/types";
 import { discordApiRequest } from "../../../discordApiRequest";
 import { PermissionString, hasPermsOnChannel } from "../../../discordPerms";
 import {
@@ -29,7 +29,7 @@ export async function setChannelSubCommand(
 	commandName: string,
 	language: Language,
 	currency: Currency,
-	dbServer: DbDiscordServer | null
+	dbServer: DbServer | null
 ) {
 	await respondToInteraction(ctx, i, {
 		type: InteractionResponseType.DeferredChannelMessageWithSource,

@@ -3,7 +3,7 @@ import {
 	isGuildInteraction,
 } from "../../../node_modules/discord-api-types/utils/v10";
 import { Ctx } from "../../ctx";
-import { DbDiscordServer } from "../../db/types";
+import { DbServer } from "../../db/types";
 import { respondWith } from "../../utils";
 import { createInteractionResponse, getCommandName } from "../discordUtils";
 import { genericErrorEmbed } from "../embeds/errors";
@@ -38,7 +38,7 @@ export type Command =
 				commandName: string,
 				language: Language,
 				currency: Currency,
-				server: DbDiscordServer | null
+				server: DbServer | null
 			) => Promise<Response | void>;
 	  }
 	| {
@@ -96,7 +96,7 @@ export async function commandHandler(
 
 		const isGuild = isGuildInteraction(i);
 
-		let dbServer: DbDiscordServer | null = null;
+		let dbServer: DbServer | null = null;
 		let language: Language = defaultLangauge;
 		let currency: Currency = defaultCurrency;
 

@@ -1,3 +1,4 @@
+import { discord_server } from "@prisma/client";
 import {
 	APIChatInputApplicationCommandGuildInteraction,
 	ApplicationCommandOptionType,
@@ -5,7 +6,6 @@ import {
 	MessageFlags,
 	RESTGetAPIGuildRolesResult,
 } from "discord-api-types/v10";
-import { DbDiscordServer } from "../../../db/dbTypes";
 import { DiscordRequestContext } from "../../context";
 import { discordApi } from "../../discordApi";
 import { channelNotSetEmbed, genericErrorEmbed } from "../../embeds/errors";
@@ -21,10 +21,10 @@ export const setRoleSubCommand = async (props: {
 	i: APIChatInputApplicationCommandGuildInteraction;
 	language: Language;
 	currency: Currency;
-	dbServer: DbDiscordServer;
+	dbServer: discord_server;
 }) => {
 	try {
-		if (!props.dbServer.channelId) {
+		if (!props.dbServer.channel_id) {
 			return props.ctx.respondWith(200, {
 				type: InteractionResponseType.ChannelMessageWithSource,
 				data: {
@@ -48,7 +48,7 @@ export const setRoleSubCommand = async (props: {
 		});
 
 		if (roleResult.error) {
-			props.ctx.log("Failed to set role - failed to fetch guild roles", {
+			props.ctx.log("Failed to fetch guild roles", {
 				error: roleResult.error,
 				guildId: props.i.guild_id,
 				selectedRoleId,
@@ -64,7 +64,7 @@ export const setRoleSubCommand = async (props: {
 
 		const selectedRole = roleResult.data?.find((r) => r.id === selectedRoleId);
 		if (!selectedRole) {
-			props.ctx.log("Failed to set role - failed to find selected role", {
+			props.ctx.log("Failed to find selected role", {
 				guildId: props.i.guild_id,
 				selectedRoleId,
 			});
@@ -79,54 +79,28 @@ export const setRoleSubCommand = async (props: {
 
 		const useful = makeSenseOfRole(selectedRole);
 
-		const updatedDbServerRes = await props.ctx.mongo.discordServers.findOneAndUpdate(
-			{ discordId: props.dbServer.discordId },
-			{
-				$set: { role: useful.toDb },
-			},
-			{ returnDocument: "after" }
-		);
-
-		if (!updatedDbServerRes.ok) {
-			props.ctx.log("Failed to set role - failed to update db server", {
-				error: updatedDbServerRes.lastErrorObject,
-			});
-
-			await editInteractionResponse(props.ctx, props.i, {
-				flags: MessageFlags.Ephemeral,
-				embeds: [
-					genericErrorEmbed({ language: props.language, requestId: props.ctx.requestId }),
-				],
-			});
-
-			return;
-		}
-
-		if (!updatedDbServerRes.value) {
-			props.ctx.log("Failed to set role - failed to update db server, value falsy");
-
-			await editInteractionResponse(props.ctx, props.i, {
-				flags: MessageFlags.Ephemeral,
-				embeds: [
-					genericErrorEmbed({ language: props.language, requestId: props.ctx.requestId }),
-				],
-			});
-
-			return;
-		}
-
-		const updatedDbServer = updatedDbServerRes.value;
+		await props.ctx.db.discord_server.update({
+			where: { id: props.dbServer.id },
+			data: { role_id: useful.toDb },
+		});
 
 		await editInteractionResponse(props.ctx, props.i, {
 			embeds: [
 				roleSetEmbed({ language: props.language, role: useful.embed }),
-				settingsEmbed(updatedDbServer, props.language, props.currency),
+				settingsEmbed(props.dbServer, props.language, props.currency),
 			],
 		});
 	} catch (e) {
-		props.ctx.log("Failed to set role - catched an error", {
+		props.ctx.log("Catched an error in /set role", {
 			error: e,
 			guildId: props.i.guild_id,
+		});
+
+		await editInteractionResponse(props.ctx, props.i, {
+			flags: MessageFlags.Ephemeral,
+			embeds: [
+				genericErrorEmbed({ language: props.language, requestId: props.ctx.requestId }),
+			],
 		});
 	}
 };

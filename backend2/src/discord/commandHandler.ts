@@ -20,7 +20,6 @@ import { helpCommand } from "./commands/helpCommand";
 import { inviteCommand } from "./commands/inviteCommand";
 import { setCommand } from "./commands/setCommand/setCommand";
 import { getTypedOption } from "./commands/_getTypedOption";
-import { removeCommand } from "./commands/removeCommand/removeCommand";
 
 const commands = new Map<string, Command>([
 	[freeCommand.name, freeCommand],
@@ -28,7 +27,6 @@ const commands = new Map<string, Command>([
 	[helpCommand.name, helpCommand],
 	[inviteCommand.name, inviteCommand],
 	[setCommand.name, setCommand],
-	[removeCommand.name, removeCommand],
 ]);
 
 export async function commandHandler(
@@ -58,42 +56,19 @@ export async function commandHandler(
 	let dbServer = undefined;
 
 	if (isGuild) {
-		const dbServerRes = await ctx.mongo.discordServers.findOneAndUpdate(
-			{ discordId: i.guild_id! },
-			{
-				$setOnInsert: {
-					discordId: i.guild_id!,
-					channelId: null,
-					roleId: null,
-					threadId: null,
-					webhookId: null,
-					webhookToken: null,
-					languageCode: "en",
-					currencyCode: "USD",
-					createdAt: new Date(),
-				},
-			},
-			{ upsert: true, returnDocument: "after" }
-		);
-
-		if (!dbServerRes.ok) {
-			ctx.log("Failed to upsert db server", {
-				dbServerRes,
-				requestId: ctx.requestId,
-			});
-
-			return ctx.respondWith(500, "Failed to update db server");
-		}
-
-		dbServer = dbServerRes.value!;
+		dbServer = await ctx.db.discord_server.upsert({
+			where: { discord_id: i.guild_id },
+			create: { discord_id: i.guild_id },
+			update: {},
+		});
 	}
 
 	if (command.needsGuild) {
 		if (!isGuild) {
 			return ctx.respondWith(400, "This command needs to be run in a guild.");
 		} else if (isGuild && dbServer) {
-			language = languages.get(dbServer.languageCode ?? "") ?? language;
-			currency = currencies.get(dbServer.currencyCode ?? "") ?? currency;
+			language = languages.get(dbServer.language_code ?? "") ?? language;
+			currency = currencies.get(dbServer.currency_code ?? "") ?? currency;
 
 			if (
 				command.needsManageGuild &&

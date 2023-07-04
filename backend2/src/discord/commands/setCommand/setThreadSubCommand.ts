@@ -1,3 +1,4 @@
+import { discord_server } from "@prisma/client";
 import {
 	APIChatInputApplicationCommandGuildInteraction,
 	ApplicationCommandOptionType,
@@ -10,7 +11,6 @@ import {
 } from "discord-api-types/v10";
 import { constants } from "../../../configuration/constants";
 import { envs } from "../../../configuration/env";
-import { DbDiscordServer } from "../../../db/dbTypes";
 import { DiscordRequestContext } from "../../context";
 import { discordApi } from "../../discordApi";
 import { genericErrorEmbed } from "../../embeds/errors";
@@ -28,7 +28,7 @@ export const setThreadSubCommand = async (props: {
 	i: APIChatInputApplicationCommandGuildInteraction;
 	language: Language;
 	currency: Currency;
-	dbServer: DbDiscordServer;
+	dbServer: discord_server;
 }) => {
 	try {
 		const threadOption = getTypedOption(
@@ -112,7 +112,7 @@ export const setThreadSubCommand = async (props: {
 				"MANAGE_WEBHOOKS",
 				"SEND_MESSAGES_IN_THREADS",
 				"EMBED_LINKS",
-				...(props.dbServer?.roleId ? ["MENTION_EVERYONE" as PermissionString] : []), // check only if server has a set role
+				...(props.dbServer?.role_id ? ["MENTION_EVERYONE" as PermissionString] : []), // check only if server has a set role
 			]
 		);
 
@@ -185,13 +185,13 @@ export const setThreadSubCommand = async (props: {
 		// delete the previous saved webhook if new channel !== old channel
 		// that cannot be used since the channel is changing
 		if (
-			props.dbServer?.webhookId &&
-			props.dbServer.webhookToken &&
-			props.dbServer.channelId !== selectedThreadParentId
+			props.dbServer?.webhook_id &&
+			props.dbServer.webhook_token &&
+			props.dbServer.channel_id !== selectedThreadParentId
 		) {
 			discordApi(props.ctx, {
 				method: "DELETE",
-				path: `/webhooks/${props.dbServer.webhookId}/${props.dbServer.webhookToken}`,
+				path: `/webhooks/${props.dbServer.webhook_id}/${props.dbServer.webhook_token}`,
 			});
 		}
 
@@ -203,7 +203,7 @@ export const setThreadSubCommand = async (props: {
 
 		if (!webhook) {
 			if (parentChannelsWebhooksResult.data.length >= 10) {
-				props.ctx.log("Failed to set thread - too many webhooks on parent", {
+				props.ctx.log("Too many webhooks on parent", {
 					guildId: props.i.guild_id,
 					selectedThreadId,
 					selectedThreadParentId,
@@ -228,7 +228,7 @@ export const setThreadSubCommand = async (props: {
 			});
 
 			if (newWebhookResult.error) {
-				props.ctx.log("Failed to set thread - failed to create a new webhook on parent", {
+				props.ctx.log("Failed to create a new webhook on parent", {
 					guildId: props.i.guild_id,
 					selectedThreadId,
 					selectedThreadParentId,
@@ -253,7 +253,7 @@ export const setThreadSubCommand = async (props: {
 
 		// just in case a miracle happens
 		if (!webhook.token) {
-			props.ctx.log("Failed to set thread - created webhook doesn't have a token", {
+			props.ctx.log("Created webhook doesn't have a token", {
 				guildId: props.i.guild_id,
 				selectedThreadParentId,
 			});
@@ -266,22 +266,21 @@ export const setThreadSubCommand = async (props: {
 			});
 		}
 
-		const updatedDbServerRes = await props.ctx.mongo.discordServers.findOneAndUpdate(
-			{ discordId: props.dbServer.discordId },
-			{
-				$set: {
-					channelId: selectedThreadParentId,
-					threadId: selectedThreadId,
-					webhookId: webhook.id,
-					webhookToken: webhook.token,
-				},
+		const updatedDbServer = await props.ctx.db.discord_server.update({
+			where: { id: props.dbServer.id },
+			data: {
+				channel_id: selectedThreadParentId,
+				thread_id: selectedThreadId,
+				webhook_id: webhook.id,
+				webhook_token: webhook.token,
 			},
-			{ returnDocument: "after" }
-		);
+		});
 
-		if (!updatedDbServerRes.ok) {
-			props.ctx.log("Failed to set thread - failed to update db server", {
-				error: updatedDbServerRes.lastErrorObject,
+		if (!updatedDbServer.channel_id) {
+			props.ctx.log("Db server channel id is falsy after update", {
+				guildId: props.i.guild_id,
+				selectedThreadId,
+				selectedThreadParentId,
 			});
 
 			await editInteractionResponse(props.ctx, props.i, {
@@ -294,36 +293,12 @@ export const setThreadSubCommand = async (props: {
 			return;
 		}
 
-		if (!updatedDbServerRes.value) {
-			props.ctx.log("Failed to set thread - failed to update db server, value falsy");
-
-			await editInteractionResponse(props.ctx, props.i, {
-				flags: MessageFlags.Ephemeral,
-				embeds: [
-					genericErrorEmbed({ language: props.language, requestId: props.ctx.requestId }),
-				],
+		if (!updatedDbServer.thread_id) {
+			props.ctx.log("Db server thread id is falsy after update", {
+				guildId: props.i.guild_id,
+				selectedThreadId,
+				selectedThreadParentId,
 			});
-
-			return;
-		}
-
-		const updatedDbServer = updatedDbServerRes.value;
-
-		if (!updatedDbServer.channelId) {
-			props.ctx.log("Failed to set thread - db server channel id is falsy after update");
-
-			await editInteractionResponse(props.ctx, props.i, {
-				flags: MessageFlags.Ephemeral,
-				embeds: [
-					genericErrorEmbed({ language: props.language, requestId: props.ctx.requestId }),
-				],
-			});
-
-			return;
-		}
-
-		if (!updatedDbServer.threadId) {
-			props.ctx.log("Failed to set thread - db server thread id is falsy after update");
 
 			await editInteractionResponse(props.ctx, props.i, {
 				flags: MessageFlags.Ephemeral,
@@ -338,14 +313,26 @@ export const setThreadSubCommand = async (props: {
 		await editInteractionResponse(props.ctx, props.i, {
 			flags: MessageFlags.Ephemeral,
 			embeds: [
-				channelSetEmbed(props.language, updatedDbServer.threadId),
+				channelSetEmbed(props.language, updatedDbServer.thread_id),
 				settingsEmbed(updatedDbServer, props.language, props.currency),
 			],
 		});
 	} catch (e) {
-		props.ctx.log("Failed to set thread - catched an error", {
+		props.ctx.log("Catched an error in /set thread", {
 			error: e,
 			guildId: props.i.guild_id,
 		});
+
+		await editInteractionResponse(props.ctx, props.i, {
+			flags: MessageFlags.Ephemeral,
+			embeds: [
+				genericErrorEmbed({ language: props.language, requestId: props.ctx.requestId }),
+			],
+		});
 	}
 };
+
+function makeSenseOfRole(role: any) {
+	if (role.name === "@everyone") return { embed: "@everyone", toDb: "1" };
+	return { embed: `<@&${role.id}>`, toDb: role.id };
+}

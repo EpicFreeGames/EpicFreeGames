@@ -4,21 +4,21 @@ import {
 	InteractionResponseType,
 	MessageFlags,
 } from "discord-api-types/v10";
-import { DbDiscordServer } from "../../../../db/dbTypes";
 import { DiscordRequestContext } from "../../../context";
-import { genericErrorEmbed } from "../../../embeds/errors";
-import { settingsEmbed, updatedSettingsEmbed } from "../../../embeds/settings";
-import { Currency, currencies } from "../../../i18n/currency";
 import { Language } from "../../../i18n/language";
-import { editInteractionResponse } from "../../../utils";
+import { Currency, currencies } from "../../../i18n/currency";
+import { discord_server } from "@prisma/client";
 import { getTypedOption } from "../../_getTypedOption";
+import { genericErrorEmbed } from "../../../embeds/errors";
+import { editInteractionResponse } from "../../../utils";
+import { settingsEmbed, updatedSettingsEmbed } from "../../../embeds/settings";
 
 export const setCurrencySubCommand = async (props: {
 	ctx: DiscordRequestContext;
 	i: APIChatInputApplicationCommandGuildInteraction;
 	language: Language;
 	currency: Currency;
-	dbServer: DbDiscordServer;
+	dbServer: discord_server;
 }) => {
 	try {
 		const currencyOption = getTypedOption(
@@ -51,50 +51,29 @@ export const setCurrencySubCommand = async (props: {
 			data: { flags: MessageFlags.Ephemeral },
 		});
 
-		const updatedDbServerRes = await props.ctx.mongo.discordServers.findOneAndUpdate(
-			{ discordId: props.dbServer.discordId },
-			{ $set: { currencyCode: newCurrencyCode } },
-			{ returnDocument: "after" }
-		);
-
-		if (!updatedDbServerRes.ok) {
-			props.ctx.log("Failed to set currency - failed to update db server", {
-				error: updatedDbServerRes.lastErrorObject,
-			});
-
-			await editInteractionResponse(props.ctx, props.i, {
-				flags: MessageFlags.Ephemeral,
-				embeds: [
-					genericErrorEmbed({ language: props.language, requestId: props.ctx.requestId }),
-				],
-			});
-
-			return;
-		}
-
-		if (!updatedDbServerRes.value) {
-			props.ctx.log("Failed to set currency - failed to update db server, value falsy");
-
-			await editInteractionResponse(props.ctx, props.i, {
-				flags: MessageFlags.Ephemeral,
-				embeds: [
-					genericErrorEmbed({ language: props.language, requestId: props.ctx.requestId }),
-				],
-			});
-
-			return;
-		}
+		await props.ctx.db.discord_server.update({
+			where: { id: props.dbServer.id },
+			data: { currency_code: newCurrencyCode },
+		});
 
 		editInteractionResponse(props.ctx, props.i, {
 			flags: MessageFlags.Ephemeral,
 			embeds: [
 				updatedSettingsEmbed(props.language),
-				settingsEmbed(updatedDbServerRes.value, props.language, props.currency),
+				settingsEmbed(props.dbServer, props.language, props.currency),
 			],
 		});
 	} catch (e) {
-		props.ctx.log("Failed to set currency - catched an error", {
+		props.ctx.log("Catched an error in /set currency", {
 			error: e,
+			guildId: props.i.guild_id,
+		});
+
+		await editInteractionResponse(props.ctx, props.i, {
+			flags: MessageFlags.Ephemeral,
+			embeds: [
+				genericErrorEmbed({ language: props.language, requestId: props.ctx.requestId }),
+			],
 		});
 	}
 };

@@ -1,3 +1,4 @@
+import { discord_server } from "@prisma/client";
 import {
 	APIChatInputApplicationCommandGuildInteraction,
 	ApplicationCommandOptionType,
@@ -8,7 +9,6 @@ import {
 } from "discord-api-types/v10";
 import { constants } from "../../../configuration/constants";
 import { envs } from "../../../configuration/env";
-import { DbDiscordServer } from "../../../db/dbTypes";
 import { DiscordRequestContext } from "../../context";
 import { discordApi } from "../../discordApi";
 import { genericErrorEmbed } from "../../embeds/errors";
@@ -26,7 +26,7 @@ export const setChannelSubCommand = async (props: {
 	i: APIChatInputApplicationCommandGuildInteraction;
 	language: Language;
 	currency: Currency;
-	dbServer: DbDiscordServer;
+	dbServer: discord_server;
 }) => {
 	try {
 		props.ctx.respondWith(200, {
@@ -51,7 +51,7 @@ export const setChannelSubCommand = async (props: {
 				"VIEW_CHANNEL",
 				"MANAGE_WEBHOOKS",
 				"EMBED_LINKS",
-				...(props.dbServer?.roleId ? ["MENTION_EVERYONE" as PermissionString] : []),
+				...(props.dbServer?.role_id ? ["MENTION_EVERYONE" as PermissionString] : []),
 			]
 		);
 
@@ -109,13 +109,13 @@ export const setChannelSubCommand = async (props: {
 		// delete the previous saved webhook if new channel !== old channel
 		// that cannot be used since the channel is changing
 		if (
-			props.dbServer?.webhookId &&
-			props.dbServer.webhookToken &&
-			props.dbServer.channelId !== selectedChannelId
+			props.dbServer?.webhook_id &&
+			props.dbServer.webhook_token &&
+			props.dbServer.channel_id !== selectedChannelId
 		) {
 			discordApi(props.ctx, {
 				method: "DELETE",
-				path: `/webhooks/${props.dbServer.webhookId}/${props.dbServer.webhookToken}`,
+				path: `/webhooks/${props.dbServer.webhook_id}/${props.dbServer.webhook_token}`,
 			});
 		}
 
@@ -188,54 +188,16 @@ export const setChannelSubCommand = async (props: {
 			});
 		}
 
-		const updatedDbServerRes = await props.ctx.mongo.discordServers.findOneAndUpdate(
-			{ discordId: props.dbServer.discordId },
-			{
-				$set: {
-					channelId: selectedChannelId,
-					webhookId: webhook.id,
-					webhookToken: webhook.token,
-				},
+		const updatedDbServer = await props.ctx.db.discord_server.update({
+			where: { id: props.dbServer.id },
+			data: {
+				channel_id: selectedChannelId,
+				webhook_id: webhook.id,
+				webhook_token: webhook.token,
 			},
-			{ returnDocument: "after" }
-		);
+		});
 
-		if (!updatedDbServerRes.ok) {
-			props.ctx.log("Failed to update db server", {
-				guildId: props.i.guild_id,
-				selectedChannelId,
-				error: updatedDbServerRes.lastErrorObject,
-			});
-
-			await editInteractionResponse(props.ctx, props.i, {
-				flags: MessageFlags.Ephemeral,
-				embeds: [
-					genericErrorEmbed({ language: props.language, requestId: props.ctx.requestId }),
-				],
-			});
-
-			return;
-		}
-
-		if (!updatedDbServerRes.value) {
-			props.ctx.log("Failed to update db server, value falsy", {
-				guildId: props.i.guild_id,
-				selectedChannelId,
-			});
-
-			await editInteractionResponse(props.ctx, props.i, {
-				flags: MessageFlags.Ephemeral,
-				embeds: [
-					genericErrorEmbed({ language: props.language, requestId: props.ctx.requestId }),
-				],
-			});
-
-			return;
-		}
-
-		const updatedDbServer = updatedDbServerRes.value;
-
-		if (!updatedDbServer.channelId) {
+		if (!updatedDbServer.channel_id) {
 			props.ctx.log("Channel id is falsy after update", {
 				guildId: props.i.guild_id,
 				selectedChannelId,
@@ -251,17 +213,24 @@ export const setChannelSubCommand = async (props: {
 			return;
 		}
 
-		editInteractionResponse(props.ctx, props.i, {
+		await editInteractionResponse(props.ctx, props.i, {
 			flags: MessageFlags.Ephemeral,
 			embeds: [
-				channelSetEmbed(props.language, updatedDbServer.channelId),
+				channelSetEmbed(props.language, updatedDbServer.channel_id),
 				settingsEmbed(updatedDbServer, props.language, props.currency),
 			],
 		});
 	} catch (e) {
-		props.ctx.log("Failed to set channel - catched an error", {
+		props.ctx.log("Catched an error in /set channel", {
 			error: e,
 			guildId: props.i.guild_id,
+		});
+
+		await editInteractionResponse(props.ctx, props.i, {
+			flags: MessageFlags.Ephemeral,
+			embeds: [
+				genericErrorEmbed({ language: props.language, requestId: props.ctx.requestId }),
+			],
 		});
 	}
 };
