@@ -14,6 +14,7 @@ export function ApiProvider(props: { children: ReactNode }) {
 			links: [
 				httpBatchLink({
 					url: "http://localhost:8000/trpc",
+					fetch: (input, init) => fetch(input, { ...init, credentials: "include" }),
 				}),
 			],
 		})

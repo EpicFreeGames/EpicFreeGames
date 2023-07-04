@@ -1,6 +1,7 @@
 import z from "zod";
 import { publicProcedure, router } from "../trpc";
 import { envs } from "../configuration/env";
+import { createToken } from "../auth";
 
 const redirectUrl = envs.FRONT_BASE + "/dash/auth/callback";
 
@@ -40,6 +41,11 @@ export const authRouter = router({
 		const userResponseJson = await userResponse.json();
 
 		if (!!userResponseJson.email) {
+			const token = await createToken(userResponseJson.email);
+			props.ctx.res.setHeader(
+				"Set-Cookie",
+				`token=${token}; HttpOnly; SameSite=Strict; Path=/;`
+			);
 			return { email: userResponseJson.email };
 		} else {
 			throw new Error("No email");
