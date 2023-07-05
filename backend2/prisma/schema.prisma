@@ -8,7 +8,7 @@ generator client {
 }
 
 model game {
-    id           String       @id
+    id           String       @id @default(cuid())
     name         String       @unique @db.Text
     display_name String       @db.Text
     image_url    String       @db.Text
@@ -22,7 +22,7 @@ model game {
 }
 
 model game_price {
-    id              String @id
+    id              String @id @default(cuid())
     value           Float
     formatted_value String
     currency_code   String
@@ -31,22 +31,23 @@ model game_price {
 }
 
 model discord_server {
-    id                String                @id @default(uuid()) // Db id for the server (used for relations)
-    discord_id        String                @unique // Discord's ID for the server
-    role_id           String?
-    channel_id        String?
-    thread_id         String?
-    webhook_id        String?
-    webhook_token     String?
-    language_code     String                @default("en")
-    currency_code     String                @default("USD")
-    created_at        DateTime              @default(now())
-    command_logs      discord_command_log[]
-    discord_send_logs discord_send_logs[]
+    id                 String                @id @default(cuid()) // Db id for the server (used for relations)
+    discord_id         String                @unique // Discord's ID for the server
+    role_id            String?
+    channel_updated_at DateTime?
+    channel_id         String?
+    thread_id          String?
+    webhook_id         String?
+    webhook_token      String?
+    language_code      String                @default("en")
+    currency_code      String                @default("USD")
+    created_at         DateTime              @default(now())
+    command_logs       discord_command_log[]
+    discord_send_logs  discord_send_log[]
 }
 
 model discord_command_log {
-    id                String          @id
+    id                String          @id @default(cuid())
     command           String
     sender_id         String
     discord_server_id String?
@@ -54,10 +55,11 @@ model discord_command_log {
     created_at        DateTime        @default(now())
 }
 
-model discord_send_logs {
-    id                String         @id
+model discord_send_log {
+    id                String         @id @default(cuid())
     type              String
-    result            String         @db.Text
+    statusCode        Int
+    error             String         @db.Text
     success           Boolean
     discord_server_id String
     discord_server    discord_server @relation(fields: [discord_server_id], references: [id], onDelete: Cascade)
@@ -67,13 +69,14 @@ model discord_send_logs {
 }
 
 model send {
-    id                String              @id
+    id                String             @id @default(cuid())
+    created_at        DateTime           @default(now())
     games             game[]
-    discord_send_logs discord_send_logs[]
+    discord_send_logs discord_send_log[]
 }
 
 model user {
-    id      String  @id @default(uuid())
+    id      String  @id @default(cuid())
     email   String  @unique
     isAdmin Boolean @default(false)
 }

@@ -265,6 +265,7 @@ export const setThreadSubCommand = async (props: {
 				thread_id: selectedThreadId,
 				webhook_id: webhook.id,
 				webhook_token: webhook.token,
+				channel_updated_at: new Date(),
 			},
 		});
 

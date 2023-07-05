@@ -189,6 +189,7 @@ export const setChannelSubCommand = async (props: {
 				channel_id: selectedChannelId,
 				webhook_id: webhook.id,
 				webhook_token: webhook.token,
+				channel_updated_at: new Date(),
 			},
 		});
 

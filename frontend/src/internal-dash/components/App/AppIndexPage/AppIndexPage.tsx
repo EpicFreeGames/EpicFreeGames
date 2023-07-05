@@ -1,9 +1,18 @@
 import { Link } from "react-router-dom";
+import { trpc } from "../../../trpc";
 
 export function AppIndexPage() {
+	const sendMutation = trpc.test.send.useMutation();
+
 	return (
 		<div>
-			<Link to="games">games</Link>
+			<button
+				onClick={() => {
+					sendMutation.mutateAsync();
+				}}
+			>
+				{sendMutation.isLoading ? "loading..." : "send"}
+			</button>
 		</div>
 	);
 }
