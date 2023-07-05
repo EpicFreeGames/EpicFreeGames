@@ -85,3 +85,5 @@ export function editInteractionResponse(
 		ctx.log("Failed to edit interaction response", { error: e });
 	});
 }
+
+export const displayRole = (role: string) => (role === "1" ? "@everyone" : `<@&${role}>`);

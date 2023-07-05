@@ -1,6 +1,6 @@
 import { game } from "@prisma/client";
 import { authProcedure, router } from "../trpc";
-import { sendWebhooks } from "../discord/sender";
+import { sendMessages, sendWebhooks } from "../discord/sender";
 
 export const testRouter = router({
 	send: authProcedure.mutation(async (props) => {
@@ -27,7 +27,5 @@ export const testRouter = router({
 				games: { connect: { id: game.id } },
 			},
 		});
-
-		await sendWebhooks(props.ctx.db, newSend.id);
 	}),
 });
