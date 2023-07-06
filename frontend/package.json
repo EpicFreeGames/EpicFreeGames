@@ -13,6 +13,8 @@
 	},
 	"dependencies": {
 		"@astrojs/react": "^2.2.1",
+		"@headlessui/react": "^1.7.15",
+		"@hookform/resolvers": "^3.1.1",
 		"@radix-ui/react-collapsible": "^1.0.3",
 		"@tanstack/react-query": "^4.29.19",
 		"@trpc/client": "^10.33.0",
@@ -26,6 +28,7 @@
 		"marked": "^5.1.0",
 		"react": "^18.0.0",
 		"react-dom": "^18.0.0",
+		"react-hook-form": "^7.45.1",
 		"react-router-dom": "^6.14.1",
 		"superjson": "^1.12.4",
 		"tailwind-merge": "^1.13.2",

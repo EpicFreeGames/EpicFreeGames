@@ -13,8 +13,6 @@ export const middleware = t.middleware;
 export const publicProcedure = t.procedure;
 
 const authMiddleware = middleware(async (props) => {
-	console.log(props.ctx.req.headers.cookie);
-
 	const tokenCookie = props.ctx.req.headers.cookie?.split("=")[1];
 	const token = await verifyToken(tokenCookie ?? "");
 
