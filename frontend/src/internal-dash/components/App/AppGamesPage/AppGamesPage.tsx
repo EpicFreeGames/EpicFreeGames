@@ -9,7 +9,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 export function AppGamesPage() {
 	return (
 		<div className="flex flex-col gap-4 pt-4">
-			<h1 className="text-xl">Games</h1>
+			<div className="flex gap-2 justify-between items-center">
+				<h1 className="text-xl">Games</h1>
+
+				<CreateGame />
+			</div>
 
 			<GameList />
 		</div>
@@ -34,7 +38,10 @@ function GameList() {
 	return (
 		<div className="flex flex-col gap-2">
 			{games.data.map((game) => (
-				<div className="bg-gray-900 border border-gray-800 p-3 rounded-xl flex flex-col gap-2">
+				<div
+					key={game.id}
+					className="bg-gray-900 border border-gray-800 p-3 rounded-xl flex flex-col gap-2"
+				>
 					<div className="flex items-center justify-between">
 						<h2 className="text-lg">{game.display_name}</h2>
 
@@ -45,10 +52,12 @@ function GameList() {
 					</div>
 
 					<div className="flex flex-col sm:flex-row gap-2">
-						<img
-							className="w-full max-w-[16rem] rounded-lg border border-gray-800"
-							src={game.image_url}
-						/>
+						<div>
+							<img
+								className="max-w-[16rem] rounded-lg border border-gray-800"
+								src={game.image_url}
+							/>
+						</div>
 
 						<div className="flex flex-col gap-2 w-full">
 							<div className="flex flex-col gap-1 p-2 rounded-lg border border-gray-800 bg-gray-950/50">
@@ -90,7 +99,10 @@ function GameList() {
 
 									<div className="flex flex-col gap-2 mt-2">
 										{game.prices.map((price) => (
-											<span className="rounded-md  border border-gray-800 p-2">
+											<span
+												key={price.id}
+												className="rounded-md border border-gray-800 p-2"
+											>
 												<b>{price.currency_code}:</b>{" "}
 												{price.formatted_value}
 											</span>
@@ -287,6 +299,162 @@ function EditGame(props: { game: Game }) {
 								type="submit"
 							>
 								{editMutation.isLoading ? "Saving..." : "Save"}
+							</button>
+						</div>
+					</form>
+				</div>
+			</Modal>
+		</>
+	);
+}
+
+const newGameFormSchema = z.object({
+	name: z.string(),
+	display_name: z.string(),
+	image_url: z.string(),
+	start_date: z.custom((v) =>
+		v instanceof Date ? v : typeof v === "string" ? new Date(v) : new Date(v as string)
+	),
+	end_date: z.custom((v) =>
+		v instanceof Date ? v : typeof v === "string" ? new Date(v) : new Date(v as string)
+	),
+	path: z.string(),
+
+	usd_price_formatted: z.string(),
+	usd_price_value: z.number(),
+});
+
+function CreateGame() {
+	const [isOpen, setIsOpen] = useState(false);
+
+	const trpcCtx = trpc.useContext();
+	const createMutation = trpc.games.create.useMutation({
+		onSuccess: () => {
+			setIsOpen(false);
+			trpcCtx.games.invalidate();
+		},
+	});
+
+	const createGameForm = useForm<z.infer<typeof newGameFormSchema>>({
+		resolver: zodResolver(editGameFormSchema),
+		defaultValues: {
+			name: "",
+			display_name: "",
+			image_url: "",
+			start_date: format(new Date(), "yyyy-MM-dd'T'HH:mm"),
+			end_date: format(new Date(), "yyyy-MM-dd'T'HH:mm"),
+			path: "",
+			usd_price_formatted: "0 $",
+			usd_price_value: 0,
+		},
+		onSubmit: (data) => {
+			createMutation.mutate({
+				start_date: data.start_date as Date,
+				end_date: data.end_date as Date,
+				...data,
+			});
+		},
+	});
+
+	return (
+		<>
+			<button
+				onClick={() => setIsOpen(true)}
+				className="py-2 px-3 rounded-lg border border-gray-600 bg-gray-700"
+			>
+				Create
+			</button>
+
+			<Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+				<div className="flex flex-col gap-2">
+					<h1 className="text-xl">Create game</h1>
+
+					<form className="flex flex-col gap-4" onSubmit={createGameForm.handleSubmit}>
+						<label className="flex flex-col gap-1">
+							<span className="text-sm">Name:</span>
+							<input
+								className="p-2 focus rounded-lg bg-gray-700 border border-gray-500 "
+								type="text"
+								{...createGameForm.register("name")}
+							/>
+						</label>
+
+						<label className="flex flex-col gap-1">
+							<span className="text-sm">Image url:</span>
+
+							<input
+								className="p-2 focus rounded-lg bg-gray-700 border border-gray-500 "
+								type="text"
+								{...createGameForm.register("image_url")}
+							/>
+						</label>
+
+						<label className="flex flex-col gap-1">
+							<span className="text-sm">Start:</span>
+
+							<input
+								className="p-2 focus rounded-lg bg-gray-700 border border-gray-500 "
+								type="datetime-local"
+								{...createGameForm.register("start_date", { valueAsDate: true })}
+							/>
+						</label>
+
+						<label className="flex flex-col gap-1">
+							<span className="text-sm">End:</span>
+
+							<input
+								className="p-2 focus rounded-lg bg-gray-700 border border-gray-500 "
+								type="datetime-local"
+								{...createGameForm.register("end_date", { valueAsDate: true })}
+							/>
+						</label>
+
+						<label className="flex flex-col gap-1">
+							<span className="text-sm">Path:</span>
+
+							<input
+								className="p-2 focus rounded-lg bg-gray-700 border border-gray-500 "
+								type="text"
+								{...createGameForm.register("path")}
+							/>
+						</label>
+
+						<label className="flex flex-col gap-1">
+							<span className="text-sm">USD price (formatted):</span>
+
+							<input
+								className="p-2 focus rounded-lg bg-gray-700 border border-gray-500 "
+								type="text"
+								{...createGameForm.register("usd_price_formatted")}
+							/>
+						</label>
+
+						<label className="flex flex-col gap-1">
+							<span className="text-sm">USD price (value):</span>
+
+							<input
+								className="p-2 focus rounded-lg bg-gray-700 border border-gray-500 "
+								type="number"
+								{...createGameForm.register("usd_price_value", {
+									valueAsNumber: true,
+								})}
+							/>
+						</label>
+
+						<div className="flex gap-2 w-full">
+							<button
+								className="w-full py-2 px-3 rounded-lg border border-gray-600 bg-gray-700"
+								type="button"
+								onClick={() => setIsOpen(false)}
+							>
+								Cancel
+							</button>
+
+							<button
+								className="w-full py-2 px-3 rounded-lg border border-gray-600 bg-gray-700"
+								type="submit"
+							>
+								{createMutation.isLoading ? "Saving..." : "Save"}
 							</button>
 						</div>
 					</form>
