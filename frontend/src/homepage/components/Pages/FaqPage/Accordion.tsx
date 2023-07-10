@@ -1,7 +1,7 @@
 import * as Collapsible from "@radix-ui/react-collapsible";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState, type ReactNode } from "react";
-import { cn } from "../../../../shared/reactUtils";
+import { cn } from "../../../../shared/cn";
 
 export function FaqAccordion(props: {
 	questionsAndAnswers: { question: string; answer: string }[];
