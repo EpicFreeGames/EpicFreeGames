@@ -5,6 +5,7 @@ import { envs } from "./configuration/env";
 import { createServer } from "http";
 import { discordRequestHandler } from "./discord/requestHandler";
 import { PrismaClient } from "@prisma/client";
+import { redirect } from "./redirector";
 
 const db = new PrismaClient();
 
@@ -32,5 +33,16 @@ createServer((req, res) => {
 		req.url = req.url.replace("/trpc", "");
 
 		return trpcHandler(req, res);
+	} else if (
+		envs.ENV === "notprod"
+			? req.url?.startsWith("/redirect")
+			: req.headers.host?.startsWith("redirect")
+	) {
+		redirect(req, res, db);
+		return;
+	} else {
+		res.writeHead(404);
+		res.end();
+		return;
 	}
 }).listen(port, () => console.log(`Listening on port ${port}`));
