@@ -1,9 +1,12 @@
 import z from "zod";
-import { authProcedure, publicProcedure, router } from "../trpc";
+import { authProcedure, router } from "../trpc";
 
 export const gamesRouter = router({
 	getAll: authProcedure.query((props) => {
-		return props.ctx.db.game.findMany({ include: { prices: true } });
+		return props.ctx.db.game.findMany({
+			include: { prices: true },
+			orderBy: { start_date: "desc" },
+		});
 	}),
 	toggleConfirmed: authProcedure
 		.input(
