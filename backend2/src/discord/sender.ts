@@ -45,14 +45,20 @@ export async function sendWebhooks(db: PrismaClient, sendId: string) {
 		}),
 	]);
 
+	if (!serverCount) {
+		return console.log("WEBHOOKS ABORT - NO SERVERS");
+	}
+
+	console.log(`WEBHOOKS START - STARTING SEND TO ${serverCount} SERVERS`);
+
 	let i = 0;
 	let prevI = 0;
 	let failed = 0;
 	let succeeded = 0;
 	let prevSucceed = 0;
 
-	setInterval(() => {
-		console.log("WEBHOOKS - status", {
+	const statusLogInterval = setInterval(() => {
+		console.log("WEBHOOKS STATUS", {
 			i,
 			failed,
 			succeeded,
@@ -93,7 +99,7 @@ export async function sendWebhooks(db: PrismaClient, sendId: string) {
 				`?${searchParams.toString()}`;
 
 			fetch(url, {
-				method: "GET",
+				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify(body),
 			})
@@ -102,7 +108,7 @@ export async function sendWebhooks(db: PrismaClient, sendId: string) {
 
 					if (!r.ok) {
 						failed++;
-						console.log(i, "WEBHOOKS - NOT OK", json, r.status);
+						console.log(i, "WEBHOOKS NOT OK", json, r.status);
 					} else {
 						succeeded++;
 					}
@@ -121,7 +127,7 @@ export async function sendWebhooks(db: PrismaClient, sendId: string) {
 						.catch(() => null);
 				})
 				.catch((e) => {
-					console.log(i, "WEBHOOKS - ERROR", e);
+					console.log(i, "WEBHOOKS ERROR", e);
 
 					failed++;
 
@@ -159,6 +165,9 @@ export async function sendWebhooks(db: PrismaClient, sendId: string) {
 			skip: 1,
 		});
 	}
+
+	console.log("WEBHOOKS DONE");
+	clearInterval(statusLogInterval);
 }
 
 export async function sendMessages(db: PrismaClient, sendId: string) {
@@ -196,14 +205,20 @@ export async function sendMessages(db: PrismaClient, sendId: string) {
 		}),
 	]);
 
+	if (!serverCount) {
+		return console.log("MESSAGES ABORT - NO SERVERS");
+	}
+
+	console.log(`MESSAGES START - STARTING SEND TO ${serverCount} SERVERS`);
+
 	let i = 0;
 	let prevI = 0;
 	let failed = 0;
 	let succeeded = 0;
 	let prevSucceed = 0;
 
-	setInterval(() => {
-		console.log("MESSAGES - status", {
+	const statusLogInterval = setInterval(() => {
+		console.log("MESSAGES STATUS", {
 			i,
 			failed,
 			succeeded,
@@ -244,7 +259,7 @@ export async function sendMessages(db: PrismaClient, sendId: string) {
 
 					if (!r.ok) {
 						failed++;
-						console.log(i, "MESSAGES - NOT OK", json, r.status);
+						console.log(i, "MESSAGES NOT OK", json, r.status);
 					} else {
 						succeeded++;
 					}
@@ -263,7 +278,7 @@ export async function sendMessages(db: PrismaClient, sendId: string) {
 						.catch(() => null);
 				})
 				.catch((e) => {
-					console.log(i, "MESSAGES - ERROR", e);
+					console.log(i, "MESSAGES ERROR", e);
 
 					failed++;
 
@@ -301,4 +316,7 @@ export async function sendMessages(db: PrismaClient, sendId: string) {
 			skip: 1,
 		});
 	}
+
+	console.log("MESSAGES DONE");
+	clearInterval(statusLogInterval);
 }
