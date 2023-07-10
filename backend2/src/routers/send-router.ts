@@ -1,6 +1,7 @@
 import z from "zod";
 import { authProcedure, router } from "../trpc";
-// import { sendMessages, sendWebhooks } from "../discord/sender";
+import { TRPCError } from "@trpc/server";
+import { sendMessages, sendWebhooks } from "../discord/sender";
 
 export const sendRouter = router({
 	getAll: authProcedure.query(async (props) => {
@@ -33,6 +34,23 @@ export const sendRouter = router({
 			});
 		}),
 
+	removeSend: authProcedure.input(z.object({ sendId: z.string() })).mutation(async (props) => {
+		const send = await props.ctx.db.send.findUnique({
+			where: { id: props.input.sendId },
+		});
+
+		if (!send) {
+			throw new TRPCError({
+				code: "NOT_FOUND",
+				message: "Send not found",
+			});
+		}
+
+		await props.ctx.db.send.delete({
+			where: { id: props.input.sendId },
+		});
+	}),
+
 	startSending: authProcedure.input(z.object({ sendId: z.string() })).mutation(async (props) => {
 		const send = await props.ctx.db.send.findUnique({
 			where: { id: props.input.sendId },
@@ -42,7 +60,7 @@ export const sendRouter = router({
 			throw new Error("Send not found");
 		}
 
-		// sendWebhooks(props.ctx.db, send.id);
-		// sendMessages(props.ctx.db, send.id);
+		sendWebhooks(props.ctx.db, send.id);
+		sendMessages(props.ctx.db, send.id);
 	}),
 });

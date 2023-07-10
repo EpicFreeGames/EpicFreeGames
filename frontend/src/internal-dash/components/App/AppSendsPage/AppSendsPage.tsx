@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { trpc } from "../../../trpc";
+import { RouterOutputs, trpc } from "../../../trpc";
 import { Modal } from "../Modal";
 import { useForm } from "../useForm";
 
@@ -56,14 +56,16 @@ function SendsList() {
 					<div className="flex justify-between items-center">
 						<h2 className="text-lg">{send.id}</h2>
 
-						<div className="flex gap-2"></div>
+						<div className="flex gap-2">
+							<RemoveSend sendId={send.id} />
+
+							<StartSending send={send} />
+						</div>
 					</div>
 
-					<div className="bg-gray-900 border border-gray-800 p-2 flex flex-col rounded-lg">
-						{send.games.map((game) => (
-							<span key={game.id}>{game.name}</span>
-						))}
-					</div>
+					{send.games.map((game) => (
+						<span key={game.id}>{game.name}</span>
+					))}
 				</div>
 			))}
 		</div>
@@ -74,8 +76,12 @@ function CreateSend() {
 	const [isOpen, setIsOpen] = useState(false);
 
 	const games = trpc.games.getAll.useQuery();
-
-	const createSendMutation = trpc.send.createSend.useMutation();
+	const trpcCtx = trpc.useContext();
+	const createSendMutation = trpc.send.createSend.useMutation({
+		onSuccess() {
+			trpcCtx.send.getAll.invalidate();
+		},
+	});
 
 	const createSendForm = useForm({
 		defaultValues: {
@@ -83,8 +89,11 @@ function CreateSend() {
 		},
 		onSubmit: async (values) => {
 			await createSendMutation.mutateAsync(values);
+			setIsOpen(false);
 		},
 	});
+
+	const now = new Date();
 
 	return (
 		<>
@@ -99,7 +108,7 @@ function CreateSend() {
 				<div className="flex flex-col gap-2">
 					<h1 className="text-xl">Create Send</h1>
 
-					<form className="flex flex-col gap-2">
+					<form className="flex flex-col gap-4">
 						{games.isLoading ? (
 							<div>Loading...</div>
 						) : games.error ? (
@@ -112,16 +121,183 @@ function CreateSend() {
 							>
 								{games.data.map((game) => (
 									<option key={game.id} value={game.id}>
-										{game.name}
+										{game.name} (
+										{now < game.start_date
+											? "upcoming"
+											: game.end_date < now
+											? "free"
+											: "gone"}
+										)
 									</option>
 								))}
 							</select>
 						) : (
 							<div>No games</div>
 						)}
+
+						<div className="flex w-full gap-2">
+							<button
+								type="button"
+								onClick={() => setIsOpen(false)}
+								className="py-2 w-full px-3 rounded-lg border border-gray-600 bg-gray-700"
+							>
+								Cancel
+							</button>
+
+							<button
+								type="submit"
+								onClick={createSendForm.handleSubmit}
+								className="py-2 w-full px-3 rounded-lg border border-gray-600 bg-gray-700"
+							>
+								Create
+							</button>
+						</div>
 					</form>
 				</div>
 			</Modal>
 		</>
 	);
 }
+
+function RemoveSend(props: { sendId: string }) {
+	const [isOpen, setIsOpen] = useState(false);
+
+	const trpcCtx = trpc.useContext();
+	const removeSendMutation = trpc.send.removeSend.useMutation({
+		onSuccess: () => {
+			trpcCtx.send.getAll.invalidate();
+		},
+	});
+
+	const removeSendForm = useForm({
+		defaultValues: {
+			gameIds: new Array<string>(),
+		},
+		onSubmit: async () => {
+			await removeSendMutation.mutateAsync({ sendId: props.sendId });
+
+			setIsOpen(false);
+		},
+	});
+
+	return (
+		<>
+			<button
+				onClick={() => setIsOpen(true)}
+				className="p-2 rounded-lg border border-gray-600 bg-gray-700"
+			>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="24"
+					height="24"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					className="lucide lucide-trash-2 h-5 w-5 text-red-500"
+				>
+					<path d="M3 6h18" />
+					<path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+					<path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+					<line x1="10" x2="10" y1="11" y2="17" />
+					<line x1="14" x2="14" y1="11" y2="17" />
+				</svg>
+			</button>
+
+			<Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+				<div className="flex flex-col gap-4">
+					<h1 className="text-xl">Delete send</h1>
+
+					<p>Are you sure you want to delete this send?</p>
+
+					<div className="flex w-full gap-2">
+						<button
+							type="button"
+							onClick={() => setIsOpen(false)}
+							className="py-2 w-full px-3 rounded-lg border border-gray-600 bg-gray-700"
+						>
+							Cancel
+						</button>
+
+						<button
+							type="submit"
+							onClick={removeSendForm.handleSubmit}
+							className="py-2 w-full px-3 rounded-lg border border-gray-600 bg-gray-700"
+						>
+							Remove
+						</button>
+					</div>
+				</div>
+			</Modal>
+		</>
+	);
+}
+
+function StartSending(props: { send: Send }) {
+	const [isOpen, setIsOpen] = useState(false);
+
+	const trpcCtx = trpc.useContext();
+	const startSendingMutation = trpc.send.startSending.useMutation({
+		onSuccess() {
+			trpcCtx.games.getAll.invalidate();
+		},
+	});
+
+	const createSendForm = useForm({
+		defaultValues: {
+			gameIds: new Array<string>(),
+		},
+		onSubmit: async () => {
+			await startSendingMutation.mutateAsync({ sendId: props.send.id });
+		},
+	});
+
+	return (
+		<>
+			<button
+				onClick={() => setIsOpen(true)}
+				className="p-2 rounded-lg border border-gray-600 bg-gray-700"
+			>
+				Send
+			</button>
+
+			<Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+				<div className="flex flex-col gap-4">
+					<h1 className="text-xl">Start sending</h1>
+
+					<p>Are you sure you want to start sending these?</p>
+
+					<div className="flex flex-col gap-2">
+						{props.send.games.map((game) => (
+							<div key={game.id}>
+								<div>{game.name}</div>
+							</div>
+						))}
+					</div>
+
+					<div className="flex w-full gap-2">
+						<button
+							type="button"
+							onClick={() => setIsOpen(false)}
+							className="py-2 w-full px-3 rounded-lg border border-gray-600 bg-gray-700"
+						>
+							Cancel
+						</button>
+
+						<button
+							type="submit"
+							onClick={createSendForm.handleSubmit}
+							className="py-2 w-full px-3 rounded-lg border border-gray-600 bg-gray-700"
+						>
+							Send
+						</button>
+					</div>
+				</div>
+			</Modal>
+		</>
+	);
+}
+
+type Send = RouterOutputs["send"]["getAll"][number];
