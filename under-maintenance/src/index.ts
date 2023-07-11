@@ -12,6 +12,8 @@ import nacl from "tweetnacl";
 import { envs } from "./configuration/envs";
 
 createServer(async (req, res) => {
+	console.log("req");
+
 	const stringBody = await getTextBody(req);
 
 	if (!isValidRequest(req, stringBody)) {
