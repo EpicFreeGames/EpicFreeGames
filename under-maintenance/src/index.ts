@@ -1,4 +1,4 @@
-import { createServer } from "node:http";
+import { IncomingMessage, createServer } from "node:http";
 import {
 	APIInteraction,
 	APIInteractionResponseChannelMessageWithSource,
@@ -59,7 +59,7 @@ createServer(async (req, res) => {
 
 const publicKey = valueToUint8Array(envs.DC_PUB_KEY, true);
 
-function isValidRequest(req: Request, stringBody: string) {
+function isValidRequest(req: IncomingMessage, stringBody: string) {
 	const timestampHeader = req.headers["x-signature-timestamp"];
 	const signatureHeader = req.headers["x-signature-ed25519"];
 

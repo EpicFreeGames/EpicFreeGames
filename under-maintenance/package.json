@@ -7,13 +7,13 @@
 	},
 	"devDependencies": {
 		"@types/node": "^20.4.1",
-		"discord-api-types": "^0.37.48",
 		"dotenv-cli": "^7.2.1",
 		"prettier": "^2.8.8",
 		"tsx": "^3.12.7",
 		"typescript": "^5.1.6"
 	},
 	"dependencies": {
+		"discord-api-types": "^0.37.48",
 		"tweetnacl": "^1.0.3",
 		"zod": "^3.21.4"
 	}

@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  discord-api-types:
+    specifier: ^0.37.48
+    version: 0.37.48
   tweetnacl:
     specifier: ^1.0.3
     version: 1.0.3
@@ -16,9 +19,6 @@ devDependencies:
   '@types/node':
     specifier: ^20.4.1
     version: 20.4.1
-  discord-api-types:
-    specifier: ^0.37.48
-    version: 0.37.48
   dotenv-cli:
     specifier: ^7.2.1
     version: 7.2.1
@@ -272,7 +272,7 @@ packages:
 
   /discord-api-types@0.37.48:
     resolution: {integrity: sha512-vu2NQJD7SZRjpKDC2DPNsxTz34KS53OrotA+LGRW6mcyT55Hjqu66aRrouzjYhea7tllL9I7rvWVX7bg3aT2AQ==}
-    dev: true
+    dev: false
 
   /dotenv-cli@7.2.1:
     resolution: {integrity: sha512-ODHbGTskqRtXAzZapDPvgNuDVQApu4oKX8lZW7Y0+9hKA6le1ZJlyRS687oU9FXjOVEDU/VFV6zI125HzhM1UQ==}
