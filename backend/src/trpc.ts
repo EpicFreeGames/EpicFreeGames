@@ -13,10 +13,12 @@ export const middleware = t.middleware;
 export const publicProcedure = t.procedure;
 
 const authMiddleware = middleware(async (props) => {
-	const tokenCookie = props.ctx.req.headers.cookie?.split("=")[1];
+	const tokenCookie = props.ctx.req.headers.cookie?.split("token=")[1];
 	const token = await verifyToken(tokenCookie ?? "");
 
 	if (!token) {
+		props.ctx.res.setHeader("Set-Cookie", "token=; HttpOnly; Path=/; Max-Age=0");
+
 		throw new TRPCError({
 			code: "UNAUTHORIZED",
 		});

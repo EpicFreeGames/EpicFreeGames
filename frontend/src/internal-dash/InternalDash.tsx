@@ -5,12 +5,12 @@ import { ApiProvider } from "./trpc";
 
 export function InternalDash() {
 	return (
-		<ApiProvider>
-			<AuthProvider>
+		<AuthProvider>
+			<ApiProvider>
 				<BrowserRouter>
 					<Entrypoint />
 				</BrowserRouter>
-			</AuthProvider>
-		</ApiProvider>
+			</ApiProvider>
+		</AuthProvider>
 	);
 }
