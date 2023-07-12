@@ -14,7 +14,7 @@ services:
             - POSTGRES_DB=efg-notprod
 
     proxy:
-        image: twilight-rs--http-proxy
+        image: veetik/efg-proxy
         restart: always
         environment:
             - DISCORD_TOKEN=${DC_TOKEN}
