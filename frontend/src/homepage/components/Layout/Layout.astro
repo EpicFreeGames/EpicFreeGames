@@ -31,6 +31,18 @@ const relativeIcoUrl = isProd ? `/assets/epicfreegames.ico` : `/assets/epicfreeg
         <link rel="icon" type="image/x-icon" href={relativeIcoUrl} />
 
         <SEO />
+
+        <!-- Prevent FOUC (?) -->
+        <style is:inline>
+            html {
+                visibility: hidden;
+            }
+        </style>
+        <style is:global>
+            html {
+                visibility: visible;
+            }
+        </style>
     </head>
 
     <body
