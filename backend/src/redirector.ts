@@ -23,7 +23,7 @@ export async function redirect(req: Request, res: Response, db: PrismaClient) {
 
 	const dest =
 		destination === "web"
-			? `https://epicgames.com/store/p${game.path}`
+			? `https://epicgames.com${game.path}`
 			: `com.epicgames.launcher://store${game.path}`;
 
 	res.writeHead(302, { Location: dest });
