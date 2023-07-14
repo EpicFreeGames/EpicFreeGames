@@ -1,12 +1,12 @@
 {
 	"rewrites": [
 		{
-			"source": "/r/web/:gameId*",
-			"destination": "https://redirect.epicfreegames.net/web/:gameId*"
+			"source": "/r/web/:gameId",
+			"destination": "https://redirect.epicfreegames.net/web/:gameId"
 		},
 		{
-			"source": "/r/app/:gameId*",
-			"destination": "https://redirect.epicfreegames.net/app/:gameId*"
+			"source": "/r/app/:gameId",
+			"destination": "https://redirect.epicfreegames.net/app/:gameId"
 		}
 	]
 }
