@@ -1,7 +1,3 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 .focus {
 	@apply relative outline-none outline outline-[3px] outline-offset-2 outline-transparent transition-all duration-150 focus-visible:outline-blue-500;
 }
