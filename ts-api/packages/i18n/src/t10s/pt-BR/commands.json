@@ -1,9 +1,9 @@
 {
-  "cmd_desc_set_currency": "Pick a currency for the games' prices on this server",
+  "cmd_desc_set_currency": "Escolha uma moeda para os preços dos jogos nesse servidor",
   "cmd_desc_set_thread": "Escolha uma discussão na qual eu vou postar novos jogos grátis",
   "cmd_desc_set_channel": "Escolha um canal o qual eu vou postar novos jogos grátis",
-  "cmd_desc_set_role": "Pick a role I'll ping when a new game comes free",
-  "cmd_desc_set_language": "Pick a language for my messages on this server",
+  "cmd_desc_set_role": "Escolha um cargo que notificarei quando um novo jogo ficar gratuito",
+  "cmd_desc_set_language": "Escolha um idioma para as minhas mensagens nesse servidor",
   "cmd_desc_remove_channel": "Remove o canal configurado (ou tópico)",
   "cmd_desc_remove_role": "Remove o cargo setado",
   "cmd_desc_invite": "Obter link de convite",
@@ -13,5 +13,5 @@
   "cmd_desc_free": "Veja os jogos atuais gratuitos",
   "cmd_desc_settings": "Veja minhas configurações",
   "cmd_desc_vote": "Vote-me",
-  "cmd_desc_test": "Sends a test message to the set channel and pings the set role"
+  "cmd_desc_test": "Envia uma mensagem de teste para o canal definido e pings para a função definida"
 }
