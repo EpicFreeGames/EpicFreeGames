@@ -14,6 +14,9 @@ dependencies:
   date-fns:
     specifier: ^2.30.0
     version: 2.30.0
+  discord-api-types:
+    specifier: ^0.37.48
+    version: 0.37.48
   jose:
     specifier: ^4.14.4
     version: 4.14.4
@@ -37,9 +40,6 @@ devDependencies:
   '@types/node':
     specifier: ^20.3.3
     version: 20.3.3
-  discord-api-types:
-    specifier: ^0.37.47
-    version: 0.37.47
   dotenv-cli:
     specifier: ^7.2.1
     version: 7.2.1
@@ -356,9 +356,9 @@ packages:
       '@babel/runtime': 7.22.5
     dev: false
 
-  /discord-api-types@0.37.47:
-    resolution: {integrity: sha512-rNif8IAv6duS2z47BMXq/V9kkrLfkAoiwpFY3sLxxbyKprk065zqf3HLTg4bEoxRSmi+Lhc7yqGDrG8C3j8GFA==}
-    dev: true
+  /discord-api-types@0.37.48:
+    resolution: {integrity: sha512-vu2NQJD7SZRjpKDC2DPNsxTz34KS53OrotA+LGRW6mcyT55Hjqu66aRrouzjYhea7tllL9I7rvWVX7bg3aT2AQ==}
+    dev: false
 
   /dotenv-cli@7.2.1:
     resolution: {integrity: sha512-ODHbGTskqRtXAzZapDPvgNuDVQApu4oKX8lZW7Y0+9hKA6le1ZJlyRS687oU9FXjOVEDU/VFV6zI125HzhM1UQ==}
