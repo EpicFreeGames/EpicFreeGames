@@ -1,8 +1,9 @@
 import { PrismaClient } from "@prisma/client";
 import { Request, Response } from "./discord/requestHandler";
+import { envs } from "./configuration/env";
 
 export async function redirect(req: Request, res: Response, db: PrismaClient) {
-	const [destination, gameId] = req.url?.split("/").slice(2) ?? [];
+	const [destination, gameId] = req.url?.split("/").slice(envs.ENV === "notprod" ? 2 : 1) ?? [];
 
 	if (!destination || !gameId) {
 		res.writeHead(400);
