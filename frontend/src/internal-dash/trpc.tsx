@@ -1,9 +1,4 @@
-import {
-	TRPCClientError,
-	createTRPCReact,
-	httpBatchLink,
-	inferReactQueryProcedureOptions,
-} from "@trpc/react-query";
+import { createTRPCReact, httpBatchLink, inferReactQueryProcedureOptions } from "@trpc/react-query";
 import type { RootRouter } from "../../../backend/src/rootRouter";
 import { useState, type ReactNode } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -11,6 +6,7 @@ import superjson from "superjson";
 import { useAuthContext } from "./auth";
 import type { inferRouterInputs, inferRouterOutputs } from "@trpc/server";
 
+const apiUrl = import.meta.env.PUBLIC_BACKEND_URL + "/trpc";
 export const trpc = createTRPCReact<RootRouter>();
 
 export function ApiProvider(props: { children: ReactNode }) {
@@ -22,7 +18,7 @@ export function ApiProvider(props: { children: ReactNode }) {
 			transformer: superjson,
 			links: [
 				httpBatchLink({
-					url: "http://localhost:8000/trpc",
+					url: apiUrl,
 					fetch: async (input, init) => {
 						const response = await fetch(input, { ...init, credentials: "include" });
 
