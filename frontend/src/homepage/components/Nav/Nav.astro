@@ -1,0 +1,21 @@
+---
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import HomeIcon from "../Icons/HomeIcon.astro";
+import NavLink from "./NavLink.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang.code);
+---
+
+<nav class="fixed z-10 w-full bg-gray-900/50 backdrop-blur-sm">
+    <div
+        class="mx-auto flex h-[3.5rem] max-w-screen-sm items-center justify-between gap-3 overflow-auto px-3 sm:h-[4.5rem]"
+    >
+        <div class="flex gap-1 sm:gap-3">
+            <NavLink href="/"><HomeIcon /></NavLink>
+            <NavLink href="/commands">{t("commands")}</NavLink>
+            <NavLink href="/tutorial">{t("tutorial")}</NavLink>
+            <NavLink href="/faq">{t("faq")}</NavLink>
+        </div>
+    </div>
+</nav>

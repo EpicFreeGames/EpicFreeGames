@@ -1,0 +1,67 @@
+---
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import Layout from "../Layout/Layout.astro";
+import Markdown from "../Markdown.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang.code);
+---
+
+<Layout title={t("tutorial")}>
+    <h1 class="text-2xl font-bold">{t("tutorial")}</h1>
+
+    <div class="flex flex-col gap-[3rem] pt-6 sm:gap-[4rem]">
+        <div class="flex flex-col gap-4">
+            <Markdown stuff={t("tutorial_q", { botName: "EpicFreeGames" })} />
+
+            <Markdown stuff={t("tutorial_1", { inviteLink: "/invite" })} />
+
+            <Markdown stuff={t("tutorial_2")} />
+
+            <Markdown stuff={t("tutorial_3")} />
+
+            <div class="rounded-md border-[1px] border-gray-700 bg-gray-800 px-3 py-2">
+                <h3 class="pb-2 font-bold">{t("having_problems_title")}</h3>
+
+                <Markdown
+                    stuff={t("having_problems_desc", { faqLink: "/faq", serverInvite: "/discord" })}
+                />
+            </div>
+        </div>
+
+        <div class="flex flex-col">
+            <div class="flex gap-1">
+                <h2 class="pb-2 text-xl font-bold">{t("tutorial_setting_role")}</h2>
+                <span class="text-lg font-normal text-slate-600">({t("optional")})</span>
+            </div>
+
+            <div class="flex flex-col gap-2">
+                <Markdown stuff={t("tutorial_setting_role_1")} />
+
+                <Markdown stuff={t("tutorial_setting_role_2")} />
+            </div>
+        </div>
+
+        <div class="flex flex-col">
+            <div class="flex gap-1">
+                <h2 class="pb-2 text-xl font-bold">
+                    {t("tutorial_changing_language")}
+                </h2>
+                <span class="text-lg font-normal text-slate-600">({t("optional")})</span>
+            </div>
+
+            <Markdown stuff={t("tutorial_changing_language_1")} />
+        </div>
+
+        <div class="flex flex-col">
+            <div class="flex gap-1">
+                <h2 class="pb-2 text-xl font-bold">
+                    {t("tutorial_changing_currency")}
+                </h2>
+                <span class="text-lg font-normal text-slate-600">({t("optional")})</span>
+            </div>
+
+            <Markdown stuff={t("tutorial_changing_currency_1")} />
+        </div>
+    </div>
+</Layout>

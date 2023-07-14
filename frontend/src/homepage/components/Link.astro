@@ -1,0 +1,25 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { resolveHref } from "../utils";
+
+type Props = HTMLAttributes<"a"> & {
+    href: string;
+    withLang?: boolean;
+};
+
+const { withLang = true, href } = Astro.props;
+
+const resolvedHref = resolveHref({
+    currentPath: Astro.url.pathname,
+    href,
+    withLang,
+});
+---
+
+<a href={resolvedHref} class="focus w-max rounded-md">
+    <span
+        class="border-b-2 duration-150 transition-all border-b-blue-400 border-opacity-40 font-bold text-blue-400 hover:border-opacity-100"
+    >
+        <slot />
+    </span>
+</a>

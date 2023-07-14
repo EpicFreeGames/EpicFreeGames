@@ -1,0 +1,18 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { resolveHref, resolvePathname } from "../../utils";
+
+type Props = HTMLAttributes<"a"> & { href: string };
+const props = Astro.props;
+
+const { pathname } = resolvePathname(Astro.url.pathname);
+const linkHref = resolveHref({ currentPath: Astro.url.pathname, href: props.href });
+const activeLinkClass = pathname === props.href ? "bg-gray-700" : "";
+---
+
+<a
+    class=`${activeLinkClass} outline-none outline outline-[3px] relative outline-offset-2 outline-transparent transition-all focus-visible:outline-blue-500 flex items-center justify-center rounded-md border border-transparent px-2 py-1 font-bold duration-150 active:bg-gray-700`
+    href={linkHref}
+>
+    <slot />
+</a>

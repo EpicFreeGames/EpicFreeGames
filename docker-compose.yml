@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+    db:
+        image: postgres
+        restart: always
+        ports:
+            - 5432:5432
+        volumes:
+            - db_data:/var/lib/postgresql/data
+        environment:
+            - POSTGRES_PASSWORD=postgres
+            - POSTGRES_USER=postgres
+            - POSTGRES_DB=efg-notprod
+
+    proxy:
+        image: veetik/efg-proxy
+        restart: always
+        environment:
+            - DISCORD_TOKEN=${DC_TOKEN}
+
+volumes:
+    db_data:

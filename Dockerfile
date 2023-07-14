@@ -7,7 +7,7 @@ FROM base AS pruner
 ARG APP
 ARG APP_FOLDER
 
-RUN yarn global add turbo@1.4.4
+RUN yarn global add turbo
 
 COPY ./*.json yarn.lock ./
 COPY ./apps ./apps
@@ -28,9 +28,6 @@ FROM base as runner
 
 ARG APP_FOLDER
 ENV APP_FOLDER=${APP_FOLDER}
-
-ARG VERSION
-ENV VERSION=${VERSION}
 
 COPY --from=deps /app/ ./
 COPY --from=pruner /app/out/full/ ./

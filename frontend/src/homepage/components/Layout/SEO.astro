@@ -1,0 +1,62 @@
+---
+import { webLanguages } from "../../i18n/languages";
+import { resolvePathname } from "../../utils";
+
+const botName = import.meta.env.PUBLIC_BOT_NAME;
+const baseUrl = import.meta.env.PUBLIC_BASE_URL;
+const isProd = import.meta.env.PROD;
+
+const relativeLogoUrl = isProd
+    ? `/assets/epicfreegames.webp`
+    : `/assets/epicfreegames-notprod.webp`;
+
+const desc =
+    "A customizable and easy-to-setup Discord bot focused around notifying about free games. Apart from notifying, it also provides your server some cool commands!";
+
+const { pathname } = resolvePathname(Astro.url.pathname);
+const isHome = pathname === "/";
+---
+
+<base href={baseUrl} />
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content={botName} />
+<meta name="twitter:description" content={desc} />
+
+<meta property="og:title" content={botName} />
+<meta property="og:description" content={desc} />
+
+<meta property="og:image" content={`${baseUrl}${relativeLogoUrl}`} />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="180" />
+<meta property="og:image:height" content="180" />
+<meta property="og:image:alt" content="EpicFreeGames logo" />
+
+<meta property="og:type" content="website" />
+<meta property="og:url" content={baseUrl} />
+
+<meta property="og:site_name" content={botName} />
+
+<meta name="description" content={desc} />
+<meta
+    name="keywords"
+    content="discord, bot, free, games, epic, store, giveaway, notify, notification, epicfreegames"
+/>
+
+{isProd ? <meta name="robots" content="index, follow" /> : <meta name="robots" content="noindex" />}
+
+<link rel="alternate" hreflang="x-default" href={`${baseUrl}${!isHome ? pathname : ""}`} />
+
+{
+    webLanguages.map((l) => (
+        <link
+            rel="alternate"
+            hreflang={l.code}
+            href={
+                l.code === "en"
+                    ? `${baseUrl}${!isHome ? pathname : ""}`
+                    : `${baseUrl}/${l.code}${!isHome ? pathname : ""}`
+            }
+        />
+    ))
+}

@@ -1,0 +1,10 @@
+---
+import { markdown } from "../markdown";
+
+type Props = { stuff: string };
+const props = Astro.props;
+
+const parsedMarkdown = markdown(props.stuff, Astro.url.pathname);
+---
+
+<Fragment set:html={parsedMarkdown} />

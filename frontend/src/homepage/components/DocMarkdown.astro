@@ -1,0 +1,42 @@
+---
+import { marked } from "marked";
+
+type Props = {
+    stuff: string;
+};
+
+const parsedMarkdown = marked(Astro.props.stuff);
+
+const replacedMarkdown = parsedMarkdown
+    // Replace all <a> tags with a custom component
+    .replaceAll(
+        /(<a\s+(?:[^>]*?\s+)?href="[^"]*"(?:\s+[^>]*?)?\s*)>(.*?)<\/a>/gi,
+        '$1 class="focus w-max rounded-md"><span class="border-b-2 border-b-blue-400 border-opacity-40 font-bold text-blue-400 hover:border-opacity-100">$2</span></a>'
+    )
+    // Replace all <h1> tags with a custom component
+    .replaceAll(
+        /(<h1\s+(?:[^>]*)\s)?>(.*?)<\/h1>/gi,
+        '$1 class="my-[0.67em] text-2xl font-medium">$2</h1>'
+    )
+    // Replace all <h2> tags with a custom component
+    .replaceAll(
+        /(<h2\s+(?:[^>]*)\s)?>(.*?)<\/h2>/gi,
+        '$1 class="my-[0.83em] text-xl font-medium">$2</h2>'
+    )
+    // Replace all <h3> tags with a custom component
+    .replaceAll(
+        /(<h3\s+(?:[^>]*)\s)?>(.*?)<\/h3>/gi,
+        '$1 class="my-[1em] text-lg font-medium">$2</h3>'
+    )
+    // Replace all <h4> tags with a custom component
+    .replaceAll(
+        /(<h4\s+(?:[^>]*)\s)?>(.*?)<\/h4>/gi,
+        '$1 class="my-[1em] text-base font-medium">$2</h4>'
+    )
+    // Replace all <ul> tags with a custom component
+    .replaceAll(/(<ul)>([\s\S]*?)<\/ul>/gi, '$1 class="my-[1em] list-disc pl-5">$2</ul>')
+    // Replace all <p> tags with a custom component
+    .replaceAll(/(<p)>([\s\S]*?)<\/p>/gi, '$1 class="my-[1em] text-base">$2</p>');
+---
+
+<Fragment set:html={replacedMarkdown} />

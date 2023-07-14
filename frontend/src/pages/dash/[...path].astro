@@ -1,0 +1,19 @@
+---
+import { InternalDash } from "../../internal-dash/InternalDash";
+import InternalDashLayout from "../../internal-dash/components/InternalDashLayout.astro";
+
+export function getStaticPaths() {
+    return [
+        { params: { path: undefined } },
+        { params: { path: "app" } },
+        { params: { path: "app/games" } },
+        { params: { path: "app/sends" } },
+        { params: { path: "auth/login" } },
+        { params: { path: "auth/callback" } },
+    ];
+}
+---
+
+<InternalDashLayout>
+    <InternalDash client:only />
+</InternalDashLayout>

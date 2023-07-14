@@ -1,0 +1,26 @@
+{
+  "pipeline": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**"]
+    },
+    "buildprod": {
+      "dependsOn": ["^build", "^buildprod"],
+      "outputs": ["dist/**", ".next/**"]
+    },
+    "dev": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", ".next/**"],
+      "cache": false
+    },
+    "start": {
+      "dependsOn": ["^build", "^buildprod", "build", "^start"],
+      "cache": false
+    },
+    "typecheck": {
+      "dependsOn": ["^build", "build", "^typecheck"],
+      "cache": false
+    }
+  },
+  "globalEnv": ["ENV", "VERSION"]
+}

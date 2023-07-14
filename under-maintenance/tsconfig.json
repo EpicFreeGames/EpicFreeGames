@@ -1,0 +1,34 @@
+{
+	"$schema": "https://json.schemastore.org/tsconfig",
+	"display": "Node 20",
+
+	"compilerOptions": {
+		"rootDir": "./src",
+		"outDir": "./dist",
+
+		"lib": ["es2023", "dom"],
+		"module": "Node16",
+		"target": "es2022",
+
+		"strict": true,
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true,
+		"moduleResolution": "node16",
+		"resolveJsonModule": true,
+
+		"strictFunctionTypes": true,
+		"strictNullChecks": true,
+		"strictBindCallApply": true,
+		"strictPropertyInitialization": true,
+		"noUnusedLocals": true,
+		"noImplicitAny": true,
+		"noImplicitOverride": true,
+		"noImplicitReturns": false,
+		"noImplicitThis": true,
+		"noPropertyAccessFromIndexSignature": false,
+		"noFallthroughCasesInSwitch": true,
+		"noUncheckedIndexedAccess": true,
+		"useUnknownInCatchVariables": false
+	}
+}

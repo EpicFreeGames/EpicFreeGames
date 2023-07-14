@@ -1,0 +1,17 @@
+{
+  "cmd_desc_set_currency": "Pilih mata uang untuk harga game di server ini",
+  "cmd_desc_set_thread": "Pilih utas yang akan saya posting game gratis berada",
+  "cmd_desc_set_channel": "Pilih channel tempat saya akan memposting game gratis baru",
+  "cmd_desc_set_role": "Pilih sebuah role dan saya akan ping ketika game baru menjadi gratis",
+  "cmd_desc_set_language": "Pilih sebuah bahasa sebagai pesan saya pada server ini",
+  "cmd_desc_remove_channel": "Menghapus channel yang ditetapkan (atau thread)",
+  "cmd_desc_remove_role": "Hapus role yang ditetapkan",
+  "cmd_desc_invite": "Berikan link invite saya",
+  "cmd_desc_help": "Gunakan ini jika kamu membutuhkan sebuah bantuan",
+  "cmd_desc_debug": "Digunakan untuk debugging",
+  "cmd_desc_up": "Lihat game gratis mendatang",
+  "cmd_desc_free": "Lihat game gratis saat ini",
+  "cmd_desc_settings": "Lihat pengaturan",
+  "cmd_desc_vote": "Vote untuk saya",
+  "cmd_desc_test": "Mengirimkan sebuah pesan tes pada channel yang ditetapkan dan ping role yang ditetapkan"
+}
