@@ -19,6 +19,7 @@ export function AppGamesPage() {
 		</div>
 	);
 }
+const now = new Date();
 
 function GameList() {
 	const games = trpc.games.getAll.useQuery();
@@ -32,8 +33,6 @@ function GameList() {
 	} else if (!games.data.length) {
 		return <div>No games</div>;
 	}
-
-	const now = new Date();
 
 	return (
 		<div className="flex flex-col gap-2">
@@ -85,7 +84,7 @@ function GameList() {
 								<span>
 									{now < game.startDate
 										? "Upcoming"
-										: game.endDate < now
+										: game.endDate > now
 										? "Free"
 										: "Gone"}
 								</span>

@@ -57,7 +57,7 @@ model DiscordSendLog {
     id         String        @id @default(cuid())
     type       String
     statusCode Int
-    error      String        @db.Text
+    result     String        @db.Text
     success    Boolean
     serverId   String
     server     DiscordServer @relation(fields: [serverId], references: [id], onDelete: Cascade)
@@ -73,7 +73,7 @@ model Send {
     sendLogs  DiscordSendLog[]
 }
 
-model user {
+model User {
     id      String  @id @default(cuid())
     email   String  @unique
     isAdmin Boolean @default(false)

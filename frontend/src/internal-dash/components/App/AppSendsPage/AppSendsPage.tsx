@@ -18,7 +18,7 @@ export function AppSendsPage() {
 }
 
 function SendsList() {
-	const sends = trpc.send.getAll.useQuery();
+	const sends = trpc.send.getAll.useQuery(undefined, { refetchInterval: 1000 });
 
 	if (sends.isLoading) {
 		return (
@@ -63,9 +63,17 @@ function SendsList() {
 						</div>
 					</div>
 
-					{send.games.map((game) => (
-						<span key={game.id}>{game.name}</span>
-					))}
+					<div className="flex flex-col ">
+						<span>Games:</span>
+						{send.games.map((game) => (
+							<span key={game.id}>{game.name}</span>
+						))}
+					</div>
+
+					<div className="flex flex-col">
+						<span>Send logs:</span>
+						<span>{send._count.sendLogs}</span>
+					</div>
 				</div>
 			))}
 		</div>
@@ -124,7 +132,7 @@ function CreateSend() {
 										{game.name} (
 										{now < game.startDate
 											? "upcoming"
-											: game.endDate < now
+											: game.endDate > now
 											? "free"
 											: "gone"}
 										)

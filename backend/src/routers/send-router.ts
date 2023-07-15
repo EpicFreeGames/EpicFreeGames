@@ -1,12 +1,17 @@
 import z from "zod";
 import { authProcedure, router } from "../trpc";
 import { TRPCError } from "@trpc/server";
-import { sendMessages, sendWebhooks } from "../discord/sender";
+import { sendWebhooks } from "../discord/sender/webhookSender";
+import { sendMessages } from "../discord/sender/messageSender";
+import { PrismaClient } from "@prisma/client";
 
 export const sendRouter = router({
 	getAll: authProcedure.query(async (props) => {
 		const sends = await props.ctx.db.send.findMany({
-			include: { games: { select: { id: true, name: true } } },
+			include: {
+				_count: { select: { sendLogs: true } },
+				games: { select: { id: true, name: true } },
+			},
 		});
 
 		return sends;
@@ -52,15 +57,21 @@ export const sendRouter = router({
 	}),
 
 	startSending: authProcedure.input(z.object({ sendId: z.string() })).mutation(async (props) => {
-		const send = await props.ctx.db.send.findUnique({
-			where: { id: props.input.sendId },
-		});
-
+		const send = await getSendForSending(props.ctx.db, props.input.sendId);
 		if (!send) {
 			throw new Error("Send not found");
 		}
 
-		sendWebhooks(props.ctx.db, send.id);
-		sendMessages(props.ctx.db, send.id);
+		sendWebhooks(props.ctx.db, send);
+		sendMessages(props.ctx.db, send);
 	}),
 });
+
+function getSendForSending(db: PrismaClient, sendId: string) {
+	return db.send.findUnique({
+		where: { id: sendId },
+		include: { games: { include: { prices: true } } },
+	});
+}
+
+export type SendForSending = NonNullable<Awaited<ReturnType<typeof getSendForSending>>>;
