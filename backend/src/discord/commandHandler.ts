@@ -66,15 +66,15 @@ export async function commandHandler(
 			create: { discordId: i.guild_id },
 			update: {},
 		});
+
+		language = languages.get(dbServer.languageCode ?? "") ?? language;
+		currency = currencies.get(dbServer.currencyCode ?? "") ?? currency;
 	}
 
 	if (command.needsGuild) {
 		if (!isGuild) {
 			return ctx.respondWith(400, "This command needs to be run in a guild.");
 		} else if (isGuild && dbServer) {
-			language = languages.get(dbServer.languageCode ?? "") ?? language;
-			currency = currencies.get(dbServer.currencyCode ?? "") ?? currency;
-
 			if (
 				command.needsManageGuild &&
 				!hasPerms(BigInt(i?.member?.permissions || 0n), ["MANAGE_GUILD"])
