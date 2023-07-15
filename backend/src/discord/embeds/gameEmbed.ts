@@ -54,8 +54,8 @@ function links(game: Game & { prices: GamePrice[] }, language: Language) {
 
 function gameLinks(game: Game & { prices: GamePrice[] }) {
 	return {
-		redirectWeb: constants.links.frontHome + "/r/web/" + game.path,
-		redirectApp: constants.links.frontHome + "/r/app/" + game.path,
+		redirectWeb: constants.links.frontHome + "/r/web/" + game.id,
+		redirectApp: constants.links.frontHome + "/r/app/" + game.id,
 	};
 }
 
