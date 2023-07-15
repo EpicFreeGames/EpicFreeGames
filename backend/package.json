@@ -2,7 +2,8 @@
 	"name": "backend",
 	"scripts": {
 		"build": "tsc",
-		"dev": "dotenv -e .env -- tsx watch src/index.ts"
+		"dev": "dotenv -e .env -- tsx watch src/index.ts",
+		"devdb": "docker run --name efg-dev-db -p 5432:5432 -e POSTGRES_PASSWORD=postgres -e POSTGRES_USER=postgres -e POSTGRES_DB=efg-dev -v efg-dev-db:/var/lib/postgresql/data -d postgres"
 	},
 	"devDependencies": {
 		"@types/node": "^20.3.3",
