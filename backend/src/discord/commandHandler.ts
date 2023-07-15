@@ -22,6 +22,7 @@ import { setCommand } from "./commands/setCommand/setCommand";
 import { getTypedOption } from "./commands/_getTypedOption";
 import { removeCommand } from "./commands/removeCommand/removeCommand";
 import { settingsCommand } from "./commands/settingsCommand";
+import { PrismaClient } from "@prisma/client";
 
 const commands = new Map<string, Command>([
 	[freeCommand.name, freeCommand],
@@ -89,15 +90,7 @@ export async function commandHandler(
 				});
 			}
 
-			ctx.db.discordCommandLog
-				.create({
-					data: {
-						command: fullCommandName,
-						senderId: userId,
-						serverId: i.guild_id,
-					},
-				})
-				.catch((e) => ctx.log("Catched an error logging command to db", { e }));
+			logCommand(ctx, { fullCommandName, userId, discordServerId: i.guild_id });
 
 			return command.handle({
 				ctx,
@@ -122,6 +115,8 @@ export async function commandHandler(
 			});
 		}
 	} else {
+		logCommand(ctx, { fullCommandName, userId, discordServerId: i.guild_id });
+
 		return command.handle({
 			ctx,
 			i,
@@ -130,4 +125,23 @@ export async function commandHandler(
 			dbServer,
 		});
 	}
+}
+
+async function logCommand(
+	ctx: DiscordRequestContext,
+	props: {
+		fullCommandName: string;
+		userId: string;
+		discordServerId?: string;
+	}
+) {
+	return ctx.db.discordCommandLog
+		.create({
+			data: {
+				command: props.fullCommandName,
+				senderId: props.userId,
+				serverId: props.discordServerId,
+			},
+		})
+		.catch((e) => ctx.log("Catched an error logging command to db", { e }));
 }
