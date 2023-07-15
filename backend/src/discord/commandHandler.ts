@@ -22,7 +22,6 @@ import { setCommand } from "./commands/setCommand/setCommand";
 import { getTypedOption } from "./commands/_getTypedOption";
 import { removeCommand } from "./commands/removeCommand/removeCommand";
 import { settingsCommand } from "./commands/settingsCommand";
-import { PrismaClient } from "@prisma/client";
 
 const commands = new Map<string, Command>([
 	[freeCommand.name, freeCommand],
