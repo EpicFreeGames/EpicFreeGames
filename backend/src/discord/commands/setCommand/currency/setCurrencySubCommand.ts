@@ -51,7 +51,7 @@ export const setCurrencySubCommand = async (props: {
 			data: { flags: MessageFlags.Ephemeral },
 		});
 
-		await props.ctx.db.discordServer.update({
+		const updatedDbServer = await props.ctx.db.discordServer.update({
 			where: { id: props.dbServer.id },
 			data: { currencyCode: newCurrencyCode },
 		});
@@ -60,7 +60,7 @@ export const setCurrencySubCommand = async (props: {
 			flags: MessageFlags.Ephemeral,
 			embeds: [
 				updatedSettingsEmbed(props.language),
-				settingsEmbed(props.dbServer, props.language, props.currency),
+				settingsEmbed(updatedDbServer, props.language, props.currency),
 			],
 		});
 	} catch (e) {

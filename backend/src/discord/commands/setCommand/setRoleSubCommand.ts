@@ -77,7 +77,7 @@ export const setRoleSubCommand = async (props: {
 
 		const useful = makeSenseOfRole(selectedRole);
 
-		await props.ctx.db.discordServer.update({
+		const updatedDbServer = await props.ctx.db.discordServer.update({
 			where: { id: props.dbServer.id },
 			data: { roleId: useful.toDb },
 		});
@@ -85,7 +85,7 @@ export const setRoleSubCommand = async (props: {
 		await editInteractionResponse(props.ctx, props.i, {
 			embeds: [
 				roleSetEmbed({ language: props.language, role: useful.embed }),
-				settingsEmbed(props.dbServer, props.language, props.currency),
+				settingsEmbed(updatedDbServer, props.language, props.currency),
 			],
 		});
 	} catch (e) {
