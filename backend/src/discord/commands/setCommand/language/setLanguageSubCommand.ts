@@ -59,8 +59,8 @@ export const setLanguageSubCommand = async (props: {
 		editInteractionResponse(props.ctx, props.i, {
 			flags: MessageFlags.Ephemeral,
 			embeds: [
-				updatedSettingsEmbed(props.language),
-				settingsEmbed(updatedDbServer, props.language, props.currency),
+				updatedSettingsEmbed(newLanguage),
+				settingsEmbed(updatedDbServer, newLanguage, props.currency),
 			],
 		});
 	} catch (e) {
