@@ -20,6 +20,8 @@ import { helpCommand } from "./commands/helpCommand";
 import { inviteCommand } from "./commands/inviteCommand";
 import { setCommand } from "./commands/setCommand/setCommand";
 import { getTypedOption } from "./commands/_getTypedOption";
+import { removeCommand } from "./commands/removeCommand/removeCommand";
+import { settingsCommand } from "./commands/settingsCommand";
 
 const commands = new Map<string, Command>([
 	[freeCommand.name, freeCommand],
@@ -27,6 +29,8 @@ const commands = new Map<string, Command>([
 	[helpCommand.name, helpCommand],
 	[inviteCommand.name, inviteCommand],
 	[setCommand.name, setCommand],
+	[removeCommand.name, removeCommand],
+	[settingsCommand.name, settingsCommand],
 ]);
 
 export async function commandHandler(
