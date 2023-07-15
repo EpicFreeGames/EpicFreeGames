@@ -35,7 +35,8 @@ export function gameEmbed(
 			links(game, language) +
 			gameStart(game) +
 			gameEnd(game) +
-			gamePriceString(game, language, currency),
+			gamePriceString(game, language, currency) +
+			embedUtils.footer(language),
 	} satisfies APIEmbed;
 }
 
