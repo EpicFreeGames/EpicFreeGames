@@ -11,14 +11,14 @@ import { Currency } from "../../../i18n/currency";
 import { Language, languages } from "../../../i18n/language";
 import { editInteractionResponse } from "../../../utils";
 import { getTypedOption } from "../../_getTypedOption";
-import { discord_server } from "@prisma/client";
+import { DiscordServer } from "@prisma/client";
 
 export const setLanguageSubCommand = async (props: {
 	ctx: DiscordRequestContext;
 	i: APIChatInputApplicationCommandGuildInteraction;
 	language: Language;
 	currency: Currency;
-	dbServer: discord_server;
+	dbServer: DiscordServer;
 }) => {
 	try {
 		const languageOption = getTypedOption(
@@ -51,9 +51,9 @@ export const setLanguageSubCommand = async (props: {
 			data: { flags: MessageFlags.Ephemeral },
 		});
 
-		await props.ctx.db.discord_server.update({
+		await props.ctx.db.discordServer.update({
 			where: { id: props.dbServer.id },
-			data: { language_code: newLanguageCode },
+			data: { languageCode: newLanguageCode },
 		});
 
 		editInteractionResponse(props.ctx, props.i, {

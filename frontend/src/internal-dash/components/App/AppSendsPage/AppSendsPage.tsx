@@ -122,9 +122,9 @@ function CreateSend() {
 								{games.data.map((game) => (
 									<option key={game.id} value={game.id}>
 										{game.name} (
-										{now < game.start_date
+										{now < game.startDate
 											? "upcoming"
-											: game.end_date < now
+											: game.endDate < now
 											? "free"
 											: "gone"}
 										)

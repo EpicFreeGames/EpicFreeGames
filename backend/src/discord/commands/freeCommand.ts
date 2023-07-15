@@ -13,8 +13,8 @@ export const freeCommand: Command = {
 			const games = await props.ctx.db.game.findMany({
 				where: {
 					confirmed: true,
-					start_date: { lte: now },
-					end_date: { gte: now },
+					startDate: { lte: now },
+					endDate: { gte: now },
 				},
 				include: { prices: true },
 			});

@@ -1,4 +1,4 @@
-import { game, game_price } from "@prisma/client";
+import { Game, GamePrice } from "@prisma/client";
 import { constants } from "../../configuration/constants";
 import { Currency } from "../i18n/currency";
 import { Language } from "../i18n/language";
@@ -23,14 +23,14 @@ export function noUpcomingFreeGamesEmbed(language: Language) {
 }
 
 export function gameEmbed(
-	game: game & { prices: game_price[] },
+	game: Game & { prices: GamePrice[] },
 	language: Language,
 	currency: Currency
 ) {
 	return {
-		title: game.display_name,
+		title: game.displayName,
 		color: embedUtils.colors.gray,
-		image: { url: game.image_url },
+		image: { url: game.imageUrl },
 		description:
 			links(game, language) +
 			gameStart(game) +
@@ -39,7 +39,7 @@ export function gameEmbed(
 	} satisfies APIEmbed;
 }
 
-function links(game: game & { prices: game_price[] }, language: Language) {
+function links(game: Game & { prices: GamePrice[] }, language: Language) {
 	const gameLink = gameLinks(game);
 
 	return (
@@ -52,30 +52,30 @@ function links(game: game & { prices: game_price[] }, language: Language) {
 	);
 }
 
-function gameLinks(game: game & { prices: game_price[] }) {
+function gameLinks(game: Game & { prices: GamePrice[] }) {
 	return {
 		redirectWeb: constants.links.frontHome + "/r/web/" + game.path,
 		redirectApp: constants.links.frontHome + "/r/app/" + game.path,
 	};
 }
 
-function gameStart(game: game & { prices: game_price[] }): string {
+function gameStart(game: Game & { prices: GamePrice[] }): string {
 	const now = Date.now() / 1000;
-	const start = new Date(game.start_date).getTime() / 1000;
+	const start = new Date(game.startDate).getTime() / 1000;
 
 	if (start < now) return "";
 
 	return `🟢 ${embedUtils.relativeTimestamp(start)}` + "\n\n";
 }
 
-function gameEnd(game: game & { prices: game_price[] }): string {
-	const end = new Date(game.end_date).getTime() / 1000;
+function gameEnd(game: Game & { prices: GamePrice[] }): string {
+	const end = new Date(game.endDate).getTime() / 1000;
 
 	return `🔴 ${embedUtils.relativeTimestamp(end)}` + "\n\n";
 }
 
 function gamePriceString(
-	game: game & { prices: game_price[] },
+	game: Game & { prices: GamePrice[] },
 	language: Language,
 	currency: Currency
 ): string {
@@ -83,11 +83,11 @@ function gamePriceString(
 	return `💰 ${embedUtils.bold(`${embedUtils.strike(getGamePrice(game, currency))} ${embedUtils.chars.arrow} ${t(language, "free")}!`)}` + "\n\n";
 }
 
-function getGamePrice(game: game & { prices: game_price[] }, currency: Currency): string {
-	const price = game.prices.find((p) => p.currency_code === currency.code);
+function getGamePrice(game: Game & { prices: GamePrice[] }, currency: Currency): string {
+	const price = game.prices.find((p) => p.currencyCode === currency.code);
 
-	if (!price || !price.formatted_value)
-		return game.prices.find((p) => p.currency_code === "USD")?.formatted_value || "???";
+	if (!price || !price.formattedValue)
+		return game.prices.find((p) => p.currencyCode === "USD")?.formattedValue || "???";
 
-	return price.formatted_value;
+	return price.formattedValue;
 }

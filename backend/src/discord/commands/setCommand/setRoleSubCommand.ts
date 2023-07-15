@@ -1,4 +1,4 @@
-import { discord_server } from "@prisma/client";
+import { DiscordServer } from "@prisma/client";
 import {
 	APIChatInputApplicationCommandGuildInteraction,
 	ApplicationCommandOptionType,
@@ -21,10 +21,10 @@ export const setRoleSubCommand = async (props: {
 	i: APIChatInputApplicationCommandGuildInteraction;
 	language: Language;
 	currency: Currency;
-	dbServer: discord_server;
+	dbServer: DiscordServer;
 }) => {
 	try {
-		if (!props.dbServer.channel_id) {
+		if (!props.dbServer.channelId) {
 			return props.ctx.respondWith(200, {
 				type: InteractionResponseType.ChannelMessageWithSource,
 				data: {
@@ -77,9 +77,9 @@ export const setRoleSubCommand = async (props: {
 
 		const useful = makeSenseOfRole(selectedRole);
 
-		await props.ctx.db.discord_server.update({
+		await props.ctx.db.discordServer.update({
 			where: { id: props.dbServer.id },
-			data: { role_id: useful.toDb },
+			data: { roleId: useful.toDb },
 		});
 
 		await editInteractionResponse(props.ctx, props.i, {

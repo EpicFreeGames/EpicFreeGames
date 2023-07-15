@@ -7,7 +7,7 @@ import {
 import { DiscordRequestContext } from "../../../context";
 import { Language } from "../../../i18n/language";
 import { Currency, currencies } from "../../../i18n/currency";
-import { discord_server } from "@prisma/client";
+import { DiscordServer } from "@prisma/client";
 import { getTypedOption } from "../../_getTypedOption";
 import { genericErrorEmbed } from "../../../embeds/errors";
 import { editInteractionResponse } from "../../../utils";
@@ -18,7 +18,7 @@ export const setCurrencySubCommand = async (props: {
 	i: APIChatInputApplicationCommandGuildInteraction;
 	language: Language;
 	currency: Currency;
-	dbServer: discord_server;
+	dbServer: DiscordServer;
 }) => {
 	try {
 		const currencyOption = getTypedOption(
@@ -51,9 +51,9 @@ export const setCurrencySubCommand = async (props: {
 			data: { flags: MessageFlags.Ephemeral },
 		});
 
-		await props.ctx.db.discord_server.update({
+		await props.ctx.db.discordServer.update({
 			where: { id: props.dbServer.id },
-			data: { currency_code: newCurrencyCode },
+			data: { currencyCode: newCurrencyCode },
 		});
 
 		editInteractionResponse(props.ctx, props.i, {

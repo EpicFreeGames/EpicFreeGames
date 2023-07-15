@@ -6,7 +6,7 @@ import {
 import { DiscordRequestContext } from "../../context";
 import { Language } from "../../i18n/language";
 import { Currency } from "../../i18n/currency";
-import { discord_server } from "@prisma/client";
+import { DiscordServer } from "@prisma/client";
 import { editInteractionResponse } from "../../utils";
 import { settingsEmbed, updatedSettingsEmbed } from "../../embeds/settings";
 
@@ -15,7 +15,7 @@ export async function removeChannelSubCommand(props: {
 	i: APIChatInputApplicationCommandGuildInteraction;
 	language: Language;
 	currency: Currency;
-	dbServer: discord_server;
+	dbServer: DiscordServer;
 }) {
 	try {
 		props.ctx.respondWith(200, {
@@ -23,13 +23,13 @@ export async function removeChannelSubCommand(props: {
 			data: { flags: MessageFlags.Ephemeral },
 		});
 
-		const updatedDbServer = await props.ctx.db.discord_server.update({
+		const updatedDbServer = await props.ctx.db.discordServer.update({
 			where: { id: props.dbServer.id },
 			data: {
-				channel_id: null,
-				thread_id: null,
-				webhook_id: null,
-				webhook_token: null,
+				channelId: null,
+				threadId: null,
+				webhookId: null,
+				webhookToken: null,
 			},
 		});
 

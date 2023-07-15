@@ -7,72 +7,70 @@ generator client {
     provider = "prisma-client-js"
 }
 
-model game {
-    id           String       @id @default(cuid())
-    name         String       @unique @db.Text
-    display_name String       @db.Text
-    image_url    String       @db.Text
-    start_date   DateTime     @db.Timestamp
-    end_date     DateTime     @db.Timestamp
-    confirmed    Boolean      @default(false)
-    path         String
-    store_id     String
-    prices       game_price[]
-    sends        send[]
+model Game {
+    id          String      @id @default(cuid())
+    name        String      @unique @db.Text
+    displayName String      @db.Text
+    imageUrl    String      @db.Text
+    startDate   DateTime    @db.Timestamp
+    endDate     DateTime    @db.Timestamp
+    confirmed   Boolean     @default(false)
+    path        String
+    storeId     String
+    prices      GamePrice[]
+    sends       Send[]
 }
 
-model game_price {
-    id              String @id @default(cuid())
-    value           Float
-    formatted_value String
-    currency_code   String
-    game_id         String
-    game            game   @relation(fields: [game_id], references: [id], onDelete: Cascade)
+model GamePrice {
+    id             String @id @default(cuid())
+    value          Float
+    formattedValue String
+    currencyCode   String
+    gameId         String
+    game           Game   @relation(fields: [gameId], references: [id], onDelete: Cascade)
 }
 
-model discord_server {
-    id                 String                @id @default(cuid()) // Db id for the server (used for relations)
-    discord_id         String                @unique // Discord's ID for the server
-    role_id            String?
-    channel_updated_at DateTime?
-    channel_id         String?
-    thread_id          String?
-    webhook_id         String?
-    webhook_token      String?
-    language_code      String                @default("en")
-    currency_code      String                @default("USD")
-    created_at         DateTime              @default(now())
-    command_logs       discord_command_log[]
-    discord_send_logs  discord_send_log[]
+model DiscordServer {
+    id               String           @id @default(cuid()) // Db id for the server (used for relations)
+    discordId        String           @unique // Discord's ID for the server
+    roleId           String?
+    channelUpdatedAt DateTime?
+    channelId        String?
+    threadId         String?
+    webhookId        String?
+    webhookToken     String?
+    languageCode     String           @default("en")
+    currencyCode     String           @default("USD")
+    createdAt        DateTime         @default(now())
+    sendLogs         DiscordSendLog[]
 }
 
-model discord_command_log {
-    id                String          @id @default(cuid())
-    command           String
-    sender_id         String
-    discord_server_id String?
-    discord_server    discord_server? @relation(fields: [discord_server_id], references: [id], onDelete: Cascade)
-    created_at        DateTime        @default(now())
+model DiscordCommandLog {
+    id        String   @id @default(cuid())
+    command   String
+    senderId  String
+    serverId  String?
+    createdAt DateTime @default(now())
 }
 
-model discord_send_log {
-    id                String         @id @default(cuid())
-    type              String
-    statusCode        Int
-    error             String         @db.Text
-    success           Boolean
-    discord_server_id String
-    discord_server    discord_server @relation(fields: [discord_server_id], references: [id], onDelete: Cascade)
-    send_id           String
-    send              send           @relation(fields: [send_id], references: [id], onDelete: Cascade)
-    created_at        DateTime       @default(now())
+model DiscordSendLog {
+    id         String        @id @default(cuid())
+    type       String
+    statusCode Int
+    error      String        @db.Text
+    success    Boolean
+    serverId   String
+    server     DiscordServer @relation(fields: [serverId], references: [id], onDelete: Cascade)
+    sendId     String
+    send       Send          @relation(fields: [sendId], references: [id], onDelete: Cascade)
+    createdAt  DateTime      @default(now())
 }
 
-model send {
-    id                String             @id @default(cuid())
-    created_at        DateTime           @default(now())
-    games             game[]
-    discord_send_logs discord_send_log[]
+model Send {
+    id        String           @id @default(cuid())
+    createdAt DateTime         @default(now())
+    games     Game[]
+    sendLogs  DiscordSendLog[]
 }
 
 model user {

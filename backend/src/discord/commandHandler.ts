@@ -50,7 +50,8 @@ export async function commandHandler(
 
 	const userId = (i.member?.user ?? i.user)?.id!;
 	const subCommand = getTypedOption(i, ApplicationCommandOptionType.Subcommand);
-	ctx.log("c", { commandName, subCommand: subCommand?.name, guildId: i?.guild_id, userId });
+	const fullCommandName = subCommand ? `${commandName} ${subCommand.name}` : commandName;
+	ctx.log("c", { fullCommandName, guildId: i?.guild_id, userId });
 
 	const isGuild = isGuildInteraction(i);
 
@@ -60,9 +61,9 @@ export async function commandHandler(
 	let dbServer = undefined;
 
 	if (isGuild) {
-		dbServer = await ctx.db.discord_server.upsert({
-			where: { discord_id: i.guild_id },
-			create: { discord_id: i.guild_id },
+		dbServer = await ctx.db.discordServer.upsert({
+			where: { discordId: i.guild_id },
+			create: { discordId: i.guild_id },
 			update: {},
 		});
 	}
@@ -71,8 +72,8 @@ export async function commandHandler(
 		if (!isGuild) {
 			return ctx.respondWith(400, "This command needs to be run in a guild.");
 		} else if (isGuild && dbServer) {
-			language = languages.get(dbServer.language_code ?? "") ?? language;
-			currency = currencies.get(dbServer.currency_code ?? "") ?? currency;
+			language = languages.get(dbServer.languageCode ?? "") ?? language;
+			currency = currencies.get(dbServer.currencyCode ?? "") ?? currency;
 
 			if (
 				command.needsManageGuild &&
@@ -87,6 +88,16 @@ export async function commandHandler(
 					},
 				});
 			}
+
+			ctx.db.discordCommandLog
+				.create({
+					data: {
+						command: fullCommandName,
+						senderId: userId,
+						serverId: i.guild_id,
+					},
+				})
+				.catch((e) => ctx.log("Catched an error logging command to db", { e }));
 
 			return command.handle({
 				ctx,

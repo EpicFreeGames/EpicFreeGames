@@ -1,4 +1,4 @@
-import { discord_server } from "@prisma/client";
+import { DiscordServer } from "@prisma/client";
 import {
 	APIChatInputApplicationCommandGuildInteraction,
 	ApplicationCommandOptionType,
@@ -26,7 +26,7 @@ export const setChannelSubCommand = async (props: {
 	i: APIChatInputApplicationCommandGuildInteraction;
 	language: Language;
 	currency: Currency;
-	dbServer: discord_server;
+	dbServer: DiscordServer;
 }) => {
 	try {
 		props.ctx.respondWith(200, {
@@ -51,7 +51,7 @@ export const setChannelSubCommand = async (props: {
 				"VIEW_CHANNEL",
 				"MANAGE_WEBHOOKS",
 				"EMBED_LINKS",
-				...(props.dbServer?.role_id ? ["MENTION_EVERYONE" as PermissionString] : []),
+				...(props.dbServer?.roleId ? ["MENTION_EVERYONE" as PermissionString] : []),
 			]
 		);
 
@@ -107,13 +107,13 @@ export const setChannelSubCommand = async (props: {
 		// delete the previous saved webhook if new channel !== old channel
 		// that cannot be used since the channel is changing
 		if (
-			props.dbServer?.webhook_id &&
-			props.dbServer.webhook_token &&
-			props.dbServer.channel_id !== selectedChannelId
+			props.dbServer?.webhookId &&
+			props.dbServer.webhookToken &&
+			props.dbServer.channelId !== selectedChannelId
 		) {
 			discordApi(props.ctx, {
 				method: "DELETE",
-				path: `/webhooks/${props.dbServer.webhook_id}/${props.dbServer.webhook_token}`,
+				path: `/webhooks/${props.dbServer.webhookId}/${props.dbServer.webhookToken}`,
 			});
 		}
 
@@ -183,17 +183,17 @@ export const setChannelSubCommand = async (props: {
 			});
 		}
 
-		const updatedDbServer = await props.ctx.db.discord_server.update({
+		const updatedDbServer = await props.ctx.db.discordServer.update({
 			where: { id: props.dbServer.id },
 			data: {
-				channel_id: selectedChannelId,
-				webhook_id: webhook.id,
-				webhook_token: webhook.token,
-				channel_updated_at: new Date(),
+				channelId: selectedChannelId,
+				webhookId: webhook.id,
+				webhookToken: webhook.token,
+				channelUpdatedAt: new Date(),
 			},
 		});
 
-		if (!updatedDbServer.channel_id) {
+		if (!updatedDbServer.channelId) {
 			props.ctx.log("Failed to set channel - channel id is falsy after update", {
 				selectedChannelId,
 			});
@@ -211,7 +211,7 @@ export const setChannelSubCommand = async (props: {
 		await editInteractionResponse(props.ctx, props.i, {
 			flags: MessageFlags.Ephemeral,
 			embeds: [
-				channelSetEmbed(props.language, updatedDbServer.channel_id),
+				channelSetEmbed(props.language, updatedDbServer.channelId),
 				settingsEmbed(updatedDbServer, props.language, props.currency),
 			],
 		});

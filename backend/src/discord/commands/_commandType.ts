@@ -1,4 +1,4 @@
-import { discord_server } from "@prisma/client";
+import { DiscordServer } from "@prisma/client";
 import {
 	APIChatInputApplicationCommandDMInteraction,
 	APIChatInputApplicationCommandGuildInteraction,
@@ -18,7 +18,7 @@ export type Command =
 				i: APIChatInputApplicationCommandGuildInteraction;
 				language: Language;
 				currency: Currency;
-				dbServer: discord_server;
+				dbServer: DiscordServer;
 			}) => Promise<any> | any;
 	  }
 	| {
@@ -32,6 +32,6 @@ export type Command =
 					| APIChatInputApplicationCommandInteraction;
 				language: Language;
 				currency: Currency;
-				dbServer?: discord_server;
+				dbServer?: DiscordServer;
 			}) => Promise<any> | any;
 	  };

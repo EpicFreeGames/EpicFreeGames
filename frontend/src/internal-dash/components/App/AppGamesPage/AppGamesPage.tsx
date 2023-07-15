@@ -43,7 +43,7 @@ function GameList() {
 					className="bg-gray-900 border border-gray-800 p-3 rounded-xl flex flex-col gap-2"
 				>
 					<div className="flex items-center justify-between">
-						<h2 className="text-lg">{game.display_name}</h2>
+						<h2 className="text-lg">{game.displayName}</h2>
 
 						<div className="flex gap-2">
 							<EditGame game={game} />
@@ -55,7 +55,7 @@ function GameList() {
 						<div>
 							<img
 								className="max-w-[16rem] rounded-lg border border-gray-800"
-								src={game.image_url}
+								src={game.imageUrl}
 							/>
 						</div>
 
@@ -67,12 +67,12 @@ function GameList() {
 
 							<div className="flex flex-col gap-1 p-2 rounded-lg border border-gray-800 bg-gray-950/50">
 								<span>Start:</span>
-								<span>{format(game.start_date, "yyyy-MM-dd HH:mm")}</span>
+								<span>{format(game.startDate, "yyyy-MM-dd HH:mm")}</span>
 							</div>
 
 							<div className="flex flex-col gap-1 p-2 rounded-lg border border-gray-800 bg-gray-950/50">
 								<span>End:</span>
-								<span>{format(game.end_date, "yyyy-MM-dd HH:mm")}</span>
+								<span>{format(game.endDate, "yyyy-MM-dd HH:mm")}</span>
 							</div>
 
 							<div className="flex flex-col gap-1 p-2 rounded-lg border border-gray-800 bg-gray-950/50">
@@ -83,9 +83,9 @@ function GameList() {
 							<div className="flex flex-col gap-1 p-2 rounded-lg border border-gray-800 bg-gray-950/50">
 								<span>Status:</span>
 								<span>
-									{now < game.start_date
+									{now < game.startDate
 										? "Upcoming"
-										: game.end_date < now
+										: game.endDate < now
 										? "Free"
 										: "Gone"}
 								</span>
@@ -103,8 +103,7 @@ function GameList() {
 												key={price.id}
 												className="rounded-md border border-gray-800 p-2"
 											>
-												<b>{price.currency_code}:</b>{" "}
-												{price.formatted_value}
+												<b>{price.currencyCode}:</b> {price.formattedValue}
 											</span>
 										))}
 									</div>
@@ -155,12 +154,12 @@ const Confirmed = (props: { game: Game }) => {
 
 const editGameFormSchema = z.object({
 	name: z.string(),
-	display_name: z.string(),
-	image_url: z.string(),
-	start_date: z.custom((v) =>
+	displayName: z.string(),
+	imageUrl: z.string(),
+	startDate: z.custom((v) =>
 		v instanceof Date ? v : typeof v === "string" ? new Date(v) : new Date(v as string)
 	),
-	end_date: z.custom((v) =>
+	endDate: z.custom((v) =>
 		v instanceof Date ? v : typeof v === "string" ? new Date(v) : new Date(v as string)
 	),
 	path: z.string(),
@@ -178,23 +177,23 @@ function EditGame(props: { game: Game }) {
 		resolver: zodResolver(editGameFormSchema),
 		defaultValues: {
 			name: props.game.name,
-			display_name: props.game.display_name,
-			image_url: props.game.image_url,
-			start_date: format(props.game.start_date, "yyyy-MM-dd'T'HH:mm"),
-			end_date: format(props.game.end_date, "yyyy-MM-dd'T'HH:mm"),
+			displayName: props.game.displayName,
+			imageUrl: props.game.imageUrl,
+			startDate: format(props.game.startDate, "yyyy-MM-dd'T'HH:mm"),
+			endDate: format(props.game.endDate, "yyyy-MM-dd'T'HH:mm"),
 			path: props.game.path,
 
 			usd_price_formatted:
-				props.game.prices.find((price) => price.currency_code === "USD")?.formatted_value ||
+				props.game.prices.find((price) => price.currencyCode === "USD")?.formattedValue ||
 				"0 $",
 			usd_price_value:
-				props.game.prices.find((price) => price.currency_code === "USD")?.value || 0,
+				props.game.prices.find((price) => price.currencyCode === "USD")?.value || 0,
 		},
 		onSubmit: (data) => {
 			editMutation.mutate({
 				gameId: props.game.id,
-				start_date: data.start_date as Date,
-				end_date: data.end_date as Date,
+				startDate: data.startDate as Date,
+				endDate: data.endDate as Date,
 				...data,
 			});
 		},
@@ -229,7 +228,7 @@ function EditGame(props: { game: Game }) {
 							<input
 								className="p-2 focus rounded-lg bg-gray-700 border border-gray-500 "
 								type="text"
-								{...editGameForm.register("image_url")}
+								{...editGameForm.register("imageUrl")}
 							/>
 						</label>
 
@@ -239,7 +238,7 @@ function EditGame(props: { game: Game }) {
 							<input
 								className="p-2 focus rounded-lg bg-gray-700 border border-gray-500 "
 								type="datetime-local"
-								{...editGameForm.register("start_date", { valueAsDate: true })}
+								{...editGameForm.register("startDate", { valueAsDate: true })}
 							/>
 						</label>
 
@@ -249,7 +248,7 @@ function EditGame(props: { game: Game }) {
 							<input
 								className="p-2 focus rounded-lg bg-gray-700 border border-gray-500 "
 								type="datetime-local"
-								{...editGameForm.register("end_date", { valueAsDate: true })}
+								{...editGameForm.register("endDate", { valueAsDate: true })}
 							/>
 						</label>
 
@@ -310,12 +309,12 @@ function EditGame(props: { game: Game }) {
 
 const newGameFormSchema = z.object({
 	name: z.string(),
-	display_name: z.string(),
-	image_url: z.string(),
-	start_date: z.custom((v) =>
+	displayName: z.string(),
+	imageUrl: z.string(),
+	startDate: z.custom((v) =>
 		v instanceof Date ? v : typeof v === "string" ? new Date(v) : new Date(v as string)
 	),
-	end_date: z.custom((v) =>
+	endDate: z.custom((v) =>
 		v instanceof Date ? v : typeof v === "string" ? new Date(v) : new Date(v as string)
 	),
 	path: z.string(),
@@ -339,18 +338,18 @@ function CreateGame() {
 		resolver: zodResolver(editGameFormSchema),
 		defaultValues: {
 			name: "",
-			display_name: "",
-			image_url: "",
-			start_date: format(new Date(), "yyyy-MM-dd'T'HH:mm"),
-			end_date: format(new Date(), "yyyy-MM-dd'T'HH:mm"),
+			displayName: "",
+			imageUrl: "",
+			startDate: format(new Date(), "yyyy-MM-dd'T'HH:mm"),
+			endDate: format(new Date(), "yyyy-MM-dd'T'HH:mm"),
 			path: "",
 			usd_price_formatted: "0 $",
 			usd_price_value: 0,
 		},
 		onSubmit: (data) => {
 			createMutation.mutate({
-				start_date: data.start_date as Date,
-				end_date: data.end_date as Date,
+				startDate: data.startDate as Date,
+				endDate: data.endDate as Date,
 				...data,
 			});
 		},
@@ -385,7 +384,7 @@ function CreateGame() {
 							<input
 								className="p-2 focus rounded-lg bg-gray-700 border border-gray-500 "
 								type="text"
-								{...createGameForm.register("image_url")}
+								{...createGameForm.register("imageUrl")}
 							/>
 						</label>
 
@@ -395,7 +394,7 @@ function CreateGame() {
 							<input
 								className="p-2 focus rounded-lg bg-gray-700 border border-gray-500 "
 								type="datetime-local"
-								{...createGameForm.register("start_date", { valueAsDate: true })}
+								{...createGameForm.register("startDate", { valueAsDate: true })}
 							/>
 						</label>
 
@@ -405,7 +404,7 @@ function CreateGame() {
 							<input
 								className="p-2 focus rounded-lg bg-gray-700 border border-gray-500 "
 								type="datetime-local"
-								{...createGameForm.register("end_date", { valueAsDate: true })}
+								{...createGameForm.register("endDate", { valueAsDate: true })}
 							/>
 						</label>
 

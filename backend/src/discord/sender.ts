@@ -24,23 +24,23 @@ export async function sendWebhooks(db: PrismaClient, sendId: string) {
 	}
 
 	let [servers, serverCount] = await Promise.all([
-		db.discord_server.findMany({
+		db.discordServer.findMany({
 			where: {
-				created_at: { lte: new Date() },
-				channel_updated_at: { not: null, lte: new Date() },
-				webhook_id: { not: null },
-				webhook_token: { not: null },
-				channel_id: { not: null },
+				createdAt: { lte: new Date() },
+				channelUpdatedAt: { not: null, lte: new Date() },
+				webhookId: { not: null },
+				webhookToken: { not: null },
+				channelId: { not: null },
 			},
 			take: 5000,
 		}),
-		db.discord_server.count({
+		db.discordServer.count({
 			where: {
-				created_at: { lte: new Date() },
-				channel_updated_at: { not: null, lte: new Date() },
-				webhook_id: { not: null },
-				webhook_token: { not: null },
-				channel_id: { not: null },
+				createdAt: { lte: new Date() },
+				channelUpdatedAt: { not: null, lte: new Date() },
+				webhookId: { not: null },
+				webhookToken: { not: null },
+				channelId: { not: null },
 			},
 		}),
 	]);
@@ -77,25 +77,25 @@ export async function sendWebhooks(db: PrismaClient, sendId: string) {
 			await new Promise((r) => setTimeout(r, 2));
 
 			const language =
-				languages.get(server.language_code ?? defaultLangauge.code) ?? defaultLangauge;
+				languages.get(server.languageCode ?? defaultLangauge.code) ?? defaultLangauge;
 			const currency =
-				currencies.get(server.currency_code ?? defaultCurrency.code) ?? defaultCurrency;
+				currencies.get(server.currencyCode ?? defaultCurrency.code) ?? defaultCurrency;
 
 			const gameEmbeds = send.games.map((game) => gameEmbed(game, language, currency));
 
 			const body: RESTPostAPIWebhookWithTokenJSONBody = {
 				embeds: gameEmbeds,
-				...(server.role_id && { content: displayRole(server.role_id) }),
+				...(server.roleId && { content: displayRole(server.roleId) }),
 			};
 
 			const searchParams = new URLSearchParams({ wait: "true" });
-			if (server.thread_id) {
-				searchParams.append("thread_id", server.thread_id);
+			if (server.threadId) {
+				searchParams.append("threadId", server.threadId);
 			}
 
 			const url =
 				envs.DC_API_BASE +
-				`/webhooks/${server.webhook_id}/${server.webhook_token}` +
+				`/webhooks/${server.webhookId}/${server.webhookToken}` +
 				`?${searchParams.toString()}`;
 
 			fetch(url, {
@@ -113,7 +113,7 @@ export async function sendWebhooks(db: PrismaClient, sendId: string) {
 						succeeded++;
 					}
 
-					db.discord_send_log
+					db.discordSendLog
 						.create({
 							data: {
 								error: json,
@@ -121,7 +121,7 @@ export async function sendWebhooks(db: PrismaClient, sendId: string) {
 								success: r.ok,
 								type: "WEBHOOK",
 								send: { connect: { id: sendId } },
-								discord_server: { connect: { id: server.id } },
+								server: { connect: { id: server.id } },
 							},
 						})
 						.catch(() => null);
@@ -131,7 +131,7 @@ export async function sendWebhooks(db: PrismaClient, sendId: string) {
 
 					failed++;
 
-					db.discord_send_log
+					db.discordSendLog
 						.create({
 							data: {
 								error: e,
@@ -139,7 +139,7 @@ export async function sendWebhooks(db: PrismaClient, sendId: string) {
 								success: false,
 								type: "WEBHOOK",
 								send: { connect: { id: sendId } },
-								discord_server: { connect: { id: server.id } },
+								server: { connect: { id: server.id } },
 							},
 						})
 						.catch(() => null);
@@ -151,13 +151,13 @@ export async function sendWebhooks(db: PrismaClient, sendId: string) {
 			break;
 		}
 
-		servers = await db.discord_server.findMany({
+		servers = await db.discordServer.findMany({
 			where: {
-				created_at: { lte: new Date() },
-				channel_updated_at: { not: null, lte: new Date() },
-				webhook_id: { not: null },
-				webhook_token: { not: null },
-				channel_id: { not: null },
+				createdAt: { lte: new Date() },
+				channelUpdatedAt: { not: null, lte: new Date() },
+				webhookId: { not: null },
+				webhookToken: { not: null },
+				channelId: { not: null },
 			},
 			orderBy: { id: "asc" },
 			take: 5000,
@@ -184,23 +184,23 @@ export async function sendMessages(db: PrismaClient, sendId: string) {
 	}
 
 	let [servers, serverCount] = await Promise.all([
-		db.discord_server.findMany({
+		db.discordServer.findMany({
 			where: {
-				created_at: { lte: new Date() },
-				channel_updated_at: { not: null, lte: new Date() },
-				webhook_id: null,
-				webhook_token: null,
-				channel_id: { not: null },
+				createdAt: { lte: new Date() },
+				channelUpdatedAt: { not: null, lte: new Date() },
+				webhookId: null,
+				webhookToken: null,
+				channelId: { not: null },
 			},
 			take: 5000,
 		}),
-		db.discord_server.count({
+		db.discordServer.count({
 			where: {
-				created_at: { lte: new Date() },
-				channel_updated_at: { not: null, lte: new Date() },
-				webhook_id: null,
-				webhook_token: null,
-				channel_id: { not: null },
+				createdAt: { lte: new Date() },
+				channelUpdatedAt: { not: null, lte: new Date() },
+				webhookId: null,
+				webhookToken: null,
+				channelId: { not: null },
 			},
 		}),
 	]);
@@ -237,16 +237,16 @@ export async function sendMessages(db: PrismaClient, sendId: string) {
 			await new Promise((r) => setTimeout(r, 25));
 
 			const language =
-				languages.get(server.language_code ?? defaultLangauge.code) ?? defaultLangauge;
+				languages.get(server.languageCode ?? defaultLangauge.code) ?? defaultLangauge;
 			const currency =
-				currencies.get(server.currency_code ?? defaultCurrency.code) ?? defaultCurrency;
+				currencies.get(server.currencyCode ?? defaultCurrency.code) ?? defaultCurrency;
 
 			const gameEmbeds = send.games.map((game) => gameEmbed(game, language, currency));
 
-			const url = envs.DC_API_BASE + `/channels/${server.channel_id}/messages`;
+			const url = envs.DC_API_BASE + `/channels/${server.channelId}/messages`;
 			const body: RESTPostAPIChannelMessageJSONBody = {
 				embeds: gameEmbeds,
-				...(server.role_id && { content: displayRole(server.role_id) }),
+				...(server.roleId && { content: displayRole(server.roleId) }),
 			};
 
 			fetch(url, {
@@ -264,7 +264,7 @@ export async function sendMessages(db: PrismaClient, sendId: string) {
 						succeeded++;
 					}
 
-					db.discord_send_log
+					db.discordSendLog
 						.create({
 							data: {
 								error: json,
@@ -272,7 +272,7 @@ export async function sendMessages(db: PrismaClient, sendId: string) {
 								success: r.ok,
 								type: "WEBHOOK",
 								send: { connect: { id: sendId } },
-								discord_server: { connect: { id: server.id } },
+								server: { connect: { id: server.id } },
 							},
 						})
 						.catch(() => null);
@@ -282,7 +282,7 @@ export async function sendMessages(db: PrismaClient, sendId: string) {
 
 					failed++;
 
-					db.discord_send_log
+					db.discordSendLog
 						.create({
 							data: {
 								error: e,
@@ -290,7 +290,7 @@ export async function sendMessages(db: PrismaClient, sendId: string) {
 								success: false,
 								type: "WEBHOOK",
 								send: { connect: { id: sendId } },
-								discord_server: { connect: { id: server.id } },
+								server: { connect: { id: server.id } },
 							},
 						})
 						.catch(() => null);
@@ -302,13 +302,13 @@ export async function sendMessages(db: PrismaClient, sendId: string) {
 			break;
 		}
 
-		servers = await db.discord_server.findMany({
+		servers = await db.discordServer.findMany({
 			where: {
-				created_at: { lte: new Date() },
-				channel_updated_at: { not: null, lte: new Date() },
-				webhook_id: null,
-				webhook_token: null,
-				channel_id: { not: null },
+				createdAt: { lte: new Date() },
+				channelUpdatedAt: { not: null, lte: new Date() },
+				webhookId: null,
+				webhookToken: null,
+				channelId: { not: null },
 			},
 			orderBy: { id: "asc" },
 			take: 5000,

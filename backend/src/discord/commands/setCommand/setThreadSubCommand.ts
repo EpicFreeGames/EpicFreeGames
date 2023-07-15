@@ -1,4 +1,4 @@
-import { discord_server } from "@prisma/client";
+import { DiscordServer } from "@prisma/client";
 import {
 	APIChatInputApplicationCommandGuildInteraction,
 	ApplicationCommandOptionType,
@@ -28,7 +28,7 @@ export const setThreadSubCommand = async (props: {
 	i: APIChatInputApplicationCommandGuildInteraction;
 	language: Language;
 	currency: Currency;
-	dbServer: discord_server;
+	dbServer: DiscordServer;
 }) => {
 	try {
 		const threadOption = getTypedOption(
@@ -109,7 +109,7 @@ export const setThreadSubCommand = async (props: {
 				"MANAGE_WEBHOOKS",
 				"SEND_MESSAGES_IN_THREADS",
 				"EMBED_LINKS",
-				...(props.dbServer?.role_id ? ["MENTION_EVERYONE" as PermissionString] : []), // check only if server has a set role
+				...(props.dbServer?.roleId ? ["MENTION_EVERYONE" as PermissionString] : []), // check only if server has a set role
 			]
 		);
 
@@ -179,13 +179,13 @@ export const setThreadSubCommand = async (props: {
 		// delete the previous saved webhook if new channel !== old channel
 		// that cannot be used since the channel is changing
 		if (
-			props.dbServer?.webhook_id &&
-			props.dbServer.webhook_token &&
-			props.dbServer.channel_id !== selectedThreadParentId
+			props.dbServer?.webhookId &&
+			props.dbServer.webhookToken &&
+			props.dbServer.channelId !== selectedThreadParentId
 		) {
 			discordApi(props.ctx, {
 				method: "DELETE",
-				path: `/webhooks/${props.dbServer.webhook_id}/${props.dbServer.webhook_token}`,
+				path: `/webhooks/${props.dbServer.webhookId}/${props.dbServer.webhookToken}`,
 			});
 		}
 
@@ -258,18 +258,18 @@ export const setThreadSubCommand = async (props: {
 			});
 		}
 
-		const updatedDbServer = await props.ctx.db.discord_server.update({
+		const updatedDbServer = await props.ctx.db.discordServer.update({
 			where: { id: props.dbServer.id },
 			data: {
-				channel_id: selectedThreadParentId,
-				thread_id: selectedThreadId,
-				webhook_id: webhook.id,
-				webhook_token: webhook.token,
-				channel_updated_at: new Date(),
+				channelId: selectedThreadParentId,
+				threadId: selectedThreadId,
+				webhookId: webhook.id,
+				webhookToken: webhook.token,
+				channelUpdatedAt: new Date(),
 			},
 		});
 
-		if (!updatedDbServer.channel_id) {
+		if (!updatedDbServer.channelId) {
 			props.ctx.log("Failed to set thread - channel id is falsy after update", {
 				selectedThreadId,
 				selectedThreadParentId,
@@ -285,7 +285,7 @@ export const setThreadSubCommand = async (props: {
 			return;
 		}
 
-		if (!updatedDbServer.thread_id) {
+		if (!updatedDbServer.threadId) {
 			props.ctx.log("Failed to set thread - thread id is falsy after update", {
 				selectedThreadId,
 				selectedThreadParentId,
@@ -304,7 +304,7 @@ export const setThreadSubCommand = async (props: {
 		await editInteractionResponse(props.ctx, props.i, {
 			flags: MessageFlags.Ephemeral,
 			embeds: [
-				channelSetEmbed(props.language, updatedDbServer.thread_id),
+				channelSetEmbed(props.language, updatedDbServer.threadId),
 				settingsEmbed(updatedDbServer, props.language, props.currency),
 			],
 		});

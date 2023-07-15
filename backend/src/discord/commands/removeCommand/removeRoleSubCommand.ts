@@ -6,7 +6,7 @@ import {
 import { DiscordRequestContext } from "../../context";
 import { Language } from "../../i18n/language";
 import { Currency } from "../../i18n/currency";
-import { discord_server } from "@prisma/client";
+import { DiscordServer } from "@prisma/client";
 import { editInteractionResponse } from "../../utils";
 import { currentSettingsEmbed, settingsEmbed, updatedSettingsEmbed } from "../../embeds/settings";
 
@@ -15,10 +15,10 @@ export async function removeRoleSubCommand(props: {
 	i: APIChatInputApplicationCommandGuildInteraction;
 	language: Language;
 	currency: Currency;
-	dbServer: discord_server;
+	dbServer: DiscordServer;
 }) {
 	try {
-		if (!props.dbServer.role_id) {
+		if (!props.dbServer.roleId) {
 			props.ctx.respondWith(200, {
 				type: InteractionResponseType.ChannelMessageWithSource,
 				data: {
@@ -38,9 +38,9 @@ export async function removeRoleSubCommand(props: {
 			data: { flags: MessageFlags.Ephemeral },
 		});
 
-		const updatedDbServer = await props.ctx.db.discord_server.update({
+		const updatedDbServer = await props.ctx.db.discordServer.update({
 			where: { id: props.dbServer.id },
-			data: { role_id: null },
+			data: { roleId: null },
 		});
 
 		await editInteractionResponse(props.ctx, props.i, {

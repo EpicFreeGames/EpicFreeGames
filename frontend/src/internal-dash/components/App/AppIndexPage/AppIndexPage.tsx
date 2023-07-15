@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { trpc } from "../../../trpc";
 
 export function AppIndexPage() {

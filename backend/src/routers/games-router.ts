@@ -5,7 +5,7 @@ export const gamesRouter = router({
 	getAll: authProcedure.query((props) => {
 		return props.ctx.db.game.findMany({
 			include: { prices: true },
-			orderBy: { start_date: "desc" },
+			orderBy: { startDate: "desc" },
 		});
 	}),
 	toggleConfirmed: authProcedure
@@ -26,10 +26,10 @@ export const gamesRouter = router({
 		.input(
 			z.object({
 				name: z.string(),
-				display_name: z.string(),
-				image_url: z.string(),
-				start_date: z.date(),
-				end_date: z.date(),
+				displayName: z.string(),
+				imageUrl: z.string(),
+				startDate: z.date(),
+				endDate: z.date(),
 				path: z.string(),
 
 				usd_price_formatted: z.string(),
@@ -40,19 +40,19 @@ export const gamesRouter = router({
 			await props.ctx.db.game.create({
 				data: {
 					name: props.input.name,
-					display_name: props.input.display_name,
-					image_url: props.input.image_url,
-					start_date: props.input.start_date,
-					end_date: props.input.end_date,
+					displayName: props.input.displayName,
+					imageUrl: props.input.imageUrl,
+					startDate: props.input.startDate,
+					endDate: props.input.endDate,
 					path: props.input.path,
 
 					confirmed: false,
-					store_id: "epic_games",
+					storeId: "epic_games",
 
 					prices: {
 						create: {
-							currency_code: "USD",
-							formatted_value: props.input.usd_price_formatted,
+							currencyCode: "USD",
+							formattedValue: props.input.usd_price_formatted,
 							value: props.input.usd_price_value,
 						},
 					},
@@ -66,10 +66,10 @@ export const gamesRouter = router({
 				gameId: z.string(),
 
 				name: z.string(),
-				display_name: z.string(),
-				image_url: z.string(),
-				start_date: z.date(),
-				end_date: z.date(),
+				displayName: z.string(),
+				imageUrl: z.string(),
+				startDate: z.date(),
+				endDate: z.date(),
 				path: z.string(),
 
 				usd_price_formatted: z.string(),
@@ -77,18 +77,18 @@ export const gamesRouter = router({
 			})
 		)
 		.mutation(async (props) => {
-			const usdPrice = await props.ctx.db.game_price.findFirst({
-				where: { game_id: props.input.gameId, currency_code: "USD" },
+			const usdPrice = await props.ctx.db.gamePrice.findFirst({
+				where: { gameId: props.input.gameId, currencyCode: "USD" },
 			});
 
 			await props.ctx.db.game.update({
 				where: { id: props.input.gameId },
 				data: {
 					name: props.input.name,
-					display_name: props.input.display_name,
-					image_url: props.input.image_url,
-					start_date: props.input.start_date,
-					end_date: props.input.end_date,
+					displayName: props.input.displayName,
+					imageUrl: props.input.imageUrl,
+					startDate: props.input.startDate,
+					endDate: props.input.endDate,
 					path: props.input.path,
 
 					prices: {
@@ -97,15 +97,15 @@ export const gamesRouter = router({
 									update: {
 										where: { id: usdPrice.id },
 										data: {
-											formatted_value: props.input.usd_price_formatted,
+											formattedValue: props.input.usd_price_formatted,
 											value: props.input.usd_price_value,
 										},
 									},
 							  }
 							: {
 									create: {
-										currency_code: "USD",
-										formatted_value: props.input.usd_price_formatted,
+										currencyCode: "USD",
+										formattedValue: props.input.usd_price_formatted,
 										value: props.input.usd_price_value,
 									},
 							  }),
