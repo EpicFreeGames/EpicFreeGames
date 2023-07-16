@@ -7,6 +7,14 @@
 		{
 			"source": "/r/app/:gameId",
 			"destination": "https://redirect.epicfreegames.net/app/:gameId"
+		},
+		{
+			"source": "/discord",
+			"destination": "https://discord.gg/49UQcJe"
+		},
+		{
+			"source": "/invite",
+			"destination": "https://discord.com/api/oauth2/authorize?client_id=719806770133991434&permissions=275414927360&scope=bot%20applications.commands"
 		}
 	]
 }
