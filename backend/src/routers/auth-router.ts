@@ -40,15 +40,19 @@ export const authRouter = router({
 		});
 		const userResponseJson = await userResponse.json();
 
-		if (!!userResponseJson.email) {
-			const token = await createToken(userResponseJson.email);
-			props.ctx.res.setHeader(
-				"Set-Cookie",
-				`token=${token}; HttpOnly; SameSite=Strict; Path=/;`
-			);
-			return { email: userResponseJson.email };
-		} else {
+		if (!!!userResponseJson.email) {
 			throw new Error("No email");
 		}
+
+		if (
+			envs.ADMIN_EMAIL !== userResponseJson.email ||
+			envs.ADMIN_USER_ID !== userResponseJson.id
+		) {
+			throw new Error("Not admin");
+		}
+
+		const token = await createToken(userResponseJson.email);
+		props.ctx.res.setHeader("Set-Cookie", `token=${token}; HttpOnly; SameSite=Strict; Path=/;`);
+		return { email: userResponseJson.email };
 	}),
 });

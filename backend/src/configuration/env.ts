@@ -10,6 +10,8 @@ const envSchema = z.object({
 	DC_PUB_KEY: z.string(),
 	DC_TOKEN: z.string(),
 	JWT_SECRET: z.string().transform((x) => new TextEncoder().encode(x)),
+	ADMIN_EMAIL: z.string(),
+	ADMIN_USER_ID: z.string(),
 	PORT: z.string().transform(Number).optional(),
 	LOG: z.enum(["debug", "info", "warn", "error"]).optional(),
 	PRETTY_LOG: z.string().transform(Boolean).optional(),
