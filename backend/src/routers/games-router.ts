@@ -113,4 +113,16 @@ export const gamesRouter = router({
 				},
 			});
 		}),
+
+	delete: authProcedure
+		.input(
+			z.object({
+				gameId: z.string(),
+			})
+		)
+		.mutation(async (props) => {
+			await props.ctx.db.game.delete({
+				where: { id: props.input.gameId },
+			});
+		}),
 });

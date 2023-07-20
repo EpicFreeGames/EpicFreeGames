@@ -45,6 +45,7 @@ function GameList() {
 						<h2 className="text-lg">{game.displayName}</h2>
 
 						<div className="flex gap-2">
+							<DeleteGame game={game} />
 							<EditGame game={game} />
 							<Confirmed game={game} />
 						</div>
@@ -170,7 +171,13 @@ const editGameFormSchema = z.object({
 function EditGame(props: { game: Game }) {
 	const [isOpen, setIsOpen] = useState(false);
 
-	const editMutation = trpc.games.edit.useMutation();
+	const trpcCtx = trpc.useContext();
+	const editMutation = trpc.games.edit.useMutation({
+		onSuccess: () => {
+			setIsOpen(false);
+			trpcCtx.games.getAll.invalidate();
+		},
+	});
 
 	const editGameForm = useForm<z.infer<typeof editGameFormSchema>>({
 		resolver: zodResolver(editGameFormSchema),
@@ -378,6 +385,15 @@ function CreateGame() {
 						</label>
 
 						<label className="flex flex-col gap-1">
+							<span className="text-sm">Display name:</span>
+							<input
+								className="p-2 focus rounded-lg bg-gray-700 border border-gray-500 "
+								type="text"
+								{...createGameForm.register("displayName")}
+							/>
+						</label>
+
+						<label className="flex flex-col gap-1">
 							<span className="text-sm">Image url:</span>
 
 							<input
@@ -456,6 +472,82 @@ function CreateGame() {
 							</button>
 						</div>
 					</form>
+				</div>
+			</Modal>
+		</>
+	);
+}
+
+function DeleteGame(props: { game: Game }) {
+	const [isOpen, setIsOpen] = useState(false);
+
+	const trpcCtx = trpc.useContext();
+	const deleteGameMutation = trpc.games.delete.useMutation({
+		onSuccess: () => {
+			trpcCtx.games.invalidate();
+		},
+	});
+
+	const deleteGameForm = useForm({
+		defaultValues: {
+			gameIds: new Array<string>(),
+		},
+		onSubmit: async () => {
+			await deleteGameMutation.mutateAsync({ gameId: props.game.id });
+
+			setIsOpen(false);
+		},
+	});
+
+	return (
+		<>
+			<button
+				onClick={() => setIsOpen(true)}
+				className="p-2 rounded-lg border border-gray-600 bg-gray-700"
+			>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="24"
+					height="24"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					className="lucide lucide-trash-2 h-5 w-5 text-red-500"
+				>
+					<path d="M3 6h18" />
+					<path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+					<path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+					<line x1="10" x2="10" y1="11" y2="17" />
+					<line x1="14" x2="14" y1="11" y2="17" />
+				</svg>
+			</button>
+
+			<Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+				<div className="flex flex-col gap-4">
+					<h1 className="text-xl">Delete game</h1>
+
+					<p>Are you sure you want to delete this game?</p>
+
+					<div className="flex w-full gap-2">
+						<button
+							type="button"
+							onClick={() => setIsOpen(false)}
+							className="py-2 w-full px-3 rounded-lg border border-gray-600 bg-gray-700"
+						>
+							Cancel
+						</button>
+
+						<button
+							type="submit"
+							onClick={deleteGameForm.handleSubmit}
+							className="py-2 w-full px-3 rounded-lg border border-gray-600 bg-gray-700"
+						>
+							Delete
+						</button>
+					</div>
 				</div>
 			</Modal>
 		</>
