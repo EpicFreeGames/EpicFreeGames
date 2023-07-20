@@ -101,7 +101,7 @@ export async function sendWebhooks(db: PrismaClient, send: SendForSending) {
 
 			const searchParams = new URLSearchParams({ wait: "true" });
 			if (server.threadId) {
-				searchParams.append("threadId", server.threadId);
+				searchParams.append("thread_id", server.threadId);
 			}
 
 			const url =
