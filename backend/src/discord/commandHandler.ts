@@ -22,6 +22,7 @@ import { setCommand } from "./commands/setCommand/setCommand";
 import { getTypedOption } from "./commands/_getTypedOption";
 import { removeCommand } from "./commands/removeCommand/removeCommand";
 import { settingsCommand } from "./commands/settingsCommand";
+import { testCommand } from "./commands/testCommand";
 
 const commands = new Map<string, Command>([
 	[freeCommand.name, freeCommand],
@@ -31,6 +32,7 @@ const commands = new Map<string, Command>([
 	[setCommand.name, setCommand],
 	[removeCommand.name, removeCommand],
 	[settingsCommand.name, settingsCommand],
+	[testCommand.name, testCommand],
 ]);
 
 export async function commandHandler(
