@@ -85,7 +85,7 @@ export async function sendWebhooks(db: PrismaClient, send: SendForSending) {
 		for (const server of servers) {
 			i++;
 			const innerI = i;
-			await new Promise((r) => setTimeout(r, 2));
+			await new Promise((r) => setTimeout(r, 3));
 
 			const language =
 				languages.get(server.languageCode ?? defaultLangauge.code) ?? defaultLangauge;
@@ -99,7 +99,7 @@ export async function sendWebhooks(db: PrismaClient, send: SendForSending) {
 				...(server.roleId && { content: displayRole(server.roleId) }),
 			};
 
-			const searchParams = new URLSearchParams({ wait: "true" });
+			const searchParams = new URLSearchParams();
 			if (server.threadId) {
 				searchParams.append("thread_id", server.threadId);
 			}
@@ -107,7 +107,7 @@ export async function sendWebhooks(db: PrismaClient, send: SendForSending) {
 			const url =
 				envs.DC_API_BASE +
 				`/webhooks/${server.webhookId}/${server.webhookToken}` +
-				`?${searchParams.toString()}`;
+				(searchParams.size ? `?${searchParams.toString()}` : "");
 
 			fetch(url, {
 				method: "POST",
@@ -127,25 +127,27 @@ export async function sendWebhooks(db: PrismaClient, send: SendForSending) {
 							error: result,
 						});
 
-						db.discordServer
-							.update({
-								where: { id: server.id },
-								data: {
-									channelId: null,
-									threadId: null,
-									webhookId: null,
-									webhookToken: null,
-								},
-							})
-							.catch((e) => {
-								senderLogError({
-									index: innerI,
-									serverId: server.id,
-									type: "webhook",
-									ctx: "failed to update db server",
-									error: e,
+						if (r.status < 500) {
+							db.discordServer
+								.update({
+									where: { id: server.id },
+									data: {
+										channelId: null,
+										threadId: null,
+										webhookId: null,
+										webhookToken: null,
+									},
+								})
+								.catch((e) => {
+									senderLogError({
+										index: innerI,
+										serverId: server.id,
+										type: "webhook",
+										ctx: "failed to update db server",
+										error: e,
+									});
 								});
-							});
+						}
 					} else {
 						succeeded++;
 					}
