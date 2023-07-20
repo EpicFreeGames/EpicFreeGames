@@ -22,6 +22,7 @@ import { hasPermsOnChannel } from "../../perms/hasPermsOnChannel";
 import { PermissionString } from "../../perms/types";
 import { editInteractionResponse } from "../../utils";
 import { getTypedOption } from "../_getTypedOption";
+import { gameEmbed } from "../../embeds/gameEmbed";
 
 export const setThreadSubCommand = async (props: {
 	ctx: DiscordRequestContext;
@@ -308,6 +309,27 @@ export const setThreadSubCommand = async (props: {
 				settingsEmbed(updatedDbServer, props.language, props.currency),
 			],
 		});
+
+		// send current free games to the set thread
+		const now = new Date();
+		const freeGames = await props.ctx.db.game.findMany({
+			where: {
+				confirmed: true,
+				startDate: { lte: now },
+				endDate: { gte: now },
+			},
+			include: { prices: true },
+		});
+
+		if (freeGames && freeGames.length) {
+			discordApi(props.ctx, {
+				method: "POST",
+				path: `/webhooks/${updatedDbServer.webhookId}/${updatedDbServer.webhookToken}?thread_id=${updatedDbServer.threadId}`,
+				body: {
+					embeds: freeGames.map((g) => gameEmbed(g, props.language, props.currency)),
+				},
+			});
+		}
 	} catch (e) {
 		props.ctx.log("Failed to set thread - catched an error", {
 			error: e,
