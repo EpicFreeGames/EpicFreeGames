@@ -112,25 +112,27 @@ export async function sendMessages(db: PrismaClient, send: SendForSending) {
 							error: result,
 						});
 
-						db.discordServer
-							.update({
-								where: { id: server.id },
-								data: {
-									channelId: null,
-									threadId: null,
-									webhookId: null,
-									webhookToken: null,
-								},
-							})
-							.catch((e) => {
-								senderLogError({
-									index: innerI,
-									serverId: server.id,
-									type: "webhook",
-									ctx: "failed to update db server",
-									error: e,
+						if (r.status < 500) {
+							db.discordServer
+								.update({
+									where: { id: server.id },
+									data: {
+										channelId: null,
+										threadId: null,
+										webhookId: null,
+										webhookToken: null,
+									},
+								})
+								.catch((e) => {
+									senderLogError({
+										index: innerI,
+										serverId: server.id,
+										type: "message",
+										ctx: "failed to update db server",
+										error: e,
+									});
 								});
-							});
+						}
 					} else {
 						succeeded++;
 					}
@@ -141,7 +143,7 @@ export async function sendMessages(db: PrismaClient, send: SendForSending) {
 								result: JSON.stringify(result),
 								statusCode: r.status,
 								success: r.ok,
-								type: "WEBHOOK",
+								type: "MESSAGE",
 								send: { connect: { id: send.id } },
 								server: { connect: { id: server.id } },
 							},
@@ -173,7 +175,7 @@ export async function sendMessages(db: PrismaClient, send: SendForSending) {
 								result: e?.toString(),
 								statusCode: e.status ?? 500,
 								success: false,
-								type: "WEBHOOK",
+								type: "MESSAGE",
 								send: { connect: { id: send.id } },
 								server: { connect: { id: server.id } },
 							},
