@@ -17,7 +17,11 @@ function getDbServers(props: { db: PrismaClient; sendId: string; lastServerId?: 
 			createdAt: { lte: new Date() },
 			channelUpdatedAt: { not: null, lte: new Date() },
 			sendLogs: {
-				none: { sendId: props.sendId, success: true },
+				none: {
+					sendId: props.sendId,
+					success: true,
+					AND: [{ statusCode: { lt: 500 } }, { statusCode: { not: 429 } }],
+				},
 			},
 		},
 		orderBy: { id: "asc" },
@@ -76,7 +80,7 @@ export async function sendMessages(db: PrismaClient, send: SendForSending) {
 		for (const server of servers) {
 			i++;
 			const innerI = i;
-			await new Promise((r) => setTimeout(r, 25));
+			await new Promise((r) => setTimeout(r, 30));
 
 			const language =
 				languages.get(server.languageCode ?? defaultLangauge.code) ?? defaultLangauge;
@@ -112,7 +116,7 @@ export async function sendMessages(db: PrismaClient, send: SendForSending) {
 							error: result,
 						});
 
-						if (r.status < 500) {
+						if (r.status < 500 && r.status !== 429) {
 							db.discordServer
 								.update({
 									where: { id: server.id },
