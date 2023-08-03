@@ -1,5 +1,4 @@
 import { RESTPostAPIWebhookWithTokenJSONBody } from "discord-api-types/v10";
-import { envs } from "../../configuration/env";
 import { displayRole } from "../utils";
 import { gameEmbed } from "../embeds/gameEmbed";
 import { currencies, defaultCurrency } from "../i18n/currency";
@@ -109,7 +108,7 @@ export async function sendWebhooks(db: PrismaClient, send: SendForSending) {
 			}
 
 			const url =
-				envs.DC_API_BASE +
+				"https://discord.com/api/v10" +
 				`/webhooks/${server.webhookId}/${server.webhookToken}` +
 				(searchParams.size ? `?${searchParams.toString()}` : "");
 
