@@ -83,11 +83,7 @@ function GameList() {
 							<div className="flex flex-col gap-1 p-2 rounded-lg border border-gray-800 bg-gray-950/50">
 								<span>Status:</span>
 								<span>
-									{now < game.startDate
-										? "Upcoming"
-										: game.endDate > now
-										? "Free"
-										: "Gone"}
+									{now < game.startDate ? "Upcoming" : game.endDate > now ? "Free" : "Gone"}
 								</span>
 							</div>
 						</div>
@@ -99,10 +95,7 @@ function GameList() {
 
 									<div className="flex flex-col gap-2 mt-2">
 										{game.prices.map((price) => (
-											<span
-												key={price.id}
-												className="rounded-md border border-gray-800 p-2"
-											>
+											<span key={price.id} className="rounded-md border border-gray-800 p-2">
 												<b>{price.currencyCode}:</b> {price.formattedValue}
 											</span>
 										))}
@@ -190,10 +183,8 @@ function EditGame(props: { game: Game }) {
 			path: props.game.path,
 
 			usd_price_formatted:
-				props.game.prices.find((price) => price.currencyCode === "USD")?.formattedValue ||
-				"0 $",
-			usd_price_value:
-				props.game.prices.find((price) => price.currencyCode === "USD")?.value || 0,
+				props.game.prices.find((price) => price.currencyCode === "USD")?.formattedValue || "0 $",
+			usd_price_value: props.game.prices.find((price) => price.currencyCode === "USD")?.value || 0,
 		},
 		onSubmit: (data) => {
 			editMutation.mutate({
@@ -284,6 +275,7 @@ function EditGame(props: { game: Game }) {
 							<input
 								className="p-2 focus rounded-lg bg-gray-700 border border-gray-500 "
 								type="number"
+								step="0.01"
 								{...editGameForm.register("usd_price_value", {
 									valueAsNumber: true,
 								})}
@@ -449,6 +441,7 @@ function CreateGame() {
 							<input
 								className="p-2 focus rounded-lg bg-gray-700 border border-gray-500 "
 								type="number"
+								step="0.01"
 								{...createGameForm.register("usd_price_value", {
 									valueAsNumber: true,
 								})}
