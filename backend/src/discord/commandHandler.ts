@@ -1,28 +1,29 @@
 import {
+	isChatInputApplicationCommandInteraction,
+	isGuildInteraction,
+} from "discord-api-types/utils";
+import {
 	APIApplicationCommandInteraction,
 	ApplicationCommandOptionType,
 	InteractionResponseType,
 	MessageFlags,
 } from "discord-api-types/v10";
-import { DiscordRequestContext } from "./context";
-import {
-	isChatInputApplicationCommandInteraction,
-	isGuildInteraction,
-} from "discord-api-types/utils";
 import { Command } from "./commands/_commandType";
+import { getTypedOption } from "./commands/_getTypedOption";
+import { debugCommand } from "./commands/debugCommand";
 import { freeCommand } from "./commands/freeCommand";
-import { hasPerms } from "./perms/hasPerms";
-import { genericErrorEmbed, manageGuildCommandError } from "./embeds/errors";
-import { defaultLangauge, languages } from "./i18n/language";
-import { currencies, defaultCurrency } from "./i18n/currency";
-import { upCommand } from "./commands/upCommand";
 import { helpCommand } from "./commands/helpCommand";
 import { inviteCommand } from "./commands/inviteCommand";
-import { setCommand } from "./commands/setCommand/setCommand";
-import { getTypedOption } from "./commands/_getTypedOption";
 import { removeCommand } from "./commands/removeCommand/removeCommand";
+import { setCommand } from "./commands/setCommand/setCommand";
 import { settingsCommand } from "./commands/settingsCommand";
 import { testCommand } from "./commands/testCommand";
+import { upCommand } from "./commands/upCommand";
+import { DiscordRequestContext } from "./context";
+import { genericErrorEmbed, manageGuildCommandError } from "./embeds/errors";
+import { currencies, defaultCurrency } from "./i18n/currency";
+import { defaultLangauge, languages } from "./i18n/language";
+import { hasPerms } from "./perms/hasPerms";
 
 const commands = new Map<string, Command>([
 	[freeCommand.name, freeCommand],
@@ -33,6 +34,7 @@ const commands = new Map<string, Command>([
 	[removeCommand.name, removeCommand],
 	[settingsCommand.name, settingsCommand],
 	[testCommand.name, testCommand],
+	[debugCommand.name, debugCommand],
 ]);
 
 export async function commandHandler(
