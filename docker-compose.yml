@@ -39,6 +39,9 @@ services:
         networks:
             - new-efg
 
+    frontend:
+        image: veetik/efg-frontend
+
 networks:
     efg:
         external: true
