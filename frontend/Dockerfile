@@ -4,6 +4,12 @@ COPY package.json pnpm-lock.yaml ./
 RUN corepack enable pnpm
 RUN pnpm i
 COPY . .
+
+ENV PROD=true
+ENV PUBLIC_BOT_NAME=EpicFreeGames
+ENV PUBLIC_BACKEND_URL=https://api.epicfreegames.net
+ENV PUBLIC_BASE_URL=https://epicfreegames.net
+
 RUN pnpm build
 
 FROM nginx:alpine AS runtime
