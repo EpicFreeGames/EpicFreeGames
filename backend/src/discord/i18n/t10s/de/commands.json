@@ -1,9 +1,9 @@
 {
-  "cmd_desc_set_currency": "Pick a currency for the games' prices on this server",
+  "cmd_desc_set_currency": "Wähle eine Währung für die Spielpreise auf diesem Server",
   "cmd_desc_set_thread": "Wähle einen Thread, in dem ich neue kostenlose Spiele posten werde",
   "cmd_desc_set_channel": "Wählen Sie einen Channel, auf dem ich neue kostenlose Spiele veröffentlichen werde",
-  "cmd_desc_set_role": "Pick a role I'll ping when a new game comes free",
-  "cmd_desc_set_language": "Pick a language for my messages on this server",
+  "cmd_desc_set_role": "Wähle eine Rolle, die ich pingen werde, wenn ein neues Spiel kostenlos wird",
+  "cmd_desc_set_language": "Wähle eine Sprache für meine Nachrichten auf diesem Server",
   "cmd_desc_remove_channel": "Entfernen Sie den eingestellten Channel (oder das Thread)",
   "cmd_desc_remove_role": "Entfernen Sie die eingestellte Rolle",
   "cmd_desc_invite": "Link für meine Einladung",
@@ -13,5 +13,5 @@
   "cmd_desc_free": "Die aktuellen Gratisspiele ansehen",
   "cmd_desc_settings": "Siehe die Einstellungen",
   "cmd_desc_vote": "Wählen Sie für mich",
-  "cmd_desc_test": "Sends a test message to the set channel and pings the set role"
+  "cmd_desc_test": "Sendet eine Testnachricht in den festgelegten Kanal, und erwähnt die festgelegte Rolle"
 }

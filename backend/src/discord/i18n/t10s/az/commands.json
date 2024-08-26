@@ -1,9 +1,9 @@
 {
-  "cmd_desc_set_currency": "Pick a currency for the games' prices on this server",
+  "cmd_desc_set_currency": "Bu serverdə oyunların qiymətləri üçün valyuta seçin",
   "cmd_desc_set_thread": "Yeni pulsuz oyunları yerləşdirəcəyim mövzunu seçin",
   "cmd_desc_set_channel": "Yeni pulsuz oyunları yerləşdirəcəyim kanalı seçin",
-  "cmd_desc_set_role": "Pick a role I'll ping when a new game comes free",
-  "cmd_desc_set_language": "Pick a language for my messages on this server",
+  "cmd_desc_set_role": "Yeni pulsuz oyunlar yerləşdirəndə qeyd edəcəyim rolu seçin",
+  "cmd_desc_set_language": "Bu serverdə mesajlarım üçün dil seçin",
   "cmd_desc_remove_channel": "Köklənmiş kanalı (və ya mövzunu) silmək",
   "cmd_desc_remove_role": "Quraşdırılmış rolu silin",
   "cmd_desc_invite": "Dəvət linkimi əldə edin",
@@ -13,5 +13,5 @@
   "cmd_desc_free": "Cari pulsuz oyuna baxın",
   "cmd_desc_settings": "Parametrlər görmək",
   "cmd_desc_vote": "Mənə səs vermək üçün",
-  "cmd_desc_test": "Sends a test message to the set channel and pings the set role"
+  "cmd_desc_test": "Quraşdırılmış kanala test mesajı göndərir və təyin edilmiş rola ping göndərir"
 }

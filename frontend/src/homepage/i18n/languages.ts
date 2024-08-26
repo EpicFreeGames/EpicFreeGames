@@ -11,7 +11,10 @@ import type { Language } from "./i18nTypes";
  *   },
  * }
  */
-export const languagesMap = new Map<string, Language & { websiteReady: boolean }>([
+export const languagesMap = new Map<
+	string,
+	Language & { websiteReady: boolean }
+>([
 	[
 		"af",
 		{
@@ -63,7 +66,7 @@ export const languagesMap = new Map<string, Language & { websiteReady: boolean }
 			code: "de",
 			name: "German",
 			nativeName: "Deutsch",
-			websiteReady: false,
+			websiteReady: true,
 		},
 	],
 	[
@@ -208,7 +211,7 @@ export const languagesMap = new Map<string, Language & { websiteReady: boolean }
 			code: "pt-BR",
 			name: "Portuguese (Brazil)",
 			nativeName: "Português (Brasil)",
-			websiteReady: false,
+			websiteReady: true,
 		},
 	],
 	[
@@ -319,7 +322,7 @@ export const languages: Record<string, Language> = {
 		code: "de",
 		name: "German",
 		nativeName: "Deutsch",
-		websiteReady: false,
+		websiteReady: true,
 	},
 	en: {
 		code: "en",
@@ -415,7 +418,7 @@ export const languages: Record<string, Language> = {
 		code: "pt-BR",
 		name: "Portuguese (Brazil)",
 		nativeName: "Português (Brasil)",
-		websiteReady: false,
+		websiteReady: true,
 	},
 	"pt-PT": {
 		code: "pt-PT",
@@ -473,6 +476,8 @@ export const languages: Record<string, Language> = {
 	},
 };
 
-export const webLanguages = Object.values(languages).filter((l) => l.websiteReady);
+export const webLanguages = Object.values(languages).filter(
+	(l) => l.websiteReady,
+);
 
 export const defaultLanguage: Language = languages["en"]!;

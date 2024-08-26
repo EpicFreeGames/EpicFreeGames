@@ -64,7 +64,7 @@ export const languages = new Map<string, Language & { websiteReady: boolean }>([
 			code: "de",
 			name: "Deutsch",
 			englishName: "German",
-			websiteReady: false,
+			websiteReady: true,
 		},
 	],
 	[defaultLangauge.code, defaultLangauge],
@@ -201,7 +201,7 @@ export const languages = new Map<string, Language & { websiteReady: boolean }>([
 			code: "pt-BR",
 			name: "Português (Brasil)",
 			englishName: "Portuguese (Brazil)",
-			websiteReady: false,
+			websiteReady: true,
 		},
 	],
 	[

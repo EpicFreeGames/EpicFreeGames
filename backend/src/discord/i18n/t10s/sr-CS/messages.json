@@ -1,9 +1,9 @@
 {
-  "support_click_here": "If you need help, [click here](<serverInvite>) to join our support server",
+  "support_click_here": "Ako vam je potrebna pomoć, [kliknite ovde](<serverInvite>) da pristupite našem serveru za podršku",
   "set_channel_first": "Prvo morate da podesite kanal!",
   "no_free_games": "Trenutno nema besplatnih igara",
   "no_upcoming_games": "Trenutno nema predstojećih besplatnih igara",
-  "bot_missing_perms": "I'm missing some permissions on <channel>!",
+  "bot_missing_perms": "Nedostaju mi neke permisije za <channel> kanal!",
   "user_missing_perms": "Nemate dovoljno prava da koristite ovu komandu",
   "manage_guild_needed": "Ova komanda zahteva da imate **upravljanje serverom**",
   "bot_admins_only": "Ovu komandu mogu da koriste samo administratori botova",
