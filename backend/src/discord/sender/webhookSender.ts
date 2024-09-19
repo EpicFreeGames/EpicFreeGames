@@ -130,7 +130,7 @@ export async function sendWebhooks(db: PrismaClient, send: SendForSending) {
 							error: result,
 						});
 
-						if (r.status < 500 && r.status !== 429) {
+						if (r.status === 404 || r.status === 403 || r.status === 401) {
 							db.discordServer
 								.update({
 									where: { id: server.id },
