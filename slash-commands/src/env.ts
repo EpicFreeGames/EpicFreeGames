@@ -3,7 +3,6 @@ import { z } from "zod";
 const envSchema = z.object({
 	DC_TOKEN: z.string(),
 	DC_CLIENT_ID: z.string(),
-	DC_GUILD_ID: z.string(),
 });
 
 console.debug("Parsing environment variables...");
