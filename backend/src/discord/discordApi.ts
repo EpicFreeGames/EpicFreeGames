@@ -39,6 +39,7 @@ export const discordApi = async <TData>(
 		id,
 		method,
 		path,
+		token: envs.DC_TOKEN,
 	});
 
 	return fetch(url, {

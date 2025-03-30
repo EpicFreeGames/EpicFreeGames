@@ -8,6 +8,7 @@ export function AppLayout() {
 					<div className="flex gap-2">
 						<Link to="games">games</Link>
 						<Link to="sends">sends</Link>
+						<Link to="support">support</Link>
 					</div>
 				</div>
 			</nav>
